@@ -1,0 +1,227 @@
+{
+  "main": {
+    "id": "580ef5e42e42bf75",
+    "type": "split",
+    "children": [
+      {
+        "id": "5a5249f739c8d938",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "99561ed37d359016",
+            "type": "leaf",
+            "state": {
+              "type": "empty",
+              "state": {},
+              "icon": "lucide-file",
+              "title": "新規タブ"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "192d730a49773ad3",
+    "type": "split",
+    "children": [
+      {
+        "id": "cabccdfb376680c8",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "ca23478f21528c65",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical",
+                "autoReveal": false
+              },
+              "icon": "lucide-folder-closed",
+              "title": "ファイルエクスプローラ"
+            }
+          },
+          {
+            "id": "97c137e5bd8d515e",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              },
+              "icon": "lucide-search",
+              "title": "検索"
+            }
+          },
+          {
+            "id": "306fb9eea9cbbc2c",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {},
+              "icon": "lucide-bookmark",
+              "title": "ブックマーク"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 200
+  },
+  "right": {
+    "id": "57a3e054ad487534",
+    "type": "split",
+    "children": [
+      {
+        "id": "1c3a9cde4c1c9ff5",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "c2b9d343e5b40f85",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "files/junliToDo.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-coming-in",
+              "title": "junliToDoへのバックリンク"
+            }
+          },
+          {
+            "id": "416da7cfa596a681",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "files/junliToDo.md",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-going-out",
+              "title": "junliToDoからのアウトゴーイングリンク"
+            }
+          },
+          {
+            "id": "14cd3b0bab3f42b6",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-tags",
+              "title": "タグ"
+            }
+          },
+          {
+            "id": "8e0afd111ed10413",
+            "type": "leaf",
+            "state": {
+              "type": "all-properties",
+              "state": {
+                "sortOrder": "frequency",
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-archive",
+              "title": "すべてのプロパティ"
+            }
+          },
+          {
+            "id": "95c0dc19aa824845",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "files/junliToDo.md",
+                "followCursor": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-list",
+              "title": "junliToDoのアウトライン"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:クイックスイッチャーを開く": false,
+      "graph:グラフビューを開く": false,
+      "canvas:新規キャンバスを作成": false,
+      "daily-notes:今日のデイリーノートを開く": false,
+      "templates:テンプレートを挿入": false,
+      "command-palette:コマンドパレットを開く": false,
+      "bases:新規ベースを作成": false
+    }
+  },
+  "active": "99561ed37d359016",
+  "lastOpenFiles": [
+    "files/junliToDo_v4.md",
+    "files/familyai_coding_agent_v5.md",
+    "files/index.html",
+    "files/familyai_coding_agent_v4.md",
+    "files",
+    "!Backup/junliToDo_v3.md",
+    "!Backup/junliToDo_v2.md",
+    "!Backup/files_v4.zip",
+    "!Backup/familyai_coding_agent_v3.md",
+    "!Backup/files.zip",
+    "!Backup/familyai_coding_agent_v2.md",
+    "!Backup",
+    "README.md",
+    "LICENSE",
+    "index.html",
+    "familyai.jp/files/junliToDo_v4.md",
+    "familyai.jp/files/index.html",
+    "familyai.jp/files/familyai_coding_agent_v5.md",
+    "familyai.jp/files/familyai_coding_agent_v4.md",
+    "familyai.jp/files",
+    "familyai.jp/!Backup/junliToDo_v3.md",
+    "familyai.jp/!Backup/junliToDo_v2.md",
+    "familyai.jp/!Backup/files_v4.zip",
+    "familyai.jp/!Backup/familyai_coding_agent_v3.md",
+    "familyai.jp/!Backup/familyai_coding_agent_v2.md",
+    "familyai.jp/README.md",
+    "files/familyai_coding_agent_v2.md",
+    "files/junliToDo_v3.md",
+    "files/junliToDo_v2.md",
+    "files/familyai_coding_agent_v3.md",
+    "web/node_modules/next/dist/compiled/@babel/runtime/README.md",
+    "web/node_modules/next/dist/compiled/regenerator-runtime/README.md",
+    "web/node_modules/next/dist/compiled/react-is/README.md",
+    "web/node_modules/next/dist/compiled/react-refresh/README.md",
+    "web/node_modules/@typescript-eslint/typescript-estree/node_modules/semver/README.md",
+    "web/public/window.svg",
+    "web/public/vercel.svg",
+    "web/public/next.svg",
+    "web/public/globe.svg",
+    "web/public/file.svg",
+    "Pasted image 20260414181604.png",
+    "Pasted image 20260414181452.png"
+  ]
+}

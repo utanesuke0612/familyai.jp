@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<meta name="description" content="AI（愛）で家族をもっと幸せに。パパ・ママ・子ども・シニア向けAI活用メディア。2026年5月8日オープン予定。">
+<meta property="og:title" content="familyai.jp — 家族みんなのAI活用サイト">
+<meta property="og:description" content="AI（愛）で家族をもっと幸せに。2026年5月8日オープン予定。">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://familyai.jp">
+<meta property="og:image" content="https://familyai.jp/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#FDF6ED">
+<title>familyai.jp — Coming Soon</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@400;500;700&family=Kaisei+Opti:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --cream:       #FDF6ED;
+    --peach:       #FFAD80;
+    --peach-light: #FFD4B2;
+    --orange:      #FF8C42;
+    --beige:       #F5E6D0;
+    --beige-dark:  #E8CFA8;
+    --brown:       #8B5E3C;
+    --brown-light: #B5896A;
+    --sky:         #C8E8F8;
+    --mint:        #B8EDD8;
+    --yellow:      #FFE066;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Zen Maru Gothic', sans-serif;
+    background: var(--cream);
+    color: var(--brown);
+    min-height: 100vh;
+    min-height: 100dvh;
+    overflow-x: hidden;
+    position: relative;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* ノイズテクスチャ */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.032'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* ── アニメーション ── */
+  @keyframes float    { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-10px)} }
+  @keyframes pulse    { 0%,100%{transform:scale(1);opacity:.5} 50%{transform:scale(1.1);opacity:.75} }
+  @keyframes pulseR   { 0%,100%{transform:scale(1);opacity:.4} 50%{transform:scale(1.08);opacity:.65} }
+  @keyframes blink    { 0%,100%{opacity:1} 50%{opacity:.2} }
+  @keyframes heartbeat{ 0%,100%{transform:scale(1)} 14%{transform:scale(1.18)} 28%{transform:scale(1)} 42%{transform:scale(1.12)} 70%{transform:scale(1)} }
+  @keyframes fadeUp   { from{opacity:0;transform:translateY(28px)} to{opacity:1;transform:translateY(0)} }
+  @keyframes ticker   { 0%{transform:translateX(0)} 100%{transform:translateX(-50%)} }
+
+  /* ── 背景ブロブ ── */
+  .blob { position: fixed; border-radius: 50%; pointer-events: none; z-index: 0; }
+  .blob1 {
+    width: min(520px, 90vw); height: min(520px, 90vw);
+    background: radial-gradient(circle, var(--peach-light) 0%, transparent 70%);
+    top: -15%; right: -10%;
+    animation: pulse 6s ease-in-out infinite;
+  }
+  .blob2 {
+    width: min(380px, 70vw); height: min(380px, 70vw);
+    background: radial-gradient(circle, var(--sky) 0%, transparent 70%);
+    bottom: -8%; left: -8%;
+    animation: pulseR 7s ease-in-out infinite 1s;
+  }
+  .blob3 {
+    width: min(240px, 50vw); height: min(240px, 50vw);
+    background: radial-gradient(circle, var(--mint) 0%, transparent 70%);
+    top: 38%; left: 5%;
+    animation: pulse 8s ease-in-out infinite 2s;
+  }
+
+  /* ── ページ全体 ── */
+  .page {
+    position: relative;
+    z-index: 1;
+    min-height: 100vh;
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: clamp(40px, 8vw, 72px) clamp(16px, 5vw, 40px) clamp(48px, 8vw, 72px);
+    gap: 0;
+  }
+
+  /* ── バッジ ── */
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: #fff;
+    border: 2px solid var(--beige-dark);
+    border-radius: 999px;
+    padding: 6px 16px;
+    font-size: clamp(11px, 3vw, 13px);
+    font-weight: 500;
+    color: var(--brown-light);
+    margin-bottom: clamp(20px, 4vw, 32px);
+    animation: fadeUp .5s ease both;
+    box-shadow: 0 2px 12px rgba(139,94,60,.08);
+    white-space: nowrap;
+  }
+  .badge-dot {
+    width: 8px; height: 8px;
+    background: var(--orange);
+    border-radius: 50%;
+    animation: blink 1.5s ease-in-out infinite;
+    flex-shrink: 0;
+  }
+
+  /* ── ロゴ ── */
+  .logo-wrap {
+    display: flex;
+    align-items: center;
+    gap: clamp(10px, 3vw, 16px);
+    margin-bottom: clamp(16px, 4vw, 28px);
+    animation: fadeUp .6s .08s ease both;
+  }
+  .logo-icon {
+    width: clamp(44px, 10vw, 64px);
+    height: clamp(44px, 10vw, 64px);
+    background: linear-gradient(135deg, var(--peach), var(--orange));
+    border-radius: clamp(12px, 3vw, 20px);
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 6px 20px rgba(255,140,66,.38);
+    animation: float 3.5s ease-in-out infinite;
+    flex-shrink: 0;
+    will-change: transform;
+    transform: translateZ(0);
+    backface-visibility: hidden;
+  }
+  .logo-icon-svg {
+    width: 62%;
+    height: 62%;
+    display: block;
+  }
+  .logo-text {
+    font-family: 'Kaisei Opti', serif;
+    font-size: clamp(24px, 6vw, 44px);
+    font-weight: 700;
+    color: var(--brown);
+    letter-spacing: -.5px;
+    white-space: nowrap;
+  }
+  .logo-text span { color: var(--orange); }
+
+  /* ── タグライン ── */
+  .tagline {
+    font-family: 'Kaisei Opti', serif;
+    font-size: clamp(12px, 3.2vw, 16px);
+    font-weight: 400;
+    color: var(--brown-light);
+    margin-bottom: clamp(24px, 5vw, 40px);
+    letter-spacing: .04em;
+    animation: fadeUp .6s .15s ease both;
+    text-align: center;
+  }
+
+  /* ── メインタイトル ── */
+  .main-title {
+    font-family: 'Kaisei Opti', serif;
+    font-size: clamp(28px, 7.5vw, 64px);
+    font-weight: 700;
+    line-height: 1.25;
+    color: var(--brown);
+    text-align: center;
+    margin-bottom: clamp(16px, 3vw, 24px);
+    animation: fadeUp .6s .22s ease both;
+  }
+  .main-title .highlight {
+    color: var(--orange);
+    position: relative;
+    display: inline-block;
+  }
+  .main-title .highlight::after {
+    content: '';
+    position: absolute;
+    bottom: 2px; left: 0; right: 0;
+    height: clamp(6px, 1.5vw, 11px);
+    background: var(--yellow);
+    z-index: -1;
+    border-radius: 4px;
+    opacity: .55;
+  }
+
+  /* ── サブメッセージ ── */
+  .sub-msg {
+    font-size: clamp(13px, 3.5vw, 18px);
+    line-height: 1.9;
+    color: var(--brown-light);
+    text-align: center;
+    max-width: 520px;
+    width: 100%;
+    margin-bottom: clamp(32px, 6vw, 52px);
+    animation: fadeUp .6s .3s ease both;
+  }
+
+  /* ── リリースカード ── */
+  .release-card {
+    background: #fff;
+    border: 2px solid var(--beige-dark);
+    border-radius: clamp(20px, 5vw, 32px);
+    padding: clamp(24px, 6vw, 44px) clamp(20px, 8vw, 56px);
+    text-align: center;
+    box-shadow: 0 8px 40px rgba(139,94,60,.09);
+    margin-bottom: clamp(32px, 6vw, 52px);
+    animation: fadeUp .6s .38s ease both;
+    max-width: 480px;
+    width: 100%;
+  }
+  .release-label {
+    font-size: clamp(10px, 2.5vw, 12px);
+    font-weight: 700;
+    letter-spacing: .12em;
+    color: var(--orange);
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .release-date {
+    font-family: 'Kaisei Opti', serif;
+    font-size: clamp(22px, 6vw, 40px);
+    font-weight: 700;
+    color: var(--brown);
+    margin-bottom: 6px;
+    line-height: 1.15;
+  }
+  .release-divider {
+    width: 44px; height: 3px;
+    background: var(--orange);
+    border-radius: 2px;
+    margin: 14px auto;
+    opacity: .5;
+  }
+  .release-msg {
+    font-size: clamp(13px, 3.5vw, 16px);
+    color: var(--brown-light);
+    line-height: 1.8;
+  }
+  .heart {
+    display: inline-block;
+    color: var(--orange);
+    font-size: clamp(14px, 3.5vw, 18px);
+    animation: heartbeat 2s ease-in-out infinite;
+  }
+
+  /* ── カウントダウン ── */
+  .countdown-wrap {
+    display: flex;
+    gap: clamp(8px, 2vw, 16px);
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: clamp(18px, 4vw, 28px);
+  }
+  .count-box {
+    background: var(--beige);
+    border-radius: clamp(10px, 3vw, 16px);
+    padding: clamp(10px, 2.5vw, 16px) clamp(12px, 3vw, 22px);
+    min-width: clamp(56px, 14vw, 76px);
+    text-align: center;
+    flex: 1;
+    max-width: 90px;
+  }
+  .count-num {
+    font-family: 'Kaisei Opti', serif;
+    font-size: clamp(22px, 6vw, 32px);
+    font-weight: 700;
+    color: var(--orange);
+    line-height: 1;
+    display: block;
+  }
+  .count-label {
+    font-size: clamp(9px, 2.2vw, 11px);
+    color: var(--brown-light);
+    font-weight: 500;
+    margin-top: 4px;
+    display: block;
+    letter-spacing: .06em;
+  }
+
+  /* ── ファミリーチップ ── */
+  .family-row {
+    display: flex;
+    gap: clamp(8px, 2vw, 14px);
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-bottom: clamp(32px, 6vw, 52px);
+    animation: fadeUp .6s .46s ease both;
+    max-width: 560px;
+    width: 100%;
+  }
+  .fam-chip {
+    background: #fff;
+    border: 2px solid var(--beige-dark);
+    border-radius: 999px;
+    padding: clamp(7px, 2vw, 10px) clamp(12px, 3vw, 20px);
+    display: flex;
+    align-items: center;
+    gap: clamp(5px, 1.5vw, 8px);
+    font-size: clamp(12px, 3vw, 14px);
+    font-weight: 500;
+    color: var(--brown);
+    box-shadow: 0 2px 10px rgba(139,94,60,.07);
+    transition: transform .2s, box-shadow .2s, border-color .2s;
+    cursor: default;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .fam-chip:hover, .fam-chip:active {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(255,140,66,.2);
+    border-color: var(--orange);
+  }
+  .fam-chip .icon { font-size: clamp(16px, 4vw, 20px); }
+
+  /* ── スニークプレビュー ── */
+  .preview-label {
+    font-size: clamp(11px, 3vw, 13px);
+    font-weight: 500;
+    color: var(--brown-light);
+    margin-bottom: clamp(14px, 3vw, 20px);
+    text-align: center;
+    animation: fadeUp .6s .52s ease both;
+    letter-spacing: .04em;
+  }
+  .sneak-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: clamp(8px, 2vw, 14px);
+    max-width: 540px;
+    width: 100%;
+    margin-bottom: clamp(36px, 7vw, 56px);
+    animation: fadeUp .6s .58s ease both;
+  }
+  .sneak-card {
+    background: #fff;
+    border: 2px solid var(--beige-dark);
+    border-radius: clamp(14px, 4vw, 22px);
+    padding: clamp(14px, 4vw, 22px) clamp(8px, 2vw, 14px);
+    text-align: center;
+    transition: transform .2s, box-shadow .2s, border-color .2s;
+    cursor: default;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .sneak-card:hover, .sneak-card:active {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(255,140,66,.18);
+    border-color: var(--peach);
+  }
+  .sneak-card .s-icon {
+    font-size: clamp(22px, 5.5vw, 30px);
+    display: block;
+    margin-bottom: clamp(6px, 1.5vw, 10px);
+  }
+  .sneak-card .s-title {
+    font-size: clamp(10px, 2.5vw, 12px);
+    font-weight: 700;
+    color: var(--brown);
+    line-height: 1.4;
+  }
+  .sneak-card .s-tag {
+    display: inline-block;
+    margin-top: clamp(4px, 1vw, 6px);
+    font-size: clamp(9px, 2vw, 11px);
+    font-weight: 500;
+    background: var(--beige);
+    color: var(--brown-light);
+    padding: 2px 8px;
+    border-radius: 999px;
+  }
+
+  /* ── ティッカー（流れるテキスト） ── */
+  .ticker-wrap {
+    width: 100%;
+    overflow: hidden;
+    margin-bottom: clamp(28px, 5vw, 44px);
+    animation: fadeUp .6s .62s ease both;
+    mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+    -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+  }
+  .ticker-inner {
+    display: flex;
+    gap: 0;
+    width: max-content;
+    will-change: transform;
+    transform: translate3d(0, 0, 0);
+    backface-visibility: hidden;
+    contain: layout paint;
+  }
+  .ticker-segment {
+    display: flex;
+    flex-shrink: 0;
+  }
+  .ticker-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 0 28px;
+    font-size: clamp(12px, 3vw, 14px);
+    font-weight: 500;
+    line-height: 1.25;
+    color: var(--brown-light);
+    white-space: nowrap;
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    text-rendering: geometricPrecision;
+  }
+  .ticker-dot {
+    width: 5px; height: 5px;
+    background: var(--orange);
+    border-radius: 50%;
+    opacity: .6;
+    flex-shrink: 0;
+  }
+
+  /* ── フッター ── */
+  .footer-note {
+    font-size: clamp(11px, 2.8vw, 13px);
+    color: var(--brown-light);
+    text-align: center;
+    opacity: .75;
+    line-height: 1.8;
+    animation: fadeUp .6s .68s ease both;
+  }
+
+  /* ── スマホ専用調整 ── */
+  @media (max-width: 480px) {
+    .sneak-grid { grid-template-columns: repeat(2, 1fr); }
+    .badge { white-space: normal; text-align: center; justify-content: center; }
+  }
+
+  @media (max-width: 360px) {
+    .logo-text { font-size: 20px; }
+    .countdown-wrap { gap: 6px; }
+    .count-box { min-width: 48px; padding: 8px 6px; }
+  }
+
+  /* タッチデバイス: ホバーを無効化してtapを有効に */
+  @media (hover: none) {
+    .fam-chip:hover   { transform: none; box-shadow: 0 2px 10px rgba(139,94,60,.07); border-color: var(--beige-dark); }
+    .sneak-card:hover { transform: none; box-shadow: none; border-color: var(--beige-dark); }
+    .fam-chip:active   { transform: translateY(-2px); border-color: var(--orange); }
+    .sneak-card:active { transform: translateY(-2px); border-color: var(--peach); }
+  }
+
+  /* アクセシビリティ: モーション軽減 */
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: .01ms !important; }
+  }
+</style>
+</head>
+<body>
+
+<div class="blob blob1"></div>
+<div class="blob blob2"></div>
+<div class="blob blob3"></div>
+
+<main class="page">
+
+  <div class="badge">
+    <div class="badge-dot"></div>
+    AI = 愛 &mdash; 家族の幸せのために
+  </div>
+
+  <div class="logo-wrap">
+    <div class="logo-icon" aria-hidden="true">
+      <svg class="logo-icon-svg" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false">
+        <path d="M3 10.5L12 3L21 10.5V20a1 1 0 0 1-1 1h-5.5a.5.5 0 0 1-.5-.5V15a2 2 0 0 0-4 0v5.5a.5.5 0 0 1-.5.5H4a1 1 0 0 1-1-1v-9.5Z" fill="white"/>
+      </svg>
+    </div>
+    <div class="logo-text">family<span>ai</span>.jp</div>
+  </div>
+
+  <p class="tagline">家族みんなのAI活用メディア</p>
+
+  <h1 class="main-title">
+    AIで、家族が<br>
+    <span class="highlight">もっと笑顔に</span>。
+  </h1>
+
+  <p class="sub-msg">
+    難しくない。怖くない。<br>
+    パパも、ママも、子どもも、シニアも。<br>
+    家族全員が使えるAI活用法をお届けします。
+  </p>
+
+  <div class="release-card">
+    <div class="release-label">🗓 Release Date</div>
+    <div class="release-date">2026年 5月 8日</div>
+    <div class="release-divider"></div>
+    <div class="release-msg">
+      ただいま準備中です。<br>
+      もうしばらくお待ちください <span class="heart">♥</span>
+    </div>
+    <div class="countdown-wrap" aria-label="リリースまでのカウントダウン">
+      <div class="count-box">
+        <span class="count-num" id="cd-d">--</span>
+        <span class="count-label">日</span>
+      </div>
+      <div class="count-box">
+        <span class="count-num" id="cd-h">--</span>
+        <span class="count-label">時間</span>
+      </div>
+      <div class="count-box">
+        <span class="count-num" id="cd-m">--</span>
+        <span class="count-label">分</span>
+      </div>
+      <div class="count-box">
+        <span class="count-num" id="cd-s">--</span>
+        <span class="count-label">秒</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="family-row" role="list" aria-label="対応ロール一覧">
+    <div class="fam-chip" role="listitem"><span class="icon" aria-hidden="true">👨</span>パパ向け</div>
+    <div class="fam-chip" role="listitem"><span class="icon" aria-hidden="true">👩</span>ママ向け</div>
+    <div class="fam-chip" role="listitem"><span class="icon" aria-hidden="true">🧒</span>子ども向け</div>
+    <div class="fam-chip" role="listitem"><span class="icon" aria-hidden="true">👴</span>シニア向け</div>
+    <div class="fam-chip" role="listitem"><span class="icon" aria-hidden="true">🏠</span>共通ガイド</div>
+  </div>
+
+  <div class="ticker-wrap" aria-hidden="true">
+    <div class="ticker-inner" id="ticker">
+      <div class="ticker-segment" id="ticker-segment-a">
+        <div class="ticker-item"><div class="ticker-dot"></div>AI入門ガイド</div>
+        <div class="ticker-item"><div class="ticker-dot"></div>Excel自動化</div>
+        <div class="ticker-item"><div class="ticker-dot"></div>語学学習</div>
+        <div class="ticker-item"><div class="ticker-dot"></div>献立提案</div>
+        <div class="ticker-item"><div class="ticker-dot"></div>画像生成</div>
+        <div class="ticker-item"><div class="ticker-dot"></div>議事録作成</div>
+        <div class="ticker-item"><div class="ticker-dot"></div>宿題サポート</div>
+        <div class="ticker-item"><div class="ticker-dot"></div>スマホ活用</div>
+        <div class="ticker-item"><div class="ticker-dot"></div>健康相談</div>
+        <div class="ticker-item"><div class="ticker-dot"></div>家計管理</div>
+      </div>
+      <div class="ticker-segment" aria-hidden="true">
+        <div class="ticker-item"><div class="ticker-dot"></div>AI入門ガイド</div>
+        <div class="ticker-item"><div class="ticker-dot"></div>Excel自動化</div>
+        <div class="ticker-item"><div class="ticker-dot"></div>語学学習</div>
+        <div class="ticker-item"><div class="ticker-dot"></div>献立提案</div>
+        <div class="ticker-item"><div class="ticker-dot"></div>画像生成</div>
+        <div class="ticker-item"><div class="ticker-dot"></div>議事録作成</div>
+        <div class="ticker-item"><div class="ticker-dot"></div>宿題サポート</div>
+        <div class="ticker-item"><div class="ticker-dot"></div>スマホ活用</div>
+        <div class="ticker-item"><div class="ticker-dot"></div>健康相談</div>
+        <div class="ticker-item"><div class="ticker-dot"></div>家計管理</div>
+      </div>
+    </div>
+  </div>
+
+  <p class="preview-label">✨ こんなコンテンツをご用意しています</p>
+
+  <div class="sneak-grid" role="list" aria-label="コンテンツ一覧">
+    <div class="sneak-card" role="listitem">
+      <span class="s-icon" aria-hidden="true">💼</span>
+      <div class="s-title">仕事効率化</div>
+      <span class="s-tag">パパ向け</span>
+    </div>
+    <div class="sneak-card" role="listitem">
+      <span class="s-icon" aria-hidden="true">🍳</span>
+      <div class="s-title">家事・育児</div>
+      <span class="s-tag">ママ向け</span>
+    </div>
+    <div class="sneak-card" role="listitem">
+      <span class="s-icon" aria-hidden="true">📚</span>
+      <div class="s-title">勉強・学習</div>
+      <span class="s-tag">子ども向け</span>
+    </div>
+    <div class="sneak-card" role="listitem">
+      <span class="s-icon" aria-hidden="true">📱</span>
+      <div class="s-title">スマホ活用</div>
+      <span class="s-tag">シニア向け</span>
+    </div>
+    <div class="sneak-card" role="listitem">
+      <span class="s-icon" aria-hidden="true">🌏</span>
+      <div class="s-title">語学学習</div>
+      <span class="s-tag">全員向け</span>
+    </div>
+    <div class="sneak-card" role="listitem">
+      <span class="s-icon" aria-hidden="true">🎨</span>
+      <div class="s-title">AI画像生成</div>
+      <span class="s-tag">全員向け</span>
+    </div>
+  </div>
+
+  <p class="footer-note">
+    &copy; 2026 familyai.jp &nbsp;&mdash;&nbsp; AI = 愛<br>
+    家族の幸せのために、テクノロジーを人間の言葉で語る
+  </p>
+
+</main>
+
+<script>
+(function () {
+  var target = new Date('2026-05-08T00:00:00+09:00');
+
+  function pad(n) { return String(n).padStart(2, '0'); }
+
+  function tick() {
+    var now  = new Date();
+    var diff = target - now;
+
+    if (diff <= 0) {
+      ['cd-d','cd-h','cd-m','cd-s'].forEach(function(id){
+        document.getElementById(id).textContent = '00';
+      });
+      return;
+    }
+
+    var d = Math.floor(diff / 86400000);
+    var h = Math.floor((diff % 86400000) / 3600000);
+    var m = Math.floor((diff % 3600000)  / 60000);
+    var s = Math.floor((diff % 60000)    / 1000);
+
+    document.getElementById('cd-d').textContent = pad(d);
+    document.getElementById('cd-h').textContent = pad(h);
+    document.getElementById('cd-m').textContent = pad(m);
+    document.getElementById('cd-s').textContent = pad(s);
+  }
+
+  tick();
+  setInterval(tick, 1000);
+})();
+
+(function () {
+  var ticker = document.getElementById('ticker');
+  var firstSegment = document.getElementById('ticker-segment-a');
+  if (!ticker || !firstSegment) return;
+
+  var reducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reducedMotion) return;
+
+  var x = 0;
+  var last = performance.now();
+  var speed = 40; // px/sec
+  var cycleWidth = 0;
+
+  function measure() {
+    cycleWidth = Math.round(firstSegment.getBoundingClientRect().width);
+  }
+
+  function frame(now) {
+    var dt = (now - last) / 1000;
+    last = now;
+
+    x -= speed * dt;
+    if (cycleWidth > 0 && -x >= cycleWidth) x += cycleWidth;
+
+    var renderX = Math.round(x);
+    ticker.style.transform = 'translate3d(' + renderX + 'px,0,0)';
+    window.requestAnimationFrame(frame);
+  }
+
+  function onResize() {
+    measure();
+    if (cycleWidth > 0) {
+      var r = x % cycleWidth;
+      x = r > 0 ? r - cycleWidth : r;
+    }
+  }
+
+  window.addEventListener('resize', onResize);
+
+  function start() {
+    measure();
+    last = performance.now();
+    window.requestAnimationFrame(frame);
+  }
+
+  if (document.fonts && document.fonts.ready) {
+    document.fonts.ready.then(start);
+  } else {
+    start();
+  }
+})();
+</script>
+</body>
+</html>
