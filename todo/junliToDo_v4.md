@@ -1,8 +1,11 @@
 # junli ToDo — 人間がやること一覧
 
+> 最終更新: 2026-04-16（実装計画 v5 に合わせて更新）
+
 # かかった費用
 
 - DNS 設定費用　1356円 と Domain名費用：2,339円年間
+
 # familyai.jp プロジェクト
 
 > CodingAgent（Claude Code / Codex）に任せられない、
@@ -11,6 +14,10 @@
 ---
 
 ## ✅ 今すぐやること（2026年5月8日リリースまで）
+
+> ⚠️ 今日（4/16）時点で**残り22日**。
+> 外部サービスのアカウント未設定があると、CodingAgent の実装が止まります。
+> 「🔥 今週中」タスクを最優先で片付けてください。
 
 ---
 
@@ -40,6 +47,7 @@
 
 ### 1. ドメイン・DNS設定（お名前ドットコム専用手順）
 **所要時間: 約30分**
+**状態: 設定済み・Vercel Refresh 待ち（途中）**
 
 #### STEP 1: Vercel でドメインを追加してDNS値を確認する
 1. https://vercel.com にログイン
@@ -104,19 +112,38 @@ https://vercel.com/utafamily/familyai-jp/settings/domains
 
 ### 2. Vercel アカウント作成・プロジェクト設定
 **所要時間: 約20分**
+**状態: アカウント作成・プロジェクト設定済み ✅ / 環境変数は順次追加中**
+
 #### 手順
 1. https://vercel.com にアクセス
 2. 「Sign Up」→ GitHub アカウントでログイン（GitHubがない場合は先に作成）
 3. 「New Project」→ GitHubリポジトリと連携
 4. Hobby プラン（無料）で開始
 5. Environment Variables（環境変数）画面で以下を入力
-   ```
-   DATABASE_URL          = （Neonから取得）
-   NEXTAUTH_SECRET       = （下記コマンドで生成）
-   NEXTAUTH_URL          = https://familyai.jp
-   BLOB_READ_WRITE_TOKEN = （Vercel Blobから取得）
-   ```
-   ※ NEXTAUTH_SECRET の生成コマンド（ターミナルで実行）:
+
+   #### 必須環境変数チェックリスト（実装完走に必要なすべて）
+
+   | 変数名 | 取得元 | 状態 |
+   |--------|--------|------|
+   | `DATABASE_URL` | Neon PostgreSQL | ⚠️ 未設定 |
+   | `NEXTAUTH_SECRET` | ターミナルで生成（下記） | ⚠️ 未設定 |
+   | `NEXTAUTH_URL` | 固定値 `https://familyai.jp` | ⚠️ 未設定 |
+   | `GOOGLE_CLIENT_ID` | Google Cloud Console | ⚠️ 未設定 |
+   | `GOOGLE_CLIENT_SECRET` | Google Cloud Console | ⚠️ 未設定 |
+   | `BLOB_READ_WRITE_TOKEN` | Vercel Blob（Marketplace） | ⚠️ 未設定 |
+   | `UPSTASH_REDIS_REST_URL` | Upstash | ⚠️ 未設定 |
+   | `UPSTASH_REDIS_REST_TOKEN` | Upstash | ⚠️ 未設定 |
+   | `OPENROUTER_API_KEY` | OpenRouter | ⚠️ 未設定 |
+   | `OPENROUTER_BASE_URL` | 固定値 `https://openrouter.ai/api/v1` | ⚠️ 未設定 |
+   | `OPENROUTER_APP_URL` | 固定値 `https://familyai.jp` | ⚠️ 未設定 |
+   | `OPENROUTER_APP_NAME` | 固定値 `familyai.jp` | ⚠️ 未設定 |
+   | `NEXT_PUBLIC_API_URL` | 固定値 `https://familyai.jp` | ⚠️ 未設定 |
+   | `NEXT_PUBLIC_GA_ID` | Google Analytics | ⚠️ 未設定（Step 8 完了後） |
+   | `VOICEVOX_API_BASE` | Voicevox サーバー | — MVP では任意 |
+
+   > ✅ 固定値の変数は下記コマンドを使わず、そのままコピペしてOK。
+
+   ※ `NEXTAUTH_SECRET` の生成コマンド（ターミナルで実行）:
    ```bash
    openssl rand -base64 32
    ```
@@ -313,6 +340,25 @@ https://vercel.com/utafamily/familyai-jp/settings/domains
 5. ファイル名を `og-default.png` にリネーム
 6. プロジェクトの `public/og-default.png` に配置
    （CodingAgentに「public/に配置して」と伝える）
+
+---
+
+### 5c-2. OGP 用日本語フォントファイルの配置
+**所要時間: 約5分**
+**状態: 未着手**
+
+> `/api/og` の動的OGP画像に日本語を表示するために必要。
+> フォントがないと日本語が文字化けします。
+
+#### 手順
+1. Google Fonts から `Noto Sans JP Bold`（TTF形式）をダウンロード
+   - https://fonts.google.com/noto/specimen/Noto+Sans+JP → 「Download family」
+   - ダウンロードした ZIP を解凍 → `NotoSansJP-Bold.ttf` を探す
+2. プロジェクトの `public/fonts/NotoSansJP-Bold.ttf` に配置
+3. CodingAgent に「public/fonts/ に NotoSansJP-Bold.ttf を配置しました」と伝える
+   （CodingAgent が `/api/og/route.tsx` でこのファイルを参照します）
+
+> ⚠️ このファイルは約 4MB あります。Git にコミットして問題ありません（Vercel の静的ファイルとして配信）。
 
 ---
 
@@ -551,45 +597,101 @@ App Manager（アプリの提出・審査提出が可能）
 
 ---
 
-## ⚡ 今日からの優先順序（最新版）
+## ⚡ 今日からの優先順序（2026-04-16 更新版）
+
+> 残り **22日**（〜5月8日）。CodingAgent はすでにコーディング待機中。
+> 環境変数が揃わないとステップが進められない。最優先で対応を。
 
 ```
 ✅ 完了済み:
-  ① Vercel アカウント作成・プロジェクト設定
-  ② ドメイン取得（familyai.jp / お名前ドットコム）
-  ③ DNS設定（Aレコード・CNAMEレコード）← 途中
-  ④ SSL/HTTPS 有効化確認 ✅
+  ① Vercel アカウント作成・プロジェクト設定 ✅
+  ② ドメイン取得（familyai.jp / お名前ドットコム） ✅
+  ③ DNS設定（Aレコード・CNAMEレコード）✅（Vercel Refresh 待ち）
+  ④ SSL/HTTPS 有効化確認 ✅（2026-04-15）
 
-🔥 今週中に完了（〜4月20日）:
-  ⑤ DNS Refresh確認（Vercelダッシュボードで ✅ になるまで待つ）
-     証跡: Vercel Domains画面のスクリーンショット
-  ⑥ OpenRouter APIキー取得・Vercel環境変数に設定【今日中に着手推奨】
-     証跡: 環境変数名 OPENROUTER_API_KEY が Vercel に追加されたことを確認
-     ⚠️ これがないとAI機能が全部動かない。最優先。
-  ⑦ Neon PostgreSQL セットアップ・DATABASE_URL設定
-     証跡: 環境変数名 DATABASE_URL が Vercel に追加されたことを確認
+🔥 今週中に完了（〜4月20日）★最優先★:
+  ⑤ DNS Refresh 最終確認（Vercelダッシュボードで ✅ になるまで待つ）
+     確認URL: https://vercel.com/utafamily/familyai-jp/settings/domains
+     証跡: Vercel Domains 画面の ✅ スクリーンショット
 
-📅 来週中に完了（〜4月30日）:
-  ⑧ Google OAuth クライアントID・シークレット設定
-     証跡: 環境変数名 GOOGLE_CLIENT_ID / GOOGLE_CLIENT_SECRET が設定済み
-  ⑨ Upstash Redis セットアップ（レート制限用）
-     証跡: 環境変数名 UPSTASH_REDIS_REST_URL / TOKEN が設定済み
-  ⑩ OGP デフォルト画像作成（Canvaで1200×630px）
+  ⑥ OpenRouter APIキー取得・Vercel環境変数に4件設定【今日中に着手推奨】
+     設定する変数:
+       OPENROUTER_API_KEY=（発行したキー）
+       OPENROUTER_BASE_URL=https://openrouter.ai/api/v1
+       OPENROUTER_APP_URL=https://familyai.jp
+       OPENROUTER_APP_NAME=familyai.jp
+     ⚠️ これがないと /api/ai が一切動かない。CodingAgent のStep 17 が完成しない。
+
+  ⑦ Neon PostgreSQL セットアップ・DATABASE_URL 設定
+     設定する変数: DATABASE_URL=（Neon接続文字列）
+     ⚠️ これがないと DB マイグレーション（Step 04）が走らない。
+
+  ⑧ NEXTAUTH_SECRET と NEXTAUTH_URL を設定（⚠️ 計画書 v4 から追加）
+     設定する変数:
+       NEXTAUTH_SECRET=（openssl rand -base64 32 で生成）
+       NEXTAUTH_URL=https://familyai.jp
+     ⚠️ 認証機能（ログイン）が動かない。Step 19 が完成しない。
+
+  ⑨ NEXT_PUBLIC_API_URL を設定（⚠️ 計画書 v5 で新規追加）
+     設定する変数: NEXT_PUBLIC_API_URL=https://familyai.jp
+     ⚠️ shared/api/ のフロントエンドから API 呼び出しが全て失敗する。
+
+📅 来週中に完了（〜4月27日）:
+  ⑩ Google OAuth クライアントID・シークレット設定
+     設定する変数: GOOGLE_CLIENT_ID・GOOGLE_CLIENT_SECRET
+     証跡: 環境変数が設定済み・/auth/signin で Google ボタンが表示される
+
+  ⑪ Upstash Redis セットアップ（レート制限用）
+     設定する変数: UPSTASH_REDIS_REST_URL・UPSTASH_REDIS_REST_TOKEN
+     ⚠️ これがないと /api/ai のレート制限が機能しない（Step 17）
+
+  ⑫ Vercel Blob セットアップ
+     設定する変数: BLOB_READ_WRITE_TOKEN（Vercel Marketplace から自動追加）
+     ⚠️ 音声ファイルのアップロードに必要（Step 13）
+
+  ⑬ OGP デフォルト画像作成（Canvaで1200×630px → public/og-default.png）
      証跡: public/og-default.png がリポジトリに追加済み
-  ⑪ 初期記事10本・語学音声MP3の執筆・録音開始【⚠️ 並行して今週から着手】
-     ⚠️ コンテンツ準備は時間がかかる。5月8日直前に回すと間に合わないリスクが高い。
-     目安: 4月末までに10本分の下書きと音声素材を揃える。
+
+  ⑭ OGP 用日本語フォント配置（⚠️ 計画書 v5 で新規追加）
+     手順: Google Fonts から NotoSansJP-Bold.ttf をダウンロード → public/fonts/ に配置
+     ⚠️ これがないと /api/og の日本語が文字化けする
+
+  ⑮ 初期記事10本・語学音声MP3の執筆・録音開始【⚠️ 並行して今週から着手】
+     ⚠️ コンテンツ準備は時間がかかる。4月末までに下書きと音声素材を揃えること。
      証跡: 原稿ファイルと音声MP3ファイルが手元に揃っていること
 
-📅 5月8日直前までに完了:
-  ⑫ プライバシーポリシー・利用規約の内容確認・修正
-     証跡: /privacy と /terms が familyai.jp で表示できる
-  ⑬ Vercel Blob に音声MP3ファイルをアップロード
+📅 5月1日〜8日（最終週）に完了:
+  ⑯ Google Analytics 測定ID取得・NEXT_PUBLIC_GA_ID 設定
+     証跡: 環境変数 NEXT_PUBLIC_GA_ID が設定済み
+
+  ⑰ Google Search Console 登録・sitemap.xml 送信
+     証跡: サイトマップが送信済み
+
+  ⑱ プライバシーポリシー・利用規約の内容確認・修正
+     証跡: /privacy と /terms が familyai.jp で表示できる・内容を自分で確認済み
+
+  ⑲ Vercel Blob に音声MP3ファイルをアップロード・DBにURL登録
      証跡: Vercel Blob に音声ファイルがアップロード済み・DBにURL登録済み
 ```
 
 > 💡 各タスクが完了したら、証跡（スクリーンショットのURL・環境変数名）を
 > このToDo ファイルに書き込んでおくと、後から確認しやすくなります。
+
+---
+
+## ⚠️ リスク一覧（2026-04-16 時点）
+
+| リスク | 重要度 | 対策 |
+|--------|--------|------|
+| 外部サービス未設定（Neon・Google OAuth・Upstash・OpenRouter） | **高** | 今週中（〜4/20）に⑥〜⑨を完了 |
+| 初期記事・音声素材が未準備 | **高** | 今日から並行して執筆・録音開始 |
+| 残り22日でフルスタック実装 | **高** | 環境変数を揃えてCodingAgentを止めない |
+| NextAuth v5 beta の破壊的変更 | 中 | `5.0.0-beta.25` 以降でバージョン固定 |
+| DNS Refresh がまだ途中 | 中 | Vercel Domains 画面で ✅ になるまで待機 |
+| Vercel Blob 音声配信コスト増 | 中 | 利用量アラートを設定・適切なビットレートで録音 |
+| og-default.png 未作成 | 中 | ⑬で4月末までに対応 |
+| NotoSansJP-Bold.ttf 未配置 | 中 | ⑭で対応（5分作業） |
+| プライバシーポリシー法務確認 | 低 | テンプレートはCodingAgentが作成・junliさんが最終確認 |
 
 ---
 

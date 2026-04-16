@@ -2,49 +2,53 @@
 
 ## 2026/5/8 までの実行整理（進捗テーブル）
 
-| タスク（1行1タスク）                                                   | 担当        | 期限           | 状態  |
-| ------------------------------------------------------------- | --------- | ------------ | --- |
-| Step 00: Skills `frontend-design` を読み込みデザイン方針を確定              | Codex     | 2026-05-08まで | 未着手 |
-| Step 01: Next.js + TypeScript + Tailwind + shadcn/ui を初期設定   | Codex     | 2026-05-08まで | 未完了 |
-| Step 01b: `shared/`（types/constants/utils/api）を作成             | Codex     | 2026-05-08まで | 未完了 |
-| Step 02: `globals.css` にCSS変数/アニメーション/ノイズ背景を実装                | Codex     | 2026-05-08まで | 未完了 |
-| Step 03: `tailwind.config.ts` にブランドカラー/フォント変数を追加               | Codex     | 2026-05-08まで | 未着手 |
-| Step 04: Drizzle + Neon 接続と `schema.ts` とマイグレーションを実装          | Codex     | 2026-05-08まで | 未着手 |
-| Step 05: `Header.tsx` `Footer.tsx` `MobileNav.tsx` を実装         | Codex     | 2026-05-08まで | 未着手 |
-| Step 06: `app/layout.tsx` にフォント/メタデータ/スクロール演出を実装              | Codex     | 2026-05-08まで | 未着手 |
-| Step 07: `HeroSection.tsx`（blob背景+家族カード）を実装                   | Codex     | 2026-05-08まで | 未着手 |
-| Step 08: `RolePicker.tsx` `CategoryFilter.tsx` を実装             | Codex     | 2026-05-08まで | 未着手 |
-| Step 09: `ArticleCard.tsx` `ArticleGrid.tsx` を実装               | Codex     | 2026-05-08まで | 未着手 |
-| Step 10: `app/(site)/learn/page.tsx`（一覧/フィルタ）を実装              | Codex     | 2026-05-08まで | 未着手 |
-| Step 11: `app/(site)/learn/[slug]/page.tsx`（詳細+JSON-LD）を実装    | Codex     | 2026-05-08まで | 未着手 |
-| Step 12: `AudioPlayer.tsx`（速度/リピート/シーク）を実装                    | Codex     | 2026-05-08まで | 未着手 |
-| Step 13: `/api/audio` をVercel Blob署名URL方式で実装                  | Codex     | 2026-05-08まで | 未着手 |
-| Step 13b: `/api/articles` をページネーション/ソート/閲覧数仕様で実装              | Codex     | 2026-05-08まで | 未着手 |
-| Step 14: `/common` `/about` `/privacy` `/terms` を実装           | Codex     | 2026-05-08まで | 未着手 |
-| Step 15: `/api/og`（@vercel/og）を実装                             | Codex     | 2026-05-08まで | 未着手 |
-| Step 16: `sitemap` `robots` SEOメタデータ JSON-LD を実装              | Codex     | 2026-05-08まで | 未着手 |
-| Step 17: Upstash Redis でレート制限を実装                              | Codex     | 2026-05-08まで | 未着手 |
-| Step 18: `loading.tsx` `error.tsx` `not-found.tsx` を実装         | Codex     | 2026-05-08まで | 未着手 |
-| Step 19: `lib/db/seed.ts` で初期データを投入                            | Codex     | 2026-05-08まで | 未着手 |
-| Step 22: Vercelデプロイ最終確認と環境変数反映を実施                              | Codex     | 2026-05-08まで | 未着手 |
-| `runVoicevox` のダミー応答を実際のTTS呼び出しへ置換                            | Codex     | 2026-05-08まで | 未着手 |
-| `seedArticles` 依存を Drizzle + Neon のDB取得へ置換                    | Codex     | 2026-05-08まで | 未着手 |
-| NextAuth v5（Google + Credentials）を本番接続                        | Codex     | 2026-05-08まで | 未着手 |
-| OpenRouter の用途別処理（画像/音声/文字起こし）を実運用検証して調整                     | Codex     | 2026-05-08まで | 未完了 |
-| Vercel・Neon・GitHub の各アカウント作成を完了                                | 人間（junli） | 2026-05-08まで | 未着手 |
-| OpenRouter でAPIキーを発行し `OPENROUTER_API_KEY` を設定                | 人間（junli） | 2026-05-08まで | 未着手 |
-| `OPENROUTER_APP_URL` と `OPENROUTER_APP_NAME` を本番値で設定          | 人間（junli） | 2026-05-08まで | 未着手 |
-| （Voicevox直結を使う場合のみ）`VOICEVOX_API_BASE` を設定                    | 人間（junli） | 2026-05-08まで | 未着手 |
-| Neon接続文字列 `DATABASE_URL` を設定                                  | 人間（junli） | 2026-05-08まで | 未着手 |
-| Google OAuth クライアント情報を設定（`GOOGLE_CLIENT_ID/SECRET`）           | 人間（junli） | 2026-05-08まで | 未着手 |
-| Upstash Redis を作成し `UPSTASH_REDIS_REST_URL/TOKEN` を設定         | 人間（junli） | 2026-05-08まで | 未着手 |
-| `public/og-default.png` を作成して配置する                              | 人間（junli） | 2026-05-08まで | 未着手 |
-| `https://familyai.jp/privacy` と `/terms` の法務文言を最終確認            | 人間（junli） | 2026-05-08まで | 未着手 |
-| 初期記事10本と語学音声MP3素材を準備し入稿可能状態にする                                | 人間（junli） | 2026-05-08まで | 未着手 |
-| Google Search Console 登録と `sitemap.xml` 送信を完了                 | 人間（junli） | 2026-05-08まで | 未着手 |
-| Google Analytics の測定ID発行と `NEXT_PUBLIC_GA_ID` 設定を完了           | 人間（junli） | 2026-05-08まで | 未着手 |
-| ドメイン/DNS 設定を完了（Vercel Refresh待ち）                           | 人間（junli） | 2026-04-14   | 途中 |
-| SSL/HTTPS 有効化確認を完了                                            | 人間（junli） | 2026-04-15   | ✅完了 |
+> 最終更新: 2026-04-16（推定時間列を追加）
+
+| タスク（1行1タスク）                                                                                                                           | 担当          | 期限           | 推定時間 | 依存                                                                     | 状態  |
+| ------------------------------------------------------------------------------------------------------------------------------------- | ----------- | ------------ | ---- | ---------------------------------------------------------------------- | --- |
+| Step 00: Skills `frontend-design` を読み込みデザイン方針を確定・`index.html` デザイン確認                                                                  | CodingAgent | 2026-05-08まで | —    | —                                                                      | ✅完了 |
+| Step 01: Next.js + TypeScript + Tailwind + shadcn/ui を初期設定・`.env.local.example` 作成                                                    | CodingAgent | 2026-05-08まで | 30分  | —                                                                      | 未着手 |
+| Step 01b: `shared/`（types/constants/utils/api）を作成                                                                                     | CodingAgent | 2026-05-08まで | 40分  | —                                                                      | 未着手 |
+| Step 02: `globals.css` にCSS変数/全アニメーション/ノイズ背景/`prose-warm`/`reveal`クラスを実装                                                              | CodingAgent | 2026-05-08まで | 30分  | —                                                                      | 未着手 |
+| Step 03: `tailwind.config.ts` にブランドカラー/フォント変数を追加                                                                                      | CodingAgent | 2026-05-08まで | 20分  | —                                                                      | 未着手 |
+| Step 04: Drizzle + Neon 接続と `schema.ts` `drizzle.config.ts` とマイグレーションを実装                                                              | CodingAgent | 2026-05-08まで | 40分  | Todo07                                                                 | 未着手 |
+| Step 05: `Header.tsx` `Footer.tsx` `MobileNav.tsx` を実装                                                                                | CodingAgent | 2026-05-08まで | 60分  | —                                                                      | 未着手 |
+| Step 06: `app/layout.tsx` にフォント/メタデータ/スクロール演出を実装・`hooks/useScrollReveal.ts` 作成・`next.config.ts` セキュリティヘッダー追加                          | CodingAgent | 2026-05-08まで | 30分  | —                                                                      | 未着手 |
+| Step 07: `HeroSection.tsx`（blob背景+家族カード）を実装                                                                                           | CodingAgent | 2026-05-08まで | 60分  | —                                                                      | 未着手 |
+| Step 07c: `app/(site)/page.tsx`（トップページ）を組み立て・`StatsRow.tsx` を実装（⚠️ 旧版に欠番）                                                             | CodingAgent | 2026-05-08まで | 30分  | —                                                                      | 未着手 |
+| Step 08: `RolePicker.tsx` `CategoryFilter.tsx` を実装                                                                                    | CodingAgent | 2026-05-08まで | 40分  | —                                                                      | 未着手 |
+| Step 09: `ArticleCard.tsx` `ArticleGrid.tsx` を実装                                                                                      | CodingAgent | 2026-05-08まで | 40分  | —                                                                      | 未着手 |
+| Step 10: `app/(site)/learn/page.tsx`（一覧/フィルタ）を実装                                                                                      | CodingAgent | 2026-05-08まで | 40分  | Todo07                                                                 | 未着手 |
+| Step 11: `app/(site)/learn/[slug]/page.tsx`（詳細+JSON-LD）を実装・`ArticleBody.tsx` `AIChatWidget.tsx` を追加                                   | CodingAgent | 2026-05-08まで | 60分  | Todo07                                                                 | 未着手 |
+| Step 12: `AudioPlayer.tsx`（速度/リピート/シーク/transcript表示）を実装                                                                               | CodingAgent | 2026-05-08まで | 50分  | —                                                                      | 未着手 |
+| Step 13: `/api/audio` をVercel Blob署名URL方式で実装・再生カウント重複防止（`/api/audio/play`）を追加                                                         | CodingAgent | 2026-05-08まで | 40分  | Todo01, Todo09                                                         | 未着手 |
+| Step 13b: `/api/articles` をページネーション/ソート/閲覧数仕様で実装                                                                                      | CodingAgent | 2026-05-08まで | 40分  | Todo07                                                                 | 未着手 |
+| Step 14: `/common` `/about` `/privacy` `/terms` を実装                                                                                   | CodingAgent | 2026-05-08まで | 40分  | —                                                                      | 未着手 |
+| Step 15: `/api/og`（@vercel/og・日本語フォント対応）を実装                                                                                           | CodingAgent | 2026-05-08まで | 30分  | Todo11                                                                 | 未着手 |
+| Step 16: `sitemap.ts` `robots.ts` SEOメタデータ JSON-LD を実装                                                                                | CodingAgent | 2026-05-08まで | 20分  | Todo07                                                                 | 未着手 |
+| Step 17: Upstash Redis でレート制限・`lib/ai/router.ts`・`lib/ai/providers/openrouter.ts`・`lib/csrf.ts` を実装・`runVoicevox` ダミー応答を実際のTTS呼び出しへ置換 | CodingAgent | 2026-05-08まで | 60分  | Todo02, Todo03, Todo09                                                 | 未着手 |
+| Step 18: `loading.tsx` `error.tsx` `not-found.tsx` を実装（全階層）                                                                           | CodingAgent | 2026-05-08まで | 30分  | —                                                                      | 未着手 |
+| Step 19: `lib/db/seed.ts` で初期データ投入・`lib/auth.ts`（NextAuth v5）実装・`/auth/signin` `/auth/register` 作成・`seedArticles` 依存をDB取得へ置換          | CodingAgent | 2026-05-08まで | 60分  | Todo07, Todo08                                                         | 未着手 |
+| Step 22: Vercelデプロイ最終確認・環境変数反映・Google Analytics 設定・OpenRouter 用途別処理の実運用検証                                                             | CodingAgent | 2026-05-08まで | 30分  | Todo02, Todo03, Todo04, Todo05, Todo07, Todo08, Todo09, Todo15, Todo16 | 未着手 |
+| **Todo01**: Vercel・Neon・GitHub の各アカウント作成を完了                                                                                           | 人間（junli）   | 2026-05-08まで | —    | —                                                                      | ✅完了 |
+| **Todo02**: OpenRouter でAPIキーを発行し `OPENROUTER_API_KEY` を設定                                                                            | 人間（junli）   | 2026-05-08まで | —    | —                                                                      | 未着手 |
+| **Todo03**: `OPENROUTER_APP_URL` と `OPENROUTER_APP_NAME` を本番値で設定                                                                      | 人間（junli）   | 2026-05-08まで | —    | —                                                                      | 未着手 |
+| **Todo04**: `NEXTAUTH_SECRET` を生成し・`NEXTAUTH_URL` を本番値で設定                                                                             | 人間（junli）   | 2026-05-08まで | —    | —                                                                      | 未着手 |
+| **Todo05**: `NEXT_PUBLIC_API_URL` を本番値で設定                                                                                             | 人間（junli）   | 2026-05-08まで | —    | —                                                                      | 未着手 |
+| **Todo06**: （Voicevox直結を使う場合のみ）`VOICEVOX_API_BASE` を設定                                                                                | 人間（junli）   | 2026-05-08まで | —    | —                                                                      | 未着手 |
+| **Todo07**: Neon接続文字列 `DATABASE_URL` を設定                                                                                              | 人間（junli）   | 2026-05-08まで | —    | —                                                                      | 未着手 |
+| **Todo08**: Google OAuth クライアント情報を設定（`GOOGLE_CLIENT_ID/SECRET`）                                                                       | 人間（junli）   | 2026-05-08まで | —    | —                                                                      | 未着手 |
+| **Todo09**: Upstash Redis を作成し `UPSTASH_REDIS_REST_URL/TOKEN` を設定                                                                     | 人間（junli）   | 2026-05-08まで | —    | —                                                                      | 未着手 |
+| **Todo10**: `public/og-default.png` を作成して配置する（Canva 1200×630px）                                                                       | 人間（junli）   | 2026-05-08まで | —    | —                                                                      | 未着手 |
+| **Todo11**: `public/fonts/NotoSansJP-Bold.ttf` を配置する（OGP日本語表示に必須）                                                                     | 人間（junli）   | 2026-05-08まで | —    | —                                                                      | 未着手 |
+| **Todo12**: `https://familyai.jp/privacy` と `/terms` の法務文言を最終確認                                                                       | 人間（junli）   | 2026-05-08まで | —    | —                                                                      | 未着手 |
+| **Todo13**: 初期記事10本と語学音声MP3素材を準備し入稿可能状態にする                                                                                            | 人間（junli）   | 2026-05-08まで | —    | —                                                                      | 未着手 |
+| **Todo14**: Google Search Console 登録と `sitemap.xml` 送信を完了                                                                             | 人間（junli）   | 2026-05-08まで | —    | —                                                                      | 未着手 |
+| **Todo15**: Google Analytics の測定ID発行と `NEXT_PUBLIC_GA_ID` 設定を完了                                                                       | 人間（junli）   | 2026-05-08まで | —    | —                                                                      | 未着手 |
+| **Todo16**: ドメイン/DNS 設定を完了（Vercel Refresh待ち）                                                                                          | 人間（junli）   | 2026-04-14   | —    | —                                                                      | 途中  |
+| **Todo17**: SSL/HTTPS 有効化確認を完了                                                                                                        | 人間（junli）   | 2026-04-15   | —    | —                                                                      | ✅完了 |
+
+> **CodingAgent 合計推定時間: 約 870分（14.5時間）**
 
 ## あなたの役割
 
