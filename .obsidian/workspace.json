@@ -11,10 +11,14 @@
             "id": "99561ed37d359016",
             "type": "leaf",
             "state": {
-              "type": "empty",
-              "state": {},
+              "type": "markdown",
+              "state": {
+                "file": "todo/junliToDo_v4.md",
+                "mode": "source",
+                "source": false
+              },
               "icon": "lucide-file",
-              "title": "新規タブ"
+              "title": "junliToDo_v4"
             }
           }
         ]
@@ -74,7 +78,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 200
+    "width": 349.5
   },
   "right": {
     "id": "57a3e054ad487534",
@@ -181,47 +185,51 @@
   },
   "active": "99561ed37d359016",
   "lastOpenFiles": [
+    "index_files/css2",
+    "index_files",
+    "todo/familyai_coding_agent_v5.md",
+    "!Backup/familyai_coding_agent_v4.md",
+    "res/Gemini_Generated_Image_yy3686yy3686yy36.png",
+    "todo/junliToDo_v4.md",
+    "todo/index.html",
+    "todo/familyai_coding_agent_v4.md",
+    "todo",
+    "study/Memo.md",
+    "study",
+    "Todo/junliToDo_v4.md",
+    "Todo/index.html",
+    "Todo/familyai_coding_agent_v5.md",
+    "Todo/familyai_coding_agent_v4.md",
+    "Todo",
+    "res/Gemini_Generated_Image_d41k0nd41k0nd41k.png",
+    "res/gemini-svg.svg",
+    "res/familyai_x_banner_7.svg",
+    "res/familyai_x_banner_7.png",
+    "res/familyai_x_banner_7.svg.sb-599e1ed2-o7TyBW",
+    "Study/Memo.md",
+    "res",
+    "!Backup/Pasted image 20260416194856.png",
+    "Study",
     "files/junliToDo_v4.md",
     "files/familyai_coding_agent_v5.md",
     "files/index.html",
     "files/familyai_coding_agent_v4.md",
-    "files",
     "!Backup/junliToDo_v3.md",
     "!Backup/junliToDo_v2.md",
-    "!Backup/files_v4.zip",
     "!Backup/familyai_coding_agent_v3.md",
-    "!Backup/files.zip",
     "!Backup/familyai_coding_agent_v2.md",
-    "!Backup",
     "README.md",
-    "LICENSE",
-    "index.html",
     "familyai.jp/files/junliToDo_v4.md",
-    "familyai.jp/files/index.html",
     "familyai.jp/files/familyai_coding_agent_v5.md",
     "familyai.jp/files/familyai_coding_agent_v4.md",
-    "familyai.jp/files",
     "familyai.jp/!Backup/junliToDo_v3.md",
     "familyai.jp/!Backup/junliToDo_v2.md",
-    "familyai.jp/!Backup/files_v4.zip",
     "familyai.jp/!Backup/familyai_coding_agent_v3.md",
     "familyai.jp/!Backup/familyai_coding_agent_v2.md",
     "familyai.jp/README.md",
-    "files/familyai_coding_agent_v2.md",
-    "files/junliToDo_v3.md",
-    "files/junliToDo_v2.md",
-    "files/familyai_coding_agent_v3.md",
-    "web/node_modules/next/dist/compiled/@babel/runtime/README.md",
-    "web/node_modules/next/dist/compiled/regenerator-runtime/README.md",
-    "web/node_modules/next/dist/compiled/react-is/README.md",
-    "web/node_modules/next/dist/compiled/react-refresh/README.md",
-    "web/node_modules/@typescript-eslint/typescript-estree/node_modules/semver/README.md",
     "web/public/window.svg",
     "web/public/vercel.svg",
     "web/public/next.svg",
-    "web/public/globe.svg",
-    "web/public/file.svg",
-    "Pasted image 20260414181604.png",
-    "Pasted image 20260414181452.png"
+    "web/public/globe.svg"
   ]
 }

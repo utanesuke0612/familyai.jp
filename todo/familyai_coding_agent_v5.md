@@ -43,8 +43,8 @@
 | 初期記事10本と語学音声MP3素材を準備し入稿可能状態にする                                | 人間（junli） | 2026-05-08まで | 未着手 |
 | Google Search Console 登録と `sitemap.xml` 送信を完了                 | 人間（junli） | 2026-05-08まで | 未着手 |
 | Google Analytics の測定ID発行と `NEXT_PUBLIC_GA_ID` 設定を完了           | 人間（junli） | 2026-05-08まで | 未着手 |
-| ドメイン/DNS 設定を完了                                                | 人間（junli） | 2026-04-14   | 未完了 |
-| SSL/HTTPS 有効化確認を完了                                            | 人間（junli） | 2026-04-15   | 未完了 |
+| ドメイン/DNS 設定を完了（Vercel Refresh待ち）                           | 人間（junli） | 2026-04-14   | 途中 |
+| SSL/HTTPS 有効化確認を完了                                            | 人間（junli） | 2026-04-15   | ✅完了 |
 
 ## あなたの役割
 
@@ -60,7 +60,6 @@
 
 ```
 Skills名: frontend-design
-場所：C:\Users\jun.li\.claude\plugins\cache\claude-plugins-official\frontend-design\unknown\skills\frontend-design
 ```
 
 **読み込みタイミング（厳守）:**
@@ -127,7 +126,7 @@ Skills名: frontend-design
 
 ### デザイン参照元（index.htmlを基準に統一）
 
-`/files/index.html` は **familyai.jp の公式デザインリファレンス（正）** とする。  
+`/todo/index.html`（リポジトリルートからの相対パス）は **familyai.jp の公式デザインリファレンス（正）** とする。  
 今後作成する全ページ（トップ以外も含む）は、以下を `index.html` に合わせて実装すること。
 
 1. **フォント統一**: Kaisei Opti（見出し）+ Zen Maru Gothic（本文）を維持する  
@@ -639,18 +638,10 @@ export function ArticleCard({ article }: Props) {
 
 ```typescript
 // lib/db/schema.ts
-
-export const ROLES = ['papa', 'mama', 'kids', 'senior', 'common'] as const;
-export type Role = typeof ROLES[number];
-
-export const CATEGORIES = [
-  'office', 'design', 'language', 'study',
-  'cooking', 'money', 'health', 'writing', 'basic',
-] as const;
-export type Category = typeof CATEGORIES[number];
-
-export const LEVELS = ['beginner', 'intermediate', 'advanced'] as const;
-export type Level = typeof LEVELS[number];
+// ⚠️ ROLES / CATEGORIES / LEVELS の定義は shared/ 層が唯一の正とする。
+// ここでは shared/ からimportすること。直接定義しないこと（二重管理防止）。
+import { ROLES, CATEGORIES, LEVELS } from '../shared/types';
+export type { Role, Category, Level } from '../shared/types';
 
 export const articles = pgTable('articles', {
   id:               uuid('id').defaultRandom().primaryKey(),
@@ -1009,6 +1000,19 @@ import { ImageResponse } from '@vercel/og';
 
 export const runtime = 'edge';
 
+// ⚠️ @vercel/og はデフォルトで日本語フォントを持っていない。
+// Noto Sans JP（または Kaisei Opti）をfetchして渡さないと日本語が文字化けする。
+// 以下のフォント読み込みを必ず実装すること:
+//
+// const fontData = await fetch(
+//   new URL('../../../public/fonts/NotoSansJP-Bold.ttf', import.meta.url)
+// ).then(res => res.arrayBuffer());
+//
+// そして ImageResponse の options に渡す:
+// { width: 1200, height: 630, fonts: [{ name: 'NotoSansJP', data: fontData, weight: 700 }] }
+//
+// フォントファイルは public/fonts/ に配置し、Gitにコミットすること。
+
 // GET /api/og?title=記事タイトル&role=papa
 export async function GET(req: Request) {
   const { searchParams } = new URL(req.url);
@@ -1151,7 +1155,8 @@ app/(site)/
 // Vercel Hobby プランの最大実行時間: 10秒
 // → OpenRouter呼び出しタイムアウト: 8秒（バッファ2秒）
 // ⚠️ Vercel Proなら60秒まで延長可能。MVPはHobbyで進める。
-export const maxDuration = 10; // Vercel Edge Runtime用
+// ⚠️ OPENROUTER_CONFIG.timeout（後述）と必ず整合させること: timeout = maxDuration - 2秒
+export const maxDuration = 10; // Vercel Edge Runtime用（Hobbyプラン上限）
 
 // ── エラーコード一覧（日本語メッセージ付き）──
 const AI_ERRORS = {
@@ -1205,7 +1210,7 @@ const MODEL_ROUTER: Record<AIRequestType, ModelRoute> = {
   },
   'math-reasoning': {
     primary: { provider: 'openrouter', model: 'deepseek/deepseek-r1' },
-    fallback: [{ provider: 'openrouter', model: 'openai/gpt-5-mini' }],
+    fallback: [{ provider: 'openrouter', model: 'openai/gpt-4o-mini' }],
   },
   'transcribe': {
     primary: { provider: 'openrouter', model: 'openai/whisper-1' },
@@ -1274,7 +1279,7 @@ const AUDIO_ERRORS = {
 - `lib/ai/providers/openrouter.ts` に以下を設定ファイルとして定義すること:
   ```typescript
   export const OPENROUTER_CONFIG = {
-    timeout:      15_000,   // ms: 15秒でタイムアウト
+    timeout:      8_000,    // ms: 8秒でタイムアウト（Vercel Hobby maxDuration:10秒に対してバッファ2秒）
     maxRetries:   2,        // タイムアウト/5xx時のリトライ回数
     maxInputChars: 2_000,   // ユーザー入力の最大文字数（≒500トークン相当）
     fallbackOrder: ['text-simple', 'text-quality'] as const,
@@ -1645,7 +1650,8 @@ Step 09: ArticleCard.tsx + ArticleGrid.tsx
 Step 10: app/(site)/learn/page.tsx（一覧・フィルター）
 Step 11: app/(site)/learn/[slug]/page.tsx（記事詳細 + ArticleBody + JSON-LD）
 Step 12: AudioPlayer.tsx（速度変更・リピート・シーク）← MVP必須・5月8日までに完成させること
-Step 13: app/api/audio/route.ts（Vercel Blob からの音声配信）
+Step 13: app/api/audio/route.ts（Vercel Blob からの音声配信・署名URL発行）
+Step 13a: app/api/audio/play/route.ts（再生カウント POST・30秒以上 + 1日1回制限）
 Step 13b: app/api/articles/route.ts（ページネーション・フィルター・viewCountインクリメント）
 Step 14: app/(site)/common/page.tsx + about/page.tsx + privacy/page.tsx + terms/page.tsx
 Step 15: app/api/og/route.tsx（@vercel/og による動的OGP画像生成）

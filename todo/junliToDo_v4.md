@@ -93,7 +93,7 @@
 - Vercelダッシュボードの Domains 画面が ✅ に変わればOK
 https://vercel.com/utafamily/familyai-jp/settings/domains
 
-**👆@2026/4/14 できたところ、Refreshのところはまだで！！**
+**👆@2026/4/14 できたところ、Refreshのところはまだ（Vercelダッシュボードで ✅ になるまで待機中）**
 #### STEP 4: SSL証明書（HTTPS）有効化の確認
 1. Vercel ダッシュボード → Project → `Settings` → `Domains` を開く
 2. `familyai.jp` / `www.familyai.jp` の HTTPS ステータスが有効（証明書発行済み）であることを確認
@@ -563,8 +563,9 @@ App Manager（アプリの提出・審査提出が可能）
 🔥 今週中に完了（〜4月20日）:
   ⑤ DNS Refresh確認（Vercelダッシュボードで ✅ になるまで待つ）
      証跡: Vercel Domains画面のスクリーンショット
-  ⑥ OpenRouter APIキー取得・Vercel環境変数に設定
+  ⑥ OpenRouter APIキー取得・Vercel環境変数に設定【今日中に着手推奨】
      証跡: 環境変数名 OPENROUTER_API_KEY が Vercel に追加されたことを確認
+     ⚠️ これがないとAI機能が全部動かない。最優先。
   ⑦ Neon PostgreSQL セットアップ・DATABASE_URL設定
      証跡: 環境変数名 DATABASE_URL が Vercel に追加されたことを確認
 
@@ -575,12 +576,16 @@ App Manager（アプリの提出・審査提出が可能）
      証跡: 環境変数名 UPSTASH_REDIS_REST_URL / TOKEN が設定済み
   ⑩ OGP デフォルト画像作成（Canvaで1200×630px）
      証跡: public/og-default.png がリポジトリに追加済み
+  ⑪ 初期記事10本・語学音声MP3の執筆・録音開始【⚠️ 並行して今週から着手】
+     ⚠️ コンテンツ準備は時間がかかる。5月8日直前に回すと間に合わないリスクが高い。
+     目安: 4月末までに10本分の下書きと音声素材を揃える。
+     証跡: 原稿ファイルと音声MP3ファイルが手元に揃っていること
 
 📅 5月8日直前までに完了:
-  ⑪ プライバシーポリシー・利用規約の内容確認・修正
+  ⑫ プライバシーポリシー・利用規約の内容確認・修正
      証跡: /privacy と /terms が familyai.jp で表示できる
-  ⑫ 初期記事10本・語学音声MP3の準備
-     証跡: Vercel Blob に音声ファイルがアップロード済み
+  ⑬ Vercel Blob に音声MP3ファイルをアップロード
+     証跡: Vercel Blob に音声ファイルがアップロード済み・DBにURL登録済み
 ```
 
 > 💡 各タスクが完了したら、証跡（スクリーンショットのURL・環境変数名）を
