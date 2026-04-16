@@ -139,9 +139,14 @@
     border-radius: clamp(12px, 3vw, 20px);
     display: flex; align-items: center; justify-content: center;
     font-size: clamp(22px, 5vw, 32px);
+    line-height: 1;
+    font-family: "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", sans-serif;
     box-shadow: 0 6px 20px rgba(255,140,66,.38);
     animation: float 3.5s ease-in-out infinite;
     flex-shrink: 0;
+    will-change: transform;
+    transform: translateZ(0);
+    backface-visibility: hidden;
   }
   .logo-text {
     font-family: 'Kaisei Opti', serif;
@@ -390,6 +395,9 @@
     gap: 0;
     width: max-content;
     animation: ticker 24s linear infinite;
+    will-change: transform;
+    transform: translate3d(0, 0, 0);
+    backface-visibility: hidden;
   }
   .ticker-item {
     display: flex;
@@ -398,8 +406,11 @@
     padding: 0 28px;
     font-size: clamp(12px, 3vw, 14px);
     font-weight: 500;
+    line-height: 1.25;
     color: var(--brown-light);
     white-space: nowrap;
+    transform: translateZ(0);
+    backface-visibility: hidden;
   }
   .ticker-dot {
     width: 5px; height: 5px;
