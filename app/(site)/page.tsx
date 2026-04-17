@@ -2,8 +2,12 @@
  * app/(site)/page.tsx
  * familyai.jp — トップページ
  *
- * 本番環境 (NODE_ENV === 'production') → Coming Soon ページを表示
- * 開発環境 (NODE_ENV === 'development') → 実際のホームページを表示
+ * ── Coming Soon / 本番公開 スイッチ ──────────────────────────────
+ * Vercel 環境変数 COMING_SOON=true  → Coming Soon ページを表示
+ * Vercel 環境変数 COMING_SOON を削除 or false → 実際のホームページを表示
+ *
+ * ローカル（.env.local に COMING_SOON を設定しない）→ 常に実際のホームページ
+ * ─────────────────────────────────────────────────────────────────
  */
 
 import { Suspense } from 'react';
@@ -146,12 +150,13 @@ function NewArticlesSection() {
 
 // ── ページ本体 ────────────────────────────────────────────────
 export default function HomePage() {
-  // 本番環境では Coming Soon ページを表示
-  if (process.env.NODE_ENV === 'production') {
+  // COMING_SOON=true の場合は Coming Soon ページを表示
+  // 公開時は Vercel 環境変数から COMING_SOON を削除するだけでOK（コード変更不要）
+  if (process.env.COMING_SOON === 'true') {
     return <ComingSoon />;
   }
 
-  // 開発環境では実際のホームページを表示
+  // 実際のホームページを表示
   return (
     <>
       <HeroSection />

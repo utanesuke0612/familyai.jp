@@ -50,6 +50,12 @@ export function ComingSoon() {
     <>
       {/* ── CSS ── */}
       <style>{`
+        /* Coming Soon 表示中はページ全体のリンクをクリック無効化 */
+        a {
+          pointer-events: none !important;
+          cursor: default !important;
+        }
+
         .cs-body {
           font-family: 'Zen Maru Gothic', sans-serif;
           background: var(--color-cream, #FDF6ED);
@@ -181,8 +187,10 @@ export function ComingSoon() {
           border-radius: clamp(20px,5vw,32px);
           padding: clamp(24px,6vw,44px) clamp(20px,8vw,56px);
           text-align: center; box-shadow: 0 8px 40px rgba(139,94,60,.09);
-          margin-bottom: clamp(32px,6vw,52px);
-          animation: cs-fadeUp .6s .38s ease both;
+          /* 最上部に移動したため上マージンを追加、下マージンは既存維持 */
+          margin-top: 0;
+          margin-bottom: clamp(28px,5vw,44px);
+          animation: cs-fadeUp .6s .1s ease both;
           max-width: 480px; width: 100%;
         }
         .cs-release-label {
@@ -350,33 +358,7 @@ export function ComingSoon() {
 
         <main className="cs-page">
 
-          {/* バッジ */}
-          <div className="cs-badge">
-            <div className="cs-badge-dot" />
-            AI = 愛 &mdash; 家族の幸せのために
-          </div>
-
-          {/* ロゴ */}
-          <div className="cs-logo-wrap">
-            <div className="cs-logo-icon" aria-hidden="true">🏠</div>
-            <div className="cs-logo-text">family<span>ai</span>.jp</div>
-          </div>
-
-          <p className="cs-tagline">家族みんなのAI活用メディア</p>
-
-          {/* メインタイトル */}
-          <h1 className="cs-main-title">
-            AIで、家族が<br />
-            <span className="cs-highlight">もっと笑顔に</span>。
-          </h1>
-
-          <p className="cs-sub-msg">
-            難しくない。怖くない。<br />
-            パパも、ママも、子どもも、シニアも。<br />
-            家族全員が使えるAI活用法をお届けします。
-          </p>
-
-          {/* リリースカード */}
+          {/* リリースカード（最上部） */}
           <div className="cs-release-card">
             <div className="cs-release-label">🗓 Release Date</div>
             <div className="cs-release-date">2026年 5月 8日</div>
@@ -404,6 +386,32 @@ export function ComingSoon() {
               </div>
             </div>
           </div>
+
+          {/* バッジ */}
+          <div className="cs-badge">
+            <div className="cs-badge-dot" />
+            AI = 愛 &mdash; 家族の幸せのために
+          </div>
+
+          {/* ロゴ */}
+          <div className="cs-logo-wrap">
+            <div className="cs-logo-icon" aria-hidden="true">🏠</div>
+            <div className="cs-logo-text">family<span>ai</span>.jp</div>
+          </div>
+
+          <p className="cs-tagline">家族みんなのAI活用メディア</p>
+
+          {/* メインタイトル */}
+          <h1 className="cs-main-title">
+            AIで、家族が<br />
+            <span className="cs-highlight">もっと笑顔に</span>。
+          </h1>
+
+          <p className="cs-sub-msg">
+            難しくない。怖くない。<br />
+            パパも、ママも、子どもも、シニアも。<br />
+            家族全員が使えるAI活用法をお届けします。
+          </p>
 
           {/* ファミリーチップ */}
           <div className="cs-family-row" role="list" aria-label="対応ロール一覧">

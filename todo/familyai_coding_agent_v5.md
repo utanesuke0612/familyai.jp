@@ -2461,4 +2461,57 @@ export const revalidate = 3600;
 // app/sitemap.ts — 修正後
 export const dynamic = 'force-dynamic'; // no-store fetch との競合を避ける
 ```
+
+---
+
+### 📋 #002 Coming Soon → 本番公開 切り替え仕様（2026-04-17）
+
+**概要**
+`familyai.jp` のトップページは、5/8 正式オープンまで Coming Soon ページを表示する。  
+公開時はコード変更なしに Vercel 環境変数だけで切り替えられるよう実装済み。
+
+**実装済みファイル**
+
+| ファイル | 役割 |
+|--------|------|
+| `components/home/ComingSoon.tsx` | Coming Soon コンポーネント（`'use client'`・カウントダウン付き） |
+| `app/(site)/page.tsx` | `COMING_SOON === 'true'` で分岐 |
+
+**切り替えの仕組み（CodingAgent は基本的に触らない）**
+
+```typescript
+// app/(site)/page.tsx
+export default function HomePage() {
+  // Vercel 環境変数 COMING_SOON=true → Coming Soon を表示
+  // COMING_SOON を削除 or false → 実際のホームページを表示
+  if (process.env.COMING_SOON === 'true') {
+    return <ComingSoon />;
+  }
+  return (
+    <>
+      <HeroSection />
+      <StatsRow />
+      <Suspense fallback={...}><RolePicker /></Suspense>
+      <NewArticlesSection />
+    </>
+  );
+}
 ```
+
+**Vercel 環境変数の設定状態**
+
+| 状態 | 変数 | 値 | 表示 |
+|------|------|----|------|
+| Coming Soon 期間（現在） | `COMING_SOON` | `true` | Coming Soon ページ |
+| 本番公開後 | `COMING_SOON` を削除 or `false` | — | 実際のホームページ |
+| ローカル開発 | 未設定 | — | 常に実際のホームページ |
+
+**本番公開時に junli さんがやること（CodingAgent の作業不要）**
+1. Vercel → Settings → Environment Variables → `COMING_SOON` の値を `false` に変更（または削除）
+2. Vercel → Deployments → 最新デプロイ → Redeploy
+3. `https://familyai.jp` を開いてホームページが表示されることを確認
+
+**⚠️ CodingAgent へ**
+- Coming Soon コンポーネント（`ComingSoon.tsx`）や `page.tsx` の分岐ロジックは触らないこと
+- カウントダウンの日時は `2026-05-08T00:00:00+09:00` に固定済み
+- 今後の記事 DB 連携や UI 改善は `NewArticlesSection` / `HeroSection` 等を修正し、`ComingSoon` には影響させないこと

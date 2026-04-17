@@ -608,11 +608,17 @@ App Manager（アプリの提出・審査提出が可能）
   ② ドメイン取得（familyai.jp / お名前ドットコム） ✅
   ③ DNS設定（Aレコード・CNAMEレコード）✅（Vercel Refresh 待ち）
   ④ SSL/HTTPS 有効化確認 ✅（2026-04-15）
+  ★ Coming Soon ページ実装済み ✅（2026-04-17）
 
 🔥 今週中に完了（〜4月20日）★最優先★:
   ⑤ DNS Refresh 最終確認（Vercelダッシュボードで ✅ になるまで待つ）
      確認URL: https://vercel.com/utafamily/familyai-jp/settings/domains
      証跡: Vercel Domains 画面の ✅ スクリーンショット
+
+  ★ 【今すぐ】Vercel 環境変数に COMING_SOON=true を追加する（Production のみ）
+     手順: Vercel → Settings → Environment Variables → Add → COMING_SOON = true
+     ⚠️ これを設定しないと familyai.jp に実際のホームページが表示されてしまいます
+     ⚠️ 設定後に Redeploy が必要（Deployments → 最新デプロイ → Redeploy）
 
   ⑥ OpenRouter APIキー取得・Vercel環境変数に4件設定【今日中に着手推奨】
      設定する変数:
@@ -692,6 +698,82 @@ App Manager（アプリの提出・審査提出が可能）
 | og-default.png 未作成 | 中 | ⑬で4月末までに対応 |
 | NotoSansJP-Bold.ttf 未配置 | 中 | ⑭で対応（5分作業） |
 | プライバシーポリシー法務確認 | 低 | テンプレートはCodingAgentが作成・junliさんが最終確認 |
+
+---
+
+---
+
+## 🚀 本番公開手順（Coming Soon → 実際のサイトへ切り替え）
+
+> 現在 familyai.jp は「Coming Soon」ページを表示しています。
+> 本番公開の準備ができたら、以下の手順で切り替えます。
+> **コードの変更は一切不要です。Vercel の管理画面だけで完結します。**
+
+### 切り替えの仕組み
+
+```
+【現在】Vercel 環境変数 COMING_SOON=true → Coming Soon ページ表示
+【公開後】COMING_SOON を削除 or false → 実際のホームページ表示
+
+ローカル（npm run dev）→ COMING_SOON 未設定 → 常に実際のホームページ
+```
+
+---
+
+### 事前準備（公開前にやること）
+
+以下がすべて✅になってから切り替えること：
+
+```
+□ 記事10本以上が DB に投入済み（Todo13）
+□ 音声MP3ファイルが Vercel Blob にアップロード済み（Todo13）
+□ Google OAuth ログインが動作確認済み（Todo08）
+□ プライバシーポリシー・利用規約を確認済み（Todo12）
+□ OGP画像（public/og-default.png）が配置済み（Todo10）
+□ Google Analytics が設定済み（Todo15）
+```
+
+---
+
+### 当日の手順（所要時間: 約5分）
+
+#### STEP 1: Vercel 環境変数から COMING_SOON を削除
+
+1. https://vercel.com にログイン
+2. プロジェクト `familyai-jp` → **`Settings`** → **`Environment Variables`**
+3. `COMING_SOON` を探して **`Edit`** → 値を **`true` から `false` に変更**  
+   （または行右端の「…」→「**Remove**」で削除してもOK）
+4. **`Save`** をクリック
+
+#### STEP 2: 再デプロイ
+
+1. Vercel ダッシュボード → `Deployments` タブ
+2. 最新のデプロイ右端の「…」→ **`Redeploy`** をクリック
+3. 「Redeploy」確認ダイアログ → **`Redeploy`** ボタンをクリック
+4. デプロイが完了するまで待つ（通常1〜2分）
+
+#### STEP 3: 公開確認
+
+1. `https://familyai.jp` を開いてホームページが表示されることを確認
+2. `https://www.familyai.jp` も同様に確認
+3. 記事一覧 `/learn`、記事詳細 `/learn/（スラッグ）` が表示されることを確認
+4. Google Analyticsでページビューが計測されていることを確認（数分後）
+
+---
+
+### もし Coming Soon に戻したいとき
+
+1. Vercel → Settings → Environment Variables
+2. 新しい変数を追加: `COMING_SOON` = `true`（Environments: `Production` にチェック）
+3. Save → Redeploy
+
+---
+
+### ⚠️ 注意事項
+
+- **ローカル開発には影響しません**（`npm run dev` は常に実際のホームページ）
+- Vercel の環境変数変更は**Redeploy をしないと反映されません**（必ず再デプロイ）
+- `COMING_SOON` は `Production` 環境にのみ設定してください（`Preview`・`Development` は不要）
 
 ---
 
