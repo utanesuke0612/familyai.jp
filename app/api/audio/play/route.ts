@@ -3,9 +3,10 @@
  * familyai.jp — 音声再生カウント API
  *
  * POST /api/audio/play
- * Body: { articleId: string }
+ * Body: { articleId: string, listenedSec: number }
  *
  * 仕様:
+ * - 再生開始から 30秒以上聴いた場合のみカウント（listenedSec >= 30）
  * - 同一 IP × 同一記事の 24時間以内の重複再生はカウントしない
  * - Redis（Upstash）でデデュープキーを管理（TTL: 86400秒）
  * - Redis 未設定時はデデュープをスキップしてカウントを続行（可用性優先）
@@ -16,7 +17,7 @@
  * レスポンス:
  * { ok: true, counted: boolean }
  *   counted: true  → 新規カウント（Redis フラグ設定済み）
- *   counted: false → 重複（24時間以内に同 IP で再生済み）
+ *   counted: false → 重複（24時間以内に同 IP で再生済み）または30秒未満
  */
 
 import { NextRequest, NextResponse } from 'next/server';
@@ -30,7 +31,9 @@ export const runtime = 'nodejs';
 
 // ── 入力バリデーション ───────────────────────────────────────────
 const bodySchema = z.object({
-  articleId: z.string().uuid('articleId は UUID 形式である必要があります'),
+  articleId:   z.string().uuid('articleId は UUID 形式である必要があります'),
+  /** クライアントで計測した累積リスニング秒数（30秒未満はカウント対象外） */
+  listenedSec: z.number().int().min(0).max(7200).default(0),
 });
 
 // ── Redis lazy singleton ─────────────────────────────────────────
@@ -89,9 +92,14 @@ export async function POST(req: NextRequest) {
     );
   }
 
-  const { articleId } = parsed.data;
+  const { articleId, listenedSec } = parsed.data;
 
-  // 3. Redis デデュープチェック（24時間以内の同一 IP × 同一記事）
+  // 3. 30秒条件チェック（仕様: 再生開始から30秒以上聴いた場合のみカウント）
+  if (listenedSec < 30) {
+    return NextResponse.json({ ok: true, counted: false });
+  }
+
+  // 4. Redis デデュープチェック（24時間以内の同一 IP × 同一記事）
   const ip       = getClientIp(req);
   const ipHash   = hashIp(ip);
   const redis    = getRedis();
@@ -110,9 +118,9 @@ export async function POST(req: NextRequest) {
     }
   }
 
-  // 4. DB 処理: 記事の存在確認 + カウントインクリメント + ログ挿入
+  // 5. DB 処理: 記事の存在確認 + カウントインクリメント + ログ挿入
   try {
-    // 4-1. 記事の存在確認（公開済みのみ）
+    // 5-1. 記事の存在確認（公開済みのみ）
     const article = await db
       .select({ id: articles.id, published: articles.published })
       .from(articles)
@@ -127,19 +135,19 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // 4-2. audioPlayCount をインクリメント
+    // 5-2. audioPlayCount をインクリメント
     await db
       .update(articles)
       .set({ audioPlayCount: sql`${articles.audioPlayCount} + 1` })
       .where(eq(articles.id, articleId));
 
-    // 4-3. 再生ログを挿入（生 IP は保存しない・ipHash のみ）
+    // 5-3. 再生ログを挿入（生 IP は保存しない・ipHash のみ）
     await db.insert(audioPlayLogs).values({
       articleId,
       ipHash,
     });
 
-    // 5. Redis にフラグをセット（TTL: 86400秒 = 24時間）
+    // 6. Redis にフラグをセット（TTL: 86400秒 = 24時間）
     if (redis) {
       try {
         await redis.set(redisKey, '1', { ex: 86400 });

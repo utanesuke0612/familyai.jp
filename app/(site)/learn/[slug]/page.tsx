@@ -437,10 +437,11 @@ export default async function ArticlePage({
                 <span className="text-xs font-medium" style={{ color: 'var(--color-brown-light)' }}>
                   タグ：
                 </span>
-                {[...article.roles, ...article.categories].map((tag) => (
+                {/* ロールタグ: ?role= でフィルタ */}
+                {article.roles.map((role) => (
                   <a
-                    key={tag}
-                    href={`/learn?cat=${tag}`}
+                    key={`role-${role}`}
+                    href={`/learn?role=${role}`}
                     className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs border hover:opacity-70 transition-opacity"
                     style={{
                       background:  'white',
@@ -448,9 +449,24 @@ export default async function ArticlePage({
                       color:       'var(--color-brown-light)',
                     }}
                   >
-                    {CATEGORY_LABEL[tag as ContentCategory] ??
-                     FAMILY_ROLE_LABEL[tag as FamilyRole] ??
-                     tag}
+                    {ROLE_EMOJI[role as FamilyRole] ?? ''}{' '}
+                    {FAMILY_ROLE_LABEL[role as FamilyRole] ?? role}
+                  </a>
+                ))}
+                {/* カテゴリタグ: ?cat= でフィルタ */}
+                {article.categories.map((cat) => (
+                  <a
+                    key={`cat-${cat}`}
+                    href={`/learn?cat=${cat}`}
+                    className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs border hover:opacity-70 transition-opacity"
+                    style={{
+                      background:  'white',
+                      borderColor: 'var(--color-beige-dark)',
+                      color:       'var(--color-brown-light)',
+                    }}
+                  >
+                    {CATEGORY_EMOJI[cat as ContentCategory] ?? ''}{' '}
+                    {CATEGORY_LABEL[cat as ContentCategory] ?? cat}
                   </a>
                 ))}
               </div>

@@ -62,6 +62,8 @@ export function AudioPlayer({
   const seekBarRef       = useRef<HTMLDivElement>(null);
   const transcriptId     = useId();
   const playCountedRef   = useRef(false); // 1セッションにつき1回のみカウント
+  const listenedSecsRef  = useRef(0);     // 累積リスニング秒数（30秒到達でカウント）
+  const lastTimeRef      = useRef<number | null>(null); // 前回の currentTime（差分計算用）
 
   const [isPlaying,        setIsPlaying]        = useState(false);
   const [isBuffering,      setIsBuffering]       = useState(false);
@@ -75,13 +77,41 @@ export function AudioPlayer({
 
   const progress = duration > 0 ? (currentTime / duration) * 100 : 0;
 
+  // ── 再生カウント（30秒聴いた時点のみ /api/audio/play に POST） ──
+  // ※ Audio イベント useEffect より前に定義する必要あり（依存配列で参照するため）
+  const reportPlay = useCallback((listenedSec: number) => {
+    if (!articleId || playCountedRef.current) return;
+    playCountedRef.current = true;
+    // fire-and-forget（エラーは無視）
+    fetch('/api/audio/play', {
+      method:  'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body:    JSON.stringify({ articleId, listenedSec: Math.round(listenedSec) }),
+    }).catch(() => {/* 無視 */});
+  }, [articleId]);
+
   // ── Audio イベント ──────────────────────────────────────────
   useEffect(() => {
     const audio = audioRef.current;
     if (!audio) return;
 
     const onLoadedMetadata = () => setDuration(audio.duration);
-    const onTimeUpdate     = () => { if (!isDragging) setCurrentTime(audio.currentTime); };
+    const onTimeUpdate     = () => {
+      const curr = audio.currentTime;
+      // 累積リスニング秒数の計算（正方向のみ・シーク・一時停止は除外）
+      // timeupdate は ~250ms 毎に発火するため、差分が 0〜1.5s 以内のみ正常再生とみなす
+      if (!playCountedRef.current && lastTimeRef.current !== null) {
+        const delta = curr - lastTimeRef.current;
+        if (delta > 0 && delta < 1.5) {
+          listenedSecsRef.current += delta;
+          if (listenedSecsRef.current >= 30) {
+            reportPlay(listenedSecsRef.current);
+          }
+        }
+      }
+      lastTimeRef.current = curr;
+      if (!isDragging) setCurrentTime(curr);
+    };
     const onPlay           = () => setIsPlaying(true);
     const onPause          = () => setIsPlaying(false);
     const onWaiting        = () => setIsBuffering(true);
@@ -114,24 +144,12 @@ export function AudioPlayer({
       audio.removeEventListener('error',          onError);
       audio.removeEventListener('ended',          onEnded);
     };
-  }, [isDragging, isRepeat]);
+  }, [isDragging, isRepeat, reportPlay]);
 
   // ── 再生速度を適用 ──────────────────────────────────────────
   useEffect(() => {
     if (audioRef.current) audioRef.current.playbackRate = speed;
   }, [speed]);
-
-  // ── 再生カウント（初回再生時のみ /api/audio/play に POST） ──
-  const reportPlay = useCallback(() => {
-    if (!articleId || playCountedRef.current) return;
-    playCountedRef.current = true;
-    // fire-and-forget（エラーは無視）
-    fetch('/api/audio/play', {
-      method:  'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body:    JSON.stringify({ articleId }),
-    }).catch(() => {/* 無視 */});
-  }, [articleId]);
 
   // ── 再生 / 一時停止 ─────────────────────────────────────────
   const togglePlay = useCallback(() => {
@@ -140,10 +158,11 @@ export function AudioPlayer({
     if (isPlaying) {
       audio.pause();
     } else {
-      reportPlay(); // 初回再生をカウント
+      // 再生開始時に lastTimeRef を初期化（シーク後の誤差防止）
+      lastTimeRef.current = audio.currentTime;
       audio.play().catch(() => setHasError(true));
     }
-  }, [isPlaying, reportPlay]);
+  }, [isPlaying]);
 
   // ── シーク共通ヘルパー ──────────────────────────────────────
   const calcRatio = useCallback((clientX: number) => {

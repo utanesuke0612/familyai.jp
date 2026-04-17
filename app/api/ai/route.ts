@@ -118,17 +118,23 @@ export async function POST(req: NextRequest) {
     );
   }
 
-  // 2. リクエストボディのパース
+  // 2. リクエストボディのパース（SSE 開始前なので 400 JSON を返す）
   let rawBody: unknown;
   try {
     rawBody = await req.json();
   } catch {
-    return errorStream('INVALID_BODY', 'リクエストボディが不正です。');
+    return new Response(
+      JSON.stringify({ ok: false, error: { code: 'INVALID_BODY', message: 'リクエストボディが不正です。' } }),
+      { status: 400, headers: { 'Content-Type': 'application/json' } },
+    );
   }
 
   const parsed = bodySchema.safeParse(rawBody);
   if (!parsed.success) {
-    return errorStream('INVALID_PARAMS', '入力内容を確認してもう一度お試しください。');
+    return new Response(
+      JSON.stringify({ ok: false, error: { code: 'INVALID_PARAMS', message: '入力内容を確認してもう一度お試しください。' } }),
+      { status: 400, headers: { 'Content-Type': 'application/json' } },
+    );
   }
 
   const { type, messages, articleTitle, articleExcerpt } = parsed.data;
@@ -162,11 +168,12 @@ export async function POST(req: NextRequest) {
 
     const { success } = await limiter.limit(limitKey);
     if (!success) {
-      return errorStream(
-        'RATE_LIMIT_EXCEEDED',
-        session?.user?.id
-          ? '本日の利用上限に達しました。明日またお試しください。'
-          : '1日の利用上限に達しました。ログインするとより多く使えます。',
+      const message = session?.user?.id
+        ? '本日の利用上限に達しました。明日またお試しください。'
+        : '1日の利用上限に達しました。ログインするとより多く使えます。';
+      return new Response(
+        JSON.stringify({ ok: false, error: { code: 'RATE_LIMIT_EXCEEDED', message } }),
+        { status: 429, headers: { 'Content-Type': 'application/json' } },
       );
     }
   }
@@ -186,6 +193,9 @@ export async function POST(req: NextRequest) {
   const ac = new AbortController();
   req.signal.addEventListener('abort', () => ac.abort());
 
+  // 8秒サーバータイムアウト（Vercel Hobby の maxDuration=10s を超えないよう保護）
+  const timeoutId = setTimeout(() => ac.abort(), 8_000);
+
   try {
     // text-simple / text-quality のみストリーミング対応
     // transcribe / image-gen / tts-japanese は将来実装
@@ -195,9 +205,18 @@ export async function POST(req: NextRequest) {
 
     const stream = await routeAI(type, fullMessages, { signal: ac.signal });
 
+    // ストリーム開始後はタイムアウトをクリア（クライアント切断シグナルに任せる）
+    clearTimeout(timeoutId);
     return new Response(stream, { headers: sseHeaders() });
   } catch (err) {
+    clearTimeout(timeoutId);
     const msg = err instanceof Error ? err.message : '不明なエラー';
+
+    // AbortError（タイムアウト or クライアント切断）
+    if (err instanceof Error && err.name === 'AbortError') {
+      return errorStream('TIMEOUT', 'AIの応答に時間がかかりすぎました。しばらくしてからお試しください。');
+    }
+
     console.error('[POST /api/ai] AI エラー:', msg);
 
     if (msg.includes('OPENROUTER_API_KEY')) {

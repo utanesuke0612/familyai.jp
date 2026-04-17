@@ -141,8 +141,8 @@ export const ROUTES = {
   article:        (slug: string) => `/learn/${slug}`,
   roleArticles:   (role: FamilyRole) => `/learn?role=${role}`,
   chat:           '/chat',
-  login:          '/login',
-  signup:         '/signup',
+  login:          '/auth/signin',
+  signup:         '/auth/register',
   dashboard:      '/dashboard',
   settings:       '/settings',
   api: {

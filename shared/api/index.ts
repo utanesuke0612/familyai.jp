@@ -10,6 +10,24 @@ import type { ApiResponse, ArticleSummary, Article, PaginatedResult } from '../t
 import { buildQueryString } from '../utils';
 import { PAGINATION } from '../constants';
 
+// ─── サーバー応答の実形式（/api/articles が返す shape）────────────
+/**
+ * /api/articles の実際のレスポンス data 形式。
+ * shared/types の PaginatedResult<T>（items/meta）とは異なるため
+ * fetchArticles 内で正規化する。
+ */
+interface ArticlesApiData {
+  articles:   ArticleSummary[];
+  pagination: {
+    page:       number;
+    limit:      number;
+    total:      number;
+    totalPages: number;
+    hasNext:    boolean;
+    hasPrev:    boolean;
+  };
+}
+
 // ─── 基底 fetch ラッパー ───────────────────────────────────────
 
 /** fetch 共通オプション */
@@ -83,7 +101,9 @@ export interface ArticlesQuery {
 }
 
 /**
- * 記事一覧を取得する
+ * 記事一覧を取得する。
+ * サーバーは { articles, pagination } を返すが、
+ * PaginatedResult<T>（{ items, meta }）形式に正規化して返す。
  */
 export async function fetchArticles(
   baseUrl: string,
@@ -94,13 +114,37 @@ export async function fetchArticles(
     perPage:    query.perPage ?? PAGINATION.defaultPerPage,
     ...query,
   };
-  return apiFetch<PaginatedResult<ArticleSummary>>(
+
+  const raw = await apiFetch<ArticlesApiData>(
     `${baseUrl}/api/articles${buildQueryString(params)}`,
   );
+
+  if (!raw.ok) return raw;
+
+  // サーバー応答の { articles, pagination } → PaginatedResult<T> に正規化
+  const { articles, pagination } = raw.data;
+  return {
+    ok:   true,
+    data: {
+      items: articles,
+      meta: {
+        page:       pagination.page,
+        perPage:    pagination.limit,
+        total:      pagination.total,
+        totalPages: pagination.totalPages,
+        hasNext:    pagination.hasNext,
+        hasPrev:    pagination.hasPrev,
+      },
+    },
+  };
 }
 
 /**
- * 記事詳細を取得する
+ * 記事詳細を取得する。
+ *
+ * @note Web 版は Drizzle を直接呼ぶ Server Component を使用するため
+ *       このエンドポイント（GET /api/articles/:slug）は現在未実装。
+ *       iOS アプリ連携（Phase 4）時に app/api/articles/[slug]/route.ts を追加すること。
  */
 export async function fetchArticle(
   baseUrl: string,

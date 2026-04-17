@@ -81,11 +81,14 @@ export function buildPaginationMeta(
   page:    number,
   perPage: number,
 ): PaginationMeta {
+  const totalPages = Math.max(1, Math.ceil(total / perPage));
   return {
     page,
     perPage,
     total,
-    totalPages: Math.max(1, Math.ceil(total / perPage)),
+    totalPages,
+    hasNext: page < totalPages,
+    hasPrev: page > 1,
   };
 }
 

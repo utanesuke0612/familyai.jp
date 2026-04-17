@@ -2,7 +2,7 @@
 
 ## 2026/5/8 までの実行整理（進捗テーブル）
 
-> 最終更新: 2026-04-17（Step 01〜14, 13b, 16, 18 完了・Rev01〜11 完了）
+> 最終更新: 2026-04-17（Step 01〜14, 13b, 16, 18 完了・Rev01〜11 完了・Rev12〜17 追加：Codex レビュー指摘）
 
 | タスク（1行1タスク）                                                                                                                           | 担当          | 期限           | 推定時間 | 依存                                                                     | 状態  |
 | ------------------------------------------------------------------------------------------------------------------------------------- | ----------- | ------------ | ---- | ---------------------------------------------------------------------- | --- |
@@ -32,6 +32,12 @@
 | **Rev09 🟡: `app/(site)/learn/[slug]/page.tsx` の JSON-LD に AudioObject スキーマを追加（`audioUrl` がある記事のみ・`duration` / `inLanguage` / `transcript` 含める）。音声SEO対応。 | CodingAgent | 2026-05-08まで | 15分  | —                                                                      | ✅完了 |
 | **Rev10 🟢: `.gitignore` に `.claude/settings.local.json` を追加（個人設定をバージョン管理から除外）。 | CodingAgent | 2026-05-08まで | 2分   | —                                                                      | ✅完了 |
 | **Rev11 🟢: `app/fonts/GeistVF.woff`・`app/fonts/GeistMonoVF.woff` を削除（create-next-app 残骸・Kaisei Opti + Zen Maru Gothic に統一済み）。 | CodingAgent | 2026-05-08まで | 2分   | —                                                                      | ✅完了 |
+| **Rev12 🔴: `shared/constants/index.ts` の `ROUTES.login` を `/login` → `/auth/signin` に修正（`Header.tsx:92`・`MobileNav.tsx:115` の「✨ 無料で始める」CTA が 404 になる・実ページは `app/(site)/auth/signin/`）。MVP登録動線のリリースブロッカー。 | CodingAgent | 2026-05-08まで | 5分   | —                                                                      | 未着手 |
+| **Rev13 🔴: `AudioPlayer.tsx` と `/api/audio/play` に「30秒再生後のみカウント」ルールを実装。クライアント側で `timeupdate` を監視し、累計30秒経過後に初めて `POST /api/audio/play` を送る。サーバー側は現状の24時間デデュープに加え、`elapsedSec >= 30` をリクエストボディに追加して検証。仕様書 line 1257 準拠。 | CodingAgent | 2026-05-08まで | 30分  | —                                                                      | 未着手 |
+| **Rev14 🟠: `app/api/ai/route.ts` の `errorStream()` を 200 固定から見直し。ストリーム開始前のエラー（`INVALID_BODY`・`INVALID_PARAMS`・`UNSUPPORTED_TYPE`・`FORBIDDEN`）は HTTP 400/403 の JSON レスポンスで返す。ストリーム途中エラーのみ SSE 200 + `{error}` で送る。仕様書検収項目「2001文字以上で400エラー」準拠。 | CodingAgent | 2026-05-08まで | 10分  | —                                                                      | 未着手 |
+| **Rev15 🟠: `/api/ai` に 8秒サーバータイムアウトを実装。`route.ts` で `setTimeout(() => ac.abort(), 8000)` を設定し、`lib/ai/providers/openrouter.ts` の fetch にも適用。Vercel Hobby の maxDuration=10s バッファ 2秒を守る。仕様書 `OPENROUTER_CONFIG.timeout = 8_000` 準拠。 | CodingAgent | 2026-05-08まで | 15分  | —                                                                      | 未着手 |
+| **Rev16 🟡: `app/(site)/learn/[slug]/page.tsx` のタグ導線を修正。`[...article.roles, ...article.categories]` を一律 `cat=` に流しているため、`papa` 等のロールが `cat=papa` となり空振りする。ロールは `?role=`、カテゴリは `?cat=` に分岐させる。 | CodingAgent | 2026-05-08まで | 10分  | —                                                                      | 未着手 |
+| **Rev17 🟡: `shared/api/index.ts` と `app/api/articles/route.ts` の契約を整合。現状サーバーは `{ articles, pagination }` を返すが shared は `PaginatedResult<T> = { items, meta }` を期待。どちらかに統一（推奨: サーバー側を `{ items, meta }` に変更し shared 層の再利用性を守る）。また `fetchArticle` の `/api/articles/:slug` を使うなら対応 route を追加、使わないなら shared 層から削除。 | CodingAgent | 2026-05-08まで | 20分  | —                                                                      | 未着手 |
 | Step 13: `/api/audio` をVercel Blob署名URL方式で実装・再生カウント重複防止（`/api/audio/play`）を追加                                                         | CodingAgent | 2026-05-08まで | 40分  | Todo01 ✅, Todo09 ✅, Todo18 ✅                                          | ✅完了 |
 | Step 13b: `/api/articles` をページネーション/ソート/閲覧数仕様で実装                                                                                      | CodingAgent | 2026-05-08まで | 40分  | Todo07                                                                 | ✅完了 |
 | Step 14: `/common` `/about` `/privacy` `/terms` を実装                                                                                   | CodingAgent | 2026-05-08まで | 40分  | —                                                                      | ✅完了 |
@@ -60,7 +66,7 @@
 | **Todo17**: SSL/HTTPS 有効化確認を完了                                                                                                        | 人間（junli）   | 2026-04-15   | —    | —                                                                      | ✅完了 |
 | **Todo18**: Vercel Blob を作成し `BLOB_READ_WRITE_TOKEN` を設定（Vercel Marketplace → Storage → Blob → `familyai-blob`）                       | 人間（junli）   | 2026-05-08まで | —    | —                                                                      | ✅完了 |
 
-> **CodingAgent 合計推定時間: 約 919分（15.3時間）** ※Rev07〜11 を含む
+> **CodingAgent 合計推定時間: 約 1009分（16.8時間）** ※Rev07〜11・Rev12〜17 を含む
 
 ## あなたの役割
 
