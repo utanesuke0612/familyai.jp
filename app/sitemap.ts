@@ -15,7 +15,9 @@ import { eq }                 from 'drizzle-orm';
 import { db, articles }       from '@/lib/db';
 import { SITE }               from '@/shared';
 
-export const revalidate = 3600; // 1時間ごとに再生成
+// force-dynamic: no-store fetch（Neon）との競合を避けるためリクエスト時に毎回生成
+// revalidate = 3600 はビルド時静的生成を試みるが、no-store fetch と競合してビルドが失敗する
+export const dynamic = 'force-dynamic';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = SITE.url;
