@@ -50,7 +50,7 @@ function ChatBubble({ message }: { message: Message }) {
         }}
         aria-hidden="true"
       >
-        {isUser ? '👤' : '🤖'}
+        {isUser ? '👤' : '💞'}
       </div>
 
       <div
@@ -87,7 +87,7 @@ function TypingIndicator() {
         style={{ background: 'var(--color-beige)', color: 'var(--color-brown)' }}
         aria-hidden="true"
       >
-        🤖
+        💞
       </div>
       <div
         className="px-4 py-3 rounded-2xl"
@@ -276,7 +276,7 @@ export function AIChatWidget({
           className="flex items-center gap-3 p-4"
           style={{ background: 'linear-gradient(135deg, var(--color-orange) 0%, var(--color-peach) 100%)' }}
         >
-          <span className="text-2xl" aria-hidden="true">🤖</span>
+          <span className="text-2xl" aria-hidden="true">💞</span>
           <div>
             <p className="font-bold text-sm text-white">AIに質問する</p>
             <p className="text-xs text-white/80">この記事について何でも聞けます</p>
@@ -323,7 +323,7 @@ export function AIChatWidget({
         style={{ background: 'linear-gradient(135deg, var(--color-orange) 0%, var(--color-peach) 100%)' }}
       >
         <div className="flex items-center gap-2">
-          <span className="text-lg" aria-hidden="true">🤖</span>
+          <span className="text-lg" aria-hidden="true">💞</span>
           <p className="font-bold text-sm text-white">AIに質問する</p>
         </div>
         <button

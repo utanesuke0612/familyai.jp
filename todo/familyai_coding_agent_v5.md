@@ -59,7 +59,7 @@
 | **Todo10**: `public/og-default.png` を作成して配置する（Canva 1200×630px）                                                                       | 人間（junli）   | 2026-05-08まで | —    | —                                                                      | 未着手 |
 | **Todo11**: `public/fonts/NotoSansJP-Bold.ttf` を配置する（OGP日本語表示に必須）                                                                     | 人間（junli）   | 2026-05-08まで | —    | —                                                                      | ✅完了 |
 | **Todo12**: `https://familyai.jp/privacy` と `/terms` の法務文言を最終確認                                                                       | 人間（junli）   | 2026-05-08まで | —    | —                                                                      | 未着手 |
-| **Todo13**: 初期記事10本と語学音声MP3素材を準備し入稿可能状態にする                                                                                            | 人間（junli）   | 2026-05-08まで | —    | —                                                                      | 未着手 |
+| **Todo13**: 初期記事10本と語学音声MP3素材を準備し入稿可能状態にする（`content/articles/*.md` に記述 → `npm run db:sync`）                                          | 人間（junli）   | 2026-05-08まで | —    | —                                                                      | 進行中 |
 | **Todo14**: Google Search Console 登録と `sitemap.xml` 送信を完了                                                                             | 人間（junli）   | 2026-05-08まで | —    | —                                                                      | 未着手 |
 | **Todo15**: Google Analytics の測定ID発行と `NEXT_PUBLIC_GA_ID` 設定を完了                                                                       | 人間（junli）   | 2026-05-08まで | —    | —                                                                      | 未着手 |
 | **Todo16**: ドメイン/DNS 設定を完了（Vercel Refresh待ち）                                                                                          | 人間（junli）   | 2026-04-14   | —    | —                                                                      | 途中  |
@@ -2515,3 +2515,62 @@ export default function HomePage() {
 - Coming Soon コンポーネント（`ComingSoon.tsx`）や `page.tsx` の分岐ロジックは触らないこと
 - カウントダウンの日時は `2026-05-08T00:00:00+09:00` に固定済み
 - 今後の記事 DB 連携や UI 改善は `NewArticlesSection` / `HeroSection` 等を修正し、`ComingSoon` には影響させないこと
+
+---
+
+### 📋 #003 記事管理：Markdown ファイル → DB 同期方式（2026-04-17）
+
+**概要**
+記事コンテンツは `content/articles/*.md`（1記事1ファイル）で管理し、`npm run db:sync` で Neon DB に同期する。
+`lib/db/seed.ts` にすべての記事本文を書き込む方式から移行済み。
+
+**ディレクトリ構成**
+
+```
+content/
+  articles/
+    chatgpt-account-setup.md      ← slug = ファイル名（拡張子なし）
+    claude-install-guide.md
+    （新記事はここに追加するだけ）
+```
+
+**Markdownファイルの frontmatter 仕様**
+
+```yaml
+---
+title: 記事タイトル（必須）
+description: 一行説明（任意）
+roles:                # 必須・配列
+  - common            # papa / mama / kids / senior / common
+categories:           # 必須・配列
+  - basic             # basic / office / cooking / study / health / design / language など
+level: beginner       # 必須: beginner / intermediate / advanced
+published: true       # true=公開 / false=非公開
+publishedAt: 2026-04-01  # 公開日（YYYY-MM-DD）
+audioUrl: ~           # 音声URLがある場合のみ記入（なければ ~ か省略）
+---
+
+本文（Markdown）
+```
+
+**同期スクリプト**
+
+| ファイル | 役割 |
+|---------|------|
+| `scripts/sync-articles.ts` | MD ファイルを読み込み DB に upsert |
+| `npm run db:sync` | 同期コマンド |
+
+**同期の動作**
+- 既存slug → `UPDATE`（内容を上書き更新）
+- 新規slug → `INSERT`（新規追加）
+- `published: false` → DB に入るが `/learn` には表示されない
+
+**Phase 2：管理画面（Admin）**
+- `/admin/articles` — 記事一覧・新規作成・編集・削除
+- `/admin/articles/new` — ブラウザ上から Markdown を書いて保存
+- 実装時期：Phase 2（2026年6〜8月）
+
+**⚠️ CodingAgent へ**
+- 新しい記事を追加する際は `content/articles/` にファイルを置いて `npm run db:sync` を実行する
+- `lib/db/seed.ts` は初期投入のみに使用。今後の記事追加は `sync-articles.ts` 経由とする
+- Phase 2 で管理画面を実装する際は `app/(site)/admin/` 以下に配置し、認証（NextAuth）で保護すること

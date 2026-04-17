@@ -701,6 +701,155 @@ App Manager（アプリの提出・審査提出が可能）
 
 ---
 
+## 📝 記事の書き方・管理手順（日常運用）
+
+> 記事は `content/articles/` フォルダに **1記事 = 1ファイル（.md）** で管理します。
+> DB への反映は `npm run db:sync` を実行するだけです。
+
+---
+
+### 記事ファイルの場所
+
+```
+familyai.jp/
+  content/
+    articles/
+      chatgpt-account-setup.md   ← 既存記事
+      meal-planning-ai.md
+      （新しい記事はここに追加）
+```
+
+---
+
+### 新しい記事を追加するとき
+
+**STEP 1：ファイルを新規作成**
+
+`content/articles/` の中に新しい `.md` ファイルを作る。
+ファイル名（英数字・ハイフンのみ）が記事のURL になる。
+
+例：`chatgpt-recipe-tips.md` → URL: `familyai.jp/learn/chatgpt-recipe-tips`
+
+**STEP 2：以下のテンプレートで書く**
+
+```
+---
+title: 記事タイトル
+description: 一行説明（SNSシェア時にも表示される）
+roles:
+  - mama          ← papa / mama / kids / senior / common から選ぶ
+categories:
+  - cooking       ← basic / office / cooking / study / health / design / language から選ぶ
+level: beginner   ← beginner（初心者） / intermediate（中級） / advanced（上級）
+published: true   ← false にすると非公開（DBには入るが表示されない）
+publishedAt: 2026-05-01   ← 公開日（YYYY-MM-DD形式）
+audioUrl: ~       ← 音声ファイルがある場合のみURLを記入。なければ ~ のまま
+---
+
+## 見出し（##で書く）
+
+本文をここに書く。普通の文章でOK。
+
+## 次の見出し
+
+- 箇条書きはハイフン
+- このように書く
+
+**太字**はアスタリスク2つで囲む
+
+```プロンプト例（コードブロック）```
+
+```
+
+**STEP 3：ターミナルで同期コマンドを実行**
+
+```bash
+npm run db:sync
+```
+
+実行すると自動でDBに保存される。
+
+**STEP 4：GitHub Desktop でコミット & Push**
+
+ファイルをGitHubに保存しておく（バックアップ）。
+
+---
+
+### 既存記事を修正するとき
+
+1. `content/articles/` の該当 `.md` ファイルを開いて編集
+2. `npm run db:sync` を実行（変更がDBに反映される）
+3. GitHub Desktop でコミット & Push
+
+---
+
+### 記事を一時的に非公開にするとき
+
+該当ファイルの frontmatter を変更するだけ：
+```
+published: false   ← true → false に変更
+```
+→ `npm run db:sync` を実行
+
+---
+
+### ロール・カテゴリの選択肢
+
+| 種類 | 選択肢 |
+|------|--------|
+| **roles**（対象者） | `papa` / `mama` / `kids` / `senior` / `common`（全員向け） |
+| **categories**（ジャンル） | `basic`（AI基礎）/ `office`（仕事）/ `cooking`（料理）/ `study`（学習）/ `health`（健康）/ `design`（画像・デザイン）/ `language`（語学） |
+| **level**（難易度） | `beginner`（初心者）/ `intermediate`（中級）/ `advanced`（上級） |
+
+---
+
+### Phase 2（6〜8月）：管理画面
+ブラウザ上から記事を追加・編集・削除できる `/admin` ページを実装予定。
+ファイルの作成・コマンドの実行が不要になります。
+
+---
+
+## 🚧 Coming Soon ページを本番（familyai.jp）に表示する手順
+
+> コードの変更後、GitHub Desktop でコミット・Push してから以下を実施します。
+
+### STEP 1：GitHub Desktop でコミット & Push
+
+1. GitHub Desktop を開く
+2. 変更されているファイルにチェックが入っていることを確認
+3. コメント欄に「Add Coming Soon page」などと入力して **Commit**
+4. **Push origin** をクリック
+
+---
+
+### STEP 2：Vercel に環境変数 `COMING_SOON=true` を追加
+
+1. https://vercel.com にログイン
+2. プロジェクト `familyai-jp` → **`Settings`** → **`Environment Variables`**
+3. 以下を入力して **`Save`**：
+   ```
+   Key:         COMING_SOON
+   Value:       true
+   Environment: Production（にチェック）
+   ```
+
+---
+
+### STEP 3：Redeploy（再デプロイ）
+
+1. Vercel → **`Deployments`** タブ
+2. 最新デプロイの右端「**…**」→ **`Redeploy`** をクリック
+3. 確認ダイアログ → **`Redeploy`** ボタンをクリック
+4. デプロイ完了まで待つ（通常 1〜2 分）
+
+---
+
+### STEP 4：確認
+
+- `https://familyai.jp` を開いて Coming Soon ページが表示されることを確認 ✅
+- カウントダウンが動いていることを確認 ✅
+- Header のリンクをクリックして他ページに飛ばないことを確認 ✅
+
 ---
 
 ## 🚀 本番公開手順（Coming Soon → 実際のサイトへ切り替え）

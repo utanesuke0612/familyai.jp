@@ -474,7 +474,7 @@ export default async function ArticlePage({
               {/* SNS シェアボタン */}
               <div className="mt-8 flex flex-wrap gap-3">
                 <a
-                  href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(article.title)}&url=${encodeURIComponent(`${SITE.url}/learn/${article.slug}`)}&via=familyai_jp`}
+                  href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(article.title)}&url=${encodeURIComponent(`${SITE.url}/learn/${article.slug}`)}&via=familyaijp`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium border transition-all hover:opacity-80 min-h-[44px]"

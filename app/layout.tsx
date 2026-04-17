@@ -53,7 +53,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card:        'summary_large_image',
-    site:        '@familyai_jp',
+    site:        '@familyaijp',
     title:       'familyai.jp — 家族みんなのAI活用サイト',
     description: 'AI（愛）で家族をもっと幸せに。',
     images:      ['/og-default.png'],

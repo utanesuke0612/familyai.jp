@@ -15,16 +15,10 @@ import type { ContentCategory } from '@/shared';
 
 // ── カテゴリ定義（表示順） ─────────────────────────────────────
 const CATEGORIES: ContentCategory[] = [
-  'chatgpt',
-  'claude',
-  'gemini',
   'image-gen',
   'voice',
   'education',
   'housework',
-  'health',
-  'finance',
-  'other',
 ];
 
 interface CategoryFilterProps {

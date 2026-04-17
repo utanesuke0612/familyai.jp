@@ -20,16 +20,10 @@ export const FAMILY_ROLE_LABEL: Record<FamilyRole, string> = {
 // ─── コンテンツ関連 ────────────────────────────────────────────
 /** 記事・コンテンツのカテゴリ */
 export type ContentCategory =
-  | 'chatgpt'
-  | 'claude'
-  | 'gemini'
   | 'image-gen'
   | 'voice'
   | 'education'
-  | 'housework'
-  | 'health'
-  | 'finance'
-  | 'other';
+  | 'housework';
 
 /** 記事の難易度 */
 export type DifficultyLevel = 'beginner' | 'intermediate' | 'advanced';

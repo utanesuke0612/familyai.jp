@@ -18,12 +18,10 @@ const ROLE_LINKS = [
 ];
 
 const CATEGORY_LINKS = [
-  { href: '/learn?cat=chatgpt',   label: 'ChatGPT' },
-  { href: '/learn?cat=claude',    label: 'Claude' },
-  { href: '/learn?cat=image-gen', label: '画像生成' },
-  { href: '/learn?cat=education', label: '学習・教育' },
-  { href: '/learn?cat=housework', label: '家事・育児' },
-  { href: '/learn?cat=finance',   label: 'お金・節約' },
+  { href: '/learn?cat=image-gen', label: '🎨 画像生成' },
+  { href: '/learn?cat=voice',     label: '🎙️ 音声AI' },
+  { href: '/learn?cat=education', label: '📚 学習・教育' },
+  { href: '/learn?cat=housework', label: '🏠 家事・育児' },
 ];
 
 const SITE_LINKS = [
@@ -72,7 +70,7 @@ export function Footer() {
           {/* SNSリンク（将来実装用） */}
           <div className="flex gap-3 mt-5">
             <a
-              href="https://x.com/familyai_jp"
+              href="https://x.com/familyaijp"
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center justify-center w-9 h-9 rounded-lg text-sm transition-opacity hover:opacity-70 min-h-[44px] min-w-[44px]"

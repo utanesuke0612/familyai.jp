@@ -11,7 +11,7 @@ export const SITE = {
   tagline:     'AI（愛）で家族をもっと幸せに',
   url:         'https://familyai.jp',
   locale:      'ja-JP',
-  twitterHandle: '@familyai_jp',
+  twitterHandle: '@familyaijp',
 } as const;
 
 // ─── ロール設定 ────────────────────────────────────────────────
@@ -36,30 +36,18 @@ export const ROLE_EMOJI: Record<FamilyRole, string> = {
 // ─── カテゴリ設定 ──────────────────────────────────────────────
 /** カテゴリの表示ラベル */
 export const CATEGORY_LABEL: Record<ContentCategory, string> = {
-  'chatgpt':   'ChatGPT',
-  'claude':    'Claude',
-  'gemini':    'Gemini',
   'image-gen': '画像生成',
   'voice':     '音声AI',
   'education': '学習・教育',
   'housework': '家事・育児',
-  'health':    '健康・医療',
-  'finance':   'お金・節約',
-  'other':     'その他',
 } as const;
 
 /** カテゴリのアイコン絵文字 */
 export const CATEGORY_EMOJI: Record<ContentCategory, string> = {
-  'chatgpt':   '💬',
-  'claude':    '🤖',
-  'gemini':    '✨',
   'image-gen': '🎨',
   'voice':     '🎙️',
   'education': '📚',
   'housework': '🏠',
-  'health':    '❤️',
-  'finance':   '💰',
-  'other':     '📌',
 } as const;
 
 // ─── 難易度設定 ────────────────────────────────────────────────

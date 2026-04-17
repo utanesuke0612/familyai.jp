@@ -201,7 +201,7 @@ export function HeroSection() {
               background: 'linear-gradient(135deg, var(--color-peach) 0%, var(--color-orange) 100%)',
             }}
           >
-            <span className="text-5xl">🤖</span>
+            <span className="text-5xl">💞</span>
             <span className="font-display font-bold text-white text-sm tracking-wide">
               AI = 愛
             </span>
@@ -255,24 +255,6 @@ export function HeroSection() {
 
       </div>
 
-      {/* ── スクロール誘導 ── */}
-      <div
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 animate-fade-in-up delay-500"
-        aria-hidden="true"
-      >
-        <span className="text-xs" style={{ color: 'var(--color-brown-light)' }}>
-          スクロール
-        </span>
-        <div
-          className="w-5 h-8 rounded-full border-2 flex items-start justify-center pt-1.5"
-          style={{ borderColor: 'var(--color-beige-dark)' }}
-        >
-          <div
-            className="w-1 h-2 rounded-full animate-bounce"
-            style={{ background: 'var(--color-orange)' }}
-          />
-        </div>
-      </div>
     </section>
   );
 }
