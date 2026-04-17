@@ -2419,4 +2419,46 @@ export function formatDuration(sec: number): string {
   const s = sec % 60;
   return `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
 }
+
+---
+
+## ═══════════════════════════════════
+## 課題解決
+## ═══════════════════════════════════
+
+### 🐛 #001 Vercel デプロイ後に全 URL が 404 NOT_FOUND になる（2026-04-17）
+
+**症状**
+- `familyai.jp` / `www.familyai.jp` / `familyai-jp-git-main-utafamily.vercel.app` すべてで `404: NOT_FOUND` が返る
+- Vercel のビルドログは `✓ Generating static pages (18/18)` `Build Completed` `Deployment completed` と全て成功
+- `x-vercel-error: NOT_FOUND` ヘッダーが付いており、Next.js レベルではなく Vercel インフラレベルの 404
+
+**調査過程**
+1. DNS 確認 → `familyai.jp` A レコード・`www.familyai.jp` CNAME ともに Vercel を正しく向いていた（問題なし）
+2. ドメイン競合確認 → Vercel プロジェクトは `familyai-jp` 1 つのみ（問題なし）
+3. Deployment Protection 確認 → Vercel Authentication・Password Protection ともに Disabled（問題なし）
+4. ビルドキャッシュクリア再デプロイ → 変わらず 404
+5. `curl https://familyai-jp-git-main-utafamily.vercel.app` → 同じく `NOT_FOUND`（Vercel URL 直打ちでも 404）
+6. **Vercel → Project Settings → General → Framework Settings を確認 → `Framework Preset: Other` になっていた** ← 根本原因
+
+**根本原因**
+Vercel の `Framework Preset` が `Other`（汎用 Node.js サーバー）に設定されており、Next.js のビルド出力（`.next/` ディレクトリ）を正しく認識・配信できていなかった。
+ビルド自体は `next build` コマンドが `package.json` の `build` スクリプトで実行されるため成功するが、Vercel がその出力をルーティングに使えず全 URL が 404 になる。
+
+**解決方法**
+Vercel → Project Settings → General → Framework Settings →  
+`Framework Preset` を `Other` → **`Next.js`** に変更して Save → Redeploy
+
+**補足: sitemap.ts の副次的バグも同時修正**
+同デプロイ調査中に、`app/sitemap.ts` の `export const revalidate = 3600` が  
+`lib/db/index.ts` の `fetchOptions: { cache: 'no-store' }` と競合してビルド時エラーを出していたことも判明。  
+`export const dynamic = 'force-dynamic'` に変更して解消。
+
+```typescript
+// app/sitemap.ts — 修正前
+export const revalidate = 3600;
+
+// app/sitemap.ts — 修正後
+export const dynamic = 'force-dynamic'; // no-store fetch との競合を避ける
+```
 ```

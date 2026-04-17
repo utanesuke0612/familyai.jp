@@ -1,6 +1,9 @@
 /**
  * app/(site)/page.tsx
  * familyai.jp — トップページ
+ *
+ * 本番環境 (NODE_ENV === 'production') → Coming Soon ページを表示
+ * 開発環境 (NODE_ENV === 'development') → 実際のホームページを表示
  */
 
 import { Suspense } from 'react';
@@ -8,6 +11,7 @@ import { HeroSection } from '@/components/home/HeroSection';
 import { StatsRow }    from '@/components/home/StatsRow';
 import { RolePicker }  from '@/components/home/RolePicker';
 import { ArticleGrid } from '@/components/article/ArticleGrid';
+import { ComingSoon }  from '@/components/home/ComingSoon';
 
 // ── ダミー記事データ（Step 13b で DB 取得に差し替え） ──────────
 const DUMMY_ARTICLES = [
@@ -142,6 +146,12 @@ function NewArticlesSection() {
 
 // ── ページ本体 ────────────────────────────────────────────────
 export default function HomePage() {
+  // 本番環境では Coming Soon ページを表示
+  if (process.env.NODE_ENV === 'production') {
+    return <ComingSoon />;
+  }
+
+  // 開発環境では実際のホームページを表示
   return (
     <>
       <HeroSection />
