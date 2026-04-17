@@ -127,7 +127,7 @@ export async function streamChat(
   signal?: AbortSignal,
 ): Promise<ReadableStream<Uint8Array> | null> {
   try {
-    const res = await fetch(`${baseUrl}/api/chat`, {
+    const res = await fetch(`${baseUrl}/api/ai`, {
       method:  'POST',
       headers: { 'Content-Type': 'application/json' },
       body:    JSON.stringify(req),

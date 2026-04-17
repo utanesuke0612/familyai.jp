@@ -1,7 +1,8 @@
 import type { Metadata, Viewport } from 'next';
 import { Zen_Maru_Gothic, Kaisei_Opti } from 'next/font/google';
-import { Header } from '@/components/layout/Header';
-import { Footer } from '@/components/layout/Footer';
+import { Header }           from '@/components/layout/Header';
+import { Footer }           from '@/components/layout/Footer';
+import { GoogleAnalytics }  from '@/components/analytics/GoogleAnalytics';
 import './globals.css';
 
 // ── フォント定義 ──────────────────────────────────────────────
@@ -108,6 +109,11 @@ export default function RootLayout({
 
         {/* グローバルフッター */}
         <Footer />
+
+        {/* Google Analytics（NEXT_PUBLIC_GA_ID が設定されている場合のみ） */}
+        {process.env.NEXT_PUBLIC_GA_ID && (
+          <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID} />
+        )}
 
       </body>
     </html>

@@ -75,17 +75,37 @@ export const DIFFICULTY_COLOR: Record<DifficultyLevel, string> = {
   advanced:     'text-red-600',
 } as const;
 
-// ─── AI モデル設定 ─────────────────────────────────────────────
-/** OpenRouter 経由で利用するモデル一覧 */
+// ─── AI モデルルーター設定 ─────────────────────────────────────
+/**
+ * 用途別モデルルーター（/api/ai の `type` パラメータと対応）
+ * すべて OpenRouter 経由で呼び出す。
+ *
+ * text-simple    : 汎用チャット・要約など軽量タスク
+ * text-quality   : 語学・高品質な長文応答
+ * math-reasoning : 数学・論理・コーディング
+ * transcribe     : 音声→テキスト
+ * image-gen      : テキスト→画像
+ * tts-japanese   : テキスト→日本語音声
+ */
+export const MODEL_ROUTER = {
+  'text-simple':    'google/gemini-2.0-flash-001',
+  'text-quality':   'anthropic/claude-3-5-haiku',
+  'math-reasoning': 'anthropic/claude-3-5-sonnet',
+  'transcribe':     'openai/whisper-large-v3',
+  'image-gen':      'black-forest-labs/flux-1.1-pro',
+  'tts-japanese':   'fishaudio/fish-speech-1.5',
+  /** どのモデルも利用不可の場合の最終フォールバック */
+  fallback:         'google/gemini-2.0-flash-001',
+} as const;
+
+export type ModelRouterType = Exclude<keyof typeof MODEL_ROUTER, 'fallback'>;
+
+/** @deprecated AI_MODELS → MODEL_ROUTER に移行済み */
 export const AI_MODELS = {
-  /** 記事生成・長文向け */
-  article:  'google/gemini-2.0-flash-001',
-  /** チャット向け（コスト最適） */
-  chat:     'google/gemini-2.0-flash-001',
-  /** 高品質コンテンツ向け */
-  premium:  'anthropic/claude-3-5-haiku',
-  /** ふりがな・要約など軽量タスク */
-  light:    'google/gemini-flash-1.5-8b',
+  article: MODEL_ROUTER['text-simple'],
+  chat:    MODEL_ROUTER['text-simple'],
+  premium: MODEL_ROUTER['text-quality'],
+  light:   MODEL_ROUTER['text-simple'],
 } as const;
 
 export type AiModelKey = keyof typeof AI_MODELS;
@@ -126,7 +146,9 @@ export const ROUTES = {
   dashboard:      '/dashboard',
   settings:       '/settings',
   api: {
-    chat:         '/api/chat',
+    ai:           '/api/ai',    // AIルーター（/api/chat から統一）
+    audio:        '/api/audio',
+    play:         '/api/audio/play',
     articles:     '/api/articles',
     og:           '/api/og',
     rss:          '/api/rss',

@@ -27,7 +27,9 @@ function getDb() {
     );
   }
 
-  const sql = neon(url);
+  // fetchOptions: cache:'no-store' で Next.js のフェッチキャッシュをバイパス
+  // （App Router の Server Component で常に最新 DB データを取得するために必須）
+  const sql = neon(url, { fetchOptions: { cache: 'no-store' } });
   _db = drizzle(sql, { schema });
   return _db;
 }

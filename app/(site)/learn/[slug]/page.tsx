@@ -110,8 +110,17 @@ export async function generateMetadata({
 
   const title       = `${article.title} | familyai.jp`;
   const description = article.description ?? article.title;
-  const ogImage     = article.thumbnailUrl ?? '/og-default.png';
   const url         = `${SITE.url}/learn/${article.slug}`;
+
+  // 動的OGP: サムネイルがあればそれを使い、なければ /api/og で生成
+  const primaryRole  = article.roles?.[0] ?? 'common';
+  const primaryLevel = article.level ?? '';
+  const ogApiUrl     = `${SITE.url}/api/og?${new URLSearchParams({
+    title: article.title,
+    role:  primaryRole,
+    ...(primaryLevel ? { level: primaryLevel } : {}),
+  }).toString()}`;
+  const ogImage      = article.thumbnailUrl ?? ogApiUrl;
 
   return {
     title,
@@ -137,6 +146,24 @@ export async function generateMetadata({
 
 // ── JSON-LD コンポーネント ────────────────────────────────────
 function JsonLd({ article }: { article: NonNullable<Awaited<ReturnType<typeof getArticle>>> }) {
+  const articleUrl = `${SITE.url}/learn/${article.slug}`;
+
+  // AudioObject スキーマ（音声付き記事のみ）
+  const audioObject = article.audioUrl
+    ? {
+        '@type':      'AudioObject',
+        contentUrl:   article.audioUrl,
+        name:         `${article.title}（音声版）`,
+        inLanguage:   article.audioLanguage ?? 'ja',
+        ...(article.audioDurationSec != null && {
+          duration: `PT${Math.floor(article.audioDurationSec / 60)}M${article.audioDurationSec % 60}S`,
+        }),
+        ...(article.audioTranscript && {
+          transcript: article.audioTranscript,
+        }),
+      }
+    : undefined;
+
   const schema = {
     '@context': 'https://schema.org',
     '@type':    'Article',
@@ -145,7 +172,7 @@ function JsonLd({ article }: { article: NonNullable<Awaited<ReturnType<typeof ge
     image:      article.thumbnailUrl ?? `${SITE.url}/og-default.png`,
     datePublished: article.publishedAt?.toISOString(),
     dateModified:  article.updatedAt?.toISOString() ?? article.publishedAt?.toISOString(),
-    url:        `${SITE.url}/learn/${article.slug}`,
+    url:        articleUrl,
     inLanguage: 'ja',
     publisher: {
       '@type': 'Organization',
@@ -158,9 +185,11 @@ function JsonLd({ article }: { article: NonNullable<Awaited<ReturnType<typeof ge
     },
     mainEntityOfPage: {
       '@type': 'WebPage',
-      '@id':   `${SITE.url}/learn/${article.slug}`,
+      '@id':   articleUrl,
     },
     keywords: [...article.roles, ...article.categories, 'AI', '人工知能', '家族'].join(', '),
+    // 音声コンテンツ SEO（audioUrl がある記事のみ）
+    ...(audioObject && { audio: audioObject }),
   };
 
   return (
@@ -377,6 +406,7 @@ export default async function ArticlePage({
               transcript={article.audioTranscript ?? null}
               language={article.audioLanguage ?? null}
               durationSec={article.audioDurationSec ?? null}
+              articleId={article.id}
             />
           </div>
         </section>
@@ -466,6 +496,7 @@ export default async function ArticlePage({
                 articleTitle={article.title}
                 articleSlug={article.slug}
                 articleExcerpt={article.description ?? undefined}
+                articleCategories={article.categories}
               />
 
               {/* 記事情報カード */}

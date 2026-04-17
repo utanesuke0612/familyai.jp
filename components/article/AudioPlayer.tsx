@@ -25,6 +25,8 @@ interface AudioPlayerProps {
   /** 語学コンテンツの言語コード: 'en' | 'zh' | 'ko' 等 */
   language?:    string | null;
   durationSec?: number | null;
+  /** 再生カウント用の記事 ID（/api/audio/play に送信） */
+  articleId?:   string | null;
 }
 
 // ── 定数 ──────────────────────────────────────────────────────
@@ -54,10 +56,12 @@ export function AudioPlayer({
   transcript,
   language,
   durationSec,
+  articleId,
 }: AudioPlayerProps) {
   const audioRef         = useRef<HTMLAudioElement>(null);
   const seekBarRef       = useRef<HTMLDivElement>(null);
   const transcriptId     = useId();
+  const playCountedRef   = useRef(false); // 1セッションにつき1回のみカウント
 
   const [isPlaying,        setIsPlaying]        = useState(false);
   const [isBuffering,      setIsBuffering]       = useState(false);
@@ -117,6 +121,18 @@ export function AudioPlayer({
     if (audioRef.current) audioRef.current.playbackRate = speed;
   }, [speed]);
 
+  // ── 再生カウント（初回再生時のみ /api/audio/play に POST） ──
+  const reportPlay = useCallback(() => {
+    if (!articleId || playCountedRef.current) return;
+    playCountedRef.current = true;
+    // fire-and-forget（エラーは無視）
+    fetch('/api/audio/play', {
+      method:  'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body:    JSON.stringify({ articleId }),
+    }).catch(() => {/* 無視 */});
+  }, [articleId]);
+
   // ── 再生 / 一時停止 ─────────────────────────────────────────
   const togglePlay = useCallback(() => {
     const audio = audioRef.current;
@@ -124,9 +140,10 @@ export function AudioPlayer({
     if (isPlaying) {
       audio.pause();
     } else {
+      reportPlay(); // 初回再生をカウント
       audio.play().catch(() => setHasError(true));
     }
-  }, [isPlaying]);
+  }, [isPlaying, reportPlay]);
 
   // ── シーク共通ヘルパー ──────────────────────────────────────
   const calcRatio = useCallback((clientX: number) => {
