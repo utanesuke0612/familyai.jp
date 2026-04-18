@@ -10,24 +10,6 @@ import type { ApiResponse, ArticleSummary, Article, PaginatedResult } from '../t
 import { buildQueryString } from '../utils';
 import { PAGINATION } from '../constants';
 
-// ─── サーバー応答の実形式（/api/articles が返す shape）────────────
-/**
- * /api/articles の実際のレスポンス data 形式。
- * shared/types の PaginatedResult<T>（items/meta）とは異なるため
- * fetchArticles 内で正規化する。
- */
-interface ArticlesApiData {
-  articles:   ArticleSummary[];
-  pagination: {
-    page:       number;
-    limit:      number;
-    total:      number;
-    totalPages: number;
-    hasNext:    boolean;
-    hasPrev:    boolean;
-  };
-}
-
 // ─── 基底 fetch ラッパー ───────────────────────────────────────
 
 /** fetch 共通オプション */
@@ -102,41 +84,22 @@ export interface ArticlesQuery {
 
 /**
  * 記事一覧を取得する。
- * サーバーは { articles, pagination } を返すが、
- * PaginatedResult<T>（{ items, meta }）形式に正規化して返す。
+ * サーバーは PaginatedResult<T>（{ items, meta }）形式で返す。
+ * ※ /api/articles のレスポンス形式と完全に一致（Rev17 で統一済み）
  */
 export async function fetchArticles(
   baseUrl: string,
   query:   ArticlesQuery = {},
 ): Promise<ApiResponse<PaginatedResult<ArticleSummary>>> {
   const params = {
-    page:       query.page    ?? 1,
-    perPage:    query.perPage ?? PAGINATION.defaultPerPage,
+    page:  query.page    ?? 1,
+    limit: query.perPage ?? PAGINATION.defaultPerPage,
     ...query,
   };
 
-  const raw = await apiFetch<ArticlesApiData>(
+  return apiFetch<PaginatedResult<ArticleSummary>>(
     `${baseUrl}/api/articles${buildQueryString(params)}`,
   );
-
-  if (!raw.ok) return raw;
-
-  // サーバー応答の { articles, pagination } → PaginatedResult<T> に正規化
-  const { articles, pagination } = raw.data;
-  return {
-    ok:   true,
-    data: {
-      items: articles,
-      meta: {
-        page:       pagination.page,
-        perPage:    pagination.limit,
-        total:      pagination.total,
-        totalPages: pagination.totalPages,
-        hasNext:    pagination.hasNext,
-        hasPrev:    pagination.hasPrev,
-      },
-    },
-  };
 }
 
 /**

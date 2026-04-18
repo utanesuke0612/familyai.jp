@@ -16,10 +16,11 @@
  * {
  *   ok: true,
  *   data: {
- *     articles:   Article[];
- *     pagination: { page, limit, total, totalPages, hasNext, hasPrev }
+ *     items: Article[];
+ *     meta:  { page, perPage, total, totalPages, hasNext, hasPrev }
  *   }
  * }
+ * ※ shared/api/index.ts の PaginatedResult<T> と同一形式（iOS 共通）
  *
  * 実装ルール:
  * - published: true の記事のみ返す
@@ -40,8 +41,7 @@ export const runtime = 'nodejs';
 const querySchema = z.object({
   role:  z.enum(['papa', 'mama', 'kids', 'senior', 'common']).optional(),
   cat:   z.enum([
-    'chatgpt', 'claude', 'gemini', 'image-gen', 'voice',
-    'education', 'housework', 'health', 'finance', 'other',
+    'image-gen', 'voice', 'education', 'housework',
   ]).optional(),
   level: z.enum(['beginner', 'intermediate', 'advanced']).optional(),
   page:  z.coerce.number().int().min(1).default(1),
@@ -150,10 +150,10 @@ export async function GET(req: NextRequest) {
     const res = NextResponse.json({
       ok:   true,
       data: {
-        articles:   rows,
-        pagination: {
+        items: rows,
+        meta: {
           page,
-          limit,
+          perPage:    limit,
           total,
           totalPages,
           hasNext: page < totalPages,

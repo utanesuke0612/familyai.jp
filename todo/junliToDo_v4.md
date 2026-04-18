@@ -1,6 +1,6 @@
 # junli ToDo — 人間がやること一覧
 
-> 最終更新: 2026-04-16（実装計画 v5 に合わせて更新）
+> 最終更新: 2026-04-18（Rev12〜16 完了確認・ホームページ DB 差し替え完了・カテゴリ定義修正）
 
 # かかった費用
 
@@ -47,7 +47,7 @@
 
 ### 1. ドメイン・DNS設定（お名前ドットコム専用手順）
 **所要時間: 約30分**
-**状態: 設定済み・Vercel Refresh 待ち（途中）**
+**状態: ✅ 完了（2026-04-18 Vercel Domains 全項目 Valid Configuration 確認済み）**
 
 #### STEP 1: Vercel でドメインを追加してDNS値を確認する
 1. https://vercel.com にログイン
@@ -101,7 +101,6 @@
 - Vercelダッシュボードの Domains 画面が ✅ に変わればOK
 https://vercel.com/utafamily/familyai-jp/settings/domains
 
-**👆@2026/4/14 できたところ、Refreshのところはまだ（Vercelダッシュボードで ✅ になるまで待機中）**
 #### STEP 4: SSL証明書（HTTPS）有効化の確認
 1. Vercel ダッシュボード → Project → `Settings` → `Domains` を開く
 2. `familyai.jp` / `www.familyai.jp` の HTTPS ステータスが有効（証明書発行済み）であることを確認
@@ -442,7 +441,35 @@ https://vercel.com/utafamily/familyai-jp/settings/domains
 
 ---
 
+## 🗺️ 全体ロードマップ（メディア × Webアプリ × スマホアプリ）
+
+> **familyai.jp は「記事メディア」だけでなく、インタラクティブなWebアプリも提供するプラットフォームです。**
+> また将来は iOS・Android アプリへの展開も確定しています。Web版はその「最初のクライアント」です。
+
+| フェーズ | 時期 | 内容 | 担当 |
+|---------|------|------|------|
+| **Phase 1** | 〜2026年5月 | **記事メディア公開**（記事・音声・AIチャット） | junli + CodingAgent |
+| **Phase 2** | 2026年夏 | **Webアプリ追加**（ディクテーション・宿題ヘルパー・献立プランナー等）<br>+ PWA対応・管理画面・Stripe決済 | junli + CodingAgent |
+| **Phase 3** | 2026年秋 | **有料会員機能**（Webアプリの高度機能を有料化）<br>+ コンテンツ拡充・語学コース | junli + CodingAgent |
+| **Phase 4** | 2027年前半 | **スマホアプリ化**（React Native + Expo）<br>App Store / Google Play 申請 | junli + CodingAgent |
+| **Phase 5** | 2027年後半〜 | Swift / Kotlin ネイティブ検討（必要に応じて） | 要検討 |
+
+> 📌 CodingAgent は常に「shared/ 層を iOS でも使える設計」「Webアプリを追加しやすいAPI設計」で実装しています。
+
+---
+
 ## 📅 Phase 2（6〜8月）でやること
+
+> Phase 2 の主な目標：**インタラクティブWebアプリの追加** + PWA対応 + Stripe決済
+
+### Phase 2 で追加するWebアプリ一覧（CodingAgent が実装）
+
+| アプリ | ルート | junli さんがやること |
+|-------|--------|-------------------|
+| **ディクテーション** | `/tools/dictation` | 練習用の音声素材（MP3）を準備して Vercel Blob にアップロード |
+| **宿題ヘルパー** | `/tools/homework` | 対象学年・科目の範囲を CodingAgent に伝える |
+| **献立プランナー** | `/tools/meal-plan` | 特になし（CodingAgent が実装） |
+| **画像生成スタジオ** | `/tools/image-gen` | OpenRouter で FLUX モデルの利用枠を確認 |
 
 ---
 
@@ -491,7 +518,16 @@ https://vercel.com/utafamily/familyai-jp/settings/domains
 
 ---
 
-## 📱 Phase 4（2026年 Q3〜Q4）でやること
+## 📱 Phase 4（2027年前半）でやること — React Native + Expo アプリ化
+
+> **CodingAgent がやること（Phase 4 で追加実装）**
+> - React Native + Expo プロジェクトの初期設定
+> - `shared/` 層（型・定数・fetch関数）をそのまま流用
+> - 全 UI コンポーネントを React Native 用に作り直し
+> - 音声再生を `expo-av` に置き換え
+> - 認証を Expo Auth Session に置き換え
+>
+> **junli さんがやること（下記）**
 
 ---
 
@@ -546,7 +582,7 @@ App Manager（アプリの提出・審査提出が可能）
 
 ---
 
-## 🤖 Phase 5（2027年 Q1）でやること
+## 🤖 Phase 5（2027年後半〜）でやること — Android 対応・ネイティブ検討
 
 ---
 
@@ -606,9 +642,13 @@ App Manager（アプリの提出・審査提出が可能）
 ✅ 完了済み:
   ① Vercel アカウント作成・プロジェクト設定 ✅
   ② ドメイン取得（familyai.jp / お名前ドットコム） ✅
-  ③ DNS設定（Aレコード・CNAMEレコード）✅（Vercel Refresh 待ち）
+  ③ DNS設定（Aレコード・CNAMEレコード）✅ 完了（2026-04-18 Valid Configuration 確認）
   ④ SSL/HTTPS 有効化確認 ✅（2026-04-15）
   ★ Coming Soon ページ実装済み ✅（2026-04-17）
+  ★ COMING_SOON=true を Vercel 本番環境に設定・Redeploy 済み ✅（2026-04-18）
+  ★ ホームページ新着記事を Neon DB から直接取得に差し替え完了 ✅（2026-04-18）
+  ★ 記事を 5本に絞り込み（MD管理・npm run db:sync 方式）✅（2026-04-18）
+  ★ カテゴリを 4種類（image-gen/voice/education/housework）に統一 ✅（2026-04-18）
 
 🔥 今週中に完了（〜4月20日）★最優先★:
   ⑤ DNS Refresh 最終確認（Vercelダッシュボードで ✅ になるまで待つ）
@@ -739,7 +779,7 @@ description: 一行説明（SNSシェア時にも表示される）
 roles:
   - mama          ← papa / mama / kids / senior / common から選ぶ
 categories:
-  - cooking       ← basic / office / cooking / study / health / design / language から選ぶ
+  - housework     ← image-gen / voice / education / housework から選ぶ（この4種類のみ有効）
 level: beginner   ← beginner（初心者） / intermediate（中級） / advanced（上級）
 published: true   ← false にすると非公開（DBには入るが表示されない）
 publishedAt: 2026-05-01   ← 公開日（YYYY-MM-DD形式）
@@ -798,8 +838,11 @@ published: false   ← true → false に変更
 | 種類 | 選択肢 |
 |------|--------|
 | **roles**（対象者） | `papa` / `mama` / `kids` / `senior` / `common`（全員向け） |
-| **categories**（ジャンル） | `basic`（AI基礎）/ `office`（仕事）/ `cooking`（料理）/ `study`（学習）/ `health`（健康）/ `design`（画像・デザイン）/ `language`（語学） |
+| **categories**（ジャンル） | `image-gen`（画像生成）/ `voice`（音声AI）/ `education`（学習・教育）/ `housework`（家事・育児） |
 | **level**（難易度） | `beginner`（初心者）/ `intermediate`（中級）/ `advanced`（上級） |
+
+> ⚠️ categories は**上記4種類のみ**です。それ以外の値（cooking・study・health 等）を使うと
+> カテゴリフィルターに表示されません。必ず4種類から選んでください。
 
 ---
 
