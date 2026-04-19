@@ -19,6 +19,15 @@ import type { Article, NewArticle } from '@/lib/db/schema';
 
 export type ArticleRow = Article;
 
+// ─── SQL ユーティリティ ────────────────────────────────────────
+
+/**
+ * ILIKE のメタ文字（% / _ / \）をエスケープ。
+ * ユーザー入力の `%` を「任意文字列にマッチ」ではなく
+ * リテラル `%` として ILIKE に渡すために使う。
+ */
+export const escapeLike = (s: string): string => s.replace(/[\\%_]/g, '\\$&');
+
 export interface ArticleListFilter {
   role?:       string;
   categories?: string[];   // OR 条件で複数カテゴリに対応
@@ -217,8 +226,6 @@ export async function listAllArticles(opts: {
   const { search, sort = 'latest' } = opts;
 
   try {
-    // ILIKE メタ文字（% / _ / \）をエスケープして部分一致検索に使う
-    const escapeLike = (s: string) => s.replace(/[\\%_]/g, '\\$&');
     const conditions = search
       ? [ilike(articles.title, `%${escapeLike(search)}%`)]
       : [];

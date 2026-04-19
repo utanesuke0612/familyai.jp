@@ -5,45 +5,11 @@
  */
 
 import { NextRequest, NextResponse } from 'next/server';
-import { z }                         from 'zod';
 import { requireAdmin }              from '@/lib/admin-auth';
 import { verifyCsrf }                from '@/lib/csrf';
 import { enforceAdminRateLimit }     from '@/lib/ratelimit';
 import { listAllArticles, createArticle } from '@/lib/repositories/articles';
-
-// ─── zod スキーマ ─────────────────────────────────────────────
-const FAMILY_ROLES = ['papa', 'mama', 'kids', 'senior', 'common'] as const;
-const CATEGORIES   = ['image-gen', 'voice', 'education', 'housework'] as const;
-const LEVELS       = ['beginner', 'intermediate', 'advanced'] as const;
-
-/** 日付文字列 → Date（空文字/undefined は null） */
-const optionalDate = z
-  .union([z.string(), z.null()])
-  .optional()
-  .transform((v) => {
-    if (v === undefined) return undefined;
-    if (v === null || v === '') return null;
-    const d = new Date(v);
-    return isNaN(d.getTime()) ? null : d;
-  });
-
-const createArticleSchema = z.object({
-  slug:             z.string().min(1).max(255),
-  title:            z.string().min(1).max(255),
-  description:      z.string().nullable().optional().transform((v) => v ?? null),
-  body:             z.string().min(1),
-  roles:            z.array(z.enum(FAMILY_ROLES)).default([]),
-  categories:       z.array(z.enum(CATEGORIES)).default([]),
-  level:            z.enum(LEVELS).default('beginner'),
-  published:        z.boolean().optional().default(false),
-  publishedAt:      optionalDate,
-  audioUrl:         z.string().nullable().optional().transform((v) => v ?? null),
-  audioTranscript:  z.string().nullable().optional().transform((v) => v ?? null),
-  audioDurationSec: z.number().int().nonnegative().nullable().optional().transform((v) => v ?? null),
-  audioLanguage:    z.string().nullable().optional().transform((v) => v ?? null),
-  thumbnailUrl:     z.string().nullable().optional().transform((v) => v ?? null),
-  isFeatured:       z.boolean().optional().default(false),
-});
+import { createArticleSchema }       from '@/lib/schemas/articles';
 
 // ─── GET: 全記事一覧 ──────────────────────────────────────────
 export async function GET(req: NextRequest) {
