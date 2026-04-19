@@ -17,7 +17,7 @@
 import NextAuth            from 'next-auth';
 import Google              from 'next-auth/providers/google';
 import Credentials         from 'next-auth/providers/credentials';
-import type { JWT }        from 'next-auth/jwt';
+import 'next-auth/jwt';
 import bcrypt              from 'bcryptjs';
 import { eq }              from 'drizzle-orm';
 import { db, users }       from '@/lib/db';
