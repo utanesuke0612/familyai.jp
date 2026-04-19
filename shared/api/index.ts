@@ -6,7 +6,15 @@
  * Next.js Route Handler / iOS Swift のどちらからも呼び出せる設計。
  */
 
-import type { ApiResponse, ArticleSummary, Article, PaginatedResult } from '../types';
+import type {
+  ApiResponse,
+  ArticleSummary,
+  Article,
+  PaginatedResult,
+  FamilyRole,
+  ContentCategory,
+  DifficultyLevel,
+} from '../types';
 import { buildQueryString } from '../utils';
 import { PAGINATION } from '../constants';
 
@@ -73,28 +81,40 @@ export async function apiFetch<T>(
 // ─── 記事 API ─────────────────────────────────────────────────
 
 export interface ArticlesQuery {
-  page?:       number;
-  perPage?:    number;
-  role?:       string;
-  category?:   string;
-  difficulty?: string;
-  tag?:        string;
-  q?:          string; // 全文検索クエリ
+  page?:    number;
+  perPage?: number;
+  /** ロール（単一）— サーバー側パラメータ名 `role` */
+  role?:    FamilyRole;
+  /** カテゴリ（複数指定可）— サーバー側パラメータ名 `cat`（繰り返し） */
+  cat?:     ContentCategory[];
+  /** 難易度 — サーバー側パラメータ名 `level` */
+  level?:   DifficultyLevel;
+  /** ソート */
+  sort?:    'latest' | 'popular';
 }
 
 /**
  * 記事一覧を取得する。
  * サーバーは PaginatedResult<T>（{ items, meta }）形式で返す。
  * ※ /api/articles のレスポンス形式と完全に一致（Rev17 で統一済み）
+ *
+ * パラメータ名はサーバーの /api/articles と完全一致させる（Rev22 で修正）：
+ *   page / limit / role / cat（複数）/ level / sort
  */
 export async function fetchArticles(
   baseUrl: string,
   query:   ArticlesQuery = {},
 ): Promise<ApiResponse<PaginatedResult<ArticleSummary>>> {
-  const params = {
+  const params: Record<
+    string,
+    string | number | boolean | undefined | null | ReadonlyArray<string>
+  > = {
     page:  query.page    ?? 1,
     limit: query.perPage ?? PAGINATION.defaultPerPage,
-    ...query,
+    role:  query.role,
+    cat:   query.cat,
+    level: query.level,
+    sort:  query.sort,
   };
 
   return apiFetch<PaginatedResult<ArticleSummary>>(

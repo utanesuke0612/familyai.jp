@@ -126,13 +126,21 @@ export function formatNumberJa(n: number): string {
 
 // ─── API ユーティリティ ────────────────────────────────────────
 
-/** URLSearchParams を安全に構築する */
+/** URLSearchParams を安全に構築する（配列値は繰り返しパラメータとして展開）*/
 export function buildQueryString(
-  params: Record<string, string | number | boolean | undefined | null>,
+  params: Record<
+    string,
+    string | number | boolean | undefined | null | ReadonlyArray<string | number | boolean>
+  >,
 ): string {
   const sp = new URLSearchParams();
   for (const [k, v] of Object.entries(params)) {
-    if (v !== undefined && v !== null) {
+    if (v === undefined || v === null) continue;
+    if (Array.isArray(v)) {
+      for (const item of v) {
+        if (item !== undefined && item !== null) sp.append(k, String(item));
+      }
+    } else {
       sp.set(k, String(v));
     }
   }

@@ -26,12 +26,10 @@
 import { NextRequest }    from 'next/server';
 import { Ratelimit }      from '@upstash/ratelimit';
 import { Redis }          from '@upstash/redis';
-import { eq }             from 'drizzle-orm';
 import { z }              from 'zod';
 import { routeAI, buildArticleSystemPrompt } from '@/lib/ai/router';
 import { verifyCsrf }     from '@/lib/csrf';
 import { auth }           from '@/lib/auth';
-import { db, users }      from '@/lib/db';
 
 export const runtime = 'nodejs';
 
@@ -149,21 +147,10 @@ export async function POST(req: NextRequest) {
     let limitKey   = ip;
 
     if (session?.user?.id) {
-      // ログイン済み: DB からプランを取得してリミッターを選択
-      try {
-        const userRows = await db
-          .select({ plan: users.plan })
-          .from(users)
-          .where(eq(users.id, session.user.id))
-          .limit(1);
-        const plan = userRows[0]?.plan ?? 'free';
-        limiter  = plan === 'pro' ? ratelimiters.pro : ratelimiters.free;
-        limitKey = session.user.id;
-      } catch {
-        // DB 取得失敗時は anon フォールバック
-        limiter  = ratelimiters.anon;
-        limitKey = ip;
-      }
+      // ログイン済み：plan は JWT に埋め込み済み（Rev23 #4）のため DB 呼び出し不要
+      const plan = session.user.plan ?? 'free';
+      limiter  = plan === 'pro' ? ratelimiters.pro : ratelimiters.free;
+      limitKey = session.user.id;
     }
 
     const { success } = await limiter.limit(limitKey);

@@ -1,7 +1,5 @@
 import type { Metadata, Viewport } from 'next';
 import { Zen_Maru_Gothic, Kaisei_Opti } from 'next/font/google';
-import { Header }           from '@/components/layout/Header';
-import { Footer }           from '@/components/layout/Footer';
 import { GoogleAnalytics }  from '@/components/analytics/GoogleAnalytics';
 import './globals.css';
 
@@ -90,7 +88,7 @@ export default function RootLayout({
     >
       <body className="antialiased full-height" style={{ backgroundColor: 'var(--color-cream)' }}>
 
-        {/* スキップリンク（キーボードアクセシビリティ） */}
+        {/* スキップリンク（キーボードアクセシビリティ・全ページ共通） */}
         <a
           href="#main-content"
           className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-toast focus:px-4 focus:py-2 focus:rounded-lg focus:font-bold"
@@ -99,16 +97,8 @@ export default function RootLayout({
           メインコンテンツへスキップ
         </a>
 
-        {/* グローバルヘッダー */}
-        <Header />
-
-        {/* メインコンテンツ */}
-        <main id="main-content">
-          {children}
-        </main>
-
-        {/* グローバルフッター */}
-        <Footer />
+        {/* Header・Footer・main は各レイアウト（(site)/layout.tsx / admin/layout.tsx）が担当 */}
+        {children}
 
         {/* Google Analytics（NEXT_PUBLIC_GA_ID が設定されている場合のみ） */}
         {process.env.NEXT_PUBLIC_GA_ID && (

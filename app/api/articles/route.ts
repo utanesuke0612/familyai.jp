@@ -31,18 +31,44 @@
  */
 
 import { NextRequest, NextResponse } from 'next/server';
-import { eq, and, desc, sql, count } from 'drizzle-orm';
+import { eq, and, or, desc, sql, count } from 'drizzle-orm';
 import { z }                         from 'zod';
 import { db, articles }              from '@/lib/db';
 
 export const runtime = 'nodejs';
 
 // ── 入力バリデーションスキーマ ──────────────────────────────────
+const CAT_VALUES = ['image-gen', 'voice', 'education', 'housework'] as const;
+const catEnum    = z.enum(CAT_VALUES);
+
+/** cat は複数指定を許可：
+ *  - 単一値:     ?cat=voice
+ *  - 繰り返し:   ?cat=voice&cat=education （配列で入る）
+ *  - カンマ区切: ?cat=voice,education
+ */
+const catSchema = z
+  .union([catEnum, z.array(catEnum), z.string()])
+  .optional()
+  .transform((v): (typeof CAT_VALUES)[number][] | undefined => {
+    if (v === undefined) return undefined;
+    const arr = Array.isArray(v)
+      ? v
+      : typeof v === 'string'
+        ? v.split(',').map((s) => s.trim()).filter(Boolean)
+        : [v];
+    // enum 再チェック
+    const validated: (typeof CAT_VALUES)[number][] = [];
+    for (const item of arr) {
+      const parsed = catEnum.safeParse(item);
+      if (!parsed.success) return undefined; // 無効値は全体を無効化
+      validated.push(parsed.data);
+    }
+    return validated.length > 0 ? validated : undefined;
+  });
+
 const querySchema = z.object({
   role:  z.enum(['papa', 'mama', 'kids', 'senior', 'common']).optional(),
-  cat:   z.enum([
-    'image-gen', 'voice', 'education', 'housework',
-  ]).optional(),
+  cat:   catSchema,
   level: z.enum(['beginner', 'intermediate', 'advanced']).optional(),
   page:  z.coerce.number().int().min(1).default(1),
   limit: z.coerce.number().int().min(1).max(50).default(12),
@@ -73,9 +99,12 @@ const SELECT_FIELDS = {
 export async function GET(req: NextRequest) {
   // 1. クエリパラメータのバリデーション
   const { searchParams } = new URL(req.url);
+  const catParams = searchParams.getAll('cat');
   const raw = {
     role:  searchParams.get('role')  ?? undefined,
-    cat:   searchParams.get('cat')   ?? undefined,
+    cat:   catParams.length > 1 ? catParams
+         : catParams.length === 1 ? catParams[0]
+         : undefined,
     level: searchParams.get('level') ?? undefined,
     page:  searchParams.get('page')  ?? undefined,
     limit: searchParams.get('limit') ?? undefined,
@@ -109,9 +138,13 @@ export async function GET(req: NextRequest) {
     );
   }
 
-  if (cat) {
+  if (cat && cat.length > 0) {
+    // 複数カテゴリは OR（いずれかを含む）で検索
+    const catConditions = cat.map(
+      (c) => sql`${articles.categories} @> ARRAY[${c}]::text[]`,
+    );
     conditions.push(
-      sql`${articles.categories} @> ARRAY[${cat}]::text[]`,
+      catConditions.length === 1 ? catConditions[0]! : or(...catConditions)!,
     );
   }
 

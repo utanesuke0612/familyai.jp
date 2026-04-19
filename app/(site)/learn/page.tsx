@@ -20,6 +20,9 @@ import { SortLevelBar }      from '@/components/learn/SortLevelBar';
 // ── 定数 ──────────────────────────────────────────────────────
 const PAGE_SIZE = 12;
 
+// ISR: 5分ごとに再検証（Rev23 #2・フィルタ組み合わせでも DB 負荷を抑える）
+export const revalidate = 300;
+
 // ── メタデータ ────────────────────────────────────────────────
 export const metadata: Metadata = {
   title:       '記事一覧 | familyai.jp',

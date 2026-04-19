@@ -1,6 +1,6 @@
 # familyai.jp — システム構成図（保守ガイド）
 
-> 最終更新: 2026-04-18（ホームページDB差し替え・content/articles/ 追加・Rev12〜16完了・Webアプリ機能追加・モバイル前提明記）
+> 最終更新: 2026-04-19（Rev22 完了／Rev23 をモバイル・高トラフィック観点レビューに基づき計画追加：Phase A 56分／Rev24-25 は Phase 4・規模到達時に実施）
 > 目的: 全体構造・外部サービス連携・データフローを一目で把握し、保守・拡張を容易にする
 
 ---
@@ -118,15 +118,15 @@ familyai.jp
 
 **OpenRouter 経由で呼ぶモデル**（`shared/constants/index.ts` の `MODEL_ROUTER`）:
 
-| 用途タイプ | モデル | 提供元 |
-|---|---|---|
-| `text-simple` | `google/gemini-2.0-flash-001` | Google |
-| `text-quality` | `anthropic/claude-3-5-haiku` | Anthropic |
-| `math-reasoning` | `anthropic/claude-3-5-sonnet` | Anthropic |
-| `transcribe` | `openai/whisper-large-v3` | OpenAI |
-| `image-gen` | `black-forest-labs/flux-1.1-pro` | Black Forest Labs |
-| `tts-japanese` | `fishaudio/fish-speech-1.5` | Fish Audio |
-| `fallback` | `google/gemini-2.0-flash-001` | Google |
+| 用途タイプ            | モデル                              | 提供元               |
+| ---------------- | -------------------------------- | ----------------- |
+| `text-simple`    | `google/gemini-2.0-flash-001`    | Google            |
+| `text-quality`   | `anthropic/claude-3-5-haiku`     | Anthropic         |
+| `math-reasoning` | `anthropic/claude-3-5-sonnet`    | Anthropic         |
+| `transcribe`     | `openai/whisper-large-v3`        | OpenAI            |
+| `image-gen`      | `black-forest-labs/flux-1.1-pro` | Black Forest Labs |
+| `tts-japanese`   | `fishaudio/fish-speech-1.5`      | Fish Audio        |
+| `fallback`       | `google/gemini-2.0-flash-001`    | Google            |
 
 > 🔑 **保守ポイント**: モデル入替は `MODEL_ROUTER` のみ編集すれば完結。`lib/ai/router.ts` は切替のみ・ビジネスロジック無し。
 
@@ -135,7 +135,8 @@ familyai.jp
 | サービス | 役割 | 環境変数 | 使う場所 | Phase |
 |---|---|---|---|---|
 | **Google OAuth** | Googleログイン | `GOOGLE_CLIENT_ID`<br>`GOOGLE_CLIENT_SECRET` | `lib/auth.ts` (NextAuth v5) | Phase1 |
-| **NextAuth (内製)** | Credentials認証（メール+パス）<br>セッション (JWT) | `NEXTAUTH_SECRET`<br>`NEXTAUTH_URL` | `lib/auth.ts` | Phase1 |
+| **NextAuth v5** | Credentials認証（メール+パス）<br>セッション (JWT) | `NEXTAUTH_SECRET` / `AUTH_SECRET`<br>`NEXTAUTH_URL` / `AUTH_URL` | `lib/auth.ts` | Phase1 |
+| **管理画面認証** | ADMIN_EMAIL による単一管理者制御 | `ADMIN_EMAIL` | `lib/admin-auth.ts`<br>`app/admin/layout.tsx` | Phase1 |
 | **Google Analytics 4** | PV・イベント解析 | `NEXT_PUBLIC_GA_ID` | `components/analytics/GoogleAnalytics.tsx` | Phase1 |
 | **Google Search Console** | SEO診断・sitemap送信 | — (認証ファイル) | `app/sitemap.ts`<br>`app/robots.ts` | Phase1 |
 
@@ -345,6 +346,7 @@ familyai.jp/
 │
 ├── app/                          📱 Next.js App Router (Web専用)
 │   ├── (site)/                   一般ユーザー向けページ群
+│   │   ├── layout.tsx            サイト共通レイアウト（Header + Footer をここで管理）
 │   │   ├── page.tsx              トップ (Hero/StatsRow/RolePicker/新着・DB直取得)
 │   │   ├── learn/
 │   │   │   ├── page.tsx          記事一覧（フィルタ・ページネーション）
@@ -365,21 +367,33 @@ familyai.jp/
 │   │   ├── about / common / privacy / terms / page.tsx
 │   │   ├── error.tsx / loading.tsx / not-found.tsx
 │   │
+│   ├── admin/                    🔐 管理画面（ADMIN_EMAIL 認証必須）
+│   │   ├── layout.tsx            管理者認証ガード + AdminNav
+│   │   ├── page.tsx              記事一覧（検索・ソート・公開トグル・削除）
+│   │   └── articles/
+│   │       ├── new/page.tsx      記事新規作成（ArticleForm）
+│   │       └── [slug]/edit/page.tsx  記事編集（ArticleForm・非公開記事も取得）
+│   │
 │   ├── api/                      🔌 Route Handler（サーバー側API）
 │   │   ├── ai/route.ts           ❶ AI生成SSE（OpenRouter+Upstash+Auth）← メディア＆Webアプリ共用
 │   │   ├── articles/route.ts     ❷ 記事一覧API（Neon）
+│   │   ├── admin/articles/
+│   │   │   ├── route.ts          ❸ 管理者用記事 GET一覧+POST作成
+│   │   │   └── [slug]/
+│   │   │       ├── route.ts      ❹ 管理者用記事 PUT更新+DELETE削除
+│   │   │       └── toggle/route.ts  ❺ 公開/非公開トグル PATCH
 │   │   ├── audio/
-│   │   │   ├── route.ts          ❸ 音声メタデータGET（Neon）
-│   │   │   └── play/route.ts     ❹ 再生カウントPOST（Neon+Upstash）
-│   │   ├── og/route.tsx          ❺ OGP画像（@vercel/og・Edge）
-│   │   ├── tools/                ❻ Webアプリ用API（Phase 2 以降）
+│   │   │   ├── route.ts          ❻ 音声メタデータGET（Neon）
+│   │   │   └── play/route.ts     ❼ 再生カウントPOST（Neon+Upstash）
+│   │   ├── og/route.tsx          ❽ OGP画像（@vercel/og・Edge）
+│   │   ├── tools/                ❾ Webアプリ用API（Phase 2 以降）
 │   │   │   ├── dictation/route.ts    音声採点・フィードバック
 │   │   │   └── homework/route.ts     宿題ヒント生成（教育特化プロンプト）
 │   │   └── auth/
-│   │       ├── [...nextauth]/    ❼ NextAuth標準エンドポイント
-│   │       └── register/route.ts ❽ ローカル登録（bcrypt+Neon）
+│   │       ├── [...nextauth]/    ❿ NextAuth標準エンドポイント
+│   │       └── register/route.ts ⓫ ローカル登録（bcrypt+Neon）
 │   │
-│   ├── layout.tsx                ルートレイアウト（フォント・OGP・GA）
+│   ├── layout.tsx                ルートレイアウト（フォント・OGP・GA のみ・Header/Footerなし）
 │   ├── globals.css               CSS変数・アニメ・prose-warm
 │   ├── sitemap.ts / robots.ts    SEO
 │   └── favicon.ico / fonts/      静的アセット
@@ -394,6 +408,7 @@ familyai.jp/
 │   │   ├── HomeworkChat          宿題ヒント専用チャットUI
 │   │   ├── MealPlanForm          食材入力フォーム＋献立表示
 │   │   └── ImageGenStudio        プロンプト入力＋画像表示
+│   ├── admin/  AdminNav AdminArticleTable ArticleForm
 │   ├── analytics/GoogleAnalytics
 │   └── ui/     button (shadcn/ui)
 │
@@ -410,10 +425,18 @@ familyai.jp/
 │   │   ├── schema.ts             Drizzle スキーマ定義
 │   │   ├── index.ts              Proxy で lazy 初期化された db
 │   │   └── seed.ts               初期データ投入
+│   ├── repositories/
+│   │   └── articles.ts           Repository Pattern（全DB アクセスを集約）
+│   │                             getArticle / getArticleForAdmin /
+│   │                             getArticleList / getLatestArticles /
+│   │                             getRelatedArticles / incrementViewCount /
+│   │                             listAllArticles(ILIKEエスケープ) / createArticle /
+│   │                             updateArticle / deleteArticle / togglePublished
 │   ├── ai/
 │   │   ├── router.ts             routeAI() - MODEL_ROUTER切替
 │   │   └── providers/openrouter.ts  HTTP直叩き+SSE変換
 │   ├── auth.ts                   NextAuth v5 設定
+│   ├── admin-auth.ts             ADMIN_EMAIL による管理者認証ヘルパー（isAdmin / requireAdmin）
 │   ├── csrf.ts                   Origin チェック
 │   └── utils.ts                  cn() (tailwind-merge)
 │
@@ -441,7 +464,6 @@ familyai.jp/
 └── todo/                         📝 仕様・作業管理
     ├── familyai_coding_agent_v5.md  CodingAgent 実装依頼書
     ├── junliToDo_v4.md              人間作業手順書
-    ├── codexfeedback.md             Codex レビュー
     └── system-architecture.md       このドキュメント
 ```
 
@@ -499,12 +521,15 @@ familyai.jp/
 ## 🔑 5. 環境変数マップ（.env.local.example 準拠）
 
 | カテゴリ | 変数名 | 必須 | 用途 |
-|---|---|---|---|
+|----------|--------|------|------|
 | **DB** | `DATABASE_URL` | ✅ | Neon 接続文字列 |
-| **認証** | `NEXTAUTH_SECRET` | ✅ | JWT 署名鍵（32文字+） |
-| | `NEXTAUTH_URL` | ✅ | 本番 URL |
+| **認証** | `NEXTAUTH_SECRET` | ✅ | JWT 署名鍵（32文字+）NextAuth v4 互換 |
+| | `AUTH_SECRET` | ✅ | NextAuth v5 用（NEXTAUTH_SECRET と同値） |
+| | `NEXTAUTH_URL` | ✅ | 本番 URL（NextAuth v4 互換） |
+| | `AUTH_URL` | ✅ | NextAuth v5 用（NEXTAUTH_URL と同値） |
 | | `GOOGLE_CLIENT_ID` | ✅ | Google OAuth |
 | | `GOOGLE_CLIENT_SECRET` | ✅ | Google OAuth |
+| **管理者** | `ADMIN_EMAIL` | ✅ | `/admin` にアクセスできるメールアドレス（1名） |
 | **ストレージ** | `BLOB_READ_WRITE_TOKEN` | ✅ | Vercel Blob 書込み権限 |
 | **レート制限** | `UPSTASH_REDIS_REST_URL` | ✅ | Upstash エンドポイント |
 | | `UPSTASH_REDIS_REST_TOKEN` | ✅ | Upstash 認証 |
@@ -513,7 +538,7 @@ familyai.jp/
 | | `OPENROUTER_BASE_URL` | ✅ | `https://openrouter.ai/api/v1` |
 | | `OPENROUTER_APP_URL` | ✅ | `https://familyai.jp` |
 | | `OPENROUTER_APP_NAME` | ✅ | `familyai.jp` |
-| **AI（任意）**| `VOICEVOX_API_BASE` | ⚪ | 日本語TTS直結時のみ |
+| **AI（任意）** | `VOICEVOX_API_BASE` | ⚪ | 日本語TTS直結時のみ |
 | **解析** | `NEXT_PUBLIC_GA_ID` | 推奨 | Google Analytics 4 |
 | **公開API** | `NEXT_PUBLIC_API_URL` | ✅ | `https://familyai.jp` |
 | **Phase2決済** | `STRIPE_SECRET_KEY` | ⚪ | Phase2以降 |
@@ -528,7 +553,7 @@ familyai.jp/
 | 境界 | 実装 | 場所 |
 |---|---|---|
 | **XSS** | `rehype-sanitize` + `rehype-highlight` | `components/article/ArticleBody.tsx` |
-| **CSRF** | Origin ヘッダー検証 | `lib/csrf.ts` → `/api/ai` 等で呼び出し |
+| **CSRF** | Origin ヘッダー検証 | `lib/csrf.ts` → `/api/ai` / `/api/admin/articles/*`（POST/PUT/DELETE/PATCH）で呼び出し |
 | **HTTP ヘッダー** | X-Frame-Options DENY / X-Content-Type-Options nosniff / Referrer-Policy | `next.config.mjs` |
 | **認証** | JWT（NextAuth v5 デフォルト `SameSite=Lax`）| `lib/auth.ts` |
 | **パスワード** | bcrypt saltRounds: 12 + 8文字以上 zod検証 | `app/api/auth/register/route.ts` |
@@ -541,14 +566,19 @@ familyai.jp/
 ## 🚦 7. リクエストフロー早見表
 
 | エンドポイント | メソッド | 用途 | 呼ぶ外部サービス |
-|---|---|---|---|
+|----------------|----------|------|-----------------|
 | `/api/ai` | POST | AIチャットSSE（メディア＆Webアプリ共用） | OpenRouter + Upstash + Neon(plan取得) |
-| `/api/articles` | GET | 記事一覧 | Neon |
+| `/api/articles` | GET | 記事一覧（公開記事のみ） | Neon |
 | `/api/audio?slug=` | GET | 音声メタ | Neon |
 | `/api/audio/play` | POST | 再生カウント | Neon + Upstash |
 | `/api/og` | GET | OGP画像 | Vercel(fonts静的) |
 | `/api/auth/[...nextauth]` | GET/POST | NextAuth | Google OAuth + Neon |
 | `/api/auth/register` | POST | ローカル登録 | Neon + bcrypt |
+| `/api/admin/articles` | GET | 管理者：記事一覧（全件・非公開含む） | Neon（ADMIN_EMAIL 認証必須） |
+| `/api/admin/articles` | POST | 管理者：記事新規作成（CSRF + zod） | Neon（ADMIN_EMAIL 認証必須） |
+| `/api/admin/articles/[slug]` | PUT | 管理者：記事更新（CSRF + zod） | Neon（ADMIN_EMAIL 認証必須） |
+| `/api/admin/articles/[slug]` | DELETE | 管理者：記事削除（CSRF） | Neon（ADMIN_EMAIL 認証必須） |
+| `/api/admin/articles/[slug]/toggle` | PATCH | 管理者：公開/非公開切替（CSRF） | Neon（ADMIN_EMAIL 認証必須） |
 | `/api/tools/dictation` | POST | 音声採点・フィードバック（Phase 2） | OpenRouter(Whisper+Gemini) |
 | `/api/tools/homework` | POST | 宿題ヒント生成・教育特化（Phase 2） | OpenRouter(Claude) |
 
@@ -830,5 +860,4 @@ Phase 5（2027年後半〜）Swift / Kotlin ネイティブ検討（必要に応
 
 - 実装依頼書: [todo/familyai_coding_agent_v5.md](./familyai_coding_agent_v5.md)
 - 人間作業手順: [todo/junliToDo_v4.md](./junliToDo_v4.md)
-- Codex レビュー: [todo/codexfeedback.md](./codexfeedback.md)
-- 残課題: v5.md の Rev17（`shared/api/index.ts` ↔ `/api/articles` の契約整合）のみ
+- 残課題: CodingAgent タスクは Rev21 まで全完了 🎉

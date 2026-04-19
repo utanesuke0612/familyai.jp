@@ -29,7 +29,16 @@ declare module 'next-auth' {
       email: string;
       name:  string | null;
       image: string | null;
+      /** 'free' | 'pro'（Rev23 #4：JWT に埋め込んで DB 呼び出しを回避） */
+      plan:  string;
     };
+  }
+}
+
+declare module '@auth/core/jwt' {
+  interface JWT {
+    id?:   string;
+    plan?: string;
   }
 }
 
@@ -137,17 +146,42 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       return true;
     },
 
-    // ── JWT にユーザー ID を埋め込む ──────────────────────────
-    async jwt({ token, user }) {
+    // ── JWT にユーザー ID + plan を埋め込む（Rev23 #4）────────
+    // plan を毎リクエストで DB から引くのを避けるため、
+    // ログイン時 / トリガー時のみ users テーブルから取得してトークンに焼き込む。
+    async jwt({ token, user, trigger }) {
       if (user?.id) token.id = user.id;
+
+      // 初回ログイン or セッション更新時に plan を DB から取得
+      // （email は初回のみ user から、以降は token から解決可能）
+      const shouldRefreshPlan =
+        trigger === 'signIn' ||
+        trigger === 'signUp' ||
+        trigger === 'update' ||
+        (token.plan === undefined && token.id);
+
+      if (shouldRefreshPlan && token.id) {
+        try {
+          const rows = await db
+            .select({ plan: users.plan })
+            .from(users)
+            .where(eq(users.id, token.id as string))
+            .limit(1);
+          token.plan = rows[0]?.plan ?? 'free';
+        } catch {
+          token.plan = token.plan ?? 'free';
+        }
+      }
+
       return token;
     },
 
-    // ── Session に id を付与 ────────────────────────────────
+    // ── Session に id + plan を付与 ─────────────────────────
     async session({ session, token }) {
       if (token.id) {
         (session.user as { id: string }).id = token.id as string;
       }
+      (session.user as { plan: string }).plan = (token.plan as string) ?? 'free';
       return session;
     },
   },

@@ -13,12 +13,21 @@
 
 import type { Metadata }    from 'next';
 import { notFound }         from 'next/navigation';
+import { cache }            from 'react';
 
 import {
   getArticle,
   getRelatedArticles,
   incrementViewCount,
 } from '@/lib/repositories/articles';
+
+/**
+ * React.cache() で同一リクエスト中の重複 DB 呼び出しを排除する（Rev23 #1）。
+ * Next.js は Server Component の fetch() のみ自動 dedup するため、
+ * Drizzle 直接呼び出しでは自前で cache() を噛ませる必要がある。
+ * → generateMetadata と ArticlePage で同じ slug を2回叩かないようにする。
+ */
+const getArticleCached = cache(getArticle);
 import { ArticleBody }  from '@/components/article/ArticleBody';
 import { AIChatWidget } from '@/components/article/AIChatWidget';
 import { AudioPlayer }  from '@/components/article/AudioPlayer';
@@ -63,7 +72,7 @@ export async function generateMetadata({
 }: {
   params: { slug: string };
 }): Promise<Metadata> {
-  const article = await getArticle(params.slug);
+  const article = await getArticleCached(params.slug);
 
   if (!article) {
     return {
@@ -170,7 +179,7 @@ export default async function ArticlePage({
 }: {
   params: { slug: string };
 }) {
-  const article = await getArticle(params.slug);
+  const article = await getArticleCached(params.slug);
 
   if (!article) {
     notFound();
