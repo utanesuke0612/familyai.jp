@@ -1,6 +1,6 @@
 # familyai.jp — システム構成図（保守ガイド）
 
-> 最終更新: 2026-04-19（Rev22 完了／Rev23 をモバイル・高トラフィック観点レビューに基づき計画追加：Phase A 56分／Rev24-25 は Phase 4・規模到達時に実施）
+> 最終更新: 2026-04-19 23:00（Rev23 完了＋Rev23.1/23.2 Vercel hotfix／Phase QA-T1 スモーク 44/45 PASS＋QA-T2 Vitest 43/43 PASS＋QA-CI ワークフロー配置）
 > 目的: 全体構造・外部サービス連携・データフローを一目で把握し、保守・拡張を容易にする
 
 ---
@@ -431,13 +431,17 @@ familyai.jp/
 │   │                             getArticleList / getLatestArticles /
 │   │                             getRelatedArticles / incrementViewCount /
 │   │                             listAllArticles(ILIKEエスケープ) / createArticle /
-│   │                             updateArticle / deleteArticle / togglePublished
+│   │                             updateArticle / deleteArticle / togglePublished /
+│   │                             escapeLike（export・テスト用）
+│   ├── schemas/                  🧪 zod スキーマ（独立ファイル・ユニットテスト対象）
+│   │   └── articles.ts           createArticleSchema / updateArticleSchema / optionalDate
 │   ├── ai/
 │   │   ├── router.ts             routeAI() - MODEL_ROUTER切替
 │   │   └── providers/openrouter.ts  HTTP直叩き+SSE変換
-│   ├── auth.ts                   NextAuth v5 設定
+│   ├── auth.ts                   NextAuth v5 設定（JWT に plan 埋込・Rev23）
 │   ├── admin-auth.ts             ADMIN_EMAIL による管理者認証ヘルパー（isAdmin / requireAdmin）
 │   ├── csrf.ts                   Origin チェック
+│   ├── ratelimit.ts              Upstash Ratelimit 共通ヘルパー（enforceAdminRateLimit 10req/min・Rev23）
 │   └── utils.ts                  cn() (tailwind-merge)
 │
 ├── hooks/
@@ -456,15 +460,32 @@ familyai.jp/
 │           （新しい記事はここに追加 → npm run db:sync で Neon DB に反映）
 │
 ├── scripts/                      🔧 運用スクリプト
-│   └── sync-articles.ts          content/articles/*.md → Neon DB upsert
+│   ├── sync-articles.ts          content/articles/*.md → Neon DB upsert
+│   └── smoke-test.sh             Phase QA-T1 スモークテスト（curl で37エンドポイント検証）
+│
+├── test/                         🧪 Vitest ユニットテスト（Phase QA-T2）
+│   └── unit/
+│       ├── buildQueryString.test.ts      shared/utils 配列対応（Rev22）
+│       ├── escapeLike.test.ts            ILIKE メタ文字エスケープ（Rev22）
+│       ├── createArticleSchema.test.ts   zod 必須欠落・enum・NaN・日付変換
+│       └── updateArticleSchema.test.ts   zod 全 optional・null 上書き
+│
+├── vitest.config.ts              Vitest 設定（node env・@/ alias・test/**/*.test.ts）
+│
+├── .github/
+│   └── workflows/
+│       └── test.yml              GitHub Actions（push/PR で tsc + lint + Vitest 自動実行）
 │
 ├── public/                       静的ファイル
 │   └── fonts/NotoSansJP-*.ttf    ✅ 配置済み（OGP日本語フォント）
 │
 └── todo/                         📝 仕様・作業管理
-    ├── familyai_coding_agent_v5.md  CodingAgent 実装依頼書
-    ├── junliToDo_v4.md              人間作業手順書
-    └── system-architecture.md       このドキュメント
+    ├── familyai_coding_agent_v5.md   CodingAgent 実装依頼書
+    ├── junliToDo_v4.md               人間作業手順書
+    ├── system-architecture.md        このドキュメント
+    ├── test-plan_v1.md               テスト観点14カテゴリ・80+項目（Phase QA）
+    ├── TestResult_202604192224.md    Phase QA-T1 スモーク結果（44/45 PASS）
+    └── TestResult_202604192243.md    Phase QA-T2/CI 結果（Vitest 43/43 PASS）
 ```
 
 ---
@@ -656,10 +677,12 @@ familyai.jp/
 | 6   | **Vercel Functions**           | Hobby 100 GB-Hours/月                                              | 超過で停止                     | 通常MVPでは到達しない                            |
 | 7   | **ISR revalidate**             | 記事詳細 3600秒 / 一覧 60秒CDN                                            | DB更新が最大1時間遅延              | 記事公開直後に反映させたい場合は `revalidatePath()` を呼ぶ |
 | 8   | **Next.js 14 App Router**      | `searchParams` は同期オブジェクト                                          | Next.js 15 移行時は Promise 化 | アップグレード時は `LearnPage` 等の型を修正            |
-| 9   | **NextAuth v5 beta**           | バージョン固定必須                                                         | 破壊的変更リスク                  | `5.0.0-beta.25` 固定。CHANGELOG を確認してから更新  |
+| 9   | **NextAuth v5 beta**           | バージョン固定必須                                                         | 破壊的変更リスク                  | `5.0.0-beta.25` 固定。CHANGELOG を確認してから更新。型拡張は `next-auth/jwt` を使う（Rev23.2・`@auth/core/jwt` は Vercel pnpm strict で解決不可） |
 | 10  | **shared/層の鉄則**                | `next/*` `react-dom` `document` `window` / Tailwind文字列 / HTMLタグ禁止 | iOSで動かない                  | 新規ファイル追加時は必ず pure TypeScript のみ         |
 | 11  | **Edge Runtime**               | `/api/og` は Node API 不可                                           | crypto や fs が使えない         | Blob フォント読込は `fetch` のみ                 |
 | 12  | **prefers-reduced-motion**     | すべてのアニメに対応必須                                                      | シニア・VR利用者の健康影響            | `globals.css` で一括抑制済み                   |
+| 13  | **pnpm-lock.yaml 同期**         | `package.json` 変更後は必ず `pnpm install` で再生成                            | Vercel `frozen-lockfile` で CI 失敗  | Rev23.1 で `gray-matter` 未同期事件あり。依存追加後は push 前に再生成必須 |
+| 14  | **依存追加後の `.next` 破棄**    | `vitest` 等の devDep 追加後はローカル `.next` 削除が必要                          | `Cannot find module 'vendor-chunks/*'` やクライアント Hook エラー | `rm -rf .next node_modules/.cache` してから `pnpm dev` |
 
 ---
 
@@ -856,8 +879,86 @@ Phase 5（2027年後半〜）Swift / Kotlin ネイティブ検討（必要に応
 
 ---
 
+## 🧪 13. テスト戦略（Phase QA）
+
+### 13-1. 4層テストピラミッド
+
+```
+         ┌──────────────────────┐
+         │  E2E  (Playwright)    │ ← QA-T4（未着手・4〜6h・chromium install 必要）
+         ├──────────────────────┤
+         │  統合  (Vitest + DB)  │ ← QA-T3（未着手・3〜4h・Neon branch + auth mock 必要）
+         ├──────────────────────┤
+         │  ユニット (Vitest)     │ ← QA-T2 ✅ 完了（43/43 PASS・363ms）
+         ├──────────────────────┤
+         │  スモーク (curl/bash)  │ ← QA-T1 ✅ 完了（44/45 PASS・G1 は仕様通り 403）
+         └──────────────────────┘
+```
+
+### 13-2. 各層の責務と実体
+
+| 層 | 場所 | 対象 | 依存 | コマンド |
+|---|---|---|---|---|
+| **スモーク (T1)** | `scripts/smoke-test.sh` | 37 エンドポイント（ページ19・公開API7・admin API 未認証5・CSRF 1・auth 3・misc 2） | dev server（port 3000）稼働 | `BASE_URL=http://localhost:3000 pnpm test:smoke` |
+| **ユニット (T2)** | `test/unit/*.test.ts` | `shared/utils` / `lib/schemas/articles` / `lib/repositories.escapeLike` | なし（pure 関数のみ） | `pnpm test` |
+| **統合 (T3)** | `test/integration/` (未作成) | admin API CRUD・rate limit 429・AI plan分岐 | Neon branch + NextAuth モック | (未整備) |
+| **E2E (T4)** | `e2e/*.spec.ts` (未作成) | ログイン／閲覧／AI／管理画面／CSRF／404 の主要10シナリオ | `@playwright/test` + chromium | (未整備) |
+
+### 13-3. テスト可能性を担保するための実装ルール
+
+| ルール | 配置例 | 理由 |
+|---|---|---|
+| **zod スキーマは独立ファイル** | `lib/schemas/articles.ts` | Next.js route.ts は HTTP method 以外を export できないため、テストから import できる別ファイルに置く |
+| **純粋関数は export** | `lib/repositories/articles.ts` の `escapeLike` | DB に依存しない部分だけ切り出してユニットテスト可能に |
+| **ビジネスロジックを Repository へ集約**（Rev19 の原則再掲） | `lib/repositories/*.ts` | API route はバリデーション＋リポジトリ呼び出しだけにして、Repository 単位でテストを書けるようにする |
+| **外部サービスは DI or 抽象化** | `lib/ratelimit.ts` (TODO) | Upstash 呼び出しをインターフェイス化してフェイク実装に差し替え可能にする |
+
+### 13-4. CI / CD 連携（`.github/workflows/test.yml`）
+
+```
+push (main) / pull_request (main → *)
+    ↓
+┌──────────────────────────────────┐
+│ static-and-unit  ✅ 有効           │
+│ ├─ pnpm install --frozen-lockfile │
+│ ├─ pnpm exec tsc --noEmit         │
+│ ├─ pnpm lint                      │
+│ └─ pnpm test                      │
+└──────────────────────────────────┘
+           ↓ (将来拡張)
+   ┌────────┬──────────┬──────────┐
+   │ smoke  │ integration│  e2e    │
+   │ 準備中 │ QA-T3後   │ QA-T4後  │
+   └────────┴──────────┴──────────┘
+```
+
+### 13-5. テスト実行コマンド早見表
+
+| 用途 | コマンド |
+|---|---|
+| ユニットテスト（1回） | `pnpm test` |
+| ウォッチモード | `pnpm test:watch` |
+| UI モード（ブラウザ） | `pnpm test:ui` |
+| スモーク（要 dev server） | `pnpm test:smoke` |
+| 型検査 | `npx tsc --noEmit` |
+| Lint | `pnpm lint` |
+
+### 13-6. モバイル移行時のテスト流用性
+
+| 層 | iOS/Android 流用性 | 備考 |
+|---|---|---|
+| ユニット（T2） | 🟢 高 | `shared/utils` や zod スキーマは pure TS なので React Native でもそのまま実行可能 |
+| 統合（T3） | 🟡 中 | API 契約テストは React Native クライアントでも流用可能（base URL 差し替え） |
+| E2E（T4） | 🔴 低 | Playwright は Web 専用。iOS/Android は Detox や XCUITest で別途構築 |
+| スモーク（T1） | 🟢 高 | curl ベースなので CI から実行可能（URL リストを追加するだけ） |
+
+---
+
 ## 🔗 関連ドキュメント
 
 - 実装依頼書: [todo/familyai_coding_agent_v5.md](./familyai_coding_agent_v5.md)
 - 人間作業手順: [todo/junliToDo_v4.md](./junliToDo_v4.md)
-- 残課題: CodingAgent タスクは Rev21 まで全完了 🎉
+- テスト計画: [todo/test-plan_v1.md](./test-plan_v1.md)
+- テスト結果（T1 スモーク）: [todo/TestResult_202604192224.md](./TestResult_202604192224.md)
+- テスト結果（T2 Vitest + CI）: [todo/TestResult_202604192243.md](./TestResult_202604192243.md)
+- 残課題: CodingAgent タスクは Step 01〜22・Rev01〜23.2・Phase QA-T1/T2/CI まで全完了 🎉
