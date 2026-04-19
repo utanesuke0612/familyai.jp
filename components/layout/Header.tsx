@@ -92,7 +92,7 @@ export function Header() {
             href={ROUTES.login}
             className="btn-primary hidden lg:inline-flex text-sm px-5 py-2.5"
           >
-            ✨ 無料で始める
+            ログイン
           </Link>
 
           {/* Mobile のみ表示 */}

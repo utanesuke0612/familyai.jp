@@ -11,42 +11,17 @@
  */
 
 import { Suspense } from 'react';
-import { desc, eq }  from 'drizzle-orm';
-import { HeroSection } from '@/components/home/HeroSection';
-import { StatsRow }    from '@/components/home/StatsRow';
-import { RolePicker }  from '@/components/home/RolePicker';
-import { ArticleGrid } from '@/components/article/ArticleGrid';
-import { ComingSoon }  from '@/components/home/ComingSoon';
-import { db }          from '@/lib/db';
-import { articles }    from '@/lib/db/schema';
+import { HeroSection }       from '@/components/home/HeroSection';
+import { StatsRow }          from '@/components/home/StatsRow';
+import { RolePicker }        from '@/components/home/RolePicker';
+import { ArticleGrid }       from '@/components/article/ArticleGrid';
+import { ComingSoon }        from '@/components/home/ComingSoon';
+import { getLatestArticles } from '@/lib/repositories/articles';
 
-// ── 新着セクション（Server Component · DB直接取得） ──────────
+// ── 新着セクション（Server Component · Repository 経由） ──────
 async function NewArticlesSection() {
-  // 公開済み記事を新着順で最大6件取得
-  const rows = await db
-    .select({
-      slug:        articles.slug,
-      title:       articles.title,
-      description: articles.description,
-      roles:       articles.roles,
-      categories:  articles.categories,
-      level:       articles.level,
-      audioUrl:    articles.audioUrl,
-      thumbnailUrl: articles.thumbnailUrl,
-      publishedAt: articles.publishedAt,
-      viewCount:   articles.viewCount,
-      body:        articles.body,
-    })
-    .from(articles)
-    .where(eq(articles.published, true))
-    .orderBy(desc(articles.publishedAt))
-    .limit(6);
-
-  // ArticleCard が期待する shape に整形
-  const articleItems = rows.map((row) => ({
-    ...row,
-    description: row.description ?? '',
-  }));
+  // 公開済み記事を新着順で最大6件取得（description は '' にフォールバック済み）
+  const articleItems = await getLatestArticles(6);
 
   return (
     <section

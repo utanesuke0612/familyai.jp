@@ -41,7 +41,8 @@
     --color-beige:        #F5E6D0;
     --color-beige-dark:   #E8CFA8;
     --color-brown:        #8B5E3C;
-    --color-brown-light:  #B5896A;
+    --color-brown-light:  #8C6450; /* darkened: 旧 #B5896A (2.83:1) → 新 (4.71:1) WCAG AA ✅ */
+    --color-brown-muted:  #B5896A; /* 装飾専用（ボーダー・アイコン・非テキスト）non-text use only */
     --color-sky:          #C8E8F8;
     --color-mint:         #B8EDD8;
     --color-yellow:       #FFE066;

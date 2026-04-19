@@ -263,5 +263,5 @@ export function HeroSection() {
 const STATS = [
   { value: '100+',  label: 'AI活用事例' },
   { value: '4',     label: '家族ロール対応' },
-  { value: '無料',  label: '基本機能すべて' },
+  { value: '¥0',   label: '基本機能すべて' },
 ] as const;

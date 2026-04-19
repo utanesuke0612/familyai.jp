@@ -116,7 +116,7 @@ export function MobileNav({ onClose }: MobileNavProps) {
             onClick={handleClose}
             className="btn-primary w-full justify-center text-center"
           >
-            ✨ 無料で始める
+            ログイン
           </Link>
         </div>
 

@@ -13,13 +13,16 @@
 
 import type { Metadata }    from 'next';
 import { notFound }         from 'next/navigation';
-import { eq, sql, ne, and } from 'drizzle-orm';
 
-import { db, articles }   from '@/lib/db';
-import { ArticleBody }    from '@/components/article/ArticleBody';
-import { AIChatWidget }   from '@/components/article/AIChatWidget';
-import { AudioPlayer }    from '@/components/article/AudioPlayer';
-import { ArticleGrid }    from '@/components/article/ArticleGrid';
+import {
+  getArticle,
+  getRelatedArticles,
+  incrementViewCount,
+} from '@/lib/repositories/articles';
+import { ArticleBody }  from '@/components/article/ArticleBody';
+import { AIChatWidget } from '@/components/article/AIChatWidget';
+import { AudioPlayer }  from '@/components/article/AudioPlayer';
+import { ArticleGrid }  from '@/components/article/ArticleGrid';
 import {
   SITE,
   FAMILY_ROLE_LABEL,
@@ -27,9 +30,10 @@ import {
   CATEGORY_LABEL,
   CATEGORY_EMOJI,
   DIFFICULTY_LABEL,
+  formatDateJa,
+  estimateReadingMin,
 } from '@/shared';
 import type { FamilyRole, ContentCategory, DifficultyLevel } from '@/shared';
-import { formatDateJa, estimateReadingMin } from '@/shared';
 
 // ISR: 1時間ごとに再検証
 export const revalidate = 3600;
@@ -52,46 +56,6 @@ const ROLE_BG: Record<string, string> = {
   senior: 'var(--color-senior-bg)',
   common: 'var(--color-common-bg)',
 };
-
-// ── 記事取得ヘルパー ──────────────────────────────────────────
-async function getArticle(slug: string) {
-  try {
-    const rows = await db
-      .select()
-      .from(articles)
-      .where(and(eq(articles.slug, slug), eq(articles.published, true)))
-      .limit(1);
-    return rows[0] ?? null;
-  } catch {
-    return null;
-  }
-}
-
-// ── 関連記事取得 ─────────────────────────────────────────────
-async function getRelatedArticles(
-  currentSlug: string,
-  roles:       string[],
-  categories:  string[],
-) {
-  try {
-    const rows = await db
-      .select()
-      .from(articles)
-      .where(
-        and(
-          eq(articles.published, true),
-          ne(articles.slug, currentSlug),
-          // roles が一致するものを優先（配列に共通要素があれば）
-          sql`(${articles.roles} && ${roles}::text[] OR ${articles.categories} && ${categories}::text[])`,
-        ),
-      )
-      .orderBy(sql`random()`)
-      .limit(3);
-    return rows;
-  } catch {
-    return [];
-  }
-}
 
 // ── generateMetadata ──────────────────────────────────────────
 export async function generateMetadata({
@@ -213,11 +177,7 @@ export default async function ArticlePage({
   }
 
   // バックグラウンドで閲覧数インクリメント（await しない）
-  void db
-    .update(articles)
-    .set({ viewCount: sql`${articles.viewCount} + 1` })
-    .where(eq(articles.slug, params.slug))
-    .catch(() => {/* 失敗しても無視 */});
+  incrementViewCount(params.slug);
 
   // 関連記事
   const relatedArticles = await getRelatedArticles(

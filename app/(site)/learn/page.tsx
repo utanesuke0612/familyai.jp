@@ -3,16 +3,15 @@
  * familyai.jp — 記事一覧ページ（Server Component）
  *
  * - searchParams でロール / カテゴリ / 難易度 / ソート / ページを受け取る
- * - Drizzle + Neon HTTP でフィルタリング・ページネーション
+ * - getArticleList() (Repository) でフィルタリング・ページネーション
  * - RolePicker / CategoryFilter / SortLevelBar は Client Components
  * - DB 接続失敗時は空状態にフォールバック
  */
 
 import type { Metadata } from 'next';
 import { Suspense }      from 'react';
-import { and, or, desc, eq, sql, count } from 'drizzle-orm';
 
-import { db, articles }      from '@/lib/db';
+import { getArticleList }    from '@/lib/repositories/articles';
 import { RolePicker }        from '@/components/home/RolePicker';
 import { CategoryFilter }    from '@/components/home/CategoryFilter';
 import { ArticleGrid }       from '@/components/article/ArticleGrid';
@@ -210,61 +209,16 @@ export default async function LearnPage({ searchParams }: LearnPageProps) {
 
   const isFiltered = !!(role || cats.length || level);
 
-  // ── Drizzle クエリ ──────────────────────────────────────────
-  type ArticleRow = typeof articles.$inferSelect;
-  let articleRows:  ArticleRow[] = [];
-  let totalCount = 0;
-
-  try {
-    // WHERE 条件を組み立て
-    const conditions = [eq(articles.published, true)];
-
-    if (role) {
-      // roles 配列が role を含む
-      conditions.push(sql`${articles.roles} @> ARRAY[${role}]::text[]`);
-    }
-
-    if (cats.length > 0) {
-      // categories 配列が選択カテゴリのいずれかを含む（OR）
-      const catConditions = cats.map((c) =>
-        sql`${articles.categories} @> ARRAY[${c}]::text[]`,
-      );
-      conditions.push(catConditions.length === 1 ? catConditions[0]! : or(...catConditions)!);
-    }
-
-    if (level) {
-      conditions.push(eq(articles.level, level));
-    }
-
-    const whereClause = and(...conditions);
-    const orderByClause =
-      sort === 'popular'
-        ? desc(articles.viewCount)
-        : desc(articles.publishedAt);
-
-    // 件数 + データを並行取得
-    const [rows, countRows] = await Promise.all([
-      db
-        .select()
-        .from(articles)
-        .where(whereClause)
-        .orderBy(orderByClause)
-        .limit(PAGE_SIZE)
-        .offset((page - 1) * PAGE_SIZE),
-      db
-        .select({ total: count() })
-        .from(articles)
-        .where(whereClause),
-    ]);
-
-    articleRows = rows;
-    totalCount  = Number(countRows[0]?.total ?? 0);
-  } catch (err) {
-    // DB 未設定・接続失敗時は空状態にフォールバック
-    console.error('[LearnPage] DB query failed:', err);
-  }
-
-  const totalPages = Math.max(1, Math.ceil(totalCount / PAGE_SIZE));
+  // ── Repository 経由でフィルタ + ページネーション取得 ────────
+  const { items: articleRows, total: totalCount, totalPages } = await getArticleList(
+    {
+      role:       role       ?? undefined,
+      categories: cats,
+      level:      level      ?? undefined,
+      sort,
+    },
+    { page, pageSize: PAGE_SIZE },
+  );
 
   // searchParams を string のみのレコードに変換（Pagination コンポーネント用）
   const spRecord: Record<string, string> = Object.fromEntries(

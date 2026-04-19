@@ -27,15 +27,16 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "todo/junliToDo_v4.md",
+                "file": "todo/familyai_coding_agent_v5.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "junliToDo_v4"
+              "title": "familyai_coding_agent_v5"
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -197,11 +198,13 @@
       "bases:新規ベースを作成": false
     }
   },
-  "active": "99561ed37d359016",
+  "active": "5f3acf79ba5f0a61",
   "lastOpenFiles": [
-    "todo/familyai_coding_agent_v5.md",
-    "todo/junliToDo_v4.md",
+    "lib/repositories/articles.ts",
+    "lib/repositories",
     "todo/system-architecture.md",
+    "todo/junliToDo_v4.md",
+    "todo/familyai_coding_agent_v5.md",
     "todo/codexfeedback.md",
     "content/articles/ai-homework-helper.md",
     "content/articles/english-learning-voice-ai.md",
@@ -227,14 +230,12 @@
     "node_modules/section-matter/index.js",
     "node_modules/section-matter/package.json",
     "node_modules/strip-bom-string/index.js",
-    "node_modules/strip-bom-string/LICENSE",
     "node_modules/strip-bom-string/README.md",
     "node_modules/extend-shallow/README.md",
     "node_modules/gray-matter/node_modules/argparse/README.md",
     "node_modules/gray-matter/node_modules/argparse/CHANGELOG.md",
     "node_modules/gray-matter/node_modules/js-yaml/README.md",
     "node_modules/gray-matter/CHANGELOG.md",
-    "node_modules/gray-matter/README.md",
     "!Backup/Pasted image 20260416194856.png",
     "node_modules/highlight.js/styles/pojoaque.jpg",
     "node_modules/highlight.js/styles/brown-papersq.png",
