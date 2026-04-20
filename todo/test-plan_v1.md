@@ -9,24 +9,27 @@
 
 ## 0. テスト戦略概要
 
-### 0.1 3層テストピラミッド
+### 0.1 4層テストピラミッド（実装実績 2026-04-20）
 
 ```
-         ┌─────────────────┐
-         │  E2E (Playwright)│  ← 5〜10シナリオ / 実ブラウザ
-         ├─────────────────┤
-         │ 統合 (Vitest+DB) │  ← API route × repositories
-         ├─────────────────┤
-         │ ユニット (Vitest) │  ← 純粋関数・zod・utils
-         └─────────────────┘
+         ┌─────────────────────────┐
+         │  E2E (Playwright)        │ ← QA-T4 ⏳ 未着手（主要10シナリオ・4〜6h）
+         ├─────────────────────────┤
+         │ 統合 (Vitest + vi.mock)  │ ← QA-T3 ✅ admin CRUD 14 件 PASS（残 /api/ai）
+         ├─────────────────────────┤
+         │ ユニット (Vitest)        │ ← QA-T2 ✅ 65 件 PASS（Rev24/Rev27 追加分含む）
+         ├─────────────────────────┤
+         │ スモーク (curl/bash)     │ ← QA-T1 ✅ 44/45 PASS（G1 は仕様通り 403）
+         └─────────────────────────┘
+  合計: 9 files / 79 tests PASS・Duration 約 600ms（2026-04-20 現在）
 ```
 
-### 0.2 導入順序（推奨）
+### 0.2 導入順序（実績 & 予定）
 
-1. **Phase T1 (30分)**: スモークテスト（curl + bash） — 今すぐ導入可能・依存なし
-2. **Phase T2 (2〜3時間)**: Vitest 導入 + ユニットテスト（utils / zod / repositories pure logic）
-3. **Phase T3 (3〜4時間)**: Vitest + MSW で API route テスト
-4. **Phase T4 (4〜6時間)**: Playwright 導入 + E2E主要シナリオ
+1. **Phase T1 (30分)**: スモークテスト（curl + bash）— ✅ 2026-04-19 完了・44/45 PASS
+2. **Phase T2 (2〜3時間)**: Vitest 導入 + ユニットテスト — ✅ 2026-04-19 完了・以後 Rev24/Rev26/Rev27 で追加
+3. **Phase T3 (3〜4時間)**: Vitest + `vi.mock()` で API route テスト — ✅ 2026-04-20 admin CRUD 部分完了・残 `/api/ai`
+4. **Phase T4 (4〜6時間)**: Playwright 導入 + E2E主要シナリオ — ⏳ Rev24 #②③ 着手前に実施予定
 
 ---
 
@@ -301,31 +304,61 @@ pnpm test --ui      # ブラウザUI
 
 ## 4. Phase T3: API 統合テスト手順
 
+> **方針転換（2026-04-20 Rev24 時）**: 当初は Neon test branch + supertest + DB seeding を想定していたが、
+> 実装時に **外部依存ゼロの `vi.mock()` 戦略** に切り替え。Route Handler を直接 import して呼び出すため、
+> CI 実行時間が 1 秒以下・Neon ブランチのコスト・接続数制限・seeding 複雑度すべてを回避できる。
+> 既に admin CRUD（14件）が合格済み。残タスクは `/api/ai` プラン別の 1 ファイルのみ。
+
 ### 4.1 セットアップ
-テスト用 DB（ローカル PostgreSQL or Neon branch）を作成し、`.env.test` に切り替え。
+追加依存なし。Vitest と Next.js の機能のみで完結する。
 
 ```bash
-pnpm add -D supertest @types/supertest
+# 追加 install 不要。既存の Vitest + next/server で動作する
+pnpm test                                                              # 全件
+pnpm test -- test/integration/admin-articles.integration.test.ts       # admin CRUD のみ
 ```
 
 ### 4.2 戦略
-- `next-test-api-route-handler` を使って API route を直接呼び出す
-- beforeEach で DB シード、afterEach でロールバック
+- Route Handler を `await import('@/app/api/admin/articles/route')` で動的 import
+- `vi.mock('@/lib/auth')` で `auth()` の戻り値を切り替え（管理者 / 非管理者 / 未ログイン）
+- `vi.mock('@/lib/repositories/articles')` で DB 呼び出しを全て vi.fn() に差替
+- `vi.mock('@/lib/ratelimit')` で rate limit を制御（成功 / 429 を自在に切替）
+- `new NextRequest(url, { method, headers, body })` で Origin ヘッダー込みのリクエストを生成
+- CSRF 違反は `originMismatch: true` ヘルパーで再現
 
-### 4.3 ディレクトリ構造
+### 4.3 ディレクトリ構造（現状 & 予定）
 ```
 test/integration/
-├─ db/seed.ts
-├─ articles.api.test.ts       # F1〜F8
-├─ admin.articles.api.test.ts # G1〜G11
-├─ ai.api.test.ts             # H1〜H3
-└─ auth.callbacks.test.ts     # A1〜A9 (mock DB)
+├─ admin-articles.integration.test.ts  ✅ 14 件 PASS（2026-04-20 Rev24）
+│    - GET    /api/admin/articles            : 200/meta, 403×2, 400
+│    - POST   /api/admin/articles            : 201, 403 CSRF, 400, 429
+│    - PUT    /api/admin/articles/:slug      : 200, 404
+│    - DELETE /api/admin/articles/:slug      : 200, 404
+│    - PATCH  /api/admin/articles/:slug/toggle: 200, 404
+├─ ai.api.test.ts                       ⏳ 未作成（H1〜H3・約60分・下記 4.5 参照）
+└─ public-articles.api.test.ts          ⏳ 必要に応じて（F1〜F8）
 ```
 
-### 4.4 モック方針
-- NextAuth: `vi.mock('@/lib/auth')` で auth() を直接モック
-- Upstash Ratelimit: メモリ内フェイクで置換
-- DB: テスト専用 schema + 各テスト前 truncate
+### 4.4 モック方針（実装実績）
+
+| モック対象 | 方法 | 理由 |
+|---|---|---|
+| NextAuth | `vi.mock('@/lib/auth', () => ({ auth: vi.fn() }))` | 各テスト内で `mockResolvedValue({user:{email}})` で管理者／非管理者／null を切替 |
+| Repository | `vi.mock('@/lib/repositories/articles')` で CRUD 関数を全て `vi.fn()` に | DB 接続不要・戻り値を fixture で制御 |
+| Ratelimit | `vi.mock('@/lib/ratelimit')` で `enforceAdminRateLimit` を切替 | 429 レスポンスを明示的に注入可能 |
+| NextRequest | `new NextRequest(url, { method, headers, body })` | `req.nextUrl.searchParams` / `req.json()` / `req.headers.get()` が動作する |
+
+### 4.5 残タスク: `/api/ai` プラン別テスト（H1〜H3・約60分）
+
+必要なモック:
+- `vi.mock('@/lib/ai/providers/openrouter')` で `fetchOpenRouter` を SSE 疑似ストリームに置換
+- `vi.mock('@/lib/db')` で `users` テーブル SELECT（plan 取得）をモック
+- `vi.mock('@/lib/ratelimit')` で free: 30/d・pro: 200/d 相当のトークン数設定
+
+検証ケース:
+1. **H1**: 未ログイン → anon 制限 10req/d で 11 回目 429
+2. **H2**: free ユーザー → 30req/d で 31 回目 429
+3. **H3**: pro ユーザー → 200req/d までストリーム継続
 
 ---
 

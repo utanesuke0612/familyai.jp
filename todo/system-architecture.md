@@ -560,6 +560,7 @@ familyai.jp/
 | | `OPENROUTER_APP_URL` | ✅ | `https://familyai.jp` |
 | | `OPENROUTER_APP_NAME` | ✅ | `familyai.jp` |
 | **AI（任意）** | `VOICEVOX_API_BASE` | ⚪ | 日本語TTS直結時のみ |
+| **モバイル** | `MOBILE_API_KEYS` | ⚪ | iOS/Android ネイティブ向け API キー許可リスト（カンマまたはセミコロン区切り）。未設定時はモバイル経路自体が無効化される（= `verifyCsrf(req, { allowMobile: true })` が常に false 判定）。Rev24 #⑤ で追加。 |
 | **解析** | `NEXT_PUBLIC_GA_ID` | 推奨 | Google Analytics 4 |
 | **公開API** | `NEXT_PUBLIC_API_URL` | ✅ | `https://familyai.jp` |
 | **Phase2決済** | `STRIPE_SECRET_KEY` | ⚪ | Phase2以降 |
@@ -574,7 +575,7 @@ familyai.jp/
 | 境界 | 実装 | 場所 |
 |---|---|---|
 | **XSS** | `rehype-sanitize` + `rehype-highlight` | `components/article/ArticleBody.tsx` |
-| **CSRF** | Origin ヘッダー検証 | `lib/csrf.ts` → `/api/ai` / `/api/admin/articles/*`（POST/PUT/DELETE/PATCH）で呼び出し |
+| **CSRF** | Origin ヘッダー検証＋モバイル経路（`X-Client-Platform` + `X-Mobile-Api-Key`／Rev24 #⑤）| `lib/csrf.ts` → `/api/ai` / `/api/admin/articles/*`（POST/PUT/DELETE/PATCH）で呼び出し。admin は allowMobile:false のため Cookie/Origin 経路のみ許可。モバイル API を追加する場合は `verifyCsrf(req, { allowMobile: true })` で明示オプトイン。 |
 | **HTTP ヘッダー** | X-Frame-Options DENY / X-Content-Type-Options nosniff / Referrer-Policy | `next.config.mjs` |
 | **認証** | JWT（NextAuth v5 デフォルト `SameSite=Lax`）| `lib/auth.ts` |
 | **パスワード** | bcrypt saltRounds: 12 + 8文字以上 zod検証 | `app/api/auth/register/route.ts` |
@@ -589,13 +590,16 @@ familyai.jp/
 | エンドポイント | メソッド | 用途 | 呼ぶ外部サービス |
 |----------------|----------|------|-----------------|
 | `/api/ai` | POST | AIチャットSSE（メディア＆Webアプリ共用） | OpenRouter + Upstash + Neon(plan取得) |
-| `/api/articles` | GET | 記事一覧（公開記事のみ） | Neon |
+| `/api/articles` | GET | 記事一覧（公開記事のみ・`search`/`role`/`cat[]`/`level`/`sort`/`page`/`limit`） | Neon |
+| `/api/articles/[slug]` | GET | 記事詳細（モバイル・外部クライアント用／Web は SC 直呼び／Rev23 #3） | Neon |
+| `/api/articles/latest` | GET | 最新記事 `limit=1-20` default 6（モバイル・外部クライアント用／Rev24 #①） | Neon |
+| `/api/articles/[slug]/related` | GET | 関連記事 `limit=1-10` default 3（モバイル・外部クライアント用／Rev24 #①） | Neon |
 | `/api/audio?slug=` | GET | 音声メタ | Neon |
 | `/api/audio/play` | POST | 再生カウント | Neon + Upstash |
 | `/api/og` | GET | OGP画像 | Vercel(fonts静的) |
 | `/api/auth/[...nextauth]` | GET/POST | NextAuth | Google OAuth + Neon |
 | `/api/auth/register` | POST | ローカル登録 | Neon + bcrypt |
-| `/api/admin/articles` | GET | 管理者：記事一覧（全件・非公開含む） | Neon（ADMIN_EMAIL 認証必須） |
+| `/api/admin/articles` | GET | 管理者：記事一覧（全件・非公開含む・`data:{items, meta}` 契約・`page`/`pageSize` pagination／Rev24 #④） | Neon（ADMIN_EMAIL 認証必須） |
 | `/api/admin/articles` | POST | 管理者：記事新規作成（CSRF + zod） | Neon（ADMIN_EMAIL 認証必須） |
 | `/api/admin/articles/[slug]` | PUT | 管理者：記事更新（CSRF + zod） | Neon（ADMIN_EMAIL 認証必須） |
 | `/api/admin/articles/[slug]` | DELETE | 管理者：記事削除（CSRF） | Neon（ADMIN_EMAIL 認証必須） |
@@ -887,21 +891,27 @@ Phase 5（2027年後半〜）Swift / Kotlin ネイティブ検討（必要に応
          ┌──────────────────────┐
          │  E2E  (Playwright)    │ ← QA-T4（未着手・4〜6h・chromium install 必要）
          ├──────────────────────┤
-         │  統合  (Vitest + DB)  │ ← QA-T3（未着手・3〜4h・Neon branch + auth mock 必要）
+         │  統合  (Vitest + mock)│ ← QA-T3 ✅ admin CRUD 部分完了（14/14 PASS・残 /api/ai プラン別）
          ├──────────────────────┤
-         │  ユニット (Vitest)     │ ← QA-T2 ✅ 完了（43/43 PASS・363ms）
+         │  ユニット (Vitest)     │ ← QA-T2 ✅ 完了（65/65 PASS・Rev24/Rev27 追加分含む）
          ├──────────────────────┤
          │  スモーク (curl/bash)  │ ← QA-T1 ✅ 完了（44/45 PASS・G1 は仕様通り 403）
          └──────────────────────┘
+  合計: 9 files / 79 tests PASS（2026-04-20）
 ```
+
+> **QA-T3 方針転換（Rev24 時）**: 当初は「Neon test branch + NextAuth モック」を前提にしていたが、
+> 現実には **外部依存ゼロの `vi.mock()` 戦略** を採用した。`@/lib/auth`・`@/lib/repositories/articles`・
+> `@/lib/ratelimit` をモジュール単位でモックし、Route Handler を直接呼び出す。これにより CI 実行時間が
+> 1 秒以下で完結し、Neon のブランチコスト・接続数制限・seeding 複雑度を回避できる。
 
 ### 13-2. 各層の責務と実体
 
 | 層 | 場所 | 対象 | 依存 | コマンド |
 |---|---|---|---|---|
 | **スモーク (T1)** | `scripts/smoke-test.sh` | 37 エンドポイント（ページ19・公開API7・admin API 未認証5・CSRF 1・auth 3・misc 2） | dev server（port 3000）稼働 | `BASE_URL=http://localhost:3000 pnpm test:smoke` |
-| **ユニット (T2)** | `test/unit/*.test.ts` | `shared/utils` / `lib/schemas/articles` / `lib/repositories.escapeLike` | なし（pure 関数のみ） | `pnpm test` |
-| **統合 (T3)** | `test/integration/` (未作成) | admin API CRUD・rate limit 429・AI plan分岐 | Neon branch + NextAuth モック | (未整備) |
+| **ユニット (T2)** | `test/unit/*.test.ts` | `shared/utils`・`lib/schemas/articles`・`lib/repositories.escapeLike`・`shared/api` 契約（apiFetch/fetchLatest/fetchRelated）・`lib/csrf`（Origin + モバイル経路）| なし（pure 関数 / fetch スタブ）| `pnpm test` |
+| **統合 (T3)** | `test/integration/admin-articles.integration.test.ts` ✅ | admin API 5 Route Handler × 正常系＋403/400/404/429/CSRF | `vi.mock()` で auth / repositories / ratelimit を差替（Neon 不要） | `pnpm test` |
 | **E2E (T4)** | `e2e/*.spec.ts` (未作成) | ログイン／閲覧／AI／管理画面／CSRF／404 の主要10シナリオ | `@playwright/test` + chromium | (未整備) |
 
 ### 13-3. テスト可能性を担保するための実装ルール
