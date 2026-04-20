@@ -1,6 +1,6 @@
 # junli ToDo — 人間がやること一覧
 
-> 最終更新: 2026-04-19 22:30（Rev23 完了・Rev23.1/23.2 Vercel hotfix 完了・Vercel 本番デプロイ成功・Phase QA-T1 スモークテスト完了 44/45 PASS）
+> 最終更新: 2026-04-20（Rev26/Rev27 実装完了：Codex v1 レビュー 11項目＋Codex v2 再レビュー 4項目すべて実装／`tsc --noEmit`＋`pnpm lint`＋`pnpm test 46/46` PASS 済み。Rev24 を 🟡→🟠 に昇格：Phase 4（iOS/Android）着手前の最優先項目として `POST /api/auth/mobile/token`（Apple/Google ID Token 検証）・`/api/articles/latest` + `/related`・Redis INCR 切替＋Vercel Cron を予定。Phase QA-T3/T4 は未着手のまま。人間側の未着手: Todo06・Todo10・Todo12・Todo14・Todo15 ／ 進行中: Todo13 ／ 完了: Todo01〜05・07〜09・11・16〜18）
 
 # かかった費用
 
