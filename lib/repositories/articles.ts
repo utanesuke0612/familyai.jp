@@ -227,15 +227,31 @@ export async function getLatestArticles(limit = 6): Promise<
 
 export type AdminArticleSort = 'latest' | 'oldest' | 'popular' | 'title';
 
+export interface ListAllArticlesResult {
+  items:      ArticleRow[];
+  total:      number;
+  totalPages: number;
+  page:       number;
+  pageSize:   number;
+}
+
 /**
- * 管理画面用：公開・非公開を含む全記事を取得する。
- * タイトル検索とソートをサポート。
+ * 管理画面用：公開・非公開を含む全記事を取得する（Rev24 #④: pagination 対応）。
+ * タイトル検索とソート、ページネーションをサポート。
+ *
+ * - `page` / `pageSize` 未指定時は 1ページ目・pageSize=50 を返す
+ * - `pageSize` は 1〜200 に clamp（呼び出し側の事故防止）
  */
 export async function listAllArticles(opts: {
-  search?: string;
-  sort?:   AdminArticleSort;
-} = {}): Promise<ArticleRow[]> {
+  search?:   string;
+  sort?:     AdminArticleSort;
+  page?:     number;
+  pageSize?: number;
+} = {}): Promise<ListAllArticlesResult> {
   const { search, sort = 'latest' } = opts;
+  const page     = Math.max(1, Math.floor(opts.page ?? 1));
+  const pageSize = Math.min(200, Math.max(1, Math.floor(opts.pageSize ?? 50)));
+  const offset   = (page - 1) * pageSize;
 
   try {
     const conditions = search
@@ -250,14 +266,27 @@ export async function listAllArticles(opts: {
       title:   asc(articles.title),
     }[sort];
 
-    return await db
-      .select()
-      .from(articles)
-      .where(whereClause)
-      .orderBy(orderByClause);
+    const [items, countRows] = await Promise.all([
+      db
+        .select()
+        .from(articles)
+        .where(whereClause)
+        .orderBy(orderByClause)
+        .limit(pageSize)
+        .offset(offset),
+      db
+        .select({ total: count() })
+        .from(articles)
+        .where(whereClause),
+    ]);
+
+    const total      = Number(countRows[0]?.total ?? 0);
+    const totalPages = Math.max(1, Math.ceil(total / pageSize));
+
+    return { items, total, totalPages, page, pageSize };
   } catch (err) {
     console.error('[articles.listAllArticles] DB query failed:', err);
-    return [];
+    return { items: [], total: 0, totalPages: 1, page, pageSize };
   }
 }
 

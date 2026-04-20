@@ -1,6 +1,6 @@
 # familyai.jp — システム構成図（保守ガイド）
 
-> 最終更新: 2026-04-20（Rev27 実装完了：`shared/api` 契約の二重ラップ解消＋`/og-default.png` 残存参照解消＋Windows/OneDrive 運用ノート追記。`tsc --noEmit EXIT=0`／`pnpm lint` 0件／`pnpm test` 46/46 PASS。Rev24 を 🟡→🟠 に昇格（Codex v2/v3 で継続指摘中・iOS 着手前の最優先項目）／Rev26 実装完了：Codex レビュー 11項目すべて実装／Rev23 完了＋Rev23.1/23.2 Vercel hotfix／Phase QA-T1 スモーク 44/45 PASS＋QA-T2 Vitest 46/46 PASS＋QA-CI ワークフロー配置）
+> 最終更新: 2026-04-20（Rev24 #①④⑤ 先行実装完了：`/api/articles/latest`・`/api/articles/[slug]/related` 新規／admin pagination（`listAllArticles` 拡張・`data:{items, meta}` 契約・AdminArticleTable 前後ページ UI）／`verifyCsrf` にモバイル経路（`X-Client-Platform` + `X-Mobile-Api-Key` 許可リスト）追加。QA-T3 admin CRUD 統合テスト 14件追加で Vitest 79/79 PASS、`tsc`／`lint` 0件。Rev24 残タスク = #② mobile token API（jose + Apple/Google Client ID 待ち）・#③ Redis INCR + Vercel Cron。Rev27 実装完了／Rev26 実装完了／Rev23 完了＋Rev23.1/23.2 Vercel hotfix／Phase QA-T1 スモーク 44/45 PASS＋QA-CI ワークフロー配置）
 > 目的: 全体構造・外部サービス連携・データフローを一目で把握し、保守・拡張を容易にする
 
 ---

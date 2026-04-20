@@ -168,6 +168,42 @@ export async function fetchArticle(
   return apiFetch<Article>(`${baseUrl}/api/articles/${slug}`);
 }
 
+/**
+ * 最新記事を取得する（Rev24 #①）。
+ * サーバは `{ ok: true, data: ArticleSummary[] }` 形式で返し、`apiFetch` が剥がす。
+ *
+ * @param limit 1〜20（デフォルト 6）
+ * @note Web トップは Server Component が `getLatestArticles()` を直呼びするため、
+ *       このエンドポイントは主に iOS/Android モバイル・外部クライアント用。
+ */
+export async function fetchLatest(
+  baseUrl: string,
+  limit:   number = 6,
+): Promise<ApiResponse<ArticleSummary[]>> {
+  return apiFetch<ArticleSummary[]>(
+    `${baseUrl}/api/articles/latest${buildQueryString({ limit })}`,
+  );
+}
+
+/**
+ * 関連記事を取得する（Rev24 #①）。
+ * サーバは `{ ok: true, data: ArticleSummary[] }` 形式で返し、`apiFetch` が剥がす。
+ *
+ * @param slug  対象記事の slug
+ * @param limit 1〜10（デフォルト 3）
+ * @note Web 詳細は Server Component が `getRelatedArticles()` を直呼びするため、
+ *       このエンドポイントは主に iOS/Android モバイル・外部クライアント用。
+ */
+export async function fetchRelated(
+  baseUrl: string,
+  slug:    string,
+  limit:   number = 3,
+): Promise<ApiResponse<ArticleSummary[]>> {
+  return apiFetch<ArticleSummary[]>(
+    `${baseUrl}/api/articles/${slug}/related${buildQueryString({ limit })}`,
+  );
+}
+
 // ─── チャット API ──────────────────────────────────────────────
 
 export interface ChatRequest {

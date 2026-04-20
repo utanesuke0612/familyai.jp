@@ -1,7 +1,7 @@
 # familyai.jp 自動テスト手順書 v1
 
 作成日: 2026-04-19
-最終更新: 2026-04-20（Rev27 反映：`shared/api` 契約ユニットテスト3件を追加し Vitest 46/46 PASS を達成。`test/unit/shared-api.contract.test.ts` を新設し (a) 200 `{ok,data}` → `data` が剥がれる (b) 4xx `{ok:false,error:{message}}` → `error.message` が返る (c) ネットワーク例外 → `NETWORK_ERROR` の 3 ケースをカバー。Phase QA-T3/T4 は Rev24 着手前に未着手のまま継続。）
+最終更新: 2026-04-20（Rev24 #①④⑤ + QA-T3 admin CRUD 反映：Vitest **79/79 PASS**。追加テスト = `shared-api.latest-related.test.ts`（3件・fetchLatest/fetchRelated）＋`adminArticlesQuerySchema.test.ts`（6件・page/pageSize/sort/search validation）＋`csrf.test.ts`（10件・Origin チェック4＋モバイル経路6）＋`test/integration/admin-articles.integration.test.ts`（14件・admin GET/POST/PUT/DELETE/PATCH-toggle × 正常系＋403/400/404/429/CSRF）。QA-T3 の `/api/ai` free/pro プラン別（OpenRouter＋db.users mock 要）、QA-T4 Playwright E2E は未着手のまま継続。）
 対象範囲: Phase1 / Rev23〜Rev27 時点のコードベース
 目的: 回帰防止・iOS/Android移行前の品質担保・高トラフィック対応前の信頼性検証
 

@@ -13,10 +13,12 @@ export const LEVELS       = ['beginner', 'intermediate', 'advanced'] as const;
 export const ARTICLE_SORTS = ['latest', 'oldest', 'popular', 'title'] as const;
 export type ArticleSort = (typeof ARTICLE_SORTS)[number];
 
-/** 管理 API の GET クエリパラメータ（Rev26 #6: sort を zod 検証）*/
+/** 管理 API の GET クエリパラメータ（Rev26 #6: sort を zod 検証・Rev24 #④: pagination 追加）*/
 export const adminArticlesQuerySchema = z.object({
-  search: z.string().trim().min(1).max(100).optional(),
-  sort:   z.enum(ARTICLE_SORTS).default('latest'),
+  search:   z.string().trim().min(1).max(100).optional(),
+  sort:     z.enum(ARTICLE_SORTS).default('latest'),
+  page:     z.coerce.number().int().min(1).default(1),
+  pageSize: z.coerce.number().int().min(1).max(200).default(50),
 });
 
 /** 日付文字列 → Date（空文字/undefined は null、未指定は undefined を保持）*/

@@ -18,8 +18,10 @@ export async function GET(req: NextRequest) {
 
   const { searchParams } = req.nextUrl;
   const parsedQuery = adminArticlesQuerySchema.safeParse({
-    search: searchParams.get('search') ?? undefined,
-    sort:   searchParams.get('sort')   ?? undefined,
+    search:   searchParams.get('search')   ?? undefined,
+    sort:     searchParams.get('sort')     ?? undefined,
+    page:     searchParams.get('page')     ?? undefined,
+    pageSize: searchParams.get('pageSize') ?? undefined,
   });
   if (!parsedQuery.success) {
     return NextResponse.json(
@@ -27,10 +29,22 @@ export async function GET(req: NextRequest) {
       { status: 400 },
     );
   }
-  const { search, sort } = parsedQuery.data;
+  const { search, sort, page, pageSize } = parsedQuery.data;
 
-  const items = await listAllArticles({ search, sort });
-  return NextResponse.json({ ok: true, data: items });
+  // Rev24 #④: pagination 対応（items/total/totalPages を meta に格納）
+  const result = await listAllArticles({ search, sort, page, pageSize });
+  return NextResponse.json({
+    ok:   true,
+    data: {
+      items: result.items,
+      meta:  {
+        page:       result.page,
+        pageSize:   result.pageSize,
+        total:      result.total,
+        totalPages: result.totalPages,
+      },
+    },
+  });
 }
 
 // ─── POST: 記事新規作成 ───────────────────────────────────────

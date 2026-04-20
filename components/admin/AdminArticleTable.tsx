@@ -19,16 +19,24 @@ import type { Article } from '@/lib/db/schema';
 
 type SortKey = 'latest' | 'oldest' | 'popular' | 'title';
 
+const PAGE_SIZE = 50;
+
 interface Props {
   initialArticles: Article[];
+  /** Rev24 #④: 件数表示とページング用の総件数（初期値） */
+  initialTotal?:   number;
 }
 
-export function AdminArticleTable({ initialArticles }: Props) {
+export function AdminArticleTable({ initialArticles, initialTotal }: Props) {
   const router = useRouter();
   const [articles, setArticles]   = useState<Article[]>(initialArticles);
   const [search,   setSearch]     = useState('');
   const [sort,     setSort]       = useState<SortKey>('latest');
+  const [page,     setPage]       = useState(1);
+  const [total,    setTotal]      = useState<number>(initialTotal ?? initialArticles.length);
   const [, startTransition] = useTransition();
+
+  const totalPages = Math.max(1, Math.ceil(total / PAGE_SIZE));
 
   // 二重クリック防止：アクション実行中の slug を保持
   const [pendingSlugs, setPendingSlugs] = useState<Set<string>>(new Set());
@@ -46,6 +54,11 @@ export function AdminArticleTable({ initialArticles }: Props) {
   const isFirstRender = useRef(true);
   const [loading, setLoading] = useState(false);
 
+  // 検索・ソート変更時は 1 ページ目に戻す
+  useEffect(() => {
+    setPage(1);
+  }, [search, sort]);
+
   useEffect(() => {
     if (isFirstRender.current) {
       isFirstRender.current = false;
@@ -56,7 +69,9 @@ export function AdminArticleTable({ initialArticles }: Props) {
       const params = new URLSearchParams();
       const q = search.trim();
       if (q) params.set('search', q);
-      params.set('sort', sort);
+      params.set('sort',     sort);
+      params.set('page',     String(page));
+      params.set('pageSize', String(PAGE_SIZE));
       setLoading(true);
       try {
         const res = await fetch(`/api/admin/articles?${params.toString()}`, {
@@ -64,17 +79,24 @@ export function AdminArticleTable({ initialArticles }: Props) {
           cache:  'no-store',
         });
         if (!res.ok) return;
-        const json = await res.json() as { ok: boolean; data: Article[] };
-        if (json.ok && Array.isArray(json.data)) {
+        const json = await res.json() as {
+          ok:   boolean;
+          data: {
+            items: Article[];
+            meta:  { page: number; pageSize: number; total: number; totalPages: number };
+          };
+        };
+        if (json.ok && json.data && Array.isArray(json.data.items)) {
           // createdAt は JSON で string になるので Date に復元
           setArticles(
-            json.data.map((a) => ({
+            json.data.items.map((a) => ({
               ...a,
               createdAt:   a.createdAt   ? new Date(a.createdAt)   : a.createdAt,
               updatedAt:   a.updatedAt   ? new Date(a.updatedAt)   : a.updatedAt,
               publishedAt: a.publishedAt ? new Date(a.publishedAt) : a.publishedAt,
             })) as Article[],
           );
+          setTotal(json.data.meta.total);
         }
       } catch {
         // AbortError はスキップ
@@ -87,7 +109,7 @@ export function AdminArticleTable({ initialArticles }: Props) {
       controller.abort();
       clearTimeout(timer);
     };
-  }, [search, sort]);
+  }, [search, sort, page]);
 
   const filtered = articles;
 
@@ -165,7 +187,9 @@ export function AdminArticleTable({ initialArticles }: Props) {
         </select>
 
         <span style={{ marginLeft: 'auto', fontSize: '13px', color: '#6B7280' }}>
-          {loading ? '読み込み中…' : `${filtered.length} 件`}
+          {loading
+            ? '読み込み中…'
+            : `${filtered.length} / ${total.toLocaleString('ja-JP')} 件（${page} / ${totalPages} ページ）`}
         </span>
 
         <Link
@@ -298,8 +322,54 @@ export function AdminArticleTable({ initialArticles }: Props) {
           </tbody>
         </table>
       </div>
+
+      {/* ── ページネーション（Rev24 #④）── */}
+      {totalPages > 1 && (
+        <div
+          style={{
+            display:        'flex',
+            gap:            '8px',
+            alignItems:     'center',
+            justifyContent: 'center',
+            marginTop:      '1rem',
+          }}
+        >
+          <button
+            onClick={() => setPage((p) => Math.max(1, p - 1))}
+            disabled={page <= 1 || loading}
+            style={pagerBtnStyle(page <= 1 || loading)}
+            aria-label="前のページ"
+          >
+            ← 前へ
+          </button>
+          <span style={{ fontSize: '13px', color: '#374151', minWidth: '80px', textAlign: 'center' }}>
+            {page} / {totalPages}
+          </span>
+          <button
+            onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
+            disabled={page >= totalPages || loading}
+            style={pagerBtnStyle(page >= totalPages || loading)}
+            aria-label="次のページ"
+          >
+            次へ →
+          </button>
+        </div>
+      )}
     </div>
   );
+}
+
+function pagerBtnStyle(disabled: boolean): React.CSSProperties {
+  return {
+    padding:      '6px 14px',
+    borderRadius: '8px',
+    border:       '1px solid #D1D5DB',
+    background:   disabled ? '#F3F4F6' : 'white',
+    color:        disabled ? '#9CA3AF' : '#111827',
+    fontSize:     '13px',
+    fontWeight:   500,
+    cursor:       disabled ? 'not-allowed' : 'pointer',
+  };
 }
 
 // ── 難易度バッジ ──────────────────────────────────────────────
