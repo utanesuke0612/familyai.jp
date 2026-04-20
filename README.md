@@ -2,8 +2,8 @@
 
 家族みんなのAI活用ガイドサイト（Next.js 14 App Router / Drizzle ORM / NextAuth v5）。
 
-詳細なアーキテクチャと開発手順は [`todo/system-architecture.md`](./todo/system-architecture.md)・
-[`todo/familyai_coding_agent_v5.md`](./todo/familyai_coding_agent_v5.md) を参照してください。
+詳細なアーキテクチャと開発手順は [`todo/01_システム設計書.md`](./todo/01_システム設計書.md)・
+[`todo/02_CodingAgent指示書.md`](./todo/02_CodingAgent指示書.md) を参照してください。
 
 ## 開発環境セットアップ
 
