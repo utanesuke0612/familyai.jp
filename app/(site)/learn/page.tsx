@@ -32,7 +32,7 @@ export const metadata: Metadata = {
     title:       '記事一覧 | familyai.jp',
     description: 'パパ・ママ・子ども・シニアのためのAI活用ガイド。',
     url:         'https://familyai.jp/learn',
-    images:      [{ url: '/og-default.png', width: 1200, height: 630 }],
+    // images は指定しない → ルート `app/opengraph-image.tsx` が自動継承される（Next.js 14 規約・Rev27 #3）
   },
 };
 

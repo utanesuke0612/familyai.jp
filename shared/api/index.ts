@@ -31,7 +31,13 @@ interface FetchOptions extends Omit<RequestInit, 'body'> {
  * 型安全な fetch ラッパー。
  * - Content-Type: application/json を自動付与
  * - タイムアウトを AbortController で制御
- * - ApiResponse<T> 形式でラップして返す
+ * - サーバー側の `{ ok: true, data: T }` / `{ ok: false, error: {...} }` ラッパーを
+ *   1枚剥がして `ApiResponse<T>` で返す（Rev27 #1）
+ *
+ * サーバ契約:
+ *   - 成功: { ok: true,  data: T }
+ *   - 失敗: { ok: false, error: { code: string; message: string } }
+ *           もしくは { ok: false, error: string }（レガシー）
  */
 export async function apiFetch<T>(
   url: string,
@@ -55,19 +61,43 @@ export async function apiFetch<T>(
 
     clearTimeout(timer);
 
-    if (!res.ok) {
-      let error = `HTTP ${res.status}`;
-      try {
-        const json = await res.json();
-        error = json?.error ?? error;
-      } catch {
-        // ignore parse error
-      }
-      return { ok: false, error, status: res.status };
+    // ── JSON パース（失敗しても例外にしない）
+    let json: unknown = null;
+    try {
+      json = await res.json();
+    } catch {
+      // ignore parse error
     }
 
-    const data: T = await res.json();
-    return { ok: true, data };
+    // ── サーバ契約のラッパーを剥がす
+    const wrapped = (json ?? {}) as {
+      ok?:    boolean;
+      data?:  T;
+      error?: { code?: string; message?: string } | string;
+    };
+
+    if (!res.ok || wrapped.ok === false) {
+      const errObj  = wrapped.error;
+      const message =
+        typeof errObj === 'string'
+          ? errObj
+          : errObj?.message ?? `HTTP ${res.status}`;
+      const code =
+        typeof errObj === 'object' ? errObj?.code : undefined;
+      return {
+        ok:     false,
+        error:  message,
+        status: res.status,
+        ...(code ? { code } : {}),
+      };
+    }
+
+    // 正常系: { ok: true, data: T } の data を取り出す
+    // ※ レガシー（ラップなし）の場合は json 自体を返す
+    if (wrapped.ok === true && 'data' in wrapped) {
+      return { ok: true, data: wrapped.data as T };
+    }
+    return { ok: true, data: json as T };
   } catch (err: unknown) {
     clearTimeout(timer);
     if (err instanceof Error && err.name === 'AbortError') {
@@ -125,9 +155,11 @@ export async function fetchArticles(
 /**
  * 記事詳細を取得する。
  *
- * @note Web 版は Drizzle を直接呼ぶ Server Component を使用するため
- *       このエンドポイント（GET /api/articles/:slug）は現在未実装。
- *       iOS アプリ連携（Phase 4）時に app/api/articles/[slug]/route.ts を追加すること。
+ * @note Web 版の Server Component は `lib/repositories/articles.ts` の
+ *       `getArticle()` を直呼びするため、このエンドポイントは主に
+ *       iOS/Android モバイルクライアントおよび外部クライアント用（Rev23 #3 で実装済み・
+ *       `app/api/articles/[slug]/route.ts`）。
+ *       サーバは `{ ok: true, data: Article }` 形式で返し、`apiFetch` が剥がす。
  */
 export async function fetchArticle(
   baseUrl: string,

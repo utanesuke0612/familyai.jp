@@ -142,7 +142,9 @@ function JsonLd({ article }: { article: NonNullable<Awaited<ReturnType<typeof ge
     '@type':    'Article',
     headline:   article.title,
     description: article.description ?? article.title,
-    image:      article.thumbnailUrl ?? `${SITE.url}/og-default.png`,
+    // Rev27 #3: /og-default.png は存在しないため、Next.js 14 の動的 OGP
+    // エンドポイント（app/opengraph-image.tsx → /opengraph-image）を使用する
+    image:      article.thumbnailUrl ?? `${SITE.url}/opengraph-image`,
     datePublished: article.publishedAt?.toISOString(),
     dateModified:  article.updatedAt?.toISOString() ?? article.publishedAt?.toISOString(),
     url:        articleUrl,
