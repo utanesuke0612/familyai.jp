@@ -959,6 +959,6 @@ push (main) / pull_request (main → *)
 - 実装依頼書: [todo/familyai_coding_agent_v5.md](./familyai_coding_agent_v5.md)
 - 人間作業手順: [todo/junliToDo_v4.md](./junliToDo_v4.md)
 - テスト計画: [todo/test-plan_v1.md](./test-plan_v1.md)
-- テスト結果（T1 スモーク）: [todo/TestResult_202604192224.md](./TestResult_202604192224.md)
-- テスト結果（T2 Vitest + CI）: [todo/TestResult_202604192243.md](./TestResult_202604192243.md)
+- テスト結果（T1 スモーク）: [todo/TestResult_202604192224.md](TestResult_202604192224.md)
+- テスト結果（T2 Vitest + CI）: [todo/TestResult_202604192243.md](TestResult_202604192243.md)
 - 残課題: CodingAgent タスクは Step 01〜22・Rev01〜23.2・Phase QA-T1/T2/CI まで全完了 🎉
