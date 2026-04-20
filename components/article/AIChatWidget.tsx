@@ -100,7 +100,7 @@ function TypingIndicator() {
               className="w-1.5 h-1.5 rounded-full"
               style={{
                 background:     'var(--color-brown-light)',
-                animation:      'pulseSoft 1.2s ease-in-out infinite',
+                animation:      'pulse-soft 1.2s ease-in-out infinite',
                 animationDelay: `${i * 0.2}s`,
               }}
             />

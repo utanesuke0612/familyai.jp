@@ -6,7 +6,9 @@
  * Upstash 環境変数が未設定の場合は null を返し、呼び出し側はスキップする。
  *
  * 用途:
- *   - admin API（POST/PUT/DELETE/PATCH）: 10req/min per userId
+ *   - admin API（POST/PUT/DELETE/PATCH）: 10req/min per (userId + IP)
+ *     identity（= userId / admin email など）と IP を組み合わせてキー化し、
+ *     侵害アカウントからの大量操作と、同一 IP 経由のなりすましの両方を抑制する。
  *   - 将来の他 API でも流用可能
  *
  * ※ /api/ai の /d 制限は専用ロジック（プラン別）があるため本ヘルパーとは独立。

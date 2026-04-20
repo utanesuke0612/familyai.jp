@@ -12,7 +12,7 @@
  * - 閲覧数表示
  */
 
-import { useState, useMemo, useTransition } from 'react';
+import { useState, useEffect, useRef, useTransition } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import type { Article } from '@/lib/db/schema';
@@ -40,23 +40,56 @@ export function AdminArticleTable({ initialArticles }: Props) {
       return next;
     });
 
-  // ── クライアントサイド絞り込み + ソート ──────────────────────
-  const filtered = useMemo(() => {
-    const q = search.trim().toLowerCase();
-    const result = q
-      ? articles.filter((a) => a.title.toLowerCase().includes(q))
-      : [...articles];
+  // ── API 主導のサーバーサイド絞り込み + ソート（Rev26 #5）────
+  // initial render では SSR の initialArticles を使用、以降 search/sort 変更時に
+  // /api/admin/articles を叩いて結果を取得（350ms debounce）。
+  const isFirstRender = useRef(true);
+  const [loading, setLoading] = useState(false);
 
-    result.sort((a, b) => {
-      switch (sort) {
-        case 'latest':  return (b.createdAt?.getTime() ?? 0) - (a.createdAt?.getTime() ?? 0);
-        case 'oldest':  return (a.createdAt?.getTime() ?? 0) - (b.createdAt?.getTime() ?? 0);
-        case 'popular': return b.viewCount - a.viewCount;
-        case 'title':   return a.title.localeCompare(b.title, 'ja');
+  useEffect(() => {
+    if (isFirstRender.current) {
+      isFirstRender.current = false;
+      return;
+    }
+    const controller = new AbortController();
+    const timer = setTimeout(async () => {
+      const params = new URLSearchParams();
+      const q = search.trim();
+      if (q) params.set('search', q);
+      params.set('sort', sort);
+      setLoading(true);
+      try {
+        const res = await fetch(`/api/admin/articles?${params.toString()}`, {
+          signal: controller.signal,
+          cache:  'no-store',
+        });
+        if (!res.ok) return;
+        const json = await res.json() as { ok: boolean; data: Article[] };
+        if (json.ok && Array.isArray(json.data)) {
+          // createdAt は JSON で string になるので Date に復元
+          setArticles(
+            json.data.map((a) => ({
+              ...a,
+              createdAt:   a.createdAt   ? new Date(a.createdAt)   : a.createdAt,
+              updatedAt:   a.updatedAt   ? new Date(a.updatedAt)   : a.updatedAt,
+              publishedAt: a.publishedAt ? new Date(a.publishedAt) : a.publishedAt,
+            })) as Article[],
+          );
+        }
+      } catch {
+        // AbortError はスキップ
+      } finally {
+        setLoading(false);
       }
-    });
-    return result;
-  }, [articles, search, sort]);
+    }, 350);
+
+    return () => {
+      controller.abort();
+      clearTimeout(timer);
+    };
+  }, [search, sort]);
+
+  const filtered = articles;
 
   // ── 公開トグル ────────────────────────────────────────────────
   async function handleToggle(slug: string) {
@@ -109,7 +142,6 @@ export function AdminArticleTable({ initialArticles }: Props) {
             border:       '1px solid #D1D5DB',
             fontSize:     '14px',
             width:        '240px',
-            outline:      'none',
           }}
         />
 
@@ -133,7 +165,7 @@ export function AdminArticleTable({ initialArticles }: Props) {
         </select>
 
         <span style={{ marginLeft: 'auto', fontSize: '13px', color: '#6B7280' }}>
-          {filtered.length} 件 / 全 {articles.length} 件
+          {loading ? '読み込み中…' : `${filtered.length} 件`}
         </span>
 
         <Link

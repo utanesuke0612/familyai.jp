@@ -15,6 +15,7 @@
 
 import { NextRequest, NextResponse } from 'next/server';
 import { getArticle }                from '@/lib/repositories/articles';
+import { toArticleDetail }           from '@/lib/mappers/articles';
 
 export const runtime = 'nodejs';
 // ISR/CDN キャッシュ（記事更新は Rev21 の admin API 経由・revalidate しない運用で OK）
@@ -37,7 +38,7 @@ export async function GET(
       );
     }
 
-    const res = NextResponse.json({ ok: true, data: article });
+    const res = NextResponse.json({ ok: true, data: toArticleDetail(article) });
     // CDN 60秒キャッシュ + 10分 stale-while-revalidate
     res.headers.set(
       'Cache-Control',

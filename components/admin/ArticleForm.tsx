@@ -299,7 +299,10 @@ export function ArticleForm({ article }: ArticleFormProps) {
           }
         >
           {preview === 'split' ? (
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', minHeight: '520px' }}>
+            <div
+              className="grid gap-4 md:grid-cols-2 grid-cols-1"
+              style={{ minHeight: '520px' }}
+            >
               <textarea
                 value={body}
                 onChange={(e) => setBody(e.target.value)}
@@ -509,7 +512,8 @@ const inputStyle: React.CSSProperties = {
   borderRadius: '8px',
   border:       '1px solid #D1D5DB',
   fontSize:     '14px',
-  outline:      'none',
+  // Rev26 #7: outline:none を削除（フォーカス可視性確保）。
+  // ブラウザ標準の :focus-visible アウトラインが表示される。
   boxSizing:    'border-box',
   background:   'white',
 };

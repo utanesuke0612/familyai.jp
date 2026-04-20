@@ -9,7 +9,7 @@ import { requireAdmin }              from '@/lib/admin-auth';
 import { verifyCsrf }                from '@/lib/csrf';
 import { enforceAdminRateLimit }     from '@/lib/ratelimit';
 import { listAllArticles, createArticle } from '@/lib/repositories/articles';
-import { createArticleSchema }       from '@/lib/schemas/articles';
+import { createArticleSchema, adminArticlesQuerySchema } from '@/lib/schemas/articles';
 
 // ─── GET: 全記事一覧 ──────────────────────────────────────────
 export async function GET(req: NextRequest) {
@@ -17,8 +17,17 @@ export async function GET(req: NextRequest) {
   if (!check.ok) return check.response;
 
   const { searchParams } = req.nextUrl;
-  const search = searchParams.get('search') ?? undefined;
-  const sort   = (searchParams.get('sort') ?? 'latest') as 'latest' | 'oldest' | 'popular' | 'title';
+  const parsedQuery = adminArticlesQuerySchema.safeParse({
+    search: searchParams.get('search') ?? undefined,
+    sort:   searchParams.get('sort')   ?? undefined,
+  });
+  if (!parsedQuery.success) {
+    return NextResponse.json(
+      { error: 'Invalid query parameters', details: parsedQuery.error.flatten() },
+      { status: 400 },
+    );
+  }
+  const { search, sort } = parsedQuery.data;
 
   const items = await listAllArticles({ search, sort });
   return NextResponse.json({ ok: true, data: items });

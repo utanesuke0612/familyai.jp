@@ -88,14 +88,19 @@ export function CategoryFilter({
       </div>
 
       {/* チップ一覧 */}
-      <div className="flex flex-wrap gap-2" role="group" aria-label="カテゴリフィルター">
+      <div
+        className="flex gap-2 overflow-x-auto whitespace-nowrap pb-2 -mx-1 px-1"
+        role="group"
+        aria-label="カテゴリフィルター"
+        style={{ WebkitOverflowScrolling: 'touch', scrollbarWidth: 'thin' }}
+      >
         {categories.map((cat) => {
           const isActive = selected.includes(cat);
           return (
             <button
               key={cat}
               onClick={() => toggle(cat)}
-              className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-sm font-medium border transition-[transform,box-shadow,border-color,background-color,color] duration-150 min-h-[44px]"
+              className="inline-flex shrink-0 items-center gap-1.5 px-4 py-2 rounded-full text-sm font-medium border transition-[transform,box-shadow,border-color,background-color,color] duration-150 min-h-[44px]"
               style={{
                 background:   isActive ? 'var(--color-orange)' : 'white',
                 borderColor:  isActive ? 'var(--color-orange)' : 'var(--color-beige-dark)',

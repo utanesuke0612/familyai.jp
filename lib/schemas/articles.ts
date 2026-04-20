@@ -10,6 +10,14 @@ import { z } from 'zod';
 export const FAMILY_ROLES = ['papa', 'mama', 'kids', 'senior', 'common'] as const;
 export const CATEGORIES   = ['image-gen', 'voice', 'education', 'housework'] as const;
 export const LEVELS       = ['beginner', 'intermediate', 'advanced'] as const;
+export const ARTICLE_SORTS = ['latest', 'oldest', 'popular', 'title'] as const;
+export type ArticleSort = (typeof ARTICLE_SORTS)[number];
+
+/** 管理 API の GET クエリパラメータ（Rev26 #6: sort を zod 検証）*/
+export const adminArticlesQuerySchema = z.object({
+  search: z.string().trim().min(1).max(100).optional(),
+  sort:   z.enum(ARTICLE_SORTS).default('latest'),
+});
 
 /** 日付文字列 → Date（空文字/undefined は null、未指定は undefined を保持）*/
 export const optionalDate = z

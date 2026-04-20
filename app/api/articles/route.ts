@@ -31,9 +31,11 @@
  */
 
 import { NextRequest, NextResponse } from 'next/server';
-import { eq, and, or, desc, sql, count } from 'drizzle-orm';
+import { eq, and, or, desc, sql, count, ilike } from 'drizzle-orm';
 import { z }                         from 'zod';
 import { db, articles }              from '@/lib/db';
+import { toArticleSummary }          from '@/lib/mappers/articles';
+import { escapeLike }                from '@/lib/repositories/articles';
 
 export const runtime = 'nodejs';
 
@@ -67,12 +69,14 @@ const catSchema = z
   });
 
 const querySchema = z.object({
-  role:  z.enum(['papa', 'mama', 'kids', 'senior', 'common']).optional(),
-  cat:   catSchema,
-  level: z.enum(['beginner', 'intermediate', 'advanced']).optional(),
-  page:  z.coerce.number().int().min(1).default(1),
-  limit: z.coerce.number().int().min(1).max(50).default(12),
-  sort:  z.enum(['latest', 'popular']).default('latest'),
+  role:   z.enum(['papa', 'mama', 'kids', 'senior', 'common']).optional(),
+  cat:    catSchema,
+  level:  z.enum(['beginner', 'intermediate', 'advanced']).optional(),
+  page:   z.coerce.number().int().min(1).default(1),
+  limit:  z.coerce.number().int().min(1).max(50).default(12),
+  sort:   z.enum(['latest', 'popular']).default('latest'),
+  // Rev26 #2: 公開 search（タイトル/description 部分一致・ILIKE）
+  search: z.string().trim().min(1).max(100).optional(),
 });
 
 // ── レスポンス用の記事フィールド ────────────────────────────────
@@ -101,14 +105,15 @@ export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url);
   const catParams = searchParams.getAll('cat');
   const raw = {
-    role:  searchParams.get('role')  ?? undefined,
-    cat:   catParams.length > 1 ? catParams
+    role:   searchParams.get('role')   ?? undefined,
+    cat:    catParams.length > 1 ? catParams
          : catParams.length === 1 ? catParams[0]
          : undefined,
-    level: searchParams.get('level') ?? undefined,
-    page:  searchParams.get('page')  ?? undefined,
-    limit: searchParams.get('limit') ?? undefined,
-    sort:  searchParams.get('sort')  ?? undefined,
+    level:  searchParams.get('level')  ?? undefined,
+    page:   searchParams.get('page')   ?? undefined,
+    limit:  searchParams.get('limit')  ?? undefined,
+    sort:   searchParams.get('sort')   ?? undefined,
+    search: searchParams.get('search') ?? undefined,
   };
 
   const parsed = querySchema.safeParse(raw);
@@ -125,7 +130,7 @@ export async function GET(req: NextRequest) {
     );
   }
 
-  const { role, cat, level, page, limit, sort } = parsed.data;
+  const { role, cat, level, page, limit, sort, search } = parsed.data;
   const offset = (page - 1) * limit;
 
   // 2. WHERE 句の構築
@@ -150,6 +155,16 @@ export async function GET(req: NextRequest) {
 
   if (level) {
     conditions.push(eq(articles.level, level));
+  }
+
+  if (search) {
+    const pattern = `%${escapeLike(search)}%`;
+    conditions.push(
+      or(
+        ilike(articles.title, pattern),
+        ilike(articles.description, pattern),
+      )!,
+    );
   }
 
   const where = and(...conditions);
@@ -183,7 +198,7 @@ export async function GET(req: NextRequest) {
     const res = NextResponse.json({
       ok:   true,
       data: {
-        items: rows,
+        items: rows.map(toArticleSummary),
         meta: {
           page,
           perPage:    limit,

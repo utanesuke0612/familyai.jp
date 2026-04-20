@@ -47,23 +47,18 @@ export const metadata: Metadata = {
     title:     'familyai.jp — 家族みんなのAI活用サイト',
     description:
       'AI（愛）で家族をもっと幸せに。パパ・ママ・子ども・シニアに向けたやさしいAIガイド。',
-    images: [{ url: '/og-default.png', width: 1200, height: 630, alt: 'familyai.jp' }],
+    // Rev26 #4: 画像は app/opengraph-image.tsx が自動配信（/opengraph-image）。
+    // 明示指定しないことで Next.js のファイル規約に任せ、欠落を防ぐ。
   },
   twitter: {
     card:        'summary_large_image',
     site:        '@familyaijp',
     title:       'familyai.jp — 家族みんなのAI活用サイト',
     description: 'AI（愛）で家族をもっと幸せに。',
-    images:      ['/og-default.png'],
+    // OG 画像は app/opengraph-image.tsx が自動生成するため未指定で OK。
   },
-  icons: {
-    icon:  [
-      { url: '/favicon.ico',               sizes: 'any' },
-      { url: '/icon-192.png', type: 'image/png', sizes: '192x192' },
-    ],
-    apple: [{ url: '/apple-touch-icon.png', sizes: '180x180' }],
-  },
-  manifest: '/manifest.json',
+  // icons / manifest は app/icon.tsx、app/apple-icon.tsx、app/manifest.ts が
+  // Next.js のファイル規約で自動的に配信するため、ここで明示指定しない（Rev26 #4）。
 };
 
 // ── viewport（テーマカラー・PWA 対応） ───────────────────────

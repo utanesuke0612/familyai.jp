@@ -16,6 +16,7 @@ import { RolePicker }        from '@/components/home/RolePicker';
 import { CategoryFilter }    from '@/components/home/CategoryFilter';
 import { ArticleGrid }       from '@/components/article/ArticleGrid';
 import { SortLevelBar }      from '@/components/learn/SortLevelBar';
+import { LearnSearchBar }    from '@/components/learn/LearnSearchBar';
 
 // ── 定数 ──────────────────────────────────────────────────────
 const PAGE_SIZE = 12;
@@ -194,23 +195,27 @@ function ActiveFilterBanner({
 // ── ページ本体 ────────────────────────────────────────────────
 interface LearnPageProps {
   searchParams: {
-    role?:  string;
-    cat?:   string;
-    level?: string;
-    sort?:  string;
-    page?:  string;
+    role?:   string;
+    cat?:    string;
+    level?:  string;
+    sort?:   string;
+    page?:   string;
+    search?: string;
   };
 }
 
 export default async function LearnPage({ searchParams }: LearnPageProps) {
   // ── パラメータ解析 ──────────────────────────────────────────
-  const role  = searchParams.role  || null;
-  const cats  = searchParams.cat   ? searchParams.cat.split(',').filter(Boolean) : [];
-  const level = searchParams.level || null;
-  const sort  = searchParams.sort === 'popular' ? 'popular' : 'latest';
-  const page  = Math.max(1, parseInt(searchParams.page ?? '1', 10));
+  const role   = searchParams.role  || null;
+  const cats   = searchParams.cat   ? searchParams.cat.split(',').filter(Boolean) : [];
+  const level  = searchParams.level || null;
+  const sort   = searchParams.sort === 'popular' ? 'popular' : 'latest';
+  const page   = Math.max(1, parseInt(searchParams.page ?? '1', 10));
+  // Rev26 #2: 公開 search（100 文字・前後空白除去）
+  const searchRaw = (searchParams.search ?? '').trim();
+  const search    = searchRaw.length > 0 && searchRaw.length <= 100 ? searchRaw : null;
 
-  const isFiltered = !!(role || cats.length || level);
+  const isFiltered = !!(role || cats.length || level || search);
 
   // ── Repository 経由でフィルタ + ページネーション取得 ────────
   const { items: articleRows, total: totalCount, totalPages } = await getArticleList(
@@ -219,6 +224,7 @@ export default async function LearnPage({ searchParams }: LearnPageProps) {
       categories: cats,
       level:      level      ?? undefined,
       sort,
+      search:     search     ?? undefined,
     },
     { page, pageSize: PAGE_SIZE },
   );
@@ -310,6 +316,11 @@ export default async function LearnPage({ searchParams }: LearnPageProps) {
           className="max-w-container mx-auto flex flex-col gap-6"
           style={{ paddingInline: 'var(--container-px)' }}
         >
+          {/* 検索バー（Rev26 #2）*/}
+          <Suspense fallback={<div className="h-14 rounded-full skeleton" />}>
+            <LearnSearchBar />
+          </Suspense>
+
           {/* ロールピッカー */}
           <Suspense fallback={
             <div className="h-20 rounded-2xl skeleton" />

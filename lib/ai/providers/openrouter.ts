@@ -29,12 +29,13 @@ export async function streamOpenRouter(
   const apiKey  = process.env.OPENROUTER_API_KEY;
   const appUrl  = process.env.OPENROUTER_APP_URL  ?? 'https://familyai.jp';
   const appName = process.env.OPENROUTER_APP_NAME ?? 'familyai.jp';
+  const baseUrl = process.env.OPENROUTER_BASE_URL ?? 'https://openrouter.ai/api/v1';
 
   if (!apiKey) {
     throw new Error('OPENROUTER_API_KEY が設定されていません。');
   }
 
-  const res = await fetch('https://openrouter.ai/api/v1/chat/completions', {
+  const res = await fetch(`${baseUrl.replace(/\/$/, '')}/chat/completions`, {
     method:  'POST',
     headers: {
       'Authorization': `Bearer ${apiKey}`,

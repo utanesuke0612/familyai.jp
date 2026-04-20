@@ -33,6 +33,8 @@ export interface ArticleListFilter {
   categories?: string[];   // OR 条件で複数カテゴリに対応
   level?:      string;
   sort?:       'latest' | 'popular';
+  /** タイトル・description 部分一致検索（Rev26 #2・ILIKE、ユーザー入力は escapeLike 適用）*/
+  search?:     string;
 }
 
 export interface ArticleListPagination {
@@ -129,7 +131,7 @@ export async function getArticleList(
   filter:     ArticleListFilter = {},
   pagination: ArticleListPagination = { page: 1, pageSize: 12 },
 ): Promise<ArticleListResult> {
-  const { role, categories = [], level, sort = 'latest' } = filter;
+  const { role, categories = [], level, sort = 'latest', search } = filter;
   const { page, pageSize } = pagination;
   const offset = (page - 1) * pageSize;
 
@@ -152,6 +154,16 @@ export async function getArticleList(
 
     if (level) {
       conditions.push(eq(articles.level, level));
+    }
+
+    if (search && search.trim()) {
+      const pattern = `%${escapeLike(search.trim())}%`;
+      conditions.push(
+        or(
+          ilike(articles.title, pattern),
+          ilike(articles.description, pattern),
+        )!,
+      );
     }
 
     const whereClause  = and(...conditions);
