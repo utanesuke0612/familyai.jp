@@ -10,11 +10,49 @@
  * - リンクは外部リンクを新タブで開く
  */
 
+import { useState, useRef } from 'react';
 import ReactMarkdown     from 'react-markdown';
 import remarkGfm         from 'remark-gfm';
 import rehypeSanitize    from 'rehype-sanitize';
 import rehypeHighlight   from 'rehype-highlight';
 import type { Components } from 'react-markdown';
+
+function CodeBlockWithCopy({ children, ...props }: React.HTMLAttributes<HTMLPreElement>) {
+  const preRef = useRef<HTMLPreElement>(null);
+  const [copied, setCopied] = useState(false);
+
+  const handleCopy = async () => {
+    const text = preRef.current?.innerText ?? '';
+    try {
+      await navigator.clipboard.writeText(text);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 1500);
+    } catch {
+      // fallback silently
+    }
+  };
+
+  return (
+    <div className="code-block-wrapper" style={{ position: 'relative' }}>
+      <button
+        type="button"
+        onClick={handleCopy}
+        aria-label="コードをコピー"
+        className="absolute top-2 right-2 text-xs px-2 py-1 rounded-md transition-opacity hover:opacity-80"
+        style={{
+          background: copied ? 'var(--color-orange)' : 'rgba(255,255,255,0.85)',
+          color:      copied ? 'white' : 'var(--color-brown)',
+          border:     '1px solid var(--color-beige-dark)',
+          minHeight:  'auto',
+          zIndex:     1,
+        }}
+      >
+        {copied ? '✓ コピー済' : '📋 コピー'}
+      </button>
+      <pre ref={preRef} {...props}>{children}</pre>
+    </div>
+  );
+}
 
 // ── カスタムコンポーネント ─────────────────────────────────────
 const components: Components = {
@@ -48,13 +86,9 @@ const components: Components = {
     );
   },
 
-  // コードブロック（インライン以外）は wrapper div 付き
+  // コードブロック（インライン以外）は wrapper div + コピーボタン付き
   pre({ children, ...props }) {
-    return (
-      <div className="code-block-wrapper" style={{ position: 'relative' }}>
-        <pre {...props}>{children}</pre>
-      </div>
-    );
+    return <CodeBlockWithCopy {...props}>{children}</CodeBlockWithCopy>;
   },
 
   // 引用ブロック

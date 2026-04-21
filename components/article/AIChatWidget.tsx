@@ -35,9 +35,52 @@ function selectAiType(categories?: string[]): 'text-simple' | 'text-quality' {
   return 'text-simple';
 }
 
+// ── AI応答を段落・箇条書きに整形 ───────────────────────────────
+function formatAssistantContent(raw: string): React.ReactNode {
+  const normalized = raw
+    .replace(/\s+(\d+\.)\s*/g, '\n$1 ')
+    .replace(/\s*([・•])\s*/g, '\n$1 ')
+    .replace(/([。！？!?])\s+(?=\S)/g, '$1\n');
+
+  const blocks = normalized.split(/\n{2,}|\n(?=\d+\.\s|[・•])/).map(b => b.trim()).filter(Boolean);
+
+  return blocks.map((block, i) => {
+    const lines = block.split(/\n/).map(l => l.trim()).filter(Boolean);
+    const isList = lines.length > 1 && lines.every(l => /^(\d+\.\s|[・•]\s)/.test(l));
+    if (isList) {
+      const ordered = /^\d+\./.test(lines[0]!);
+      const ListTag = ordered ? 'ol' : 'ul';
+      return (
+        <ListTag key={i} style={{ paddingLeft: '1.25em', margin: '0.25em 0' }}>
+          {lines.map((l, j) => (
+            <li key={j} style={{ marginBottom: '0.2em' }}>
+              {l.replace(/^(\d+\.\s|[・•]\s)/, '')}
+            </li>
+          ))}
+        </ListTag>
+      );
+    }
+    return (
+      <p key={i} style={{ margin: i === 0 ? '0 0 0.5em' : '0.5em 0', whiteSpace: 'pre-wrap' }}>
+        {block}
+      </p>
+    );
+  });
+}
+
 // ── チャットバブル ─────────────────────────────────────────────
 function ChatBubble({ message }: { message: Message }) {
   const isUser = message.role === 'user';
+  const [copied, setCopied] = useState(false);
+
+  const handleCopy = async () => {
+    try {
+      await navigator.clipboard.writeText(message.content);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 1500);
+    } catch { /* noop */ }
+  };
+
   return (
     <div
       className={`flex gap-2 ${isUser ? 'flex-row-reverse' : 'flex-row'} items-end`}
@@ -53,25 +96,45 @@ function ChatBubble({ message }: { message: Message }) {
         {isUser ? '👤' : '💞'}
       </div>
 
-      <div
-        className="max-w-[85%] px-3 py-2 text-sm leading-relaxed"
-        style={{
-          background:   isUser ? 'var(--color-orange)' : 'var(--color-beige)',
-          color:        isUser ? 'white' : 'var(--color-brown)',
-          borderRadius: isUser ? '18px 18px 4px 18px' : '18px 18px 18px 4px',
-        }}
-      >
-        {message.content || (message.streaming ? '' : '…')}
-        {/* ストリーミング中のカーソル */}
-        {message.streaming && (
-          <span
-            className="inline-block w-0.5 h-4 ml-0.5 align-middle"
+      <div className="max-w-[85%] flex flex-col gap-1">
+        <div
+          className="px-3 py-2 text-sm leading-relaxed"
+          style={{
+            background:   isUser ? 'var(--color-orange)' : 'var(--color-beige)',
+            color:        isUser ? 'white' : 'var(--color-brown)',
+            borderRadius: isUser ? '18px 18px 4px 18px' : '18px 18px 18px 4px',
+          }}
+        >
+          {message.content
+            ? (isUser ? message.content : formatAssistantContent(message.content))
+            : (message.streaming ? '' : '…')}
+          {message.streaming && (
+            <span
+              className="inline-block w-0.5 h-4 ml-0.5 align-middle"
+              style={{
+                background: 'var(--color-brown-light)',
+                animation:  'blink 0.8s step-end infinite',
+              }}
+              aria-hidden="true"
+            />
+          )}
+        </div>
+
+        {!isUser && message.content && !message.streaming && (
+          <button
+            type="button"
+            onClick={handleCopy}
+            aria-label="回答をコピー"
+            className="self-start text-xs px-2 py-0.5 rounded-md transition-opacity hover:opacity-80"
             style={{
-              background: 'var(--color-brown-light)',
-              animation:  'blink 0.8s step-end infinite',
+              background: copied ? 'var(--color-orange)' : 'transparent',
+              color:      copied ? 'white' : 'var(--color-brown-light)',
+              border:     '1px solid var(--color-beige-dark)',
+              minHeight:  'auto',
             }}
-            aria-hidden="true"
-          />
+          >
+            {copied ? '✓ コピー済' : '📋 コピー'}
+          </button>
         )}
       </div>
     </div>
@@ -123,13 +186,16 @@ export function AIChatWidget({
   const [isLoading, setIsLoading] = useState(false);
   const [isOpen,    setIsOpen]    = useState(false);
   const [error,     setError]     = useState<string | null>(null);
-  const bottomRef  = useRef<HTMLDivElement>(null);
+  const scrollRef  = useRef<HTMLDivElement>(null);
   const inputRef   = useRef<HTMLTextAreaElement>(null);
   const abortRef   = useRef<AbortController | null>(null);
+  const composingRef = useRef(false);
 
-  // 新着メッセージへ自動スクロール
+  // 新着メッセージへ自動スクロール（チャット内部のみスクロール、ページ全体は動かさない）
   useEffect(() => {
-    bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
+    const el = scrollRef.current;
+    if (!el) return;
+    el.scrollTop = el.scrollHeight;
   }, [messages, isLoading]);
 
   // 開いたら入力欄にフォーカス
@@ -259,6 +325,9 @@ export function AIChatWidget({
   }, [input, isLoading, messages, articleTitle, articleExcerpt, articleCategories]);
 
   function handleKeyDown(e: React.KeyboardEvent<HTMLTextAreaElement>) {
+    // IME変換中（日本語入力の確定Enter）は送信しない
+    // `isComposing` / keyCode 229 / composingRef（onCompositionStart/End で更新）を多層チェック
+    if (composingRef.current || e.nativeEvent.isComposing || e.keyCode === 229) return;
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();
       void handleSubmit(e as unknown as React.FormEvent);
@@ -315,7 +384,7 @@ export function AIChatWidget({
   return (
     <div
       className="rounded-2xl overflow-hidden flex flex-col"
-      style={{ background: 'white', boxShadow: 'var(--shadow-warm-sm)', border: '1px solid var(--color-beige)', height: '420px' }}
+      style={{ background: 'white', boxShadow: 'var(--shadow-warm-sm)', border: '1px solid var(--color-beige)', height: '500px' }}
     >
       {/* ヘッダー */}
       <div
@@ -337,7 +406,9 @@ export function AIChatWidget({
 
       {/* メッセージ一覧 */}
       <div
+        ref={scrollRef}
         className="flex-1 overflow-y-auto p-4 flex flex-col gap-3"
+        style={{ overscrollBehavior: 'contain' }}
         role="log"
         aria-live="polite"
         aria-label="チャット履歴"
@@ -361,7 +432,6 @@ export function AIChatWidget({
           </p>
         )}
 
-        <div ref={bottomRef} aria-hidden="true" />
       </div>
 
       {/* 入力エリア */}
@@ -375,15 +445,17 @@ export function AIChatWidget({
           value={input}
           onChange={(e) => setInput(e.target.value)}
           onKeyDown={handleKeyDown}
-          placeholder="質問を入力…（Enterで送信）"
-          rows={1}
+          onCompositionStart={() => { composingRef.current = true; }}
+          onCompositionEnd={() => { composingRef.current = false; }}
+          placeholder="質問を入力…（Enterで送信 / Shift+Enterで改行）"
+          rows={2}
           disabled={isLoading}
           className="flex-1 resize-none rounded-xl border px-3 py-2 text-sm outline-none transition-[border-color,box-shadow]"
           style={{
             borderColor: 'var(--color-beige-dark)',
             color:       'var(--color-brown)',
             background:  'var(--color-cream)',
-            maxHeight:   '96px',
+            maxHeight:   '120px',
             lineHeight:  '1.5',
           }}
           aria-label="質問を入力"
