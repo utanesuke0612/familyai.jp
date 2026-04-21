@@ -241,7 +241,7 @@ export default async function LearnPage({ searchParams }: LearnPageProps) {
         className="relative overflow-hidden"
         style={{
           background:   'var(--color-cream)',
-          paddingBlock: 'clamp(40px, 6vw, 72px)',
+          paddingBlock: 'clamp(13px, 2vw, 24px)',
         }}
       >
         {/* blob 装飾 */}
@@ -264,7 +264,7 @@ export default async function LearnPage({ searchParams }: LearnPageProps) {
           <nav className="flex items-center gap-2 text-xs mb-6" aria-label="パンくずリスト">
             <a
               href="/"
-              className="hover:opacity-70 transition-opacity"
+              className="inline-flex items-center hover:opacity-70 transition-opacity"
               style={{ color: 'var(--color-brown-light)' }}
             >
               ホーム
@@ -309,7 +309,7 @@ export default async function LearnPage({ searchParams }: LearnPageProps) {
         style={{
           background:   'white',
           borderBottom: '1px solid var(--color-beige)',
-          paddingBlock: 'clamp(20px, 3vw, 32px)',
+          paddingBlock: 'clamp(12px, 2vw, 20px)',
         }}
       >
         <div
@@ -361,7 +361,7 @@ export default async function LearnPage({ searchParams }: LearnPageProps) {
       <section
         style={{
           background:  'var(--color-cream)',
-          paddingBlock: 'clamp(32px, 5vw, 64px)',
+          paddingBlock: 'clamp(16px, 3vw, 28px)',
         }}
       >
         <div

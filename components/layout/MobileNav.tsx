@@ -9,7 +9,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { Menu, X } from 'lucide-react';
-import { ROUTES, ROLE_EMOJI } from '@/shared';
+import { ROLE_EMOJI } from '@/shared';
 
 const NAV_LINKS = [
   { href: '/learn?role=common', label: '共通ガイド', emoji: '👨‍👩‍👧‍👦' },
@@ -108,17 +108,6 @@ export function MobileNav({ onClose }: MobileNavProps) {
             </li>
           ))}
         </ul>
-
-        {/* CTA */}
-        <div className="p-4 border-t" style={{ borderColor: 'var(--color-beige-dark)' }}>
-          <Link
-            href={ROUTES.login}
-            onClick={handleClose}
-            className="btn-primary w-full justify-center text-center"
-          >
-            ログイン
-          </Link>
-        </div>
 
         {/* Safe Area */}
         <div className="pb-safe" />

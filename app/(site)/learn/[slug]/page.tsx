@@ -198,14 +198,11 @@ export default async function ArticlePage({
   );
 
   // 計算済みメタ
-  const primaryRole     = (article.roles[0] ?? 'common') as FamilyRole;
-  const primaryCategory = (article.categories[0] ?? 'other') as ContentCategory;
   const level           = article.level as DifficultyLevel;
   const readingMin      = estimateReadingMin(article.body);
   const dateStr         = article.publishedAt
     ? formatDateJa(article.publishedAt.toISOString())
     : null;
-  const thumbBg         = ROLE_BG[primaryRole] ?? ROLE_BG['common']!;
 
   return (
     <>
@@ -215,7 +212,7 @@ export default async function ArticlePage({
       <header
         style={{
           background:   'var(--color-cream)',
-          paddingBlock: 'clamp(32px, 5vw, 64px)',
+          paddingBlock: 'clamp(16px, 2.5vw, 28px)',
         }}
       >
         <div
@@ -224,19 +221,19 @@ export default async function ArticlePage({
         >
           {/* パンくず */}
           <nav
-            className="flex items-center gap-2 text-xs mb-6 flex-wrap"
+            className="flex items-center gap-2 text-xs mb-3 flex-wrap"
             aria-label="パンくずリスト"
           >
-            <a href="/" className="hover:opacity-70 transition-opacity" style={{ color: 'var(--color-brown-light)' }}>
+            <a href="/" className="inline-flex items-center hover:opacity-70 transition-opacity" style={{ color: 'var(--color-brown-light)' }}>
               ホーム
             </a>
             <span style={{ color: 'var(--color-brown-light)' }} aria-hidden="true">/</span>
-            <a href="/learn" className="hover:opacity-70 transition-opacity" style={{ color: 'var(--color-brown-light)' }}>
+            <a href="/learn" className="inline-flex items-center hover:opacity-70 transition-opacity" style={{ color: 'var(--color-brown-light)' }}>
               記事一覧
             </a>
             <span style={{ color: 'var(--color-brown-light)' }} aria-hidden="true">/</span>
             <span
-              className="line-clamp-1"
+              className="truncate"
               style={{ color: 'var(--color-orange)', maxWidth: '240px' }}
               aria-current="page"
             >
@@ -255,6 +252,7 @@ export default async function ArticlePage({
                   background:  ROLE_BG[r] ?? 'var(--color-beige)',
                   borderColor: 'transparent',
                   color:       'var(--color-brown)',
+                  minHeight:   'auto',
                 }}
               >
                 {ROLE_EMOJI[r as FamilyRole]} {FAMILY_ROLE_LABEL[r as FamilyRole] ?? r}
@@ -269,6 +267,7 @@ export default async function ArticlePage({
                   background:  'white',
                   borderColor: 'var(--color-beige-dark)',
                   color:       'var(--color-brown-light)',
+                  minHeight:   'auto',
                 }}
               >
                 {CATEGORY_EMOJI[c as ContentCategory]}
@@ -340,31 +339,12 @@ export default async function ArticlePage({
         </div>
       </header>
 
-      {/* ── サムネイル（ロールカラー背景） ── */}
-      <div
-        className="w-full flex items-center justify-center"
-        style={{
-          background: thumbBg,
-          height:     'clamp(100px, 18vw, 200px)',
-        }}
-        aria-hidden="true"
-      >
-        <span
-          style={{
-            fontSize: 'clamp(56px, 10vw, 96px)',
-            filter:   'drop-shadow(0 4px 12px rgba(0,0,0,0.12))',
-          }}
-        >
-          {CATEGORY_EMOJI[primaryCategory]}
-        </span>
-      </div>
-
       {/* ── 音声プレーヤー（audioUrl がある場合のみ）── */}
       {article.audioUrl && (
         <section
           style={{
             background:   'var(--color-cream)',
-            paddingBlock: 'clamp(20px, 3vw, 32px)',
+            paddingBlock: 'clamp(12px, 2vw, 20px)',
           }}
         >
           <div
@@ -387,63 +367,21 @@ export default async function ArticlePage({
       <section
         style={{
           background:   'var(--color-cream)',
-          paddingBlock: 'clamp(32px, 5vw, 64px)',
+          paddingBlock: 'clamp(16px, 2.5vw, 32px)',
         }}
       >
         <div
           className="max-w-container mx-auto"
           style={{ paddingInline: 'var(--container-px)' }}
         >
-          <div className="grid grid-cols-1 lg:grid-cols-[1fr_320px] gap-10 items-start">
+          <div className="grid grid-cols-1 lg:grid-cols-[1fr_320px] gap-8 items-start">
 
             {/* ── 左：記事本文 ── */}
             <div className="min-w-0">
               <ArticleBody content={article.body} />
 
-              {/* 記事末尾：タグ一覧 */}
-              <div
-                className="mt-12 pt-6 border-t flex flex-wrap gap-2"
-                style={{ borderColor: 'var(--color-beige)' }}
-              >
-                <span className="text-xs font-medium" style={{ color: 'var(--color-brown-light)' }}>
-                  タグ：
-                </span>
-                {/* ロールタグ: ?role= でフィルタ */}
-                {article.roles.map((role) => (
-                  <a
-                    key={`role-${role}`}
-                    href={`/learn?role=${role}`}
-                    className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs border hover:opacity-70 transition-opacity"
-                    style={{
-                      background:  'white',
-                      borderColor: 'var(--color-beige-dark)',
-                      color:       'var(--color-brown-light)',
-                    }}
-                  >
-                    {ROLE_EMOJI[role as FamilyRole] ?? ''}{' '}
-                    {FAMILY_ROLE_LABEL[role as FamilyRole] ?? role}
-                  </a>
-                ))}
-                {/* カテゴリタグ: ?cat= でフィルタ */}
-                {article.categories.map((cat) => (
-                  <a
-                    key={`cat-${cat}`}
-                    href={`/learn?cat=${cat}`}
-                    className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs border hover:opacity-70 transition-opacity"
-                    style={{
-                      background:  'white',
-                      borderColor: 'var(--color-beige-dark)',
-                      color:       'var(--color-brown-light)',
-                    }}
-                  >
-                    {CATEGORY_EMOJI[cat as ContentCategory] ?? ''}{' '}
-                    {CATEGORY_LABEL[cat as ContentCategory] ?? cat}
-                  </a>
-                ))}
-              </div>
-
               {/* SNS シェアボタン */}
-              <div className="mt-8 flex flex-wrap gap-3">
+              <div className="mt-6 flex flex-wrap gap-3">
                 <a
                   href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(article.title)}&url=${encodeURIComponent(`${SITE.url}/learn/${article.slug}`)}&via=familyaijp`}
                   target="_blank"
@@ -486,51 +424,6 @@ export default async function ArticlePage({
                 articleCategories={article.categories}
               />
 
-              {/* 記事情報カード */}
-              <div
-                className="rounded-2xl p-5 flex flex-col gap-3"
-                style={{ background: 'white', boxShadow: 'var(--shadow-warm-sm)', border: '1px solid var(--color-beige)' }}
-              >
-                <p className="text-xs font-bold uppercase tracking-wider" style={{ color: 'var(--color-brown-light)' }}>
-                  この記事について
-                </p>
-                <dl className="flex flex-col gap-2 text-sm">
-                  <div className="flex justify-between">
-                    <dt style={{ color: 'var(--color-brown-light)' }}>対象</dt>
-                    <dd className="font-medium" style={{ color: 'var(--color-brown)' }}>
-                      {article.roles.map((r) => FAMILY_ROLE_LABEL[r as FamilyRole] ?? r).join('・')}
-                    </dd>
-                  </div>
-                  <div className="flex justify-between">
-                    <dt style={{ color: 'var(--color-brown-light)' }}>難易度</dt>
-                    <dd>
-                      <span
-                        className="px-2 py-0.5 rounded-full text-xs font-semibold"
-                        style={{
-                          background: LEVEL_BG[level] ?? 'var(--color-beige)',
-                          color:      LEVEL_TEXT[level] ?? 'var(--color-brown)',
-                        }}
-                      >
-                        {DIFFICULTY_LABEL[level] ?? level}
-                      </span>
-                    </dd>
-                  </div>
-                  <div className="flex justify-between">
-                    <dt style={{ color: 'var(--color-brown-light)' }}>読了時間</dt>
-                    <dd className="font-medium" style={{ color: 'var(--color-brown)' }}>
-                      約{readingMin}分
-                    </dd>
-                  </div>
-                  {dateStr && (
-                    <div className="flex justify-between">
-                      <dt style={{ color: 'var(--color-brown-light)' }}>公開日</dt>
-                      <dd className="font-medium" style={{ color: 'var(--color-brown)' }}>
-                        {dateStr}
-                      </dd>
-                    </div>
-                  )}
-                </dl>
-              </div>
             </aside>
           </div>
         </div>
@@ -541,7 +434,7 @@ export default async function ArticlePage({
         <section
           style={{
             background:   'var(--color-beige)',
-            paddingBlock: 'clamp(32px, 5vw, 64px)',
+            paddingBlock: 'clamp(16px, 3vw, 28px)',
           }}
         >
           <div

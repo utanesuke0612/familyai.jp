@@ -57,7 +57,7 @@ export default function CommonPage() {
 
       {/* ── ヒーロー ── */}
       <section
-        className="py-20 px-6 text-center"
+        className="py-6 px-6 text-center"
         style={{ background: 'linear-gradient(160deg, var(--color-beige) 0%, var(--color-cream) 100%)' }}
       >
         <div className="max-w-2xl mx-auto flex flex-col items-center gap-5">
@@ -76,7 +76,7 @@ export default function CommonPage() {
       </section>
 
       {/* ── まず読むべき4本 ── */}
-      <section className="py-16 px-6">
+      <section className="py-5 px-6">
         <div className="max-w-3xl mx-auto flex flex-col gap-8">
           <div>
             <p
@@ -131,7 +131,7 @@ export default function CommonPage() {
 
       {/* ── ロール別 ── */}
       <section
-        className="py-16 px-6"
+        className="py-5 px-6"
         style={{ background: 'var(--color-beige)' }}
       >
         <div className="max-w-3xl mx-auto flex flex-col gap-8">
@@ -161,7 +161,7 @@ export default function CommonPage() {
       </section>
 
       {/* ── 全記事へ ── */}
-      <section className="py-16 px-6 text-center">
+      <section className="py-5 px-6 text-center">
         <div className="max-w-lg mx-auto flex flex-col items-center gap-4">
           <p className="text-sm" style={{ color: 'var(--color-brown-light)' }}>
             もっとたくさんの記事を読みたい方は

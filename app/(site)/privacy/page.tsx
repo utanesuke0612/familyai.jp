@@ -52,7 +52,7 @@ Cookie の無効化はブラウザの設定から行えます。`,
   },
   {
     title: '6. 個人情報の開示・訂正・削除',
-    body: `保有する個人情報の開示・訂正・削除をご希望の場合は、hello@familyai.jp までご連絡ください。
+    body: `保有する個人情報の開示・訂正・削除をご希望の場合は、familyaijp@gmail.com までご連絡ください。
 本人確認の上、合理的な期間内に対応いたします。`,
   },
   {
@@ -63,7 +63,7 @@ Cookie の無効化はブラウザの設定から行えます。`,
   {
     title: '8. お問い合わせ',
     body: `プライバシーポリシーに関するご質問は、以下にご連絡ください。
-メール: hello@familyai.jp`,
+メール: familyaijp@gmail.com`,
   },
 ];
 
@@ -71,7 +71,7 @@ export default function PrivacyPage() {
   return (
     <main style={{ background: 'var(--color-cream)' }}>
       <section
-        className="py-16 px-6"
+        className="py-5 px-6"
         style={{ background: 'var(--color-beige)' }}
       >
         <div className="max-w-2xl mx-auto">
@@ -87,7 +87,7 @@ export default function PrivacyPage() {
         </div>
       </section>
 
-      <section className="py-12 px-6">
+      <section className="py-4 px-6">
         <div className="max-w-2xl mx-auto flex flex-col gap-10">
           <p className="text-sm leading-relaxed" style={{ color: 'var(--color-brown-light)' }}>
             familyai.jp（以下「当サイト」）は、ユーザーの個人情報保護を重要な責務と考え、

@@ -20,7 +20,7 @@ export function StatsRow() {
   return (
     <div
       ref={ref}
-      className="py-10 border-y"
+      className="py-4 border-y"
       style={{
         background:   'var(--color-beige)',
         borderColor:  'var(--color-beige-dark)',

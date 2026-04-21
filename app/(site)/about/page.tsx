@@ -14,7 +14,7 @@ export const metadata: Metadata = {
 
 const TEAM = [
   {
-    name:   'junli',
+    name:   'AIおじさん🏠',
     role:   'ファウンダー・エンジニア',
     emoji:  '👨‍💻',
     desc:   'AIを「家族の愛の道具」にしたいという想いでfamilyai.jpを立ち上げました。',
@@ -34,7 +34,7 @@ export default function AboutPage() {
 
       {/* ── ヒーロー ── */}
       <section
-        className="py-20 px-6 text-center relative overflow-hidden"
+        className="py-6 px-6 text-center relative overflow-hidden"
         style={{ background: 'linear-gradient(160deg, var(--color-beige) 0%, var(--color-cream) 100%)' }}
       >
         <div aria-hidden="true" className="absolute inset-0 pointer-events-none">
@@ -65,7 +65,7 @@ export default function AboutPage() {
       </section>
 
       {/* ── ミッション ── */}
-      <section className="py-16 px-6">
+      <section className="py-5 px-6">
         <div className="max-w-2xl mx-auto flex flex-col gap-6">
           <h2
             className="font-display font-bold text-2xl"
@@ -99,7 +99,7 @@ export default function AboutPage() {
 
       {/* ── 大切にしていること ── */}
       <section
-        className="py-16 px-6"
+        className="py-5 px-6"
         style={{ background: 'var(--color-beige)' }}
       >
         <div className="max-w-2xl mx-auto flex flex-col gap-8">
@@ -126,7 +126,7 @@ export default function AboutPage() {
       </section>
 
       {/* ── チーム ── */}
-      <section className="py-16 px-6">
+      <section className="py-5 px-6">
         <div className="max-w-2xl mx-auto flex flex-col gap-8">
           <h2
             className="font-display font-bold text-2xl"
@@ -158,7 +158,7 @@ export default function AboutPage() {
 
       {/* ── お問い合わせ ── */}
       <section
-        className="py-16 px-6 text-center"
+        className="py-5 px-6 text-center"
         style={{ background: 'var(--color-beige)' }}
       >
         <div className="max-w-lg mx-auto flex flex-col items-center gap-4">
@@ -173,10 +173,10 @@ export default function AboutPage() {
             ご意見・ご要望・取材のお問い合わせはこちら
           </p>
           <a
-            href="mailto:hello@familyai.jp"
+            href="mailto:familyaijp@gmail.com"
             className="btn-primary inline-block"
           >
-            hello@familyai.jp
+            familyaijp@gmail.com
           </a>
         </div>
       </section>

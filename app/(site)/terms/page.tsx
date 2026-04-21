@@ -79,7 +79,7 @@ export default function TermsPage() {
   return (
     <main style={{ background: 'var(--color-cream)' }}>
       <section
-        className="py-16 px-6"
+        className="py-5 px-6"
         style={{ background: 'var(--color-beige)' }}
       >
         <div className="max-w-2xl mx-auto">
@@ -95,7 +95,7 @@ export default function TermsPage() {
         </div>
       </section>
 
-      <section className="py-12 px-6">
+      <section className="py-4 px-6">
         <div className="max-w-2xl mx-auto flex flex-col gap-10">
           <p className="text-sm leading-relaxed" style={{ color: 'var(--color-brown-light)' }}>
             本利用規約（以下「本規約」）は、familyai.jp（以下「当サイト」）が

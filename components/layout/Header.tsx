@@ -87,14 +87,6 @@ export function Header() {
 
         {/* ── PC CTA + Mobile ハンバーガー ── */}
         <div className="flex items-center gap-3">
-          {/* PC のみ表示 */}
-          <Link
-            href={ROUTES.login}
-            className="btn-primary hidden lg:inline-flex text-sm px-5 py-2.5"
-          >
-            ログイン
-          </Link>
-
           {/* Mobile のみ表示 */}
           <MobileNav />
         </div>

@@ -102,7 +102,7 @@ export function HeroSection() {
         className="relative max-w-container mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-center"
         style={{
           paddingInline: 'var(--container-px)',
-          paddingBlock:  'clamp(64px, 10vw, 112px)',
+          paddingBlock:  'clamp(21px, 3.3vw, 37px)',
         }}
       >
 
@@ -196,9 +196,16 @@ export function HeroSection() {
         >
           {/* 中央 AI カード */}
           <div
-            className="relative z-10 flex flex-col items-center justify-center gap-3 w-36 h-36 rounded-3xl shadow-orange animate-float"
+            className="relative z-10 flex flex-col items-center justify-center gap-3 w-36 h-36 rounded-3xl shadow-orange animate-float cursor-pointer"
             style={{
               background: 'linear-gradient(135deg, var(--color-peach) 0%, var(--color-orange) 100%)',
+              transition: 'transform 200ms var(--ease-bounce)',
+            }}
+            onMouseEnter={(e) => {
+              (e.currentTarget as HTMLElement).style.transform = 'scale(1.08) rotate(-3deg)';
+            }}
+            onMouseLeave={(e) => {
+              (e.currentTarget as HTMLElement).style.transform = '';
             }}
           >
             <span className="text-5xl">💞</span>
