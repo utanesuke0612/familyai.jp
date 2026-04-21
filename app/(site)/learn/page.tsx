@@ -241,7 +241,7 @@ export default async function LearnPage({ searchParams }: LearnPageProps) {
         className="relative overflow-hidden"
         style={{
           background:   'var(--color-cream)',
-          paddingBlock: 'clamp(13px, 2vw, 24px)',
+          paddingBlock: 'clamp(7px, 1vw, 12px)',
         }}
       >
         {/* blob 装飾 */}
@@ -261,7 +261,7 @@ export default async function LearnPage({ searchParams }: LearnPageProps) {
           style={{ paddingInline: 'var(--container-px)' }}
         >
           {/* パンくずリスト */}
-          <nav className="flex items-center gap-2 text-xs mb-6" aria-label="パンくずリスト">
+          <nav className="flex items-center gap-2 text-xs mb-3" aria-label="パンくずリスト">
             <a
               href="/"
               className="inline-flex items-center hover:opacity-70 transition-opacity"

@@ -10,20 +10,22 @@
  */
 
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useSearchParams } from 'next/navigation';
 import { MobileNav } from './MobileNav';
 import { ROUTES, ROLE_EMOJI } from '@/shared';
 
 const NAV_LINKS = [
-  { href: '/learn?role=common', label: '共通ガイド' },
-  { href: '/learn?role=papa',   label: `${ROLE_EMOJI.papa} パパ` },
-  { href: '/learn?role=mama',   label: `${ROLE_EMOJI.mama} ママ` },
-  { href: '/learn?role=kids',   label: `${ROLE_EMOJI.kids} こども` },
-  { href: '/learn?role=senior', label: `${ROLE_EMOJI.senior} シニア` },
+  { href: '/learn?role=common', role: 'common', label: '共通ガイド' },
+  { href: '/learn?role=papa',   role: 'papa',   label: `${ROLE_EMOJI.papa} パパ` },
+  { href: '/learn?role=mama',   role: 'mama',   label: `${ROLE_EMOJI.mama} ママ` },
+  { href: '/learn?role=kids',   role: 'kids',   label: `${ROLE_EMOJI.kids} こども` },
+  { href: '/learn?role=senior', role: 'senior', label: `${ROLE_EMOJI.senior} シニア` },
 ];
 
 export function Header() {
-  const pathname = usePathname();
+  const pathname     = usePathname();
+  const searchParams = useSearchParams();
+  const currentRole  = searchParams.get('role');
 
   return (
     <header
@@ -61,7 +63,7 @@ export function Header() {
         {/* ── PC ナビ ── */}
         <nav className="hidden lg:flex items-center gap-1" aria-label="メインナビゲーション">
           {NAV_LINKS.map((link) => {
-            const isActive = pathname === link.href || pathname.startsWith(link.href.split('?')[0]);
+            const isActive = pathname === '/learn' && currentRole === link.role;
             return (
               <Link
                 key={link.href}

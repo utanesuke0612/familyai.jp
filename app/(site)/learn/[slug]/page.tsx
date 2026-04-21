@@ -212,7 +212,7 @@ export default async function ArticlePage({
       <header
         style={{
           background:   'var(--color-cream)',
-          paddingBlock: 'clamp(16px, 2.5vw, 28px)',
+          paddingBlock: 'clamp(7px, 1vw, 12px)',
         }}
       >
         <div
@@ -367,7 +367,7 @@ export default async function ArticlePage({
       <section
         style={{
           background:   'var(--color-cream)',
-          paddingBlock: 'clamp(16px, 2.5vw, 32px)',
+          paddingBlock: 'clamp(8px, 1.25vw, 16px)',
         }}
       >
         <div
