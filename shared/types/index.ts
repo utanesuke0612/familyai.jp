@@ -73,12 +73,19 @@ export interface ChatMessage {
   createdAt: string; // ISO 8601
 }
 
-/** AI 応答ストリームのデルタ */
-export interface ChatStreamDelta {
-  id:      string;
-  delta:   string;
-  done:    boolean;
-}
+// ストリーム契約は ./ai-stream.ts を参照（再 export で shared/types 単一入口を維持）
+export type {
+  ChatStreamDelta,
+  ChatStreamError,
+  ChatStreamPayload,
+  ChatStreamErrorCode,
+} from './ai-stream';
+export {
+  CHAT_STREAM_DONE,
+  CHAT_STREAM_ERROR_CODES,
+  isChatStreamDelta,
+  isChatStreamError,
+} from './ai-stream';
 
 // ─── ユーザー関連 ──────────────────────────────────────────────
 /** 認証済みユーザーのプロファイル */

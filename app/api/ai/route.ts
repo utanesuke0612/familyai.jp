@@ -88,14 +88,23 @@ function getClientIp(req: NextRequest): string {
   );
 }
 
-// ── SSE エラー送信ヘルパー ─────────────────────────────────────
-function errorStream(code: string, message: string): Response {
-  const encoder = new TextEncoder();
-  const body    = `data: ${JSON.stringify({ error: message, code })}\n\ndata: [DONE]\n\n`;
-  return new Response(encoder.encode(body), {
-    status:  200, // クライアントはストリーム内の error フィールドで判定
-    headers: sseHeaders(),
-  });
+// ── エラーレスポンスヘルパー ───────────────────────────────────
+/**
+ * ストリーム確立前のエラーは JSON + 適切な HTTP status で返す（Rev28 #HIGH-3）。
+ * 理由: 従来は status:200 固定の SSE を返していたため、Vercel/DataDog 等の
+ * 外部監視が失敗を検知できず、iOS/Android の URLSession も成功扱いしていた。
+ * ストリーム確立後（routeAI 内）のエラーは別経路（SSE data 行内の error）で
+ * 通知されるため本関数は使わない。
+ */
+function errorResponse(
+  code:    string,
+  message: string,
+  status:  number,
+): Response {
+  return new Response(
+    JSON.stringify({ ok: false, error: { code, message } }),
+    { status, headers: { 'Content-Type': 'application/json' } },
+  );
 }
 
 function sseHeaders(): HeadersInit {
@@ -187,7 +196,8 @@ export async function POST(req: NextRequest) {
     // text-simple / text-quality のみストリーミング対応
     // transcribe / image-gen / tts-japanese は将来実装
     if (type !== 'text-simple' && type !== 'text-quality' && type !== 'math-reasoning') {
-      return errorStream('UNSUPPORTED_TYPE', 'このAI機能は現在準備中です。');
+      clearTimeout(timeoutId);
+      return errorResponse('UNSUPPORTED_TYPE', 'このAI機能は現在準備中です。', 400);
     }
 
     const stream = await routeAI(type, fullMessages, { signal: ac.signal });
@@ -201,14 +211,26 @@ export async function POST(req: NextRequest) {
 
     // AbortError（タイムアウト or クライアント切断）
     if (err instanceof Error && err.name === 'AbortError') {
-      return errorStream('TIMEOUT', 'AIの応答に時間がかかりすぎました。しばらくしてからお試しください。');
+      return errorResponse(
+        'TIMEOUT',
+        'AIの応答に時間がかかりすぎました。しばらくしてからお試しください。',
+        504,
+      );
     }
 
     console.error('[POST /api/ai] AI エラー:', msg);
 
     if (msg.includes('OPENROUTER_API_KEY')) {
-      return errorStream('AI_UNAVAILABLE', 'AIが一時的に利用できません。しばらくしてからお試しください。');
+      return errorResponse(
+        'AI_UNAVAILABLE',
+        'AIが一時的に利用できません。しばらくしてからお試しください。',
+        503,
+      );
     }
-    return errorStream('AI_ERROR', 'AIが一時的に利用できません。しばらくしてからお試しください。');
+    return errorResponse(
+      'AI_ERROR',
+      'AIが一時的に利用できません。しばらくしてからお試しください。',
+      502,
+    );
   }
 }

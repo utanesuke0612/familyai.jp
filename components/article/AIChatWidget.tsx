@@ -251,7 +251,17 @@ export function AIChatWidget({
         signal: ac.signal,
       });
 
-      if (!res.ok || !res.body) throw new Error(`HTTP ${res.status}`);
+      // Rev28 #HIGH-3: ストリーム確立前のエラーは 4xx/5xx JSON で返る
+      if (!res.ok) {
+        let message = `HTTP ${res.status}`;
+        try {
+          const j = await res.json() as { error?: { message?: string } | string };
+          if (typeof j.error === 'string')                 message = j.error;
+          else if (j.error?.message)                       message = j.error.message;
+        } catch { /* JSON でない場合は既定メッセージ */ }
+        throw new Error(message);
+      }
+      if (!res.body) throw new Error(`HTTP ${res.status}`);
 
       // SSE ストリームを読み込んでリアルタイム更新
       const reader  = res.body.getReader();

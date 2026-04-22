@@ -121,6 +121,8 @@ export interface ArticlesQuery {
   level?:   DifficultyLevel;
   /** ソート */
   sort?:    'latest' | 'popular';
+  /** タイトル/description 部分一致（サーバー側パラメータ名 `search`・1〜100 文字） */
+  search?:  string;
 }
 
 /**
@@ -129,22 +131,25 @@ export interface ArticlesQuery {
  * ※ /api/articles のレスポンス形式と完全に一致（Rev17 で統一済み）
  *
  * パラメータ名はサーバーの /api/articles と完全一致させる（Rev22 で修正）：
- *   page / limit / role / cat（複数）/ level / sort
+ *   page / limit / role / cat（複数）/ level / sort / search
  */
 export async function fetchArticles(
   baseUrl: string,
   query:   ArticlesQuery = {},
 ): Promise<ApiResponse<PaginatedResult<ArticleSummary>>> {
+  // search は空文字・空白のみのときサーバ側で min(1) に引っかかるため送らない
+  const trimmedSearch = query.search?.trim();
   const params: Record<
     string,
     string | number | boolean | undefined | null | ReadonlyArray<string>
   > = {
-    page:  query.page    ?? 1,
-    limit: query.perPage ?? PAGINATION.defaultPerPage,
-    role:  query.role,
-    cat:   query.cat,
-    level: query.level,
-    sort:  query.sort,
+    page:   query.page    ?? 1,
+    limit:  query.perPage ?? PAGINATION.defaultPerPage,
+    role:   query.role,
+    cat:    query.cat,
+    level:  query.level,
+    sort:   query.sort,
+    search: trimmedSearch ? trimmedSearch : undefined,
   };
 
   return apiFetch<PaginatedResult<ArticleSummary>>(

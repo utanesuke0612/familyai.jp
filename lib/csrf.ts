@@ -5,15 +5,14 @@
  * Next.js App Router では same-origin の fetch に Origin ヘッダーが付くため、
  * Origin チェックによるシンプルな CSRF 防御を実装する。
  *
- * ・Origin が存在しない（サーバー間通信・古いブラウザ）: 通過させる
- * ・Origin のホストが Host ヘッダーと一致する: OK
- * ・一致しない: CSRF の可能性あり → 拒否
+ * ・Origin のホストが Host ヘッダーと一致: OK
+ * ・一致しない / Origin 不在: 既定では CSRF の可能性あり → 拒否
+ * ・Origin 不在でも `allowMobile:true` + `verifyMobileClient()` 成立なら通す
+ *   （= iOS/Android ネイティブクライアントの専用経路）
  *
- * Rev24 #⑤ モバイル API 許可（2026-04-20）:
- * - `X-Client-Platform: ios | android` ヘッダー＋許可 API キー
- *   （`MOBILE_API_KEYS` envの camel/semi-colon 区切り）で
- *   Cookie を持たないネイティブクライアントから admin 以外の非冪等 API を叩けるように拡張。
- * - admin API は依然として Origin チェックが通らなければ拒否される（= Web/CMS 専用）。
+ * Rev24 #⑤ モバイル API 許可（2026-04-20）で mobile 経路を追加。
+ * Rev28 #HIGH-5（2026-04-22）で Origin 不在時の暗黙通過を廃止し、
+ * 非ブラウザ経路は必ず `allowMobile: true` + mobile 認証ヘッダの明示オプトインを要求する。
  */
 
 import type { NextRequest } from 'next/server';
@@ -57,6 +56,9 @@ export function verifyMobileClient(req: NextRequest): boolean {
  *
  * 第2引数に `{ allowMobile: true }` を渡すと、
  * `X-Client-Platform` + `X-Mobile-Api-Key` 経由のモバイルリクエストも受け付ける。
+ *
+ * Rev28 #HIGH-5: Origin 不在は既定で拒否。非ブラウザ経路を通したい API は
+ * 明示的に `allowMobile: true` を渡し、モバイル認証ヘッダを検証させる。
  */
 export function verifyCsrf(
   req: NextRequest,
@@ -69,8 +71,8 @@ export function verifyCsrf(
 
   const origin = req.headers.get('origin');
 
-  // Origin がない場合はサーバー間通信等として通過
-  if (!origin) return true;
+  // Origin 不在は CSRF 可能性ありとして拒否（mobile 経路は上で処理済み）
+  if (!origin) return false;
 
   const host = req.headers.get('host');
   if (!host) return false;

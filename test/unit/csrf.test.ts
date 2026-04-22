@@ -31,9 +31,14 @@ describe('verifyCsrf — 既存 Origin チェック（Rev22 時点の仕様）',
   beforeEach(() => vi.resetModules());
   afterEach(() => vi.unstubAllEnvs());
 
-  it('Origin なし → true（サーバ間通信）', async () => {
+  it('Origin なし → false（Rev28 #HIGH-5: 非ブラウザ経路は allowMobile オプトイン必須）', async () => {
     const { verifyCsrf } = await importCsrf();
-    expect(verifyCsrf(makeReq({}))).toBe(true);
+    expect(verifyCsrf(makeReq({}))).toBe(false);
+  });
+
+  it('Origin なし + allowMobile:true + mobile 認証ヘッダ不在 → false', async () => {
+    const { verifyCsrf } = await importCsrf();
+    expect(verifyCsrf(makeReq({}), { allowMobile: true })).toBe(false);
   });
 
   it('Origin host === Host → true', async () => {
