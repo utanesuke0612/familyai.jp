@@ -12,7 +12,7 @@
  * - 保存後 /admin にリダイレクト
  */
 
-import { useState }         from 'react';
+import { useId, useRef, useState } from 'react';
 import { useRouter }        from 'next/navigation';
 import { ArticleBody }      from '@/components/article/ArticleBody';
 import type { Article }     from '@/lib/db/schema';
@@ -69,6 +69,8 @@ export function ArticleForm({ article }: ArticleFormProps) {
   const [loading, setLoading] = useState(false);
   const [error,   setError]   = useState('');
   const [preview, setPreview] = useState<'split' | 'full'>('split');
+  // Rev28 #HIGH-7: 送信失敗時に SR がエラーへ辿れるよう、バナーにフォーカス移動する
+  const errorRef = useRef<HTMLDivElement | null>(null);
 
   // ── ロール / カテゴリ チェックボックス制御 ─────────────────
   function toggleRole(r: FamilyRole) {
@@ -83,15 +85,21 @@ export function ArticleForm({ article }: ArticleFormProps) {
   }
 
   // ── 送信 ──────────────────────────────────────────────────
+  function fail(msg: string): void {
+    setError(msg);
+    // エラー領域へフォーカス移動（role="alert" と合わせて SR に即読み上げさせる）
+    requestAnimationFrame(() => errorRef.current?.focus());
+  }
+
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setError('');
 
-    if (!slug.trim())            return setError('スラッグは必須です');
-    if (!title.trim())           return setError('タイトルは必須です');
-    if (!body.trim())            return setError('本文は必須です');
-    if (roles.length === 0)      return setError('ロールを1つ以上選択してください');
-    if (categories.length === 0) return setError('カテゴリを1つ以上選択してください');
+    if (!slug.trim())            return fail('スラッグは必須です');
+    if (!title.trim())           return fail('タイトルは必須です');
+    if (!body.trim())            return fail('本文は必須です');
+    if (roles.length === 0)      return fail('ロールを1つ以上選択してください');
+    if (categories.length === 0) return fail('カテゴリを1つ以上選択してください');
 
     setLoading(true);
     try {
@@ -124,14 +132,14 @@ export function ArticleForm({ article }: ArticleFormProps) {
 
       const json = await res.json() as { error?: string };
       if (!res.ok) {
-        setError(json.error ?? '保存に失敗しました');
+        fail(json.error ?? '保存に失敗しました');
         return;
       }
 
       router.push('/admin');
       router.refresh();
     } catch {
-      setError('ネットワークエラーが発生しました');
+      fail('ネットワークエラーが発生しました');
     } finally {
       setLoading(false);
     }
@@ -140,12 +148,20 @@ export function ArticleForm({ article }: ArticleFormProps) {
   // ── レンダリング ──────────────────────────────────────────
   return (
     <form onSubmit={handleSubmit}>
-      {/* エラーバナー */}
+      {/* エラーバナー（Rev28 #HIGH-7: SR 通知対応） */}
       {error && (
-        <div style={{
-          padding: '12px 16px', borderRadius: '8px', marginBottom: '1.5rem',
-          background: '#FEF2F2', color: '#B91C1C', border: '1px solid #FECACA', fontSize: '14px',
-        }}>
+        <div
+          ref={errorRef}
+          role="alert"
+          aria-live="polite"
+          aria-atomic="true"
+          tabIndex={-1}
+          style={{
+            padding: '12px 16px', borderRadius: '8px', marginBottom: '1.5rem',
+            background: '#FEF2F2', color: '#B91C1C', border: '1px solid #FECACA', fontSize: '14px',
+            outline: 'none',
+          }}
+        >
           ⚠️ {error}
         </div>
       )}
@@ -156,44 +172,57 @@ export function ArticleForm({ article }: ArticleFormProps) {
         <Section title="基本情報">
           <div style={{ display: 'grid', gap: '1rem' }}>
             {/* スラッグ */}
-            <Field label="スラッグ（URL）" required>
-              <input
-                type="text"
-                value={slug}
-                onChange={(e) => setSlug(e.target.value.replace(/[^a-z0-9-]/g, ''))}
-                placeholder="article-slug-here"
-                readOnly={isEdit}
-                style={{ ...inputStyle, ...(isEdit ? { background: '#F9FAFB', cursor: 'not-allowed' } : {}) }}
-                required
-              />
-              <Hint>英数字とハイフンのみ。URL: /learn/{slug || '…'}</Hint>
+            <Field
+              label="スラッグ（URL）"
+              required
+              hint={<>英数字とハイフンのみ。URL: /learn/{slug || '…'}</>}
+            >
+              {({ id, hintId }) => (
+                <input
+                  id={id}
+                  type="text"
+                  value={slug}
+                  onChange={(e) => setSlug(e.target.value.replace(/[^a-z0-9-]/g, ''))}
+                  placeholder="article-slug-here"
+                  readOnly={isEdit}
+                  aria-describedby={hintId}
+                  style={{ ...inputStyle, ...(isEdit ? { background: '#F9FAFB', cursor: 'not-allowed' } : {}) }}
+                  required
+                />
+              )}
             </Field>
 
             {/* タイトル */}
             <Field label="タイトル" required>
-              <input
-                type="text"
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}
-                placeholder="記事タイトル"
-                style={inputStyle}
-                required
-              />
+              {({ id }) => (
+                <input
+                  id={id}
+                  type="text"
+                  value={title}
+                  onChange={(e) => setTitle(e.target.value)}
+                  placeholder="記事タイトル"
+                  style={inputStyle}
+                  required
+                />
+              )}
             </Field>
 
             {/* 説明文 */}
             <Field label="説明文（SNS シェア時に表示）">
-              <textarea
-                value={description}
-                onChange={(e) => setDescription(e.target.value)}
-                placeholder="記事の簡単な説明（省略可）"
-                rows={2}
-                style={{ ...inputStyle, resize: 'vertical' }}
-              />
+              {({ id }) => (
+                <textarea
+                  id={id}
+                  value={description}
+                  onChange={(e) => setDescription(e.target.value)}
+                  placeholder="記事の簡単な説明（省略可）"
+                  rows={2}
+                  style={{ ...inputStyle, resize: 'vertical' }}
+                />
+              )}
             </Field>
 
             {/* ロール */}
-            <Field label="対象ロール" required>
+            <FieldGroup label="対象ロール" required>
               <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
                 {ROLES.map((r) => (
                   <label key={r} style={{ display: 'flex', alignItems: 'center', gap: '6px', cursor: 'pointer', fontSize: '14px' }}>
@@ -207,10 +236,10 @@ export function ArticleForm({ article }: ArticleFormProps) {
                   </label>
                 ))}
               </div>
-            </Field>
+            </FieldGroup>
 
             {/* カテゴリ */}
-            <Field label="カテゴリ" required>
+            <FieldGroup label="カテゴリ" required>
               <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
                 {CATEGORIES.map((c) => (
                   <label key={c} style={{ display: 'flex', alignItems: 'center', gap: '6px', cursor: 'pointer', fontSize: '14px' }}>
@@ -224,28 +253,38 @@ export function ArticleForm({ article }: ArticleFormProps) {
                   </label>
                 ))}
               </div>
-            </Field>
+            </FieldGroup>
 
             {/* 難易度 / 公開設定 */}
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1rem' }}>
               <Field label="難易度">
-                <select value={level} onChange={(e) => setLevel(e.target.value as DifficultyLevel)} style={inputStyle}>
-                  {LEVELS.map((l) => (
-                    <option key={l} value={l}>{DIFFICULTY_LABEL[l]}</option>
-                  ))}
-                </select>
+                {({ id }) => (
+                  <select
+                    id={id}
+                    value={level}
+                    onChange={(e) => setLevel(e.target.value as DifficultyLevel)}
+                    style={inputStyle}
+                  >
+                    {LEVELS.map((l) => (
+                      <option key={l} value={l}>{DIFFICULTY_LABEL[l]}</option>
+                    ))}
+                  </select>
+                )}
               </Field>
 
               <Field label="公開日">
-                <input
-                  type="date"
-                  value={publishedAt}
-                  onChange={(e) => setPublishedAt(e.target.value)}
-                  style={inputStyle}
-                />
+                {({ id }) => (
+                  <input
+                    id={id}
+                    type="date"
+                    value={publishedAt}
+                    onChange={(e) => setPublishedAt(e.target.value)}
+                    style={inputStyle}
+                  />
+                )}
               </Field>
 
-              <Field label="ステータス">
+              <FieldGroup label="ステータス">
                 <label style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer', padding: '10px 0' }}>
                   <input
                     type="checkbox"
@@ -255,9 +294,9 @@ export function ArticleForm({ article }: ArticleFormProps) {
                   />
                   <span style={{ fontSize: '14px' }}>公開する</span>
                 </label>
-              </Field>
+              </FieldGroup>
 
-              <Field label="おすすめ記事">
+              <FieldGroup label="おすすめ記事">
                 <label style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer', padding: '10px 0' }}>
                   <input
                     type="checkbox"
@@ -267,7 +306,7 @@ export function ArticleForm({ article }: ArticleFormProps) {
                   />
                   <span style={{ fontSize: '14px' }}>トップおすすめに表示</span>
                 </label>
-              </Field>
+              </FieldGroup>
             </div>
           </div>
         </Section>
@@ -307,6 +346,7 @@ export function ArticleForm({ article }: ArticleFormProps) {
                 value={body}
                 onChange={(e) => setBody(e.target.value)}
                 placeholder={'## 見出し\n\n本文を Markdown で書いてください…'}
+                aria-label="本文（Markdown 入力）"
                 style={{
                   ...inputStyle,
                   fontFamily:  'ui-monospace, SFMono-Regular, monospace',
@@ -335,6 +375,7 @@ export function ArticleForm({ article }: ArticleFormProps) {
               value={body}
               onChange={(e) => setBody(e.target.value)}
               placeholder={'## 見出し\n\n本文を Markdown で書いてください…'}
+              aria-label="本文（Markdown 入力）"
               style={{
                 ...inputStyle,
                 fontFamily: 'ui-monospace, SFMono-Regular, monospace',
@@ -351,56 +392,71 @@ export function ArticleForm({ article }: ArticleFormProps) {
         <Section title="メディア（任意）">
           <div style={{ display: 'grid', gap: '1rem' }}>
             <Field label="サムネイル画像 URL">
-              <input
-                type="url"
-                value={thumbnailUrl}
-                onChange={(e) => setThumbnailUrl(e.target.value)}
-                placeholder="https://…（Vercel Blob の URL）"
-                style={inputStyle}
-              />
+              {({ id }) => (
+                <input
+                  id={id}
+                  type="url"
+                  value={thumbnailUrl}
+                  onChange={(e) => setThumbnailUrl(e.target.value)}
+                  placeholder="https://…（Vercel Blob の URL）"
+                  style={inputStyle}
+                />
+              )}
             </Field>
 
             <Field label="音声ファイル URL（MP3）">
-              <input
-                type="url"
-                value={audioUrl}
-                onChange={(e) => setAudioUrl(e.target.value)}
-                placeholder="https://…（Vercel Blob の URL）"
-                style={inputStyle}
-              />
+              {({ id }) => (
+                <input
+                  id={id}
+                  type="url"
+                  value={audioUrl}
+                  onChange={(e) => setAudioUrl(e.target.value)}
+                  placeholder="https://…（Vercel Blob の URL）"
+                  style={inputStyle}
+                />
+              )}
             </Field>
 
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: '1rem' }}>
               <Field label="音声の長さ（秒）">
-                <input
-                  type="number"
-                  value={audioDurationSec}
-                  onChange={(e) => setAudioDurationSec(e.target.value)}
-                  placeholder="例: 240"
-                  min={0}
-                  style={inputStyle}
-                />
+                {({ id }) => (
+                  <input
+                    id={id}
+                    type="number"
+                    value={audioDurationSec}
+                    onChange={(e) => setAudioDurationSec(e.target.value)}
+                    placeholder="例: 240"
+                    min={0}
+                    style={inputStyle}
+                  />
+                )}
               </Field>
               <Field label="音声の言語コード">
-                <input
-                  type="text"
-                  value={audioLanguage}
-                  onChange={(e) => setAudioLanguage(e.target.value)}
-                  placeholder="例: en / zh / ko"
-                  maxLength={10}
-                  style={inputStyle}
-                />
+                {({ id }) => (
+                  <input
+                    id={id}
+                    type="text"
+                    value={audioLanguage}
+                    onChange={(e) => setAudioLanguage(e.target.value)}
+                    placeholder="例: en / zh / ko"
+                    maxLength={10}
+                    style={inputStyle}
+                  />
+                )}
               </Field>
             </div>
 
             <Field label="音声トランスクリプト（SEO 用）">
-              <textarea
-                value={audioTranscript}
-                onChange={(e) => setAudioTranscript(e.target.value)}
-                placeholder="音声の文字起こし内容（省略可）"
-                rows={4}
-                style={{ ...inputStyle, resize: 'vertical' }}
-              />
+              {({ id }) => (
+                <textarea
+                  id={id}
+                  value={audioTranscript}
+                  onChange={(e) => setAudioTranscript(e.target.value)}
+                  placeholder="音声の文字起こし内容（省略可）"
+                  rows={4}
+                  style={{ ...inputStyle, resize: 'vertical' }}
+                />
+              )}
             </Field>
           </div>
         </Section>
@@ -480,7 +536,48 @@ function Section({
   );
 }
 
+/**
+ * 単一 input 向け Field（Rev28 #HIGH-6）。
+ * 生成した id を render-prop で子に渡し、label[htmlFor] ↔ input[id] を一致させる。
+ * checkbox/radio グループは FieldGroup を使うこと。
+ */
 function Field({
+  label,
+  required,
+  hint,
+  children,
+}: {
+  label:    string;
+  required?: boolean;
+  hint?:    React.ReactNode;
+  children: (ids: { id: string; hintId?: string }) => React.ReactNode;
+}) {
+  const id     = useId();
+  const hintId = hint ? `${id}-hint` : undefined;
+  return (
+    <div>
+      <label
+        htmlFor={id}
+        style={{ display: 'block', fontSize: '13px', fontWeight: 600, color: '#374151', marginBottom: '6px' }}
+      >
+        {label}
+        {required && <span style={{ color: 'var(--color-orange)', marginLeft: '4px' }}>*</span>}
+      </label>
+      {children({ id, hintId })}
+      {hint && (
+        <p id={hintId} style={{ fontSize: '12px', color: '#9CA3AF', marginTop: '4px' }}>
+          {hint}
+        </p>
+      )}
+    </div>
+  );
+}
+
+/**
+ * 複数入力（チェックボックス/ラジオ群）向け Field（Rev28 #HIGH-6）。
+ * 単一 id を各 input に割り振れないため fieldset/legend パターンで labeling する。
+ */
+function FieldGroup({
   label,
   required,
   children,
@@ -490,19 +587,13 @@ function Field({
   children: React.ReactNode;
 }) {
   return (
-    <div>
-      <label style={{ display: 'block', fontSize: '13px', fontWeight: 600, color: '#374151', marginBottom: '6px' }}>
+    <fieldset style={{ border: 'none', padding: 0, margin: 0, minWidth: 0 }}>
+      <legend style={{ padding: 0, fontSize: '13px', fontWeight: 600, color: '#374151', marginBottom: '6px' }}>
         {label}
         {required && <span style={{ color: 'var(--color-orange)', marginLeft: '4px' }}>*</span>}
-      </label>
+      </legend>
       {children}
-    </div>
-  );
-}
-
-function Hint({ children }: { children: React.ReactNode }) {
-  return (
-    <p style={{ fontSize: '12px', color: '#9CA3AF', marginTop: '4px' }}>{children}</p>
+    </fieldset>
   );
 }
 

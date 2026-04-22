@@ -36,6 +36,14 @@ export function AdminArticleTable({ initialArticles, initialTotal }: Props) {
   const [total,    setTotal]      = useState<number>(initialTotal ?? initialArticles.length);
   const [, startTransition] = useTransition();
 
+  // Rev28 #HIGH-9: alert() を置換する SR 通知トースト（aria-live アナウンス領域）
+  const [flash, setFlash] = useState<{ kind: 'error' | 'info'; message: string } | null>(null);
+  useEffect(() => {
+    if (!flash) return;
+    const id = setTimeout(() => setFlash(null), 4000);
+    return () => clearTimeout(id);
+  }, [flash]);
+
   const totalPages = Math.max(1, Math.ceil(total / PAGE_SIZE));
 
   // 二重クリック防止：アクション実行中の slug を保持
@@ -119,7 +127,7 @@ export function AdminArticleTable({ initialArticles, initialTotal }: Props) {
     markPending(slug, true);
     try {
       const res = await fetch(`/api/admin/articles/${slug}/toggle`, { method: 'PATCH' });
-      if (!res.ok) { alert('更新に失敗しました'); return; }
+      if (!res.ok) { setFlash({ kind: 'error', message: '更新に失敗しました' }); return; }
       const { data } = await res.json() as { data: { published: boolean } };
       setArticles((prev) =>
         prev.map((a) => a.slug === slug ? { ...a, published: data.published } : a),
@@ -136,8 +144,14 @@ export function AdminArticleTable({ initialArticles, initialTotal }: Props) {
     markPending(slug, true);
     try {
       const res = await fetch(`/api/admin/articles/${slug}`, { method: 'DELETE' });
-      if (!res.ok) { alert('削除に失敗しました'); return; }
+      if (!res.ok) { setFlash({ kind: 'error', message: '削除に失敗しました' }); return; }
+      // Rev28 #HIGH-4: 総件数・ページング整合を維持
+      // 最終ページの最終行を消したときはページを 1 つ戻す（useEffect で再フェッチ）
+      const nextTotal = Math.max(0, total - 1);
+      setTotal(nextTotal);
       setArticles((prev) => prev.filter((a) => a.slug !== slug));
+      const nextTotalPages = Math.max(1, Math.ceil(nextTotal / PAGE_SIZE));
+      if (page > nextTotalPages) setPage(nextTotalPages);
       startTransition(() => router.refresh());
     } finally {
       markPending(slug, false);
@@ -150,12 +164,45 @@ export function AdminArticleTable({ initialArticles, initialTotal }: Props) {
 
   return (
     <div>
+      {/* Rev28 #HIGH-9: alert() 置換のトースト（SR に読み上げさせる） */}
+      <div
+        role="status"
+        aria-live="polite"
+        aria-atomic="true"
+        style={{
+          position:      'fixed',
+          top:           '16px',
+          right:         '16px',
+          zIndex:        60,
+          pointerEvents: flash ? 'auto' : 'none',
+        }}
+      >
+        {flash && (
+          <div
+            style={{
+              padding:      '10px 14px',
+              borderRadius: '8px',
+              fontSize:     '13px',
+              fontWeight:   600,
+              background:   flash.kind === 'error' ? '#FEF2F2' : '#ECFDF5',
+              color:        flash.kind === 'error' ? '#B91C1C' : '#047857',
+              border:       `1px solid ${flash.kind === 'error' ? '#FECACA' : '#A7F3D0'}`,
+              boxShadow:    '0 2px 8px rgba(0,0,0,0.08)',
+            }}
+          >
+            {flash.message}
+          </div>
+        )}
+      </div>
+
       {/* ── ツールバー ── */}
       <div style={{ display: 'flex', gap: '1rem', marginBottom: '1.25rem', flexWrap: 'wrap', alignItems: 'center' }}>
         {/* 検索 */}
         <input
           type="search"
           placeholder="タイトルで検索…"
+          aria-label="記事タイトルで検索"
+          aria-busy={loading || undefined}
           value={search}
           onChange={(e) => setSearch(e.target.value)}
           style={{
@@ -171,6 +218,7 @@ export function AdminArticleTable({ initialArticles, initialTotal }: Props) {
         <select
           value={sort}
           onChange={(e) => setSort(e.target.value as SortKey)}
+          aria-label="ソート順序"
           style={{
             padding:      '8px 12px',
             borderRadius: '8px',
