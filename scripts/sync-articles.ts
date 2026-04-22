@@ -30,7 +30,6 @@ config({ path: '.env.local' });
 
 import fs         from 'fs';
 import path       from 'path';
-import matter     from 'gray-matter';
 import { drizzle } from 'drizzle-orm/neon-http';
 import { neon }    from '@neondatabase/serverless';
 import { articles } from '../lib/db/schema';
@@ -40,6 +39,69 @@ const db = drizzle(neon(process.env.DATABASE_URL!));
 
 // content/articles/ フォルダのパス
 const ARTICLES_DIR = path.join(process.cwd(), 'content', 'articles');
+
+type FrontmatterValue = string | boolean | null | string[];
+
+function parseScalar(value: string): string | boolean | null {
+  const trimmed = value.trim();
+
+  if (trimmed === 'true') return true;
+  if (trimmed === 'false') return false;
+  if (trimmed === '~' || trimmed === 'null') return null;
+
+  return trimmed;
+}
+
+function parseFrontmatter(raw: string): { data: Record<string, FrontmatterValue>; content: string } {
+  if (!raw.startsWith('---\n')) {
+    return { data: {}, content: raw };
+  }
+
+  const endIndex = raw.indexOf('\n---\n', 4);
+  if (endIndex === -1) {
+    return { data: {}, content: raw };
+  }
+
+  const fmText = raw.slice(4, endIndex);
+  const content = raw.slice(endIndex + 5);
+  const data: Record<string, FrontmatterValue> = {};
+  const lines = fmText.split('\n');
+
+  let currentKey: string | null = null;
+
+  for (const line of lines) {
+    const trimmed = line.trim();
+    if (!trimmed) continue;
+
+    if (line.startsWith('  - ') || line.startsWith('- ')) {
+      if (!currentKey) continue;
+      const item = line.replace(/^\s*-\s*/, '').trim();
+      const currentValue = data[currentKey];
+      if (Array.isArray(currentValue)) {
+        currentValue.push(item);
+      } else {
+        data[currentKey] = [item];
+      }
+      continue;
+    }
+
+    const separatorIndex = line.indexOf(':');
+    if (separatorIndex === -1) continue;
+
+    const key = line.slice(0, separatorIndex).trim();
+    const rawValue = line.slice(separatorIndex + 1).trim();
+    currentKey = key;
+
+    if (!rawValue) {
+      data[key] = [];
+      continue;
+    }
+
+    data[key] = parseScalar(rawValue);
+  }
+
+  return { data, content };
+}
 
 async function syncArticles() {
   console.log('🔄 Markdown記事 → DB 同期を開始します...\n');
@@ -62,7 +124,7 @@ async function syncArticles() {
     const raw      = fs.readFileSync(filePath, 'utf-8');
 
     // frontmatter と本文を分離
-    const { data, content } = matter(raw);
+    const { data, content } = parseFrontmatter(raw);
 
     // 必須フィールドチェック
     if (!data.title || !data.roles || !data.categories || !data.level) {

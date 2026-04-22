@@ -26,6 +26,22 @@ audioUrl: ~
 - 「OK Google, let's talk in English」で始められる
 - 発音を聞き取ってもらう練習になる
 
+## VOA Learning English の教材を使って練習する
+
+動画と音声を使って、実際の英語に触れながら練習する方法もあります。
+
+### 動画教材
+
+<iframe src="https://learningenglish.voanews.com/embed/player/0/5781394.html?type=video" frameborder="0" scrolling="no" width="640" height="360" allowfullscreen></iframe>
+
+### 音声教材
+
+<iframe src="https://learningenglish.voanews.com/embed/player/0/3181231.html?type=audio" frameborder="0" scrolling="no" width="100%" height="144" allowfullscreen></iframe>
+
+### YouTube で会話練習の雰囲気をつかむ
+
+<iframe src="https://www.youtube.com/watch?v=TR6U8Sa88Jc" frameborder="0" scrolling="no" width="640" height="360" allowfullscreen></iframe>
+
 ## 毎日10分の練習メニュー
 
 ```

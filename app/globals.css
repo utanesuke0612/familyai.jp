@@ -593,7 +593,7 @@
     font-family: var(--font-body), sans-serif;
     font-size: var(--text-body);
     line-height: 1.85;
-    max-width: 72ch;
+    max-width: calc(72ch + 40px);
   }
   .prose-warm h1,
   .prose-warm h2,

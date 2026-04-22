@@ -17,6 +17,118 @@ import rehypeSanitize    from 'rehype-sanitize';
 import rehypeHighlight   from 'rehype-highlight';
 import type { Components } from 'react-markdown';
 
+type ArticleSegment =
+  | { type: 'markdown'; content: string }
+  | { type: 'trusted-embed'; src: string; width: string; height: string; title: string };
+
+const VOA_EMBED_HOSTS = new Set(['learningenglish.voanews.com', 'www.voanews.com', 'voanews.com']);
+const YOUTUBE_EMBED_HOSTS = new Set([
+  'www.youtube.com',
+  'youtube.com',
+  'www.youtube-nocookie.com',
+  'youtube-nocookie.com',
+  'youtu.be',
+]);
+
+function getIframeAttr(tag: string, attr: string): string | null {
+  const escapedAttr = attr.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  const match = tag.match(new RegExp(`${escapedAttr}=(["'])(.*?)\\1`, 'i'));
+  return match?.[2]?.trim() ?? null;
+}
+
+function isAllowedVoaEmbed(src: string): boolean {
+  try {
+    const url = new URL(src);
+    return url.protocol === 'https:' && VOA_EMBED_HOSTS.has(url.hostname);
+  } catch {
+    return false;
+  }
+}
+
+function normalizeYouTubeEmbed(src: string): string | null {
+  try {
+    const url = new URL(src);
+    if (url.protocol !== 'https:' || !YOUTUBE_EMBED_HOSTS.has(url.hostname)) {
+      return null;
+    }
+
+    if (url.hostname === 'youtu.be') {
+      const videoId = url.pathname.split('/').filter(Boolean)[0];
+      if (!videoId) return null;
+      return `https://www.youtube.com/embed/${videoId}`;
+    }
+
+    if (url.pathname.startsWith('/watch')) {
+      const videoId = url.searchParams.get('v');
+      if (!videoId) return null;
+      return `https://www.youtube.com/embed/${videoId}`;
+    }
+
+    if (url.pathname.startsWith('/embed/')) {
+      return url.toString();
+    }
+
+    return null;
+  } catch {
+    return null;
+  }
+}
+
+function parseArticleSegments(content: string): ArticleSegment[] {
+  const iframeRegex = /<iframe\b[^>]*><\/iframe>/gi;
+  const segments: ArticleSegment[] = [];
+  let lastIndex = 0;
+
+  for (const match of content.matchAll(iframeRegex)) {
+    const fullTag = match[0];
+    const start = match.index ?? 0;
+
+    if (start > lastIndex) {
+      segments.push({
+        type: 'markdown',
+        content: content.slice(lastIndex, start),
+      });
+    }
+
+    const src = getIframeAttr(fullTag, 'src');
+    if (src && isAllowedVoaEmbed(src)) {
+      segments.push({
+        type: 'trusted-embed',
+        src,
+        width: getIframeAttr(fullTag, 'width') ?? '100%',
+        height: getIframeAttr(fullTag, 'height') ?? '360',
+        title: 'VOA embed',
+      });
+    } else if (src) {
+      const youtubeSrc = normalizeYouTubeEmbed(src);
+      if (youtubeSrc) {
+        segments.push({
+          type: 'trusted-embed',
+          src: youtubeSrc,
+          width: getIframeAttr(fullTag, 'width') ?? '100%',
+          height: getIframeAttr(fullTag, 'height') ?? '360',
+          title: 'YouTube embed',
+        });
+      } else {
+        segments.push({ type: 'markdown', content: fullTag });
+      }
+    } else {
+      segments.push({ type: 'markdown', content: fullTag });
+    }
+
+    lastIndex = start + fullTag.length;
+  }
+
+  if (lastIndex < content.length) {
+    segments.push({
+      type: 'markdown',
+      content: content.slice(lastIndex),
+    });
+  }
+
+  return segments.length > 0 ? segments : [{ type: 'markdown', content }];
+}
+
 function CodeBlockWithCopy({ children, ...props }: React.HTMLAttributes<HTMLPreElement>) {
   const preRef = useRef<HTMLPreElement>(null);
   const [copied, setCopied] = useState(false);
@@ -180,6 +292,8 @@ interface ArticleBodyProps {
 }
 
 export function ArticleBody({ content, className = '' }: ArticleBodyProps) {
+  const segments = parseArticleSegments(content);
+
   return (
     <>
       {/* highlight.js テーマ（atom-one-light 系カスタム） */}
@@ -198,13 +312,52 @@ export function ArticleBody({ content, className = '' }: ArticleBodyProps) {
       `}</style>
 
       <article className={`prose-warm ${className}`}>
-        <ReactMarkdown
-          remarkPlugins={[remarkGfm]}
-          rehypePlugins={[rehypeSanitize, rehypeHighlight]}
-          components={components}
-        >
-          {content}
-        </ReactMarkdown>
+        {segments.map((segment, index) => {
+          if (segment.type === 'trusted-embed') {
+            const numericHeight = Number.parseInt(segment.height, 10);
+            const iframeHeight = Number.isFinite(numericHeight) ? numericHeight : 360;
+
+            return (
+              <div
+                key={`trusted-embed-${index}`}
+                style={{ margin: '1.5rem 0' }}
+              >
+                <iframe
+                  src={segment.src}
+                  width={segment.width}
+                  height={String(iframeHeight)}
+                  allowFullScreen
+                  loading="lazy"
+                  scrolling="no"
+                  referrerPolicy="strict-origin-when-cross-origin"
+                  style={{
+                    display: 'block',
+                    width: segment.width === '100%' ? '100%' : segment.width,
+                    maxWidth: '100%',
+                    border: '0',
+                    borderRadius: '12px',
+                  }}
+                  title={`${segment.title} ${index + 1}`}
+                />
+              </div>
+            );
+          }
+
+          if (!segment.content.trim()) {
+            return null;
+          }
+
+          return (
+            <ReactMarkdown
+              key={`markdown-${index}`}
+              remarkPlugins={[remarkGfm]}
+              rehypePlugins={[rehypeSanitize, rehypeHighlight]}
+              components={components}
+            >
+              {segment.content}
+            </ReactMarkdown>
+          );
+        })}
       </article>
     </>
   );
