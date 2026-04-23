@@ -76,14 +76,14 @@ export const DIFFICULTY_COLOR: Record<DifficultyLevel, string> = {
  * tts-japanese   : テキスト→日本語音声
  */
 export const MODEL_ROUTER = {
-  'text-simple':    'google/gemini-2.0-flash-001',
-  'text-quality':   'anthropic/claude-3-5-haiku',
-  'math-reasoning': 'anthropic/claude-3-5-sonnet',
+  'text-simple':    'qwen/qwen3-14b',
+  'text-quality':   'qwen/qwen3-235b-a22b-2507',
+  'math-reasoning': 'deepseek/deepseek-r1-0528',
   'transcribe':     'openai/whisper-large-v3',
   'image-gen':      'black-forest-labs/flux-1.1-pro',
   'tts-japanese':   'fishaudio/fish-speech-1.5',
   /** どのモデルも利用不可の場合の最終フォールバック */
-  fallback:         'google/gemini-2.0-flash-001',
+  fallback:         'qwen/qwen3-14b',
 } as const;
 
 export type ModelRouterType = Exclude<keyof typeof MODEL_ROUTER, 'fallback'>;
