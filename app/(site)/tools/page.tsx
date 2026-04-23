@@ -26,21 +26,21 @@ const GUIDES = [
     title: 'ChatGPTの始め方・使い方ガイド',
     desc:  'アカウント作成から最初の質問まで、スクリーンショット付きで丁寧に解説。',
     level: 'はじめて',
-    href:  '/learn?level=beginner&search=ChatGPT',
+    href:  '/learn?cat=work&level=beginner&search=ChatGPT',
   },
   {
     emoji: '🎨',
     title: 'AI画像生成入門｜スマホで簡単に始める',
     desc:  '文章を入力するだけでイラストや写真を生成できるツールを紹介します。',
     level: 'はじめて',
-    href:  '/learn?cat=image-gen',
+    href:  '/learn?cat=creative',
   },
   {
     emoji: '🔒',
     title: 'AIを安全に使うための5つのルール',
     desc:  '個人情報の取り扱い、注意すべき点など、安心して使うための基礎知識。',
     level: 'はじめて',
-    href:  '/learn?level=beginner&search=安全',
+    href:  '/learn?cat=lifestyle&level=beginner&search=安全',
   },
 ];
 

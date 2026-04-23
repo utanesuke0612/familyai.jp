@@ -14,8 +14,8 @@ describe('buildQueryString', () => {
   });
 
   it('V2: 配列を繰り返しパラメータに展開（Rev22 cat複数対応）', () => {
-    expect(buildQueryString({ cat: ['image-gen', 'voice'] }))
-      .toBe('?cat=image-gen&cat=voice');
+    expect(buildQueryString({ cat: ['work', 'creative'] }))
+      .toBe('?cat=work&cat=creative');
   });
 
   it('V2b: 3要素配列', () => {

@@ -37,10 +37,10 @@ export interface ArticleCardProps {
 
 // ── カテゴリ別サムネイル背景色 ────────────────────────────────
 const CATEGORY_BG: Record<string, string> = {
-  'image-gen': 'var(--color-peach-light)',
-  voice: 'var(--color-sky)',
   education: 'var(--color-mint)',
-  housework: 'var(--color-yellow)',
+  lifestyle: 'var(--color-peach-light)',
+  work: 'var(--color-sky)',
+  creative: 'var(--color-yellow)',
 };
 
 // ── 難易度バッジ色 ────────────────────────────────────────────

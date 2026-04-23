@@ -17,10 +17,10 @@ const NAV_LINKS = [
 ];
 
 const CATEGORY_LINKS = [
-  { href: '/learn?cat=image-gen', label: '🎨 画像生成' },
-  { href: '/learn?cat=voice',     label: '🎙️ 音声AI' },
   { href: '/learn?cat=education', label: '📚 学習・教育' },
-  { href: '/learn?cat=housework', label: '🏠 家事・育児' },
+  { href: '/learn?cat=lifestyle', label: '🏠 家事・暮らし' },
+  { href: '/learn?cat=work',      label: '💼 仕事・効率化' },
+  { href: '/learn?cat=creative',  label: '🎨 創作・表現' },
 ];
 
 const SITE_LINKS = [

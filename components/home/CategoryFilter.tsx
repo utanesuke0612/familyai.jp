@@ -15,10 +15,10 @@ import type { ContentCategory } from '@/shared';
 
 // ── カテゴリ定義（表示順） ─────────────────────────────────────
 const CATEGORIES: ContentCategory[] = [
-  'image-gen',
-  'voice',
   'education',
-  'housework',
+  'lifestyle',
+  'work',
+  'creative',
 ];
 
 interface CategoryFilterProps {

@@ -7,7 +7,7 @@
 
 import { z } from 'zod';
 
-export const CATEGORIES   = ['image-gen', 'voice', 'education', 'housework'] as const;
+export const CATEGORIES   = ['education', 'lifestyle', 'work', 'creative'] as const;
 export const LEVELS       = ['beginner', 'intermediate', 'advanced'] as const;
 export const ARTICLE_SORTS = ['latest', 'oldest', 'popular', 'title'] as const;
 export type ArticleSort = (typeof ARTICLE_SORTS)[number];

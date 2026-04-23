@@ -39,13 +39,13 @@ import { escapeLike }                from '@/lib/repositories/articles';
 export const runtime = 'nodejs';
 
 // ── 入力バリデーションスキーマ ──────────────────────────────────
-const CAT_VALUES = ['image-gen', 'voice', 'education', 'housework'] as const;
+const CAT_VALUES = ['education', 'lifestyle', 'work', 'creative'] as const;
 const catEnum    = z.enum(CAT_VALUES);
 
 /** cat は複数指定を許可：
- *  - 単一値:     ?cat=voice
- *  - 繰り返し:   ?cat=voice&cat=education （配列で入る）
- *  - カンマ区切: ?cat=voice,education
+ *  - 単一値:     ?cat=work
+ *  - 繰り返し:   ?cat=work&cat=education （配列で入る）
+ *  - カンマ区切: ?cat=work,education
  */
 const catSchema = z
   .union([catEnum, z.array(catEnum), z.string()])

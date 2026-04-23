@@ -16,8 +16,8 @@ const USE_CASE_CARDS = [
   {
     id:       'work',
     emoji:    '💼',
-    label:    '仕事',
-    desc:     '業務効率化',
+    label:    '仕事・効率化',
+    desc:     '業務をすばやく進める',
     position: 'top-0 left-0 -translate-x-1/4 -translate-y-1/4',
     delay:    '0s',
     bg:       'var(--color-sky)',
@@ -26,8 +26,8 @@ const USE_CASE_CARDS = [
   {
     id:       'life',
     emoji:    '🏠',
-    label:    '暮らし',
-    desc:     '家事サポート',
+    label:    '家事・暮らし',
+    desc:     '毎日のタスクを軽くする',
     position: 'top-0 right-0 translate-x-1/4 -translate-y-1/4',
     delay:    '0.8s',
     bg:       'var(--color-peach-light)',
@@ -36,8 +36,8 @@ const USE_CASE_CARDS = [
   {
     id:       'study',
     emoji:    '📚',
-    label:    '学習',
-    desc:     '調べる・覚える',
+    label:    '学習・教育',
+    desc:     '調べる・理解を深める',
     position: 'bottom-0 left-0 -translate-x-1/4 translate-y-1/4',
     delay:    '1.6s',
     bg:       'var(--color-mint)',
@@ -46,8 +46,8 @@ const USE_CASE_CARDS = [
   {
     id:       'creative',
     emoji:    '🎨',
-    label:    '創作',
-    desc:     '画像・文章生成',
+    label:    '創作・表現',
+    desc:     '画像や文章を形にする',
     position: 'bottom-0 right-0 translate-x-1/4 translate-y-1/4',
     delay:    '2.4s',
     bg:       'var(--color-yellow)',

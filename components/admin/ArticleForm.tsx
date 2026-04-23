@@ -23,7 +23,7 @@ import {
 import type { ContentCategory, DifficultyLevel } from '@/shared';
 
 // ─── 定数 ─────────────────────────────────────────────────────
-const CATEGORIES: ContentCategory[]  = ['image-gen', 'voice', 'education', 'housework'];
+const CATEGORIES: ContentCategory[]  = ['education', 'lifestyle', 'work', 'creative'];
 const LEVELS:     DifficultyLevel[]  = ['beginner', 'intermediate', 'advanced'];
 
 // ─── 型 ───────────────────────────────────────────────────────

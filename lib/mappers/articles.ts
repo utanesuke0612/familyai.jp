@@ -22,7 +22,7 @@ import type {
 } from '@/shared/types';
 
 // ── 型ガード兼フィルタ ────────────────────────────────────────
-const CATEGORIES:   readonly ContentCategory[] = ['image-gen', 'voice', 'education', 'housework'];
+const CATEGORIES:   readonly ContentCategory[] = ['education', 'lifestyle', 'work', 'creative'];
 const LEVELS:       readonly DifficultyLevel[] = ['beginner', 'intermediate', 'advanced'];
 
 function filterCategories(values: string[] | null | undefined): ContentCategory[] {

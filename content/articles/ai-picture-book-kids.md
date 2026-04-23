@@ -2,7 +2,7 @@
 title: AIで絵本を作ってみよう
 description: 自分だけのオリジナル絵本をAIと一緒に作ろう！お話を考えて、絵もAIが描いてくれるよ。
 categories:
-  - image-gen
+  - creative
   - education
 level: beginner
 published: true

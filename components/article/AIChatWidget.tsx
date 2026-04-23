@@ -30,7 +30,7 @@ interface AIChatWidgetProps {
 
 // ── AI タイプ選択 ──────────────────────────────────────────────
 function selectAiType(categories?: string[]): 'text-simple' | 'text-quality' {
-  const languageCats = ['voice', 'education'];
+  const languageCats = ['education'];
   if (categories?.some((c) => languageCats.includes(c))) return 'text-quality';
   return 'text-simple';
 }

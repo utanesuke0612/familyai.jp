@@ -17,18 +17,18 @@ export const SITE = {
 // ─── カテゴリ設定 ──────────────────────────────────────────────
 /** カテゴリの表示ラベル */
 export const CATEGORY_LABEL: Record<ContentCategory, string> = {
-  'image-gen': '画像生成',
-  'voice':     '音声AI',
   'education': '学習・教育',
-  'housework': '家事・育児',
+  'lifestyle': '家事・暮らし',
+  'work':      '仕事・効率化',
+  'creative':  '創作・表現',
 } as const;
 
 /** カテゴリのアイコン絵文字 */
 export const CATEGORY_EMOJI: Record<ContentCategory, string> = {
-  'image-gen': '🎨',
-  'voice':     '🎙️',
   'education': '📚',
-  'housework': '🏠',
+  'lifestyle': '🏠',
+  'work':      '💼',
+  'creative':  '🎨',
 } as const;
 
 // ─── 難易度設定 ────────────────────────────────────────────────

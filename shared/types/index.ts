@@ -7,10 +7,10 @@
 // ─── コンテンツ関連 ────────────────────────────────────────────
 /** 記事・コンテンツのカテゴリ */
 export type ContentCategory =
-  | 'image-gen'
-  | 'voice'
   | 'education'
-  | 'housework';
+  | 'lifestyle'
+  | 'work'
+  | 'creative';
 
 /** 記事の難易度 */
 export type DifficultyLevel = 'beginner' | 'intermediate' | 'advanced';

@@ -2,7 +2,7 @@
 title: 音声AIで毎日10分の英語練習を習慣にする方法
 description: AIと会話することで発音・リスニング・スピーキングを同時に鍛えられます。
 categories:
-  - voice
+  - education
 level: intermediate
 published: true
 publishedAt: 2026-04-17
