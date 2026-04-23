@@ -40,8 +40,8 @@ const LEVELS: LevelSection[] = [
     modules: [
       {
         title: "Let's Learn English with Anna",
-        summary: '8歳から12歳向けに作られた、質問と会話中心のやさしい英語コースです。',
-        href: 'https://learningenglish.voanews.com/p/8322.html',
+        summary: '8歳から12歳向けに作られた、質問と会話中心のやさしい英語コースです。全40レッスン。',
+        href: '/tools/voaenglish/anna',
       },
       {
         title: "Let's Learn English - Level 1",
@@ -267,35 +267,54 @@ export default function VoaEnglishToolPage({ searchParams }: VoaEnglishToolPageP
               </div>
 
               <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-                {section.modules.map((module) => (
-                  <a
-                    key={module.title}
-                    href={module.href}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="block rounded-3xl p-5 transition-[transform,box-shadow] duration-200 hover:-translate-y-1"
-                    style={{
-                      background: 'linear-gradient(180deg, rgba(255,255,255,0.98) 0%, rgba(255,250,245,0.92) 100%)',
-                      boxShadow: 'var(--shadow-warm-sm)',
-                    }}
-                  >
-                    <div className="inline-flex rounded-full px-3 py-1 text-xs font-bold" style={{ background: section.accent, color: 'var(--color-brown)' }}>
-                      VOA
-                    </div>
-                    <h3
-                      className="mt-4 text-xl font-bold leading-tight"
-                      style={{ color: 'var(--color-brown)' }}
+                {section.modules.map((module) => {
+                  const isInternal = module.href.startsWith('/');
+                  const cardClassName = 'block rounded-3xl p-5 transition-[transform,box-shadow] duration-200 hover:-translate-y-1';
+                  const cardStyle = {
+                    background: 'linear-gradient(180deg, rgba(255,255,255,0.98) 0%, rgba(255,250,245,0.92) 100%)',
+                    boxShadow: 'var(--shadow-warm-sm)',
+                  } as const;
+                  const cardInner = (
+                    <>
+                      <div className="inline-flex rounded-full px-3 py-1 text-xs font-bold" style={{ background: section.accent, color: 'var(--color-brown)' }}>
+                        {isInternal ? 'VOA × AI' : 'VOA'}
+                      </div>
+                      <h3
+                        className="mt-4 text-xl font-bold leading-tight"
+                        style={{ color: 'var(--color-brown)' }}
+                      >
+                        {module.title}
+                      </h3>
+                      <p className="mt-3 text-sm leading-relaxed" style={{ color: 'var(--color-brown-light)' }}>
+                        {module.summary}
+                      </p>
+                      <div className="mt-5 text-sm font-semibold" style={{ color: 'var(--color-orange)' }}>
+                        {isInternal ? 'コースを開く →' : 'VOAで開く ↗'}
+                      </div>
+                    </>
+                  );
+                  return isInternal ? (
+                    <Link
+                      key={module.title}
+                      href={module.href}
+                      className={cardClassName}
+                      style={cardStyle}
                     >
-                      {module.title}
-                    </h3>
-                    <p className="mt-3 text-sm leading-relaxed" style={{ color: 'var(--color-brown-light)' }}>
-                      {module.summary}
-                    </p>
-                    <div className="mt-5 text-sm font-semibold" style={{ color: 'var(--color-orange)' }}>
-                      VOAで開く ↗
-                    </div>
-                  </a>
-                ))}
+                      {cardInner}
+                    </Link>
+                  ) : (
+                    <a
+                      key={module.title}
+                      href={module.href}
+                      target="_blank"
+                      rel="noreferrer"
+                      className={cardClassName}
+                      style={cardStyle}
+                    >
+                      {cardInner}
+                    </a>
+                  );
+                })}
               </div>
             </section>
           ))}
