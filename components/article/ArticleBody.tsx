@@ -78,8 +78,9 @@ function parseArticleSegments(content: string): ArticleSegment[] {
   const iframeRegex = /<iframe\b[^>]*><\/iframe>/gi;
   const segments: ArticleSegment[] = [];
   let lastIndex = 0;
+  let match: RegExpExecArray | null;
 
-  for (const match of content.matchAll(iframeRegex)) {
+  while ((match = iframeRegex.exec(content)) !== null) {
     const fullTag = match[0];
     const start = match.index ?? 0;
 
