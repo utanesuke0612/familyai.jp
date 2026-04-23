@@ -142,7 +142,7 @@ async function syncArticles() {
       categories:  Array.isArray(data.categories) ? data.categories : [data.categories],
       level:       String(data.level) as 'beginner' | 'intermediate' | 'advanced',
       published:   data.published === true,
-      publishedAt: data.publishedAt ? new Date(data.publishedAt) : null,
+      publishedAt: typeof data.publishedAt === 'string' ? new Date(data.publishedAt) : null,
       audioUrl:    (data.audioUrl && data.audioUrl !== '~') ? String(data.audioUrl) : null,
     };
 
