@@ -315,26 +315,28 @@ export function ArticleBody({ content, className = '' }: ArticleBodyProps) {
       <article className={`prose-warm ${className}`}>
         {segments.map((segment, index) => {
           if (segment.type === 'trusted-embed') {
+            const numericWidth  = Number.parseInt(segment.width, 10);
             const numericHeight = Number.parseInt(segment.height, 10);
-            const iframeHeight = Number.isFinite(numericHeight) ? numericHeight : 360;
+            const aspectRatio =
+              Number.isFinite(numericWidth) && Number.isFinite(numericHeight) && numericHeight > 0
+                ? `${numericWidth} / ${numericHeight}`
+                : '16 / 9';
 
             return (
               <div
                 key={`trusted-embed-${index}`}
-                style={{ margin: '1.5rem 0' }}
+                style={{ margin: '1.5rem 0', width: '100%', aspectRatio }}
               >
                 <iframe
                   src={segment.src}
-                  width={segment.width}
-                  height={String(iframeHeight)}
                   allowFullScreen
                   loading="lazy"
                   scrolling="no"
                   referrerPolicy="strict-origin-when-cross-origin"
                   style={{
                     display: 'block',
-                    width: segment.width === '100%' ? '100%' : segment.width,
-                    maxWidth: '100%',
+                    width: '100%',
+                    height: '100%',
                     border: '0',
                     borderRadius: '12px',
                   }}

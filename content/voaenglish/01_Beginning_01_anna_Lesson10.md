@@ -1,3 +1,15 @@
-# Lesson 10: What Time Is It?
+---
+slug: lesson-10
+level: beginning
+course: anna
+courseTitle: "Let's Learn English with Anna"
+lessonNumber: 10
+title: "What Time Is It?"
+thumbnail: https://gdb.voanews.com/09680000-0a00-0242-f3b1-08da69e715fd_w400_r1.png
+voaUrl: https://learningenglish.voanews.com/a/6729066.html
+published: true
+---
 
-参照：[VOA公式ページ](https://learningenglish.voanews.com/a/6729066.html)
+# 🎧 会話を聞いて、読んでみよう
+
+# ✨ AIと一緒に、もっと分かる

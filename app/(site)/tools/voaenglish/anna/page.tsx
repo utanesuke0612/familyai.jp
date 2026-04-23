@@ -148,10 +148,8 @@ export default function AnnaTopPage() {
           <ul className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
             {ANNA_LESSONS.map((lesson) => (
               <li key={lesson.number}>
-                <a
-                  href={lesson.href}
-                  target="_blank"
-                  rel="noreferrer"
+                <Link
+                  href={`/tools/voaenglish/anna/lesson-${String(lesson.number).padStart(2, '0')}`}
                   className="group block overflow-hidden rounded-2xl transition-[transform,box-shadow] duration-200 hover:-translate-y-1"
                   style={{
                     background: 'rgba(255,255,255,0.92)',
@@ -178,7 +176,7 @@ export default function AnnaTopPage() {
                       {lesson.title}
                     </span>
                   </div>
-                </a>
+                </Link>
               </li>
             ))}
           </ul>

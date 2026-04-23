@@ -1,3 +1,35 @@
-# Lesson 1: Who Are You?
+---
+slug: lesson-01
+level: beginning
+course: anna
+courseTitle: "Let's Learn English with Anna"
+lessonNumber: 1
+title: "Who Are You?"
+thumbnail: https://gdb.voanews.com/09690000-0a00-0242-53a7-08da69e707f7_w400_r1.png
+voaUrl: https://learningenglish.voanews.com/a/6654462.html
+published: true
+---
 
-参照：[VOA公式ページ](https://learningenglish.voanews.com/a/6654462.html)
+# 🎧 会話を聞いて、読んでみよう
+
+<iframe src="https://learningenglish.voanews.com/embed/player/0/6654472.html?type=video" frameborder="0" scrolling="no" width="640" height="360" allowfullscreen></iframe>
+
+Pete: Hi! Are you Anna?
+
+Anna: Yes! Hi there! Are you Pete?
+
+Pete: I am Pete.
+
+Anna: Nice to meet you.
+
+Anna: Let's try that again. I'm Anna. Nice to meet you.
+
+Pete: I'm Pete. "Anna" Is that A-N-A?
+
+Anna: No. A-N-N-A
+
+Pete: Well, Anna with two "n's" ... Welcome to ... 1400 Irving Street!
+
+Anna: My new apartment! Yes!
+
+# ✨ AIと一緒に、もっと分かる

@@ -1,3 +1,15 @@
-# Lesson 16: What Can Pets Do?
+---
+slug: lesson-16
+level: beginning
+course: anna
+courseTitle: "Let's Learn English with Anna"
+lessonNumber: 16
+title: "What Can Pets Do?"
+thumbnail: https://gdb.voanews.com/01000000-0aff-0242-0247-08db0ec58fcc_w400_r1.png
+voaUrl: https://learningenglish.voanews.com/a/6983016.html
+published: true
+---
 
-参照：[VOA公式ページ](https://learningenglish.voanews.com/a/6983016.html)
+# 🎧 会話を聞いて、読んでみよう
+
+# ✨ AIと一緒に、もっと分かる

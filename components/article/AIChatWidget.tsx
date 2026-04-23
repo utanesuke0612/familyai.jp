@@ -26,7 +26,15 @@ interface AIChatWidgetProps {
   articleExcerpt?: string;
   /** カテゴリ配列（language系なら text-quality モデルを選択） */
   articleCategories?: string[];
+  /** 初期表示のクイック質問（3件推奨）。未指定時は記事向けデフォルト */
+  suggestedQuestions?: string[];
 }
+
+const DEFAULT_SUGGESTED_QUESTIONS = [
+  'もっと簡単に教えて',
+  '実際の手順を教えて',
+  'このAIツールは安全？',
+];
 
 // ── AI タイプ選択 ──────────────────────────────────────────────
 function selectAiType(categories?: string[]): 'text-simple' | 'text-quality' {
@@ -180,7 +188,11 @@ export function AIChatWidget({
   articleSlug:    _articleSlug, // eslint-disable-line @typescript-eslint/no-unused-vars
   articleExcerpt,
   articleCategories,
+  suggestedQuestions,
 }: AIChatWidgetProps) {
+  const quickQuestions = suggestedQuestions && suggestedQuestions.length > 0
+    ? suggestedQuestions
+    : DEFAULT_SUGGESTED_QUESTIONS;
   const [messages,  setMessages]  = useState<Message[]>([]);
   const [input,     setInput]     = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -367,11 +379,7 @@ export function AIChatWidget({
             「{articleTitle.length > 20 ? articleTitle.slice(0, 20) + '…' : articleTitle}」について疑問があれば、AIが丁寧にお答えします。
           </p>
 
-          {[
-            'もっと簡単に教えて',
-            '実際の手順を教えて',
-            'このAIツールは安全？',
-          ].map((q) => (
+          {quickQuestions.map((q) => (
             <button
               key={q}
               onClick={() => { setIsOpen(true); setInput(q); }}
