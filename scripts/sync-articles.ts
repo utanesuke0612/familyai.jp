@@ -103,6 +103,16 @@ function parseFrontmatter(raw: string): { data: Record<string, FrontmatterValue>
   return { data, content };
 }
 
+function toStringArray(value: FrontmatterValue | undefined): string[] {
+  if (Array.isArray(value)) {
+    return value.filter((item): item is string => typeof item === 'string');
+  }
+  if (typeof value === 'string') {
+    return [value];
+  }
+  return [];
+}
+
 async function syncArticles() {
   console.log('🔄 Markdown記事 → DB 同期を開始します...\n');
 
@@ -138,8 +148,8 @@ async function syncArticles() {
       title:       String(data.title),
       description: data.description ? String(data.description) : null,
       body:        content.trim(),
-      roles:       Array.isArray(data.roles) ? data.roles : [data.roles],
-      categories:  Array.isArray(data.categories) ? data.categories : [data.categories],
+      roles:       toStringArray(data.roles),
+      categories:  toStringArray(data.categories),
       level:       String(data.level) as 'beginner' | 'intermediate' | 'advanced',
       published:   data.published === true,
       publishedAt: typeof data.publishedAt === 'string' ? new Date(data.publishedAt) : null,
