@@ -18,6 +18,7 @@ const USE_CASE_CARDS = [
     emoji:    '💼',
     label:    '仕事・効率化',
     desc:     '業務をすばやく進める',
+    href:     '/learn?cat=work',
     position: 'top-0 left-0 -translate-x-1/4 -translate-y-1/4',
     delay:    '0s',
     bg:       'var(--color-sky)',
@@ -28,6 +29,7 @@ const USE_CASE_CARDS = [
     emoji:    '🏠',
     label:    '家事・暮らし',
     desc:     '毎日のタスクを軽くする',
+    href:     '/learn?cat=lifestyle',
     position: 'top-0 right-0 translate-x-1/4 -translate-y-1/4',
     delay:    '0.8s',
     bg:       'var(--color-peach-light)',
@@ -38,6 +40,7 @@ const USE_CASE_CARDS = [
     emoji:    '📚',
     label:    '学習・教育',
     desc:     '調べる・理解を深める',
+    href:     '/learn?cat=education',
     position: 'bottom-0 left-0 -translate-x-1/4 translate-y-1/4',
     delay:    '1.6s',
     bg:       'var(--color-mint)',
@@ -48,6 +51,7 @@ const USE_CASE_CARDS = [
     emoji:    '🎨',
     label:    '創作・表現',
     desc:     '画像や文章を形にする',
+    href:     '/learn?cat=creative',
     position: 'bottom-0 right-0 translate-x-1/4 translate-y-1/4',
     delay:    '2.4s',
     bg:       'var(--color-yellow)',
@@ -215,8 +219,9 @@ export function HeroSection() {
 
           {/* 四隅のユースケースカード */}
           {USE_CASE_CARDS.map((card) => (
-            <div
+            <Link
               key={card.id}
+              href={card.href}
               className={`absolute ${card.position} flex flex-col items-center gap-1.5 px-4 py-3 rounded-2xl shadow-warm cursor-pointer`}
               style={{
                 background:      card.bg,
@@ -234,6 +239,7 @@ export function HeroSection() {
               onMouseLeave={(e) => {
                 (e.currentTarget as HTMLElement).style.transform = '';
               }}
+              aria-label={`${card.label}の記事一覧へ`}
             >
               <span className="text-3xl">{card.emoji}</span>
               <span
@@ -248,7 +254,7 @@ export function HeroSection() {
               >
                 {card.desc}
               </span>
-            </div>
+            </Link>
           ))}
 
           {/* 装飾：背景の薄い円 */}
