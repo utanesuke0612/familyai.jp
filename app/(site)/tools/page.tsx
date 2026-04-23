@@ -35,7 +35,7 @@ const TOOLS_BY_CATEGORY: Array<{
       {
         name: 'VOA 英語学習',
         summary: 'VOA Learning English の音声と動画を使って、毎日10分の英語学習を続けるためのツールです。',
-        href: '/learn/english-learning-voice-ai',
+        href: '/tools/voaenglish',
         status: '公開中',
         cta: '使ってみる',
         accent: 'var(--color-mint)',
