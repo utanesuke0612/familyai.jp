@@ -33,8 +33,8 @@ const TOOLS_BY_CATEGORY: Array<{
     lead: '学習の習慣化、英語、宿題サポートに使えるツールです。',
     tools: [
       {
-        name: 'VOA 英語学習',
-        summary: 'VOA Learning English の音声と動画を使って、毎日10分の英語学習を続けるためのツールです。',
+        name: 'VOA × AI英語学習',
+        summary: 'VOA Learning English の音声と動画を AI と組み合わせて、毎日10分の英語学習を続けるためのツールです。',
         href: '/tools/voaenglish',
         status: '公開中',
         cta: '使ってみる',
@@ -141,7 +141,7 @@ export default function ToolsPage({ searchParams }: ToolsPageProps) {
                 style={{ color: 'var(--color-brown-light)' }}
               >
                 学習・教育、家事・暮らし、仕事・効率化、創作・表現ごとに、使えるツールを整理しています。
-                現在は「VOA 英語学習」を公開中です。
+                現在は「VOA × AI英語学習」を公開中です。
               </p>
             </div>
 
