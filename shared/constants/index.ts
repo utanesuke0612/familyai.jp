@@ -85,6 +85,8 @@ export const RATE_LIMIT = {
   chatFreePerHour:    10,
   /** 有料ユーザー：チャット API 1時間あたり */
   chatPremiumPerHour: 60,
+  /** TTS API 1分あたり（IP単位） */
+  ttsPerMinute:       5,
   /** OGP 生成 1時間あたり */
   ogPerHour:          30,
 } as const;

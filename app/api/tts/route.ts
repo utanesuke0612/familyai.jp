@@ -7,11 +7,11 @@
 
 import { NextRequest } from 'next/server';
 import { z } from 'zod';
-import { MODEL_ROUTER } from '@/shared';
+import { MODEL_ROUTER, RATE_LIMIT } from '@/shared';
 import { verifyCsrf } from '@/lib/csrf';
+import { getClientIp, getRateLimiter, rateLimitedResponse } from '@/lib/ratelimit';
 import {
   generateOpenRouterTts,
-  type OpenRouterTtsFormat,
   type OpenRouterTtsVoice,
 } from '@/lib/ai/providers/openrouter-tts';
 
@@ -28,7 +28,7 @@ const voiceSchema = z.enum([
   'verse',
 ]);
 
-const formatSchema = z.enum(['mp3', 'pcm']);
+const formatSchema = z.literal('mp3');
 
 const bodySchema = z.object({
   text: z.string().trim().min(1).max(4000),
@@ -36,16 +36,6 @@ const bodySchema = z.object({
   format: formatSchema.optional(),
   speed: z.number().min(0.25).max(4).optional(),
 });
-
-function contentTypeFor(format: OpenRouterTtsFormat): string {
-  switch (format) {
-    case 'pcm':
-      return 'audio/pcm';
-    case 'mp3':
-    default:
-      return 'audio/mpeg';
-  }
-}
 
 function errorResponse(code: string, message: string, status: number): Response {
   return new Response(
@@ -60,6 +50,14 @@ function errorResponse(code: string, message: string, status: number): Response 
 export async function POST(req: NextRequest) {
   if (!verifyCsrf(req)) {
     return errorResponse('FORBIDDEN', '不正なリクエストです。', 403);
+  }
+
+  const limiter = getRateLimiter('ratelimit:tts', RATE_LIMIT.ttsPerMinute, '1 m');
+  if (limiter) {
+    const { success } = await limiter.limit(getClientIp(req));
+    if (!success) {
+      return rateLimitedResponse('音声生成のリクエストが多すぎます。少し待ってから再試行してください。');
+    }
   }
 
   let rawBody: unknown;
@@ -88,7 +86,7 @@ export async function POST(req: NextRequest) {
     return new Response(upstream.body, {
       status: 200,
       headers: {
-        'Content-Type': contentTypeFor(format),
+        'Content-Type': 'audio/mpeg',
         'Cache-Control': 'no-store',
       },
     });

@@ -13,7 +13,7 @@ export type OpenRouterTtsVoice =
   | 'shimmer'
   | 'verse';
 
-export type OpenRouterTtsFormat = 'mp3' | 'pcm';
+export type OpenRouterTtsFormat = 'mp3';
 
 export interface OpenRouterTtsOptions {
   model?: string;
@@ -55,8 +55,7 @@ export async function generateOpenRouterTts(
   });
 
   if (!res.ok) {
-    const errText = await res.text().catch(() => '');
-    throw new Error(`OpenRouter TTS API エラー: ${res.status} ${errText}`);
+    throw new Error(`OpenRouter TTS API エラー: ${res.status}`);
   }
 
   return res;

@@ -20,6 +20,11 @@ const NAV_LINKS = [
   { href: '/common', label: 'AIツール', emoji: '🧰' },
 ];
 
+function isLinkActive(pathname: string, href: string): boolean {
+  if (href === '/') return pathname === '/';
+  return pathname === href || pathname.startsWith(`${href}/`);
+}
+
 export function Header() {
   const pathname = usePathname();
 
@@ -59,7 +64,7 @@ export function Header() {
         {/* ── PC ナビ ── */}
         <nav className="hidden lg:flex items-center gap-1" aria-label="メインナビゲーション">
           {NAV_LINKS.map((link) => {
-            const isActive = pathname === link.href;
+            const isActive = isLinkActive(pathname, link.href);
             return (
               <Link
                 key={link.href}

@@ -57,15 +57,6 @@
     --color-mint:         #B8EDD8;
     --color-yellow:       #FFE066;
 
-    /* ── ロール別カラー ──────────────────────────────────── */
-    --color-papa-bg:      #C8E8F8;   /* sky */
-    --color-papa-accent:  #4A90C4;
-    --color-mama-bg:      #FFD4B2;   /* peach-light */
-    --color-mama-accent:  #FF8C42;   /* orange */
-    --color-kids-bg:      #B8EDD8;   /* mint */
-    --color-kids-accent:  #2EAA6E;
-    --color-senior-bg:    #FFE066;   /* yellow */
-    --color-senior-accent:#C07800;
     --color-common-bg:    #FDF6ED;   /* cream */
     --color-common-accent:#3060D0;
 
@@ -543,26 +534,6 @@
     border-color: var(--color-brown-light);
     transform: translateY(-1px);
   }
-
-  /* ── ロールカード ──────────────────────────────────────── */
-  .role-card {
-    position: relative;
-    overflow: hidden;
-    border-radius: 1.5rem;
-    padding: 24px 20px;
-    cursor: pointer;
-    transition:
-      transform var(--duration-base) var(--ease-bounce),
-      box-shadow var(--duration-base) ease;
-  }
-  .role-card:hover {
-    transform: translateY(-6px) scale(1.02);
-    box-shadow: var(--shadow-warm-lg);
-  }
-  .role-card-papa   { background: var(--color-papa-bg); }
-  .role-card-mama   { background: var(--color-mama-bg); }
-  .role-card-kids   { background: var(--color-kids-bg); }
-  .role-card-senior { background: var(--color-senior-bg); }
 
   /* ── スクロールリビール ────────────────────────────────── */
   .reveal {

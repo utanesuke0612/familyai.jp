@@ -2,9 +2,9 @@
  * components/article/ArticleCard.tsx
  * familyai.jp — 記事カードコンポーネント
  *
- * - サムネイル：ロール対応背景色 + カテゴリ絵文字
- * - ボディ：ロールタグ / カテゴリタグ / タイトル / 日付 / レベル / 音声マーク
- * - ホバー：translateY(-6px) + shadow + peach-light ボーダー
+ * - サムネイル：カテゴリ背景色 + カテゴリ絵文字
+ * - ボディ：カテゴリタグ / タイトル / 日付 / レベル / 音声マーク
+ * - ホバー：浮き上がり + シャドウ + ボーダー強調
  */
 
 import Link from 'next/link';
@@ -73,11 +73,9 @@ export function ArticleCard({ article, featured = false }: ArticleCardProps) {
   return (
     <Link
       href={`/learn/${article.slug}`}
-      className="group block rounded-2xl overflow-hidden transition-[transform,box-shadow,border-color] duration-200 hover:-translate-y-1.5"
+      className="group block rounded-2xl overflow-hidden border-2 border-transparent shadow-warm-sm transition-[transform,box-shadow,border-color] duration-200 hover:-translate-y-1.5 hover:shadow-warm-lg hover:border-orange-200"
       style={{
         background:  'white',
-        border:      '2px solid transparent',
-        boxShadow:   'var(--shadow-warm-sm)',
       }}
       aria-label={`${article.title} — 記事を読む`}
     >

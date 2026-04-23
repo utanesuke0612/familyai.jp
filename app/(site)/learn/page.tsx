@@ -195,7 +195,7 @@ function ActiveFilterBanner({
 // ── ページ本体 ────────────────────────────────────────────────
 interface LearnPageProps {
   searchParams: {
-    role?:   string;
+    [key: string]: string | undefined;
     cat?:    string;
     level?:  string;
     sort?:   string;
