@@ -110,6 +110,7 @@ export const ROUTES = {
   home:           '/',
   articles:       '/learn',
   article:        (slug: string) => `/learn/${slug}`,
+  tools:          '/tools',
   chat:           '/chat',
   login:          '/auth/signin',
   signup:         '/auth/register',

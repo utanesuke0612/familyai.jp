@@ -17,7 +17,7 @@ import { ROUTES } from '@/shared';
 const NAV_LINKS = [
   { href: '/', label: 'ホーム', emoji: '🏠' },
   { href: '/learn', label: 'AI活用事例', emoji: '📝' },
-  { href: '/common', label: 'AIツール', emoji: '🧰' },
+  { href: '/tools', label: 'AIツール', emoji: '🧰' },
 ];
 
 function isLinkActive(pathname: string, href: string): boolean {

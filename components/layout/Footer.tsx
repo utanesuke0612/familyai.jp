@@ -13,7 +13,7 @@ import { ROUTES } from '@/shared';
 const NAV_LINKS = [
   { href: ROUTES.home, label: '🏠 ホーム' },
   { href: ROUTES.articles, label: '📝 AI活用事例' },
-  { href: '/common', label: '🧰 AIツール' },
+  { href: '/tools', label: '🧰 AIツール' },
 ];
 
 const CATEGORY_LINKS = [
@@ -25,7 +25,7 @@ const CATEGORY_LINKS = [
 
 const SITE_LINKS = [
   { href: '/about',   label: 'このサイトについて' },
-  { href: '/common',  label: 'AIツール' },
+  { href: '/tools',  label: 'AIツール' },
   { href: '/privacy', label: 'プライバシーポリシー' },
   { href: '/terms',   label: '利用規約' },
 ];

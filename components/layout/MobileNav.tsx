@@ -13,7 +13,7 @@ import { Menu, X } from 'lucide-react';
 const NAV_LINKS = [
   { href: '/', label: 'ホーム', emoji: '🏠' },
   { href: '/learn', label: 'AI活用事例', emoji: '📝' },
-  { href: '/common', label: 'AIツール', emoji: '🧰' },
+  { href: '/tools', label: 'AIツール', emoji: '🧰' },
 ];
 
 interface MobileNavProps {

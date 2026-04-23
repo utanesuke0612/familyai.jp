@@ -164,7 +164,7 @@ export function HeroSection() {
             <Link href="/learn" className="btn-primary animate-pulse-glow text-base px-7 py-3.5">
               🚀 まず読んでみる
             </Link>
-            <Link href="/common" className="btn-secondary text-base px-7 py-3.5">
+            <Link href="/tools" className="btn-secondary text-base px-7 py-3.5">
               🧰 AIツールを見る
             </Link>
           </div>

@@ -6,7 +6,7 @@
  * /api/sitemap.xml は不要（Next.js が /sitemap.xml として自動配信）。
  *
  * 含めるURL:
- * - 固定ページ: / /learn /common /about /privacy /terms
+ * - 固定ページ: / /learn /tools /about /privacy /terms
  * - 記事詳細 : /learn/[slug]（公開済み記事）
  */
 
@@ -38,7 +38,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority:         0.9,
     },
     {
-      url:              `${baseUrl}/common`,
+      url:              `${baseUrl}/tools`,
       lastModified:     now,
       changeFrequency:  'weekly',
       priority:         0.8,
