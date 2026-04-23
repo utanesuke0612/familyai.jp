@@ -33,6 +33,7 @@ import { drizzle } from 'drizzle-orm/neon-http';
 import { neon }    from '@neondatabase/serverless';
 import { articles } from '../lib/db/schema';
 import { eq }       from 'drizzle-orm';
+import { CATEGORIES } from '../lib/schemas/articles';
 
 const db = drizzle(neon(process.env.DATABASE_URL!));
 
@@ -112,6 +113,17 @@ function toStringArray(value: FrontmatterValue | undefined): string[] {
   return [];
 }
 
+function toValidCategories(value: FrontmatterValue | undefined): string[] | null {
+  const categories = toStringArray(value);
+  const invalid = categories.filter((category) => !(CATEGORIES as readonly string[]).includes(category));
+
+  if (invalid.length > 0) {
+    return null;
+  }
+
+  return categories;
+}
+
 async function syncArticles() {
   console.log('🔄 Markdown記事 → DB 同期を開始します...\n');
 
@@ -142,12 +154,19 @@ async function syncArticles() {
       continue;
     }
 
+    const categories = toValidCategories(data.categories);
+    if (!categories) {
+      console.log(`  ⚠️  スキップ（不正なカテゴリ）: ${file}`);
+      skipped++;
+      continue;
+    }
+
     const record = {
       slug,
       title:       String(data.title),
       description: data.description ? String(data.description) : null,
       body:        content.trim(),
-      categories:  toStringArray(data.categories),
+      categories,
       level:       String(data.level) as 'beginner' | 'intermediate' | 'advanced',
       published:   data.published === true,
       publishedAt: typeof data.publishedAt === 'string' ? new Date(data.publishedAt) : null,

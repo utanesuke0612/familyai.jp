@@ -158,7 +158,7 @@ export async function POST(req: NextRequest) {
     if (session?.user?.id) {
       // ログイン済み：plan は JWT に埋め込み済み（Rev23 #4）のため DB 呼び出し不要
       const plan = session.user.plan ?? 'free';
-      limiter  = plan === 'pro' ? ratelimiters.pro : ratelimiters.free;
+      limiter  = plan === 'premium' ? ratelimiters.pro : ratelimiters.free;
       limitKey = session.user.id;
     }
 

@@ -2,7 +2,7 @@
  * lib/db/schema.ts
  * familyai.jp — Drizzle ORM スキーマ定義
  *
- * ⚠️ ロール・カテゴリ・難易度の定数は shared/ 層が唯一の正。
+ * ⚠️ カテゴリ・難易度の定数は shared/ 層が唯一の正。
  *    ここで直接定義せず shared/ から import すること（二重管理防止）。
  */
 
