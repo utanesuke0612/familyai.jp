@@ -14,7 +14,7 @@
  *   ---
  *   title: タイトル
  *   description: 一行説明
- *   categories: [basic]      # basic / office / cooking / study / health / design など
+ *   categories: [education]  # education / lifestyle / work / creative
  *   level: beginner          # beginner / intermediate / advanced
  *   published: true          # false にすると非公開（DBには入るが表示されない）
  *   publishedAt: 2026-04-01  # 公開日（YYYY-MM-DD）
@@ -138,9 +138,12 @@ async function syncArticles() {
   let inserted = 0;
   let updated  = 0;
   let skipped  = 0;
+  let deleted  = 0;
+  const activeSlugs = new Set<string>();
 
   for (const file of files) {
     const slug     = file.replace(/\.md$/, '');
+    activeSlugs.add(slug);
     const filePath = path.join(ARTICLES_DIR, file);
     const raw      = fs.readFileSync(filePath, 'utf-8');
 
@@ -199,7 +202,22 @@ async function syncArticles() {
     }
   }
 
-  console.log(`\n✨ 完了: ${inserted} 件追加、${updated} 件更新、${skipped} 件スキップ`);
+  const existingRows = await db
+    .select({ slug: articles.slug })
+    .from(articles);
+
+  for (const row of existingRows) {
+    if (activeSlugs.has(row.slug)) continue;
+
+    await db
+      .delete(articles)
+      .where(eq(articles.slug, row.slug));
+
+    console.log(`  🗑️  削除: ${row.slug}`);
+    deleted++;
+  }
+
+  console.log(`\n✨ 完了: ${inserted} 件追加、${updated} 件更新、${deleted} 件削除、${skipped} 件スキップ`);
   console.log(`   合計 ${files.length} ファイルを処理しました`);
   process.exit(0);
 }

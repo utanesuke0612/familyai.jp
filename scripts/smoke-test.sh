@@ -51,7 +51,7 @@ check P4c 200 GET "/learn?cat=education"
 check P4d 200 GET "/learn?cat=lifestyle"
 check P5  200 GET "/learn?search=AI"
 check P6  200 GET "/learn?search=%25"     # ILIKE escape
-check P7  200 GET "/learn/image-gen-family-photo"
+check P7  200 GET "/learn/english-learning-voice-ai"
 check P8  200 GET "/about"
 check P9  200 GET "/privacy"
 check P10 200 GET "/terms"
@@ -68,7 +68,7 @@ check F2  200 GET "/api/articles?cat=education"
 check F3  200 GET "/api/articles?cat=work&cat=creative"
 check F4  200 GET "/api/articles?search=AI"
 check F5  200 GET "/api/articles?search=%25"   # ILIKE escape
-check F6  200 GET "/api/articles/image-gen-family-photo"
+check F6  200 GET "/api/articles/english-learning-voice-ai"
 check F7  404 GET "/api/articles/nonexistent-slug-xyz"
 
 # ──────────────────────────────────────────────────────────
