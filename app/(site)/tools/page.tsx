@@ -4,129 +4,297 @@
  */
 
 import type { Metadata } from 'next';
-import Link              from 'next/link';
-import { SITE }          from '@/shared';
+import Link from 'next/link';
+import { CATEGORY_EMOJI, CATEGORY_LABEL, SITE } from '@/shared';
+import type { ContentCategory } from '@/shared';
 
 export const metadata: Metadata = {
   title:       `AIツール | ${SITE.name}`,
-  description: 'すぐ使えるAIツールと導入ガイドをまとめています。',
+  description: 'カテゴリー別に使えるAIツールをまとめています。',
   alternates:  { canonical: `${SITE.url}/tools` },
 };
 
-const GUIDES = [
+type ToolItem = {
+  name: string;
+  summary: string;
+  href: string;
+  status: string;
+  cta: string;
+  accent: string;
+};
+
+const TOOLS_BY_CATEGORY: Array<{
+  category: ContentCategory;
+  lead: string;
+  tools: ToolItem[];
+}> = [
   {
-    emoji: '🤖',
-    title: 'AIってなに？3分でわかるやさしい解説',
-    desc:  '難しい言葉は一切なし。AIの仕組みと使い方をすぐ把握できる入門記事です。',
-    level: 'はじめて',
-    href:  '/learn?level=beginner',
+    category: 'education',
+    lead: '学習の習慣化、英語、宿題サポートに使えるツールです。',
+    tools: [
+      {
+        name: 'VOA 英語学習',
+        summary: 'VOA Learning English の音声と動画を使って、毎日10分の英語学習を続けるためのツールです。',
+        href: '/learn/english-learning-voice-ai',
+        status: '公開中',
+        cta: '使ってみる',
+        accent: 'var(--color-mint)',
+      },
+    ],
   },
   {
-    emoji: '💬',
-    title: 'ChatGPTの始め方・使い方ガイド',
-    desc:  'アカウント作成から最初の質問まで、スクリーンショット付きで丁寧に解説。',
-    level: 'はじめて',
-    href:  '/learn?cat=work&level=beginner&search=ChatGPT',
+    category: 'lifestyle',
+    lead: '家事や暮らしの判断を軽くするためのツール枠です。',
+    tools: [
+      {
+        name: '献立サポートAI',
+        summary: '冷蔵庫にある食材から、平日向けの献立をすばやく提案するダミーツールです。',
+        href: '/tools',
+        status: '準備中',
+        cta: '近日公開',
+        accent: 'var(--color-peach-light)',
+      },
+    ],
   },
   {
-    emoji: '🎨',
-    title: 'AI画像生成入門｜スマホで簡単に始める',
-    desc:  '文章を入力するだけでイラストや写真を生成できるツールを紹介します。',
-    level: 'はじめて',
-    href:  '/learn?cat=creative',
+    category: 'work',
+    lead: '仕事の整理、文章作成、下調べを効率化するためのツール枠です。',
+    tools: [
+      {
+        name: '議事録整理AI',
+        summary: '会話メモから要点・TODO・次回アクションをまとめるダミーツールです。',
+        href: '/tools',
+        status: '準備中',
+        cta: '近日公開',
+        accent: 'var(--color-sky)',
+      },
+    ],
   },
   {
-    emoji: '🔒',
-    title: 'AIを安全に使うための5つのルール',
-    desc:  '個人情報の取り扱い、注意すべき点など、安心して使うための基礎知識。',
-    level: 'はじめて',
-    href:  '/learn?cat=lifestyle&level=beginner&search=安全',
+    category: 'creative',
+    lead: '画像や文章のアイデア出し、表現づくりに使うためのツール枠です。',
+    tools: [
+      {
+        name: 'アイデアスケッチAI',
+        summary: 'テーマを入れると、画像や文章の方向性を一緒に広げるダミーツールです。',
+        href: '/tools',
+        status: '準備中',
+        cta: '近日公開',
+        accent: 'var(--color-yellow)',
+      },
+    ],
   },
 ];
 
-export default function ToolsPage() {
+const CATEGORY_BG: Record<ContentCategory, string> = {
+  education: 'var(--color-mint)',
+  lifestyle: 'var(--color-peach-light)',
+  work: 'var(--color-sky)',
+  creative: 'var(--color-yellow)',
+};
+
+type ToolsPageProps = {
+  searchParams?: {
+    cat?: string;
+  };
+};
+
+export default function ToolsPage({ searchParams }: ToolsPageProps) {
+  const selectedCategory = TOOLS_BY_CATEGORY.some(({ category }) => category === searchParams?.cat)
+    ? (searchParams?.cat as ContentCategory)
+    : null;
+
+  const visibleSections = selectedCategory
+    ? TOOLS_BY_CATEGORY.filter(({ category }) => category === selectedCategory)
+    : TOOLS_BY_CATEGORY;
+
   return (
     <main style={{ background: 'var(--color-cream)' }}>
       <section
-        className="py-6 px-6 text-center"
+        className="px-6 py-8 sm:py-10"
         style={{ background: 'linear-gradient(160deg, var(--color-beige) 0%, var(--color-cream) 100%)' }}
       >
-        <div className="max-w-2xl mx-auto flex flex-col items-center gap-5">
-          <span className="text-5xl">🧰</span>
-          <h1
-            className="font-display font-bold"
-            style={{ fontSize: 'clamp(26px, 5vw, 44px)', color: 'var(--color-brown)' }}
+        <div className="max-w-5xl mx-auto flex flex-col gap-4">
+          <span
+            className="inline-flex items-center gap-2 self-start rounded-full px-4 py-2 text-sm font-semibold"
+            style={{
+              background: 'rgba(255,255,255,0.78)',
+              color: 'var(--color-brown)',
+              boxShadow: 'var(--shadow-warm-sm)',
+            }}
           >
-            AIツール
-          </h1>
-          <p className="text-base leading-relaxed max-w-lg" style={{ color: 'var(--color-brown-light)' }}>
-            すぐ試せるAIツールと、使い始める前に読みたいガイドをまとめています。
-          </p>
+            🧰 カテゴリー別ツール一覧
+          </span>
+
+          <div className="grid gap-6 lg:grid-cols-[minmax(0,1.4fr)_minmax(280px,0.8fr)] lg:items-end">
+            <div className="flex flex-col gap-3">
+              <h1
+                className="font-display font-bold leading-tight"
+                style={{ fontSize: 'clamp(30px, 5vw, 54px)', color: 'var(--color-brown)' }}
+              >
+                AIツールを
+                <br />
+                4つのカテゴリーで探す
+              </h1>
+              <p
+                className="max-w-2xl text-base leading-relaxed sm:text-lg"
+                style={{ color: 'var(--color-brown-light)' }}
+              >
+                学習・教育、家事・暮らし、仕事・効率化、創作・表現ごとに、使えるツールを整理しています。
+                現在は「VOA 英語学習」を公開中です。
+              </p>
+            </div>
+
+            <div
+              className="rounded-[28px] p-5 sm:p-6"
+              style={{
+                background: 'rgba(255,255,255,0.82)',
+                boxShadow: 'var(--shadow-warm)',
+              }}
+            >
+              <div className="grid grid-cols-2 gap-3">
+                {TOOLS_BY_CATEGORY.map(({ category }) => (
+                  <Link
+                    key={category}
+                    href={selectedCategory === category ? '/tools' : `/tools?cat=${category}`}
+                    className="rounded-2xl px-4 py-4 text-center transition-[transform,box-shadow,opacity] duration-200 hover:-translate-y-1"
+                    style={{
+                      background: CATEGORY_BG[category],
+                      boxShadow: selectedCategory === category ? 'var(--shadow-warm)' : 'none',
+                      opacity: selectedCategory && selectedCategory !== category ? 0.55 : 1,
+                    }}
+                    aria-pressed={selectedCategory === category}
+                  >
+                    <div className="text-3xl">{CATEGORY_EMOJI[category]}</div>
+                    <div className="mt-2 text-sm font-bold" style={{ color: 'var(--color-brown)' }}>
+                      {CATEGORY_LABEL[category]}
+                    </div>
+                  </Link>
+                ))}
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
-      <section className="py-5 px-6">
-        <div className="max-w-3xl mx-auto flex flex-col gap-8">
-          <div>
-            <p
-              className="font-bold text-sm uppercase tracking-widest mb-2"
-              style={{ color: 'var(--color-orange)' }}
+      <section className="px-6 py-8 sm:py-10">
+        <div className="max-w-5xl mx-auto grid gap-6 md:grid-cols-2">
+          {visibleSections.map(({ category, lead, tools }) => (
+            <section
+              key={category}
+              className="rounded-[28px] p-6 sm:p-7"
+              style={{
+                background: 'rgba(255,255,255,0.88)',
+                boxShadow: 'var(--shadow-warm-sm)',
+              }}
             >
-              はじめの一歩
-            </p>
-            <h2
-              className="font-display font-bold text-2xl"
-              style={{ color: 'var(--color-brown)' }}
-            >
-              まず読んでほしい記事 4選
-            </h2>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            {GUIDES.map((g) => (
-              <Link
-                key={g.title}
-                href={g.href}
-                className="rounded-2xl p-5 flex flex-col gap-3 transition-[transform,box-shadow] hover:-translate-y-1 hover:shadow-lg"
-                style={{
-                  background: 'white',
-                  boxShadow:  'var(--shadow-warm-sm)',
-                  border:     '1px solid var(--color-beige)',
-                }}
-              >
-                <span className="text-3xl">{g.emoji}</span>
-                <div>
+              <div className="mb-5 flex items-start justify-between gap-4">
+                <div className="flex flex-col gap-2">
                   <span
-                    className="inline-block px-2 py-0.5 rounded-full text-xs font-bold mb-2"
-                    style={{ background: 'var(--color-beige)', color: 'var(--color-brown)' }}
+                    className="inline-flex items-center gap-2 self-start rounded-full px-3 py-1 text-sm font-semibold"
+                    style={{
+                      background:
+                        category === 'education'
+                          ? 'rgba(184, 237, 216, 0.55)'
+                          : category === 'lifestyle'
+                            ? 'rgba(255, 226, 204, 0.75)'
+                            : category === 'work'
+                              ? 'rgba(200, 232, 248, 0.8)'
+                              : 'rgba(255, 236, 153, 0.8)',
+                      color: 'var(--color-brown)',
+                    }}
                   >
-                    {g.level}
+                    <span>{CATEGORY_EMOJI[category]}</span>
+                    <span>{CATEGORY_LABEL[category]}</span>
                   </span>
-                  <h3
-                    className="font-bold text-sm leading-snug mb-1"
-                    style={{ color: 'var(--color-brown)' }}
-                  >
-                    {g.title}
-                  </h3>
-                  <p className="text-xs leading-relaxed" style={{ color: 'var(--color-brown-light)' }}>
-                    {g.desc}
+                  <p className="text-sm leading-relaxed" style={{ color: 'var(--color-brown-light)' }}>
+                    {lead}
                   </p>
                 </div>
-              </Link>
-            ))}
-          </div>
-        </div>
-      </section>
+                <span className="text-xs font-semibold uppercase tracking-[0.2em]" style={{ color: 'var(--color-orange)' }}>
+                  Tools
+                </span>
+              </div>
 
-      <section className="py-5 px-6 text-center">
-        <div className="max-w-lg mx-auto flex flex-col items-center gap-4">
-          <p className="text-sm" style={{ color: 'var(--color-brown-light)' }}>
-            もっとたくさんの記事を読みたい方は
-          </p>
-          <Link href="/learn" className="btn-primary text-lg px-10 py-4">
-            📚 全記事を見る →
-          </Link>
+              <div className="grid gap-4">
+                {tools.map((tool) => {
+                  const isReady = tool.status === '公開中';
+                  const card = (
+                    <article
+                      className="rounded-3xl p-5 transition-[transform,box-shadow] duration-200"
+                      style={{
+                        background: 'linear-gradient(180deg, rgba(255,255,255,0.96) 0%, rgba(255,250,245,0.92) 100%)',
+                        boxShadow: 'var(--shadow-warm-sm)',
+                      }}
+                    >
+                      <div className="mb-4 flex items-center justify-between gap-3">
+                        <span
+                          className="inline-flex items-center rounded-full px-3 py-1 text-xs font-bold"
+                          style={{
+                            background: tool.accent,
+                            color: 'var(--color-brown)',
+                          }}
+                        >
+                          {tool.status}
+                        </span>
+                        <span className="text-xs font-medium" style={{ color: 'var(--color-brown-light)' }}>
+                          {CATEGORY_LABEL[category]}
+                        </span>
+                      </div>
+
+                      <h2
+                        className="font-display text-2xl font-bold leading-tight"
+                        style={{ color: 'var(--color-brown)' }}
+                      >
+                        {tool.name}
+                      </h2>
+
+                      <p className="mt-3 text-sm leading-relaxed" style={{ color: 'var(--color-brown-light)' }}>
+                        {tool.summary}
+                      </p>
+
+                      <div className="mt-5 inline-flex items-center gap-2 text-sm font-semibold" style={{ color: 'var(--color-orange)' }}>
+                        <span>{tool.cta}</span>
+                        <span aria-hidden="true">{isReady ? '→' : '·'}</span>
+                      </div>
+                    </article>
+                  );
+
+                  if (isReady) {
+                    return (
+                      <Link key={tool.name} href={tool.href} className="block hover:-translate-y-1">
+                        {card}
+                      </Link>
+                    );
+                  }
+
+                  return (
+                    <div key={tool.name} aria-disabled="true">
+                      {card}
+                    </div>
+                  );
+                })}
+              </div>
+            </section>
+          ))}
         </div>
+
+        {selectedCategory ? (
+          <div className="mx-auto mt-6 max-w-5xl">
+            <Link
+              href="/tools"
+              className="inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-semibold"
+              style={{
+                background: 'rgba(255,255,255,0.9)',
+                color: 'var(--color-brown)',
+                boxShadow: 'var(--shadow-warm-sm)',
+              }}
+            >
+              <span>←</span>
+              <span>すべてのカテゴリーを表示</span>
+            </Link>
+          </div>
+        ) : null}
       </section>
     </main>
   );
