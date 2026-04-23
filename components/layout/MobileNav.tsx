@@ -9,14 +9,11 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { Menu, X } from 'lucide-react';
-import { ROLE_EMOJI } from '@/shared';
 
 const NAV_LINKS = [
-  { href: '/learn?role=common', label: '共通ガイド', emoji: '👨‍👩‍👧‍👦' },
-  { href: '/learn?role=papa',   label: 'パパ向け',   emoji: ROLE_EMOJI.papa },
-  { href: '/learn?role=mama',   label: 'ママ向け',   emoji: ROLE_EMOJI.mama },
-  { href: '/learn?role=kids',   label: 'こども向け', emoji: ROLE_EMOJI.kids },
-  { href: '/learn?role=senior', label: 'シニア向け', emoji: ROLE_EMOJI.senior },
+  { href: '/', label: 'ホーム', emoji: '🏠' },
+  { href: '/learn', label: 'AI活用事例', emoji: '📝' },
+  { href: '/common', label: 'AIツール', emoji: '🧰' },
 ];
 
 interface MobileNavProps {

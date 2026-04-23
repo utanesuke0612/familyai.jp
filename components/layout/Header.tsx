@@ -10,22 +10,18 @@
  */
 
 import Link from 'next/link';
-import { usePathname, useSearchParams } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 import { MobileNav } from './MobileNav';
-import { ROUTES, ROLE_EMOJI } from '@/shared';
+import { ROUTES } from '@/shared';
 
 const NAV_LINKS = [
-  { href: '/learn?role=common', role: 'common', label: '共通ガイド' },
-  { href: '/learn?role=papa',   role: 'papa',   label: `${ROLE_EMOJI.papa} パパ` },
-  { href: '/learn?role=mama',   role: 'mama',   label: `${ROLE_EMOJI.mama} ママ` },
-  { href: '/learn?role=kids',   role: 'kids',   label: `${ROLE_EMOJI.kids} こども` },
-  { href: '/learn?role=senior', role: 'senior', label: `${ROLE_EMOJI.senior} シニア` },
+  { href: '/', label: 'ホーム', emoji: '🏠' },
+  { href: '/learn', label: 'AI活用事例', emoji: '📝' },
+  { href: '/common', label: 'AIツール', emoji: '🧰' },
 ];
 
 export function Header() {
-  const pathname     = usePathname();
-  const searchParams = useSearchParams();
-  const currentRole  = searchParams.get('role');
+  const pathname = usePathname();
 
   return (
     <header
@@ -63,7 +59,7 @@ export function Header() {
         {/* ── PC ナビ ── */}
         <nav className="hidden lg:flex items-center gap-1" aria-label="メインナビゲーション">
           {NAV_LINKS.map((link) => {
-            const isActive = pathname === '/learn' && currentRole === link.role;
+            const isActive = pathname === link.href;
             return (
               <Link
                 key={link.href}
@@ -72,7 +68,10 @@ export function Header() {
                 style={{ color: isActive ? 'var(--color-orange)' : 'var(--color-brown)' }}
                 aria-current={isActive ? 'page' : undefined}
               >
-                {link.label}
+                <span className="inline-flex items-center gap-2">
+                  <span aria-hidden="true">{link.emoji}</span>
+                  <span>{link.label}</span>
+                </span>
                 {/* ホバー下線アニメーション */}
                 <span
                   className="absolute bottom-1 left-3 right-3 h-0.5 rounded-full transition-transform duration-300 origin-left"

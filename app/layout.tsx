@@ -1,19 +1,19 @@
 import type { Metadata, Viewport } from 'next';
-import { Zen_Maru_Gothic, Kaisei_Opti } from 'next/font/google';
+import { Zen_Kaku_Gothic_New, Shippori_Mincho } from 'next/font/google';
 import { GoogleAnalytics }  from '@/components/analytics/GoogleAnalytics';
 import './globals.css';
 
 // ── フォント定義 ──────────────────────────────────────────────
-const zenMaruGothic = Zen_Maru_Gothic({
-  weight:   ['400', '500', '700'],
+const zenKakuGothic = Zen_Kaku_Gothic_New({
+  weight:   ['400', '500', '700', '900'],
   subsets:  ['latin'],
   variable: '--font-body',
   display:  'swap',
   preload:  true,
 });
 
-const kaiseiOpti = Kaisei_Opti({
-  weight:   ['400', '700'],
+const shipporiMincho = Shippori_Mincho({
+  weight:   ['500', '700', '800'],
   subsets:  ['latin'],
   variable: '--font-display',
   display:  'swap',
@@ -79,7 +79,7 @@ export default function RootLayout({
   return (
     <html
       lang="ja"
-      className={`${zenMaruGothic.variable} ${kaiseiOpti.variable}`}
+      className={`${zenKakuGothic.variable} ${shipporiMincho.variable}`}
     >
       <body className="antialiased full-height" style={{ backgroundColor: 'var(--color-cream)' }}>
 
