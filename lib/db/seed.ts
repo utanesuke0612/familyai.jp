@@ -17,7 +17,9 @@ import { articles } from './schema';
 
 const db = drizzle(neon(process.env.DATABASE_URL!));
 
-const seedArticles = [
+type SeedArticle = typeof articles.$inferInsert;
+
+const seedArticles: SeedArticle[] = [
   {
     slug:        'english-learning-voice-ai',
     title:       '音声AIで毎日10分の英語練習を習慣にする方法',
@@ -100,7 +102,7 @@ AIは「答えを教えてくれる機械」ではなく「一緒に考えてく
     published:   true,
     publishedAt: new Date('2026-04-07'),
   },
-] as const;
+];
 
 async function seed() {
   console.log('🌱 シードデータの投入を開始します...\n');
