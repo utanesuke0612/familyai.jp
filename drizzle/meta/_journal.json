@@ -15,6 +15,13 @@
       "when": 1776902400000,
       "tag": "0001_remove_role_columns",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1776906000000,
+      "tag": "0002_drop_unused_tables",
+      "breakpoints": true
     }
   ]
 }

@@ -14,7 +14,6 @@ import {
   boolean,
   integer,
   timestamp,
-  unique,
   index,
 } from 'drizzle-orm/pg-core';
 
@@ -79,36 +78,6 @@ export const users = pgTable('users', {
   updatedAt:        timestamp('updated_at').defaultNow().notNull(),
 });
 
-// ─── bookmarks ────────────────────────────────────────────────
-export const bookmarks = pgTable(
-  'bookmarks',
-  {
-    id:        uuid('id').defaultRandom().primaryKey(),
-    userId:    uuid('user_id').notNull().references(() => users.id, { onDelete: 'cascade' }),
-    articleId: uuid('article_id').notNull().references(() => articles.id, { onDelete: 'cascade' }),
-    createdAt: timestamp('created_at').defaultNow().notNull(),
-  },
-  (table) => ({
-    // 同一ユーザーによる同一記事の二重ブックマークを防ぐ
-    uniqUserArticle: unique('bookmarks_user_article_unique').on(table.userId, table.articleId),
-    idxUserId:       index('bookmarks_user_id_idx').on(table.userId),
-  }),
-);
-
-// ─── apps ─────────────────────────────────────────────────────
-export const apps = pgTable('apps', {
-  id:           uuid('id').defaultRandom().primaryKey(),
-  name:         varchar('name', { length: 255 }).notNull(),
-  description:  text('description'),
-  url:          text('url').notNull(),
-  categories:   text('categories').array().notNull(),
-  thumbnailUrl: text('thumbnail_url'),
-  isPro:        boolean('is_pro').notNull().default(false),
-  published:    boolean('published').notNull().default(false),
-  createdAt:    timestamp('created_at').defaultNow().notNull(),
-  updatedAt:    timestamp('updated_at').defaultNow().notNull(),
-});
-
 // ─── audio_play_logs（再生カウント重複防止用） ────────────────
 // /api/audio/play から記録。30秒以上 + 1日1回制限のチェックに使用。
 export const audioPlayLogs = pgTable(
@@ -132,9 +101,5 @@ export type Article        = typeof articles.$inferSelect;
 export type NewArticle     = typeof articles.$inferInsert;
 export type User           = typeof users.$inferSelect;
 export type NewUser        = typeof users.$inferInsert;
-export type Bookmark       = typeof bookmarks.$inferSelect;
-export type NewBookmark    = typeof bookmarks.$inferInsert;
-export type App            = typeof apps.$inferSelect;
-export type NewApp         = typeof apps.$inferInsert;
 export type AudioPlayLog   = typeof audioPlayLogs.$inferSelect;
 export type NewAudioPlayLog = typeof audioPlayLogs.$inferInsert;

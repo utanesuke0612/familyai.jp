@@ -92,7 +92,7 @@ export default function SignInPage() {
             family<span style={{ color: 'var(--color-orange)' }}>ai</span>.jp にログイン
           </h1>
           <p className="text-sm" style={{ color: 'var(--color-brown-light)' }}>
-            AI = 愛 — 家族みんなのAI活用メディア
+            AI = 愛 — AI活用事例とAIツール
           </p>
         </div>
 

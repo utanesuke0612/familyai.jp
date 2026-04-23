@@ -9,7 +9,7 @@ import { ImageResponse } from 'next/og';
 export const runtime     = 'edge';
 export const size        = { width: 1200, height: 630 };
 export const contentType = 'image/png';
-export const alt         = 'familyai.jp — 家族みんなのAI活用サイト';
+export const alt         = 'familyai.jp — AI活用事例とAIツール';
 
 export default function OgImage() {
   return new ImageResponse(
@@ -46,7 +46,7 @@ export default function OgImage() {
             color:      '#6B4E3D',
           }}
         >
-          家族みんなのAI活用サイト
+          AI活用事例とAIツール
         </div>
       </div>
     ),

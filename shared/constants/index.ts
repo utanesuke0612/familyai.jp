@@ -8,7 +8,7 @@ import type { ContentCategory, DifficultyLevel } from '../types';
 // ─── サイトメタ ────────────────────────────────────────────────
 export const SITE = {
   name:        'familyai.jp',
-  tagline:     'AI（愛）で家族をもっと幸せに',
+  tagline:     'AI活用事例とAIツールをわかりやすく',
   url:         'https://familyai.jp',
   locale:      'ja-JP',
   twitterHandle: '@familyaijp',

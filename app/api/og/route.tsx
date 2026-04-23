@@ -174,7 +174,7 @@ export async function GET(req: NextRequest) {
               }}
             >
               <span style={{ fontSize: '22px', color: '#B5896A' }}>
-                AI = 愛 — 家族みんなのAI活用メディア
+                AI = 愛 — AI活用事例とAIツール
               </span>
               <div
                 style={{
