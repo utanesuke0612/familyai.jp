@@ -220,7 +220,6 @@ export function HeroSection() {
               className={`absolute ${card.position} flex flex-col items-center gap-1.5 px-4 py-3 rounded-2xl shadow-warm cursor-pointer`}
               style={{
                 background:      card.bg,
-                border:          `2px solid ${card.border}`,
                 animationName:   'float',
                 animationDuration: '6s',
                 animationTimingFunction: 'ease-in-out',
