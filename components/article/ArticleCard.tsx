@@ -78,23 +78,11 @@ export function ArticleCard({ article, featured = false }: ArticleCardProps) {
   return (
     <Link
       href={`/learn/${article.slug}`}
-      className="group block rounded-2xl overflow-hidden transition-[transform,box-shadow,border-color] duration-200"
+      className="group block rounded-2xl overflow-hidden transition-[transform,box-shadow,border-color] duration-200 hover:-translate-y-1.5"
       style={{
         background:  'white',
         border:      '2px solid transparent',
         boxShadow:   'var(--shadow-warm-sm)',
-      }}
-      onMouseEnter={(e) => {
-        const el = e.currentTarget as HTMLAnchorElement;
-        el.style.transform   = 'translateY(-6px)';
-        el.style.boxShadow   = 'var(--shadow-warm-lg)';
-        el.style.borderColor = 'var(--color-peach-light)';
-      }}
-      onMouseLeave={(e) => {
-        const el = e.currentTarget as HTMLAnchorElement;
-        el.style.transform   = '';
-        el.style.boxShadow   = 'var(--shadow-warm-sm)';
-        el.style.borderColor = 'transparent';
       }}
       aria-label={`${article.title} — 記事を読む`}
     >

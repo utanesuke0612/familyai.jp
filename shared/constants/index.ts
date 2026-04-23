@@ -81,7 +81,7 @@ export const MODEL_ROUTER = {
   'math-reasoning': 'deepseek/deepseek-r1-0528',
   'transcribe':     'openai/whisper-large-v3',
   'image-gen':      'black-forest-labs/flux-1.1-pro',
-  'tts-japanese':   'fishaudio/fish-speech-1.5',
+  'tts-japanese':   'openai/gpt-4o-mini-tts-2025-12-15',
   /** どのモデルも利用不可の場合の最終フォールバック */
   fallback:         'qwen/qwen3-14b',
 } as const;
@@ -135,6 +135,7 @@ export const ROUTES = {
   settings:       '/settings',
   api: {
     ai:           '/api/ai',    // AIルーター（/api/chat から統一）
+    tts:          '/api/tts',
     audio:        '/api/audio',
     play:         '/api/audio/play',
     articles:     '/api/articles',

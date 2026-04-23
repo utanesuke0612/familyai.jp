@@ -1,5 +1,3 @@
-'use client';
-
 /**
  * components/article/ArticleGrid.tsx
  * familyai.jp — 記事グリッドコンポーネント
@@ -11,7 +9,6 @@
 
 import { ArticleCard } from './ArticleCard';
 import type { ArticleCardProps } from './ArticleCard';
-import { useScrollReveal } from '@/hooks/useScrollReveal';
 
 type ArticleItem = ArticleCardProps['article'];
 
@@ -77,8 +74,6 @@ export function ArticleGrid({
   firstFeatured  = false,
   className      = '',
 }: ArticleGridProps) {
-  const ref = useScrollReveal<HTMLDivElement>();
-
   if (loading) {
     return (
       <div className={`grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 ${className}`}>
@@ -99,14 +94,11 @@ export function ArticleGrid({
 
   return (
     <div
-      ref={ref}
       className={`grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 ${className}`}
     >
       {articles.map((article, i) => (
         <div
           key={article.slug}
-          className="reveal"
-          style={{ animationDelay: `${Math.min(i * 80, 400)}ms` }}
         >
           <ArticleCard
             article={article}
