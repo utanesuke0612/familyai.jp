@@ -11,7 +11,6 @@ import type {
   ArticleSummary,
   Article,
   PaginatedResult,
-  FamilyRole,
   ContentCategory,
   DifficultyLevel,
 } from '../types';
@@ -113,8 +112,6 @@ export async function apiFetch<T>(
 export interface ArticlesQuery {
   page?:    number;
   perPage?: number;
-  /** ロール（単一）— サーバー側パラメータ名 `role` */
-  role?:    FamilyRole;
   /** カテゴリ（複数指定可）— サーバー側パラメータ名 `cat`（繰り返し） */
   cat?:     ContentCategory[];
   /** 難易度 — サーバー側パラメータ名 `level` */
@@ -131,7 +128,7 @@ export interface ArticlesQuery {
  * ※ /api/articles のレスポンス形式と完全に一致（Rev17 で統一済み）
  *
  * パラメータ名はサーバーの /api/articles と完全一致させる（Rev22 で修正）：
- *   page / limit / role / cat（複数）/ level / sort / search
+ *   page / limit / cat（複数）/ level / sort / search
  */
 export async function fetchArticles(
   baseUrl: string,
@@ -145,7 +142,6 @@ export async function fetchArticles(
   > = {
     page:   query.page    ?? 1,
     limit:  query.perPage ?? PAGINATION.defaultPerPage,
-    role:   query.role,
     cat:    query.cat,
     level:  query.level,
     sort:   query.sort,
@@ -247,7 +243,6 @@ export function buildOgImageUrl(
   baseUrl: string,
   params: {
     title:    string;
-    role?:    string;
     category?: string;
   },
 ): string {

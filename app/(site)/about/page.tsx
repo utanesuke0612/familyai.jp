@@ -8,7 +8,7 @@ import { SITE }          from '@/shared';
 
 export const metadata: Metadata = {
   title:       `familyai.jp について | ${SITE.name}`,
-  description: 'familyai.jp は「AI＝愛」をコンセプトに、家族全員がAIを安心して活用できる日本語メディアです。',
+  description: 'familyai.jp は AI活用事例とAIツールをわかりやすく届ける日本語メディアです。',
   alternates:  { canonical: `${SITE.url}/about` },
 };
 
@@ -22,7 +22,7 @@ const TEAM = [
 ];
 
 const VALUES = [
-  { emoji: '🤝', title: '全世代に優しい',    desc: 'パパ・ママ・子ども・シニア、誰でも安心して読める丁寧な解説を心がけています。' },
+  { emoji: '🤝', title: '誰でもわかりやすい', desc: '初心者でも迷わず読めるように、丁寧で実践的な説明を心がけています。' },
   { emoji: '🔒', title: '安心・安全',        desc: 'プライバシーを大切に。個人情報の収集は最小限にとどめます。' },
   { emoji: '🌱', title: '日々アップデート',  desc: 'AI業界は変化が速い。最新情報を素早くわかりやすくお届けします。' },
   { emoji: '💡', title: '実践重視',          desc: '読むだけでなく、今日から使える具体的な方法を紹介します。' },
@@ -58,7 +58,7 @@ export default function AboutPage() {
               familyai.jp について
             </h1>
             <p className="text-base leading-relaxed" style={{ color: 'var(--color-brown-light)' }}>
-              「AI = 愛」— テクノロジーを家族の笑顔につなげる日本語メディア
+              「AI = 愛」— テクノロジーを人の役に立つ形で届ける日本語メディア
             </p>
           </div>
         </div>
@@ -87,11 +87,11 @@ export default function AboutPage() {
             </p>
             <p className="mt-3">
               familyai.jp は、そんな不安を「使える楽しさ」に変えるためのメディアです。
-              パパの仕事効率化、ママの家事サポート、子どもの学習、シニアのスマホ活用。
-              家族それぞれのシーンに合ったAI活用法を、やさしい日本語でお届けします。
+              仕事の効率化、学習サポート、日常の小さな困りごとの解決。
+              さまざまなシーンで役立つAI活用法を、やさしい日本語でお届けします。
             </p>
             <p className="mt-3 font-bold" style={{ color: 'var(--color-orange)' }}>
-              AI = 愛。家族みんなの笑顔のために。
+              AI = 愛。使える形で、わかりやすく。
             </p>
           </div>
         </div>

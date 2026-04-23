@@ -1,8 +1,6 @@
 ---
 title: ChatGPTで毎日の献立を10秒で決める方法
 description: 冷蔵庫の残り物を入力するだけで、栄養バランスの取れた献立を提案してくれます。
-roles:
-  - mama
 categories:
   - housework
 level: beginner

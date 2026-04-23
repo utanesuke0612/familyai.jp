@@ -2,11 +2,10 @@
  * app/api/og/route.tsx
  * familyai.jp — 動的 OGP 画像生成 API
  *
- * GET /api/og?title=...&role=papa&cat=chatgpt&level=beginner
+ * GET /api/og?title=...&level=beginner
  *
  * - @vercel/og（Satori）で 1200×630px の PNG を生成
  * - NotoSansJP-VariableFont_wght.ttf で日本語を正しくレンダリング
- * - ロール別アクセントカラーでカード背景を変化
  * - Edge Runtime で高速配信・CDN キャッシュ 24時間
  */
 
@@ -15,13 +14,9 @@ import { type NextRequest } from 'next/server';
 
 export const runtime = 'edge';
 
-// ── ロール設定 ────────────────────────────────────────────────
-const ROLE_CONFIG: Record<string, { label: string; emoji: string; bg: string; accent: string }> = {
-  papa:   { label: 'パパ向け',   emoji: '👨',       bg: '#FFF5EE', accent: '#E07030' },
-  mama:   { label: 'ママ向け',   emoji: '👩',       bg: '#FFF0F5', accent: '#D04070' },
-  kids:   { label: 'こども向け', emoji: '🧒',       bg: '#F0FFF4', accent: '#30A060' },
-  senior: { label: 'シニア向け', emoji: '👴',       bg: '#F5F0FF', accent: '#7030C0' },
-  common: { label: 'みんな向け', emoji: '👨‍👩‍👧‍👦', bg: '#E6F4FF', accent: '#3060D0' },
+const OG_THEME = {
+  bg: '#FFF5EE',
+  accent: '#C95A1E',
 };
 
 const LEVEL_LABEL: Record<string, string> = {
@@ -46,10 +41,7 @@ export async function GET(req: NextRequest) {
   const { searchParams, origin } = new URL(req.url);
 
   const title  = searchParams.get('title')  ?? 'familyai.jp';
-  const role   = searchParams.get('role')   ?? 'common';
   const level  = searchParams.get('level')  ?? '';
-
-  const roleConf   = ROLE_CONFIG[role] ?? ROLE_CONFIG['common']!;
   const levelLabel = level ? LEVEL_LABEL[level] : null;
 
   // タイトルが長い場合は折り返す（最大40文字）
@@ -81,7 +73,7 @@ export async function GET(req: NextRequest) {
               width:        '500px',
               height:       '500px',
               borderRadius: '50%',
-              background:   `radial-gradient(circle, ${roleConf.bg}, transparent)`,
+              background:   `radial-gradient(circle, ${OG_THEME.bg}, transparent)`,
               opacity:      0.8,
             }}
           />
@@ -138,25 +130,6 @@ export async function GET(req: NextRequest) {
 
             {/* バッジ行 */}
             <div style={{ display: 'flex', gap: '10px', marginBottom: '28px', flexWrap: 'wrap' }}>
-              {/* ロールバッジ */}
-              <div
-                style={{
-                  display:      'flex',
-                  alignItems:   'center',
-                  gap:          '6px',
-                  padding:      '6px 16px',
-                  borderRadius: '999px',
-                  background:   roleConf.bg,
-                  border:       `2px solid ${roleConf.accent}44`,
-                  fontSize:     '20px',
-                  color:        '#8B5E3C',
-                  fontWeight:   700,
-                }}
-              >
-                <span>{roleConf.emoji}</span>
-                <span>{roleConf.label}</span>
-              </div>
-
               {/* レベルバッジ */}
               {levelLabel && (
                 <div
@@ -207,7 +180,7 @@ export async function GET(req: NextRequest) {
                 style={{
                   padding:      '8px 20px',
                   borderRadius: '999px',
-                  background:   roleConf.accent,
+                  background:   OG_THEME.accent,
                   color:        'white',
                   fontSize:     '18px',
                   fontWeight:   700,

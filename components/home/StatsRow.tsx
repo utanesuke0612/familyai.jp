@@ -8,8 +8,8 @@
 import { useScrollReveal } from '@/hooks/useScrollReveal';
 
 const STATS = [
-  { emoji: '📚', value: '100+',   label: 'AI活用ガイド' },
-  { emoji: '👨‍👩‍👧‍👦', value: '4',     label: '家族ロール対応' },
+  { emoji: '📚', value: '100+',   label: 'AI活用事例' },
+  { emoji: '🧰', value: '2',       label: 'AIツール' },
   { emoji: '🆓', value: '無料',   label: '基本機能すべて' },
   { emoji: '🔄', value: '毎週',   label: '新着コンテンツ更新' },
 ] as const;

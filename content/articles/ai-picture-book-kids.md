@@ -1,8 +1,6 @@
 ---
-title: AIで絵本を作ってみよう【子ども向け】
+title: AIで絵本を作ってみよう
 description: 自分だけのオリジナル絵本をAIと一緒に作ろう！お話を考えて、絵もAIが描いてくれるよ。
-roles:
-  - kids
 categories:
   - image-gen
   - education

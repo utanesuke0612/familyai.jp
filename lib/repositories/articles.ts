@@ -29,7 +29,6 @@ export type ArticleRow = Article;
 export const escapeLike = (s: string): string => s.replace(/[\\%_]/g, '\\$&');
 
 export interface ArticleListFilter {
-  role?:       string;
   categories?: string[];   // OR 条件で複数カテゴリに対応
   level?:      string;
   sort?:       'latest' | 'popular';
@@ -91,11 +90,10 @@ export async function getArticleForAdmin(slug: string): Promise<ArticleRow | nul
 
 /**
  * 指定記事に関連する公開済み記事を取得する。
- * roles または categories が重複するものをランダム順で返す。
+ * categories が重複するものをランダム順で返す。
  */
 export async function getRelatedArticles(
   currentSlug: string,
-  roles:       string[],
   categories:  string[],
   limit = 3,
 ): Promise<ArticleRow[]> {
@@ -107,11 +105,7 @@ export async function getRelatedArticles(
         and(
           eq(articles.published, true),
           ne(articles.slug, currentSlug),
-          sql`(
-            ${articles.roles}       && ${roles}::text[]
-            OR
-            ${articles.categories} && ${categories}::text[]
-          )`,
+          sql`${articles.categories} && ${categories}::text[]`,
         ),
       )
       .orderBy(sql`random()`)
@@ -131,17 +125,13 @@ export async function getArticleList(
   filter:     ArticleListFilter = {},
   pagination: ArticleListPagination = { page: 1, pageSize: 12 },
 ): Promise<ArticleListResult> {
-  const { role, categories = [], level, sort = 'latest', search } = filter;
+  const { categories = [], level, sort = 'latest', search } = filter;
   const { page, pageSize } = pagination;
   const offset = (page - 1) * pageSize;
 
   try {
     // WHERE 句の組み立て
     const conditions = [eq(articles.published, true)];
-
-    if (role) {
-      conditions.push(sql`${articles.roles} @> ARRAY[${role}]::text[]`);
-    }
 
     if (categories.length > 0) {
       const catConditions = categories.map(

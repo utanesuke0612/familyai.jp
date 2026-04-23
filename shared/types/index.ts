@@ -4,19 +4,6 @@
  * ブラウザ・Node・iOS のどの環境でも動作する型のみ定義する。
  */
 
-// ─── ユーザーロール ────────────────────────────────────────────
-/** サイトが対象とする家族メンバーのロール */
-export type FamilyRole = 'papa' | 'mama' | 'kids' | 'senior' | 'common';
-
-/** ロール別の表示ラベル（日本語） */
-export const FAMILY_ROLE_LABEL: Record<FamilyRole, string> = {
-  papa:   'パパ',
-  mama:   'ママ',
-  kids:   'こども',
-  senior: 'シニア',
-  common: 'みんな',
-} as const;
-
 // ─── コンテンツ関連 ────────────────────────────────────────────
 /** 記事・コンテンツのカテゴリ */
 export type ContentCategory =
@@ -40,7 +27,6 @@ export interface ArticleSummary {
   slug:             string;
   title:            string;
   description:      string | null;
-  roles:            FamilyRole[];
   categories:       ContentCategory[];
   level:            DifficultyLevel;
   audioUrl:         string | null;
@@ -94,7 +80,6 @@ export interface UserProfile {
   email:       string;
   name?:       string;
   image?:      string;
-  role?:       FamilyRole;
   isPremium:   boolean;
   createdAt:   string;
 }

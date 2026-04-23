@@ -3,12 +3,12 @@ import { buildQueryString } from '@/shared/utils';
 
 describe('buildQueryString', () => {
   it('V1: 単一値を ?k=v 形式で返す', () => {
-    expect(buildQueryString({ role: 'papa' })).toBe('?role=papa');
+    expect(buildQueryString({ sort: 'latest' })).toBe('?sort=latest');
   });
 
   it('V1b: 複数の単一値', () => {
-    const q = buildQueryString({ role: 'papa', sort: 'latest' });
-    expect(q).toContain('role=papa');
+    const q = buildQueryString({ search: 'voice', sort: 'latest' });
+    expect(q).toContain('search=voice');
     expect(q).toContain('sort=latest');
     expect(q.startsWith('?')).toBe(true);
   });
@@ -24,7 +24,7 @@ describe('buildQueryString', () => {
   });
 
   it('V3: undefined / null は省略', () => {
-    expect(buildQueryString({ role: undefined, sort: null })).toBe('');
+    expect(buildQueryString({ search: undefined, sort: null })).toBe('');
   });
 
   it('V3b: 空オブジェクトは空文字', () => {

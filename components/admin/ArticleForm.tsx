@@ -17,14 +17,12 @@ import { useRouter }        from 'next/navigation';
 import { ArticleBody }      from '@/components/article/ArticleBody';
 import type { Article }     from '@/lib/db/schema';
 import {
-  FAMILY_ROLE_LABEL,
   CATEGORY_LABEL,
   DIFFICULTY_LABEL,
 } from '@/shared';
-import type { FamilyRole, ContentCategory, DifficultyLevel } from '@/shared';
+import type { ContentCategory, DifficultyLevel } from '@/shared';
 
 // ─── 定数 ─────────────────────────────────────────────────────
-const ROLES:      FamilyRole[]       = ['papa', 'mama', 'kids', 'senior', 'common'];
 const CATEGORIES: ContentCategory[]  = ['image-gen', 'voice', 'education', 'housework'];
 const LEVELS:     DifficultyLevel[]  = ['beginner', 'intermediate', 'advanced'];
 
@@ -48,9 +46,6 @@ export function ArticleForm({ article }: ArticleFormProps) {
   const [title,           setTitle]           = useState(article?.title           ?? '');
   const [description,     setDescription]     = useState(article?.description     ?? '');
   const [body,            setBody]            = useState(article?.body            ?? '');
-  const [roles,           setRoles]           = useState<FamilyRole[]>(
-    (article?.roles ?? ['common']) as FamilyRole[],
-  );
   const [categories,      setCategories]      = useState<ContentCategory[]>(
     (article?.categories ?? []) as ContentCategory[],
   );
@@ -72,12 +67,7 @@ export function ArticleForm({ article }: ArticleFormProps) {
   // Rev28 #HIGH-7: 送信失敗時に SR がエラーへ辿れるよう、バナーにフォーカス移動する
   const errorRef = useRef<HTMLDivElement | null>(null);
 
-  // ── ロール / カテゴリ チェックボックス制御 ─────────────────
-  function toggleRole(r: FamilyRole) {
-    setRoles((prev) =>
-      prev.includes(r) ? prev.filter((x) => x !== r) : [...prev, r],
-    );
-  }
+  // ── カテゴリ チェックボックス制御 ──────────────────────────
   function toggleCategory(c: ContentCategory) {
     setCategories((prev) =>
       prev.includes(c) ? prev.filter((x) => x !== c) : [...prev, c],
@@ -98,7 +88,6 @@ export function ArticleForm({ article }: ArticleFormProps) {
     if (!slug.trim())            return fail('スラッグは必須です');
     if (!title.trim())           return fail('タイトルは必須です');
     if (!body.trim())            return fail('本文は必須です');
-    if (roles.length === 0)      return fail('ロールを1つ以上選択してください');
     if (categories.length === 0) return fail('カテゴリを1つ以上選択してください');
 
     setLoading(true);
@@ -108,7 +97,6 @@ export function ArticleForm({ article }: ArticleFormProps) {
         title:            title.trim(),
         description:      description.trim() || null,
         body:             body.trim(),
-        roles,
         categories,
         level,
         published,
@@ -220,23 +208,6 @@ export function ArticleForm({ article }: ArticleFormProps) {
                 />
               )}
             </Field>
-
-            {/* ロール */}
-            <FieldGroup label="対象ロール" required>
-              <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
-                {ROLES.map((r) => (
-                  <label key={r} style={{ display: 'flex', alignItems: 'center', gap: '6px', cursor: 'pointer', fontSize: '14px' }}>
-                    <input
-                      type="checkbox"
-                      checked={roles.includes(r)}
-                      onChange={() => toggleRole(r)}
-                      style={{ accentColor: 'var(--color-orange)', width: '16px', height: '16px' }}
-                    />
-                    {FAMILY_ROLE_LABEL[r]}
-                  </label>
-                ))}
-              </div>
-            </FieldGroup>
 
             {/* カテゴリ */}
             <FieldGroup label="カテゴリ" required>

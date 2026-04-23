@@ -1,0 +1,3 @@
+ALTER TABLE "articles" DROP COLUMN IF EXISTS "roles";
+ALTER TABLE "users" DROP COLUMN IF EXISTS "preferred_role";
+ALTER TABLE "apps" DROP COLUMN IF EXISTS "roles";

@@ -5,7 +5,6 @@
  * GET /api/articles
  *
  * クエリパラメータ:
- *   role   : 'papa' | 'mama' | 'kids' | 'senior' | 'common'（任意）
  *   cat    : ContentCategory（任意）
  *   level  : 'beginner' | 'intermediate' | 'advanced'（任意）
  *   page   : number（デフォルト: 1）
@@ -26,7 +25,7 @@
  * - published: true の記事のみ返す
  * - sort='popular' → viewCount 降順
  * - sort='latest'  → publishedAt 降順
- * - ロール・カテゴリは PostgreSQL 配列の @> 演算子でフィルタ
+ * - カテゴリは PostgreSQL 配列の @> 演算子でフィルタ
  * - Cache-Control: public, s-maxage=60（CDN 1分キャッシュ）
  */
 
@@ -69,7 +68,6 @@ const catSchema = z
   });
 
 const querySchema = z.object({
-  role:   z.enum(['papa', 'mama', 'kids', 'senior', 'common']).optional(),
   cat:    catSchema,
   level:  z.enum(['beginner', 'intermediate', 'advanced']).optional(),
   page:   z.coerce.number().int().min(1).default(1),
@@ -85,7 +83,6 @@ const SELECT_FIELDS = {
   slug:             articles.slug,
   title:            articles.title,
   description:      articles.description,
-  roles:            articles.roles,
   categories:       articles.categories,
   level:            articles.level,
   audioUrl:         articles.audioUrl,
@@ -105,7 +102,6 @@ export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url);
   const catParams = searchParams.getAll('cat');
   const raw = {
-    role:   searchParams.get('role')   ?? undefined,
     cat:    catParams.length > 1 ? catParams
          : catParams.length === 1 ? catParams[0]
          : undefined,
@@ -130,18 +126,11 @@ export async function GET(req: NextRequest) {
     );
   }
 
-  const { role, cat, level, page, limit, sort, search } = parsed.data;
+  const { cat, level, page, limit, sort, search } = parsed.data;
   const offset = (page - 1) * limit;
 
   // 2. WHERE 句の構築
   const conditions = [eq(articles.published, true)];
-
-  if (role) {
-    // PostgreSQL 配列に role が含まれるか（@> 演算子）
-    conditions.push(
-      sql`${articles.roles} @> ARRAY[${role}]::text[]`,
-    );
-  }
 
   if (cat && cat.length > 0) {
     // 複数カテゴリは OR（いずれかを含む）で検索

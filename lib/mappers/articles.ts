@@ -9,7 +9,7 @@
  *
  * 変換責務:
  *   - timestamp 列 → ISO 8601 文字列
- *   - roles / categories → shared/types の union 型に narrow
+ *   - categories → shared/types の union 型に narrow
  *   - body（DB）→ Markdown 文字列（Article のみ）
  *   - readingMin は本文から計算（Article のみ）
  */
@@ -19,18 +19,11 @@ import type {
   ArticleSummary,
   ContentCategory,
   DifficultyLevel,
-  FamilyRole,
 } from '@/shared/types';
 
 // ── 型ガード兼フィルタ ────────────────────────────────────────
-const FAMILY_ROLES: readonly FamilyRole[] = ['papa', 'mama', 'kids', 'senior', 'common'];
 const CATEGORIES:   readonly ContentCategory[] = ['image-gen', 'voice', 'education', 'housework'];
 const LEVELS:       readonly DifficultyLevel[] = ['beginner', 'intermediate', 'advanced'];
-
-function filterRoles(values: string[] | null | undefined): FamilyRole[] {
-  if (!values) return [];
-  return values.filter((v): v is FamilyRole => (FAMILY_ROLES as readonly string[]).includes(v));
-}
 
 function filterCategories(values: string[] | null | undefined): ContentCategory[] {
   if (!values) return [];
@@ -64,7 +57,6 @@ export interface ArticleRowSummary {
   slug:             string;
   title:            string;
   description:      string | null;
-  roles:            string[] | null;
   categories:       string[] | null;
   level:            string;
   audioUrl:         string | null;
@@ -90,7 +82,6 @@ export function toArticleSummary(row: ArticleRowSummary): ArticleSummary {
     slug:             row.slug,
     title:            row.title,
     description:      row.description,
-    roles:            filterRoles(row.roles),
     categories:       filterCategories(row.categories),
     level:            coerceLevel(row.level),
     audioUrl:         row.audioUrl,

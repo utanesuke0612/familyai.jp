@@ -8,8 +8,8 @@
  *   このルートはモバイル・外部クライアント・`shared/api/fetchRelated` の受け皿として存在する。
  *
  * 動作:
- * - 1. 指定 slug の記事を取得して roles / categories を得る
- * - 2. 同じ roles または categories を持つ公開記事を random 順で返す（現 slug 自身は除外）
+ * - 1. 指定 slug の記事を取得して categories を得る
+ * - 2. 同じ categories を持つ公開記事を random 順で返す（現 slug 自身は除外）
  *
  * クエリ:
  *   limit?: 1〜10（デフォルト 3）
@@ -52,7 +52,7 @@ export async function GET(
       );
     }
 
-    // 現在の記事情報が必要（roles / categories の取得）
+    // 現在の記事情報が必要（categories の取得）
     const article = await getArticle(params.slug);
     if (!article) {
       return NextResponse.json(
@@ -66,7 +66,6 @@ export async function GET(
 
     const rows = await getRelatedArticles(
       params.slug,
-      article.roles      ?? [],
       article.categories ?? [],
       parsed.data.limit,
     );

@@ -9,9 +9,9 @@ import type { MetadataRoute } from 'next';
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name:             'familyai.jp — 家族みんなのAI活用サイト',
+    name:             'familyai.jp — AI活用事例とAIツール',
     short_name:       'familyai',
-    description:      'AI（愛）で家族をもっと幸せに。パパ・ママ・子ども・シニアに向けたやさしいAIガイド。',
+    description:      '仕事・学習・日常に役立つAI活用事例と、すぐ使えるAIツールをまとめた日本語メディアです。',
     start_url:        '/',
     display:          'standalone',
     background_color: '#FDF6ED',

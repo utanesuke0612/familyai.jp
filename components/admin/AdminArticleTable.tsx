@@ -261,7 +261,7 @@ export function AdminArticleTable({ initialArticles, initialTotal }: Props) {
         <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '14px' }}>
           <thead>
             <tr style={{ borderBottom: '1px solid #E5E7EB', background: '#F9FAFB' }}>
-              {['状態', 'タイトル', 'ロール', '難易度', '閲覧数', '作成日', '操作'].map((h) => (
+              {['状態', 'タイトル', '難易度', '閲覧数', '作成日', '操作'].map((h) => (
                 <th key={h} style={{ padding: '10px 14px', textAlign: 'left', fontWeight: 600, color: '#374151', whiteSpace: 'nowrap' }}>
                   {h}
                 </th>
@@ -271,7 +271,7 @@ export function AdminArticleTable({ initialArticles, initialTotal }: Props) {
           <tbody>
             {filtered.length === 0 && (
               <tr>
-                <td colSpan={7} style={{ padding: '3rem', textAlign: 'center', color: '#9CA3AF' }}>
+                <td colSpan={6} style={{ padding: '3rem', textAlign: 'center', color: '#9CA3AF' }}>
                   記事が見つかりません
                 </td>
               </tr>
@@ -311,11 +311,6 @@ export function AdminArticleTable({ initialArticles, initialTotal }: Props) {
                   <div style={{ fontSize: '12px', color: '#9CA3AF', marginTop: '2px' }}>
                     /learn/{article.slug}
                   </div>
-                </td>
-
-                {/* ロール */}
-                <td style={{ padding: '10px 14px', whiteSpace: 'nowrap' }}>
-                  {article.roles.join('・')}
                 </td>
 
                 {/* 難易度 */}

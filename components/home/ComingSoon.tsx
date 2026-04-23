@@ -399,7 +399,7 @@ export function ComingSoon() {
             <div className="cs-logo-text">family<span>ai</span>.jp</div>
           </div>
 
-          <p className="cs-tagline">家族みんなのAI活用メディア</p>
+          <p className="cs-tagline">AI活用事例とAIツールのメディア</p>
 
           {/* メインタイトル */}
           <h1 className="cs-main-title">
@@ -409,18 +409,18 @@ export function ComingSoon() {
 
           <p className="cs-sub-msg">
             難しくない。怖くない。<br />
-            パパも、ママも、子どもも、シニアも。<br />
-            家族全員が使えるAI活用法をお届けします。
+            日常にも仕事にも学習にも。<br />
+            すぐ使えるAI活用法をお届けします。
           </p>
 
-          {/* ファミリーチップ */}
-          <div className="cs-family-row" role="list" aria-label="対応ロール一覧">
+          {/* テーマチップ */}
+          <div className="cs-family-row" role="list" aria-label="対応テーマ一覧">
             {[
-              { icon: '👨', label: 'パパ向け' },
-              { icon: '👩', label: 'ママ向け' },
-              { icon: '🧒', label: '子ども向け' },
-              { icon: '👴', label: 'シニア向け' },
-              { icon: '🏠', label: '共通ガイド' },
+              { icon: '📝', label: 'AI活用事例' },
+              { icon: '🧰', label: 'AIツール' },
+              { icon: '💼', label: '仕事効率化' },
+              { icon: '📚', label: '学習サポート' },
+              { icon: '🎨', label: '画像・音声' },
             ].map((item) => (
               <div key={item.label} className="cs-fam-chip" role="listitem">
                 <span className="cs-icon" aria-hidden="true">{item.icon}</span>
@@ -451,12 +451,12 @@ export function ComingSoon() {
           {/* スニークプレビュー */}
           <div className="cs-sneak-grid" role="list" aria-label="コンテンツ一覧">
             {[
-              { icon: '💼', title: '仕事効率化',  tag: 'パパ向け' },
-              { icon: '🍳', title: '家事・育児',  tag: 'ママ向け' },
-              { icon: '📚', title: '勉強・学習',  tag: '子ども向け' },
-              { icon: '📱', title: 'スマホ活用',  tag: 'シニア向け' },
-              { icon: '🌏', title: '語学学習',    tag: '全員向け' },
-              { icon: '🎨', title: 'AI画像生成',  tag: '全員向け' },
+              { icon: '💼', title: '仕事効率化',  tag: 'AI活用事例' },
+              { icon: '🧰', title: 'おすすめAIツール', tag: 'AIツール' },
+              { icon: '📚', title: '勉強・学習',  tag: 'AI活用事例' },
+              { icon: '📱', title: 'スマホ活用',  tag: 'AI活用事例' },
+              { icon: '🌏', title: '語学学習',    tag: 'AI活用事例' },
+              { icon: '🎨', title: 'AI画像生成',  tag: 'AIツール' },
             ].map((item) => (
               <div key={item.title} className="cs-sneak-card" role="listitem">
                 <span className="cs-s-icon" aria-hidden="true">{item.icon}</span>

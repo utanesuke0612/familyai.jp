@@ -14,7 +14,6 @@
  *   ---
  *   title: タイトル
  *   description: 一行説明
- *   roles: [common]          # papa / mama / kids / senior / common
  *   categories: [basic]      # basic / office / cooking / study / health / design など
  *   level: beginner          # beginner / intermediate / advanced
  *   published: true          # false にすると非公開（DBには入るが表示されない）
@@ -137,7 +136,7 @@ async function syncArticles() {
     const { data, content } = parseFrontmatter(raw);
 
     // 必須フィールドチェック
-    if (!data.title || !data.roles || !data.categories || !data.level) {
+    if (!data.title || !data.categories || !data.level) {
       console.log(`  ⚠️  スキップ（必須フィールド不足）: ${file}`);
       skipped++;
       continue;
@@ -148,7 +147,6 @@ async function syncArticles() {
       title:       String(data.title),
       description: data.description ? String(data.description) : null,
       body:        content.trim(),
-      roles:       toStringArray(data.roles),
       categories:  toStringArray(data.categories),
       level:       String(data.level) as 'beginner' | 'intermediate' | 'advanced',
       published:   data.published === true,

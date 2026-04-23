@@ -3,18 +3,17 @@
  * familyai.jp — グローバルフッター
  *
  * - 背景: var(--color-brown)
- * - 4カラムグリッド（ブランド / ロール / カテゴリ / サイト情報）
+ * - 4カラムグリッド（ブランド / ナビ / カテゴリ / サイト情報）
  * - ボトム: コピーライト
  */
 
 import Link from 'next/link';
-import { ROUTES, ROLE_EMOJI } from '@/shared';
+import { ROUTES } from '@/shared';
 
-const ROLE_LINKS = [
-  { href: ROUTES.roleArticles('papa'),   label: 'パパ向け',   emoji: ROLE_EMOJI.papa },
-  { href: ROUTES.roleArticles('mama'),   label: 'ママ向け',   emoji: ROLE_EMOJI.mama },
-  { href: ROUTES.roleArticles('kids'),   label: 'こども向け', emoji: ROLE_EMOJI.kids },
-  { href: ROUTES.roleArticles('senior'), label: 'シニア向け', emoji: ROLE_EMOJI.senior },
+const NAV_LINKS = [
+  { href: ROUTES.home, label: '🏠 ホーム' },
+  { href: ROUTES.articles, label: '📝 AI活用事例' },
+  { href: '/common', label: '🧰 AIツール' },
 ];
 
 const CATEGORY_LINKS = [
@@ -26,7 +25,7 @@ const CATEGORY_LINKS = [
 
 const SITE_LINKS = [
   { href: '/about',   label: 'このサイトについて' },
-  { href: '/common',  label: '共通ガイド' },
+  { href: '/common',  label: 'AIツール' },
   { href: '/privacy', label: 'プライバシーポリシー' },
   { href: '/terms',   label: '利用規約' },
 ];
@@ -63,9 +62,8 @@ export function Footer() {
               <span className="text-white/90">.jp</span>
             </span>
           </Link>
-          <p className="text-sm leading-relaxed text-white/70 max-w-[200px]">
-            AI = 愛、家族の幸せのために。<br />
-            パパ・ママ・こども・シニアへやさしいAI活用ガイドをお届けします。
+          <p className="text-sm leading-relaxed text-white/70 max-w-[220px]">
+            AI = 愛、暮らしに役立つAI活用事例と使いやすいAIツールをまとめています。
           </p>
           {/* SNSリンク（将来実装用） */}
           <div className="flex gap-3 mt-5">
@@ -82,27 +80,19 @@ export function Footer() {
           </div>
         </div>
 
-        {/* ② ロール別 */}
+        {/* ② ナビ */}
         <div>
           <h3 className="font-display font-bold text-base text-white mb-4">
-            ロール別
+            メニュー
           </h3>
           <ul className="flex flex-col gap-2">
-            <li>
-              <Link
-                href="/learn?role=common"
-                className="inline-flex items-center gap-2 text-sm text-white/70 hover:text-white transition-colors min-h-[44px]"
-              >
-                👨‍👩‍👧‍👦 みんなで使える
-              </Link>
-            </li>
-            {ROLE_LINKS.map((link) => (
+            {NAV_LINKS.map((link) => (
               <li key={link.href}>
                 <Link
                   href={link.href}
                   className="inline-flex items-center gap-2 text-sm text-white/70 hover:text-white transition-colors min-h-[44px]"
                 >
-                  {link.emoji} {link.label}
+                  {link.label}
                 </Link>
               </li>
             ))}

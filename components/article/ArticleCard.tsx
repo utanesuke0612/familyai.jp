@@ -9,15 +9,13 @@
 
 import Link from 'next/link';
 import {
-  FAMILY_ROLE_LABEL,
-  ROLE_EMOJI,
   CATEGORY_LABEL,
   CATEGORY_EMOJI,
   DIFFICULTY_LABEL,
   formatDateJa,
   estimateReadingMin,
 } from '@/shared';
-import type { FamilyRole, ContentCategory, DifficultyLevel } from '@/shared';
+import type { ContentCategory, DifficultyLevel } from '@/shared';
 
 // ── Props ────────────────────────────────────────────────────
 export interface ArticleCardProps {
@@ -25,7 +23,6 @@ export interface ArticleCardProps {
     slug:        string;
     title:       string;
     description: string;
-    roles:       string[];
     categories:  string[];
     level:       string;
     audioUrl?:   string | null;
@@ -38,13 +35,12 @@ export interface ArticleCardProps {
   featured?: boolean;
 }
 
-// ── ロール別サムネイル背景色 ──────────────────────────────────
-const ROLE_BG: Record<string, string> = {
-  papa:   'var(--color-papa-bg)',
-  mama:   'var(--color-mama-bg)',
-  kids:   'var(--color-kids-bg)',
-  senior: 'var(--color-senior-bg)',
-  common: 'var(--color-common-bg)',
+// ── カテゴリ別サムネイル背景色 ────────────────────────────────
+const CATEGORY_BG: Record<string, string> = {
+  'image-gen': 'var(--color-peach-light)',
+  voice: 'var(--color-sky)',
+  education: 'var(--color-mint)',
+  housework: 'var(--color-yellow)',
 };
 
 // ── 難易度バッジ色 ────────────────────────────────────────────
@@ -61,11 +57,10 @@ const LEVEL_TEXT_COLOR: Record<string, string> = {
 };
 
 export function ArticleCard({ article, featured = false }: ArticleCardProps) {
-  const primaryRole     = (article.roles[0] ?? 'common') as FamilyRole;
   const primaryCategory = (article.categories[0] ?? 'other') as ContentCategory;
   const level           = article.level as DifficultyLevel;
 
-  const thumbBg   = ROLE_BG[primaryRole] ?? ROLE_BG.common;
+  const thumbBg   = CATEGORY_BG[primaryCategory] ?? 'var(--color-common-bg)';
   const readingMin = article.body ? estimateReadingMin(article.body) : null;
   const dateStr   = article.publishedAt
     ? formatDateJa(
@@ -112,14 +107,6 @@ export function ArticleCard({ article, featured = false }: ArticleCardProps) {
             🎵 音声あり
           </span>
         )}
-
-        {/* ロールバッジ */}
-        <span
-          className="absolute top-3 left-3 flex items-center gap-1 px-2 py-1 rounded-full text-xs font-bold"
-          style={{ background: 'rgba(255,255,255,0.85)', color: 'var(--color-brown)' }}
-        >
-          {ROLE_EMOJI[primaryRole]} {FAMILY_ROLE_LABEL[primaryRole]}
-        </span>
       </div>
 
       {/* ── ボディ ── */}

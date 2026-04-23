@@ -1,6 +1,6 @@
 /**
  * app/(site)/common/page.tsx
- * familyai.jp — みんなのAIガイド（共通ガイドページ）
+ * familyai.jp — AIツールページ
  */
 
 import type { Metadata } from 'next';
@@ -8,8 +8,8 @@ import Link              from 'next/link';
 import { SITE }          from '@/shared';
 
 export const metadata: Metadata = {
-  title:       `みんなのAIガイド | ${SITE.name}`,
-  description: 'AI初心者から上級者まで。家族全員が今日から使えるAI活用ガイドを厳選しました。',
+  title:       `AIツール | ${SITE.name}`,
+  description: 'すぐ使えるAIツールと導入ガイドをまとめています。',
   alternates:  { canonical: `${SITE.url}/common` },
 };
 
@@ -44,13 +44,6 @@ const GUIDES = [
   },
 ];
 
-const ROLES = [
-  { emoji: '👨', label: 'パパ向け',   desc: '仕事の効率化・副業・資産運用',     href: '/learn?role=papa',   color: 'var(--color-papa)' },
-  { emoji: '👩', label: 'ママ向け',   desc: '家事・育児・美容・コミュニティ',    href: '/learn?role=mama',   color: 'var(--color-mama)' },
-  { emoji: '🧒', label: 'こども向け', desc: '学習・工作・英語・プログラミング',   href: '/learn?role=kids',   color: 'var(--color-kids)' },
-  { emoji: '👴', label: 'シニア向け', desc: 'スマホ・健康・写真・孫とのつながり', href: '/learn?role=senior', color: 'var(--color-senior)' },
-];
-
 export default function CommonPage() {
   return (
     <main style={{ background: 'var(--color-cream)' }}>
@@ -61,16 +54,15 @@ export default function CommonPage() {
         style={{ background: 'linear-gradient(160deg, var(--color-beige) 0%, var(--color-cream) 100%)' }}
       >
         <div className="max-w-2xl mx-auto flex flex-col items-center gap-5">
-          <span className="text-5xl">👨‍👩‍👧‍👦</span>
+          <span className="text-5xl">🧰</span>
           <h1
             className="font-display font-bold"
             style={{ fontSize: 'clamp(26px, 5vw, 44px)', color: 'var(--color-brown)' }}
           >
-            みんなのAIガイド
+            AIツール
           </h1>
           <p className="text-base leading-relaxed max-w-lg" style={{ color: 'var(--color-brown-light)' }}>
-            パパ・ママ・子ども・シニア——家族全員が今日から使えるAI活用法を厳選しました。
-            まずはここから始めてみてください。
+            すぐ試せるAIツールと、使い始める前に読みたいガイドをまとめています。
           </p>
         </div>
       </section>
@@ -122,37 +114,6 @@ export default function CommonPage() {
                   <p className="text-xs leading-relaxed" style={{ color: 'var(--color-brown-light)' }}>
                     {g.desc}
                   </p>
-                </div>
-              </Link>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ── ロール別 ── */}
-      <section
-        className="py-5 px-6"
-        style={{ background: 'var(--color-beige)' }}
-      >
-        <div className="max-w-3xl mx-auto flex flex-col gap-8">
-          <h2
-            className="font-display font-bold text-2xl"
-            style={{ color: 'var(--color-brown)' }}
-          >
-            あなたはどなたですか？
-          </h2>
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-            {ROLES.map((r) => (
-              <Link
-                key={r.label}
-                href={r.href}
-                className="rounded-2xl p-5 flex flex-col items-center gap-3 text-center transition-[transform,box-shadow] hover:-translate-y-1 hover:shadow-md"
-                style={{ background: r.color, border: '2px solid transparent' }}
-              >
-                <span className="text-4xl">{r.emoji}</span>
-                <div>
-                  <p className="font-bold text-sm" style={{ color: 'var(--color-brown)' }}>{r.label}</p>
-                  <p className="text-xs mt-1 leading-snug" style={{ color: 'var(--color-brown-light)' }}>{r.desc}</p>
                 </div>
               </Link>
             ))}

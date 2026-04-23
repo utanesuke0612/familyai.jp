@@ -7,7 +7,6 @@
 
 import { z } from 'zod';
 
-export const FAMILY_ROLES = ['papa', 'mama', 'kids', 'senior', 'common'] as const;
 export const CATEGORIES   = ['image-gen', 'voice', 'education', 'housework'] as const;
 export const LEVELS       = ['beginner', 'intermediate', 'advanced'] as const;
 export const ARTICLE_SORTS = ['latest', 'oldest', 'popular', 'title'] as const;
@@ -37,7 +36,6 @@ export const createArticleSchema = z.object({
   title:            z.string().min(1).max(255),
   description:      z.string().nullable().optional().transform((v) => v ?? null),
   body:             z.string().min(1),
-  roles:            z.array(z.enum(FAMILY_ROLES)).default([]),
   categories:       z.array(z.enum(CATEGORIES)).default([]),
   level:            z.enum(LEVELS).default('beginner'),
   published:        z.boolean().optional().default(false),
@@ -54,7 +52,6 @@ export const updateArticleSchema = z.object({
   title:            z.string().min(1).max(255).optional(),
   description:      z.string().nullable().optional(),
   body:             z.string().min(1).optional(),
-  roles:            z.array(z.enum(FAMILY_ROLES)).optional(),
   categories:       z.array(z.enum(CATEGORIES)).optional(),
   level:            z.enum(LEVELS).optional(),
   published:        z.boolean().optional(),

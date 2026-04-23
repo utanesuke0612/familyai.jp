@@ -12,7 +12,6 @@ describe('createArticleSchema (Rev22)', () => {
     const r = createArticleSchema.safeParse(validBase);
     expect(r.success).toBe(true);
     if (r.success) {
-      expect(r.data.roles).toEqual([]);
       expect(r.data.categories).toEqual([]);
       expect(r.data.level).toBe('beginner');
       expect(r.data.published).toBe(false);
@@ -38,25 +37,16 @@ describe('createArticleSchema (Rev22)', () => {
     expect(createArticleSchema.safeParse({ ...validBase, title: '' }).success).toBe(false);
   });
 
-  it('Z2a: 不正な role enum で失敗', () => {
-    expect(createArticleSchema.safeParse({ ...validBase, roles: ['invalid'] }).success).toBe(false);
-  });
-
-  it('Z2b: 正常な role enum で合格', () => {
-    const r = createArticleSchema.safeParse({ ...validBase, roles: ['papa', 'mama', 'kids'] });
-    expect(r.success).toBe(true);
-  });
-
-  it('Z2c: 不正な category enum で失敗', () => {
+  it('Z2a: 不正な category enum で失敗', () => {
     expect(createArticleSchema.safeParse({ ...validBase, categories: ['finance'] }).success).toBe(false);
   });
 
-  it('Z2d: 正常な level enum で合格', () => {
+  it('Z2b: 正常な level enum で合格', () => {
     const r = createArticleSchema.safeParse({ ...validBase, level: 'advanced' });
     expect(r.success && r.data.level).toBe('advanced');
   });
 
-  it('Z2e: 不正な level で失敗', () => {
+  it('Z2c: 不正な level で失敗', () => {
     expect(createArticleSchema.safeParse({ ...validBase, level: 'xxx' }).success).toBe(false);
   });
 

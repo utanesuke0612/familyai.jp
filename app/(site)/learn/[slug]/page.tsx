@@ -34,15 +34,13 @@ import { AudioPlayer }  from '@/components/article/AudioPlayer';
 import { ArticleGrid }  from '@/components/article/ArticleGrid';
 import {
   SITE,
-  FAMILY_ROLE_LABEL,
-  ROLE_EMOJI,
   CATEGORY_LABEL,
   CATEGORY_EMOJI,
   DIFFICULTY_LABEL,
   formatDateJa,
   estimateReadingMin,
 } from '@/shared';
-import type { FamilyRole, ContentCategory, DifficultyLevel } from '@/shared';
+import type { ContentCategory, DifficultyLevel } from '@/shared';
 
 // ISR: 1時間ごとに再検証
 export const revalidate = 3600;
@@ -58,14 +56,6 @@ const LEVEL_TEXT: Record<string, string> = {
   intermediate: '#7a5000',
   advanced:     'var(--color-brown)',
 };
-const ROLE_BG: Record<string, string> = {
-  papa:   'var(--color-papa-bg)',
-  mama:   'var(--color-mama-bg)',
-  kids:   'var(--color-kids-bg)',
-  senior: 'var(--color-senior-bg)',
-  common: 'var(--color-common-bg)',
-};
-
 // ── generateMetadata ──────────────────────────────────────────
 export async function generateMetadata({
   params,
@@ -86,11 +76,9 @@ export async function generateMetadata({
   const url         = `${SITE.url}/learn/${article.slug}`;
 
   // 動的OGP: サムネイルがあればそれを使い、なければ /api/og で生成
-  const primaryRole  = article.roles?.[0] ?? 'common';
   const primaryLevel = article.level ?? '';
   const ogApiUrl     = `${SITE.url}/api/og?${new URLSearchParams({
     title: article.title,
-    role:  primaryRole,
     ...(primaryLevel ? { level: primaryLevel } : {}),
   }).toString()}`;
   const ogImage      = article.thumbnailUrl ?? ogApiUrl;
@@ -162,7 +150,7 @@ function JsonLd({ article }: { article: NonNullable<Awaited<ReturnType<typeof ge
       '@type': 'WebPage',
       '@id':   articleUrl,
     },
-    keywords: [...article.roles, ...article.categories, 'AI', '人工知能', '家族'].join(', '),
+    keywords: [...article.categories, 'AI', '人工知能', '家族'].join(', '),
     // 音声コンテンツ SEO（audioUrl がある記事のみ）
     ...(audioObject && { audio: audioObject }),
   };
@@ -193,7 +181,6 @@ export default async function ArticlePage({
   // 関連記事
   const relatedArticles = await getRelatedArticles(
     article.slug,
-    article.roles,
     article.categories,
   );
 
@@ -241,23 +228,8 @@ export default async function ArticlePage({
             </span>
           </nav>
 
-          {/* ロール + カテゴリバッジ */}
+          {/* カテゴリバッジ */}
           <div className="flex flex-wrap gap-2 mb-4">
-            {article.roles.map((r) => (
-              <a
-                key={r}
-                href={`/learn?role=${r}`}
-                className="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-bold border transition-opacity hover:opacity-70"
-                style={{
-                  background:  ROLE_BG[r] ?? 'var(--color-beige)',
-                  borderColor: 'transparent',
-                  color:       'var(--color-brown)',
-                  minHeight:   'auto',
-                }}
-              >
-                {ROLE_EMOJI[r as FamilyRole]} {FAMILY_ROLE_LABEL[r as FamilyRole] ?? r}
-              </a>
-            ))}
             {article.categories.slice(0, 2).map((c) => (
               <a
                 key={c}
@@ -467,7 +439,6 @@ export default async function ArticlePage({
                 slug:         a.slug,
                 title:        a.title,
                 description:  a.description ?? '',
-                roles:        a.roles,
                 categories:   a.categories,
                 level:        a.level,
                 audioUrl:     a.audioUrl ?? null,

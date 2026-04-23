@@ -8,6 +8,13 @@
       "when": 1776384712297,
       "tag": "0000_nappy_golden_guardian",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1776902400000,
+      "tag": "0001_remove_role_columns",
+      "breakpoints": true
     }
   ]
 }

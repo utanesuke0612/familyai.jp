@@ -93,7 +93,6 @@ const article = {
   title:            'Hello',
   description:      null,
   body:             'body text',
-  roles:            ['papa'],
   categories:       ['education'],
   level:            'beginner',
   published:        true,

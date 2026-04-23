@@ -13,7 +13,6 @@
 import { Suspense } from 'react';
 import { HeroSection }       from '@/components/home/HeroSection';
 import { StatsRow }          from '@/components/home/StatsRow';
-import { RolePicker }        from '@/components/home/RolePicker';
 import { ArticleGrid }       from '@/components/article/ArticleGrid';
 import { ComingSoon }        from '@/components/home/ComingSoon';
 import { getLatestArticles } from '@/lib/repositories/articles';
@@ -46,7 +45,7 @@ async function NewArticlesSection() {
               className="font-display font-bold"
               style={{ fontSize: 'var(--text-title)', color: 'var(--color-brown)' }}
             >
-              みんなのAI活用ガイド
+              みんなのAI活用事例
             </h2>
           </div>
           <a
@@ -89,9 +88,6 @@ export default function HomePage() {
     <>
       <HeroSection />
       <StatsRow />
-      <Suspense fallback={<div style={{ height: '320px', background: 'var(--color-beige)' }} />}>
-        <RolePicker />
-      </Suspense>
       <Suspense fallback={<div style={{ height: '320px', background: 'var(--color-cream)' }} />}>
         <NewArticlesSection />
       </Suspense>

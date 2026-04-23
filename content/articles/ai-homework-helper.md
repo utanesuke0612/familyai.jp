@@ -1,9 +1,6 @@
 ---
 title: 子どもの宿題をAIで楽しく教える方法
 description: 子どもが「わからない」と言ったときの強い味方。AIを使って、お父さん・お母さんも一緒に楽しく学べます。
-roles:
-  - mama
-  - kids
 categories:
   - education
 level: beginner

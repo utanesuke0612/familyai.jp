@@ -1,9 +1,6 @@
 ---
 title: 音声AIで毎日10分の英語練習を習慣にする方法
 description: AIと会話することで発音・リスニング・スピーキングを同時に鍛えられます。
-roles:
-  - papa
-  - mama
 categories:
   - voice
 level: intermediate

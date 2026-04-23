@@ -28,8 +28,7 @@ export const articles = pgTable(
     description:      text('description'),
     body:             text('body').notNull(),              // Markdown（react-markdown でレンダリング）
 
-    // ロール・カテゴリ・難易度（shared/types の FamilyRole / ContentCategory / DifficultyLevel に準拠）
-    roles:            text('roles').array().notNull(),
+    // カテゴリ・難易度
     categories:       text('categories').array().notNull(),
     level:            varchar('level', { length: 20 }).notNull().default('beginner'),
 
@@ -76,9 +75,6 @@ export const users = pgTable('users', {
   plan:             varchar('plan', { length: 20 }).notNull().default('free'),
   stripeCustomerId: text('stripe_customer_id'),
 
-  // ロール選択（任意・プロフィール設定時に記入）
-  preferredRole:    varchar('preferred_role', { length: 20 }),
-
   createdAt:        timestamp('created_at').defaultNow().notNull(),
   updatedAt:        timestamp('updated_at').defaultNow().notNull(),
 });
@@ -106,7 +102,6 @@ export const apps = pgTable('apps', {
   description:  text('description'),
   url:          text('url').notNull(),
   categories:   text('categories').array().notNull(),
-  roles:        text('roles').array().notNull(),
   thumbnailUrl: text('thumbnail_url'),
   isPro:        boolean('is_pro').notNull().default(false),
   published:    boolean('published').notNull().default(false),

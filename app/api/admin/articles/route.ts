@@ -83,7 +83,6 @@ export async function POST(req: NextRequest) {
       title:            data.title,
       description:      data.description,
       body:             data.body,
-      roles:            data.roles,
       categories:       data.categories,
       level:            data.level,
       published:        data.published,

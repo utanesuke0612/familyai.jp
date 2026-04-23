@@ -6,7 +6,7 @@
  *
  * - チップ形式（pill shape）・複数選択対応
  * - 選択状態で URL クエリパラメータ `cat` を更新
- * - RolePicker と連携（role パラメータを保持したまま更新）
+ * - 現在の絞り込み条件を保ったまま `cat` を更新
  */
 
 import { useRouter, useSearchParams } from 'next/navigation';

@@ -1,8 +1,6 @@
 ---
 title: 家族の思い出をAIイラストにする — 画像生成入門
 description: 写真をもとにオリジナルのイラストを作る方法。年賀状やプロフィール画像にも。
-roles:
-  - common
 categories:
   - image-gen
 level: beginner

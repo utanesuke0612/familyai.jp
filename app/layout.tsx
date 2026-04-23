@@ -24,14 +24,14 @@ const shipporiMincho = Shippori_Mincho({
 export const metadata: Metadata = {
   metadataBase: new URL('https://familyai.jp'),
   title: {
-    default:  'familyai.jp — 家族みんなのAI活用サイト',
+    default:  'familyai.jp — AI活用事例とAIツール',
     template: '%s | familyai.jp',
   },
   description:
-    'AI（愛）で家族をもっと幸せに。パパ・ママ・子ども・シニアに向けたAI活用事例とやさしいガイドをお届けします。',
+    '仕事・学習・日常に役立つAI活用事例と、すぐ使えるAIツールをまとめた日本語メディアです。',
   keywords: [
-    'AI活用', '家族', 'ChatGPT', 'Claude', 'Gemini',
-    '子育て', 'シニア', '語学学習', '家事', '副業',
+    'AI活用', 'AIツール', 'ChatGPT', 'Claude', 'Gemini',
+    '語学学習', '画像生成', '音声AI', '家事', '仕事効率化',
   ],
   authors:  [{ name: 'familyai.jp' }],
   creator:  'familyai.jp',
@@ -44,17 +44,17 @@ export const metadata: Metadata = {
     type:      'website',
     locale:    'ja_JP',
     siteName:  'familyai.jp',
-    title:     'familyai.jp — 家族みんなのAI活用サイト',
+    title:     'familyai.jp — AI活用事例とAIツール',
     description:
-      'AI（愛）で家族をもっと幸せに。パパ・ママ・子ども・シニアに向けたやさしいAIガイド。',
+      '仕事・学習・日常に役立つAI活用事例と、すぐ使えるAIツールをまとめた日本語メディアです。',
     // Rev26 #4: 画像は app/opengraph-image.tsx が自動配信（/opengraph-image）。
     // 明示指定しないことで Next.js のファイル規約に任せ、欠落を防ぐ。
   },
   twitter: {
     card:        'summary_large_image',
     site:        '@familyaijp',
-    title:       'familyai.jp — 家族みんなのAI活用サイト',
-    description: 'AI（愛）で家族をもっと幸せに。',
+    title:       'familyai.jp — AI活用事例とAIツール',
+    description: '仕事・学習・日常に役立つAI活用事例とAIツールを紹介します。',
     // OG 画像は app/opengraph-image.tsx が自動生成するため未指定で OK。
   },
   // icons / manifest は app/icon.tsx、app/apple-icon.tsx、app/manifest.ts が

@@ -6,7 +6,7 @@
  *
  * - sort: 'latest' | 'popular'
  * - level: 'beginner' | 'intermediate' | 'advanced' | ''（全て）
- * - 現在の role / cat パラメータを保持したまま更新
+ * - 現在の cat パラメータを保持したまま更新
  */
 
 import { useRouter, useSearchParams } from 'next/navigation';

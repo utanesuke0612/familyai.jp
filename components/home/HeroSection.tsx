@@ -6,52 +6,52 @@
  *
  * - 2カラムグリッド（テキスト左・ビジュアル右）
  * - blob 背景装飾（peach / sky グラデーション）
- * - 右カラム：中央 AI カード + 四隅に家族カード（float アニメーション）
+ * - 右カラム：中央 AI カード + 周辺ユースケースカード
  */
 
 import Link from 'next/link';
 
-// ── 家族カード データ ──────────────────────────────────────────
-const FAMILY_CARDS = [
+// ── ユースケースカード データ ──────────────────────────────────
+const USE_CASE_CARDS = [
   {
-    id:       'papa',
-    emoji:    '👨',
-    label:    'パパ',
-    desc:     '仕事効率化',
+    id:       'work',
+    emoji:    '💼',
+    label:    '仕事',
+    desc:     '業務効率化',
     position: 'top-0 left-0 -translate-x-1/4 -translate-y-1/4',
     delay:    '0s',
-    bg:       'var(--color-papa-bg)',
-    border:   'var(--color-papa-border)',
+    bg:       'var(--color-sky)',
+    border:   'var(--a-border-2)',
   },
   {
-    id:       'mama',
-    emoji:    '👩',
-    label:    'ママ',
-    desc:     '家事・育児',
+    id:       'life',
+    emoji:    '🏠',
+    label:    '暮らし',
+    desc:     '家事サポート',
     position: 'top-0 right-0 translate-x-1/4 -translate-y-1/4',
     delay:    '0.8s',
-    bg:       'var(--color-mama-bg)',
-    border:   'var(--color-mama-border)',
+    bg:       'var(--color-peach-light)',
+    border:   'var(--a-border-2)',
   },
   {
-    id:       'kids',
-    emoji:    '🧒',
-    label:    'こども',
-    desc:     '勉強・創作',
+    id:       'study',
+    emoji:    '📚',
+    label:    '学習',
+    desc:     '調べる・覚える',
     position: 'bottom-0 left-0 -translate-x-1/4 translate-y-1/4',
     delay:    '1.6s',
-    bg:       'var(--color-kids-bg)',
-    border:   'var(--color-kids-border)',
+    bg:       'var(--color-mint)',
+    border:   'var(--a-border-2)',
   },
   {
-    id:       'senior',
-    emoji:    '👴',
-    label:    'シニア',
-    desc:     'スマホ活用',
+    id:       'creative',
+    emoji:    '🎨',
+    label:    '創作',
+    desc:     '画像・文章生成',
     position: 'bottom-0 right-0 translate-x-1/4 translate-y-1/4',
     delay:    '2.4s',
-    bg:       'var(--color-senior-bg)',
-    border:   'var(--color-senior-border)',
+    bg:       'var(--color-yellow)',
+    border:   'var(--a-border-2)',
   },
 ] as const;
 
@@ -59,7 +59,6 @@ export function HeroSection() {
   return (
     <section
       className="hero-bg noise-bg relative overflow-hidden"
-      style={{ minHeight: '92vh' }}
       aria-label="ヒーローセクション"
     >
       {/* ── Blob 背景装飾 ── */}
@@ -156,8 +155,8 @@ export function HeroSection() {
             }}
           >
             難しくない。怖くない。<br />
-            パパも、ママも、お子さんも、シニアも。<br />
-            家族みんなで使えるAI活用法をお届けします。
+            仕事にも、暮らしにも、学習にも。<br />
+            今日から使えるAI活用法をお届けします。
           </p>
 
           {/* CTA ボタン */}
@@ -165,8 +164,8 @@ export function HeroSection() {
             <Link href="/learn" className="btn-primary animate-pulse-glow text-base px-7 py-3.5">
               🚀 まず読んでみる
             </Link>
-            <Link href="#role-picker" className="btn-secondary text-base px-7 py-3.5">
-              🎯 自分に合った使い方を探す
+            <Link href="/common" className="btn-secondary text-base px-7 py-3.5">
+              🧰 AIツールを見る
             </Link>
           </div>
 
@@ -214,8 +213,8 @@ export function HeroSection() {
             </span>
           </div>
 
-          {/* 四隅の家族カード */}
-          {FAMILY_CARDS.map((card) => (
+          {/* 四隅のユースケースカード */}
+          {USE_CASE_CARDS.map((card) => (
             <div
               key={card.id}
               className={`absolute ${card.position} flex flex-col items-center gap-1.5 px-4 py-3 rounded-2xl shadow-warm cursor-pointer`}
@@ -269,6 +268,6 @@ export function HeroSection() {
 // ── 統計データ ─────────────────────────────────────────────────
 const STATS = [
   { value: '100+',  label: 'AI活用事例' },
-  { value: '4',     label: '家族ロール対応' },
+  { value: '2',     label: 'AIツール' },
   { value: '¥0',   label: '基本機能すべて' },
 ] as const;

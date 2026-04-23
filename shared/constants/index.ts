@@ -3,7 +3,7 @@
  * familyai.jp — アプリ全体で使う定数（pure TypeScript / iOS 移植対応）
  */
 
-import type { FamilyRole, ContentCategory, DifficultyLevel } from '../types';
+import type { ContentCategory, DifficultyLevel } from '../types';
 
 // ─── サイトメタ ────────────────────────────────────────────────
 export const SITE = {
@@ -12,25 +12,6 @@ export const SITE = {
   url:         'https://familyai.jp',
   locale:      'ja-JP',
   twitterHandle: '@familyaijp',
-} as const;
-
-// ─── ロール設定 ────────────────────────────────────────────────
-/** 各ロールのブランドカラー（Tailwind クラス名） */
-export const ROLE_COLOR: Record<FamilyRole, { bg: string; text: string; border: string }> = {
-  papa:   { bg: 'bg-sky',    text: 'text-sky-700',   border: 'border-sky-300' },
-  mama:   { bg: 'bg-peach',  text: 'text-brown',     border: 'border-peach' },
-  kids:   { bg: 'bg-mint',   text: 'text-green-700', border: 'border-mint' },
-  senior: { bg: 'bg-yellow', text: 'text-amber-700', border: 'border-yellow' },
-  common: { bg: 'bg-cream',  text: 'text-brown',     border: 'border-beige-dark' },
-} as const;
-
-/** 各ロールのアイコン絵文字 */
-export const ROLE_EMOJI: Record<FamilyRole, string> = {
-  papa:   '👨',
-  mama:   '👩',
-  kids:   '🧒',
-  senior: '👴',
-  common: '👨‍👩‍👧‍👦',
 } as const;
 
 // ─── カテゴリ設定 ──────────────────────────────────────────────
@@ -127,7 +108,6 @@ export const ROUTES = {
   home:           '/',
   articles:       '/learn',
   article:        (slug: string) => `/learn/${slug}`,
-  roleArticles:   (role: FamilyRole) => `/learn?role=${role}`,
   chat:           '/chat',
   login:          '/auth/signin',
   signup:         '/auth/register',

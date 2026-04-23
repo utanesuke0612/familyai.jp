@@ -2,17 +2,17 @@
  * app/(site)/learn/page.tsx
  * familyai.jp — 記事一覧ページ（Server Component）
  *
- * - searchParams でロール / カテゴリ / 難易度 / ソート / ページを受け取る
+ * - searchParams でカテゴリ / 難易度 / ソート / ページを受け取る
  * - getArticleList() (Repository) でフィルタリング・ページネーション
- * - RolePicker / CategoryFilter / SortLevelBar は Client Components
+ * - CategoryFilter / SortLevelBar は Client Components
  * - DB 接続失敗時は空状態にフォールバック
  */
 
 import type { Metadata } from 'next';
 import { Suspense }      from 'react';
+import { redirect }      from 'next/navigation';
 
 import { getArticleList }    from '@/lib/repositories/articles';
-import { RolePicker }        from '@/components/home/RolePicker';
 import { CategoryFilter }    from '@/components/home/CategoryFilter';
 import { ArticleGrid }       from '@/components/article/ArticleGrid';
 import { SortLevelBar }      from '@/components/learn/SortLevelBar';
@@ -27,10 +27,10 @@ export const revalidate = 300;
 // ── メタデータ ────────────────────────────────────────────────
 export const metadata: Metadata = {
   title:       '記事一覧 | familyai.jp',
-  description: 'パパ・ママ・子ども・シニアのためのAI活用ガイド。ChatGPT・Claude・Geminiなど、家族全員が使えるAI記事を厳選してお届けします。',
+  description: '仕事・学習・日常に役立つAI活用事例をまとめた記事一覧です。ChatGPT・Claude・Geminiなどの使い方をわかりやすく紹介します。',
   openGraph: {
     title:       '記事一覧 | familyai.jp',
-    description: 'パパ・ママ・子ども・シニアのためのAI活用ガイド。',
+    description: '仕事・学習・日常に役立つAI活用事例をまとめた記事一覧です。',
     url:         'https://familyai.jp/learn',
     // images は指定しない → ルート `app/opengraph-image.tsx` が自動継承される（Next.js 14 規約・Rev27 #3）
   },
@@ -205,8 +205,16 @@ interface LearnPageProps {
 }
 
 export default async function LearnPage({ searchParams }: LearnPageProps) {
+  if (searchParams.role) {
+    const params = new URLSearchParams(
+      Object.entries(searchParams).filter((entry): entry is [string, string] => typeof entry[1] === 'string'),
+    );
+    params.delete('role');
+    const qs = params.toString();
+    redirect(`/learn${qs ? `?${qs}` : ''}`);
+  }
+
   // ── パラメータ解析 ──────────────────────────────────────────
-  const role   = searchParams.role  || null;
   const cats   = searchParams.cat   ? searchParams.cat.split(',').filter(Boolean) : [];
   const level  = searchParams.level || null;
   const sort   = searchParams.sort === 'popular' ? 'popular' : 'latest';
@@ -215,12 +223,11 @@ export default async function LearnPage({ searchParams }: LearnPageProps) {
   const searchRaw = (searchParams.search ?? '').trim();
   const search    = searchRaw.length > 0 && searchRaw.length <= 100 ? searchRaw : null;
 
-  const isFiltered = !!(role || cats.length || level || search);
+  const isFiltered = !!(cats.length || level || search);
 
   // ── Repository 経由でフィルタ + ページネーション取得 ────────
   const { items: articleRows, total: totalCount, totalPages } = await getArticleList(
     {
-      role:       role       ?? undefined,
       categories: cats,
       level:      level      ?? undefined,
       sort,
@@ -280,7 +287,7 @@ export default async function LearnPage({ searchParams }: LearnPageProps) {
                 className="text-sm font-medium mb-2"
                 style={{ color: 'var(--color-orange)' }}
               >
-                AI活用ガイド
+                AI活用事例
               </p>
               <h1
                 className="font-display font-bold leading-tight"
@@ -295,7 +302,7 @@ export default async function LearnPage({ searchParams }: LearnPageProps) {
                 className="mt-2 text-sm leading-relaxed max-w-lg"
                 style={{ color: 'var(--color-brown-light)' }}
               >
-                パパ・ママ・子ども・シニア、家族全員が使えるAIガイドを厳選。
+                仕事・学習・日常ですぐ使えるAI活用事例を厳選。
                 <br className="hidden sm:inline" />
                 初心者でも安心、今日から実践できる記事だけをお届けします。
               </p>
@@ -319,13 +326,6 @@ export default async function LearnPage({ searchParams }: LearnPageProps) {
           {/* 検索バー（Rev26 #2）*/}
           <Suspense fallback={<div className="h-14 rounded-full skeleton" />}>
             <LearnSearchBar />
-          </Suspense>
-
-          {/* ロールピッカー */}
-          <Suspense fallback={
-            <div className="h-20 rounded-2xl skeleton" />
-          }>
-            <RolePicker />
           </Suspense>
 
           {/* カテゴリフィルター */}
@@ -377,7 +377,6 @@ export default async function LearnPage({ searchParams }: LearnPageProps) {
               slug:         a.slug,
               title:        a.title,
               description:  a.description ?? '',
-              roles:        a.roles,
               categories:   a.categories,
               level:        a.level,
               audioUrl:     a.audioUrl ?? null,

@@ -20,21 +20,17 @@ describe('updateArticleSchema (Rev22)', () => {
     expect(updateArticleSchema.safeParse({ title: '' }).success).toBe(false);
   });
 
-  it('Z4e: 不正 role enum で失敗', () => {
-    expect(updateArticleSchema.safeParse({ roles: ['invalid-role'] }).success).toBe(false);
-  });
-
-  it('Z4f: description を null で上書き可', () => {
+  it('Z4e: description を null で上書き可', () => {
     const r = updateArticleSchema.safeParse({ description: null });
     expect(r.success && r.data.description).toBeNull();
   });
 
-  it('Z4g: publishedAt 空文字列 → null 変換', () => {
+  it('Z4f: publishedAt 空文字列 → null 変換', () => {
     const r = updateArticleSchema.safeParse({ publishedAt: '' });
     expect(r.success && r.data.publishedAt).toBeNull();
   });
 
-  it('Z4h: audioDurationSec 非整数で失敗', () => {
+  it('Z4g: audioDurationSec 非整数で失敗', () => {
     expect(updateArticleSchema.safeParse({ audioDurationSec: 1.5 }).success).toBe(false);
   });
 });
