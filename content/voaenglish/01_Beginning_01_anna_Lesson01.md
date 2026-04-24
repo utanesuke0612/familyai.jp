@@ -10,6 +10,8 @@ voaUrl: https://learningenglish.voanews.com/a/6654462.html
 published: true
 ---
 
+# 📖 まずは日本語でチェック
+
 # 🎧 会話を聞いて、読んでみよう
 
 <iframe src="https://learningenglish.voanews.com/embed/player/0/6654472.html?type=video" frameborder="0" scrolling="no" width="640" height="360" allowfullscreen></iframe>

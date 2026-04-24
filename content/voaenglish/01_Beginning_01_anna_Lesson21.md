@@ -10,6 +10,8 @@ voaUrl: https://learningenglish.voanews.com/a/lesson-21-what-places-are-in-your-
 published: true
 ---
 
+# 📖 まずは日本語でチェック
+
 # 🎧 会話を聞いて、読んでみよう
 
 # ✨ AIと一緒に、もっと分かる

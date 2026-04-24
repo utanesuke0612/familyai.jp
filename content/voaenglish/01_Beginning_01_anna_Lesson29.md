@@ -10,6 +10,8 @@ voaUrl: https://learningenglish.voanews.com/a/lesson-29-what-do-you-do-in-school
 published: true
 ---
 
+# 📖 まずは日本語でチェック
+
 # 🎧 会話を聞いて、読んでみよう
 
 # ✨ AIと一緒に、もっと分かる

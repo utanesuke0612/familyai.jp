@@ -180,9 +180,9 @@ export default async function VoaLessonPage({
                 articleExcerpt={`VOA Learning English のコース「${data.courseTitle}」の${headline}。CEFR ${cefr}。${data.voaUrl ? `公式: ${data.voaUrl}` : ''}`}
                 articleCategories={['education']}
                 suggestedQuestions={[
-                  'このレッスンを日本語でやさしく要約して',
+                  'どんな場面で使う会話？',
                   '重要な単語と意味を5つ教えて',
-                  '役立つ例文を3つ作って',
+                  '親子で使える例文を3つ作って',
                 ]}
               />
             </aside>

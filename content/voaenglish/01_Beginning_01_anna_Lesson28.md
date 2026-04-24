@@ -10,6 +10,8 @@ voaUrl: https://learningenglish.voanews.com/a/lesson-28-how-do-you-go-to-school-
 published: true
 ---
 
+# 📖 まずは日本語でチェック
+
 # 🎧 会話を聞いて、読んでみよう
 
 # ✨ AIと一緒に、もっと分かる

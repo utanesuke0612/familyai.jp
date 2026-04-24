@@ -10,6 +10,8 @@ voaUrl: https://learningenglish.voanews.com/a/lesson-27-what-are-you-wearing-tod
 published: true
 ---
 
+# 📖 まずは日本語でチェック
+
 # 🎧 会話を聞いて、読んでみよう
 
 # ✨ AIと一緒に、もっと分かる
