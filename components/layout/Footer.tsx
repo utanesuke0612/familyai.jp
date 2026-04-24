@@ -25,7 +25,6 @@ const CATEGORY_LINKS = [
 
 const SITE_LINKS = [
   { href: '/about',   label: 'このサイトについて' },
-  { href: '/tools',  label: 'AIツール' },
   { href: '/privacy', label: 'プライバシーポリシー' },
   { href: '/terms',   label: '利用規約' },
 ];

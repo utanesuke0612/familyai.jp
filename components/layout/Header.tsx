@@ -18,6 +18,7 @@ const NAV_LINKS = [
   { href: '/', label: 'ホーム', emoji: '🏠' },
   { href: '/learn', label: 'AI活用事例', emoji: '📝' },
   { href: '/tools', label: 'AIツール', emoji: '🧰' },
+  { href: '/mypage', label: 'マイページ', emoji: '👤' },
 ];
 
 function isLinkActive(pathname: string, href: string): boolean {
