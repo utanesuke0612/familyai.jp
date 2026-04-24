@@ -18,47 +18,36 @@ published: true
 
 
 # ✨ AIと一緒に、もっと分かる
-**DrJill**: Hello and welcome to Let's Learn English with Anna.
-*00:06*
 
-**DrJill**: I am Dr.
-*00:11*
+> 💡 赤い点線の単語にマウスを合わせる（スマホはタップ）と、意味・発音（IPA）・例文・🔊読み上げ・☆単語帳登録 が使えます。
 
-**DrJill**: Jill.
-*00:12*
+> 💞 不明点や「この言い回し、もっと知りたい」ときは、右の「AIに質問する」欄に気軽に聞いてください。
 
-**DrJill**: But who are you?
-*00:13*
+**DrJill**: {Hello|こんにちは／やあ|/həˈloʊ/|Hello, everyone!} and {welcome|ようこそ|/ˈwelkəm/|Welcome to my home.} to Let's Learn English with Anna.
 
-**DrJill**: Today we answer that question.
-*00:15*
+**DrJill**: I am Dr. Jill.
+
+**DrJill**: But {who|だれ|/huː/|Who is that boy?} are you?
+
+**DrJill**: {Today|今日|/təˈdeɪ/|Today is Monday.} we {answer|答える|/ˈænsər/|Please answer the question.} that {question|質問|/ˈkwestʃən/|I have a question.}.
 
 **DrJill**: Who are you?
-*00:18*
 
-**DrJill**: So let's go to Anna's treehouse.
-*00:22*
+**DrJill**: So let's go to Anna's {treehouse|ツリーハウス（木の上の家）|/ˈtriːhaʊs/|My treehouse is in the tree.}.
 
-**DrJill**: She helps us answer the question, who are you?
-*00:24*
+**DrJill**: She {helps|手伝う・助ける|/helps/|She helps her mother.} us answer the question, who are you?
 
 **Anna**: Hi!
-*00:32*
 
-**Anna**: Welcome to my treehouse!
-*00:33*
+**Anna**: Welcome to my {treehouse|ツリーハウス（木の上の家）|/ˈtriːhaʊs/|I love my treehouse.}!
 
 **Anna**: I am Anna.
-*00:35*
 
 **Max**: And I am Max.
-*00:37*
 
 **Anna**: That is Max.
-*00:39*
 
-**Anna**: Max is an E mailbox.
-*00:41*
+**Anna**: Max is an E {mailbox|メールボックス（郵便受け）|/ˈmeɪlˌbɑːks/|The mailbox is red.}.
 
 **Max**: Anna, I have our question for today.
 *00:44*

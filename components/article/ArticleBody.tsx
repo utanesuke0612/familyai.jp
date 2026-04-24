@@ -10,11 +10,12 @@
  * - リンクは外部リンクを新タブで開く
  */
 
-import { useState, useRef } from 'react';
+import { useState, useRef, Fragment, type ReactNode } from 'react';
 import ReactMarkdown     from 'react-markdown';
 import remarkGfm         from 'remark-gfm';
 import rehypeSanitize    from 'rehype-sanitize';
 import rehypeHighlight   from 'rehype-highlight';
+import { AnnotatedWord } from '@/components/article/AnnotatedWord';
 import bash              from 'highlight.js/lib/languages/bash';
 import css               from 'highlight.js/lib/languages/css';
 import javascript        from 'highlight.js/lib/languages/javascript';
@@ -61,6 +62,51 @@ const YOUTUBE_EMBED_HOSTS = new Set([
   'youtube-nocookie.com',
   'youtu.be',
 ]);
+
+// 単語ツールチップ構文 `{word|meaning|pron?|example?}` を検出
+const ANNOTATE_REGEX = /\{([^|{}\n]+)\|([^|{}\n]+)(?:\|([^|{}\n]*))?(?:\|([^{}\n]*))?\}/g;
+
+/** 文字列内の `{word|meaning|...}` を AnnotatedWord に分割展開 */
+function splitAnnotated(text: string): ReactNode[] {
+  ANNOTATE_REGEX.lastIndex = 0;
+  const parts: ReactNode[] = [];
+  let last = 0;
+  let m: RegExpExecArray | null;
+  let key = 0;
+  while ((m = ANNOTATE_REGEX.exec(text)) !== null) {
+    if (m.index > last) parts.push(text.slice(last, m.index));
+    const [, word, meaning, pron, example] = m;
+    parts.push(
+      <AnnotatedWord
+        key={`aw-${key++}`}
+        word={word.trim()}
+        meaning={meaning.trim()}
+        pron={pron?.trim() || undefined}
+        example={example?.trim() || undefined}
+      />,
+    );
+    last = m.index + m[0].length;
+  }
+  if (last < text.length) parts.push(text.slice(last));
+  return parts;
+}
+
+/** 子要素をたどって文字列だけ AnnotatedWord 展開する */
+function annotateChildren(children: ReactNode): ReactNode {
+  if (typeof children === 'string') {
+    if (!children.includes('{')) return children;
+    return <>{splitAnnotated(children)}</>;
+  }
+  if (Array.isArray(children)) {
+    return children.map((c, i) => {
+      if (typeof c === 'string' && c.includes('{')) {
+        return <Fragment key={`as-${i}`}>{splitAnnotated(c)}</Fragment>;
+      }
+      return c;
+    });
+  }
+  return children;
+}
 
 function getIframeAttr(tag: string, attr: string): string | null {
   const escapedAttr = attr.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
@@ -201,6 +247,21 @@ function CodeBlockWithCopy({ children, ...props }: React.HTMLAttributes<HTMLPreE
 
 // ── カスタムコンポーネント ─────────────────────────────────────
 const components: Components = {
+  // 段落・見出し・リスト・リンクなどテキストを含むノードは `annotateChildren` で
+  // `{word|meaning|pron|example}` 構文を AnnotatedWord へ展開する
+  p({ children, ...props }) {
+    return <p {...props}>{annotateChildren(children)}</p>;
+  },
+  li({ children, ...props }) {
+    return <li {...props}>{annotateChildren(children)}</li>;
+  },
+  strong({ children, ...props }) {
+    return <strong {...props}>{annotateChildren(children)}</strong>;
+  },
+  em({ children, ...props }) {
+    return <em {...props}>{annotateChildren(children)}</em>;
+  },
+
   // 外部リンク → 新タブ + rel=noopener
   a({ href, children, ...props }) {
     const isExternal = href?.startsWith('http');
@@ -211,7 +272,7 @@ const components: Components = {
         rel={isExternal ? 'noopener noreferrer' : undefined}
         {...props}
       >
-        {children}
+        {annotateChildren(children)}
       </a>
     );
   },

@@ -107,7 +107,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 349.5
+    "width": 200
   },
   "right": {
     "id": "57a3e054ad487534",
@@ -214,6 +214,11 @@
   },
   "active": "2d09003b87ec32f7",
   "lastOpenFiles": [
+    "todo/04_ログイン後機能ロードマップ.md",
+    "app/(site)/tools/voaenglish/vocab/page.tsx",
+    "app/(site)/tools/voaenglish/vocab",
+    "lib/voaenglish/vocab-store.ts",
+    "components/article/AnnotatedWord.tsx",
     "content/articles/ai-homework-helper.md",
     "content/voaenglish/01_Beginning_01_anna_Lesson01.md",
     "drizzle/0003_add_categories_gin_index.sql",
@@ -241,15 +246,10 @@
     "content/voaenglish/01_Beginning_01_anna_Lesson26.md",
     "content/voaenglish/01_Beginning_01_anna_Lesson25.md",
     "content/voaenglish/01_Beginning_01_anna_Lesson24.md",
-    "content/voaenglish/01_Beginning_01_anna_Lesson23.md",
     "app/(site)/tools/voaenglish/[course]/[lesson]/page.tsx",
     "app/(site)/tools/voaenglish/[course]/[lesson]",
     "app/(site)/tools/voaenglish/[course]",
     "lib/voaenglish/lessons.ts",
-    "lib/voaenglish",
-    "app/(site)/tools/voaenglish/anna/page.tsx",
-    "app/(site)/tools/voaenglish/anna",
-    "app/(site)/tools/voaenglish/page.tsx",
     "node_modules/@vitest/ui/dist/client/favicon.svg",
     "node_modules/@vitest/ui/dist/client/bg.png",
     "Pasted image 20260421075804.png",

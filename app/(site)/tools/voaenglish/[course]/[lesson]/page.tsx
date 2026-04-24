@@ -148,6 +148,18 @@ export default async function VoaLessonPage({
             >
               CEFR {cefr}
             </span>
+            <Link
+              href="/tools/voaenglish/vocab"
+              className="inline-flex items-center rounded-full px-4"
+              style={{
+                minHeight: '44px',
+                background: 'var(--color-yellow)',
+                color: 'var(--color-brown)',
+                boxShadow: 'var(--shadow-warm-sm)',
+              }}
+            >
+              ⭐ 単語帳
+            </Link>
           </nav>
 
           <h1

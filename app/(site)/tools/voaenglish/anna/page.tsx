@@ -134,15 +134,24 @@ export default function AnnaTopPage() {
                 Lessons
               </h2>
             </div>
-            <a
-              href="https://learningenglish.voanews.com/p/8322.html"
-              target="_blank"
-              rel="noreferrer"
-              className="text-sm font-semibold"
-              style={{ color: 'var(--color-orange)' }}
-            >
-              VOA公式で全レッスンを見る ↗
-            </a>
+            <div className="flex flex-wrap items-center gap-4">
+              <Link
+                href="/tools/voaenglish/vocab"
+                className="text-sm font-semibold"
+                style={{ color: 'var(--color-orange)' }}
+              >
+                ⭐ わたしの単語帳を開く →
+              </Link>
+              <a
+                href="https://learningenglish.voanews.com/p/8322.html"
+                target="_blank"
+                rel="noreferrer"
+                className="text-sm font-semibold"
+                style={{ color: 'var(--color-orange)' }}
+              >
+                VOA公式で全レッスンを見る ↗
+              </a>
+            </div>
           </div>
 
           <ul className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
