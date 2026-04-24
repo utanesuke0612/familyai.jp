@@ -265,13 +265,30 @@ export function AIChatWidget({
 
       // Rev28 #HIGH-3: ストリーム確立前のエラーは 4xx/5xx JSON で返る
       if (!res.ok) {
-        let message = `HTTP ${res.status}`;
+        let serverMessage: string | null = null;
+        let serverCode:    string | null = null;
         try {
-          const j = await res.json() as { error?: { message?: string } | string };
-          if (typeof j.error === 'string')                 message = j.error;
-          else if (j.error?.message)                       message = j.error.message;
+          const j = await res.json() as { error?: { message?: string; code?: string } | string };
+          if (typeof j.error === 'string')                 serverMessage = j.error;
+          else if (j.error?.message)                       serverMessage = j.error.message;
+          if (typeof j.error === 'object' && j.error?.code) serverCode = j.error.code;
         } catch { /* JSON でない場合は既定メッセージ */ }
-        throw new Error(message);
+
+        // ユーザー向けに分かりやすいメッセージを組み立てる
+        let friendly: string;
+        if (res.status === 429 || serverCode === 'RATE_LIMIT_EXCEEDED') {
+          friendly = serverMessage
+            ?? '今日のAI利用回数の上限に達しました。明日またお試しください（ログインすると上限が増えます）。';
+        } else if (res.status === 401 || res.status === 403) {
+          friendly = serverMessage ?? 'ログインが必要、またはアクセスが許可されていません。';
+        } else if (res.status === 400) {
+          friendly = serverMessage ?? '入力内容を確認してもう一度お試しください。';
+        } else if (res.status >= 500) {
+          friendly = serverMessage ?? 'サーバーでエラーが発生しました。少し時間をおいてから再度お試しください。';
+        } else {
+          friendly = serverMessage ?? `通信エラーが発生しました（HTTP ${res.status}）。`;
+        }
+        throw new Error(friendly);
       }
       if (!res.body) throw new Error(`HTTP ${res.status}`);
 
@@ -335,14 +352,15 @@ export function AIChatWidget({
     } catch (err) {
       if ((err as Error).name === 'AbortError') return;
 
+      const msg = (err as Error).message?.trim() || 'エラーが発生しました。もう一度お試しください。';
       setMessages((prev) =>
         prev.map((m) =>
           m.id === assistantId
-            ? { ...m, content: 'エラーが発生しました。もう一度お試しください。', streaming: false }
+            ? { ...m, content: msg, streaming: false }
             : m,
         ),
       );
-      setError('エラーが発生しました。');
+      setError(msg);
     }
   }, [input, isLoading, messages, articleTitle, articleExcerpt, articleCategories]);
 
@@ -445,7 +463,14 @@ export function AIChatWidget({
 
         {/* エラー通知 */}
         {error && (
-          <p className="text-xs text-center px-3 py-2 rounded-xl" style={{ background: 'var(--color-beige)', color: 'var(--color-brown-light)' }}>
+          <p
+            className="text-xs leading-relaxed px-3 py-2 rounded-xl"
+            style={{
+              background: 'var(--color-peach-light, var(--color-beige))',
+              color:      'var(--color-brown)',
+              border:     '1px solid var(--color-beige-dark)',
+            }}
+          >
             ⚠️ {error}
           </p>
         )}

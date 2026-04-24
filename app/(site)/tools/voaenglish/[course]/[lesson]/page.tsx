@@ -117,8 +117,9 @@ export default async function VoaLessonPage({
           <nav className="flex flex-wrap items-center gap-3 text-sm font-semibold mb-5">
             <Link
               href={`/tools/voaenglish/${course}`}
-              className="rounded-full px-4 py-2"
+              className="inline-flex items-center rounded-full px-4"
               style={{
+                minHeight: '44px',
                 background: 'rgba(255,255,255,0.9)',
                 color: 'var(--color-brown)',
                 boxShadow: 'var(--shadow-warm-sm)',
@@ -127,14 +128,19 @@ export default async function VoaLessonPage({
               ← {data.courseTitle || course} へ戻る
             </Link>
             <span
-              className="rounded-full px-4 py-2"
-              style={{ background: 'rgba(255,255,255,0.85)', color: 'var(--color-brown)' }}
+              className="inline-flex items-center rounded-full px-4"
+              style={{
+                minHeight: '44px',
+                background: 'rgba(255,255,255,0.85)',
+                color: 'var(--color-brown)',
+              }}
             >
               {levelIcon} {levelLabel} Level
             </span>
             <span
-              className="rounded-full px-3 py-2 text-xs"
+              className="inline-flex items-center rounded-full px-3 text-xs"
               style={{
+                minHeight: '44px',
                 background: 'rgba(255,255,255,0.85)',
                 color: 'var(--color-brown)',
                 border: '1px solid rgba(120, 80, 40, 0.15)',
@@ -199,17 +205,17 @@ export default async function VoaLessonPage({
               {prev ? (
                 <Link
                   href={`/tools/voaenglish/${prev.course}/${prev.slug}`}
-                  className="flex flex-col gap-1 rounded-2xl p-4"
+                  className="flex items-center gap-3 rounded-2xl p-4"
                   style={{
                     background: 'rgba(255,255,255,0.9)',
                     boxShadow: 'var(--shadow-warm-sm)',
                     color: 'var(--color-brown)',
                   }}
                 >
-                  <span className="text-xs font-semibold" style={{ color: 'var(--color-brown-light)' }}>
+                  <span className="shrink-0 text-xs font-semibold" style={{ color: 'var(--color-brown-light)' }}>
                     ← 前のレッスン
                   </span>
-                  <span className="text-sm font-bold">
+                  <span className="truncate text-sm font-bold">
                     {prev.lessonNumber ? `Lesson ${prev.lessonNumber}: ` : ''}{prev.title}
                   </span>
                 </Link>
@@ -217,18 +223,18 @@ export default async function VoaLessonPage({
               {next ? (
                 <Link
                   href={`/tools/voaenglish/${next.course}/${next.slug}`}
-                  className="flex flex-col gap-1 rounded-2xl p-4 text-right"
+                  className="flex items-center justify-end gap-3 rounded-2xl p-4"
                   style={{
                     background: 'rgba(255,255,255,0.9)',
                     boxShadow: 'var(--shadow-warm-sm)',
                     color: 'var(--color-brown)',
                   }}
                 >
-                  <span className="text-xs font-semibold" style={{ color: 'var(--color-brown-light)' }}>
-                    次のレッスン →
-                  </span>
-                  <span className="text-sm font-bold">
+                  <span className="truncate text-sm font-bold">
                     {next.lessonNumber ? `Lesson ${next.lessonNumber}: ` : ''}{next.title}
+                  </span>
+                  <span className="shrink-0 text-xs font-semibold" style={{ color: 'var(--color-brown-light)' }}>
+                    次のレッスン →
                   </span>
                 </Link>
               ) : <div />}
