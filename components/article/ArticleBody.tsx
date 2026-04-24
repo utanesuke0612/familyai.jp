@@ -15,7 +15,39 @@ import ReactMarkdown     from 'react-markdown';
 import remarkGfm         from 'remark-gfm';
 import rehypeSanitize    from 'rehype-sanitize';
 import rehypeHighlight   from 'rehype-highlight';
+import bash              from 'highlight.js/lib/languages/bash';
+import css               from 'highlight.js/lib/languages/css';
+import javascript        from 'highlight.js/lib/languages/javascript';
+import json              from 'highlight.js/lib/languages/json';
+import python            from 'highlight.js/lib/languages/python';
+import shell             from 'highlight.js/lib/languages/shell';
+import sql               from 'highlight.js/lib/languages/sql';
+import typescript        from 'highlight.js/lib/languages/typescript';
+import xml               from 'highlight.js/lib/languages/xml';
+import yaml              from 'highlight.js/lib/languages/yaml';
 import type { Components } from 'react-markdown';
+
+// rehype-highlight の `languages` オプションで使用言語を限定し、
+// highlight.js の全言語（200+）を bundle に取り込むのを防ぐ
+const highlightLanguages = {
+  bash,
+  shell,
+  css,
+  html:       xml,   // highlight.js では HTML は xml として登録
+  javascript,
+  js:         javascript,
+  json,
+  python,
+  py:         python,
+  sql,
+  typescript,
+  ts:         typescript,
+  tsx:        typescript,
+  jsx:        javascript,
+  xml,
+  yaml,
+  yml:        yaml,
+};
 
 type ArticleSegment =
   | { type: 'markdown'; content: string }
@@ -354,7 +386,10 @@ export function ArticleBody({ content, className = '' }: ArticleBodyProps) {
             <ReactMarkdown
               key={`markdown-${index}`}
               remarkPlugins={[remarkGfm]}
-              rehypePlugins={[rehypeSanitize, rehypeHighlight]}
+              rehypePlugins={[
+                rehypeSanitize,
+                [rehypeHighlight, { languages: highlightLanguages, detect: true }],
+              ]}
               components={components}
             >
               {segment.content}

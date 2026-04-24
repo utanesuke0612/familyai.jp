@@ -53,6 +53,8 @@ export const articles = pgTable(
     idxPublishedAt: index('articles_published_at_idx').on(table.publishedAt),
     idxViewCount:   index('articles_view_count_idx').on(table.viewCount),
     idxIsFeatured:  index('articles_is_featured_idx').on(table.isFeatured),
+    // 配列カラムの絞込に GIN（`@>` `&&` オペレータで使用）
+    idxCategories:  index('articles_categories_gin_idx').using('gin', table.categories),
   }),
 );
 

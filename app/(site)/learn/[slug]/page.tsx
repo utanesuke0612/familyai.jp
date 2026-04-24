@@ -155,10 +155,13 @@ function JsonLd({ article }: { article: NonNullable<Awaited<ReturnType<typeof ge
     ...(audioObject && { audio: audioObject }),
   };
 
+  // `</script>` 抜け出し・`<!--` 早期終了を防ぐため、`<` を U+003C のエスケープに置換
+  const safeJson = JSON.stringify(schema).replace(/</g, '\\u003c');
+
   return (
     <script
       type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+      dangerouslySetInnerHTML={{ __html: safeJson }}
     />
   );
 }

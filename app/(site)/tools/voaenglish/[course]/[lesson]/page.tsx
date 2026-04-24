@@ -104,12 +104,17 @@ export default async function VoaLessonPage({
 
   return (
     <main style={{ background: 'var(--color-cream)' }}>
-      <section
-        className="px-6 py-8 sm:py-10"
-        style={{ background: `linear-gradient(160deg, ${accent} 0%, var(--color-cream) 100%)` }}
+      <header
+        style={{
+          background: `linear-gradient(160deg, ${accent} 0%, var(--color-cream) 100%)`,
+          paddingBlock: 'clamp(16px, 2.5vw, 28px)',
+        }}
       >
-        <div className="mx-auto flex max-w-4xl flex-col gap-5">
-          <div className="flex flex-wrap items-center gap-3 text-sm font-semibold">
+        <div
+          className="max-w-container mx-auto"
+          style={{ paddingInline: 'var(--container-px)' }}
+        >
+          <nav className="flex flex-wrap items-center gap-3 text-sm font-semibold mb-5">
             <Link
               href={`/tools/voaenglish/${course}`}
               className="rounded-full px-4 py-2"
@@ -137,92 +142,110 @@ export default async function VoaLessonPage({
             >
               CEFR {cefr}
             </span>
-          </div>
+          </nav>
 
+          <h1
+            className="font-display font-bold leading-tight"
+            style={{ fontSize: 'clamp(22px, 4vw, 42px)', color: 'var(--color-brown)' }}
+          >
+            {headline}
+          </h1>
+        </div>
+      </header>
+
+      <section
+        style={{
+          background: 'var(--color-cream)',
+          paddingBlock: 'clamp(8px, 1.25vw, 16px)',
+        }}
+      >
+        <div
+          className="max-w-container mx-auto"
+          style={{ paddingInline: 'var(--container-px)' }}
+        >
+          <div className="grid grid-cols-1 lg:grid-cols-[1fr_340px] gap-8 items-start">
+            <div className="min-w-0">
+              <ArticleBody content={data.body} className="!max-w-none" />
+            </div>
+            <aside className="flex flex-col gap-6 lg:sticky lg:top-[calc(var(--header-height)+24px)]">
+              <AIChatWidget
+                articleTitle={headline}
+                articleSlug={`voa-${course}-${lesson}`}
+                articleExcerpt={`VOA Learning English のコース「${data.courseTitle}」の${headline}。CEFR ${cefr}。${data.voaUrl ? `公式: ${data.voaUrl}` : ''}`}
+                articleCategories={['education']}
+                suggestedQuestions={[
+                  'このレッスンを日本語でやさしく要約して',
+                  '重要な単語と意味を5つ教えて',
+                  '役立つ例文を3つ作って',
+                ]}
+              />
+            </aside>
+          </div>
+        </div>
+      </section>
+
+      <section
+        style={{
+          background: 'var(--color-cream)',
+          paddingBlock: 'clamp(12px, 2vw, 20px)',
+        }}
+      >
+        <div
+          className="max-w-container mx-auto"
+          style={{ paddingInline: 'var(--container-px)' }}
+        >
           <div className="flex flex-col gap-4">
-            <h1
-              className="font-display font-bold leading-tight"
-              style={{ fontSize: 'clamp(26px, 4.2vw, 44px)', color: 'var(--color-brown)' }}
-            >
-              {headline}
-            </h1>
-          </div>
-        </div>
-      </section>
+            <div className="grid gap-3 sm:grid-cols-2">
+              {prev ? (
+                <Link
+                  href={`/tools/voaenglish/${prev.course}/${prev.slug}`}
+                  className="flex flex-col gap-1 rounded-2xl p-4"
+                  style={{
+                    background: 'rgba(255,255,255,0.9)',
+                    boxShadow: 'var(--shadow-warm-sm)',
+                    color: 'var(--color-brown)',
+                  }}
+                >
+                  <span className="text-xs font-semibold" style={{ color: 'var(--color-brown-light)' }}>
+                    ← 前のレッスン
+                  </span>
+                  <span className="text-sm font-bold">
+                    {prev.lessonNumber ? `Lesson ${prev.lessonNumber}: ` : ''}{prev.title}
+                  </span>
+                </Link>
+              ) : <div />}
+              {next ? (
+                <Link
+                  href={`/tools/voaenglish/${next.course}/${next.slug}`}
+                  className="flex flex-col gap-1 rounded-2xl p-4 text-right"
+                  style={{
+                    background: 'rgba(255,255,255,0.9)',
+                    boxShadow: 'var(--shadow-warm-sm)',
+                    color: 'var(--color-brown)',
+                  }}
+                >
+                  <span className="text-xs font-semibold" style={{ color: 'var(--color-brown-light)' }}>
+                    次のレッスン →
+                  </span>
+                  <span className="text-sm font-bold">
+                    {next.lessonNumber ? `Lesson ${next.lessonNumber}: ` : ''}{next.title}
+                  </span>
+                </Link>
+              ) : <div />}
+            </div>
 
-      <section className="px-6 py-8 sm:py-10">
-        <div className="mx-auto grid max-w-6xl grid-cols-1 items-start gap-8 lg:grid-cols-[1fr_340px]">
-          <div className="min-w-0">
-            <ArticleBody content={data.body} className="!max-w-none" />
-          </div>
-          <aside className="flex flex-col gap-6 lg:sticky lg:top-[calc(var(--header-height)+24px)]">
-            <AIChatWidget
-              articleTitle={headline}
-              articleSlug={`voa-${course}-${lesson}`}
-              articleExcerpt={`VOA Learning English のコース「${data.courseTitle}」の${headline}。CEFR ${cefr}。${data.voaUrl ? `公式: ${data.voaUrl}` : ''}`}
-              articleCategories={['education']}
-              suggestedQuestions={[
-                'このレッスンを日本語でやさしく要約して',
-                '重要な単語と意味を5つ教えて',
-                '役立つ例文を3つ作って',
-              ]}
-            />
-          </aside>
-        </div>
-      </section>
-
-      <section className="px-6 py-6">
-        <div className="mx-auto flex max-w-3xl flex-col gap-4">
-          <div className="grid gap-3 sm:grid-cols-2">
-            {prev ? (
-              <Link
-                href={`/tools/voaenglish/${prev.course}/${prev.slug}`}
-                className="flex flex-col gap-1 rounded-2xl p-4"
-                style={{
-                  background: 'rgba(255,255,255,0.9)',
-                  boxShadow: 'var(--shadow-warm-sm)',
-                  color: 'var(--color-brown)',
-                }}
+            {data.voaUrl ? (
+              <a
+                href={data.voaUrl}
+                target="_blank"
+                rel="noreferrer"
+                className="self-start text-sm font-semibold"
+                style={{ color: 'var(--color-orange)' }}
               >
-                <span className="text-xs font-semibold" style={{ color: 'var(--color-brown-light)' }}>
-                  ← 前のレッスン
-                </span>
-                <span className="text-sm font-bold">
-                  {prev.lessonNumber ? `Lesson ${prev.lessonNumber}: ` : ''}{prev.title}
-                </span>
-              </Link>
-            ) : <div />}
-            {next ? (
-              <Link
-                href={`/tools/voaenglish/${next.course}/${next.slug}`}
-                className="flex flex-col gap-1 rounded-2xl p-4 text-right"
-                style={{
-                  background: 'rgba(255,255,255,0.9)',
-                  boxShadow: 'var(--shadow-warm-sm)',
-                  color: 'var(--color-brown)',
-                }}
-              >
-                <span className="text-xs font-semibold" style={{ color: 'var(--color-brown-light)' }}>
-                  次のレッスン →
-                </span>
-                <span className="text-sm font-bold">
-                  {next.lessonNumber ? `Lesson ${next.lessonNumber}: ` : ''}{next.title}
-                </span>
-              </Link>
-            ) : <div />}
+                VOA公式ページを開く ↗
+              </a>
+            ) : null}
           </div>
-
-          {data.voaUrl ? (
-            <a
-              href={data.voaUrl}
-              target="_blank"
-              rel="noreferrer"
-              className="self-start text-sm font-semibold"
-              style={{ color: 'var(--color-orange)' }}
-            >
-              VOA公式ページを開く ↗
-            </a>
-          ) : null}
         </div>
       </section>
     </main>

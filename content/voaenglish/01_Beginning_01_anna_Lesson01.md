@@ -33,3 +33,9 @@ Pete: Well, Anna with two "n's" ... Welcome to ... 1400 Irving Street!
 Anna: My new apartment! Yes!
 
 # ✨ AIと一緒に、もっと分かる
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/TR6U8Sa88Jc?si=F4YjTaxLJEkmugkl" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+```
+Test
+```

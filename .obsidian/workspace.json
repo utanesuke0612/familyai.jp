@@ -11,13 +11,46 @@
             "id": "99561ed37d359016",
             "type": "leaf",
             "state": {
-              "type": "empty",
-              "state": {},
+              "type": "markdown",
+              "state": {
+                "file": "todo/テスト結果/Backup/Codexレビュー.md",
+                "mode": "source",
+                "source": false
+              },
               "icon": "lucide-file",
-              "title": "新規タブ"
+              "title": "Codexレビュー"
+            }
+          },
+          {
+            "id": "91b0e0f8ef0a50ac",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "todo/02_CodingAgent指示書.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "02_CodingAgent指示書"
+            }
+          },
+          {
+            "id": "2d09003b87ec32f7",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "content/articles/ai-homework-helper.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "ai-homework-helper"
             }
           }
-        ]
+        ],
+        "currentTab": 2
       }
     ],
     "direction": "vertical"
@@ -179,50 +212,50 @@
       "bases:新規ベースを作成": false
     }
   },
-  "active": "ca23478f21528c65",
+  "active": "2d09003b87ec32f7",
   "lastOpenFiles": [
-    "todo/UI_Modify.md",
-    "todo/テスト結果/Rev27_実装指示.md",
-    "todo/テスト結果/Codexレビュー結果に対してClaudeの見解.md",
-    "todo/テスト結果/Codexレビュー_v2(修正後のレビュー).md",
-    "todo/テスト結果/Codexレビュー.md",
-    "components/article/PdfViewer.tsx",
-    "components/article/DictationWidget.tsx",
-    "scripts/add-dictation-columns.ts",
-    "todo/05_Dictation機能指示書.md",
-    "node_modules/rolldown/dist/shared/rolldown-build-BPKCFYpX.mjs",
-    "node_modules/argparse/lib/textwrap.js",
-    "node_modules/rolldown/dist/shared/resolve-tsconfig-BVTabsge.mjs",
-    "node_modules/rolldown/dist/shared/prompt-U5ajztzG.mjs",
-    "node_modules/argparse/lib/sub.js",
-    "node_modules/argparse/argparse.js",
-    "node_modules/rolldown/dist/shared/parse-Ceo3uqkd.mjs",
-    "node_modules/hast-util-parse-selector/readme.md",
-    "node_modules/entities/readme.md",
-    "node_modules/vfile-location/readme.md",
-    "node_modules/hast-util-to-parse5/readme.md",
-    "node_modules/hastscript/readme.md",
-    "node_modules/web-namespaces/readme.md",
-    "node_modules/parse5/README.md",
-    "node_modules/html-void-elements/readme.md",
-    "node_modules/hast-util-from-parse5/readme.md",
-    "node_modules/hast-util-raw/readme.md",
-    "node_modules/rehype-raw/readme.md",
+    "drizzle/0003_add_categories_gin_index.sql",
+    "drizzle/meta/0003_snapshot.json",
+    "content/articles/english-learning-voice-ai.md",
+    "content/voaenglish/01_Beginning_01_anna_Lesson04.md",
+    "content/voaenglish/01_Beginning_01_anna_Lesson03.md",
+    "content/voaenglish/01_Beginning_01_anna_Lesson02.md",
+    "content/voaenglish/01_Beginning_01_anna_Lesson01.md",
+    "content/voaenglish/01_Beginning_01_anna_Lesson10.md",
+    "content/voaenglish/01_Beginning_01_anna_Lesson14.md",
+    "content/voaenglish/01_Beginning_01_anna_Lesson40.md",
+    "content/voaenglish/01_Beginning_01_anna_Lesson39.md",
+    "content/voaenglish/01_Beginning_01_anna_Lesson38.md",
+    "content/voaenglish/01_Beginning_01_anna_Lesson37.md",
+    "content/voaenglish/01_Beginning_01_anna_Lesson36.md",
+    "content/voaenglish/01_Beginning_01_anna_Lesson35.md",
+    "content/voaenglish/01_Beginning_01_anna_Lesson34.md",
+    "content/voaenglish/01_Beginning_01_anna_Lesson33.md",
+    "content/voaenglish/01_Beginning_01_anna_Lesson32.md",
+    "content/voaenglish/01_Beginning_01_anna_Lesson31.md",
+    "content/voaenglish/01_Beginning_01_anna_Lesson30.md",
+    "content/voaenglish/01_Beginning_01_anna_Lesson29.md",
+    "content/voaenglish/01_Beginning_01_anna_Lesson28.md",
+    "content/voaenglish/01_Beginning_01_anna_Lesson27.md",
+    "content/voaenglish/01_Beginning_01_anna_Lesson26.md",
+    "content/voaenglish/01_Beginning_01_anna_Lesson25.md",
+    "content/voaenglish/01_Beginning_01_anna_Lesson24.md",
+    "content/voaenglish/01_Beginning_01_anna_Lesson23.md",
+    "app/(site)/tools/voaenglish/[course]/[lesson]/page.tsx",
+    "app/(site)/tools/voaenglish/[course]/[lesson]",
+    "app/(site)/tools/voaenglish/[course]",
+    "lib/voaenglish/lessons.ts",
+    "lib/voaenglish",
+    "app/(site)/tools/voaenglish/anna/page.tsx",
+    "app/(site)/tools/voaenglish/anna",
+    "app/(site)/tools/voaenglish/page.tsx",
+    "app/(site)/tools/voaenglish",
+    "node_modules/@vitest/ui/dist/client/favicon.svg",
+    "node_modules/@vitest/ui/dist/client/bg.png",
     "Pasted image 20260421075804.png",
-    "todo/20260421_v1_手動確認結果.md",
     "Pasted image 20260421081023.png",
     "Pasted image 20260421080548.png",
     "Pasted image 20260421080105.png",
-    "todo/テスト結果/TestResult_20260420_1529.md",
-    "todo/テスト結果/TestResult_202604192243.md",
-    "todo/テスト結果/TestResult_202604192224.md",
-    "todo/ソースコードレビュー/Rev27_実装指示.md",
-    "todo/ソースコードレビュー/Codexレビュー.md",
-    "todo/01_システム設計書.md",
-    "todo/02_CodingAgent指示書.md",
-    "todo/03_手作業手順書.md",
-    "node_modules/@vitest/ui/dist/client/favicon.svg",
-    "node_modules/@vitest/ui/dist/client/bg.png",
     "!Backup/Pasted image 20260416194856.png",
     "node_modules/highlight.js/styles/pojoaque.jpg",
     "node_modules/highlight.js/styles/brown-papersq.png",
