@@ -10,6 +10,7 @@
  */
 
 import { useState, useRef, useEffect, useCallback } from 'react';
+import { useAiMemoBookmark } from '@/lib/ai-memo-store';
 
 // ── 型定義 ─────────────────────────────────────────────────────
 interface Message {
@@ -76,10 +77,18 @@ function formatAssistantContent(raw: string): React.ReactNode {
   });
 }
 
+interface ChatBubbleProps {
+  message:      Message;
+  question?:    string;
+  articleTitle: string;
+  articleSlug?: string;
+}
+
 // ── チャットバブル ─────────────────────────────────────────────
-function ChatBubble({ message }: { message: Message }) {
+function ChatBubble({ message, question, articleTitle, articleSlug }: ChatBubbleProps) {
   const isUser = message.role === 'user';
   const [copied, setCopied] = useState(false);
+  const { saved, toggle } = useAiMemoBookmark(message.id);
 
   const handleCopy = async () => {
     try {
@@ -87,6 +96,16 @@ function ChatBubble({ message }: { message: Message }) {
       setCopied(true);
       setTimeout(() => setCopied(false), 1500);
     } catch { /* noop */ }
+  };
+
+  const handleSave = () => {
+    toggle({
+      id:           message.id,
+      answer:       message.content,
+      question:     question ?? '',
+      articleTitle,
+      articleSlug,
+    });
   };
 
   return (
@@ -129,20 +148,36 @@ function ChatBubble({ message }: { message: Message }) {
         </div>
 
         {!isUser && message.content && !message.streaming && (
-          <button
-            type="button"
-            onClick={handleCopy}
-            aria-label="回答をコピー"
-            className="self-start text-xs px-2 py-0.5 rounded-md transition-opacity hover:opacity-80"
-            style={{
-              background: copied ? 'var(--color-orange)' : 'transparent',
-              color:      copied ? 'white' : 'var(--color-brown-light)',
-              border:     '1px solid var(--color-beige-dark)',
-              minHeight:  'auto',
-            }}
-          >
-            {copied ? '✓ コピー済' : '📋 コピー'}
-          </button>
+          <div className="flex gap-1 self-start">
+            <button
+              type="button"
+              onClick={handleCopy}
+              aria-label="回答をコピー"
+              className="text-xs px-2 py-0.5 rounded-md transition-opacity hover:opacity-80"
+              style={{
+                background: copied ? 'var(--color-orange)' : 'transparent',
+                color:      copied ? 'white' : 'var(--color-brown-light)',
+                border:     '1px solid var(--color-beige-dark)',
+                minHeight:  'auto',
+              }}
+            >
+              {copied ? '✓ コピー済' : '📋 コピー'}
+            </button>
+            <button
+              type="button"
+              onClick={handleSave}
+              aria-label={saved ? 'メモから外す' : 'AIメモ帳に保存'}
+              className="text-xs px-2 py-0.5 rounded-md transition-opacity hover:opacity-80"
+              style={{
+                background: saved ? 'var(--color-orange)' : 'transparent',
+                color:      saved ? 'white' : 'var(--color-brown-light)',
+                border:     '1px solid var(--color-beige-dark)',
+                minHeight:  'auto',
+              }}
+            >
+              {saved ? '✓ 保存済' : '📌 保存'}
+            </button>
+          </div>
         )}
       </div>
     </div>
@@ -185,7 +220,7 @@ function TypingIndicator() {
 // ── メインコンポーネント ───────────────────────────────────────
 export function AIChatWidget({
   articleTitle,
-  articleSlug:    _articleSlug, // eslint-disable-line @typescript-eslint/no-unused-vars
+  articleSlug,
   articleExcerpt,
   articleCategories,
   suggestedQuestions,
@@ -458,7 +493,20 @@ export function AIChatWidget({
           </div>
         )}
 
-        {messages.map((msg) => <ChatBubble key={msg.id} message={msg} />)}
+        {messages.map((msg, idx) => {
+          const prevUserMsg = msg.role === 'assistant'
+            ? messages.slice(0, idx).findLast((m) => m.role === 'user')?.content
+            : undefined;
+          return (
+            <ChatBubble
+              key={msg.id}
+              message={msg}
+              question={prevUserMsg}
+              articleTitle={articleTitle}
+              articleSlug={articleSlug}
+            />
+          );
+        })}
         {isLoading && <TypingIndicator />}
 
         {/* エラー通知 */}
