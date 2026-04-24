@@ -149,7 +149,7 @@ export default async function VoaLessonPage({
               CEFR {cefr}
             </span>
             <Link
-              href="/tools/voaenglish/vocab"
+              href="/mypage/vocab"
               className="inline-flex items-center rounded-full px-4"
               style={{
                 minHeight: '44px',

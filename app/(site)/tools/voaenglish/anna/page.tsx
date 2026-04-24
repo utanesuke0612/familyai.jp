@@ -136,7 +136,7 @@ export default function AnnaTopPage() {
             </div>
             <div className="flex flex-wrap items-center gap-4">
               <Link
-                href="/tools/voaenglish/vocab"
+                href="/mypage/vocab"
                 className="text-sm font-semibold"
                 style={{ color: 'var(--color-orange)' }}
               >

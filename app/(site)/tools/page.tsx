@@ -179,104 +179,65 @@ export default function ToolsPage({ searchParams }: ToolsPageProps) {
 
       <section className="px-6 py-8 sm:py-10">
         <div className="max-w-5xl mx-auto grid gap-6 md:grid-cols-2">
-          {visibleSections.map(({ category, lead, tools }) => (
-            <section
-              key={category}
-              className="rounded-[28px] p-6 sm:p-7"
-              style={{
-                background: 'rgba(255,255,255,0.88)',
-                boxShadow: 'var(--shadow-warm-sm)',
-              }}
-            >
-              <div className="mb-5 flex items-start justify-between gap-4">
-                <div className="flex flex-col gap-2">
-                  <span
-                    className="inline-flex items-center gap-2 self-start rounded-full px-3 py-1 text-sm font-semibold"
-                    style={{
-                      background:
-                        category === 'education'
-                          ? 'rgba(184, 237, 216, 0.55)'
-                          : category === 'lifestyle'
-                            ? 'rgba(255, 226, 204, 0.75)'
-                            : category === 'work'
-                              ? 'rgba(200, 232, 248, 0.8)'
-                              : 'rgba(255, 236, 153, 0.8)',
-                      color: 'var(--color-brown)',
-                    }}
-                  >
-                    <span>{CATEGORY_EMOJI[category]}</span>
-                    <span>{CATEGORY_LABEL[category]}</span>
-                  </span>
-                  <p className="text-sm leading-relaxed" style={{ color: 'var(--color-brown-light)' }}>
-                    {lead}
-                  </p>
-                </div>
-                <span className="text-xs font-semibold uppercase tracking-[0.2em]" style={{ color: 'var(--color-orange)' }}>
-                  Tools
-                </span>
-              </div>
-
-              <div className="grid gap-4">
-                {tools.map((tool) => {
-                  const isReady = tool.status === '公開中';
-                  const card = (
-                    <article
-                      className="rounded-3xl p-5 transition-[transform,box-shadow] duration-200"
+          {visibleSections.flatMap(({ category, tools }) =>
+            tools.map((tool) => {
+              const isReady = tool.status === '公開中';
+              const card = (
+                <article
+                  className="rounded-3xl p-5 transition-[transform,box-shadow] duration-200"
+                  style={{
+                    background: 'linear-gradient(180deg, rgba(255,255,255,0.96) 0%, rgba(255,250,245,0.92) 100%)',
+                    boxShadow: 'var(--shadow-warm-sm)',
+                  }}
+                >
+                  <div className="mb-4 flex items-center justify-between gap-3">
+                    <span
+                      className="inline-flex items-center rounded-full px-3 py-1 text-xs font-bold"
                       style={{
-                        background: 'linear-gradient(180deg, rgba(255,255,255,0.96) 0%, rgba(255,250,245,0.92) 100%)',
-                        boxShadow: 'var(--shadow-warm-sm)',
+                        background: tool.accent,
+                        color: 'var(--color-brown)',
                       }}
                     >
-                      <div className="mb-4 flex items-center justify-between gap-3">
-                        <span
-                          className="inline-flex items-center rounded-full px-3 py-1 text-xs font-bold"
-                          style={{
-                            background: tool.accent,
-                            color: 'var(--color-brown)',
-                          }}
-                        >
-                          {tool.status}
-                        </span>
-                        <span className="text-xs font-medium" style={{ color: 'var(--color-brown-light)' }}>
-                          {CATEGORY_LABEL[category]}
-                        </span>
-                      </div>
+                      {tool.status}
+                    </span>
+                    <span className="text-xs font-medium" style={{ color: 'var(--color-brown-light)' }}>
+                      {CATEGORY_LABEL[category]}
+                    </span>
+                  </div>
 
-                      <h2
-                        className="font-display text-2xl font-bold leading-tight"
-                        style={{ color: 'var(--color-brown)' }}
-                      >
-                        {tool.name}
-                      </h2>
+                  <h2
+                    className="font-display text-2xl font-bold leading-tight"
+                    style={{ color: 'var(--color-brown)' }}
+                  >
+                    {tool.name}
+                  </h2>
 
-                      <p className="mt-3 text-sm leading-relaxed" style={{ color: 'var(--color-brown-light)' }}>
-                        {tool.summary}
-                      </p>
+                  <p className="mt-3 text-sm leading-relaxed" style={{ color: 'var(--color-brown-light)' }}>
+                    {tool.summary}
+                  </p>
 
-                      <div className="mt-5 inline-flex items-center gap-2 text-sm font-semibold" style={{ color: 'var(--color-orange)' }}>
-                        <span>{tool.cta}</span>
-                        <span aria-hidden="true">{isReady ? '→' : '·'}</span>
-                      </div>
-                    </article>
-                  );
+                  <div className="mt-5 inline-flex items-center gap-2 text-sm font-semibold" style={{ color: 'var(--color-orange)' }}>
+                    <span>{tool.cta}</span>
+                    <span aria-hidden="true">{isReady ? '→' : '·'}</span>
+                  </div>
+                </article>
+              );
 
-                  if (isReady) {
-                    return (
-                      <Link key={tool.name} href={tool.href} className="block hover:-translate-y-1">
-                        {card}
-                      </Link>
-                    );
-                  }
+              if (isReady) {
+                return (
+                  <Link key={`${category}-${tool.name}`} href={tool.href} className="block hover:-translate-y-1">
+                    {card}
+                  </Link>
+                );
+              }
 
-                  return (
-                    <div key={tool.name} aria-disabled="true">
-                      {card}
-                    </div>
-                  );
-                })}
-              </div>
-            </section>
-          ))}
+              return (
+                <div key={`${category}-${tool.name}`} aria-disabled="true">
+                  {card}
+                </div>
+              );
+            }),
+          )}
         </div>
 
         {selectedCategory ? (

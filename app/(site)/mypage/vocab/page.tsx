@@ -1,13 +1,12 @@
 'use client';
 
 /**
- * app/(site)/tools/voaenglish/vocab/page.tsx
- * familyai.jp — VOA英語学習 単語帳ページ
+ * app/(site)/mypage/vocab/page.tsx
+ * familyai.jp — MyPage 単語帳
  *
- * localStorage に保存されたブックマークを、レッスン別にグループ化して一覧表示。
- * - 🔊 ボタンで再読み上げ
- * - ⭐ ボタンで解除
- * - ヘッダー右端の「書き出し」で JSON ダウンロード
+ * VOA レッスンの AnnotatedWord から ☆ で登録した単語を一覧表示。
+ * 現在は localStorage ベース（ログイン不要で即利用可）。
+ * 将来的にはログイン時にクラウド同期する予定（todo/04_ログイン後機能ロードマップ.md の L01）。
  */
 
 import { useMemo } from 'react';
@@ -68,7 +67,7 @@ export default function VocabPage() {
         >
           <nav className="flex flex-wrap items-center gap-3 text-sm font-semibold mb-5">
             <Link
-              href="/tools/voaenglish"
+              href="/mypage"
               className="inline-flex items-center rounded-full px-4"
               style={{
                 minHeight: '44px',
@@ -77,7 +76,7 @@ export default function VocabPage() {
                 boxShadow: 'var(--shadow-warm-sm)',
               }}
             >
-              ← VOA × AI英語学習へ戻る
+              ← MyPage へ戻る
             </Link>
           </nav>
 
@@ -154,7 +153,7 @@ export default function VocabPage() {
                 まだ単語が登録されていません。
               </p>
               <p className="mt-2 text-sm" style={{ color: 'var(--color-brown-light)' }}>
-                各レッスンの青い点線の単語をクリックして、☆ ボタンで登録できます。
+                各レッスンの赤い点線の単語をクリックして、☆ ボタンで登録できます。
               </p>
               <Link
                 href="/tools/voaenglish/anna/lesson-01"
