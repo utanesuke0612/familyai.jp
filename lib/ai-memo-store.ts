@@ -10,6 +10,9 @@
  * 設計:
  *   - useAiMemoList()      : 全メモを DB から取得して一覧表示
  *   - useAiMemoBookmark()  : チャットバブル単位の保存状態（楽観的 UI）
+ *
+ * Race condition 対策:
+ *   toggle() は apiSave/apiDelete の完了を待ち、失敗時はロールバックする。
  */
 
 import { useEffect, useState, useCallback } from 'react';
@@ -38,8 +41,13 @@ async function apiSave(items: AiMemoItem[]): Promise<boolean> {
       headers: { 'Content-Type': 'application/json' },
       body:    JSON.stringify({ items }),
     });
-    return res.ok;
-  } catch {
+    if (!res.ok) {
+      console.error('[ai-memo-store] apiSave failed:', res.status, await res.text());
+      return false;
+    }
+    return true;
+  } catch (err) {
+    console.error('[ai-memo-store] apiSave error:', err);
     return false;
   }
 }
@@ -49,8 +57,13 @@ async function apiDelete(id: string): Promise<boolean> {
     const res = await fetch(`/api/user/ai-memos?id=${encodeURIComponent(id)}`, {
       method: 'DELETE',
     });
-    return res.ok;
-  } catch {
+    if (!res.ok) {
+      console.error('[ai-memo-store] apiDelete failed:', res.status, await res.text());
+      return false;
+    }
+    return true;
+  } catch (err) {
+    console.error('[ai-memo-store] apiDelete error:', err);
     return false;
   }
 }
@@ -68,30 +81,68 @@ export function useAiMemoList(): {
   remove:      (id: string) => Promise<void>;
 } {
   const { data: session, status } = useSession();
+  const userId     = session?.user?.id ?? null;
   const isLoggedIn = status === 'authenticated';
   const [items, setItems]     = useState<AiMemoItem[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     if (status === 'loading') return;
-    if (!isLoggedIn) {
+    if (!isLoggedIn || !userId) {
       setLoading(false);
       return;
     }
     setLoading(true);
     fetch('/api/user/ai-memos')
-      .then((r) => r.json())
-      .then((json: { ok: boolean; data: AiMemoItem[] }) => {
-        setItems(json.ok ? [...json.data].sort((a, b) => b.savedAt - a.savedAt) : []);
+      .then((r) => {
+        if (!r.ok) throw new Error(`HTTP ${r.status}`);
+        return r.json();
       })
-      .catch(() => setItems([]))
+      .then((json: unknown) => {
+        if (
+          json !== null &&
+          typeof json === 'object' &&
+          'ok' in json &&
+          (json as { ok: unknown }).ok === true &&
+          'data' in json &&
+          Array.isArray((json as { data: unknown }).data)
+        ) {
+          const data = (json as { data: AiMemoItem[] }).data;
+          setItems([...data].sort((a, b) => b.savedAt - a.savedAt));
+        } else {
+          setItems([]);
+        }
+      })
+      .catch((err) => {
+        console.error('[ai-memo-store] useAiMemoList fetch error:', err);
+        setItems([]);
+      })
       .finally(() => setLoading(false));
-  }, [isLoggedIn, status, session?.user?.id]);
+  }, [isLoggedIn, status, userId]);
 
   const remove = useCallback(async (id: string) => {
     // 楽観的 UI: 即座に一覧から消す
     setItems((prev) => prev.filter((i) => i.id !== id));
-    await apiDelete(id);
+    const ok = await apiDelete(id);
+    if (!ok) {
+      // 失敗時は再フェッチして正しい状態に戻す
+      fetch('/api/user/ai-memos')
+        .then((r) => r.json())
+        .then((json: unknown) => {
+          if (
+            json !== null &&
+            typeof json === 'object' &&
+            'ok' in json &&
+            (json as { ok: unknown }).ok === true &&
+            'data' in json &&
+            Array.isArray((json as { data: unknown }).data)
+          ) {
+            const data = (json as { data: AiMemoItem[] }).data;
+            setItems([...data].sort((a, b) => b.savedAt - a.savedAt));
+          }
+        })
+        .catch(() => {/* keep optimistic state */});
+    }
   }, []);
 
   return { items, loading, isLoggedIn, remove };
@@ -100,7 +151,7 @@ export function useAiMemoList(): {
 /**
  * 単一チャットバブルの保存状態を管理するフック。
  * - ページロード時は常に saved=false（チャット履歴は永続化しないため）
- * - toggle で楽観的に saved を更新し、同時に API を呼ぶ
+ * - toggle で楽観的に saved を更新し、API 失敗時はロールバック
  * - 非ログインユーザーは isLoggedIn=false → 呼び出し側でログイン案内を表示
  */
 export function useAiMemoBookmark(id: string): {
@@ -108,7 +159,7 @@ export function useAiMemoBookmark(id: string): {
   toggle:     (item: Omit<AiMemoItem, 'savedAt'>) => void;
   isLoggedIn: boolean;
 } {
-  const { data: session, status } = useSession();
+  const { status } = useSession();
   const isLoggedIn = status === 'authenticated';
   const [saved, setSaved] = useState(false);
 
@@ -116,12 +167,24 @@ export function useAiMemoBookmark(id: string): {
     (item: Omit<AiMemoItem, 'savedAt'>) => {
       if (!isLoggedIn) return; // 非ログイン時は何もしない（UI 側で案内）
       if (saved) {
+        // 楽観的削除
         setSaved(false);
-        apiDelete(item.id);
+        apiDelete(item.id).then((ok) => {
+          if (!ok) {
+            // ロールバック
+            setSaved(true);
+          }
+        });
       } else {
+        // 楽観的追加
         const full = { ...item, savedAt: Date.now() };
         setSaved(true);
-        apiSave([full]);
+        apiSave([full]).then((ok) => {
+          if (!ok) {
+            // ロールバック
+            setSaved(false);
+          }
+        });
       }
     },
     [isLoggedIn, saved],

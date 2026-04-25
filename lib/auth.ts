@@ -150,11 +150,21 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     // ── JWT にユーザー ID + plan を埋め込む（Rev23 #4）────────
     // plan を毎リクエストで DB から引くのを避けるため、
     // ログイン時 / トリガー時のみ users テーブルから取得してトークンに焼き込む。
-    async jwt({ token, user, trigger }) {
-      if (user?.id) token.id = user.id;
+    async jwt({ token, user, account, trigger }) {
+      // 初回サインイン時のみ user オブジェクトが渡される
+      if (user) {
+        if (account?.provider === 'google' && user.email) {
+          // Google ログイン: user.id は Google の sub（数値文字列）なので
+          // DBに挿入した UUID をメールアドレスで引く
+          const dbUser = await getUserByEmail(user.email);
+          if (dbUser) token.id = dbUser.id;
+        } else if (user.id) {
+          // Credentials ログイン: authorize() が返した DB の UUID をそのまま使用
+          token.id = user.id;
+        }
+      }
 
       // 初回ログイン or セッション更新時に plan を DB から取得
-      // （email は初回のみ user から、以降は token から解決可能）
       const shouldRefreshPlan =
         trigger === 'signIn' ||
         trigger === 'signUp' ||

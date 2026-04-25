@@ -22,7 +22,7 @@ import type { AiMemoItem }             from '@/lib/ai-memo-store';
 const memoItemSchema = z.object({
   id:           z.string().min(1).max(36),
   answer:       z.string().min(1),
-  question:     z.string().min(1),
+  question:     z.string(),           // 直前の質問がない場合は空文字を許容
   articleTitle: z.string().min(1).max(255),
   articleSlug:  z.string().max(255).optional(),
   savedAt:      z.number().int().positive(),
@@ -35,22 +35,27 @@ export async function GET() {
     return NextResponse.json({ ok: false, error: 'Unauthorized' }, { status: 401 });
   }
 
-  const rows = await db
-    .select()
-    .from(userAiMemos)
-    .where(eq(userAiMemos.userId, session.user.id))
-    .orderBy(userAiMemos.savedAt);
+  try {
+    const rows = await db
+      .select()
+      .from(userAiMemos)
+      .where(eq(userAiMemos.userId, session.user.id))
+      .orderBy(userAiMemos.savedAt);
 
-  const items: AiMemoItem[] = rows.map((r) => ({
-    id:           r.memoId,
-    answer:       r.answer,
-    question:     r.question,
-    articleTitle: r.articleTitle,
-    articleSlug:  r.articleSlug ?? undefined,
-    savedAt:      r.savedAt,
-  }));
+    const items: AiMemoItem[] = rows.map((r) => ({
+      id:           r.memoId,
+      answer:       r.answer,
+      question:     r.question,
+      articleTitle: r.articleTitle,
+      articleSlug:  r.articleSlug ?? undefined,
+      savedAt:      r.savedAt,
+    }));
 
-  return NextResponse.json({ ok: true, data: items });
+    return NextResponse.json({ ok: true, data: items });
+  } catch (err) {
+    console.error('[GET /api/user/ai-memos]', err);
+    return NextResponse.json({ ok: false, error: 'サーバーエラーが発生しました' }, { status: 500 });
+  }
 }
 
 // ── POST: メモ保存（bulk 対応・upsert） ─────────────────────────
@@ -81,20 +86,25 @@ export async function POST(req: NextRequest) {
 
   const userId = session.user.id;
 
-  await db
-    .insert(userAiMemos)
-    .values(
-      parsed.data.items.map((item) => ({
-        userId,
-        memoId:       item.id,
-        question:     item.question,
-        answer:       item.answer,
-        articleTitle: item.articleTitle,
-        articleSlug:  item.articleSlug ?? null,
-        savedAt:      item.savedAt,
-      })),
-    )
-    .onConflictDoNothing(); // user_id + memo_id が重複の場合はスキップ
+  try {
+    await db
+      .insert(userAiMemos)
+      .values(
+        parsed.data.items.map((item) => ({
+          userId,
+          memoId:       item.id,
+          question:     item.question,
+          answer:       item.answer,
+          articleTitle: item.articleTitle,
+          articleSlug:  item.articleSlug ?? null,
+          savedAt:      item.savedAt,
+        })),
+      )
+      .onConflictDoNothing(); // user_id + memo_id が重複の場合はスキップ
+  } catch (err) {
+    console.error('[POST /api/user/ai-memos]', err);
+    return NextResponse.json({ ok: false, error: 'サーバーエラーが発生しました' }, { status: 500 });
+  }
 
   return NextResponse.json({ ok: true });
 }
@@ -115,14 +125,19 @@ export async function DELETE(req: NextRequest) {
     return NextResponse.json({ ok: false, error: 'id パラメータが必要です' }, { status: 400 });
   }
 
-  await db
-    .delete(userAiMemos)
-    .where(
-      and(
-        eq(userAiMemos.userId, session.user.id),
-        eq(userAiMemos.memoId, id),
-      ),
-    );
+  try {
+    await db
+      .delete(userAiMemos)
+      .where(
+        and(
+          eq(userAiMemos.userId, session.user.id),
+          eq(userAiMemos.memoId, id),
+        ),
+      );
+  } catch (err) {
+    console.error('[DELETE /api/user/ai-memos]', err);
+    return NextResponse.json({ ok: false, error: 'サーバーエラーが発生しました' }, { status: 500 });
+  }
 
   return NextResponse.json({ ok: true });
 }

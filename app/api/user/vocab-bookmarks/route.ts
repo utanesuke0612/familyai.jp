@@ -38,25 +38,30 @@ export async function GET() {
     return NextResponse.json({ ok: false, error: 'Unauthorized' }, { status: 401 });
   }
 
-  const rows = await db
-    .select()
-    .from(userVocabBookmarks)
-    .where(eq(userVocabBookmarks.userId, session.user.id))
-    .orderBy(userVocabBookmarks.addedAt);
+  try {
+    const rows = await db
+      .select()
+      .from(userVocabBookmarks)
+      .where(eq(userVocabBookmarks.userId, session.user.id))
+      .orderBy(userVocabBookmarks.addedAt);
 
-  const items: VocabItem[] = rows.map((r) => ({
-    id:          r.vocabId,
-    word:        r.word,
-    meaning:     r.meaning,
-    pron:        r.pron ?? undefined,
-    example:     r.example ?? undefined,
-    course:      r.course ?? undefined,
-    lesson:      r.lesson ?? undefined,
-    lessonTitle: r.lessonTitle ?? undefined,
-    addedAt:     r.addedAt,
-  }));
+    const items: VocabItem[] = rows.map((r) => ({
+      id:          r.vocabId,
+      word:        r.word,
+      meaning:     r.meaning,
+      pron:        r.pron ?? undefined,
+      example:     r.example ?? undefined,
+      course:      r.course ?? undefined,
+      lesson:      r.lesson ?? undefined,
+      lessonTitle: r.lessonTitle ?? undefined,
+      addedAt:     r.addedAt,
+    }));
 
-  return NextResponse.json({ ok: true, data: items });
+    return NextResponse.json({ ok: true, data: items });
+  } catch (err) {
+    console.error('[GET /api/user/vocab-bookmarks]', err);
+    return NextResponse.json({ ok: false, error: 'サーバーエラーが発生しました' }, { status: 500 });
+  }
 }
 
 // ── POST: ブックマーク保存（bulk 対応・upsert） ─────────────────
@@ -87,23 +92,28 @@ export async function POST(req: NextRequest) {
 
   const userId = session.user.id;
 
-  await db
-    .insert(userVocabBookmarks)
-    .values(
-      parsed.data.items.map((item) => ({
-        userId,
-        vocabId:     item.id,
-        word:        item.word,
-        meaning:     item.meaning,
-        pron:        item.pron ?? null,
-        example:     item.example ?? null,
-        course:      item.course ?? null,
-        lesson:      item.lesson ?? null,
-        lessonTitle: item.lessonTitle ?? null,
-        addedAt:     item.addedAt,
-      })),
-    )
-    .onConflictDoNothing(); // user_id + vocab_id が重複の場合はスキップ
+  try {
+    await db
+      .insert(userVocabBookmarks)
+      .values(
+        parsed.data.items.map((item) => ({
+          userId,
+          vocabId:     item.id,
+          word:        item.word,
+          meaning:     item.meaning,
+          pron:        item.pron ?? null,
+          example:     item.example ?? null,
+          course:      item.course ?? null,
+          lesson:      item.lesson ?? null,
+          lessonTitle: item.lessonTitle ?? null,
+          addedAt:     item.addedAt,
+        })),
+      )
+      .onConflictDoNothing(); // user_id + vocab_id が重複の場合はスキップ
+  } catch (err) {
+    console.error('[POST /api/user/vocab-bookmarks]', err);
+    return NextResponse.json({ ok: false, error: 'サーバーエラーが発生しました' }, { status: 500 });
+  }
 
   return NextResponse.json({ ok: true });
 }
@@ -124,14 +134,19 @@ export async function DELETE(req: NextRequest) {
     return NextResponse.json({ ok: false, error: 'id パラメータが必要です' }, { status: 400 });
   }
 
-  await db
-    .delete(userVocabBookmarks)
-    .where(
-      and(
-        eq(userVocabBookmarks.userId, session.user.id),
-        eq(userVocabBookmarks.vocabId, id),
-      ),
-    );
+  try {
+    await db
+      .delete(userVocabBookmarks)
+      .where(
+        and(
+          eq(userVocabBookmarks.userId, session.user.id),
+          eq(userVocabBookmarks.vocabId, id),
+        ),
+      );
+  } catch (err) {
+    console.error('[DELETE /api/user/vocab-bookmarks]', err);
+    return NextResponse.json({ ok: false, error: 'サーバーエラーが発生しました' }, { status: 500 });
+  }
 
   return NextResponse.json({ ok: true });
 }
