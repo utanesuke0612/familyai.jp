@@ -35,6 +35,9 @@ export const metadata: Metadata = {
   ],
   authors:  [{ name: 'familyai.jp' }],
   creator:  'familyai.jp',
+  verification: {
+    google: 'mpj_iCKG8iCIBmuM1buGAGKiWseS1RKiyB3u0cBgvQg',
+  },
   robots: {
     index:  true,
     follow: true,
