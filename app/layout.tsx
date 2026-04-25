@@ -47,15 +47,19 @@ export const metadata: Metadata = {
     title:     'familyai.jp — AI活用事例とAIツール',
     description:
       '仕事・学習・日常に役立つAI活用事例と、すぐ使えるAIツールをまとめた日本語メディアです。',
-    // Rev26 #4: 画像は app/opengraph-image.tsx が自動配信（/opengraph-image）。
-    // 明示指定しないことで Next.js のファイル規約に任せ、欠落を防ぐ。
+    images: [{
+      url:    '/og-default.png',
+      width:  1200,
+      height: 630,
+      alt:    'familyai.jp — AI活用事例とAIツール',
+    }],
   },
   twitter: {
     card:        'summary_large_image',
     site:        '@familyaijp',
     title:       'familyai.jp — AI活用事例とAIツール',
     description: '仕事・学習・日常に役立つAI活用事例とAIツールを紹介します。',
-    // OG 画像は app/opengraph-image.tsx が自動生成するため未指定で OK。
+    images:      ['/og-default.png'],
   },
   // icons / manifest は app/icon.tsx、app/apple-icon.tsx、app/manifest.ts が
   // Next.js のファイル規約で自動的に配信するため、ここで明示指定しない（Rev26 #4）。
