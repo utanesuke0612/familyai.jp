@@ -41,6 +41,7 @@ export const articles = pgTable(
     // メタデータ
     thumbnailUrl:     text('thumbnail_url'),
     viewCount:        integer('view_count').notNull().default(0),         // 人気記事表示に使用
+    likeCount:        integer('like_count').notNull().default(0),         // いいね数（非正規化）
     isFeatured:       boolean('is_featured').notNull().default(false),    // トップページおすすめフラグ
     published:        boolean('published').notNull().default(false),
     publishedAt:      timestamp('published_at'),
@@ -98,10 +99,47 @@ export const audioPlayLogs = pgTable(
   }),
 );
 
+// ─── article_likes ────────────────────────────────────────────
+// いいね（ログイン不要・IP ハッシュで重複防止）
+export const articleLikes = pgTable(
+  'article_likes',
+  {
+    id:        uuid('id').defaultRandom().primaryKey(),
+    articleId: uuid('article_id').notNull().references(() => articles.id, { onDelete: 'cascade' }),
+    userId:    uuid('user_id').references(() => users.id, { onDelete: 'set null' }),
+    ipHash:    varchar('ip_hash', { length: 64 }),         // 未ログイン時の重複防止
+    createdAt: timestamp('created_at').defaultNow().notNull(),
+  },
+  (table) => ({
+    idxArticleId: index('article_likes_article_id_idx').on(table.articleId),
+    idxUserId:    index('article_likes_user_id_idx').on(table.userId),
+  }),
+);
+
+// ─── article_bookmarks ────────────────────────────────────────
+// ブックマーク（ログイン必須・ユーザーごとに管理）
+export const articleBookmarks = pgTable(
+  'article_bookmarks',
+  {
+    id:        uuid('id').defaultRandom().primaryKey(),
+    articleId: uuid('article_id').notNull().references(() => articles.id, { onDelete: 'cascade' }),
+    userId:    uuid('user_id').notNull().references(() => users.id, { onDelete: 'cascade' }),
+    createdAt: timestamp('created_at').defaultNow().notNull(),
+  },
+  (table) => ({
+    idxArticleId: index('article_bookmarks_article_id_idx').on(table.articleId),
+    idxUserId:    index('article_bookmarks_user_id_idx').on(table.userId),
+  }),
+);
+
 // ─── 型エクスポート（Drizzle の推論型） ───────────────────────
 export type Article        = typeof articles.$inferSelect;
 export type NewArticle     = typeof articles.$inferInsert;
 export type User           = typeof users.$inferSelect;
 export type NewUser        = typeof users.$inferInsert;
-export type AudioPlayLog   = typeof audioPlayLogs.$inferSelect;
-export type NewAudioPlayLog = typeof audioPlayLogs.$inferInsert;
+export type AudioPlayLog      = typeof audioPlayLogs.$inferSelect;
+export type NewAudioPlayLog   = typeof audioPlayLogs.$inferInsert;
+export type ArticleLike       = typeof articleLikes.$inferSelect;
+export type NewArticleLike    = typeof articleLikes.$inferInsert;
+export type ArticleBookmark   = typeof articleBookmarks.$inferSelect;
+export type NewArticleBookmark = typeof articleBookmarks.$inferInsert;

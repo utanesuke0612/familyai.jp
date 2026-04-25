@@ -368,8 +368,9 @@ export default async function ArticlePage({
                 </a>
               </div>
 
-              {/* フローティングシェアボタン（X・LINE） */}
+              {/* フローティングアクションボタン（いいね・ブックマーク・X・LINE） */}
               <FloatingShareButtons
+                slug={article.slug}
                 title={article.title}
                 url={`${SITE.url}/learn/${article.slug}`}
               />

@@ -29,6 +29,13 @@
       "when": 1776988563997,
       "tag": "0003_add_categories_gin_index",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1777093679147,
+      "tag": "0004_perpetual_maelstrom",
+      "breakpoints": true
     }
   ]
 }
