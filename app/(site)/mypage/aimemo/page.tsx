@@ -10,6 +10,7 @@
 
 import Link from 'next/link';
 import { useAiMemoList, type AiMemoItem } from '@/lib/ai-memo-store';
+import { MarkdownContent }               from '@/components/ui/MarkdownContent';
 
 function downloadJson(items: AiMemoItem[]) {
   const blob = new Blob([JSON.stringify(items, null, 2)], { type: 'application/json' });
@@ -21,6 +22,28 @@ function downloadJson(items: AiMemoItem[]) {
   a.click();
   a.remove();
   URL.revokeObjectURL(url);
+}
+
+/**
+ * articleSlug からリンク先 href を解決する。
+ *
+ * フォーマット別:
+ *   tools/voaenglish/anna/lesson-01  → /tools/voaenglish/anna/lesson-01  (新形式)
+ *   voa-anna-lesson-01               → /tools/voaenglish/anna/lesson-01  (旧形式・後方互換)
+ *   some-article-slug                → /learn/some-article-slug           (通常記事)
+ */
+function resolveHref(slug: string): string {
+  // 新形式: tools/ または learn/ で始まるパス
+  if (slug.startsWith('tools/') || slug.startsWith('learn/')) {
+    return `/${slug}`;
+  }
+  // 旧形式: voa-{course}-{lesson} → /tools/voaenglish/{course}/{lesson}
+  const voaMatch = slug.match(/^voa-([^-]+(?:-[^-]+)*?)-((lesson|intro|review)-\S+)$/);
+  if (voaMatch) {
+    return `/tools/voaenglish/${voaMatch[1]}/${voaMatch[2]}`;
+  }
+  // デフォルト: 通常記事
+  return `/learn/${slug}`;
 }
 
 function formatDate(ms: number) {
@@ -182,44 +205,45 @@ export default function AiMemoPage() {
                   }}
                 >
                   {/* メタ情報 */}
-                  <div className="flex flex-wrap items-center justify-between gap-2 mb-3">
-                    <div className="flex flex-wrap items-center gap-2">
-                      {item.articleSlug ? (
-                        <Link
-                          href={`/learn/${item.articleSlug}`}
-                          className="text-xs font-semibold px-2 py-1 rounded-full"
-                          style={{ background: 'var(--color-peach)', color: 'var(--color-brown)' }}
-                        >
-                          📄 {item.articleTitle}
-                        </Link>
-                      ) : (
-                        <span
-                          className="text-xs font-semibold px-2 py-1 rounded-full"
-                          style={{ background: 'var(--color-peach)', color: 'var(--color-brown)' }}
-                        >
-                          📄 {item.articleTitle}
-                        </span>
-                      )}
+                  <div className="flex items-start justify-between gap-3 mb-3">
+                    <div className="flex flex-col gap-0.5 min-w-0">
+                      <span
+                        className="font-display text-lg font-bold leading-snug"
+                        style={{ color: 'var(--color-brown)' }}
+                      >
+                        {item.articleTitle}
+                      </span>
                       <span className="text-xs" style={{ color: 'var(--color-brown-light)' }}>
                         {formatDate(item.savedAt)}
                       </span>
                     </div>
-                    <button
-                      type="button"
-                      onClick={() => remove(item.id)}
-                      aria-label="メモを削除"
-                      className="inline-flex items-center justify-center rounded-full text-sm"
-                      style={{
-                        width:      '36px',
-                        height:     '36px',
-                        minHeight:  'auto',
-                        background: 'var(--color-beige)',
-                        border:     '1px solid var(--color-beige-dark)',
-                        padding:    0,
-                      }}
-                    >
-                      🗑️
-                    </button>
+                    <div className="flex items-center gap-2 shrink-0">
+                      {item.articleSlug && (
+                        <Link
+                          href={resolveHref(item.articleSlug)}
+                          className="inline-flex items-center text-sm font-semibold whitespace-nowrap"
+                          style={{ color: 'var(--color-orange)', height: '36px' }}
+                        >
+                          レッスンを開く →
+                        </Link>
+                      )}
+                      <button
+                        type="button"
+                        onClick={() => remove(item.id)}
+                        aria-label="メモを削除"
+                        className="inline-flex items-center justify-center rounded-full text-sm"
+                        style={{
+                          width:      '36px',
+                          height:     '36px',
+                          minHeight:  'auto',
+                          background: 'var(--color-beige)',
+                          border:     '1px solid var(--color-beige-dark)',
+                          padding:    0,
+                        }}
+                      >
+                        🗑️
+                      </button>
+                    </div>
                   </div>
 
                   {/* 質問 */}
@@ -236,17 +260,19 @@ export default function AiMemoPage() {
 
                   {/* 回答 */}
                   <div
-                    className="rounded-xl px-3 py-2 text-sm whitespace-pre-wrap leading-relaxed"
+                    className="rounded-xl px-3 py-2 text-sm"
                     style={{
                       background: 'var(--color-cream)',
                       color:      'var(--color-brown)',
                       border:     '1px solid var(--color-beige-dark)',
                     }}
                   >
-                    <span className="text-xs font-semibold block mb-0.5" style={{ color: 'var(--color-brown-light)' }}>
+                    <span className="text-xs font-semibold block mb-1" style={{ color: 'var(--color-brown-light)' }}>
                       AI の回答
                     </span>
-                    {item.answer}
+                    <MarkdownContent color="var(--color-brown)" fontSize="0.875rem">
+                      {item.answer}
+                    </MarkdownContent>
                   </div>
                 </article>
               ))}

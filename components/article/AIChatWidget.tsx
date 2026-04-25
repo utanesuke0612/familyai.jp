@@ -11,6 +11,7 @@
 
 import { useState, useRef, useEffect, useCallback } from 'react';
 import { useAiMemoBookmark } from '@/lib/ai-memo-store';
+import { MarkdownContent }   from '@/components/ui/MarkdownContent';
 
 // ── 型定義 ─────────────────────────────────────────────────────
 interface Message {
@@ -125,25 +126,35 @@ function ChatBubble({ message, question, articleTitle, articleSlug }: ChatBubble
 
       <div className="max-w-[85%] flex flex-col gap-1">
         <div
-          className="px-3 py-2 text-sm leading-relaxed"
+          className="px-3 py-2 text-sm"
           style={{
             background:   isUser ? 'var(--color-orange)' : 'var(--color-beige)',
             color:        isUser ? 'white' : 'var(--color-brown)',
             borderRadius: isUser ? '18px 18px 4px 18px' : '18px 18px 18px 4px',
           }}
         >
-          {message.content
-            ? (isUser ? message.content : formatAssistantContent(message.content))
-            : (message.streaming ? '' : '…')}
-          {message.streaming && (
-            <span
-              className="inline-block w-0.5 h-4 ml-0.5 align-middle"
-              style={{
-                background: 'var(--color-brown-light)',
-                animation:  'blink 0.8s step-end infinite',
-              }}
-              aria-hidden="true"
-            />
+          {isUser ? (
+            /* ユーザー発言: プレーンテキスト */
+            <span style={{ whiteSpace: 'pre-wrap', lineHeight: 1.75 }}>
+              {message.content || (message.streaming ? '' : '…')}
+            </span>
+          ) : message.streaming ? (
+            /* ストリーミング中: プレーンテキスト + カーソル */
+            <span style={{ whiteSpace: 'pre-wrap', lineHeight: 1.75 }}>
+              {message.content}
+              <span
+                className="inline-block w-0.5 h-4 ml-0.5 align-middle"
+                style={{ background: 'var(--color-brown-light)', animation: 'blink 0.8s step-end infinite' }}
+                aria-hidden="true"
+              />
+            </span>
+          ) : message.content ? (
+            /* ストリーミング完了: Markdown レンダリング */
+            <MarkdownContent color="var(--color-brown)" fontSize="0.875rem">
+              {message.content}
+            </MarkdownContent>
+          ) : (
+            <span style={{ lineHeight: 1.75 }}>…</span>
           )}
         </div>
 

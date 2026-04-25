@@ -309,57 +309,6 @@ export default async function MyPage() {
             )}
           </article>
 
-          {/* アカウント情報カード（ログイン時のみ） */}
-          {isLoggedIn && (
-            <article
-              className="md:col-span-2 rounded-[28px] p-6"
-              style={{
-                background: 'rgba(255,255,255,0.92)',
-                boxShadow: 'var(--shadow-warm-sm)',
-              }}
-            >
-              <div className="flex items-center gap-2 mb-3">
-                <span className="text-2xl" aria-hidden="true">⚙️</span>
-                <h2 className="font-display text-xl font-bold" style={{ color: 'var(--color-brown)' }}>
-                  アカウント
-                </h2>
-              </div>
-
-              <dl className="grid gap-3 sm:grid-cols-2">
-                <div>
-                  <dt className="text-xs font-semibold" style={{ color: 'var(--color-brown-light)' }}>
-                    メールアドレス
-                  </dt>
-                  <dd className="text-sm" style={{ color: 'var(--color-brown)' }}>
-                    {session.user.email}
-                  </dd>
-                </div>
-                <div>
-                  <dt className="text-xs font-semibold" style={{ color: 'var(--color-brown-light)' }}>
-                    プラン
-                  </dt>
-                  <dd className="text-sm" style={{ color: 'var(--color-brown)' }}>
-                    {quota.label}
-                  </dd>
-                </div>
-              </dl>
-
-              <form action="/api/auth/signout" method="post" className="mt-5">
-                <button
-                  type="submit"
-                  className="inline-flex items-center rounded-full px-5 text-sm font-semibold"
-                  style={{
-                    minHeight: '44px',
-                    background: 'rgba(255,255,255,0.9)',
-                    color: 'var(--color-brown)',
-                    border: '1px solid var(--color-beige-dark)',
-                  }}
-                >
-                  ログアウト
-                </button>
-              </form>
-            </article>
-          )}
         </div>
       </section>
     </main>
