@@ -31,13 +31,6 @@ export const articles = pgTable(
     categories:       text('categories').array().notNull(),
     level:            varchar('level', { length: 20 }).notNull().default('beginner'),
 
-    // 音声コンテンツ
-    audioUrl:         text('audio_url'),
-    audioTranscript:  text('audio_transcript'),           // SEO 用テキスト・ページ本文にも表示
-    audioDurationSec: integer('audio_duration_sec'),
-    audioLanguage:    varchar('audio_language', { length: 10 }), // 語学コンテンツの言語: 'en'|'zh'|'ko' 等
-    audioPlayCount:   integer('audio_play_count').notNull().default(0),
-
     // メタデータ
     thumbnailUrl:     text('thumbnail_url'),
     viewCount:        integer('view_count').notNull().default(0),         // 人気記事表示に使用
@@ -80,23 +73,6 @@ export const users = pgTable('users', {
   updatedAt:        timestamp('updated_at').defaultNow().notNull(),
 });
 
-// ─── audio_play_logs（再生カウント重複防止用） ────────────────
-// /api/audio/play から記録。30秒以上 + 1日1回制限のチェックに使用。
-export const audioPlayLogs = pgTable(
-  'audio_play_logs',
-  {
-    id:        uuid('id').defaultRandom().primaryKey(),
-    articleId: uuid('article_id').notNull().references(() => articles.id, { onDelete: 'cascade' }),
-    // 未ログインユーザーは IP ハッシュ（プライバシー保護のため平文 IP は保存しない）
-    userId:    uuid('user_id').references(() => users.id, { onDelete: 'set null' }),
-    ipHash:    varchar('ip_hash', { length: 64 }),
-    playedAt:  timestamp('played_at').defaultNow().notNull(),
-  },
-  (table) => ({
-    idxArticleId: index('audio_play_logs_article_id_idx').on(table.articleId),
-    idxPlayedAt:  index('audio_play_logs_played_at_idx').on(table.playedAt),
-  }),
-);
 
 
 // ─── 型エクスポート（Drizzle の推論型） ───────────────────────
@@ -104,5 +80,3 @@ export type Article        = typeof articles.$inferSelect;
 export type NewArticle     = typeof articles.$inferInsert;
 export type User           = typeof users.$inferSelect;
 export type NewUser        = typeof users.$inferInsert;
-export type AudioPlayLog      = typeof audioPlayLogs.$inferSelect;
-export type NewAudioPlayLog   = typeof audioPlayLogs.$inferInsert;

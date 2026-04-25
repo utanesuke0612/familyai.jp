@@ -23,28 +23,23 @@ export type DifficultyLevel = 'beginner' | 'intermediate' | 'advanced';
  * iOS/Android など shared/api を利用するクライアントはこの契約を信頼してよい。
  */
 export interface ArticleSummary {
-  id:               string;
-  slug:             string;
-  title:            string;
-  description:      string | null;
-  categories:       ContentCategory[];
-  level:            DifficultyLevel;
-  audioUrl:         string | null;
-  audioDurationSec: number | null;
-  audioLanguage:    string | null;
-  thumbnailUrl:     string | null;
-  viewCount:        number;
-  audioPlayCount:   number;
-  isFeatured:       boolean;
-  publishedAt:      string | null;  // ISO 8601
-  updatedAt?:       string;          // ISO 8601
+  id:          string;
+  slug:        string;
+  title:       string;
+  description: string | null;
+  categories:  ContentCategory[];
+  level:       DifficultyLevel;
+  thumbnailUrl: string | null;
+  viewCount:   number;
+  isFeatured:  boolean;
+  publishedAt: string | null;  // ISO 8601
+  updatedAt?:  string;          // ISO 8601
 }
 
 /** 記事詳細型（本文 + 読了目安を含む） */
 export interface Article extends ArticleSummary {
-  body:             string;          // Markdown（旧 `content`）
-  audioTranscript:  string | null;
-  readingMin:       number;          // 読了目安（分・mapper が本文から計算）
+  body:       string;   // Markdown（<audio> タグを直接記述可能）
+  readingMin: number;   // 読了目安（分・mapper が本文から計算）
 }
 
 // ─── AI チャット関連 ───────────────────────────────────────────

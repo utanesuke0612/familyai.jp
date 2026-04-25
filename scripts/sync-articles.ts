@@ -173,7 +173,6 @@ async function syncArticles() {
       level:       String(data.level) as 'beginner' | 'intermediate' | 'advanced',
       published:   data.published === true,
       publishedAt: typeof data.publishedAt === 'string' ? new Date(data.publishedAt) : null,
-      audioUrl:    (data.audioUrl && data.audioUrl !== '~') ? String(data.audioUrl) : null,
     };
 
     try {

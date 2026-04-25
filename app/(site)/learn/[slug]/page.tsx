@@ -30,7 +30,6 @@ import {
 const getArticleCached = cache(getArticle);
 import { ArticleBody }           from '@/components/article/ArticleBody';
 import { AIChatWidget }          from '@/components/article/AIChatWidget';
-import { AudioPlayer }           from '@/components/article/AudioPlayer';
 import { FloatingShareButtons }  from '@/components/article/FloatingShareButtons';
 import { ArticleGrid }  from '@/components/article/ArticleGrid';
 import {
@@ -107,22 +106,6 @@ export async function generateMetadata({
 function JsonLd({ article }: { article: NonNullable<Awaited<ReturnType<typeof getArticle>>> }) {
   const articleUrl = `${SITE.url}/learn/${article.slug}`;
 
-  // AudioObject スキーマ（音声付き記事のみ）
-  const audioObject = article.audioUrl
-    ? {
-        '@type':      'AudioObject',
-        contentUrl:   article.audioUrl,
-        name:         `${article.title}（音声版）`,
-        inLanguage:   article.audioLanguage ?? 'ja',
-        ...(article.audioDurationSec != null && {
-          duration: `PT${Math.floor(article.audioDurationSec / 60)}M${article.audioDurationSec % 60}S`,
-        }),
-        ...(article.audioTranscript && {
-          transcript: article.audioTranscript,
-        }),
-      }
-    : undefined;
-
   const schema = {
     '@context': 'https://schema.org',
     '@type':    'Article',
@@ -149,8 +132,6 @@ function JsonLd({ article }: { article: NonNullable<Awaited<ReturnType<typeof ge
       '@id':   articleUrl,
     },
     keywords: [...article.categories, 'AI', '人工知能', '家族'].join(', '),
-    // 音声コンテンツ SEO（audioUrl がある記事のみ）
-    ...(audioObject && { audio: audioObject }),
   };
 
   // `</script>` 抜け出し・`<!--` 早期終了を防ぐため、`<` を U+003C のエスケープに置換
@@ -300,41 +281,9 @@ export default async function ArticlePage({
                 👀 {article.viewCount.toLocaleString('ja-JP')} 回読まれました
               </span>
             )}
-            {article.audioUrl && (
-              <span
-                className="flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-medium"
-                style={{ background: 'var(--color-peach-light)', color: 'var(--color-brown)' }}
-              >
-                🎵 音声コンテンツあり
-              </span>
-            )}
           </div>
         </div>
       </header>
-
-      {/* ── 音声プレーヤー（audioUrl がある場合のみ）── */}
-      {article.audioUrl && (
-        <section
-          style={{
-            background:   'var(--color-cream)',
-            paddingBlock: 'clamp(12px, 2vw, 20px)',
-          }}
-        >
-          <div
-            className="max-w-container mx-auto"
-            style={{ paddingInline: 'var(--container-px)' }}
-          >
-            <AudioPlayer
-              src={article.audioUrl}
-              title={article.title}
-              transcript={article.audioTranscript ?? null}
-              language={article.audioLanguage ?? null}
-              durationSec={article.audioDurationSec ?? null}
-              articleId={article.id}
-            />
-          </div>
-        </section>
-      )}
 
       {/* ── 本文エリア ── */}
       <section
@@ -430,7 +379,6 @@ export default async function ArticlePage({
                 description:  a.description ?? '',
                 categories:   a.categories,
                 level:        a.level,
-                audioUrl:     a.audioUrl ?? null,
                 thumbnailUrl: a.thumbnailUrl ?? null,
                 publishedAt:  a.publishedAt?.toISOString() ?? null,
                 viewCount:    a.viewCount,

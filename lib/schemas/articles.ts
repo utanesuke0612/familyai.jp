@@ -40,10 +40,6 @@ export const createArticleSchema = z.object({
   level:            z.enum(LEVELS).default('beginner'),
   published:        z.boolean().optional().default(false),
   publishedAt:      optionalDate,
-  audioUrl:         z.string().nullable().optional().transform((v) => v ?? null),
-  audioTranscript:  z.string().nullable().optional().transform((v) => v ?? null),
-  audioDurationSec: z.number().int().nonnegative().nullable().optional().transform((v) => v ?? null),
-  audioLanguage:    z.string().nullable().optional().transform((v) => v ?? null),
   thumbnailUrl:     z.string().nullable().optional().transform((v) => v ?? null),
   isFeatured:       z.boolean().optional().default(false),
 });
@@ -56,10 +52,6 @@ export const updateArticleSchema = z.object({
   level:            z.enum(LEVELS).optional(),
   published:        z.boolean().optional(),
   publishedAt:      optionalDate,
-  audioUrl:         z.string().nullable().optional(),
-  audioTranscript:  z.string().nullable().optional(),
-  audioDurationSec: z.number().int().nonnegative().nullable().optional(),
-  audioLanguage:    z.string().nullable().optional(),
   thumbnailUrl:     z.string().nullable().optional(),
   isFeatured:       z.boolean().optional(),
 });

@@ -52,7 +52,8 @@ const highlightLanguages = {
 
 type ArticleSegment =
   | { type: 'markdown'; content: string }
-  | { type: 'trusted-embed'; src: string; width: string; height: string; title: string };
+  | { type: 'trusted-embed'; src: string; width: string; height: string; title: string }
+  | { type: 'audio'; src: string };
 
 const VOA_EMBED_HOSTS = new Set(['learningenglish.voanews.com', 'www.voanews.com', 'voanews.com']);
 const YOUTUBE_EMBED_HOSTS = new Set([
@@ -152,47 +153,70 @@ function normalizeYouTubeEmbed(src: string): string | null {
   }
 }
 
+// HTTPS URL かどうか検証
+function isHttpsUrl(src: string): boolean {
+  try { return new URL(src).protocol === 'https:'; } catch { return false; }
+}
+
+// <audio> タグから src を取り出す（src 属性 or 子 <source src> に対応）
+function extractAudioSrc(tag: string): string | null {
+  const directMatch = tag.match(/\bsrc\s*=\s*(["'])(.*?)\1/i);
+  if (directMatch?.[2] && isHttpsUrl(directMatch[2].trim())) return directMatch[2].trim();
+  const sourceMatch = tag.match(/<source\b[^>]*\bsrc\s*=\s*(["'])(.*?)\1/i);
+  if (sourceMatch?.[2] && isHttpsUrl(sourceMatch[2].trim())) return sourceMatch[2].trim();
+  return null;
+}
+
 function parseArticleSegments(content: string): ArticleSegment[] {
-  const iframeRegex = /<iframe\b[^>]*><\/iframe>/gi;
+  // <iframe> と <audio> を同時にスキャン
+  const tokenRegex = /(<iframe\b[^>]*><\/iframe>|<audio\b[^>]*>(?:[\s\S]*?<\/audio>)?)/gi;
   const segments: ArticleSegment[] = [];
   let lastIndex = 0;
   let match: RegExpExecArray | null;
 
-  while ((match = iframeRegex.exec(content)) !== null) {
+  while ((match = tokenRegex.exec(content)) !== null) {
     const fullTag = match[0];
     const start = match.index ?? 0;
 
     if (start > lastIndex) {
-      segments.push({
-        type: 'markdown',
-        content: content.slice(lastIndex, start),
-      });
+      segments.push({ type: 'markdown', content: content.slice(lastIndex, start) });
     }
 
-    const src = getIframeAttr(fullTag, 'src');
-    if (src && isAllowedVoaEmbed(src)) {
-      segments.push({
-        type: 'trusted-embed',
-        src,
-        width: getIframeAttr(fullTag, 'width') ?? '100%',
-        height: getIframeAttr(fullTag, 'height') ?? '360',
-        title: 'VOA embed',
-      });
-    } else if (src) {
-      const youtubeSrc = normalizeYouTubeEmbed(src);
-      if (youtubeSrc) {
-        segments.push({
-          type: 'trusted-embed',
-          src: youtubeSrc,
-          width: getIframeAttr(fullTag, 'width') ?? '100%',
-          height: getIframeAttr(fullTag, 'height') ?? '360',
-          title: 'YouTube embed',
-        });
+    if (fullTag.toLowerCase().startsWith('<audio')) {
+      // ── <audio> タグ ──────────────────────────────────────────
+      const src = extractAudioSrc(fullTag);
+      if (src) {
+        segments.push({ type: 'audio', src });
       } else {
         segments.push({ type: 'markdown', content: fullTag });
       }
     } else {
-      segments.push({ type: 'markdown', content: fullTag });
+      // ── <iframe> タグ ─────────────────────────────────────────
+      const src = getIframeAttr(fullTag, 'src');
+      if (src && isAllowedVoaEmbed(src)) {
+        segments.push({
+          type: 'trusted-embed',
+          src,
+          width: getIframeAttr(fullTag, 'width') ?? '100%',
+          height: getIframeAttr(fullTag, 'height') ?? '360',
+          title: 'VOA embed',
+        });
+      } else if (src) {
+        const youtubeSrc = normalizeYouTubeEmbed(src);
+        if (youtubeSrc) {
+          segments.push({
+            type: 'trusted-embed',
+            src: youtubeSrc,
+            width: getIframeAttr(fullTag, 'width') ?? '100%',
+            height: getIframeAttr(fullTag, 'height') ?? '360',
+            title: 'YouTube embed',
+          });
+        } else {
+          segments.push({ type: 'markdown', content: fullTag });
+        }
+      } else {
+        segments.push({ type: 'markdown', content: fullTag });
+      }
     }
 
     lastIndex = start + fullTag.length;
@@ -407,6 +431,26 @@ export function ArticleBody({ content, className = '' }: ArticleBodyProps) {
 
       <article className={`prose-warm ${className}`}>
         {segments.map((segment, index) => {
+          if (segment.type === 'audio') {
+            return (
+              <div
+                key={`audio-${index}`}
+                style={{ margin: '1.5rem 0' }}
+              >
+                {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
+                <audio
+                  controls
+                  src={segment.src}
+                  style={{
+                    width:        '100%',
+                    borderRadius: '8px',
+                    display:      'block',
+                  }}
+                />
+              </div>
+            );
+          }
+
           if (segment.type === 'trusted-embed') {
             const numericWidth  = Number.parseInt(segment.width, 10);
             const numericHeight = Number.parseInt(segment.height, 10);

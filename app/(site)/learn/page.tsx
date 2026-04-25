@@ -379,7 +379,6 @@ export default async function LearnPage({ searchParams }: LearnPageProps) {
               description:  a.description ?? '',
               categories:   a.categories,
               level:        a.level,
-              audioUrl:     a.audioUrl ?? null,
               thumbnailUrl: a.thumbnailUrl ?? null,
               publishedAt:  a.publishedAt?.toISOString() ?? null,
               viewCount:    a.viewCount,

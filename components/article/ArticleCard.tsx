@@ -25,7 +25,6 @@ export interface ArticleCardProps {
     description: string;
     categories:  string[];
     level:       string;
-    audioUrl?:   string | null;
     thumbnailUrl?: string | null;
     publishedAt: Date | string | null;
     viewCount?:  number;
@@ -95,16 +94,6 @@ export function ArticleCard({ article, featured = false }: ArticleCardProps) {
           {CATEGORY_EMOJI[primaryCategory]}
         </span>
 
-        {/* 音声マーク */}
-        {article.audioUrl && (
-          <span
-            className="absolute top-3 right-3 flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium"
-            style={{ background: 'rgba(255,255,255,0.85)', color: 'var(--color-brown)' }}
-            title="音声コンテンツあり"
-          >
-            🎵 音声あり
-          </span>
-        )}
       </div>
 
       {/* ── ボディ ── */}

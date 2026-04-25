@@ -54,10 +54,6 @@ export function ArticleForm({ article }: ArticleFormProps) {
   );
   const [published,       setPublished]       = useState(article?.published       ?? false);
   const [publishedAt,     setPublishedAt]     = useState(dateToInput(article?.publishedAt));
-  const [audioUrl,        setAudioUrl]        = useState(article?.audioUrl        ?? '');
-  const [audioTranscript, setAudioTranscript] = useState(article?.audioTranscript ?? '');
-  const [audioDurationSec,setAudioDurationSec]= useState(article?.audioDurationSec?.toString() ?? '');
-  const [audioLanguage,   setAudioLanguage]   = useState(article?.audioLanguage   ?? '');
   const [thumbnailUrl,    setThumbnailUrl]    = useState(article?.thumbnailUrl    ?? '');
   const [isFeatured,      setIsFeatured]      = useState(article?.isFeatured      ?? false);
 
@@ -101,10 +97,6 @@ export function ArticleForm({ article }: ArticleFormProps) {
         level,
         published,
         publishedAt:      publishedAt || null,
-        audioUrl:         audioUrl.trim()        || null,
-        audioTranscript:  audioTranscript.trim() || null,
-        audioDurationSec: audioDurationSec ? parseInt(audioDurationSec) : null,
-        audioLanguage:    audioLanguage.trim()   || null,
         thumbnailUrl:     thumbnailUrl.trim()    || null,
         isFeatured,
       };
@@ -375,60 +367,6 @@ export function ArticleForm({ article }: ArticleFormProps) {
               )}
             </Field>
 
-            <Field label="音声ファイル URL（MP3）">
-              {({ id }) => (
-                <input
-                  id={id}
-                  type="url"
-                  value={audioUrl}
-                  onChange={(e) => setAudioUrl(e.target.value)}
-                  placeholder="https://…（Vercel Blob の URL）"
-                  style={inputStyle}
-                />
-              )}
-            </Field>
-
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: '1rem' }}>
-              <Field label="音声の長さ（秒）">
-                {({ id }) => (
-                  <input
-                    id={id}
-                    type="number"
-                    value={audioDurationSec}
-                    onChange={(e) => setAudioDurationSec(e.target.value)}
-                    placeholder="例: 240"
-                    min={0}
-                    style={inputStyle}
-                  />
-                )}
-              </Field>
-              <Field label="音声の言語コード">
-                {({ id }) => (
-                  <input
-                    id={id}
-                    type="text"
-                    value={audioLanguage}
-                    onChange={(e) => setAudioLanguage(e.target.value)}
-                    placeholder="例: en / zh / ko"
-                    maxLength={10}
-                    style={inputStyle}
-                  />
-                )}
-              </Field>
-            </div>
-
-            <Field label="音声トランスクリプト（SEO 用）">
-              {({ id }) => (
-                <textarea
-                  id={id}
-                  value={audioTranscript}
-                  onChange={(e) => setAudioTranscript(e.target.value)}
-                  placeholder="音声の文字起こし内容（省略可）"
-                  rows={4}
-                  style={{ ...inputStyle, resize: 'vertical' }}
-                />
-              )}
-            </Field>
           </div>
         </Section>
 

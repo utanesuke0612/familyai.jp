@@ -53,54 +53,44 @@ export function estimateReadingMin(body: string): number {
 
 // ── DB 行の最小型（他層から独立させるため局所定義）─────────
 export interface ArticleRowSummary {
-  id:               string;
-  slug:             string;
-  title:            string;
-  description:      string | null;
-  categories:       string[] | null;
-  level:            string;
-  audioUrl:         string | null;
-  audioDurationSec: number | null;
-  audioLanguage:    string | null;
-  thumbnailUrl:     string | null;
-  viewCount:        number;
-  audioPlayCount:   number;
-  isFeatured:       boolean;
-  publishedAt:      Date | string | null;
-  updatedAt?:       Date | string | null;
+  id:          string;
+  slug:        string;
+  title:       string;
+  description: string | null;
+  categories:  string[] | null;
+  level:       string;
+  thumbnailUrl: string | null;
+  viewCount:   number;
+  isFeatured:  boolean;
+  publishedAt: Date | string | null;
+  updatedAt?:  Date | string | null;
 }
 
 export interface ArticleRow extends ArticleRowSummary {
-  body:            string;
-  audioTranscript: string | null;
+  body: string;
 }
 
 // ── 変換関数 ──────────────────────────────────────────────────
 export function toArticleSummary(row: ArticleRowSummary): ArticleSummary {
   return {
-    id:               row.id,
-    slug:             row.slug,
-    title:            row.title,
-    description:      row.description,
-    categories:       filterCategories(row.categories),
-    level:            coerceLevel(row.level),
-    audioUrl:         row.audioUrl,
-    audioDurationSec: row.audioDurationSec,
-    audioLanguage:    row.audioLanguage,
-    thumbnailUrl:     row.thumbnailUrl,
-    viewCount:        row.viewCount,
-    audioPlayCount:   row.audioPlayCount,
-    isFeatured:       row.isFeatured,
-    publishedAt:      toIso(row.publishedAt),
-    updatedAt:        toIso(row.updatedAt) ?? undefined,
+    id:          row.id,
+    slug:        row.slug,
+    title:       row.title,
+    description: row.description,
+    categories:  filterCategories(row.categories),
+    level:       coerceLevel(row.level),
+    thumbnailUrl: row.thumbnailUrl,
+    viewCount:   row.viewCount,
+    isFeatured:  row.isFeatured,
+    publishedAt: toIso(row.publishedAt),
+    updatedAt:   toIso(row.updatedAt) ?? undefined,
   };
 }
 
 export function toArticleDetail(row: ArticleRow): Article {
   return {
     ...toArticleSummary(row),
-    body:            row.body,
-    audioTranscript: row.audioTranscript,
-    readingMin:      estimateReadingMin(row.body),
+    body:       row.body,
+    readingMin: estimateReadingMin(row.body),
   };
 }

@@ -30,7 +30,5 @@ describe('updateArticleSchema (Rev22)', () => {
     expect(r.success && r.data.publishedAt).toBeNull();
   });
 
-  it('Z4g: audioDurationSec 非整数で失敗', () => {
-    expect(updateArticleSchema.safeParse({ audioDurationSec: 1.5 }).success).toBe(false);
-  });
 });
+

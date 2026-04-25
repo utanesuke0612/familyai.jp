@@ -70,18 +70,5 @@ describe('createArticleSchema (Rev22)', () => {
     expect(r.success && r.data.publishedAt).toBeNull();
   });
 
-  it('Z1f: Number("abc") のように NaN が渡っても reject（audioDurationSec）', () => {
-    const r = createArticleSchema.safeParse({ ...validBase, audioDurationSec: Number.NaN });
-    expect(r.success).toBe(false);
-  });
-
-  it('Z1g: audioDurationSec 負数で失敗', () => {
-    const r = createArticleSchema.safeParse({ ...validBase, audioDurationSec: -5 });
-    expect(r.success).toBe(false);
-  });
-
-  it('Z1h: audioDurationSec 正の整数で合格', () => {
-    const r = createArticleSchema.safeParse({ ...validBase, audioDurationSec: 120 });
-    expect(r.success && r.data.audioDurationSec).toBe(120);
-  });
 });
+
