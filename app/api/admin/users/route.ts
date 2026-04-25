@@ -12,8 +12,9 @@
 
 import { NextRequest, NextResponse } from 'next/server';
 import { ilike, or, eq, asc, desc, count, and } from 'drizzle-orm';
-import { requireAdmin } from '@/lib/admin-auth';
-import { db, users }    from '@/lib/db';
+import { requireAdmin }  from '@/lib/admin-auth';
+import { db, users }     from '@/lib/db';
+import { escapeLike }    from '@/lib/repositories/articles';
 
 const DEFAULT_PAGE_SIZE = 50;
 
@@ -35,8 +36,8 @@ export async function GET(req: NextRequest) {
   if (search) {
     conditions.push(
       or(
-        ilike(users.email, `%${search}%`),
-        ilike(users.name,  `%${search}%`),
+        ilike(users.email, `%${escapeLike(search)}%`),
+        ilike(users.name,  `%${escapeLike(search)}%`),
       ),
     );
   }

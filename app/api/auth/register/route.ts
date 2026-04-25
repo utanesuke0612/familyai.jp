@@ -17,6 +17,8 @@ import { z }            from 'zod';
 import bcrypt           from 'bcryptjs';
 import { eq }           from 'drizzle-orm';
 import { db, users }    from '@/lib/db';
+import { verifyCsrf }   from '@/lib/csrf';
+import { getRateLimiter, getClientIp, rateLimitedResponse } from '@/lib/ratelimit';
 
 // ── バリデーション ─────────────────────────────────────────────
 const registerSchema = z.object({
@@ -33,6 +35,24 @@ const registerSchema = z.object({
 
 // ── POST /api/auth/register ────────────────────────────────────
 export async function POST(req: NextRequest) {
+  // CSRF 防御（Origin チェック）
+  if (!verifyCsrf(req)) {
+    return Response.json(
+      { ok: false, error: { code: 'FORBIDDEN', message: '不正なリクエストです。' } },
+      { status: 403 },
+    );
+  }
+
+  // レート制限（5req/10min per IP・ブルートフォース登録を防止）
+  const rl = getRateLimiter('ratelimit:register', 5, '10 m');
+  if (rl) {
+    const ip = getClientIp(req);
+    const { success } = await rl.limit(ip);
+    if (!success) {
+      return rateLimitedResponse('登録の試行が多すぎます。しばらくしてからお試しください。');
+    }
+  }
+
   let rawBody: unknown;
   try {
     rawBody = await req.json();

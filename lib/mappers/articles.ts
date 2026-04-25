@@ -20,6 +20,7 @@ import type {
   ContentCategory,
   DifficultyLevel,
 } from '@/shared/types';
+import { estimateReadingMin } from '@/shared/utils';
 
 // ── 型ガード兼フィルタ ────────────────────────────────────────
 const CATEGORIES:   readonly ContentCategory[] = ['education', 'lifestyle', 'work', 'creative'];
@@ -40,15 +41,6 @@ function toIso(v: Date | string | null | undefined): string | null {
   if (!v) return null;
   if (v instanceof Date) return v.toISOString();
   return new Date(v).toISOString();
-}
-
-/**
- * 読了目安分を計算する（日本語 400 字/分 を基準）。
- * Markdown 記法（# ` * 等）は概算に影響しない程度の簡易計算。
- */
-export function estimateReadingMin(body: string): number {
-  const chars = body.replace(/\s+/g, '').length;
-  return Math.max(1, Math.ceil(chars / 400));
 }
 
 // ── DB 行の最小型（他層から独立させるため局所定義）─────────

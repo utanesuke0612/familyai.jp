@@ -64,11 +64,12 @@ export function relativeTimeJa(iso: string): string {
 // ─── 読了時間推定 ──────────────────────────────────────────────
 
 /**
- * Markdown 本文から読了目安分数を計算する（日本語 500字/分 基準）
+ * Markdown 本文から読了目安分数を計算する（日本語 400字/分 基準）。
+ * Markdown 記法（# ` * 等）は概算に影響しない程度の簡易計算。
  */
 export function estimateReadingMin(content: string): number {
   const charCount = content.replace(/\s+/g, '').length;
-  return Math.max(1, Math.ceil(charCount / 500));
+  return Math.max(1, Math.ceil(charCount / 400));
 }
 
 // ─── ページネーション ──────────────────────────────────────────

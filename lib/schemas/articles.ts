@@ -32,7 +32,10 @@ export const optionalDate = z
   });
 
 export const createArticleSchema = z.object({
-  slug:             z.string().min(1).max(255),
+  slug:             z.string().min(1).max(255).regex(
+    /^[a-z0-9]+(?:-[a-z0-9]+)*$/,
+    'スラッグは英小文字・数字・ハイフンのみ使用できます（ハイフンは先頭・末尾不可）',
+  ),
   title:            z.string().min(1).max(255),
   description:      z.string().nullable().optional().transform((v) => v ?? null),
   body:             z.string().min(1),
