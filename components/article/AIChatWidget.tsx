@@ -46,37 +46,6 @@ function selectAiType(categories?: string[]): 'text-simple' | 'text-quality' {
 }
 
 // ── AI応答を段落・箇条書きに整形 ───────────────────────────────
-function formatAssistantContent(raw: string): React.ReactNode {
-  const normalized = raw
-    .replace(/\s+(\d+\.)\s*/g, '\n$1 ')
-    .replace(/\s*([・•])\s*/g, '\n$1 ')
-    .replace(/([。！？!?])\s+(?=\S)/g, '$1\n');
-
-  const blocks = normalized.split(/\n{2,}|\n(?=\d+\.\s|[・•])/).map(b => b.trim()).filter(Boolean);
-
-  return blocks.map((block, i) => {
-    const lines = block.split(/\n/).map(l => l.trim()).filter(Boolean);
-    const isList = lines.length > 1 && lines.every(l => /^(\d+\.\s|[・•]\s)/.test(l));
-    if (isList) {
-      const ordered = /^\d+\./.test(lines[0]!);
-      const ListTag = ordered ? 'ol' : 'ul';
-      return (
-        <ListTag key={i} style={{ paddingLeft: '1.25em', margin: '0.25em 0' }}>
-          {lines.map((l, j) => (
-            <li key={j} style={{ marginBottom: '0.2em' }}>
-              {l.replace(/^(\d+\.\s|[・•]\s)/, '')}
-            </li>
-          ))}
-        </ListTag>
-      );
-    }
-    return (
-      <p key={i} style={{ margin: i === 0 ? '0 0 0.5em' : '0.5em 0', whiteSpace: 'pre-wrap' }}>
-        {block}
-      </p>
-    );
-  });
-}
 
 interface ChatBubbleProps {
   message:      Message;
