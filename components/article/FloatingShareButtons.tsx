@@ -26,10 +26,10 @@ export function FloatingShareButtons({ title, url }: FloatingShareButtonsProps) 
     <div
       className={[
         'fixed z-40 flex flex-col gap-3',
-        // Mobile: 右下（コンテンツと被らないよう右側・下部に配置）
-        'right-3 bottom-24',
+        // Mobile: 左下コーナー（iOS ホームバー・ブラウザUIの上に確実に表示）
+        'left-4 bottom-8',
         // Desktop: 左側・縦中央
-        'lg:right-auto lg:left-[72px] lg:bottom-auto lg:top-1/2 lg:-translate-y-1/2',
+        'lg:left-[72px] lg:bottom-auto lg:top-1/2 lg:-translate-y-1/2',
       ].join(' ')}
       aria-label="シェアボタン"
     >
