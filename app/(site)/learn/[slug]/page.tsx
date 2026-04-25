@@ -28,9 +28,10 @@ import {
  * → generateMetadata と ArticlePage で同じ slug を2回叩かないようにする。
  */
 const getArticleCached = cache(getArticle);
-import { ArticleBody }  from '@/components/article/ArticleBody';
-import { AIChatWidget } from '@/components/article/AIChatWidget';
-import { AudioPlayer }  from '@/components/article/AudioPlayer';
+import { ArticleBody }           from '@/components/article/ArticleBody';
+import { AIChatWidget }          from '@/components/article/AIChatWidget';
+import { AudioPlayer }           from '@/components/article/AudioPlayer';
+import { FloatingShareButtons }  from '@/components/article/FloatingShareButtons';
 import { ArticleGrid }  from '@/components/article/ArticleGrid';
 import {
   SITE,
@@ -352,26 +353,8 @@ export default async function ArticlePage({
             <div className="min-w-0">
               <ArticleBody content={article.body} />
 
-              {/* SNS シェアボタン */}
+              {/* 記事一覧に戻る */}
               <div className="mt-6 flex flex-wrap gap-3">
-                <a
-                  href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(article.title)}&url=${encodeURIComponent(`${SITE.url}/learn/${article.slug}`)}&via=familyaijp`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium border transition-all hover:opacity-80 min-h-[44px]"
-                  style={{ background: '#1DA1F2', color: 'white', border: 'none' }}
-                >
-                  𝕏 でシェア
-                </a>
-                <a
-                  href={`https://line.me/R/msg/text/?${encodeURIComponent(article.title + '\n' + `${SITE.url}/learn/${article.slug}`)}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium border transition-all hover:opacity-80 min-h-[44px]"
-                  style={{ background: '#06C755', color: 'white', border: 'none' }}
-                >
-                  LINE でシェア
-                </a>
                 <a
                   href="/learn"
                   className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium border transition-all hover:opacity-80 min-h-[44px]"
@@ -384,6 +367,12 @@ export default async function ArticlePage({
                   ← 記事一覧に戻る
                 </a>
               </div>
+
+              {/* フローティングシェアボタン（X・LINE） */}
+              <FloatingShareButtons
+                title={article.title}
+                url={`${SITE.url}/learn/${article.slug}`}
+              />
             </div>
 
             {/* ── 右：スティッキーサイドバー ── */}
