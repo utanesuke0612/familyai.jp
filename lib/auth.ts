@@ -164,6 +164,25 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         }
       }
 
+      // ── 古い JWT の無効化チェック ────────────────────────────────
+      // token.id が DB に存在しない場合（DB リセット後の古いセッション等）は
+      // token.id を削除してセッションを実質無効化する。
+      // 毎リクエストは重いため signIn/signUp/update トリガー時のみ実施。
+      if (
+        token.id &&
+        !user && // 初回サインイン以外
+        (trigger === 'signIn' || trigger === 'signUp' || trigger === 'update')
+      ) {
+        const exists = await getUserByEmail(
+          token.email as string ?? '',
+        ).then((u) => u?.id === token.id).catch(() => false);
+        if (!exists) {
+          console.warn('[auth] token.id not found in DB, clearing session:', token.id);
+          delete token.id;
+          delete token.plan;
+        }
+      }
+
       // 初回ログイン or セッション更新時に plan を DB から取得
       const shouldRefreshPlan =
         trigger === 'signIn' ||
@@ -195,5 +214,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       (session.user as { plan: string }).plan = (token.plan as string) ?? 'free';
       return session;
     },
+
   },
 });
