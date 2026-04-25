@@ -50,6 +50,9 @@ export function AdminNav({ email }: AdminNavProps) {
           <Link href="/admin/articles/new" style={navLinkStyle}>
             ✏️ 新規作成
           </Link>
+          <Link href="/admin/users" style={navLinkStyle}>
+            👥 会員管理
+          </Link>
           <Link href="/" target="_blank" style={navLinkStyle}>
             🌐 サイトを見る
           </Link>
