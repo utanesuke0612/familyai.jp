@@ -74,7 +74,7 @@ export function AnnotatedWord({ word, meaning, pron, example }: AnnotatedWordPro
     () => buildVocabId(course || 'misc', lesson || 'misc', word),
     [course, lesson, word],
   );
-  const { bookmarked, toggle } = useVocabBookmark(id);
+  const { bookmarked, toggle, isLoggedIn } = useVocabBookmark(id);
 
   // 外側クリックで閉じる（モバイルのタップ対応）
   useEffect(() => {
@@ -181,25 +181,49 @@ export function AnnotatedWord({ word, meaning, pron, example }: AnnotatedWordPro
               >
                 🔊
               </button>
-              <button
-                type="button"
-                onClick={handleBookmark}
-                aria-label={bookmarked ? 'ブックマーク解除' : '単語帳に追加'}
-                aria-pressed={bookmarked}
-                className="inline-flex items-center justify-center rounded-full"
-                style={{
-                  width:       '28px',
-                  height:      '28px',
-                  minHeight:   'auto',
-                  background:  bookmarked ? 'var(--color-yellow)' : 'var(--color-cream)',
-                  border:      `1px solid ${bookmarked ? 'var(--color-orange)' : 'var(--color-beige-dark)'}`,
-                  fontSize:    '14px',
-                  padding:     0,
-                  lineHeight:  1,
-                }}
-              >
-                {bookmarked ? '★' : '☆'}
-              </button>
+              {isLoggedIn ? (
+                <button
+                  type="button"
+                  onClick={handleBookmark}
+                  aria-label={bookmarked ? 'ブックマーク解除' : '単語帳に追加'}
+                  aria-pressed={bookmarked}
+                  className="inline-flex items-center justify-center rounded-full"
+                  style={{
+                    width:       '28px',
+                    height:      '28px',
+                    minHeight:   'auto',
+                    background:  bookmarked ? 'var(--color-yellow)' : 'var(--color-cream)',
+                    border:      `1px solid ${bookmarked ? 'var(--color-orange)' : 'var(--color-beige-dark)'}`,
+                    fontSize:    '14px',
+                    padding:     0,
+                    lineHeight:  1,
+                  }}
+                >
+                  {bookmarked ? '★' : '☆'}
+                </button>
+              ) : (
+                <a
+                  href="/auth/signin"
+                  onClick={(e) => e.stopPropagation()}
+                  aria-label="ログインして単語帳に追加"
+                  title="ログインすると単語帳に保存できます"
+                  className="inline-flex items-center justify-center rounded-full"
+                  style={{
+                    width:          '28px',
+                    height:         '28px',
+                    minHeight:      'auto',
+                    background:     'var(--color-cream)',
+                    border:         '1px solid var(--color-beige-dark)',
+                    fontSize:       '14px',
+                    padding:        0,
+                    lineHeight:     1,
+                    textDecoration: 'none',
+                    opacity:        0.6,
+                  }}
+                >
+                  ☆
+                </a>
+              )}
             </span>
           </span>
 

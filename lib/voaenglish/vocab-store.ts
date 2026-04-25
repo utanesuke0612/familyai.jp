@@ -1,18 +1,19 @@
-/**
- * lib/voaenglish/vocab-store.ts
- * familyai.jp — 単語ブックマーク（localStorage ベース）
- *
- * VOA レッスンの AnnotatedWord ツールチップから登録／解除され、
- * /tools/voaenglish/vocab ページで一覧表示される。
- *
- * - サーバーサイドでは空配列を返す（SSR フォールバック）
- * - 同一タブ内の変更は `familyai:vocab-changed` カスタムイベントで同期
- * - 他タブの変更は `storage` イベントで同期
- */
-
 'use client';
 
-import { useEffect, useState, useCallback } from 'react';
+/**
+ * lib/voaenglish/vocab-store.ts
+ * familyai.jp — VOA 単語ブックマーク（DB クラウドストレージ）
+ *
+ * ■ ログイン会員のみ使用可能
+ * ■ 非ログインユーザーは isLoggedIn=false が返るので、UI 側でログイン案内を表示する
+ *
+ * 設計:
+ *   - useVocabList()      : 全ブックマークを DB から取得して一覧表示
+ *   - useVocabBookmark()  : 単語ごとの保存状態（楽観的 UI）
+ */
+
+import { useEffect, useState, useCallback, useRef } from 'react';
+import { useSession }                                from 'next-auth/react';
 
 export type VocabItem = {
   /** course/lesson/word をスラッシュでつないだ一意キー（小文字化） */
@@ -28,48 +29,29 @@ export type VocabItem = {
   addedAt:      number;
 };
 
-const STORAGE_KEY = 'familyai:vocab:bookmarks';
-const CHANGE_EVENT = 'familyai:vocab-changed';
-
-function read(): VocabItem[] {
-  if (typeof window === 'undefined') return [];
+// ── API ヘルパー ──────────────────────────────────────────────────
+async function apiSave(items: VocabItem[]): Promise<boolean> {
   try {
-    const raw = window.localStorage.getItem(STORAGE_KEY);
-    if (!raw) return [];
-    const parsed = JSON.parse(raw);
-    return Array.isArray(parsed) ? parsed : [];
+    const res = await fetch('/api/user/vocab-bookmarks', {
+      method:  'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body:    JSON.stringify({ items }),
+    });
+    return res.ok;
   } catch {
-    return [];
+    return false;
   }
 }
 
-function write(items: VocabItem[]): void {
-  if (typeof window === 'undefined') return;
-  window.localStorage.setItem(STORAGE_KEY, JSON.stringify(items));
-  window.dispatchEvent(new Event(CHANGE_EVENT));
-}
-
-/** 登録する（既に同じ id がある場合は何もしない） */
-export function addVocab(item: VocabItem): void {
-  const list = read();
-  if (list.some((i) => i.id === item.id)) return;
-  list.push(item);
-  write(list);
-}
-
-/** 解除する */
-export function removeVocab(id: string): void {
-  write(read().filter((i) => i.id !== id));
-}
-
-/** 登録済みかどうか */
-export function hasVocab(id: string): boolean {
-  return read().some((i) => i.id === id);
-}
-
-/** すべて取得（新しい順） */
-export function getAllVocab(): VocabItem[] {
-  return [...read()].sort((a, b) => b.addedAt - a.addedAt);
+async function apiDelete(id: string): Promise<boolean> {
+  try {
+    const res = await fetch(`/api/user/vocab-bookmarks?id=${encodeURIComponent(id)}`, {
+      method: 'DELETE',
+    });
+    return res.ok;
+  } catch {
+    return false;
+  }
 }
 
 /** 一意キー生成 */
@@ -77,54 +59,93 @@ export function buildVocabId(course: string, lesson: string, word: string): stri
   return `${course}/${lesson}/${word.toLowerCase()}`;
 }
 
+// ── React フック ──────────────────────────────────────────────────
+
 /**
- * クライアント側で登録済みリストを購読する React フック。
- * 同一タブ内・他タブ両方の変更に反応する。
+ * 全ブックマーク一覧 + 削除操作を提供するフック。
+ * ログイン状態に応じて DB から取得する。
  */
-export function useVocabList(): VocabItem[] {
-  const [items, setItems] = useState<VocabItem[]>([]);
+export function useVocabList(): {
+  items:      VocabItem[];
+  loading:    boolean;
+  isLoggedIn: boolean;
+  remove:     (id: string) => Promise<void>;
+} {
+  const { data: session, status } = useSession();
+  const isLoggedIn = status === 'authenticated';
+  const [items, setItems]     = useState<VocabItem[]>([]);
+  const [loading, setLoading] = useState(true);
+
   useEffect(() => {
-    setItems(getAllVocab());
-    const sync = () => setItems(getAllVocab());
-    window.addEventListener(CHANGE_EVENT, sync);
-    window.addEventListener('storage', sync);
-    return () => {
-      window.removeEventListener(CHANGE_EVENT, sync);
-      window.removeEventListener('storage', sync);
-    };
+    if (status === 'loading') return;
+    if (!isLoggedIn) {
+      setLoading(false);
+      return;
+    }
+    setLoading(true);
+    fetch('/api/user/vocab-bookmarks')
+      .then((r) => r.json())
+      .then((json: { ok: boolean; data: VocabItem[] }) => {
+        setItems(json.ok ? [...json.data].sort((a, b) => b.addedAt - a.addedAt) : []);
+      })
+      .catch(() => setItems([]))
+      .finally(() => setLoading(false));
+  }, [isLoggedIn, status, session?.user?.id]);
+
+  const remove = useCallback(async (id: string) => {
+    // 楽観的 UI: 即座に一覧から消す
+    setItems((prev) => prev.filter((i) => i.id !== id));
+    await apiDelete(id);
   }, []);
-  return items;
+
+  return { items, loading, isLoggedIn, remove };
 }
 
 /**
- * 単一単語の登録状態を購読。ブックマーク切り替えは返り値の `toggle` から。
+ * 単語ごとのブックマーク状態を管理するフック。
+ * - マウント時に DB から保存状態を確認する（ページ間で状態を保持するため）
+ * - toggle で楽観的に状態を更新し、同時に API を呼ぶ
+ * - 非ログインユーザーは isLoggedIn=false → 呼び出し側でログイン案内を表示
  */
 export function useVocabBookmark(id: string): {
   bookmarked: boolean;
-  toggle: (item: Omit<VocabItem, 'addedAt'>) => void;
+  toggle:     (item: Omit<VocabItem, 'addedAt'>) => void;
+  isLoggedIn: boolean;
 } {
+  const { data: session, status } = useSession();
+  const isLoggedIn = status === 'authenticated';
   const [bookmarked, setBookmarked] = useState(false);
+  const checkedRef = useRef<string | null>(null); // チェック済みの id を記録
+
+  // マウント時 or id 変化時に DB から保存状態を確認
   useEffect(() => {
-    setBookmarked(hasVocab(id));
-    const sync = () => setBookmarked(hasVocab(id));
-    window.addEventListener(CHANGE_EVENT, sync);
-    window.addEventListener('storage', sync);
-    return () => {
-      window.removeEventListener(CHANGE_EVENT, sync);
-      window.removeEventListener('storage', sync);
-    };
-  }, [id]);
+    if (!isLoggedIn || checkedRef.current === id) return;
+    checkedRef.current = id;
+
+    fetch('/api/user/vocab-bookmarks')
+      .then((r) => r.json())
+      .then((json: { ok: boolean; data: VocabItem[] }) => {
+        if (json.ok) {
+          setBookmarked(json.data.some((v) => v.id === id));
+        }
+      })
+      .catch(() => { /* ネットワーク失敗時は false のまま */ });
+  }, [id, isLoggedIn]);
 
   const toggle = useCallback(
     (item: Omit<VocabItem, 'addedAt'>) => {
-      if (hasVocab(item.id)) {
-        removeVocab(item.id);
+      if (!isLoggedIn) return; // 非ログイン時は何もしない（UI 側で案内）
+      if (bookmarked) {
+        setBookmarked(false);
+        apiDelete(item.id);
       } else {
-        addVocab({ ...item, addedAt: Date.now() });
+        const full = { ...item, addedAt: Date.now() };
+        setBookmarked(true);
+        apiSave([full]);
       }
     },
-    [],
+    [isLoggedIn, bookmarked],
   );
 
-  return { bookmarked, toggle };
+  return { bookmarked, toggle, isLoggedIn };
 }

@@ -50,6 +50,13 @@
       "when": 1745618400000,
       "tag": "0006_remove_audio_fields",
       "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "7",
+      "when": 1745704800000,
+      "tag": "0007_user_cloud_storage",
+      "breakpoints": true
     }
   ]
 }

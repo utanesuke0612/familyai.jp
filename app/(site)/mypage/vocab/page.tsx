@@ -5,13 +5,12 @@
  * familyai.jp — MyPage 単語帳
  *
  * VOA レッスンの AnnotatedWord から ☆ で登録した単語を一覧表示。
- * 現在は localStorage ベース（ログイン不要で即利用可）。
- * 将来的にはログイン時にクラウド同期する予定（todo/04_ログイン後機能ロードマップ.md の L01）。
+ * ログイン会員のみ利用可（DB に保存）。
  */
 
 import { useMemo } from 'react';
 import Link from 'next/link';
-import { removeVocab, useVocabList, type VocabItem } from '@/lib/voaenglish/vocab-store';
+import { useVocabList, type VocabItem } from '@/lib/voaenglish/vocab-store';
 
 function speakEnglish(text: string) {
   if (typeof window === 'undefined') return;
@@ -36,8 +35,41 @@ function downloadJson(items: VocabItem[]) {
   URL.revokeObjectURL(url);
 }
 
+// ── ログインウォール ──────────────────────────────────────────────
+function LoginWall() {
+  return (
+    <main style={{ background: 'var(--color-cream)', minHeight: '60vh' }}>
+      <div className="max-w-container mx-auto flex flex-col items-center justify-center gap-6 py-24" style={{ paddingInline: 'var(--container-px)' }}>
+        <p className="text-5xl">⭐</p>
+        <h1 className="font-display font-bold text-2xl text-center" style={{ color: 'var(--color-brown)' }}>
+          単語帳はログイン会員専用です
+        </h1>
+        <p className="text-sm text-center leading-relaxed" style={{ color: 'var(--color-brown-light)', maxWidth: '360px' }}>
+          無料会員登録をすると、VOAレッスンで覚えた単語をクラウドに保存して、どのデバイスからでも復習できます。
+        </p>
+        <div className="flex gap-3 flex-wrap justify-center">
+          <Link
+            href="/auth/signin"
+            className="inline-flex items-center rounded-full px-6 text-sm font-semibold"
+            style={{ minHeight: '44px', background: 'var(--color-orange)', color: 'white' }}
+          >
+            ログイン
+          </Link>
+          <Link
+            href="/auth/register"
+            className="inline-flex items-center rounded-full px-6 text-sm font-semibold"
+            style={{ minHeight: '44px', background: 'white', color: 'var(--color-brown)', border: '1px solid var(--color-beige-dark)' }}
+          >
+            無料会員登録
+          </Link>
+        </div>
+      </div>
+    </main>
+  );
+}
+
 export default function VocabPage() {
-  const items = useVocabList();
+  const { items, loading, isLoggedIn, remove } = useVocabList();
 
   // レッスン別にグループ化
   const groups = useMemo(() => {
@@ -53,6 +85,9 @@ export default function VocabPage() {
     });
   }, [items]);
 
+  // 未ログイン
+  if (!loading && !isLoggedIn) return <LoginWall />;
+
   return (
     <main style={{ background: 'var(--color-cream)' }}>
       <header
@@ -61,10 +96,7 @@ export default function VocabPage() {
           paddingBlock: 'clamp(16px, 2.5vw, 28px)',
         }}
       >
-        <div
-          className="max-w-container mx-auto"
-          style={{ paddingInline: 'var(--container-px)' }}
-        >
+        <div className="max-w-container mx-auto" style={{ paddingInline: 'var(--container-px)' }}>
           <nav className="flex flex-wrap items-center gap-3 text-sm font-semibold mb-5">
             <Link
               href="/mypage"
@@ -91,26 +123,6 @@ export default function VocabPage() {
               <p className="mt-2 text-sm" style={{ color: 'var(--color-brown-light)' }}>
                 レッスンで ☆ を押して登録した単語が、このページに集まります。
               </p>
-              <div
-                className="mt-3 rounded-2xl p-3 text-xs leading-relaxed"
-                style={{
-                  background: 'rgba(255,255,255,0.85)',
-                  border: '1px solid var(--color-beige-dark)',
-                  color: 'var(--color-brown)',
-                }}
-              >
-                💡 <strong>保存場所について</strong>：単語データは
-                <strong>このブラウザの中だけ</strong>に保存されます（サーバーには送りません）。
-                <br />
-                ・別の端末やブラウザでは見られません<br />
-                ・ブラウザのデータ削除で消えてしまいます<br />
-                ・シークレット／プライベートモードでは保存されません
-                <br />
-                <span style={{ color: 'var(--color-brown-light)' }}>
-                  → 別端末でも使いたいときは「📥 JSONで書き出す」でファイルを保存して移してください。<br />
-                  将来のログイン機能では、クラウドに保存して全端末で共有できるようにする予定です。
-                </span>
-              </div>
             </div>
             {items.length > 0 && (
               <button
@@ -137,11 +149,17 @@ export default function VocabPage() {
           paddingBlock: 'clamp(12px, 2vw, 20px)',
         }}
       >
-        <div
-          className="max-w-container mx-auto"
-          style={{ paddingInline: 'var(--container-px)' }}
-        >
-          {items.length === 0 ? (
+        <div className="max-w-container mx-auto" style={{ paddingInline: 'var(--container-px)' }}>
+
+          {/* ローディング */}
+          {loading && (
+            <div className="flex justify-center py-16">
+              <div className="w-8 h-8 border-2 border-orange-300 border-t-orange-500 rounded-full animate-spin" />
+            </div>
+          )}
+
+          {/* 空状態 */}
+          {!loading && items.length === 0 && (
             <div
               className="rounded-[28px] p-6 sm:p-8 text-center"
               style={{
@@ -167,7 +185,10 @@ export default function VocabPage() {
                 Lesson 1 へ行く →
               </Link>
             </div>
-          ) : (
+          )}
+
+          {/* 単語一覧（レッスン別グループ） */}
+          {!loading && groups.length > 0 && (
             <div className="flex flex-col gap-6">
               {groups.map((g) => (
                 <section
@@ -246,7 +267,7 @@ export default function VocabPage() {
                           </button>
                           <button
                             type="button"
-                            onClick={() => removeVocab(it.id)}
+                            onClick={() => remove(it.id)}
                             aria-label="単語帳から外す"
                             className="inline-flex items-center justify-center rounded-full"
                             style={{

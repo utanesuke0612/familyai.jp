@@ -2,13 +2,18 @@
 
 /**
  * lib/ai-memo-store.ts
- * familyai.jp — AIメモ帳（localStorage ベース）
+ * familyai.jp — AIメモ帳（DB クラウドストレージ）
  *
- * AIChatWidget の AI 回答を 📌 ボタンで保存し、
- * /mypage/aimemo ページで一覧表示する。
+ * ■ ログイン会員のみ使用可能
+ * ■ 非ログインユーザーは isLoggedIn=false が返るので、UI 側でログイン案内を表示する
+ *
+ * 設計:
+ *   - useAiMemoList()      : 全メモを DB から取得して一覧表示
+ *   - useAiMemoBookmark()  : チャットバブル単位の保存状態（楽観的 UI）
  */
 
 import { useEffect, useState, useCallback } from 'react';
+import { useSession }                        from 'next-auth/react';
 
 export type AiMemoItem = {
   /** crypto.randomUUID() */
@@ -25,93 +30,105 @@ export type AiMemoItem = {
   savedAt:      number;
 };
 
-const STORAGE_KEY  = 'familyai:aimemo:bookmarks';
-const CHANGE_EVENT = 'familyai:aimemo-changed';
-
-function read(): AiMemoItem[] {
-  if (typeof window === 'undefined') return [];
+// ── API ヘルパー ──────────────────────────────────────────────────
+async function apiSave(items: AiMemoItem[]): Promise<boolean> {
   try {
-    const raw = window.localStorage.getItem(STORAGE_KEY);
-    if (!raw) return [];
-    const parsed = JSON.parse(raw);
-    return Array.isArray(parsed) ? parsed : [];
+    const res = await fetch('/api/user/ai-memos', {
+      method:  'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body:    JSON.stringify({ items }),
+    });
+    return res.ok;
   } catch {
-    return [];
+    return false;
   }
 }
 
-function write(items: AiMemoItem[]): void {
-  if (typeof window === 'undefined') return;
-  window.localStorage.setItem(STORAGE_KEY, JSON.stringify(items));
-  window.dispatchEvent(new Event(CHANGE_EVENT));
+async function apiDelete(id: string): Promise<boolean> {
+  try {
+    const res = await fetch(`/api/user/ai-memos?id=${encodeURIComponent(id)}`, {
+      method: 'DELETE',
+    });
+    return res.ok;
+  } catch {
+    return false;
+  }
 }
 
-/** 保存する */
-export function addAiMemo(item: AiMemoItem): void {
-  const list = read();
-  if (list.some((i) => i.id === item.id)) return;
-  list.push(item);
-  write(list);
-}
+// ── React フック ──────────────────────────────────────────────────
 
-/** 削除する */
-export function removeAiMemo(id: string): void {
-  write(read().filter((i) => i.id !== id));
-}
-
-/** 保存済みかどうか */
-export function hasAiMemo(id: string): boolean {
-  return read().some((i) => i.id === id);
-}
-
-/** 全件取得（新しい順） */
-export function getAllAiMemos(): AiMemoItem[] {
-  return [...read()].sort((a, b) => b.savedAt - a.savedAt);
-}
-
-/** 一覧を購読する React フック */
-export function useAiMemoList(): AiMemoItem[] {
-  const [items, setItems] = useState<AiMemoItem[]>([]);
-  useEffect(() => {
-    setItems(getAllAiMemos());
-    const sync = () => setItems(getAllAiMemos());
-    window.addEventListener(CHANGE_EVENT, sync);
-    window.addEventListener('storage', sync);
-    return () => {
-      window.removeEventListener(CHANGE_EVENT, sync);
-      window.removeEventListener('storage', sync);
-    };
-  }, []);
-  return items;
-}
-
-/** 単一メモの保存状態を購読 */
-export function useAiMemoBookmark(id: string): {
-  saved:  boolean;
-  toggle: (item: Omit<AiMemoItem, 'savedAt'>) => void;
+/**
+ * 全メモ一覧 + 削除操作を提供するフック。
+ * ログイン状態に応じて DB から取得する。
+ */
+export function useAiMemoList(): {
+  items:       AiMemoItem[];
+  loading:     boolean;
+  isLoggedIn:  boolean;
+  remove:      (id: string) => Promise<void>;
 } {
-  const [saved, setSaved] = useState(false);
+  const { data: session, status } = useSession();
+  const isLoggedIn = status === 'authenticated';
+  const [items, setItems]     = useState<AiMemoItem[]>([]);
+  const [loading, setLoading] = useState(true);
+
   useEffect(() => {
-    setSaved(hasAiMemo(id));
-    const sync = () => setSaved(hasAiMemo(id));
-    window.addEventListener(CHANGE_EVENT, sync);
-    window.addEventListener('storage', sync);
-    return () => {
-      window.removeEventListener(CHANGE_EVENT, sync);
-      window.removeEventListener('storage', sync);
-    };
-  }, [id]);
+    if (status === 'loading') return;
+    if (!isLoggedIn) {
+      setLoading(false);
+      return;
+    }
+    setLoading(true);
+    fetch('/api/user/ai-memos')
+      .then((r) => r.json())
+      .then((json: { ok: boolean; data: AiMemoItem[] }) => {
+        setItems(json.ok ? [...json.data].sort((a, b) => b.savedAt - a.savedAt) : []);
+      })
+      .catch(() => setItems([]))
+      .finally(() => setLoading(false));
+  }, [isLoggedIn, status, session?.user?.id]);
+
+  const remove = useCallback(async (id: string) => {
+    // 楽観的 UI: 即座に一覧から消す
+    setItems((prev) => prev.filter((i) => i.id !== id));
+    await apiDelete(id);
+  }, []);
+
+  return { items, loading, isLoggedIn, remove };
+}
+
+/**
+ * 単一チャットバブルの保存状態を管理するフック。
+ * - ページロード時は常に saved=false（チャット履歴は永続化しないため）
+ * - toggle で楽観的に saved を更新し、同時に API を呼ぶ
+ * - 非ログインユーザーは isLoggedIn=false → 呼び出し側でログイン案内を表示
+ */
+export function useAiMemoBookmark(id: string): {
+  saved:      boolean;
+  toggle:     (item: Omit<AiMemoItem, 'savedAt'>) => void;
+  isLoggedIn: boolean;
+} {
+  const { data: session, status } = useSession();
+  const isLoggedIn = status === 'authenticated';
+  const [saved, setSaved] = useState(false);
 
   const toggle = useCallback(
     (item: Omit<AiMemoItem, 'savedAt'>) => {
-      if (hasAiMemo(item.id)) {
-        removeAiMemo(item.id);
+      if (!isLoggedIn) return; // 非ログイン時は何もしない（UI 側で案内）
+      if (saved) {
+        setSaved(false);
+        apiDelete(item.id);
       } else {
-        addAiMemo({ ...item, savedAt: Date.now() });
+        const full = { ...item, savedAt: Date.now() };
+        setSaved(true);
+        apiSave([full]);
       }
     },
-    [],
+    [isLoggedIn, saved],
   );
 
-  return { saved, toggle };
+  // id が変わった場合（別のバブル）はリセット
+  useEffect(() => { setSaved(false); }, [id]);
+
+  return { saved, toggle, isLoggedIn };
 }

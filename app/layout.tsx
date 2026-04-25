@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from 'next';
 import { Zen_Kaku_Gothic_New, Shippori_Mincho } from 'next/font/google';
 import { GoogleAnalytics }  from '@/components/analytics/GoogleAnalytics';
+import { Providers }        from '@/components/Providers';
 import './globals.css';
 
 // ── フォント定義 ──────────────────────────────────────────────
@@ -100,7 +101,10 @@ export default function RootLayout({
         </a>
 
         {/* Header・Footer・main は各レイアウト（(site)/layout.tsx / admin/layout.tsx）が担当 */}
-        {children}
+        {/* Providers: SessionProvider（useSession フック用）を全ページに注入 */}
+        <Providers>
+          {children}
+        </Providers>
 
         {/* Google Analytics（NEXT_PUBLIC_GA_ID が設定されている場合のみ） */}
         {process.env.NEXT_PUBLIC_GA_ID && (

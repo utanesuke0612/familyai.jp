@@ -88,7 +88,7 @@ interface ChatBubbleProps {
 function ChatBubble({ message, question, articleTitle, articleSlug }: ChatBubbleProps) {
   const isUser = message.role === 'user';
   const [copied, setCopied] = useState(false);
-  const { saved, toggle } = useAiMemoBookmark(message.id);
+  const { saved, toggle, isLoggedIn } = useAiMemoBookmark(message.id);
 
   const handleCopy = async () => {
     try {
@@ -163,20 +163,38 @@ function ChatBubble({ message, question, articleTitle, articleSlug }: ChatBubble
             >
               {copied ? '✓ コピー済' : '📋 コピー'}
             </button>
-            <button
-              type="button"
-              onClick={handleSave}
-              aria-label={saved ? 'メモから外す' : 'AIメモ帳に保存'}
-              className="text-xs px-2 py-0.5 rounded-md transition-opacity hover:opacity-80"
-              style={{
-                background: saved ? 'var(--color-orange)' : 'transparent',
-                color:      saved ? 'white' : 'var(--color-brown-light)',
-                border:     '1px solid var(--color-beige-dark)',
-                minHeight:  'auto',
-              }}
-            >
-              {saved ? '✓ 保存済' : '📌 保存'}
-            </button>
+            {isLoggedIn ? (
+              <button
+                type="button"
+                onClick={handleSave}
+                aria-label={saved ? 'メモから外す' : 'AIメモ帳に保存'}
+                className="text-xs px-2 py-0.5 rounded-md transition-opacity hover:opacity-80"
+                style={{
+                  background: saved ? 'var(--color-orange)' : 'transparent',
+                  color:      saved ? 'white' : 'var(--color-brown-light)',
+                  border:     '1px solid var(--color-beige-dark)',
+                  minHeight:  'auto',
+                }}
+              >
+                {saved ? '✓ 保存済' : '📌 保存'}
+              </button>
+            ) : (
+              <a
+                href="/auth/signin"
+                className="text-xs px-2 py-0.5 rounded-md transition-opacity hover:opacity-80"
+                style={{
+                  background: 'transparent',
+                  color:      'var(--color-brown-light)',
+                  border:     '1px solid var(--color-beige-dark)',
+                  minHeight:  'auto',
+                  textDecoration: 'none',
+                  display:    'inline-block',
+                }}
+                title="ログインするとメモを保存できます"
+              >
+                📌 ログインして保存
+              </a>
+            )}
           </div>
         )}
       </div>

@@ -13,8 +13,10 @@ import {
   text,
   boolean,
   integer,
+  bigint,
   timestamp,
   index,
+  uniqueIndex,
 } from 'drizzle-orm/pg-core';
 
 // ─── articles ─────────────────────────────────────────────────
@@ -75,8 +77,61 @@ export const users = pgTable('users', {
 
 
 
+// ─── user_ai_memos ─────────────────────────────────────────────
+/**
+ * ログイン会員の AI メモをクラウドに保存するテーブル。
+ * 非会員は localStorage のみを使用。
+ */
+export const userAiMemos = pgTable(
+  'user_ai_memos',
+  {
+    id:           uuid('id').defaultRandom().primaryKey(),
+    userId:       uuid('user_id').notNull().references(() => users.id, { onDelete: 'cascade' }),
+    memoId:       text('memo_id').notNull(),          // クライアント生成 UUID
+    question:     text('question').notNull(),
+    answer:       text('answer').notNull(),
+    articleTitle: text('article_title').notNull(),
+    articleSlug:  text('article_slug'),
+    savedAt:      bigint('saved_at', { mode: 'number' }).notNull(), // エポックミリ秒
+    createdAt:    timestamp('created_at').defaultNow().notNull(),
+  },
+  (t) => ({
+    uniqUserMemo: uniqueIndex('user_ai_memos_user_id_memo_id_idx').on(t.userId, t.memoId),
+  }),
+);
+
+// ─── user_vocab_bookmarks ──────────────────────────────────────
+/**
+ * ログイン会員の VOA 単語ブックマークをクラウドに保存するテーブル。
+ * 非会員は localStorage のみを使用。
+ */
+export const userVocabBookmarks = pgTable(
+  'user_vocab_bookmarks',
+  {
+    id:          uuid('id').defaultRandom().primaryKey(),
+    userId:      uuid('user_id').notNull().references(() => users.id, { onDelete: 'cascade' }),
+    vocabId:     text('vocab_id').notNull(),           // "course/lesson/word"
+    word:        text('word').notNull(),
+    meaning:     text('meaning').notNull(),
+    pron:        text('pron'),
+    example:     text('example'),
+    course:      text('course'),
+    lesson:      text('lesson'),
+    lessonTitle: text('lesson_title'),
+    addedAt:     bigint('added_at', { mode: 'number' }).notNull(), // エポックミリ秒
+    createdAt:   timestamp('created_at').defaultNow().notNull(),
+  },
+  (t) => ({
+    uniqUserVocab: uniqueIndex('user_vocab_bookmarks_user_id_vocab_id_idx').on(t.userId, t.vocabId),
+  }),
+);
+
 // ─── 型エクスポート（Drizzle の推論型） ───────────────────────
-export type Article        = typeof articles.$inferSelect;
-export type NewArticle     = typeof articles.$inferInsert;
-export type User           = typeof users.$inferSelect;
-export type NewUser        = typeof users.$inferInsert;
+export type Article            = typeof articles.$inferSelect;
+export type NewArticle         = typeof articles.$inferInsert;
+export type User               = typeof users.$inferSelect;
+export type NewUser            = typeof users.$inferInsert;
+export type UserAiMemo         = typeof userAiMemos.$inferSelect;
+export type NewUserAiMemo      = typeof userAiMemos.$inferInsert;
+export type UserVocabBookmark  = typeof userVocabBookmarks.$inferSelect;
+export type NewUserVocabBookmark = typeof userVocabBookmarks.$inferInsert;

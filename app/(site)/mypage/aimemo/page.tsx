@@ -4,12 +4,12 @@
  * app/(site)/mypage/aimemo/page.tsx
  * familyai.jp — AIメモ帳ページ
  *
- * AIChatWidget で 📌 保存した AI 回答を一覧表示する。
- * localStorage ベース（ログイン不要）。
+ * AIChatWidget で 📌 ボタンで保存した AI 回答を一覧表示する。
+ * ログイン会員のみ利用可（DB に保存）。
  */
 
 import Link from 'next/link';
-import { removeAiMemo, useAiMemoList, type AiMemoItem } from '@/lib/ai-memo-store';
+import { useAiMemoList, type AiMemoItem } from '@/lib/ai-memo-store';
 
 function downloadJson(items: AiMemoItem[]) {
   const blob = new Blob([JSON.stringify(items, null, 2)], { type: 'application/json' });
@@ -30,8 +30,44 @@ function formatDate(ms: number) {
   });
 }
 
+// ── ログインウォール ──────────────────────────────────────────────
+function LoginWall() {
+  return (
+    <main style={{ background: 'var(--color-cream)', minHeight: '60vh' }}>
+      <div className="max-w-container mx-auto flex flex-col items-center justify-center gap-6 py-24" style={{ paddingInline: 'var(--container-px)' }}>
+        <p className="text-5xl">📌</p>
+        <h1 className="font-display font-bold text-2xl text-center" style={{ color: 'var(--color-brown)' }}>
+          AIメモ帳はログイン会員専用です
+        </h1>
+        <p className="text-sm text-center leading-relaxed" style={{ color: 'var(--color-brown-light)', maxWidth: '360px' }}>
+          無料会員登録をすると、AIチャットの回答をクラウドに保存して、どのデバイスからでも見返せます。
+        </p>
+        <div className="flex gap-3 flex-wrap justify-center">
+          <Link
+            href="/auth/signin"
+            className="inline-flex items-center rounded-full px-6 text-sm font-semibold"
+            style={{ minHeight: '44px', background: 'var(--color-orange)', color: 'white' }}
+          >
+            ログイン
+          </Link>
+          <Link
+            href="/auth/register"
+            className="inline-flex items-center rounded-full px-6 text-sm font-semibold"
+            style={{ minHeight: '44px', background: 'white', color: 'var(--color-brown)', border: '1px solid var(--color-beige-dark)' }}
+          >
+            無料会員登録
+          </Link>
+        </div>
+      </div>
+    </main>
+  );
+}
+
 export default function AiMemoPage() {
-  const items = useAiMemoList();
+  const { items, loading, isLoggedIn, remove } = useAiMemoList();
+
+  // 未ログイン
+  if (!loading && !isLoggedIn) return <LoginWall />;
 
   return (
     <main style={{ background: 'var(--color-cream)' }}>
@@ -68,24 +104,6 @@ export default function AiMemoPage() {
               <p className="mt-2 text-sm" style={{ color: 'var(--color-brown-light)' }}>
                 AIチャットの回答で 📌 を押して保存したメモが集まります。
               </p>
-              <div
-                className="mt-3 rounded-2xl p-3 text-xs leading-relaxed"
-                style={{
-                  background: 'rgba(255,255,255,0.85)',
-                  border:     '1px solid var(--color-beige-dark)',
-                  color:      'var(--color-brown)',
-                }}
-              >
-                💡 <strong>保存場所について</strong>：メモデータは
-                <strong>このブラウザの中だけ</strong>に保存されます（サーバーには送りません）。
-                <br />
-                ・別の端末やブラウザでは見られません<br />
-                ・ブラウザのデータ削除で消えてしまいます
-                <br />
-                <span style={{ color: 'var(--color-brown-light)' }}>
-                  → 「📥 JSONで書き出す」でバックアップできます。
-                </span>
-              </div>
             </div>
 
             {items.length > 0 && (
@@ -114,7 +132,16 @@ export default function AiMemoPage() {
         }}
       >
         <div className="max-w-container mx-auto" style={{ paddingInline: 'var(--container-px)' }}>
-          {items.length === 0 ? (
+
+          {/* ローディング */}
+          {loading && (
+            <div className="flex justify-center py-16">
+              <div className="w-8 h-8 border-2 border-orange-300 border-t-orange-500 rounded-full animate-spin" />
+            </div>
+          )}
+
+          {/* 空状態 */}
+          {!loading && items.length === 0 && (
             <div
               className="rounded-[28px] p-6 sm:p-8 text-center"
               style={{
@@ -140,7 +167,10 @@ export default function AiMemoPage() {
                 記事を読む →
               </Link>
             </div>
-          ) : (
+          )}
+
+          {/* メモ一覧 */}
+          {!loading && items.length > 0 && (
             <div className="flex flex-col gap-4">
               {items.map((item) => (
                 <article
@@ -158,20 +188,14 @@ export default function AiMemoPage() {
                         <Link
                           href={`/learn/${item.articleSlug}`}
                           className="text-xs font-semibold px-2 py-1 rounded-full"
-                          style={{
-                            background: 'var(--color-peach)',
-                            color:      'var(--color-brown)',
-                          }}
+                          style={{ background: 'var(--color-peach)', color: 'var(--color-brown)' }}
                         >
                           📄 {item.articleTitle}
                         </Link>
                       ) : (
                         <span
                           className="text-xs font-semibold px-2 py-1 rounded-full"
-                          style={{
-                            background: 'var(--color-peach)',
-                            color:      'var(--color-brown)',
-                          }}
+                          style={{ background: 'var(--color-peach)', color: 'var(--color-brown)' }}
                         >
                           📄 {item.articleTitle}
                         </span>
@@ -182,7 +206,7 @@ export default function AiMemoPage() {
                     </div>
                     <button
                       type="button"
-                      onClick={() => removeAiMemo(item.id)}
+                      onClick={() => remove(item.id)}
                       aria-label="メモを削除"
                       className="inline-flex items-center justify-center rounded-full text-sm"
                       style={{
@@ -204,7 +228,6 @@ export default function AiMemoPage() {
                     style={{
                       background: 'var(--color-orange)',
                       color:      'white',
-                      alignSelf:  'flex-end',
                     }}
                   >
                     <span className="text-xs font-semibold opacity-80 block mb-0.5">質問</span>
@@ -220,10 +243,7 @@ export default function AiMemoPage() {
                       border:     '1px solid var(--color-beige-dark)',
                     }}
                   >
-                    <span
-                      className="text-xs font-semibold block mb-0.5"
-                      style={{ color: 'var(--color-brown-light)' }}
-                    >
+                    <span className="text-xs font-semibold block mb-0.5" style={{ color: 'var(--color-brown-light)' }}>
                       AI の回答
                     </span>
                     {item.answer}
