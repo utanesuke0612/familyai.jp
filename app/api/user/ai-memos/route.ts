@@ -101,9 +101,11 @@ export async function POST(req: NextRequest) {
         })),
       )
       .onConflictDoNothing(); // user_id + memo_id が重複の場合はスキップ
-  } catch (err) {
+  } catch (err: unknown) {
+    const e = err as Record<string, unknown>;
+    const cause = e?.cause as Record<string, unknown> | undefined;
     console.error('[POST /api/user/ai-memos]', err);
-    return NextResponse.json({ ok: false, error: 'サーバーエラーが発生しました' }, { status: 500 });
+    return NextResponse.json({ ok: false, error: String(e?.message), code: cause?.code, detail: cause?.detail }, { status: 500 });
   }
 
   return NextResponse.json({ ok: true });
