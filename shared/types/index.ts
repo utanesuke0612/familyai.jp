@@ -38,7 +38,7 @@ export interface ArticleSummary {
 
 /** 記事詳細型（本文 + 読了目安を含む） */
 export interface Article extends ArticleSummary {
-  body:       string;   // Markdown（<audio> タグを直接記述可能）
+  body:       string;   // Markdown
   readingMin: number;   // 読了目安（分・mapper が本文から計算）
 }
 

@@ -28,7 +28,13 @@ export function verifyCsrf(req: NextRequest): boolean {
   try {
     const originHost = new URL(origin).host;
     // localhost / 127.0.0.1 は開発環境として常に許可
-    if (originHost.startsWith('localhost') || originHost.startsWith('127.0.0.1')) {
+    // startsWith ではなく完全一致（localhost.attacker.com 等のバイパスを防止）
+    if (
+      originHost === 'localhost' ||
+      originHost.startsWith('localhost:') ||
+      originHost === '127.0.0.1' ||
+      originHost.startsWith('127.0.0.1:')
+    ) {
       return true;
     }
     return originHost === host;
