@@ -8,6 +8,7 @@
  * ログイン会員のみ利用可（DB に保存）。
  */
 
+import { useState } from 'react';
 import Link from 'next/link';
 import { useAiMemoList, type AiMemoItem } from '@/lib/ai-memo-store';
 import { MarkdownContent }               from '@/components/ui/MarkdownContent';
@@ -51,6 +52,114 @@ function formatDate(ms: number) {
     year: 'numeric', month: 'numeric', day: 'numeric',
     hour: '2-digit', minute: '2-digit',
   });
+}
+
+// ── メモカード ────────────────────────────────────────────────────
+function MemoItem({ item, onRemove }: { item: AiMemoItem; onRemove: (id: string) => void }) {
+  const [copied, setCopied] = useState(false);
+
+  const handleCopy = async () => {
+    try {
+      await navigator.clipboard.writeText(item.answer);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 1500);
+    } catch { /* noop */ }
+  };
+
+  return (
+    <article
+      className="rounded-[24px] p-5 sm:p-6"
+      style={{
+        background: 'rgba(255,255,255,0.92)',
+        boxShadow:  'var(--shadow-warm-sm)',
+      }}
+    >
+      {/* メタ情報 */}
+      <div className="flex items-center justify-between gap-3 mb-3">
+        <div className="flex flex-col gap-0.5 min-w-0">
+          <span
+            className="font-display text-lg font-bold leading-snug"
+            style={{ color: 'var(--color-brown)' }}
+          >
+            {item.articleTitle}
+          </span>
+          <span className="text-xs" style={{ color: 'var(--color-brown-light)' }}>
+            {formatDate(item.savedAt)}
+          </span>
+        </div>
+        {item.articleSlug && (
+          <Link
+            href={resolveHref(item.articleSlug)}
+            className="inline-flex items-center text-sm font-semibold whitespace-nowrap shrink-0"
+            style={{ color: 'var(--color-orange)', height: '36px' }}
+          >
+            レッスンを開く →
+          </Link>
+        )}
+      </div>
+
+      {/* 質問 */}
+      <div
+        className="rounded-xl px-3 py-2 text-sm mb-3"
+        style={{
+          background: 'var(--color-orange)',
+          color:      'white',
+        }}
+      >
+        <span className="text-xs font-semibold opacity-80 block mb-0.5">質問</span>
+        {item.question}
+      </div>
+
+      {/* 回答 */}
+      <div
+        className="rounded-xl px-3 py-2 text-sm"
+        style={{
+          background: 'var(--color-cream)',
+          color:      'var(--color-brown)',
+          border:     '1px solid var(--color-beige-dark)',
+        }}
+      >
+        <span className="text-xs font-semibold block mb-1" style={{ color: 'var(--color-brown-light)' }}>
+          AI の回答
+        </span>
+        <MarkdownContent color="var(--color-brown)" fontSize="0.875rem">
+          {item.answer}
+        </MarkdownContent>
+      </div>
+
+      {/* アクションボタン */}
+      <div className="flex gap-1 mt-2">
+        <button
+          type="button"
+          onClick={handleCopy}
+          aria-label="回答をコピー"
+          className="text-xs px-2 py-0.5 rounded-md transition-opacity hover:opacity-80"
+          style={{
+            background: copied ? 'var(--color-orange)' : 'transparent',
+            color:      copied ? 'white' : 'var(--color-brown-light)',
+            border:     '1px solid var(--color-beige-dark)',
+            minHeight:  'auto',
+          }}
+        >
+          {copied ? '✓ コピー済' : '📋 コピー'}
+        </button>
+        <button
+          type="button"
+          onClick={() => onRemove(item.id)}
+          aria-label="メモから外す"
+          className="text-xs px-2 py-0.5 rounded-md transition-opacity hover:opacity-80"
+          style={{
+            background: 'var(--color-orange)',
+            color:      'white',
+            border:     '1px solid var(--color-beige-dark)',
+            minHeight:  'auto',
+          }}
+        >
+          ✓ 保存済
+        </button>
+      </div>
+    </article>
+  );
 }
 
 // ── ログインウォール ──────────────────────────────────────────────
@@ -196,85 +305,7 @@ export default function AiMemoPage() {
           {!loading && items.length > 0 && (
             <div className="flex flex-col gap-4">
               {items.map((item) => (
-                <article
-                  key={item.id}
-                  className="rounded-[24px] p-5 sm:p-6"
-                  style={{
-                    background: 'rgba(255,255,255,0.92)',
-                    boxShadow:  'var(--shadow-warm-sm)',
-                  }}
-                >
-                  {/* メタ情報 */}
-                  <div className="flex items-start justify-between gap-3 mb-3">
-                    <div className="flex flex-col gap-0.5 min-w-0">
-                      <span
-                        className="font-display text-lg font-bold leading-snug"
-                        style={{ color: 'var(--color-brown)' }}
-                      >
-                        {item.articleTitle}
-                      </span>
-                      <span className="text-xs" style={{ color: 'var(--color-brown-light)' }}>
-                        {formatDate(item.savedAt)}
-                      </span>
-                    </div>
-                    <div className="flex items-center gap-2 shrink-0">
-                      {item.articleSlug && (
-                        <Link
-                          href={resolveHref(item.articleSlug)}
-                          className="inline-flex items-center text-sm font-semibold whitespace-nowrap"
-                          style={{ color: 'var(--color-orange)', height: '36px' }}
-                        >
-                          レッスンを開く →
-                        </Link>
-                      )}
-                      <button
-                        type="button"
-                        onClick={() => remove(item.id)}
-                        aria-label="メモを削除"
-                        className="inline-flex items-center justify-center rounded-full text-sm"
-                        style={{
-                          width:      '36px',
-                          height:     '36px',
-                          minHeight:  'auto',
-                          background: 'var(--color-beige)',
-                          border:     '1px solid var(--color-beige-dark)',
-                          padding:    0,
-                        }}
-                      >
-                        🗑️
-                      </button>
-                    </div>
-                  </div>
-
-                  {/* 質問 */}
-                  <div
-                    className="rounded-xl px-3 py-2 text-sm mb-3"
-                    style={{
-                      background: 'var(--color-orange)',
-                      color:      'white',
-                    }}
-                  >
-                    <span className="text-xs font-semibold opacity-80 block mb-0.5">質問</span>
-                    {item.question}
-                  </div>
-
-                  {/* 回答 */}
-                  <div
-                    className="rounded-xl px-3 py-2 text-sm"
-                    style={{
-                      background: 'var(--color-cream)',
-                      color:      'var(--color-brown)',
-                      border:     '1px solid var(--color-beige-dark)',
-                    }}
-                  >
-                    <span className="text-xs font-semibold block mb-1" style={{ color: 'var(--color-brown-light)' }}>
-                      AI の回答
-                    </span>
-                    <MarkdownContent color="var(--color-brown)" fontSize="0.875rem">
-                      {item.answer}
-                    </MarkdownContent>
-                  </div>
-                </article>
+                <MemoItem key={item.id} item={item} onRemove={remove} />
               ))}
             </div>
           )}
