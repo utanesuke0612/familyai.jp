@@ -84,21 +84,45 @@ export default async function MyPage() {
                 alt=""
                 width={64}
                 height={64}
-                className="rounded-full"
+                className="rounded-full shrink-0"
                 style={{ border: '2px solid white', boxShadow: 'var(--shadow-warm-sm)' }}
               />
             )}
-            <div>
-              <h1
-                className="font-display font-bold leading-tight"
-                style={{ fontSize: 'clamp(24px, 4.2vw, 40px)', color: 'var(--color-brown)' }}
-              >
-                {isLoggedIn
-                  ? `ようこそ、${session.user.name ?? 'あなた'}さん`
-                  : 'MyPage'}
-              </h1>
+            {/* 見出し領域: flex-1 + min-w-0 で flex 親内に収め、長い user.name を折返し可能に */}
+            <div className="flex-1 min-w-0">
+              {isLoggedIn ? (
+                <h1
+                  className="font-display font-bold leading-tight"
+                  style={{
+                    // max を 28px に抑え、長いユーザー名でレイアウト崩壊を防ぐ
+                    fontSize:    'clamp(20px, 2.4vw + 14px, 28px)',
+                    color:       'var(--color-brown)',
+                    overflowWrap: 'anywhere',  // 日本語連結の長い user.name でも折返す
+                    wordBreak:    'normal',
+                  }}
+                >
+                  ようこそ、
+                  <span className="font-bold" style={{ color: 'var(--color-orange)' }}>
+                    {session.user.name ?? 'あなた'}
+                  </span>
+                  さん
+                </h1>
+              ) : (
+                <h1
+                  className="font-display font-bold leading-tight"
+                  style={{ fontSize: 'clamp(22px, 3vw + 14px, 32px)', color: 'var(--color-brown)' }}
+                >
+                  MyPage
+                </h1>
+              )}
               {isLoggedIn && session.user.email && (
-                <p className="text-sm" style={{ color: 'var(--color-brown-light)' }}>
+                <p
+                  className="text-sm mt-1"
+                  style={{
+                    color:        'var(--color-brown-light)',
+                    overflowWrap: 'anywhere',
+                  }}
+                >
                   {session.user.email}
                 </p>
               )}
@@ -223,7 +247,7 @@ export default async function MyPage() {
             }}
           >
             <div className="flex items-center gap-2 mb-3">
-              <span className="text-2xl" aria-hidden="true">🤖</span>
+              <span className="text-2xl" aria-hidden="true">💞</span>
               <h2 className="font-display text-xl font-bold" style={{ color: 'var(--color-brown)' }}>
                 AI 利用状況
               </h2>
