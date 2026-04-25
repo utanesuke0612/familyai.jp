@@ -11,8 +11,9 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 
-import { ArticleBody } from '@/components/article/ArticleBody';
-import { AIChatWidget } from '@/components/article/AIChatWidget';
+import { ArticleBody }          from '@/components/article/ArticleBody';
+import { AIChatWidget }         from '@/components/article/AIChatWidget';
+import { FloatingShareButtons } from '@/components/article/FloatingShareButtons';
 import { SITE } from '@/shared';
 import {
   getAllLessons,
@@ -184,6 +185,11 @@ export default async function VoaLessonPage({
           <div className="grid grid-cols-1 lg:grid-cols-[1fr_340px] gap-8 items-start">
             <div className="min-w-0">
               <ArticleBody content={data.body} className="!max-w-none" />
+
+              <FloatingShareButtons
+                title={headline}
+                url={`${SITE.url}/tools/voaenglish/${course}/${lesson}`}
+              />
             </div>
             <aside className="flex flex-col gap-6 lg:sticky lg:top-[calc(var(--header-height)+24px)]">
               <AIChatWidget

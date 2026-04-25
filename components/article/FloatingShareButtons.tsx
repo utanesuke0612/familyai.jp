@@ -2,88 +2,24 @@
 
 /**
  * components/article/FloatingShareButtons.tsx
- * familyai.jp — 記事ページ フローティングアクションボタン
+ * familyai.jp — 記事ページ フローティングシェアボタン
  *
  * Desktop (lg+): 画面左側・縦中央に固定
  * Mobile:        左下コーナーに固定
  *
- * ボタン: ❤️いいね（匿名OK）/ 🔖ブックマーク（ログイン必須）/ X シェア / LINE シェア
+ * ボタン: X シェア / LINE シェア
  */
 
-import { useEffect, useState, useCallback } from 'react';
-
 interface Props {
-  slug:  string;
   title: string;
   url:   string;
 }
 
-export function FloatingShareButtons({ slug, title, url }: Props) {
-  const [likeCount,   setLikeCount]   = useState(0);
-  const [liked,       setLiked]       = useState(false);
-  const [bookmarked,  setBookmarked]  = useState(false);
-  const [likeLoading, setLikeLoading] = useState(false);
-  const [bmLoading,   setBmLoading]   = useState(false);
-
-  // 初期状態取得
-  useEffect(() => {
-    fetch(`/api/articles/${slug}/like`)
-      .then((r) => r.json())
-      .then((d) => { setLikeCount(d.likeCount ?? 0); setLiked(!!d.liked); })
-      .catch(() => {});
-
-    fetch(`/api/articles/${slug}/bookmark`)
-      .then((r) => r.json())
-      .then((d) => { setBookmarked(!!d.bookmarked); })
-      .catch(() => {});
-  }, [slug]);
-
-  // いいねトグル
-  const handleLike = useCallback(async () => {
-    if (likeLoading) return;
-    setLikeLoading(true);
-    // オプティミスティック更新
-    setLiked((prev) => !prev);
-    setLikeCount((prev) => liked ? prev - 1 : prev + 1);
-    try {
-      const res  = await fetch(`/api/articles/${slug}/like`, { method: 'POST' });
-      const data = await res.json();
-      setLikeCount(data.likeCount);
-      setLiked(data.liked);
-    } catch {
-      // ロールバック
-      setLiked((prev) => !prev);
-      setLikeCount((prev) => liked ? prev + 1 : prev - 1);
-    } finally {
-      setLikeLoading(false);
-    }
-  }, [slug, liked, likeLoading]);
-
-  // ブックマークトグル
-  const handleBookmark = useCallback(async () => {
-    if (bmLoading) return;
-    setBmLoading(true);
-    setBookmarked((prev) => !prev);
-    try {
-      const res  = await fetch(`/api/articles/${slug}/bookmark`, { method: 'POST' });
-      const data = await res.json();
-      if (data.requiresLogin) {
-        setBookmarked(false);
-        window.location.href = '/auth/signin';
-        return;
-      }
-      setBookmarked(data.bookmarked);
-    } catch {
-      setBookmarked((prev) => !prev);
-    } finally {
-      setBmLoading(false);
-    }
-  }, [slug, bmLoading]);
-
+export function FloatingShareButtons({ title, url }: Props) {
   const xUrl    = `https://twitter.com/intent/tweet?text=${encodeURIComponent(title)}&url=${encodeURIComponent(url)}&via=familyaijp`;
   const lineUrl = `https://line.me/R/msg/text/?${encodeURIComponent(title + '\n' + url)}`;
 
-  const btnBase = 'flex flex-col items-center justify-center rounded-full transition-transform hover:scale-110 active:scale-95';
+  const btnBase = 'flex items-center justify-center rounded-full transition-transform hover:scale-110 active:scale-95';
 
   return (
     <div
@@ -92,62 +28,8 @@ export function FloatingShareButtons({ slug, title, url }: Props) {
         'left-4 bottom-8',
         'lg:left-[72px] lg:bottom-auto lg:top-1/2 lg:-translate-y-1/2',
       ].join(' ')}
-      aria-label="記事アクションボタン"
+      aria-label="記事シェアボタン"
     >
-      {/* ❤️ いいね */}
-      <button
-        onClick={handleLike}
-        disabled={likeLoading}
-        title={liked ? 'いいねを取り消す' : 'いいね'}
-        aria-label={liked ? 'いいねを取り消す' : 'いいね'}
-        className={btnBase}
-        style={{
-          width:      '44px',
-          height:     '44px',
-          background: liked ? '#FF6B6B' : 'white',
-          boxShadow:  '0 2px 8px rgba(0,0,0,0.14)',
-          border:     liked ? 'none' : '1px solid #e5e7eb',
-          gap:        '1px',
-        }}
-      >
-        <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"
-          fill={liked ? 'white' : 'none'}
-          stroke={liked ? 'white' : '#6b7280'}
-          strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
-        >
-          <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
-        </svg>
-        {likeCount > 0 && (
-          <span style={{ fontSize: '9px', color: liked ? 'white' : '#6b7280', lineHeight: 1, fontWeight: 600 }}>
-            {likeCount}
-          </span>
-        )}
-      </button>
-
-      {/* 🔖 ブックマーク */}
-      <button
-        onClick={handleBookmark}
-        disabled={bmLoading}
-        title={bookmarked ? 'ブックマーク解除' : 'ブックマーク'}
-        aria-label={bookmarked ? 'ブックマーク解除' : 'ブックマーク'}
-        className={btnBase}
-        style={{
-          width:      '44px',
-          height:     '44px',
-          background: bookmarked ? '#FF8C42' : 'white',
-          boxShadow:  '0 2px 8px rgba(0,0,0,0.14)',
-          border:     bookmarked ? 'none' : '1px solid #e5e7eb',
-        }}
-      >
-        <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"
-          fill={bookmarked ? 'white' : 'none'}
-          stroke={bookmarked ? 'white' : '#6b7280'}
-          strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
-        >
-          <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/>
-        </svg>
-      </button>
-
       {/* X（Twitter） */}
       <a
         href={xUrl}
