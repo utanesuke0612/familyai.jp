@@ -15,9 +15,12 @@ export default function robots(): MetadataRoute.Robots {
       {
         // 一般クローラー
         userAgent:   '*',
-        allow:       '/',
+        allow:       [
+          '/',
+          '/api/og',       // OGP画像生成 API（Twitter/SNS クローラー用）
+        ],
         disallow:    [
-          '/api/',         // API エンドポイントは除外
+          '/api/',         // API エンドポイントは除外（/api/og は上の allow で許可）
           '/dashboard/',   // ユーザーダッシュボード（将来）
           '/auth/',        // 認証ページ
           '/_next/',       // Next.js 内部
