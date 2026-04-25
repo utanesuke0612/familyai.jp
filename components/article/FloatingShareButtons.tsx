@@ -29,7 +29,7 @@ export function FloatingShareButtons({ title, url }: FloatingShareButtonsProps) 
         // Mobile: 右下（コンテンツと被らないよう右側・下部に配置）
         'right-3 bottom-24',
         // Desktop: 左側・縦中央
-        'lg:right-auto lg:left-[92px] lg:bottom-auto lg:top-1/2 lg:-translate-y-1/2',
+        'lg:right-auto lg:left-[72px] lg:bottom-auto lg:top-1/2 lg:-translate-y-1/2',
       ].join(' ')}
       aria-label="シェアボタン"
     >
