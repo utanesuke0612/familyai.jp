@@ -75,13 +75,10 @@ export async function generateMetadata({
   const description = article.description ?? article.title;
   const url         = `${SITE.url}/learn/${article.slug}`;
 
-  // 動的OGP: サムネイルがあればそれを使い、なければ /api/og で生成
-  const primaryLevel = article.level ?? '';
-  const ogApiUrl     = `${SITE.url}/api/og?${new URLSearchParams({
-    title: article.title,
-    ...(primaryLevel ? { level: primaryLevel } : {}),
-  }).toString()}`;
-  const ogImage      = article.thumbnailUrl ?? ogApiUrl;
+  // OGP: サムネイルがあればそれを使い、なければ静的デフォルト画像を使用
+  // ※ /api/og の動的生成は Twitter の robots.txt チェックでブロックされる場合があるため
+  //   サムネイルなし記事は /og-default.png をフォールバックとする
+  const ogImage = article.thumbnailUrl ?? `${SITE.url}/og-default.png`;
 
   return {
     title,
