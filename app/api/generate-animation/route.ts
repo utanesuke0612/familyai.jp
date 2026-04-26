@@ -104,6 +104,48 @@ function buildPrompt(theme: string, grade: string, subject: string): string {
     .replace(/\{SUBJECT\}/g, subjectLabel);
 }
 
+// ── Stage 1: テーマ詳細化プロンプト（インライン） ─────────────
+function buildEnrichPrompt(theme: string, gradeLabel: string, subjectLabel: string, subject: string): string {
+  const subjectGuidance: Record<string, string> = {
+    science: `理科の観点で考える：力の向き・大きさ・物体の動き・現象の因果関係を具体的に。SVGで描くべき矢印・物体・軌跡を明示。`,
+    math:    `算数・数学の観点で考える：座標軸・数値・図形の頂点座標を正確に計算。グリッドの必要性・縮尺・ラベルの位置を明示。`,
+    social:  `社会科の観点で考える：時系列・地理的位置関係・統計の比率を正確に。年号・地名・数値の正確さを最優先に明示。`,
+  };
+  return `あなたは教育SVGアニメーションの設計専門家です。
+以下のテーマを教えるためのSVGアニメーション仕様を設計してください。
+
+テーマ: ${theme}
+学年: ${gradeLabel}
+教科: ${subjectLabel}
+
+${subjectGuidance[subject] ?? ''}
+
+以下の形式で簡潔に出力してください（合計200〜400文字）:
+【核心概念】このアニメーションで示す1つの重要な概念
+【SVG要素】描くべき主要な図形・要素（3〜5個）
+【アニメーション】CSSキーフレームで実現する動き（1〜2個）
+【ラベル】SVG内に必ず表示する日本語テキスト
+【ポイント】教育的に正確な要点（3つ）`;
+}
+
+async function enrichThemeWithAI(theme: string, grade: string, subject: string): Promise<string> {
+  const gradeLabel   = GRADE_LABEL[grade]   ?? grade;
+  const subjectLabel = SUBJECT_LABEL[subject] ?? subject;
+  const enrichPrompt = buildEnrichPrompt(theme, gradeLabel, subjectLabel, subject);
+  try {
+    const spec = await completeOpenRouter(
+      MODEL_ROUTER['text-simple'],
+      [{ role: 'user', content: enrichPrompt }],
+      { maxTokens: 600, temperature: 0.3 },
+    );
+    return spec.trim();
+  } catch (err) {
+    console.warn('[generate-animation] Stage1 詳細化スキップ（フォールバック）:', err);
+    // Stage 1 失敗時はオリジナルのテーマをそのまま使用
+    return theme;
+  }
+}
+
 // ── HTML 抽出（モデルが ```html ... ``` で囲む場合に対応） ────
 function extractHtml(raw: string): string {
   // コードブロックがあれば中身だけ取り出す
@@ -181,10 +223,13 @@ export async function POST(req: NextRequest) {
     );
   }
 
-  // 6. プロンプト組み立て（教科別テンプレートを使用）
+  // 6. Stage 1: テーマを詳細仕様に変換（安い・速いモデルで高速処理）
+  const enrichedSpec = await enrichThemeWithAI(prompt, grade, subject);
+
+  // 7. プロンプト組み立て（教科別テンプレート × 詳細仕様を使用）
   let systemPrompt: string;
   try {
-    systemPrompt = buildPrompt(prompt, grade, subject);
+    systemPrompt = buildPrompt(enrichedSpec, grade, subject);
   } catch (err) {
     console.error('[generate-animation] プロンプト読み込みエラー:', err);
     return NextResponse.json(
@@ -193,7 +238,7 @@ export async function POST(req: NextRequest) {
     );
   }
 
-  // 7. OpenRouter でHTML生成（html-gen = Gemini 2.0 Flash: 高速・高品質・低コスト）
+  // 8. Stage 2: OpenRouter でHTML生成（html-gen = Gemini 2.5 Flash: 高速・高品質・低コスト）
   let rawHtml: string;
   try {
     rawHtml = await completeOpenRouter(
@@ -209,7 +254,7 @@ export async function POST(req: NextRequest) {
     );
   }
 
-  // 8. HTMLを抽出
+  // 9. HTMLを抽出
   const htmlContent = extractHtml(rawHtml);
   if (!htmlContent.toLowerCase().includes('<html') && !htmlContent.toLowerCase().includes('<!doctype')) {
     // 追加質問（テーマが曖昧な場合）として返ってきた可能性
@@ -219,7 +264,7 @@ export async function POST(req: NextRequest) {
     );
   }
 
-  // 9. DB保存
+  // 10. DB保存
   let animationId: string;
   try {
     animationId = await createAnimation({

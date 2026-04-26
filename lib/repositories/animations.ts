@@ -3,7 +3,7 @@
  * うごくAI教室 — user_animations テーブル操作
  */
 
-import { eq, desc } from 'drizzle-orm';
+import { eq, desc, and } from 'drizzle-orm';
 import { db }             from '@/lib/db';
 import { userAnimations } from '@/lib/db/schema';
 import type { NewUserAnimation, UserAnimation } from '@/lib/db/schema';
@@ -46,8 +46,7 @@ export async function deleteAnimation(id: string, userId: string): Promise<boole
   
   const result = await db
     .delete(userAnimations)
-    .where(eq(userAnimations.id, id))
+    .where(and(eq(userAnimations.id, id), eq(userAnimations.userId, userId)))
     .returning({ id: userAnimations.id });
-  // userId による所有者チェックは API 側で実施済みを前提とするが念のため確認
   return result.length > 0;
 }

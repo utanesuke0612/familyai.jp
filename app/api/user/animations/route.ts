@@ -35,6 +35,7 @@ export async function GET() {
     const list = await listUserAnimations(session.user.id);
 
     // htmlContentは一覧では不要（容量削減）
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const items = list.map(({ htmlContent: _html, ...rest }) => rest);
 
     return NextResponse.json({ ok: true, items });

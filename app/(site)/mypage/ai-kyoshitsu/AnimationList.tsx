@@ -79,9 +79,11 @@ function PreviewModal({ item, onClose }: { item: AnimationItem; onClose: () => v
   function handleFullscreen() {
     const t = wrapRef.current ?? iframeRef.current;
     if (!t) return;
-    document.fullscreenElement
-      ? document.exitFullscreen().catch(() => {})
-      : t.requestFullscreen({ navigationUI: 'hide' }).catch(() => {});
+    if (document.fullscreenElement) {
+      document.exitFullscreen().catch(() => {});
+    } else {
+      t.requestFullscreen({ navigationUI: 'hide' }).catch(() => {});
+    }
   }
 
   async function handleSave() {
