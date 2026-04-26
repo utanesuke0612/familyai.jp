@@ -326,6 +326,7 @@ export default function AiKyoshitsuPage() {
               prompt={prompt}
               setPrompt={setPrompt}
               grade={grade}
+              subject={subject}
               isGenerating={isGenerating}
               onGenerate={handleGenerate}
               subjectColor={subjectColor}
@@ -783,11 +784,12 @@ function ErrorPanel({ message, onRetry }: { message: string; onRetry: () => void
 ───────────────────────────────────────────────────── */
 
 function AiInputPanel({
-  prompt, setPrompt, grade, isGenerating, onGenerate, subjectColor,
+  prompt, setPrompt, grade, subject, isGenerating, onGenerate, subjectColor,
 }: {
   prompt:       string;
   setPrompt:    (v: string) => void;
   grade:        Grade;
+  subject:      Subject;
   isGenerating: boolean;
   onGenerate:   () => void;
   subjectColor: { bg: string; text: string; border: string };
@@ -806,22 +808,32 @@ function AiInputPanel({
         </span>
       </div>
 
-      <p className="text-sm leading-relaxed sm:text-base" style={{ color: 'var(--color-brown-light)' }}>
+      <p className="text-sm leading-relaxed" style={{ color: 'var(--color-brown-light)' }}>
         上のカードからテーマを選ぶか、自由にテーマを入力してください。
-        AIがインタラクティブなアニメーションページを生成します。
       </p>
 
-      {/* 学年表示 */}
-      <div className="flex items-center gap-2 flex-wrap">
-        <span className="text-xs" style={{ color: 'var(--color-brown-muted)' }}>対象学年：</span>
-        <span
-          className="inline-block rounded-full px-3 py-0.5 text-xs font-bold"
-          style={{ background: GRADE_COLOR[grade].bg, color: GRADE_COLOR[grade].text }}
-        >
-          {GRADE_LABEL[grade]}
-        </span>
+      {/* 学年・教科バッジ */}
+      <div className="flex items-center gap-3 flex-wrap">
+        <div className="flex items-center gap-2">
+          <span className="text-xs" style={{ color: 'var(--color-brown-muted)' }}>学年：</span>
+          <span
+            className="inline-block rounded-full px-3 py-0.5 text-xs font-bold"
+            style={{ background: GRADE_COLOR[grade].bg, color: GRADE_COLOR[grade].text }}
+          >
+            {GRADE_LABEL[grade]}
+          </span>
+        </div>
+        <div className="flex items-center gap-2">
+          <span className="text-xs" style={{ color: 'var(--color-brown-muted)' }}>教科：</span>
+          <span
+            className="inline-block rounded-full px-3 py-0.5 text-xs font-bold"
+            style={{ background: subjectColor.border, color: '#fff' }}
+          >
+            {SUBJECT_LABEL[subject]}
+          </span>
+        </div>
         <span className="text-xs" style={{ color: 'var(--color-brown-muted)' }}>
-          （上の学年ボタンで変更できます）
+          （上のボタンで変更できます）
         </span>
       </div>
 
@@ -870,10 +882,9 @@ function AiInputPanel({
             : '🎬 アニメーションを生成'
           }
         </button>
-
-        {!isGenerating && (
+        {isGenerating && (
           <span className="text-xs" style={{ color: 'var(--color-brown-muted)' }}>
-            ※ ログインが必要です。生成には30〜60秒かかります。
+            生成には30〜60秒かかります
           </span>
         )}
       </div>
@@ -883,8 +894,13 @@ function AiInputPanel({
         className="rounded-2xl px-4 py-3 text-xs leading-relaxed"
         style={{ background: 'var(--color-beige)', color: 'var(--color-brown-light)' }}
       >
-        <span className="font-bold">💡 使い方のヒント：</span>テーマは具体的に入力するほど、わかりやすいアニメーションが生成されます。
-        例：「てこの原理」より「てこの原理：支点・力点・作用点の関係を小学4年生向けに」
+        <span className="font-bold" style={{ color: 'var(--color-brown)' }}>💡 使い方のヒント：</span>
+        {'テーマは具体的に入力するほど、正確なアニメーションが生成されます。'}
+        <br />
+        例：「てこの原理」より{' '}
+        <span className="font-bold" style={{ color: 'var(--color-orange)' }}>
+          「てこの原理：支点・力点・作用点の関係を小学4年生向けに」
+        </span>
       </div>
     </div>
   );

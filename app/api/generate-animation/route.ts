@@ -47,11 +47,17 @@ const bodySchema = z.object({
   theme:   z.string().min(1).max(200),
 });
 
-// ── 学年の日本語ラベル ─────────────────────────────────────────
+// ── 学年・教科の日本語ラベル ───────────────────────────────────
 const GRADE_LABEL: Record<string, string> = {
   'elem-low':  '小3・4年生',
   'elem-high': '小5・6年生',
   'middle':    '中学生',
+};
+
+const SUBJECT_LABEL: Record<string, string> = {
+  science: '理科',
+  math:    '算数・数学',
+  social:  '社会',
 };
 
 // ── Redis / Ratelimit lazy init ────────────────────────────────
@@ -90,10 +96,12 @@ function buildPrompt(theme: string, grade: string, subject: string): string {
   const fileName     = SUBJECT_TEMPLATE[subject] ?? 'ai-kyoshitsu-prompt-science.md';
   const templatePath = join(process.cwd(), 'content', fileName);
   const template     = readFileSync(templatePath, 'utf-8');
-  const gradeLabel   = GRADE_LABEL[grade] ?? grade;
+  const gradeLabel   = GRADE_LABEL[grade]   ?? grade;
+  const subjectLabel = SUBJECT_LABEL[subject] ?? subject;
   return template
-    .replace(/\{THEME\}/g, theme)
-    .replace(/\{GRADE\}/g,  gradeLabel);
+    .replace(/\{THEME\}/g,   theme)
+    .replace(/\{GRADE\}/g,   gradeLabel)
+    .replace(/\{SUBJECT\}/g, subjectLabel);
 }
 
 // ── HTML 抽出（モデルが ```html ... ``` で囲む場合に対応） ────
