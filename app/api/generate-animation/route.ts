@@ -64,8 +64,8 @@ function getRatelimiters() {
   if (!process.env.UPSTASH_REDIS_REST_URL || !process.env.UPSTASH_REDIS_REST_TOKEN) return null;
   if (!_redis) _redis = Redis.fromEnv();
   if (!_rlAnon) {
-    _rlAnon = new Ratelimit({ redis: _redis, limiter: Ratelimit.slidingWindow(3,   '1 d'), prefix: 'ratelimit:anim:anon' });
-    _rlFree = new Ratelimit({ redis: _redis, limiter: Ratelimit.slidingWindow(5,   '1 d'), prefix: 'ratelimit:anim:free' });
+    _rlAnon = new Ratelimit({ redis: _redis, limiter: Ratelimit.slidingWindow(100, '1 d'), prefix: 'ratelimit:anim:anon' }); // TODO: テスト用 → 本番は 3
+    _rlFree = new Ratelimit({ redis: _redis, limiter: Ratelimit.slidingWindow(100, '1 d'), prefix: 'ratelimit:anim:free' }); // TODO: テスト用 → 本番は 5
     _rlPro  = new Ratelimit({ redis: _redis, limiter: Ratelimit.slidingWindow(100, '1 d'), prefix: 'ratelimit:anim:pro'  });
   }
   return { anon: _rlAnon!, free: _rlFree!, pro: _rlPro! };
@@ -79,9 +79,16 @@ function getClientIp(req: NextRequest): string {
   );
 }
 
-// ── プロンプトテンプレート読み込み ─────────────────────────────
-function buildPrompt(theme: string, grade: string): string {
-  const templatePath = join(process.cwd(), 'content', 'ai-kyoshitsu-prompt.md');
+// ── プロンプトテンプレート読み込み（教科別） ──────────────────
+const SUBJECT_TEMPLATE: Record<string, string> = {
+  science: 'ai-kyoshitsu-prompt-science.md',
+  math:    'ai-kyoshitsu-prompt-math.md',
+  social:  'ai-kyoshitsu-prompt-social.md',
+};
+
+function buildPrompt(theme: string, grade: string, subject: string): string {
+  const fileName     = SUBJECT_TEMPLATE[subject] ?? 'ai-kyoshitsu-prompt-science.md';
+  const templatePath = join(process.cwd(), 'content', fileName);
   const template     = readFileSync(templatePath, 'utf-8');
   const gradeLabel   = GRADE_LABEL[grade] ?? grade;
   return template
@@ -166,10 +173,10 @@ export async function POST(req: NextRequest) {
     );
   }
 
-  // 6. プロンプト組み立て
+  // 6. プロンプト組み立て（教科別テンプレートを使用）
   let systemPrompt: string;
   try {
-    systemPrompt = buildPrompt(prompt, grade);
+    systemPrompt = buildPrompt(prompt, grade, subject);
   } catch (err) {
     console.error('[generate-animation] プロンプト読み込みエラー:', err);
     return NextResponse.json(
