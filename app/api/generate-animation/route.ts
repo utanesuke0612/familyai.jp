@@ -132,17 +132,23 @@ async function enrichThemeWithAI(theme: string, grade: string, subject: string):
   const gradeLabel   = GRADE_LABEL[grade]   ?? grade;
   const subjectLabel = SUBJECT_LABEL[subject] ?? subject;
   const enrichPrompt = buildEnrichPrompt(theme, gradeLabel, subjectLabel, subject);
+  // Stage 1 は最大8秒でタイムアウト → 失敗してもフォールバックで継続
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), 8000);
   try {
+    // Stage 1 は軽量・無料モデル（qwen3-14b:free）で高速処理
     const spec = await completeOpenRouter(
-      MODEL_ROUTER['text-simple'],
+      'qwen/qwen3-14b:free',
       [{ role: 'user', content: enrichPrompt }],
-      { maxTokens: 600, temperature: 0.3 },
+      { maxTokens: 400, temperature: 0.3, signal: controller.signal },
     );
     return spec.trim();
   } catch (err) {
     console.warn('[generate-animation] Stage1 詳細化スキップ（フォールバック）:', err);
-    // Stage 1 失敗時はオリジナルのテーマをそのまま使用
+    // Stage 1 失敗・タイムアウト時はオリジナルのテーマをそのまま使用
     return theme;
+  } finally {
+    clearTimeout(timer);
   }
 }
 
