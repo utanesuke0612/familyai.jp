@@ -178,13 +178,13 @@ export async function POST(req: NextRequest) {
     );
   }
 
-  // 7. OpenRouter でHTML生成（text-quality モデルを使用）
+  // 7. OpenRouter でHTML生成（html-gen = Gemini 2.0 Flash: 高速・高品質・低コスト）
   let rawHtml: string;
   try {
     rawHtml = await completeOpenRouter(
-      MODEL_ROUTER['text-quality'],
+      MODEL_ROUTER['html-gen'],
       [{ role: 'user', content: systemPrompt }],
-      { maxTokens: 12000, temperature: 0.7 },
+      { maxTokens: 8000, temperature: 0.7 },
     );
   } catch (err) {
     console.error('[generate-animation] OpenRouter エラー:', err);
