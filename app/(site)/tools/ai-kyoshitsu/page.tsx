@@ -476,6 +476,21 @@ function GeneratingPanel({ themeLabel, subjectColor }: { themeLabel: string; sub
    生成結果パネル（iframe表示）
 ───────────────────────────────────────────────────── */
 
+/** HTMLをBlobダウンロードする共通ユーティリティ */
+async function downloadAnimationHtml(id: string, filename: string) {
+  const res  = await fetch(`/api/animations/${id}`);
+  const html = await res.text();
+  const blob = new Blob([html], { type: 'text/html' });
+  const url  = URL.createObjectURL(blob);
+  const a    = document.createElement('a');
+  a.href     = url;
+  a.download = `${filename.replace(/[\\/:*?"<>|]/g, '_')}.html`;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+
 function ResultPanel({
   id, themeLabel, grade, subjectColor, onReset,
 }: {
@@ -486,6 +501,7 @@ function ResultPanel({
   onReset:      () => void;
 }) {
   const [iframeHeight, setIframeHeight] = useState(600);
+  const [isSaving,     setIsSaving]     = useState(false);
   const iframeRef = useRef<HTMLIFrameElement>(null);
   const wrapRef   = useRef<HTMLDivElement>(null);
   const [isFs, setIsFs] = useState(false);
@@ -511,6 +527,12 @@ function ResultPanel({
     else { (wrapRef.current ?? iframeRef.current)?.requestFullscreen({ navigationUI: 'hide' }).catch(() => {}); }
   }
 
+  async function handleSave() {
+    setIsSaving(true);
+    try { await downloadAnimationHtml(id, themeLabel); }
+    finally { setIsSaving(false); }
+  }
+
   return (
     <div className="rounded-3xl overflow-hidden" style={{ boxShadow: 'var(--shadow-warm)', border: `2px solid ${subjectColor.border}44` }}>
       {/* ヘッダー */}
@@ -531,6 +553,14 @@ function ResultPanel({
           </div>
         </div>
         <div className="flex items-center gap-2">
+          <button
+            onClick={handleSave}
+            disabled={isSaving}
+            className="rounded-xl px-3 py-2 text-xs font-semibold transition-opacity hover:opacity-70 disabled:opacity-50"
+            style={{ background: subjectColor.border, color: '#fff', boxShadow: 'var(--shadow-warm-sm)' }}
+          >
+            {isSaving ? '⏳ 保存中…' : '💾 保存'}
+          </button>
           <button
             onClick={toggleFullscreen}
             className="rounded-xl px-3 py-2 text-xs font-semibold transition-opacity hover:opacity-70"

@@ -35,10 +35,26 @@ function formatDate(iso: string): string {
   return `${d.getFullYear()}/${String(d.getMonth() + 1).padStart(2, '0')}/${String(d.getDate()).padStart(2, '0')}`;
 }
 
+/** HTMLをBlobダウンロードする共通ユーティリティ */
+async function downloadAnimationHtml(id: string, filename: string) {
+  const res  = await fetch(`/api/animations/${id}`);
+  const html = await res.text();
+  const blob = new Blob([html], { type: 'text/html' });
+  const url  = URL.createObjectURL(blob);
+  const a    = document.createElement('a');
+  a.href     = url;
+  a.download = `${filename.replace(/[\\/:*?"<>|]/g, '_')}.html`;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+
 // ── プレビューモーダル ────────────────────────────────────────────
 function PreviewModal({ item, onClose }: { item: AnimationItem; onClose: () => void }) {
   const [iframeHeight, setIframeHeight] = useState(560);
   const [isFullscreen, setIsFullscreen] = useState(false);
+  const [isSaving,     setIsSaving]     = useState(false);
   const iframeRef = useRef<HTMLIFrameElement>(null);
   const wrapRef   = useRef<HTMLDivElement>(null);
   const col = SUBJECT_COLOR[item.subject] ?? SUBJECT_COLOR.science;
@@ -66,6 +82,12 @@ function PreviewModal({ item, onClose }: { item: AnimationItem; onClose: () => v
     document.fullscreenElement
       ? document.exitFullscreen().catch(() => {})
       : t.requestFullscreen({ navigationUI: 'hide' }).catch(() => {});
+  }
+
+  async function handleSave() {
+    setIsSaving(true);
+    try { await downloadAnimationHtml(item.id, item.theme); }
+    finally { setIsSaving(false); }
   }
 
   return (
@@ -98,6 +120,11 @@ function PreviewModal({ item, onClose }: { item: AnimationItem; onClose: () => v
             </div>
           </div>
           <div className="flex items-center gap-2 shrink-0">
+            <button onClick={handleSave} disabled={isSaving}
+              className="rounded-full px-4 text-sm font-semibold disabled:opacity-50"
+              style={{ minHeight: 36, background: col.border, color: '#fff' }}>
+              {isSaving ? '⏳ 保存中…' : '💾 保存'}
+            </button>
             <button onClick={handleFullscreen}
               className="rounded-full px-4 text-sm font-semibold"
               style={{ minHeight: 36, background: 'rgba(255,255,255,0.8)', color: 'var(--color-brown)', border: '1px solid var(--color-beige-dark)' }}>
