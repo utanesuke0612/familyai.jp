@@ -116,7 +116,7 @@ describe('GET /api/admin/articles — 一覧（Rev24 #④ pagination）', () => 
     (enforceAdminRateLimit as unknown as ReturnType<typeof vi.fn>).mockResolvedValue(null);
   });
 
-  it('200 + data.items/data.meta（page/pageSize/total/totalPages）を返す', async () => {
+  it('200 + data.items/data.meta（page/perPage/total/totalPages）を返す', async () => {
     setAdminSession();
     (listAllArticles as unknown as ReturnType<typeof vi.fn>).mockResolvedValue({
       items: [article], total: 1, totalPages: 1, page: 1, pageSize: 50,
@@ -127,11 +127,11 @@ describe('GET /api/admin/articles — 一覧（Rev24 #④ pagination）', () => 
     expect(res.status).toBe(200);
     const json = await res.json() as {
       ok: boolean;
-      data: { items: unknown[]; meta: { page: number; total: number; totalPages: number; pageSize: number } };
+      data: { items: unknown[]; meta: { page: number; total: number; totalPages: number; perPage: number } };
     };
     expect(json.ok).toBe(true);
     expect(json.data.items).toHaveLength(1);
-    expect(json.data.meta).toEqual({ page: 1, pageSize: 50, total: 1, totalPages: 1 });
+    expect(json.data.meta).toEqual({ page: 1, perPage: 50, total: 1, totalPages: 1 });
   });
 
   it('403 when 非管理者', async () => {

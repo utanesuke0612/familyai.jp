@@ -10,10 +10,11 @@
  * - リンクは外部リンクを新タブで開く
  */
 
-import { useState, useRef, Fragment, type ReactNode } from 'react';
+import { useState, useRef, useEffect, Fragment, type ReactNode } from 'react';
 import ReactMarkdown     from 'react-markdown';
 import remarkGfm         from 'remark-gfm';
-import rehypeSanitize    from 'rehype-sanitize';
+import rehypeSanitize, { defaultSchema } from 'rehype-sanitize';
+import rehypeRaw         from 'rehype-raw';
 import rehypeHighlight   from 'rehype-highlight';
 import { AnnotatedWord } from '@/components/article/AnnotatedWord';
 import bash              from 'highlight.js/lib/languages/bash';
@@ -27,6 +28,18 @@ import typescript        from 'highlight.js/lib/languages/typescript';
 import xml               from 'highlight.js/lib/languages/xml';
 import yaml              from 'highlight.js/lib/languages/yaml';
 import type { Components } from 'react-markdown';
+
+// rehype-sanitize: デフォルトスキーマに <iframe> を追加
+// 管理者のみが記事を書くため、XSS リスクは許容範囲内。
+// sandbox="allow-scripts" により親ページへのアクセスは遮断される。
+const sanitizeSchema = {
+  ...defaultSchema,
+  tagNames: [...(defaultSchema.tagNames ?? []), 'iframe'],
+  attributes: {
+    ...defaultSchema.attributes,
+    iframe: ['src', 'srcdoc', 'width', 'height', 'style', 'title', 'sandbox', 'loading', 'allowfullscreen'],
+  },
+};
 
 // rehype-highlight の `languages` オプションで使用言語を限定し、
 // highlight.js の全言語（200+）を bundle に取り込むのを防ぐ
@@ -211,6 +224,15 @@ function parseArticleSegments(content: string): ArticleSegment[] {
             height: getIframeAttr(fullTag, 'height') ?? '360',
             title: 'YouTube embed',
           });
+        } else if (isHttpsUrl(src)) {
+          // VOA・YouTube 以外の HTTPS URL（S3 等）も信頼済み埋め込みとして扱う
+          segments.push({
+            type: 'trusted-embed',
+            src,
+            width:  getIframeAttr(fullTag, 'width')  ?? '100%',
+            height: getIframeAttr(fullTag, 'height') ?? '500',
+            title:  getIframeAttr(fullTag, 'title')  ?? 'embed',
+          });
         } else {
           segments.push({ type: 'markdown', content: fullTag });
         }
@@ -230,6 +252,128 @@ function parseArticleSegments(content: string): ArticleSegment[] {
   }
 
   return segments.length > 0 ? segments : [{ type: 'markdown', content }];
+}
+
+// ── フルスクリーン付き埋め込みコンポーネント ──────────────────────
+function EmbedWithFullscreen({
+  src, width, height, title, index,
+}: { src: string; width: string; height: string; title: string; index: number }) {
+  const wrapRef   = useRef<HTMLDivElement>(null);
+  const iframeRef = useRef<HTMLIFrameElement>(null);
+  const [isFs, setIsFs]         = useState(false);
+  const [autoHeight, setAutoHeight] = useState<number | null>(null);
+
+  // Fullscreen API のイベントで状態同期（ESC キー対応）
+  useEffect(() => {
+    const onFsChange = () => setIsFs(!!document.fullscreenElement);
+    document.addEventListener('fullscreenchange', onFsChange);
+    return () => document.removeEventListener('fullscreenchange', onFsChange);
+  }, []);
+
+  // iframe からの postMessage で高さを自動調整
+  useEffect(() => {
+    const onMessage = (e: MessageEvent) => {
+      // 送信元が同じ src の iframe かを確認
+      if (iframeRef.current?.contentWindow !== e.source) return;
+      if (typeof e.data?.iframeHeight === 'number' && e.data.iframeHeight > 0) {
+        setAutoHeight(e.data.iframeHeight);
+      }
+    };
+    window.addEventListener('message', onMessage);
+    return () => window.removeEventListener('message', onMessage);
+  }, []);
+
+  const toggleFullscreen = async () => {
+    try {
+      if (!document.fullscreenElement) {
+        const el = wrapRef.current ?? iframeRef.current;
+        await el?.requestFullscreen({ navigationUI: 'hide' });
+      } else {
+        await document.exitFullscreen();
+      }
+    } catch (err) {
+      console.error('[EmbedWithFullscreen] fullscreen error:', err);
+    }
+  };
+
+  const numericWidth  = Number.parseInt(width, 10);
+  const numericHeight = Number.parseInt(height, 10);
+  const aspectRatio =
+    Number.isFinite(numericWidth) && Number.isFinite(numericHeight) && numericHeight > 0
+      ? `${numericWidth} / ${numericHeight}`
+      : '16 / 9';
+
+  // autoHeight があれば固定px、なければ aspect-ratio でフォールバック
+  const containerStyle: React.CSSProperties = isFs
+    ? { position: 'relative', width: '100%', height: '100%', background: 'var(--color-cream, #fdf6ee)' }
+    : autoHeight !== null
+      ? { position: 'relative', margin: '1.5rem 0', width: '100%', height: `${autoHeight}px`, background: 'var(--color-cream, #fdf6ee)', borderRadius: '12px', overflow: 'hidden', boxShadow: 'var(--shadow-warm-sm, 0 2px 12px rgba(0,0,0,0.08))' }
+      : { position: 'relative', margin: '1.5rem 0', width: '100%', aspectRatio, background: 'var(--color-cream, #fdf6ee)', borderRadius: '12px', overflow: 'hidden', boxShadow: 'var(--shadow-warm-sm, 0 2px 12px rgba(0,0,0,0.08))' };
+
+  return (
+    <div ref={wrapRef} style={containerStyle}>
+      <iframe
+        ref={iframeRef}
+        src={src}
+        allowFullScreen
+        loading="lazy"
+        referrerPolicy="strict-origin-when-cross-origin"
+        style={{
+          display: 'block',
+          width:   '100%',
+          height:  '100%',
+          border:  '0',
+        }}
+        title={`${title} ${index + 1}`}
+      />
+
+      {/* フルスクリーン切替ボタン */}
+      <button
+        type="button"
+        onClick={toggleFullscreen}
+        aria-label={isFs ? '全画面を終了' : '全画面で表示'}
+        title={isFs ? '全画面を終了 (Esc)' : '全画面で表示'}
+        style={{
+          position:       'absolute',
+          bottom:         '10px',
+          right:          '10px',
+          width:          '34px',
+          height:         '34px',
+          borderRadius:   '8px',
+          border:         '1px solid rgba(255,255,255,0.3)',
+          background:     'rgba(60,40,20,0.45)',
+          color:          'white',
+          cursor:         'pointer',
+          display:        'flex',
+          alignItems:     'center',
+          justifyContent: 'center',
+          backdropFilter: 'blur(6px)',
+          zIndex:         10,
+          padding:        0,
+          minHeight:      'auto',
+          transition:     'background 0.15s',
+        }}
+        onMouseEnter={(e) => { (e.currentTarget as HTMLButtonElement).style.background = 'rgba(60,40,20,0.75)'; }}
+        onMouseLeave={(e) => { (e.currentTarget as HTMLButtonElement).style.background = 'rgba(60,40,20,0.45)'; }}
+      >
+        {isFs ? (
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+            <polyline points="4 14 10 14 10 20"/>
+            <polyline points="20 10 14 10 14 4"/>
+            <line x1="10" y1="14" x2="3" y2="21"/>
+            <line x1="21" y1="3" x2="14" y2="10"/>
+          </svg>
+        ) : (
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+            <polyline points="15 3 21 3 21 9"/>
+            <polyline points="9 21 3 21 3 15"/>
+            <line x1="21" y1="3" x2="14" y2="10"/>
+            <line x1="3" y1="21" x2="10" y2="14"/>
+          </svg>
+        )}
+      </button>
+    </div>
+  );
 }
 
 function CodeBlockWithCopy({ children, ...props }: React.HTMLAttributes<HTMLPreElement>) {
@@ -452,34 +596,15 @@ export function ArticleBody({ content, className = '' }: ArticleBodyProps) {
           }
 
           if (segment.type === 'trusted-embed') {
-            const numericWidth  = Number.parseInt(segment.width, 10);
-            const numericHeight = Number.parseInt(segment.height, 10);
-            const aspectRatio =
-              Number.isFinite(numericWidth) && Number.isFinite(numericHeight) && numericHeight > 0
-                ? `${numericWidth} / ${numericHeight}`
-                : '16 / 9';
-
             return (
-              <div
+              <EmbedWithFullscreen
                 key={`trusted-embed-${index}`}
-                style={{ margin: '1.5rem 0', width: '100%', aspectRatio }}
-              >
-                <iframe
-                  src={segment.src}
-                  allowFullScreen
-                  loading="lazy"
-                  scrolling="no"
-                  referrerPolicy="strict-origin-when-cross-origin"
-                  style={{
-                    display: 'block',
-                    width: '100%',
-                    height: '100%',
-                    border: '0',
-                    borderRadius: '12px',
-                  }}
-                  title={`${segment.title} ${index + 1}`}
-                />
-              </div>
+                src={segment.src}
+                width={segment.width}
+                height={segment.height}
+                title={segment.title}
+                index={index}
+              />
             );
           }
 
@@ -492,7 +617,8 @@ export function ArticleBody({ content, className = '' }: ArticleBodyProps) {
               key={`markdown-${index}`}
               remarkPlugins={[remarkGfm]}
               rehypePlugins={[
-                rehypeSanitize,
+                rehypeRaw,
+                [rehypeSanitize, sanitizeSchema],
                 [rehypeHighlight, { languages: highlightLanguages, detect: true }],
               ]}
               components={components}
