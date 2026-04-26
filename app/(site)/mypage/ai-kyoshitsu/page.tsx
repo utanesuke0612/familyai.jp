@@ -50,6 +50,7 @@ function PreviewModal({
 }) {
   const [iframeHeight, setIframeHeight] = useState(560);
   const iframeRef = useRef<HTMLIFrameElement>(null);
+  const wrapRef   = useRef<HTMLDivElement>(null);
   const col = SUBJECT_COLOR[item.subject] ?? SUBJECT_COLOR.science;
 
   useEffect(() => {
@@ -68,6 +69,16 @@ function PreviewModal({
     window.addEventListener('keydown', handler);
     return () => window.removeEventListener('keydown', handler);
   }, [onClose]);
+
+  function handleFullscreen() {
+    const target = wrapRef.current ?? iframeRef.current;
+    if (!target) return;
+    if (document.fullscreenElement) {
+      document.exitFullscreen().catch(() => {});
+    } else {
+      target.requestFullscreen({ navigationUI: 'hide' }).catch(() => {});
+    }
+  }
 
   return (
     <div
@@ -113,22 +124,37 @@ function PreviewModal({
               </div>
             </div>
           </div>
-          <button
-            onClick={onClose}
-            className="shrink-0 rounded-full px-4 text-sm font-semibold"
-            style={{
-              minHeight: 36,
-              background: 'rgba(255,255,255,0.8)',
-              color: 'var(--color-brown)',
-              border: '1px solid var(--color-beige-dark)',
-            }}
-          >
-            ✕ 閉じる
-          </button>
+          <div className="flex items-center gap-2 shrink-0">
+            <button
+              onClick={handleFullscreen}
+              className="rounded-full px-4 text-sm font-semibold"
+              style={{
+                minHeight: 36,
+                background: 'rgba(255,255,255,0.8)',
+                color: 'var(--color-brown)',
+                border: '1px solid var(--color-beige-dark)',
+              }}
+              title="全画面表示"
+            >
+              ⛶ 全画面
+            </button>
+            <button
+              onClick={onClose}
+              className="rounded-full px-4 text-sm font-semibold"
+              style={{
+                minHeight: 36,
+                background: 'rgba(255,255,255,0.8)',
+                color: 'var(--color-brown)',
+                border: '1px solid var(--color-beige-dark)',
+              }}
+            >
+              ✕ 閉じる
+            </button>
+          </div>
         </div>
 
         {/* iframe */}
-        <div style={{ background: '#fdf6ee' }}>
+        <div ref={wrapRef} style={{ background: '#fdf6ee' }}>
           <iframe
             ref={iframeRef}
             src={`/api/animations/${item.id}`}
