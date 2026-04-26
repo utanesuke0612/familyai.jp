@@ -20,6 +20,9 @@
 .DS_Store
 *.pem
 
+# Obsidian
+.obsidian/
+
 # debug
 npm-debug.log*
 yarn-debug.log*
