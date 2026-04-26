@@ -79,7 +79,7 @@
 - テーマ名（大きく）・学年バッジ・教科バッジ「🔬 理科」を表示
 
 **② SVGアニメーション（メイン）**
-- viewBox="0 0 600 400" のSVGを1つ
+- SVGはwidth="100%" height="auto" viewBox="0 0 800 420" で描画（レスポンシブ対応）
 - CSS @keyframes でメインの現象をアニメーション
 - **何がどう動いているかがひと目でわかるよう**、ラベルと凡例を充実させる
 - 「Before → After」または「時間経過」を矢印や番号で示す
@@ -116,7 +116,11 @@
 - SVG内テキスト: font-size 13〜16px、fill #3a2a1a
 
 ▼ レイアウト
-- max-width: 680px、margin: 0 auto、padding: 16px
+- width: 100%、max-width: 860px、margin: 0 auto
+- padding: 12px（スマホ）〜 20px（PC）、box-sizing: border-box
+- bodyには margin: 0、padding: 0 を設定し、スマホで左右に余白ができないようにする
+- 必ずviewportメタタグを設定: <meta name="viewport" content="width=device-width, initial-scale=1">
+- SVGはwidth="100%" height="auto"で描画し、viewBox属性で内部座標を定義してレスポンシブに対応
 
 ▼ ヘッダー
 - background: linear-gradient(135deg, #52b788 0%, #95d5b2 100%)

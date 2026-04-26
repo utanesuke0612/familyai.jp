@@ -91,7 +91,7 @@
 - テーマ名（大きく）・学年バッジ・教科バッジ「🌏 社会」を表示
 
 **② SVGアニメーション（メイン）**
-- viewBox="0 0 600 400" のSVGを1つ
+- SVGはwidth="100%" height="auto" viewBox="0 0 800 420" で描画（レスポンシブ対応）
 - CSS @keyframes でメインの流れや変化をアニメーション
 - **地名・年号・数値ラベルを充実させ、何を示しているかひと目でわかるよう**にする
 - 凡例ボックスを必ず含める
@@ -133,7 +133,11 @@
 - 年号・数値: font-weight bold、fill #e65100
 
 ▼ レイアウト
-- max-width: 680px、margin: 0 auto、padding: 16px
+- width: 100%、max-width: 860px、margin: 0 auto
+- padding: 12px（スマホ）〜 20px（PC）、box-sizing: border-box
+- bodyには margin: 0、padding: 0 を設定し、スマホで左右に余白ができないようにする
+- 必ずviewportメタタグを設定: <meta name="viewport" content="width=device-width, initial-scale=1">
+- SVGはwidth="100%" height="auto"で描画し、viewBox属性で内部座標を定義してレスポンシブに対応
 
 ▼ ヘッダー
 - background: linear-gradient(135deg, #ff8c42 0%, #ffd166 100%)

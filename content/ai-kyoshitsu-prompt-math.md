@@ -91,7 +91,7 @@
 - テーマ名（大きく）・学年バッジ・教科バッジ「📐 算数・数学」を表示
 
 **② SVGアニメーション（メイン）**
-- viewBox="0 0 600 420" のSVGを1つ
+- SVGはwidth="100%" height="auto" viewBox="0 0 800 440" で描画（レスポンシブ対応）
 - CSS @keyframes でメインの概念をアニメーション
 - **数値・目盛り・ラベルを必ず入れ、何を表しているかひと目でわかるよう**にする
 - 操作前と操作後を色の違いで明示する
@@ -130,7 +130,11 @@
 - 数値ラベル: font-size 11px、fill #555
 
 ▼ レイアウト
-- max-width: 680px、margin: 0 auto、padding: 16px
+- width: 100%、max-width: 860px、margin: 0 auto
+- padding: 12px（スマホ）〜 20px（PC）、box-sizing: border-box
+- bodyには margin: 0、padding: 0 を設定し、スマホで左右に余白ができないようにする
+- 必ずviewportメタタグを設定: <meta name="viewport" content="width=device-width, initial-scale=1">
+- SVGはwidth="100%" height="auto"で描画し、viewBox属性で内部座標を定義してレスポンシブに対応
 
 ▼ ヘッダー
 - background: linear-gradient(135deg, #4e9af1 0%, #90caf9 100%)
