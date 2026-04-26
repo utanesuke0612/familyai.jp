@@ -40,47 +40,13 @@ const TOOLS_BY_CATEGORY: Array<{
         cta: '使ってみる',
         accent: 'var(--color-mint)',
       },
-    ],
-  },
-  {
-    category: 'lifestyle',
-    lead: '家事や暮らしの判断を軽くするためのツール枠です。',
-    tools: [
       {
-        name: '献立サポートAI',
-        summary: '冷蔵庫にある食材から、平日向けの献立をすばやく提案するダミーツールです。',
-        href: '/tools',
-        status: '準備中',
-        cta: '近日公開',
-        accent: 'var(--color-peach-light)',
-      },
-    ],
-  },
-  {
-    category: 'work',
-    lead: '仕事の整理、文章作成、下調べを効率化するためのツール枠です。',
-    tools: [
-      {
-        name: '議事録整理AI',
-        summary: '会話メモから要点・TODO・次回アクションをまとめるダミーツールです。',
-        href: '/tools',
-        status: '準備中',
-        cta: '近日公開',
-        accent: 'var(--color-sky)',
-      },
-    ],
-  },
-  {
-    category: 'creative',
-    lead: '画像や文章のアイデア出し、表現づくりに使うためのツール枠です。',
-    tools: [
-      {
-        name: 'アイデアスケッチAI',
-        summary: 'テーマを入れると、画像や文章の方向性を一緒に広げるダミーツールです。',
-        href: '/tools',
-        status: '準備中',
-        cta: '近日公開',
-        accent: 'var(--color-yellow)',
+        name: 'うごくAI教室',
+        summary: 'テーマを入力するとAIが教育用アニメーションを生成。小学生・中学生の学習や親子での調べものに活用できます。',
+        href: '/tools/ai-kyoshitsu',
+        status: '公開中',
+        cta: '使ってみる',
+        accent: 'var(--color-mint)',
       },
     ],
   },
@@ -132,16 +98,16 @@ export default function ToolsPage({ searchParams }: ToolsPageProps) {
                 className="font-display font-bold leading-tight"
                 style={{ fontSize: 'clamp(30px, 5vw, 54px)', color: 'var(--color-brown)' }}
               >
-                AIツールを
+                子どもの学びを
                 <br />
-                4つのカテゴリーで探す
+                AIツールでサポート
               </h1>
               <p
                 className="max-w-2xl text-base leading-relaxed sm:text-lg"
                 style={{ color: 'var(--color-brown-light)' }}
               >
-                学習・教育、家事・暮らし、仕事・効率化、創作・表現ごとに、使えるツールを整理しています。
-                現在は「VOA × AI英語学習」を公開中です。
+                英語学習や教育アニメーション生成など、学習・教育に特化したAIツールを公開しています。
+                親子で一緒に、または子ども自身で活用できます。
               </p>
             </div>
 
@@ -153,7 +119,7 @@ export default function ToolsPage({ searchParams }: ToolsPageProps) {
               }}
             >
               <div className="grid grid-cols-2 gap-3">
-                {TOOLS_BY_CATEGORY.map(({ category }) => (
+                {(Object.keys(CATEGORY_BG) as ContentCategory[]).map((category) => (
                   <Link
                     key={category}
                     href={selectedCategory === category ? '/tools' : `/tools?cat=${category}`}
