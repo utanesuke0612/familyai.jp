@@ -60,7 +60,7 @@ export const MODEL_ROUTER = {
   'text-simple':    'qwen/qwen3-14b',
   'text-quality':   'qwen/qwen3-235b-a22b-2507',
   'math-reasoning': 'deepseek/deepseek-r1-0528',
-  'html-gen':       'google/gemini-2.5-flash-preview',  // HTML/CSS/JS生成向け（高速・高品質）
+  'html-gen':       'google/gemini-2.5-flash',            // HTML/CSS/JS生成向け（高速・高品質）
   'transcribe':     'openai/whisper-large-v3',
   'image-gen':      'black-forest-labs/flux-1.1-pro',
   'tts-japanese':   'openai/gpt-4o-mini-tts-2025-12-15',
