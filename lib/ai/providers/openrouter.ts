@@ -17,6 +17,59 @@ export interface StreamOptions {
   signal?: AbortSignal;
 }
 
+export interface CompleteOptions {
+  maxTokens?: number;
+  temperature?: number;
+  signal?: AbortSignal;
+}
+
+/**
+ * OpenRouter API を呼び出してテキストを一括で返す（非ストリーミング）。
+ * HTML 生成など、全文を受け取ってから処理する用途向け。
+ */
+export async function completeOpenRouter(
+  model:    string,
+  messages: OpenRouterMessage[],
+  options:  CompleteOptions = {},
+): Promise<string> {
+  const apiKey  = process.env.OPENROUTER_API_KEY;
+  const appUrl  = process.env.OPENROUTER_APP_URL  ?? 'https://familyai.jp';
+  const appName = process.env.OPENROUTER_APP_NAME ?? 'familyai.jp';
+  const baseUrl = process.env.OPENROUTER_BASE_URL ?? 'https://openrouter.ai/api/v1';
+
+  if (!apiKey) throw new Error('OPENROUTER_API_KEY が設定されていません。');
+
+  const res = await fetch(`${baseUrl.replace(/\/$/, '')}/chat/completions`, {
+    method:  'POST',
+    headers: {
+      'Authorization': `Bearer ${apiKey}`,
+      'HTTP-Referer':  appUrl,
+      'X-Title':       appName,
+      'Content-Type':  'application/json',
+    },
+    body: JSON.stringify({
+      model,
+      messages,
+      stream:      false,
+      max_tokens:  options.maxTokens  ?? 8000,
+      temperature: options.temperature ?? 0.7,
+    }),
+    signal: options.signal,
+  });
+
+  if (!res.ok) {
+    const errText = await res.text().catch(() => '');
+    throw new Error(`OpenRouter API エラー: ${res.status} ${errText}`);
+  }
+
+  const json = await res.json() as {
+    choices?: Array<{ message?: { content?: string } }>;
+  };
+  const content = json.choices?.[0]?.message?.content ?? '';
+  if (!content) throw new Error('OpenRouter から空のレスポンスが返りました。');
+  return content;
+}
+
 /**
  * OpenRouter API を呼び出してテキスト生成ストリームを返す。
  * 返却する ReadableStream は `data: {"delta":"..."}` / `data: [DONE]` 形式。

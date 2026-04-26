@@ -50,10 +50,70 @@
 　💡 ポイント（親御さんへの補足・声かけのヒント）
 　❓ いっしょに考えよう（親子で話し合える問いかけ）
 
-【デザイン・言語】
-・ひらがな・やさしい言葉を使い、{GRADE}でも読める表現にする
-・カラーは明るく親しみやすいトーン（オレンジ・青・緑を基調に）
-・フォント：ヒラギノ角ゴ / Meiryo フォールバック
+---
+
+【デザイン仕様（必ず以下に従うこと）】
+
+▼ カラーパレット
+・背景色:           #fff8f0（ウォームクリーム）
+・メインテキスト:   #3a2a1a
+・サブテキスト:     #7a5a3a
+・ページヘッダー:   linear-gradient(135deg, #ff8c42 0%, #ffd166 100%)（オレンジ）
+・アクセント①オレンジ: #ff8c42（スライダー・アクティブタブ・ステップ番号）
+・アクセント②ブルー:   #4e9af1（やってみようブロック）
+・アクセント③グリーン: #52b788（ポイントブロック）
+・アクセント④パープル: #9575cd（いっしょに考えようブロック）
+
+▼ フォント
+・font-family: 'Hiragino Kaku Gothic ProN', 'ヒラギノ角ゴ ProN W3', Meiryo, メイリオ, sans-serif
+・言語：ひらがな・やさしい言葉を使い、{GRADE}でも読める表現にする
+
+▼ ページヘッダー（.page-hd）
+・background: linear-gradient(135deg, #ff8c42 0%, #ffd166 100%)
+・padding: 24px 24px 22px
+・border-radius: 0 0 28px 28px（下だけ丸める）
+・学年バッジ: background rgba(255,255,255,0.28)、color #fff、border-radius 20px
+・タイトル: color #fff、font-weight 900、text-shadow 0 1px 4px rgba(0,0,0,0.18)
+
+▼ タブボタン（.tab-btn）
+・非アクティブ: background rgba(255,255,255,0.85)、border 2px solid #e5d5c0、color #a08060
+・アクティブ:   background linear-gradient(135deg,#ff8c42,#ffd166)、border transparent、color #fff
+・border-radius: 16px、font-weight bold
+
+▼ Canvas
+・border-radius: 20px
+・box-shadow: 0 4px 18px rgba(0,0,0,0.14)
+
+▼ コントロールカード（スライダー等）
+・background: #fff、border-radius: 18px、box-shadow: 0 2px 10px rgba(0,0,0,0.08)
+・時刻/値の表示: font-size 24px、font-weight 900、color #ff8c42
+・range スライダー: track は linear-gradient(to right,#ffd166,#ff8c42)、height 8px
+・スライダーサム: 26×26px 円、background radial-gradient(circle,#fff 30%,#ff8c42 100%)
+
+▼ 説明テキスト（アニメ連動）
+・background: #fff3e0、border-left: 4px solid #ff8c42、border-radius: 0 14px 14px 0
+・strong タグ: color #e05a00
+
+▼ 凡例
+・background: #fff、border-radius: 16px、box-shadow: 0 2px 8px rgba(0,0,0,0.07)
+
+▼ ポイントカード（3枚）
+・background: #fff、border-radius: 18px、border-top: 5px solid（①#ff8c42 ②#4e9af1 ③#52b788）
+・box-shadow: 0 2px 10px rgba(0,0,0,0.09)
+
+▼ アコーディオン（.step）
+・background: #fff、border-radius: 18px、box-shadow: 0 2px 10px rgba(0,0,0,0.08)
+・ステップ番号バッジ: 34×34px 円、background linear-gradient(135deg,#ff8c42,#ffd166)、color #fff
+・ホバー: background #fff8f0
+
+▼ 各ブロックの配色
+・💬 やさしい説明: background #fff3e0、border-left 3px solid #ff8c42
+・🖱️ やってみよう:  background #e3f2fd、border-left 3px solid #4e9af1
+・💡 ポイント:      background #e8f5e9、border-left 3px solid #52b788
+・❓ いっしょに考えよう: background #f3e5f5、border-left 3px solid #9575cd
+・全ブロック共通: border-radius 13px、padding 13px 15px、font-size 13px、line-height 1.8
+
+---
 
 【出力】
 ・HTMLを1ファイルで出力（CSS・JSはすべてインラインに含める）

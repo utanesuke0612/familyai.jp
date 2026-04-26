@@ -126,12 +126,37 @@ export const userVocabBookmarks = pgTable(
   }),
 );
 
+// ─── user_animations ──────────────────────────────────────────
+/**
+ * うごくAI教室 — AIが生成した教育アニメーションHTMLを保存するテーブル。
+ * ログイン会員専用。生成したHTMLはDBに全文保存し、iframeで表示する。
+ */
+export const userAnimations = pgTable(
+  'user_animations',
+  {
+    id:          uuid('id').defaultRandom().primaryKey(),
+    userId:      uuid('user_id').notNull().references(() => users.id, { onDelete: 'cascade' }),
+    theme:       text('theme').notNull(),                          // 例: "影のでき方・太陽の動き"
+    grade:       varchar('grade', { length: 20 }).notNull(),       // "elem-low" | "elem-high" | "middle"
+    subject:     varchar('subject', { length: 20 }).notNull(),     // "science" | "math" | "social"
+    prompt:      text('prompt').notNull(),                         // ユーザーが入力したプロンプト全文
+    htmlContent: text('html_content').notNull(),                   // AIが生成したHTML全文
+    createdAt:   timestamp('created_at').defaultNow().notNull(),
+  },
+  (t) => ({
+    idxUserId:    index('user_animations_user_id_idx').on(t.userId),
+    idxCreatedAt: index('user_animations_created_at_idx').on(t.createdAt),
+  }),
+);
+
 // ─── 型エクスポート（Drizzle の推論型） ───────────────────────
-export type Article            = typeof articles.$inferSelect;
-export type NewArticle         = typeof articles.$inferInsert;
-export type User               = typeof users.$inferSelect;
-export type NewUser            = typeof users.$inferInsert;
-export type UserAiMemo         = typeof userAiMemos.$inferSelect;
-export type NewUserAiMemo      = typeof userAiMemos.$inferInsert;
-export type UserVocabBookmark  = typeof userVocabBookmarks.$inferSelect;
+export type Article              = typeof articles.$inferSelect;
+export type NewArticle           = typeof articles.$inferInsert;
+export type User                 = typeof users.$inferSelect;
+export type NewUser              = typeof users.$inferInsert;
+export type UserAiMemo           = typeof userAiMemos.$inferSelect;
+export type NewUserAiMemo        = typeof userAiMemos.$inferInsert;
+export type UserVocabBookmark    = typeof userVocabBookmarks.$inferSelect;
 export type NewUserVocabBookmark = typeof userVocabBookmarks.$inferInsert;
+export type UserAnimation        = typeof userAnimations.$inferSelect;
+export type NewUserAnimation     = typeof userAnimations.$inferInsert;

@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>影のでき方・太陽の動き | うごくAI教室</title>
+<style>
+/* ── リセット・ベース ───────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'Hiragino Kaku Gothic ProN', 'ヒラギノ角ゴ ProN W3',
+               Meiryo, メイリオ, sans-serif;
+  background: #fff8f0;
+  color: #3a2a1a;
+  font-size: 15px;
+  line-height: 1.75;
+}
+.wrap { max-width: 720px; margin: 0 auto; padding-bottom: 48px; }
+
+/* ── ページヘッダー ────────────────────────────── */
+.page-hd {
+  background: linear-gradient(135deg, #ff8c42 0%, #ffd166 100%);
+  padding: 24px 24px 22px;
+  border-radius: 0 0 28px 28px;
+  margin-bottom: 20px;
+}
+.page-badge {
+  display: inline-block;
+  background: rgba(255,255,255,0.28);
+  color: #fff;
+  font-size: 11px;
+  font-weight: bold;
+  padding: 3px 12px;
+  border-radius: 20px;
+  margin-bottom: 10px;
+  letter-spacing: 0.05em;
+}
+.page-title {
+  color: #fff;
+  font-size: 24px;
+  font-weight: 900;
+  line-height: 1.3;
+  text-shadow: 0 1px 4px rgba(0,0,0,0.18);
+}
+.page-sub {
+  color: rgba(255,255,255,0.88);
+  font-size: 13px;
+  margin-top: 6px;
+}
+
+/* ── タブ ──────────────────────────────────────── */
+.tabs { display: flex; gap: 8px; padding: 0 16px; margin-bottom: 18px; }
+.tab-btn {
+  flex: 1;
+  padding: 11px 8px;
+  border: 2px solid #e5d5c0;
+  border-radius: 16px;
+  background: rgba(255,255,255,0.85);
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: bold;
+  color: #a08060;
+  cursor: pointer;
+  transition: all 0.18s;
+}
+.tab-btn.active {
+  background: linear-gradient(135deg, #ff8c42, #ffd166);
+  border-color: transparent;
+  color: #fff;
+  box-shadow: 0 4px 14px rgba(255,140,66,0.38);
+}
+.tab-content { display: none; padding: 0 16px; }
+.tab-content.active { display: block; }
+
+/* ── Canvas ────────────────────────────────────── */
+canvas {
+  display: block;
+  width: 100%;
+  border-radius: 20px;
+  box-shadow: 0 4px 18px rgba(0,0,0,0.14);
+}
+
+/* ── コントロール ───────────────────────────────── */
+.ctrl-card {
+  background: #fff;
+  border-radius: 18px;
+  padding: 18px 20px;
+  margin-top: 14px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+}
+.ctrl-label {
+  font-size: 13px;
+  font-weight: bold;
+  color: #7a5a3a;
+  margin-bottom: 10px;
+}
+.time-disp {
+  font-size: 24px;
+  font-weight: 900;
+  color: #ff8c42;
+  text-align: center;
+  margin-bottom: 10px;
+  letter-spacing: 0.04em;
+}
+input[type="range"] {
+  -webkit-appearance: none;
+  width: 100%;
+  height: 8px;
+  border-radius: 4px;
+  background: linear-gradient(to right, #ffd166, #ff8c42);
+  outline: none;
+  cursor: pointer;
+}
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #fff 30%, #ff8c42 100%);
+  box-shadow: 0 2px 8px rgba(255,140,66,0.55);
+  cursor: pointer;
+}
+.time-marks {
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+  color: #a08060;
+  margin-top: 6px;
+}
+
+/* 説明ボックス */
+.anim-desc {
+  background: #fff3e0;
+  border-left: 4px solid #ff8c42;
+  border-radius: 0 14px 14px 0;
+  padding: 14px 16px;
+  margin-top: 14px;
+  font-size: 13.5px;
+  color: #5a3a20;
+  line-height: 1.8;
+  min-height: 58px;
+  transition: background 0.3s;
+}
+.anim-desc strong { color: #e05a00; font-weight: 900; }
+
+/* ── 凡例 ──────────────────────────────────────── */
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 18px;
+  padding: 14px 18px;
+  background: #fff;
+  border-radius: 16px;
+  margin-top: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+}
+.leg-item { display: flex; align-items: center; gap: 8px; font-size: 12.5px; color: #5a4030; font-weight: bold; }
+.leg-sun  { width: 18px; height: 18px; border-radius: 50%; background: radial-gradient(circle, #fff176 40%, #ffa000 100%); box-shadow: 0 0 6px #ffd740; flex-shrink: 0; }
+.leg-ray  { width: 24px; height: 3px; background: linear-gradient(to right, #ffb300, rgba(255,179,0,0)); border-radius: 2px; flex-shrink: 0; }
+.leg-shad { width: 28px; height: 10px; background: rgba(60,30,10,0.45); border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%; flex-shrink: 0; }
+.leg-man  { width: 10px; height: 18px; background: #5a3010; border-radius: 2px; flex-shrink: 0; }
+
+/* ── ポイントカード ─────────────────────────────── */
+.pts { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-top: 14px; }
+@media (max-width: 480px) { .pts { grid-template-columns: 1fr; } }
+.pt-card {
+  background: #fff;
+  border-radius: 18px;
+  padding: 18px 14px;
+  text-align: center;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.09);
+  border-top: 5px solid #ccc;
+}
+.pt-card:nth-child(1) { border-color: #ff8c42; }
+.pt-card:nth-child(2) { border-color: #4e9af1; }
+.pt-card:nth-child(3) { border-color: #52b788; }
+.pt-icon { font-size: 28px; margin-bottom: 8px; }
+.pt-txt  { font-size: 12.5px; font-weight: 900; color: #3a2a1a; line-height: 1.45; }
+
+/* ── アコーディオン ─────────────────────────────── */
+.step { background: #fff; border-radius: 18px; margin-bottom: 10px; overflow: hidden; box-shadow: 0 2px 10px rgba(0,0,0,0.08); }
+.step-hd {
+  display: flex; align-items: center; gap: 12px;
+  padding: 16px 18px; cursor: pointer; user-select: none;
+  transition: background 0.15s;
+}
+.step-hd:hover { background: #fff8f0; }
+.step-num {
+  width: 34px; height: 34px; border-radius: 50%; flex-shrink: 0;
+  background: linear-gradient(135deg, #ff8c42, #ffd166);
+  color: #fff; font-size: 14px; font-weight: 900;
+  display: flex; align-items: center; justify-content: center;
+}
+.step-ttl { font-size: 14px; font-weight: bold; color: #3a2a1a; flex: 1; }
+.step-arr { color: #c09070; font-size: 13px; transition: transform 0.2s; }
+.step.open .step-arr { transform: rotate(90deg); }
+.step-bd { display: none; padding: 0 18px 18px; border-top: 1px solid #f0e4d0; }
+.step.open .step-bd { display: block; }
+
+/* ブロック */
+.blk { margin-top: 12px; border-radius: 13px; padding: 13px 15px; font-size: 13px; line-height: 1.8; }
+.blk-hd { font-size: 11px; font-weight: 900; margin-bottom: 6px; opacity: 0.72; letter-spacing: 0.03em; }
+.blk-talk  { background: #fff3e0; border-left: 3px solid #ff8c42; }
+.blk-do    { background: #e3f2fd; border-left: 3px solid #4e9af1; }
+.blk-point { background: #e8f5e9; border-left: 3px solid #52b788; }
+.blk-think { background: #f3e5f5; border-left: 3px solid #9575cd; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- ページヘッダー -->
+  <div class="page-hd">
+    <div class="page-badge">小3・4年生 ／ 理科</div>
+    <div class="page-title">☀️ 影のでき方・太陽の動き</div>
+    <div class="page-sub">太陽が動くと影はどう変わる？スライダーで1日を動かして確かめよう！</div>
+  </div>
+
+  <!-- タブ -->
+  <div class="tabs">
+    <button class="tab-btn active" onclick="switchTab('anim',this)">🎬 アニメーション</button>
+    <button class="tab-btn"        onclick="switchTab('text',this)">📖 説明・解説</button>
+  </div>
+
+  <!-- ══════════ Tab 1：アニメーション ══════════ -->
+  <div class="tab-content active" id="tab-anim">
+
+    <canvas id="cv" width="688" height="340"></canvas>
+
+    <!-- スライダー -->
+    <div class="ctrl-card">
+      <div class="ctrl-label">🕐 スライダーで時刻を変えてみよう</div>
+      <div class="time-disp" id="timeTxt">12:00（正午）</div>
+      <input type="range" id="slider" min="6" max="18" step="0.25" value="12"
+             oninput="onSlider(this.value)">
+      <div class="time-marks">
+        <span>🌅 朝 6時</span>
+        <span>☀️ 正午 12時</span>
+        <span>🌇 夕方 18時</span>
+      </div>
+    </div>
+
+    <!-- 説明テキスト（スライダー連動） -->
+    <div class="anim-desc" id="animDesc"></div>
+
+    <!-- 凡例 -->
+    <div class="legend">
+      <div class="leg-item"><div class="leg-sun"></div> 太陽</div>
+      <div class="leg-item"><div class="leg-ray"></div> 太陽の光</div>
+      <div class="leg-item"><div class="leg-shad"></div> 影（かげ）</div>
+      <div class="leg-item"><div class="leg-man"></div> 立っている人</div>
+    </div>
+
+    <!-- ポイント3つ -->
+    <div class="pts">
+      <div class="pt-card">
+        <div class="pt-icon">🌅</div>
+        <div class="pt-txt">太陽は東から出て西にしずむ</div>
+      </div>
+      <div class="pt-card">
+        <div class="pt-icon">🌑</div>
+        <div class="pt-txt">影は太陽の反対がわにできる</div>
+      </div>
+      <div class="pt-card">
+        <div class="pt-icon">📏</div>
+        <div class="pt-txt">太陽が高いほど影は短くなる</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ══════════ Tab 2：説明・解説 ══════════ -->
+  <div class="tab-content" id="tab-text">
+
+    <!-- Step 1 -->
+    <div class="step">
+      <div class="step-hd" onclick="toggleStep(this)">
+        <div class="step-num">1</div>
+        <div class="step-ttl">はじめに — 影はどこにできるの？</div>
+        <div class="step-arr">▶</div>
+      </div>
+      <div class="step-bd">
+        <div class="blk blk-talk">
+          <div class="blk-hd">💬 やさしい説明</div>
+          外で遊んでいるとき、足もとに黒い形がありますよね。それが「影（かげ）」です。
+          影は、太陽の光がからだにあたって、うしろがわに光が届かなくなるところにできます。<br><br>
+          朝に学校へ行くとき・お昼ごろ・帰り道…影の長さや向きがちがうことに気づいたことはありますか？
+          それは、太陽が空のいちを変えているからです！
+        </div>
+        <div class="blk blk-do">
+          <div class="blk-hd">🖱️ やってみよう</div>
+          アニメーションタブのスライダーを左（朝6時）から右（夕方18時）まで
+          ゆっくり動かしてみましょう。太陽と影がどう変わるか見てみよう！
+        </div>
+        <div class="blk blk-point">
+          <div class="blk-hd">💡 ポイント（親御さんへ）</div>
+          「影はなぜできるの？」という問いへの答えは「光源・障害物・スクリーン」の3要素です。
+          太陽＝光源、からだ＝障害物、地面＝スクリーンと整理してあげると、
+          後の「光の学習」の基礎になります。
+        </div>
+        <div class="blk blk-think">
+          <div class="blk-hd">❓ いっしょに考えよう</div>
+          「朝と夕方、影はどっちが長いと思う？」スライダーを動かす前に予想してから
+          確かめてみましょう！
+        </div>
+      </div>
+    </div>
+
+    <!-- Step 2 -->
+    <div class="step">
+      <div class="step-hd" onclick="toggleStep(this)">
+        <div class="step-num">2</div>
+        <div class="step-ttl">しくみの説明 — 太陽と影の関係</div>
+        <div class="step-arr">▶</div>
+      </div>
+      <div class="step-bd">
+        <div class="blk blk-talk">
+          <div class="blk-hd">💬 やさしい説明</div>
+          太陽は<strong>東の空からのぼって</strong>、南の空を通り、<strong>西の空にしずみます</strong>。
+          このため、太陽のいちは1日中変わっています。<br><br>
+          ◆ <strong>影が短くなるとき：</strong>正午ごろ太陽が一番高くなり、
+          ほぼ真上から光が来るので影はとても短くなります。<br><br>
+          ◆ <strong>影が長くなるとき：</strong>朝や夕方は太陽が低いため、
+          光がよこから当たり影がとても長くなります。<br><br>
+          影の向きは必ず「太陽の反対がわ」です。
+          太陽が東にあれば影は西へ、太陽が西にあれば影は東へ伸びます。
+        </div>
+        <div class="blk blk-do">
+          <div class="blk-hd">🖱️ やってみよう</div>
+          アニメーションで「朝→正午→夕方」とスライダーを動かして、
+          影の向きが反転する瞬間に注目してみましょう！
+        </div>
+        <div class="blk blk-point">
+          <div class="blk-hd">💡 ポイント（親御さんへ）</div>
+          日本では太陽は<strong>南の空</strong>を通るため、正午の影は北を向きます。
+          これが「正午＝かげが北向きに最短」のルールです。
+          方位（東西南北）とセットで覚えると地図・社会の学習にも活きます。
+        </div>
+        <div class="blk blk-think">
+          <div class="blk-hd">❓ いっしょに考えよう</div>
+          「影が東を向いているとき、太陽はどのあたりにあるかな？」
+          実際に外に出て確かめてみよう！
+        </div>
+      </div>
+    </div>
+
+    <!-- Step 3 -->
+    <div class="step">
+      <div class="step-hd" onclick="toggleStep(this)">
+        <div class="step-num">3</div>
+        <div class="step-ttl">アニメーションで確認しよう</div>
+        <div class="step-arr">▶</div>
+      </div>
+      <div class="step-bd">
+        <div class="blk blk-talk">
+          <div class="blk-hd">💬 やさしい説明</div>
+          アニメーションでは、スライダーで時刻を変えると
+          太陽が弧（こ）を描いて動き、影の長さ・向きが変わります。
+          下の説明文もいっしょに切り替わるので読みながら操作してみてね。
+        </div>
+        <div class="blk blk-do">
+          <div class="blk-hd">🖱️ やってみよう</div>
+          ① スライダーを「6時（朝）」に → 影が西（にし）へ長く伸びることを確認<br>
+          ② 「12時（正午）」に → 影が一番みじかくなることを確認<br>
+          ③ 「18時（夕方）」に → 影が東（ひがし）へ長く伸びることを確認<br>
+          ④ ゆっくり動かして影の変化を連続で観察してみよう！
+        </div>
+        <div class="blk blk-point">
+          <div class="blk-hd">💡 ポイント（親御さんへ）</div>
+          「正午に影が最短」「朝夕に影が最長」は小3〜4理科の頻出ポイントです。
+          「なぜそうなるか」まで説明できると理解が深まります。
+          アニメーションを「止めて→なぜ？」と問いかけながら進めると効果的です。
+        </div>
+        <div class="blk blk-think">
+          <div class="blk-hd">❓ いっしょに考えよう</div>
+          「かげが一番短くなったのは何時ごろ？」「朝と夕方、かげの向きはどうちがった？」
+          アニメーションを見ながら親子で話し合ってみましょう。
+        </div>
+      </div>
+    </div>
+
+    <!-- Step 4 -->
+    <div class="step">
+      <div class="step-hd" onclick="toggleStep(this)">
+        <div class="step-num">4</div>
+        <div class="step-ttl">まとめ</div>
+        <div class="step-arr">▶</div>
+      </div>
+      <div class="step-bd">
+        <div class="blk blk-talk">
+          <div class="blk-hd">💬 まとめ</div>
+          ✅ 太陽は<strong>東からのぼり</strong>、南の空を通って、<strong>西にしずむ</strong>。<br>
+          ✅ 影は太陽の<strong>反対がわ</strong>にできる。<br>
+          ✅ 太陽が高い（正午ごろ）→ 影は<strong>みじかく</strong>・北を向く。<br>
+          ✅ 太陽が低い（朝・夕方）→ 影は<strong>ながく</strong>伸びる。<br><br>
+          太陽のいちを知れば、影を見るだけで<strong>東西南北がわかります</strong>。
+          昔の人はこれを使って方角を知っていました！
+        </div>
+        <div class="blk blk-do">
+          <div class="blk-hd">🖱️ やってみよう</div>
+          晴れた日の外で、かげの向きを観察してみよう。
+          正午ごろに外へ出て「かげが一番短い方向＝北」を確かめてみよう！
+        </div>
+        <div class="blk blk-point">
+          <div class="blk-hd">💡 ポイント（親御さんへ）</div>
+          「かげを見て方位を知る」という知恵は、コンパスがない場面でも使える
+          実用的なスキルです。実際に公園や校庭で体験させると記憶に残ります。
+          「正午に一番かげが短い→その向きが北」と繰り返し確認してください。
+        </div>
+        <div class="blk blk-think">
+          <div class="blk-hd">❓ いっしょに考えよう</div>
+          「なぜ日本では太陽が南の空を通るんだろう？」
+          地球儀や地図を使って地球上のどこに日本があるか、いっしょに見てみましょう。
+        </div>
+      </div>
+    </div>
+
+    <!-- Step 5 -->
+    <div class="step">
+      <div class="step-hd" onclick="toggleStep(this)">
+        <div class="step-num">5</div>
+        <div class="step-ttl">もっと調べてみよう（発展）</div>
+        <div class="step-arr">▶</div>
+      </div>
+      <div class="step-bd">
+        <div class="blk blk-talk">
+          <div class="blk-hd">💬 発展テーマ</div>
+          🔍 <strong>日時計（ひどけい）</strong>…かげの向きと長さで時刻を知る道具。
+          昔の人の知恵がつまっています。<br><br>
+          🔍 <strong>夏と冬のちがい</strong>…夏は太陽が高く通り影が短め、
+          冬は太陽が低く影が長め。季節によって変わります。<br><br>
+          🔍 <strong>南半球（オーストラリアなど）</strong>…太陽が北の空を通るため、
+          影の向きが日本と逆になります！正午のかげは南を向く！
+        </div>
+        <div class="blk blk-do">
+          <div class="blk-hd">🖱️ やってみよう</div>
+          紙と鉛筆で「簡単な日時計」を作ってみよう。棒を地面に立てて、
+          時間ごとにかげの先をマークしていくと、方位と時刻が同時にわかります！
+        </div>
+        <div class="blk blk-point">
+          <div class="blk-hd">💡 ポイント（親御さんへ）</div>
+          夏至（6月）と冬至（12月）に同じ時刻・同じ場所でかげの長さを
+          比べると、季節と太陽の高さの関係を体感できます。
+          理科・地理の縦断的な学習につながる良い機会です。
+        </div>
+        <div class="blk blk-think">
+          <div class="blk-hd">❓ いっしょに考えよう</div>
+          「南極や北極では、かげはどんなふうになるんだろう？」
+          「1年で一番かげが長い日はいつかな？」
+          図書館やインターネットでいっしょに調べてみよう！
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /tab-text -->
+</div><!-- /wrap -->
+
+<script>
+/* ───── タブ切り替え ───────────────────────── */
+function switchTab(name, btn) {
+  document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+  document.getElementById('tab-' + name).classList.add('active');
+  btn.classList.add('active');
+  notifyH();
+}
+
+/* ───── アコーディオン ─────────────────────── */
+function toggleStep(hd) {
+  hd.parentElement.classList.toggle('open');
+  notifyH();
+}
+
+/* ───── Canvas 設定 ────────────────────────── */
+const cv  = document.getElementById('cv');
+const ctx = cv.getContext('2d');
+const W   = cv.width;   // 688
+const H   = cv.height;  // 340
+
+/* レイアウト定数 */
+const GY   = H * 0.70;  // 地面Y
+const PX   = W * 0.50;  // 人物X
+const PY   = GY;        // 人物足元Y
+const PH   = 76;        // 人物の高さ(px)
+
+/* ───── 太陽の軌跡（弧） ─────────────────── */
+function sunPos(h) {
+  /* h: 6〜18  t: 0〜1 */
+  const t  = (h - 6) / 12;
+  const sx = W * 0.08 + W * 0.84 * t;
+  /* 放物線: 端で低く、中央で高い */
+  const sy = GY * 0.82 - (GY * 0.72) * Math.sin(t * Math.PI);
+  return { x: sx, y: sy };
+}
+
+/* 太陽の高度（0〜1）*/
+function altitude(h) { return Math.sin(((h - 6) / 12) * Math.PI); }
+
+/* 影の長さ */
+function shadowLen(h) {
+  const alt = altitude(h);
+  return PH * (0.25 + 3.5 * (1 - alt));
+}
+
+/* 影の角度（地面上の方向） */
+function shadowAngleX(h) {
+  const sun = sunPos(h);
+  /* 太陽が左（東）なら影は右（西）*/
+  return sun.x < PX ? 1 : -1;
+}
+
+/* ───── 空グラデーション ─────────────────── */
+function skyColors(h) {
+  const t = (h - 6) / 12;
+  if (t < 0.12) return ['#f4845f', '#ffcc80'];   /* 夜明け */
+  if (t < 0.35) return ['#90caf9', '#e3f2fd'];   /* 朝 */
+  if (t < 0.65) return ['#42a5f5', '#90caf9'];   /* 昼 */
+  if (t < 0.88) return ['#90caf9', '#e3f2fd'];   /* 午後 */
+  return ['#ff7043', '#ffcc80'];                  /* 夕焼け */
+}
+
+/* ───── シーン描画 ──────────────────────── */
+function draw(h) {
+  ctx.clearRect(0, 0, W, H);
+
+  /* 空 */
+  const [sc1, sc2] = skyColors(h);
+  const skyG = ctx.createLinearGradient(0, 0, 0, GY);
+  skyG.addColorStop(0, sc1);
+  skyG.addColorStop(1, sc2);
+  ctx.fillStyle = skyG;
+  ctx.fillRect(0, 0, W, GY);
+
+  /* 地面 */
+  const gG = ctx.createLinearGradient(0, GY, 0, H);
+  gG.addColorStop(0, '#8bc34a');
+  gG.addColorStop(0.4, '#7cb342');
+  gG.addColorStop(1, '#558b2f');
+  ctx.fillStyle = gG;
+  ctx.fillRect(0, GY, W, H - GY);
+
+  /* 地面境界線 */
+  ctx.strokeStyle = '#6aaa38';
+  ctx.lineWidth = 2;
+  ctx.beginPath(); ctx.moveTo(0, GY); ctx.lineTo(W, GY); ctx.stroke();
+
+  /* 太陽 */
+  const sun = sunPos(h);
+  if (sun.y < GY - 8) {
+    ctx.save();
+    ctx.translate(sun.x, sun.y);
+
+    /* 光芒 */
+    const rays = 12;
+    for (let i = 0; i < rays; i++) {
+      const a = (i / rays) * Math.PI * 2;
+      ctx.strokeStyle = 'rgba(255,230,80,0.5)';
+      ctx.lineWidth = 2.5;
+      ctx.beginPath();
+      ctx.moveTo(Math.cos(a) * 27, Math.sin(a) * 27);
+      ctx.lineTo(Math.cos(a) * 42, Math.sin(a) * 42);
+      ctx.stroke();
+    }
+    /* 太陽本体 */
+    const sg = ctx.createRadialGradient(0, 0, 0, 0, 0, 22);
+    sg.addColorStop(0, '#fff9c4');
+    sg.addColorStop(0.55, '#ffd740');
+    sg.addColorStop(1, '#ffa000');
+    ctx.fillStyle = sg;
+    ctx.beginPath(); ctx.arc(0, 0, 22, 0, Math.PI * 2); ctx.fill();
+    ctx.restore();
+
+    /* 太陽→人物への光線（点線） */
+    ctx.save();
+    ctx.setLineDash([6, 5]);
+    ctx.strokeStyle = 'rgba(255,200,60,0.35)';
+    ctx.lineWidth = 1.5;
+    ctx.beginPath();
+    ctx.moveTo(sun.x, sun.y);
+    ctx.lineTo(PX, PY - PH * 0.75);
+    ctx.stroke();
+    ctx.setLineDash([]);
+    ctx.restore();
+  }
+
+  /* 影（地面上の楕円） */
+  const sLen  = shadowLen(h);
+  const sDir  = shadowAngleX(h); /* +1=右(西), -1=左(東) */
+  const sCx   = PX + sDir * sLen * 0.5;
+  const sRx   = sLen * 0.5;
+  const sRy   = Math.max(6, sLen * 0.10);
+
+  const shadG = ctx.createLinearGradient(
+    PX, PY,
+    PX + sDir * sLen, PY
+  );
+  shadG.addColorStop(0, 'rgba(40,20,5,0.55)');
+  shadG.addColorStop(1, 'rgba(40,20,5,0)');
+
+  ctx.save();
+  ctx.translate(sCx, PY);
+  ctx.beginPath();
+  ctx.ellipse(0, 0, sRx, sRy, 0, 0, Math.PI * 2);
+  ctx.fillStyle = shadG;
+  ctx.fill();
+  ctx.restore();
+
+  /* 人物（棒人間） */
+  drawPerson(PX, PY, PH);
+
+  /* 方位ラベル */
+  ctx.font = 'bold 11px sans-serif';
+  ctx.fillStyle = 'rgba(255,255,255,0.85)';
+  ctx.textAlign = 'center';
+  ctx.fillText('東（ひがし）', W * 0.09, GY - 12);
+  ctx.fillText('南（みなみ）', W * 0.50, 20);
+  ctx.fillText('西（にし）',   W * 0.91, GY - 12);
+}
+
+/* ───── 棒人間 ──────────────────────────── */
+function drawPerson(cx, fy, h) {
+  const hr = h * 0.13;    /* 頭半径 */
+  const bl = h * 0.38;    /* 胴長 */
+  const ll = h * 0.36;    /* 脚長 */
+  const al = h * 0.26;    /* 腕長 */
+
+  const headY = fy - ll - bl - hr;
+  const neckY = fy - ll - bl;
+  const waistY = fy - ll;
+
+  ctx.lineCap = 'round';
+  ctx.lineJoin = 'round';
+
+  /* 頭 */
+  ctx.beginPath(); ctx.arc(cx, headY, hr, 0, Math.PI * 2);
+  ctx.fillStyle = '#e8a878'; ctx.fill();
+  ctx.strokeStyle = '#3a2010'; ctx.lineWidth = 2; ctx.stroke();
+
+  /* 胴 */
+  ctx.strokeStyle = '#3a2010'; ctx.lineWidth = 3.5;
+  ctx.beginPath(); ctx.moveTo(cx, neckY); ctx.lineTo(cx, waistY); ctx.stroke();
+
+  /* 腕 */
+  ctx.beginPath();
+  ctx.moveTo(cx, neckY + h * 0.08);
+  ctx.lineTo(cx - h * 0.2, neckY + al);
+  ctx.moveTo(cx, neckY + h * 0.08);
+  ctx.lineTo(cx + h * 0.2, neckY + al);
+  ctx.stroke();
+
+  /* 脚 */
+  ctx.beginPath();
+  ctx.moveTo(cx, waistY);
+  ctx.lineTo(cx - h * 0.15, fy);
+  ctx.moveTo(cx, waistY);
+  ctx.lineTo(cx + h * 0.15, fy);
+  ctx.stroke();
+}
+
+/* ───── 説明テキスト ─────────────────────── */
+const DESCS = [
+  { at: 6,  html: '🌅 <strong>朝6時：</strong>太陽が東の低い空にあります。光がよこから当たるため、影が<strong>西へとても長く</strong>伸びています。' },
+  { at: 8,  html: '🌤️ <strong>朝8時：</strong>太陽が東の空をのぼっています。影はまだ西向きですが、少し<strong>短くなってきました</strong>。' },
+  { at: 10, html: '☀️ <strong>午前10時：</strong>太陽がだいぶ高くなりました。影はさらに短くなり、向きは西よりも<strong>北西</strong>に近づいています。' },
+  { at: 12, html: '☀️ <strong>正午12時：</strong>太陽が一番高いところにいます！光がほぼ真上から来るため、影が<strong>一番みじかく</strong>なります。向きは北です。' },
+  { at: 14, html: '🌤️ <strong>午後2時：</strong>太陽が西に傾き始めました。影は<strong>東向き</strong>に伸び始めています。' },
+  { at: 16, html: '🌆 <strong>午後4時：</strong>太陽がさらに西に下がっています。影は<strong>東へ長く</strong>伸びています。' },
+  { at: 18, html: '🌇 <strong>夕方18時：</strong>太陽が西の低い空にしずみます。影が<strong>東へとても長く</strong>伸びています。朝とは反対向きです！' },
+];
+function updateDesc(h) {
+  let best = DESCS[0];
+  for (const d of DESCS) {
+    if (Math.abs(d.at - h) < Math.abs(best.at - h)) best = d;
+  }
+  document.getElementById('animDesc').innerHTML = best.html;
+}
+
+/* ───── 時刻フォーマット ─────────────────── */
+function fmtH(h) {
+  const hh = Math.floor(h);
+  const mm = Math.round((h - hh) * 60);
+  const ms = mm === 0 ? '00' : (mm < 10 ? '0' + mm : '' + mm);
+  const hs = hh < 10  ? '0' + hh : '' + hh;
+  let tag = '';
+  if (h <= 6.5)        tag = '（夜明け）';
+  else if (h < 10)     tag = '（朝）';
+  else if (h < 11.5)   tag = '（午前）';
+  else if (h < 12.5)   tag = '（正午）';
+  else if (h < 15.5)   tag = '（午後）';
+  else if (h < 17)     tag = '（夕方前）';
+  else                 tag = '（夕方）';
+  return `${hs}:${ms}${tag}`;
+}
+
+/* ───── スライダーイベント ───────────────── */
+function onSlider(val) {
+  const h = parseFloat(val);
+  document.getElementById('timeTxt').textContent = fmtH(h);
+  draw(h);
+  updateDesc(h);
+}
+
+/* ───── 初期描画 ────────────────────────── */
+draw(12);
+updateDesc(12);
+document.getElementById('timeTxt').textContent = fmtH(12);
+</script>
+
+<script>
+  /* iframeの高さを親ページへ通知 */
+  function notifyH() {
+    window.parent.postMessage({ iframeHeight: document.documentElement.scrollHeight }, '*');
+  }
+  window.addEventListener('load', notifyH);
+  window.addEventListener('resize', notifyH);
+</script>
+</body>
+</html>
