@@ -50,10 +50,11 @@ export async function GET(
   return new NextResponse(animation.htmlContent, {
     status: 200,
     headers: {
-      'Content-Type':  'text/html; charset=utf-8',
+      'Content-Type':    'text/html; charset=utf-8',
+      // Next.js デフォルトの DENY を SAMEORIGIN に上書きしてiframe表示を許可
+      'X-Frame-Options': 'SAMEORIGIN',
       // iframeのsandbox属性と組み合わせてセキュリティを確保
-      // same-originにしてiframe内のscriptが動作するようにする
-      'Cache-Control': 'private, max-age=3600',
+      'Cache-Control':   'private, max-age=3600',
     },
   });
 }
