@@ -394,7 +394,7 @@ function PreviewPanel({
           {isFs ? '⊠ 閉じる' : '⛶ 全画面'}
         </button>
       </div>
-      <div ref={wrapRef} style={{ background: '#fdf6ee' }}>
+      <div ref={wrapRef} style={{ background: '#fdf6ee', ...(isFs ? { overflowY: 'auto', height: '100vh' } : {}) }}>
         {theme.previewUrl ? (
           <iframe
             ref={iframeRef}
@@ -548,8 +548,8 @@ function ResultPanel({
         </div>
       </div>
 
-      {/* iframe */}
-      <div ref={wrapRef} style={{ background: '#fdf6ee' }}>
+      {/* iframe — 全画面時はスクロール可能にする */}
+      <div ref={wrapRef} style={{ background: '#fdf6ee', ...(isFs ? { overflowY: 'auto', height: '100vh' } : {}) }}>
         <iframe
           ref={iframeRef}
           src={`/api/animations/${id}`}
