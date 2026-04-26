@@ -202,21 +202,21 @@ export default async function MyPage() {
                 </Link>
               </li>
               <li>
-                <span
+                <Link
+                  href="/mypage/ai-kyoshitsu"
                   className="flex items-center justify-between rounded-2xl p-3"
                   style={{
                     background: 'var(--color-cream)',
                     border: '1px solid var(--color-beige-dark)',
-                    color: 'var(--color-brown-light)',
-                    opacity: 0.7,
+                    color: 'var(--color-brown)',
                   }}
                 >
                   <span className="flex items-center gap-2">
-                    <span className="text-xl" aria-hidden="true">🎓</span>
-                    <span className="font-semibold">学習履歴</span>
+                    <span className="text-xl" aria-hidden="true">🎬</span>
+                    <span className="font-semibold">AI教室履歴</span>
                   </span>
-                  <span className="text-xs">準備中</span>
-                </span>
+                  <span style={{ color: 'var(--color-orange)' }}>→</span>
+                </Link>
               </li>
               <li>
                 <Link
