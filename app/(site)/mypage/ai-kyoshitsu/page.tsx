@@ -48,7 +48,8 @@ function PreviewModal({
   item: AnimationItem;
   onClose: () => void;
 }) {
-  const [iframeHeight, setIframeHeight] = useState(560);
+  const [iframeHeight,  setIframeHeight]  = useState(560);
+  const [isFullscreen,  setIsFullscreen]  = useState(false);
   const iframeRef = useRef<HTMLIFrameElement>(null);
   const wrapRef   = useRef<HTMLDivElement>(null);
   const col = SUBJECT_COLOR[item.subject] ?? SUBJECT_COLOR.science;
@@ -63,12 +64,21 @@ function PreviewModal({
     return () => window.removeEventListener('message', handler);
   }, []);
 
-  // ESCキーで閉じる
+  // ESCキーで閉じる（全画面中はブラウザが処理するため onClose は呼ばない）
   useEffect(() => {
-    const handler = (e: KeyboardEvent) => { if (e.key === 'Escape') onClose(); };
+    const handler = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && !document.fullscreenElement) onClose();
+    };
     window.addEventListener('keydown', handler);
     return () => window.removeEventListener('keydown', handler);
   }, [onClose]);
+
+  // 全画面状態を追跡してスクロール制御に利用
+  useEffect(() => {
+    const handler = () => setIsFullscreen(!!document.fullscreenElement);
+    document.addEventListener('fullscreenchange', handler);
+    return () => document.removeEventListener('fullscreenchange', handler);
+  }, []);
 
   function handleFullscreen() {
     const target = wrapRef.current ?? iframeRef.current;
@@ -153,8 +163,16 @@ function PreviewModal({
           </div>
         </div>
 
-        {/* iframe */}
-        <div ref={wrapRef} style={{ background: '#fdf6ee' }}>
+        {/* iframe — 全画面時はラッパーをスクロール可能にして全コンテンツを表示 */}
+        <div
+          ref={wrapRef}
+          style={{
+            background: '#fdf6ee',
+            ...(isFullscreen
+              ? { overflowY: 'auto', height: '100vh' }
+              : {}),
+          }}
+        >
           <iframe
             ref={iframeRef}
             src={`/api/animations/${item.id}`}
