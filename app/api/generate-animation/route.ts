@@ -219,9 +219,9 @@ async function runStage1(prompt: string, grade: string, subject: string): Promis
 科目: ${subjectLabel}
 ユーザー指示: ${prompt}`;
 
-  // Stage 1 は最大25秒でタイムアウト（JSON生成は時間がかかる）
+  // Stage 1 は最大15秒でタイムアウト（Vercel 60秒制限内に Stage2 と合わせて収めるため）
   const controller = new AbortController();
-  const timer = setTimeout(() => controller.abort(), 25000);
+  const timer = setTimeout(() => controller.abort(), 15000);
 
   let rawText: string;
   try {
@@ -276,15 +276,14 @@ async function runStage2Structured(stage1Data: Stage1Success): Promise<string> {
 ${JSON.stringify(stage1Data, null, 2)}
 \`\`\``;
 
-  // Stage 2 タイムアウト: Vercel 60秒制限を考慮し 45秒で切る
+  // Stage 2 タイムアウト: Vercel 60秒制限から Stage1(15s) を引いた残り40秒以内
   const controller = new AbortController();
-  const timer = setTimeout(() => controller.abort(), 45000);
+  const timer = setTimeout(() => controller.abort(), 40000);
   const startedAt = Date.now();
 
   let result;
   try {
-    // プロンプトキャッシュ: システムプロンプト（~5,000トークン）を5分間キャッシュ
-    // 2回目以降のリクエストでは入力コスト 90% 削減（$3/1M → $0.30/1M）
+    // プロンプトキャッシュは Anthropic 用。Gemini では無視されるが互換性のため形式維持
     result = await completeOpenRouterWithUsage(
       MODEL_ROUTER['stage2-html'],
       [
@@ -296,8 +295,9 @@ ${JSON.stringify(stage1Data, null, 2)}
         },
         { role: 'user', content: userMessage },
       ],
-      // maxTokens: 16000, temperature: 0.5 - スケルトン回避＋クイズ5問完全実装
-      { maxTokens: 16000, temperature: 0.5, signal: controller.signal },
+      // maxTokens: 8000 - Vercel 60秒制限内に収まる現実的なサイズ
+      // temperature: 0.5 - スケルトン回避＋確定的な出力
+      { maxTokens: 8000, temperature: 0.5, signal: controller.signal },
     );
   } catch (err) {
     const elapsed = Date.now() - startedAt;
@@ -340,14 +340,14 @@ async function runStage2Legacy(prompt: string, grade: string, subject: string): 
     .replace(/\{GRADE\}/g,   gradeLabel)
     .replace(/\{SUBJECT\}/g, subjectLabel);
 
-  // タイムアウト 45秒（Vercel 60秒制限内）
+  // タイムアウト 40秒（Vercel 60秒制限から Stage1 と buffer を引いた値）
   const controller = new AbortController();
-  const timer = setTimeout(() => controller.abort(), 45000);
+  const timer = setTimeout(() => controller.abort(), 40000);
   try {
     return await completeOpenRouter(
       MODEL_ROUTER['stage2-html'],
       [{ role: 'user', content: systemPrompt }],
-      { maxTokens: 16000, temperature: 0.5, signal: controller.signal },
+      { maxTokens: 8000, temperature: 0.5, signal: controller.signal },
     );
   } finally {
     clearTimeout(timer);
@@ -455,41 +455,30 @@ export async function POST(req: NextRequest) {
     );
   }
 
-  // 7. Stage 2 実行（構造化 → 失敗時 legacy フォールバック）
+  // 7. Stage 2 実行
+  // 注意: Stage2 構造化が失敗（タイムアウト等）した場合に legacy で再試行すると、
+  // 同じモデル・同じ問題で時間が倍増し Vercel 60秒制限を超えるリスクがあるため、
+  // Stage1 が success の場合は構造化のみで再試行なし。
+  // Stage1 が parse_failed の場合のみ legacy にフォールバック。
   let rawHtml: string;
-  if (stage1.kind === 'success') {
-    // 正常パス: 構造化JSONで生成
-    try {
+  try {
+    if (stage1.kind === 'success') {
+      // 正常パス: 構造化JSONで生成（失敗したら即エラー返却）
       rawHtml = await runStage2Structured(stage1.data);
-    } catch (structuredErr) {
-      // Stage 2 構造化が失敗 → legacy で再試行
-      const errMsg = (structuredErr as Error)?.message?.slice(0, 200);
-      console.warn('[generate-animation] Stage2構造化失敗 → legacyフォールバック:', errMsg);
-      try {
-        rawHtml = await runStage2Legacy(prompt, grade, subject);
-      } catch (legacyErr) {
-        console.error('[generate-animation] Stage2 legacy も失敗:', {
-          structuredErr: errMsg,
-          legacyErr:     (legacyErr as Error)?.message?.slice(0, 200),
-        });
-        return NextResponse.json(
-          { ok: false, error: { code: 'AI_ERROR', message: 'AIが一時的に利用できません。しばらくしてからお試しください。' } },
-          { status: 502 },
-        );
-      }
-    }
-  } else {
-    // Stage 1 が parse_failed の場合: 最初から legacy で生成
-    console.warn('[generate-animation] Stage1失敗 → legacyフォールバック');
-    try {
+    } else {
+      // Stage 1 が parse_failed の場合: legacy で生成
+      console.warn('[generate-animation] Stage1失敗 → legacyフォールバック');
       rawHtml = await runStage2Legacy(prompt, grade, subject);
-    } catch (err) {
-      console.error('[generate-animation] Stage2 legacy エラー:', (err as Error)?.message?.slice(0, 200));
-      return NextResponse.json(
-        { ok: false, error: { code: 'AI_ERROR', message: 'AIが一時的に利用できません。しばらくしてからお試しください。' } },
-        { status: 502 },
-      );
     }
+  } catch (err) {
+    console.error('[generate-animation] Stage2 失敗:', {
+      stage1Kind: stage1.kind,
+      errMsg:     (err as Error)?.message?.slice(0, 200),
+    });
+    return NextResponse.json(
+      { ok: false, error: { code: 'AI_ERROR', message: 'AIが一時的に利用できません。しばらくしてからお試しください。' } },
+      { status: 502 },
+    );
   }
 
   // 8. HTMLを抽出

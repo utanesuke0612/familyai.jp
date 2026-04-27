@@ -72,7 +72,7 @@ export const MODEL_ROUTER = {
   'math-reasoning': 'deepseek/deepseek-r1-0528',
   'html-gen':       'google/gemini-2.5-flash',            // HTML/CSS/JS生成向け（高速・高品質）
   'stage1-fast':    'google/gemini-2.0-flash-001',        // AI教室Stage1: 高速・低コスト・JSON出力得意
-  'stage2-html':    'google/gemini-2.5-flash',            // AI教室Stage2: テスト段階のため低コストモデル（Sonnet 4から差し戻し・本番導入時に再アップグレード判断）
+  'stage2-html':    'google/gemini-2.0-flash-001',        // AI教室Stage2: テスト段階・最高速最安（Vercel 60秒制限内に収めるため）
   'transcribe':     'openai/whisper-large-v3',
   'image-gen':      'black-forest-labs/flux-1.1-pro',
   'tts-japanese':   'openai/gpt-4o-mini-tts-2025-12-15',
