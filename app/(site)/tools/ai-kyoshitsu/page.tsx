@@ -609,6 +609,36 @@ function ResultPanel({
         </div>
       </div>
 
+      {/* 成功通知バナー：履歴から再閲覧できることを案内（コスト削減誘導） */}
+      <div
+        className="px-5 py-3 flex items-start gap-3 flex-wrap"
+        style={{
+          background:   'linear-gradient(135deg, #fff8e1 0%, #fff3cd 100%)',
+          borderBottom: '1.5px solid #ffd54f',
+        }}
+      >
+        <span className="text-lg shrink-0">💡</span>
+        <div className="flex-1 min-w-[200px]">
+          <p className="text-sm font-bold leading-snug" style={{ color: '#7a5000' }}>
+            生成完了！この動画は <span style={{ color: '#ff8c42' }}>「📂 AI教室履歴」</span> からいつでも見直せます
+          </p>
+          <p className="text-xs mt-0.5" style={{ color: '#a07830' }}>
+            同じ内容を再生成する必要はありません。マイページの履歴から再表示できます。
+          </p>
+        </div>
+        <Link
+          href="/mypage/ai-kyoshitsu"
+          className="rounded-full px-3 py-1.5 text-xs font-bold transition-all hover:-translate-y-0.5 shrink-0"
+          style={{
+            background: 'linear-gradient(135deg, #ff8c42, #ffa563)',
+            color:      '#fff',
+            boxShadow:  '0 2px 8px rgba(255,140,66,0.35)',
+          }}
+        >
+          📂 履歴を開く
+        </Link>
+      </div>
+
       {/* iframe — 全画面時はiframe自体が100vh+内部スクロール、通常時はpostMessage高さ */}
       <div
         ref={wrapRef}
@@ -638,7 +668,7 @@ function ResultPanel({
         style={{ background: `${subjectColor.border}08`, borderTop: `1px solid ${subjectColor.border}22` }}
       >
         <p className="text-xs" style={{ color: 'var(--color-brown-light)' }}>
-          生成されたアニメーションはマイページの履歴から再度見ることができます。
+          ✨ AIの生成は時間とコストがかかります。同じテーマは履歴から再表示するのがおすすめです。
         </p>
         <button
           onClick={onReset}
