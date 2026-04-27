@@ -68,6 +68,35 @@ export {
   isChatStreamError,
 } from './ai-stream';
 
+// ─── うごくAI教室 関連 ─────────────────────────────────────────
+/** アニメーション学年 */
+export type AnimationGrade   = 'elem-low' | 'elem-high' | 'middle';
+
+/** アニメーション教科 */
+export type AnimationSubject = 'science' | 'math' | 'social';
+
+/**
+ * アニメーションサマリ（一覧表示用・htmlContent を含まない）
+ *
+ * API `/api/user/animations` の items[] と 1:1 対応。
+ * DB スキーマ（lib/db/schema.ts:userAnimations）から
+ * `lib/mappers/animations.ts` の `toAnimationSummary()` で変換される。
+ */
+export interface AnimationSummary {
+  id:        string;
+  theme:     string;
+  grade:     AnimationGrade;
+  subject:   AnimationSubject;
+  prompt:    string;
+  createdAt: string;  // ISO 8601
+}
+
+/** アニメーション詳細（本文 HTML を含む・所有者のみ取得想定） */
+export interface Animation extends AnimationSummary {
+  htmlContent: string;
+  userId:      string;
+}
+
 // ─── ユーザー関連 ──────────────────────────────────────────────
 /** 認証済みユーザーのプロファイル */
 export interface UserProfile {

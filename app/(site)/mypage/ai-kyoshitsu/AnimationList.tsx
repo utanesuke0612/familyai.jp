@@ -7,15 +7,13 @@
 'use client';
 
 import { useRef, useState, useEffect } from 'react';
+import type { AnimationSummary } from '@/shared/types';
 
-// ── 型定義 ───────────────────────────────────────────────────────
-export interface AnimationItem {
-  id:        string;
-  theme:     string;
-  grade:     string;
-  subject:   string;
-  createdAt: string;
-}
+/**
+ * 旧 `AnimationItem` ローカル型は `shared/types` の `AnimationSummary` に統合済み。
+ * 既存の import 互換のため type alias として再エクスポートする。
+ */
+export type AnimationItem = AnimationSummary;
 
 // ── 定数 ─────────────────────────────────────────────────────────
 const SUBJECT_COLOR: Record<string, { bg: string; border: string; text: string }> = {

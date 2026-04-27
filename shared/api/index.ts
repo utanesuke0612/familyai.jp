@@ -10,6 +10,7 @@ import type {
   ApiResponse,
   ArticleSummary,
   Article,
+  AnimationSummary,
   PaginatedResult,
   ContentCategory,
   DifficultyLevel,
@@ -203,6 +204,23 @@ export async function fetchRelated(
   return apiFetch<ArticleSummary[]>(
     `${baseUrl}/api/articles/${slug}/related${buildQueryString({ limit })}`,
   );
+}
+
+// ─── うごくAI教室 API ─────────────────────────────────────────
+
+/**
+ * GET /api/user/animations
+ * ユーザーの生成履歴一覧（最大50件・新しい順）を取得する。
+ * 認証必須。サーバは htmlContent 抜きで返却するので AnimationSummary[] になる。
+ *
+ * @note Web 版の Server Component は `lib/repositories/animations.ts` の
+ *       `listUserAnimations()` を直呼びするため、このエンドポイントは主に
+ *       iOS/Android モバイル・外部クライアント用。
+ */
+export async function fetchUserAnimations(
+  baseUrl: string,
+): Promise<ApiResponse<AnimationSummary[]>> {
+  return apiFetch<AnimationSummary[]>(`${baseUrl}/api/user/animations`);
 }
 
 // ─── チャット API ──────────────────────────────────────────────

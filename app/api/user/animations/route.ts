@@ -17,6 +17,7 @@ import {
   deleteAnimation,
   getAnimationById,
 } from '@/lib/repositories/animations';
+import { toAnimationSummary }         from '@/lib/mappers/animations';
 
 export const runtime = 'nodejs';
 
@@ -34,11 +35,10 @@ export async function GET() {
   try {
     const list = await listUserAnimations(session.user.id);
 
-    // htmlContentは一覧では不要（容量削減）
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const items = list.map(({ htmlContent: _html, ...rest }) => rest);
+    // mapper 経由で shared/types の AnimationSummary に変換（htmlContent は除外される）
+    const data = list.map(toAnimationSummary);
 
-    return NextResponse.json({ ok: true, items });
+    return NextResponse.json({ ok: true, data });
   } catch (err) {
     console.error('[GET /api/user/animations] DB エラー:', err);
     return NextResponse.json(

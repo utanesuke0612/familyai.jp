@@ -9,6 +9,7 @@ import Link              from 'next/link';
 import { redirect }      from 'next/navigation';
 import { auth }          from '@/lib/auth';
 import { listUserAnimations } from '@/lib/repositories/animations';
+import { toAnimationSummary } from '@/lib/mappers/animations';
 import { SITE }          from '@/shared';
 import AnimationList, { type AnimationItem } from './AnimationList';
 
@@ -27,14 +28,8 @@ export default async function AiKyoshitsuHistoryPage() {
   // DBから直接取得（APIを経由しない）
   const rows = await listUserAnimations(session.user.id);
 
-  // Client Componentに渡すため、シリアライズ可能な型に整形
-  const items: AnimationItem[] = rows.map(r => ({
-    id:        r.id,
-    theme:     r.theme,
-    grade:     r.grade,
-    subject:   r.subject,
-    createdAt: r.createdAt.toISOString(),
-  }));
+  // shared/types の AnimationSummary に変換（mapper 経由で型安全な DTO 化）
+  const items: AnimationItem[] = rows.map(toAnimationSummary);
 
   return (
     <main style={{ background: 'var(--color-cream)', minHeight: '100vh' }}>
