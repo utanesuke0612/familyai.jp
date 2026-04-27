@@ -64,7 +64,7 @@ export const MODEL_ROUTER = {
   'math-reasoning': 'deepseek/deepseek-r1-0528',
   'html-gen':       'google/gemini-2.5-flash',            // HTML/CSS/JS生成向け（高速・高品質）
   'stage1-fast':    'google/gemini-2.0-flash-001',        // AI教室Stage1: 高速・低コスト・JSON出力得意
-  'stage2-html':    'anthropic/claude-3.5-haiku',         // AI教室Stage2: HTML品質高・指示追従性◎
+  'stage2-html':    'anthropic/claude-sonnet-4',          // AI教室Stage2: 完全実装HTML生成（スケルトン回避のためHaiku→Sonnet 4にアップグレード）
   'transcribe':     'openai/whisper-large-v3',
   'image-gen':      'black-forest-labs/flux-1.1-pro',
   'tts-japanese':   'openai/gpt-4o-mini-tts-2025-12-15',

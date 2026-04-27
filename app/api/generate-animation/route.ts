@@ -263,6 +263,9 @@ async function runStage2Structured(stage1Data: Stage1Success): Promise<string> {
   const systemPrompt = readPromptFile(STAGE2_PROMPT_PATH);
   const userMessage  = `以下のJSON仕様に従って、教育用HTMLファイルを1つ生成してください。
 
+⚠️ 最重要: keywordsの全項目、teaching_flowの全ステップ、quizの5問すべてを完全に展開してください。
+コメントだけのスケルトンは絶対に出力しないでください。
+
 \`\`\`json
 ${JSON.stringify(stage1Data, null, 2)}
 \`\`\``;
@@ -273,7 +276,9 @@ ${JSON.stringify(stage1Data, null, 2)}
       { role: 'system', content: systemPrompt },
       { role: 'user',   content: userMessage  },
     ],
-    { maxTokens: 8000, temperature: 0.7 },
+    // maxTokens: 16000 (8000→16000) - クイズ5問+完全実装で必要
+    // temperature: 0.5 (0.7→0.5) - スケルトン回避のため確定的な出力を促す
+    { maxTokens: 16000, temperature: 0.5 },
   );
 }
 
@@ -290,7 +295,7 @@ async function runStage2Legacy(prompt: string, grade: string, subject: string): 
   return await completeOpenRouter(
     MODEL_ROUTER['stage2-html'],
     [{ role: 'user', content: systemPrompt }],
-    { maxTokens: 8000, temperature: 0.7 },
+    { maxTokens: 16000, temperature: 0.5 },
   );
 }
 
