@@ -62,6 +62,8 @@ function PreviewModal({ item, onClose }: { item: AnimationItem; onClose: () => v
 
   useEffect(() => {
     const onMsg = (e: MessageEvent) => {
+      // 自分の iframe からのメッセージのみ受け付ける（他フレームからの偽装を防ぐ）
+      if (iframeRef.current && e.source !== iframeRef.current.contentWindow) return;
       if (e.data && typeof e.data.iframeHeight === 'number')
         setIframeHeight(Math.max(400, e.data.iframeHeight));
     };

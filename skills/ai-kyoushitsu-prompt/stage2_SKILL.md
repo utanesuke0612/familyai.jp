@@ -67,6 +67,25 @@ design        : animation_style・color_theme・complexity
 - **必ずviewportメタタグを設定**: `<meta name="viewport" content="width=device-width, initial-scale=1">`
 - **bodyのmargin/paddingは0**にして、コンテナで余白を制御すること（iframe表示で左右に隙間ができないため）
 
+### CSP（Content Security Policy）メタタグの設定（必須・セキュリティ）
+
+生成HTMLは iframe 内で実行されるため、外部 fetch・フォーム送信・外部リソース
+読み込みを最小限に抑える CSP を `<head>` 内に必ず含めること:
+
+```html
+<meta http-equiv="Content-Security-Policy"
+      content="default-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'none'; form-action 'none'; frame-src 'none';">
+```
+
+- `connect-src 'none'`: 外部APIへのfetch/XHR遮断
+- `form-action 'none'`: フォーム送信先を遮断
+- `frame-src 'none'`: 入れ子のiframe禁止
+- `style-src` で Google Fonts のCSSを許可
+- `font-src` で Google Fonts のフォントファイルを許可
+- `script-src 'unsafe-inline'`: インラインスクリプト（postMessage等）を許可
+
+このメタタグは省略禁止。必ず `<head>` 内に含めること。
+
 ### iframe親への高さ通知（必須）
 
 生成HTMLは親ページの `<iframe>` 内に表示されるため、コンテンツの高さが
