@@ -302,8 +302,8 @@ export default async function MyPage() {
                   />
                   <FeatureRow
                     feature="📤 友達にシェア"
-                    desc="X・LINEで動画リンク共有"
-                    anon="利用不可"
+                    desc="記事・アニメをX・LINEで共有"
+                    anon="可"
                     free="可"
                     premium="可"
                     plan={plan}
