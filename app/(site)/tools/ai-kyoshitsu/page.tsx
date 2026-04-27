@@ -533,6 +533,7 @@ function ResultPanel({
 }) {
   const [iframeHeight, setIframeHeight] = useState(600);
   const [isSaving,     setIsSaving]     = useState(false);
+  const [copied,       setCopied]       = useState(false);
   const iframeRef = useRef<HTMLIFrameElement>(null);
   const wrapRef   = useRef<HTMLDivElement>(null);
   const [isFs, setIsFs] = useState(false);
@@ -571,6 +572,30 @@ function ResultPanel({
     window.open(url, '_blank', 'noopener,noreferrer,width=600,height=500');
   }
 
+  function shareToLine() {
+    const shareUrl = `${window.location.origin}/share/${id}`;
+    const url = `https://line.me/R/msg/text/?${encodeURIComponent(`「${themeLabel}」のアニメーション解説 ${shareUrl}`)}`;
+    window.open(url, '_blank', 'noopener,noreferrer');
+  }
+
+  async function copyShareLink() {
+    const shareUrl = `${window.location.origin}/share/${id}`;
+    try {
+      await navigator.clipboard.writeText(shareUrl);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    } catch {
+      const input = document.createElement('input');
+      input.value = shareUrl;
+      document.body.appendChild(input);
+      input.select();
+      document.execCommand('copy');
+      document.body.removeChild(input);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    }
+  }
+
   return (
     <div className="rounded-3xl overflow-hidden" style={{ boxShadow: 'var(--shadow-warm)', border: `2px solid ${subjectColor.border}44` }}>
       {/* ヘッダー */}
@@ -590,33 +615,53 @@ function ResultPanel({
             </div>
           </div>
         </div>
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-1.5 flex-wrap justify-end">
           <button
             onClick={shareToX}
-            className="rounded-xl px-3 py-2 text-xs font-semibold transition-opacity hover:opacity-70"
+            className="rounded-xl px-2.5 py-2 text-xs font-semibold transition-opacity hover:opacity-70"
             style={{ background: '#000', color: '#fff', boxShadow: 'var(--shadow-warm-sm)' }}
             title="Xでシェア"
           >
-            𝕏 シェア
+            𝕏
+          </button>
+          <button
+            onClick={shareToLine}
+            className="rounded-xl px-2.5 py-2 text-xs font-semibold transition-opacity hover:opacity-70"
+            style={{ background: '#06c755', color: '#fff', boxShadow: 'var(--shadow-warm-sm)' }}
+            title="LINEでシェア"
+          >
+            💬 LINE
+          </button>
+          <button
+            onClick={copyShareLink}
+            className="rounded-xl px-2.5 py-2 text-xs font-semibold transition-all"
+            style={{
+              background: copied ? '#22c55e' : 'rgba(255,255,255,0.85)',
+              color:      copied ? '#fff'    : 'var(--color-brown)',
+              boxShadow:  'var(--shadow-warm-sm)',
+            }}
+            title="リンクコピー"
+          >
+            {copied ? '✓ コピー済' : '🔗 コピー'}
           </button>
           <button
             onClick={handleSave}
             disabled={isSaving}
-            className="rounded-xl px-3 py-2 text-xs font-semibold transition-opacity hover:opacity-70 disabled:opacity-50"
+            className="rounded-xl px-2.5 py-2 text-xs font-semibold transition-opacity hover:opacity-70 disabled:opacity-50"
             style={{ background: subjectColor.border, color: '#fff', boxShadow: 'var(--shadow-warm-sm)' }}
           >
             {isSaving ? '⏳ 保存中…' : '💾 保存'}
           </button>
           <button
             onClick={toggleFullscreen}
-            className="rounded-xl px-3 py-2 text-xs font-semibold transition-opacity hover:opacity-70"
+            className="rounded-xl px-2.5 py-2 text-xs font-semibold transition-opacity hover:opacity-70"
             style={{ background: 'rgba(255,255,255,0.85)', color: 'var(--color-brown)', boxShadow: 'var(--shadow-warm-sm)' }}
           >
             {isFs ? '⊠ 閉じる' : '⛶ 全画面'}
           </button>
           <button
             onClick={onReset}
-            className="rounded-xl px-3 py-2 text-xs font-semibold transition-opacity hover:opacity-70"
+            className="rounded-xl px-2.5 py-2 text-xs font-semibold transition-opacity hover:opacity-70"
             style={{ background: 'rgba(255,255,255,0.85)', color: 'var(--color-brown-light)', boxShadow: 'var(--shadow-warm-sm)' }}
           >
             ✕ 閉じる

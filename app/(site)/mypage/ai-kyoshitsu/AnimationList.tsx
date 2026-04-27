@@ -55,6 +55,7 @@ function PreviewModal({ item, onClose }: { item: AnimationItem; onClose: () => v
   const [iframeHeight, setIframeHeight] = useState(560);
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [isSaving,     setIsSaving]     = useState(false);
+  const [copied,       setCopied]       = useState(false);
   const iframeRef = useRef<HTMLIFrameElement>(null);
   const wrapRef   = useRef<HTMLDivElement>(null);
   const col = SUBJECT_COLOR[item.subject] ?? SUBJECT_COLOR.science;
@@ -99,6 +100,30 @@ function PreviewModal({ item, onClose }: { item: AnimationItem; onClose: () => v
     window.open(url, '_blank', 'noopener,noreferrer,width=600,height=500');
   }
 
+  function shareToLine() {
+    const shareUrl = `${window.location.origin}/share/${item.id}`;
+    const url = `https://line.me/R/msg/text/?${encodeURIComponent(`「${item.theme}」のアニメーション解説 ${shareUrl}`)}`;
+    window.open(url, '_blank', 'noopener,noreferrer');
+  }
+
+  async function copyShareLink() {
+    const shareUrl = `${window.location.origin}/share/${item.id}`;
+    try {
+      await navigator.clipboard.writeText(shareUrl);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    } catch {
+      const input = document.createElement('input');
+      input.value = shareUrl;
+      document.body.appendChild(input);
+      input.select();
+      document.execCommand('copy');
+      document.body.removeChild(input);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    }
+  }
+
   return (
     <div
       className="fixed inset-0 z-50 flex items-start justify-center overflow-y-auto"
@@ -128,25 +153,42 @@ function PreviewModal({ item, onClose }: { item: AnimationItem; onClose: () => v
               </div>
             </div>
           </div>
-          <div className="flex items-center gap-2 shrink-0">
+          <div className="flex items-center gap-1.5 shrink-0 flex-wrap justify-end">
             <button onClick={shareToX}
-              className="rounded-full px-4 text-sm font-semibold"
+              className="rounded-full px-3 text-xs font-semibold"
               style={{ minHeight: 36, background: '#000', color: '#fff' }}
               title="Xでシェア">
-              𝕏 シェア
+              𝕏
+            </button>
+            <button onClick={shareToLine}
+              className="rounded-full px-3 text-xs font-semibold"
+              style={{ minHeight: 36, background: '#06c755', color: '#fff' }}
+              title="LINEでシェア">
+              💬 LINE
+            </button>
+            <button onClick={copyShareLink}
+              className="rounded-full px-3 text-xs font-semibold transition-all"
+              style={{
+                minHeight: 36,
+                background: copied ? '#22c55e' : 'rgba(255,255,255,0.8)',
+                color:      copied ? '#fff'    : 'var(--color-brown)',
+                border:     copied ? 'none'    : '1px solid var(--color-beige-dark)',
+              }}
+              title="リンクコピー">
+              {copied ? '✓ コピー済' : '🔗 コピー'}
             </button>
             <button onClick={handleSave} disabled={isSaving}
-              className="rounded-full px-4 text-sm font-semibold disabled:opacity-50"
+              className="rounded-full px-3 text-xs font-semibold disabled:opacity-50"
               style={{ minHeight: 36, background: col.border, color: '#fff' }}>
               {isSaving ? '⏳ 保存中…' : '💾 保存'}
             </button>
             <button onClick={handleFullscreen}
-              className="rounded-full px-4 text-sm font-semibold"
+              className="rounded-full px-3 text-xs font-semibold"
               style={{ minHeight: 36, background: 'rgba(255,255,255,0.8)', color: 'var(--color-brown)', border: '1px solid var(--color-beige-dark)' }}>
               {isFullscreen ? '⊠ 戻る' : '⛶ 全画面'}
             </button>
             <button onClick={onClose}
-              className="rounded-full px-4 text-sm font-semibold"
+              className="rounded-full px-3 text-xs font-semibold"
               style={{ minHeight: 36, background: 'rgba(255,255,255,0.8)', color: 'var(--color-brown)', border: '1px solid var(--color-beige-dark)' }}>
               ✕ 閉じる
             </button>
