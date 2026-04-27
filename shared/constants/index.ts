@@ -3,7 +3,7 @@
  * familyai.jp — アプリ全体で使う定数（pure TypeScript / iOS 移植対応）
  */
 
-import type { ContentCategory, DifficultyLevel } from '../types';
+import type { ContentCategory, DifficultyLevel, AiKyoshitsuConfig } from '../types';
 
 // ─── サイトメタ ────────────────────────────────────────────────
 export const SITE = {
@@ -22,6 +22,25 @@ export const MAX_GENERATED_HTML_BYTES = 1_048_576;
 
 /** ユーザー入力テーマの最大文字数（zodスキーマと共通使用）。 */
 export const MAX_ANIMATION_PROMPT = 500;
+
+/**
+ * うごくAI教室パイプラインのデフォルト設定（フォールバック値）。
+ *
+ * `lib/config/ai-config.ts:getAiConfig()` の最下層レイヤーとして利用される。
+ * env / DB から値が来ない場合は必ずこの値が使われるため、
+ * 「ハードコードのまま動く保証値」となる。
+ *
+ * 変更時は値の安全性（Vercel 60秒制限内に収まるか等）を必ず確認すること。
+ */
+export const AI_KYOSHITSU_DEFAULTS: AiKyoshitsuConfig = {
+  stage1Model:       'google/gemini-2.0-flash-001',
+  stage2Model:       'google/gemini-2.0-flash-001',
+  stage1TimeoutMs:   8_000,
+  stage2TimeoutMs:   50_000,
+  stage2MaxTokens:   6_000,
+  stage2Temperature: 0.5,
+  chatModel:         'qwen/qwen3-14b',
+};
 
 /** カテゴリの表示ラベル */
 export const CATEGORY_LABEL: Record<ContentCategory, string> = {

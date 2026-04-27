@@ -39,8 +39,10 @@ import { Redis }                      from '@upstash/redis';
 import { auth }                       from '@/lib/auth';
 import { verifyCsrf }                 from '@/lib/csrf';
 import { completeOpenRouter, completeOpenRouterWithUsage } from '@/lib/ai/providers/openrouter';
-import { MODEL_ROUTER, MAX_GENERATED_HTML_BYTES, MAX_ANIMATION_PROMPT } from '@/shared';
+import { MAX_GENERATED_HTML_BYTES, MAX_ANIMATION_PROMPT } from '@/shared';
 import { createAnimation }            from '@/lib/repositories/animations';
+import { getAiConfig }                from '@/lib/config/ai-config';
+import type { AiKyoshitsuConfig }     from '@/shared/types';
 
 export const runtime  = 'nodejs';
 export const maxDuration = 60;
@@ -203,7 +205,12 @@ function extractHtml(raw: string): string {
 }
 
 // ── Stage 1 実行 ──────────────────────────────────────────────
-async function runStage1(prompt: string, grade: string, subject: string): Promise<Stage1Result> {
+async function runStage1(
+  prompt: string,
+  grade: string,
+  subject: string,
+  cfg: AiKyoshitsuConfig,
+): Promise<Stage1Result> {
   const gradeLabel   = GRADE_LABEL[grade]   ?? grade;
   const subjectLabel = SUBJECT_LABEL[subject] ?? subject;
 
@@ -219,14 +226,14 @@ async function runStage1(prompt: string, grade: string, subject: string): Promis
 科目: ${subjectLabel}
 ユーザー指示: ${prompt}`;
 
-  // Stage 1 は最大8秒でタイムアウト（JSON生成は本来速い・Stage2に時間を譲るため）
+  // Stage 1 タイムアウト（cfg 経由・運用中に env で調整可能）
   const controller = new AbortController();
-  const timer = setTimeout(() => controller.abort(), 8000);
+  const timer = setTimeout(() => controller.abort(), cfg.stage1TimeoutMs);
 
   let rawText: string;
   try {
     rawText = await completeOpenRouter(
-      MODEL_ROUTER['stage1-fast'],
+      cfg.stage1Model,
       [
         { role: 'system', content: systemPrompt },
         { role: 'user',   content: userMessage  },
@@ -265,7 +272,10 @@ async function runStage1(prompt: string, grade: string, subject: string): Promis
 }
 
 // ── Stage 2 実行（構造化JSON入力 + プロンプトキャッシュ） ──────
-async function runStage2Structured(stage1Data: Stage1Success): Promise<string> {
+async function runStage2Structured(
+  stage1Data: Stage1Success,
+  cfg:        AiKyoshitsuConfig,
+): Promise<string> {
   const systemPrompt = readPromptFile(STAGE2_PROMPT_PATH);
   const userMessage  = `以下のJSON仕様に従って、教育用HTMLファイルを1つ生成してください。
 
@@ -276,16 +286,16 @@ async function runStage2Structured(stage1Data: Stage1Success): Promise<string> {
 ${JSON.stringify(stage1Data, null, 2)}
 \`\`\``;
 
-  // Stage 2 タイムアウト: Vercel 60秒制限から Stage1(8s) を引いた残り50秒
+  // Stage 2 タイムアウト・モデル・パラメータは cfg 経由で運用中に調整可能
   const controller = new AbortController();
-  const timer = setTimeout(() => controller.abort(), 50000);
+  const timer = setTimeout(() => controller.abort(), cfg.stage2TimeoutMs);
   const startedAt = Date.now();
 
   let result;
   try {
     // プロンプトキャッシュは Anthropic 用。Gemini では無視されるが互換性のため形式維持
     result = await completeOpenRouterWithUsage(
-      MODEL_ROUTER['stage2-html'],
+      cfg.stage2Model,
       [
         {
           role: 'system',
@@ -295,9 +305,7 @@ ${JSON.stringify(stage1Data, null, 2)}
         },
         { role: 'user', content: userMessage },
       ],
-      // maxTokens: 6000 - 約30秒で生成完了する現実的なサイズ（HTML 約4500文字）
-      // temperature: 0.5 - スケルトン回避＋確定的な出力
-      { maxTokens: 6000, temperature: 0.5, signal: controller.signal },
+      { maxTokens: cfg.stage2MaxTokens, temperature: cfg.stage2Temperature, signal: controller.signal },
     );
   } catch (err) {
     const elapsed = Date.now() - startedAt;
@@ -331,7 +339,12 @@ ${JSON.stringify(stage1Data, null, 2)}
 }
 
 // ── Stage 2 フォールバック（legacy_unified.md 使用） ──────────
-async function runStage2Legacy(prompt: string, grade: string, subject: string): Promise<string> {
+async function runStage2Legacy(
+  prompt: string,
+  grade: string,
+  subject: string,
+  cfg: AiKyoshitsuConfig,
+): Promise<string> {
   const template     = readPromptFile(LEGACY_PROMPT_PATH);
   const gradeLabel   = GRADE_LABEL[grade]   ?? grade;
   const subjectLabel = SUBJECT_LABEL[subject] ?? subject;
@@ -340,14 +353,14 @@ async function runStage2Legacy(prompt: string, grade: string, subject: string): 
     .replace(/\{GRADE\}/g,   gradeLabel)
     .replace(/\{SUBJECT\}/g, subjectLabel);
 
-  // タイムアウト 50秒（Vercel 60秒制限から Stage1 8秒を引いた値）
+  // タイムアウト・モデル・パラメータは cfg 経由
   const controller = new AbortController();
-  const timer = setTimeout(() => controller.abort(), 50000);
+  const timer = setTimeout(() => controller.abort(), cfg.stage2TimeoutMs);
   try {
     return await completeOpenRouter(
-      MODEL_ROUTER['stage2-html'],
+      cfg.stage2Model,
       [{ role: 'user', content: systemPrompt }],
-      { maxTokens: 6000, temperature: 0.5, signal: controller.signal },
+      { maxTokens: cfg.stage2MaxTokens, temperature: cfg.stage2Temperature, signal: controller.signal },
     );
   } finally {
     clearTimeout(timer);
@@ -421,8 +434,11 @@ export async function POST(req: NextRequest) {
     }
   }
 
+  // 6. ランタイム設定取得（env / DB / DEFAULTS のレイヤー解決）
+  const cfg = await getAiConfig();
+
   // 6. Stage 1 実行
-  const stage1 = await runStage1(prompt, grade, subject);
+  const stage1 = await runStage1(prompt, grade, subject, cfg);
 
   // 6a. エラー: 学習内容として不適切（科目に無関係・難易度不一致など）
   if (stage1.kind === 'error') {
@@ -464,11 +480,11 @@ export async function POST(req: NextRequest) {
   try {
     if (stage1.kind === 'success') {
       // 正常パス: 構造化JSONで生成（失敗したら即エラー返却）
-      rawHtml = await runStage2Structured(stage1.data);
+      rawHtml = await runStage2Structured(stage1.data, cfg);
     } else {
       // Stage 1 が parse_failed の場合: legacy で生成
       console.warn('[generate-animation] Stage1失敗 → legacyフォールバック');
-      rawHtml = await runStage2Legacy(prompt, grade, subject);
+      rawHtml = await runStage2Legacy(prompt, grade, subject, cfg);
     }
   } catch (err) {
     console.error('[generate-animation] Stage2 失敗:', {

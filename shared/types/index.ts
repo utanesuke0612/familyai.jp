@@ -97,6 +97,32 @@ export interface Animation extends AnimationSummary {
   userId:      string;
 }
 
+/**
+ * うごくAI教室パイプラインのランタイム設定。
+ *
+ * `lib/config/ai-config.ts:getAiConfig()` から取得する。
+ * Phase 1（現行）: コードのデフォルト値 < env オーバーライド
+ * Phase 2（将来）: DB レイヤーが間に入る予定（呼び出し側に変更不要）
+ *
+ * iOS / Android 側でも同じ型で扱えるよう shared/types に置く。
+ */
+export interface AiKyoshitsuConfig {
+  /** Stage 1（テーマ詳細化）モデル ID */
+  stage1Model:        string;
+  /** Stage 2（HTML生成）モデル ID */
+  stage2Model:        string;
+  /** Stage 1 の最大実行時間（ms） */
+  stage1TimeoutMs:    number;
+  /** Stage 2 の最大実行時間（ms） */
+  stage2TimeoutMs:    number;
+  /** Stage 2 の最大出力トークン数 */
+  stage2MaxTokens:    number;
+  /** Stage 2 の生成 temperature（0〜1） */
+  stage2Temperature:  number;
+  /** AIチャット既定モデル ID */
+  chatModel:          string;
+}
+
 // ─── ユーザー関連 ──────────────────────────────────────────────
 /** 認証済みユーザーのプロファイル */
 export interface UserProfile {
