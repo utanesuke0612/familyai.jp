@@ -167,7 +167,8 @@ export default async function MyPage() {
 
       {/* ───── コンテンツグリッド ───── */}
       <section className="px-4 sm:px-6 py-6 sm:py-10">
-        <div className="mx-auto grid max-w-5xl gap-4 sm:gap-6 md:grid-cols-2">
+        {/* 学習カード:AI利用状況カード = 1:2 比率（右側のプラン比較表に余裕を持たせる） */}
+        <div className="mx-auto grid max-w-5xl gap-4 sm:gap-6 md:grid-cols-[1fr_2fr]">
           {/* 学習カード */}
           <article
             className="rounded-[24px] sm:rounded-[28px] p-5 sm:p-6"
