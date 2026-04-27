@@ -238,7 +238,7 @@ export default async function MyPage() {
             </ul>
           </article>
 
-          {/* AI利用状況カード */}
+          {/* AI利用状況カード（プラン比較表） */}
           <article
             className="rounded-[28px] p-6"
             style={{
@@ -246,65 +246,121 @@ export default async function MyPage() {
               boxShadow: 'var(--shadow-warm-sm)',
             }}
           >
-            <div className="flex items-center gap-2 mb-3">
+            <div className="flex items-center gap-2 mb-2">
               <span className="text-2xl" aria-hidden="true">💞</span>
               <h2 className="font-display text-xl font-bold" style={{ color: 'var(--color-brown)' }}>
                 AI 利用状況
               </h2>
             </div>
+            <p className="text-sm mb-4" style={{ color: 'var(--color-brown-light)' }}>
+              プランごとの機能と利用回数の比較です。
+              <span className="font-semibold" style={{ color: 'var(--color-orange)' }}>
+                （現在: {quota.label}）
+              </span>
+            </p>
 
-            <div
-              className="rounded-2xl p-4"
-              style={{
-                background: 'var(--color-cream)',
-                border: '1px solid var(--color-beige-dark)',
-              }}
-            >
-              <p className="text-sm" style={{ color: 'var(--color-brown-light)' }}>
-                現在のプラン
-              </p>
-              <p className="mt-1 text-lg font-bold" style={{ color: 'var(--color-brown)' }}>
-                {quota.label}
-              </p>
-              <p className="mt-3 text-sm" style={{ color: 'var(--color-brown)' }}>
-                1日あたり <strong>{quota.limit}回</strong> までAIチャット・解説が使えます。
-              </p>
-              <p className="mt-2 text-xs" style={{ color: 'var(--color-brown-light)' }}>
-                ※ 残り回数の表示は準備中です
-              </p>
+            {/* 横スクロール可能なテーブル */}
+            <div className="overflow-x-auto -mx-2 sm:mx-0">
+              <table className="w-full text-sm" style={{ minWidth: 480 }}>
+                <thead>
+                  <tr style={{ borderBottom: '2px solid var(--color-beige-dark)' }}>
+                    <th
+                      className="text-left py-2 px-2 sm:px-3 font-semibold"
+                      style={{ color: 'var(--color-brown)' }}
+                    >
+                      機能
+                    </th>
+                    <PlanHeader title="未ログイン" emoji="👋" current={plan === 'anon'} />
+                    <PlanHeader title="無料会員"   emoji="🌱" current={plan === 'free'} />
+                    <PlanHeader title="プレミアム" emoji="👑" current={plan === 'premium'} />
+                  </tr>
+                </thead>
+                <tbody>
+                  <FeatureRow
+                    feature="🎬 AI教室（アニメ生成）"
+                    desc="理科・算数・社会のアニメをAIで生成"
+                    anon="利用不可"
+                    free="3回/日"
+                    premium="100回/日"
+                    plan={plan}
+                  />
+                  <FeatureRow
+                    feature="💬 AIチャット・解説"
+                    desc="質問への回答・記事の解説"
+                    anon="10回/日"
+                    free="30回/日"
+                    premium="200回/日"
+                    plan={plan}
+                  />
+                  <FeatureRow
+                    feature="📂 履歴から再閲覧"
+                    desc="生成済みアニメを無料で見直し"
+                    anon="利用不可"
+                    free="無制限"
+                    premium="無制限"
+                    plan={plan}
+                  />
+                  <FeatureRow
+                    feature="📤 友達にシェア"
+                    desc="X・LINEで動画リンク共有"
+                    anon="利用不可"
+                    free="可"
+                    premium="可"
+                    plan={plan}
+                  />
+                  <FeatureRow
+                    feature="📌 AIメモ帳"
+                    desc="AIとのやりとりを保存"
+                    anon="利用不可"
+                    free="無制限"
+                    premium="無制限"
+                    plan={plan}
+                  />
+                  <FeatureRow
+                    feature="📚 単語ブックマーク"
+                    desc="VOA英語の単語を記録"
+                    anon="利用不可"
+                    free="無制限"
+                    premium="無制限"
+                    plan={plan}
+                  />
+                </tbody>
+              </table>
             </div>
 
+            {/* CTA */}
             {plan === 'anon' && (
               <Link
                 href="/auth/register"
-                className="mt-4 inline-flex w-full items-center justify-center rounded-full px-4 text-sm font-semibold"
+                className="mt-5 inline-flex w-full items-center justify-center rounded-full px-4 text-sm font-bold"
                 style={{
                   minHeight: '44px',
                   background: 'var(--color-orange)',
                   color: 'white',
+                  boxShadow: '0 2px 8px rgba(255,140,66,0.35)',
                 }}
               >
-                無料で登録して 30回/日 に拡大 →
+                🌱 無料で登録 → AI教室・履歴・メモ帳が使えます
               </Link>
             )}
             {plan === 'free' && (
               <div
-                className="mt-4 rounded-2xl p-3 text-sm leading-relaxed"
+                className="mt-5 rounded-2xl p-4 text-sm leading-relaxed"
                 style={{
-                  background: 'var(--color-peach-light, var(--color-beige))',
-                  color: 'var(--color-brown)',
-                  border: '1px solid var(--color-beige-dark)',
+                  background: 'linear-gradient(135deg, #fff8e1, #fff3cd)',
+                  border:     '1.5px solid #ffd54f',
+                  color:      '#7a5000',
                 }}
               >
-                👑 <strong>プレミアムプラン</strong>なら 200回/日 に。<br />
-                <span className="text-xs" style={{ color: 'var(--color-brown-light)' }}>
-                  プレミアム機能は準備中です。
-                </span>
+                <p className="font-bold">👑 プレミアムプランで AI教室を 100回/日に拡大！</p>
+                <p className="mt-1 text-xs" style={{ color: '#a07830' }}>
+                  プレミアム機能は準備中です。リリース時にお知らせします。
+                </p>
               </div>
             )}
             {plan === 'premium' && (
-              <p className="mt-4 text-sm" style={{ color: 'var(--color-brown-light)' }}>
-                プレミアムプランをご利用いただきありがとうございます。
+              <p className="mt-5 text-center text-sm font-semibold" style={{ color: 'var(--color-brown)' }}>
+                👑 プレミアムプランをご利用いただきありがとうございます！
               </p>
             )}
           </article>
@@ -312,5 +368,73 @@ export default async function MyPage() {
         </div>
       </section>
     </main>
+  );
+}
+
+/* ─────────────────────────────────────────────────────
+   プラン比較テーブル用サブコンポーネント
+───────────────────────────────────────────────────── */
+
+type PlanKey = 'anon' | 'free' | 'premium';
+
+function PlanHeader({ title, emoji, current }: { title: string; emoji: string; current: boolean }) {
+  return (
+    <th
+      className="py-2 px-2 sm:px-3 text-center font-semibold whitespace-nowrap"
+      style={{
+        background: current ? 'var(--color-orange)' : 'transparent',
+        color:      current ? '#fff'                 : 'var(--color-brown)',
+        borderRadius: current ? '12px 12px 0 0'      : 0,
+      }}
+    >
+      <div className="flex flex-col items-center gap-0.5">
+        <span className="text-base">{emoji}</span>
+        <span className="text-xs sm:text-sm">{title}</span>
+        {current && <span className="text-[10px] font-normal opacity-90">（あなた）</span>}
+      </div>
+    </th>
+  );
+}
+
+function FeatureRow({
+  feature, desc, anon, free, premium, plan,
+}: {
+  feature: string;
+  desc:    string;
+  anon:    string;
+  free:    string;
+  premium: string;
+  plan:    PlanKey;
+}) {
+  return (
+    <tr style={{ borderBottom: '1px solid var(--color-beige)' }}>
+      <td className="py-3 px-2 sm:px-3" style={{ verticalAlign: 'top' }}>
+        <div className="font-semibold text-xs sm:text-sm" style={{ color: 'var(--color-brown)' }}>
+          {feature}
+        </div>
+        <div className="text-[11px] mt-0.5" style={{ color: 'var(--color-brown-light)' }}>
+          {desc}
+        </div>
+      </td>
+      <CellValue value={anon}    isCurrent={plan === 'anon'} />
+      <CellValue value={free}    isCurrent={plan === 'free'} />
+      <CellValue value={premium} isCurrent={plan === 'premium'} />
+    </tr>
+  );
+}
+
+function CellValue({ value, isCurrent }: { value: string; isCurrent: boolean }) {
+  const isDisabled = value === '利用不可';
+  return (
+    <td
+      className="py-3 px-2 sm:px-3 text-center text-xs sm:text-sm"
+      style={{
+        background: isCurrent ? 'rgba(255,140,66,0.08)' : 'transparent',
+        color:      isDisabled ? 'var(--color-brown-muted)' : 'var(--color-brown)',
+        fontWeight: isCurrent && !isDisabled ? 700 : 500,
+      }}
+    >
+      {isDisabled ? <span style={{ opacity: 0.6 }}>✕ {value}</span> : value}
+    </td>
   );
 }
