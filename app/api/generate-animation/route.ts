@@ -277,10 +277,14 @@ async function runStage2Structured(
   cfg:        AiKyoshitsuConfig,
 ): Promise<string> {
   const systemPrompt = readPromptFile(STAGE2_PROMPT_PATH);
-  const userMessage  = `以下のJSON仕様に従って、教育用HTMLファイルを1つ生成してください。
+  const userMessage  = `以下のJSON仕様から教育用HTMLを生成してください。
 
-⚠️ 最重要: keywordsの全項目、teaching_flowの全ステップ、quizの5問すべてを完全に展開してください。
-コメントだけのスケルトンは絶対に出力しないでください。
+⚠️ 出力形式（厳守）:
+- あなたの応答は HTML コードのみ。1文字目から <!DOCTYPE html> で始める
+- 「了解しました」「生成します」「よろしいですか？」等の確認文・前置きは禁止
+- markdown のコードブロック記号（\`\`\`html）は不要
+- keywordsの全項目、teaching_flowの全ステップ、quizの5問すべてを完全に展開
+- コメントだけのスケルトンは絶対に出力しない
 
 \`\`\`json
 ${JSON.stringify(stage1Data, null, 2)}
