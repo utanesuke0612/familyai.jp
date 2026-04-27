@@ -219,9 +219,9 @@ async function runStage1(prompt: string, grade: string, subject: string): Promis
 科目: ${subjectLabel}
 ユーザー指示: ${prompt}`;
 
-  // Stage 1 は最大15秒でタイムアウト（Vercel 60秒制限内に Stage2 と合わせて収めるため）
+  // Stage 1 は最大8秒でタイムアウト（JSON生成は本来速い・Stage2に時間を譲るため）
   const controller = new AbortController();
-  const timer = setTimeout(() => controller.abort(), 15000);
+  const timer = setTimeout(() => controller.abort(), 8000);
 
   let rawText: string;
   try {
@@ -276,9 +276,9 @@ async function runStage2Structured(stage1Data: Stage1Success): Promise<string> {
 ${JSON.stringify(stage1Data, null, 2)}
 \`\`\``;
 
-  // Stage 2 タイムアウト: Vercel 60秒制限から Stage1(15s) を引いた残り40秒以内
+  // Stage 2 タイムアウト: Vercel 60秒制限から Stage1(8s) を引いた残り50秒
   const controller = new AbortController();
-  const timer = setTimeout(() => controller.abort(), 40000);
+  const timer = setTimeout(() => controller.abort(), 50000);
   const startedAt = Date.now();
 
   let result;
@@ -295,9 +295,9 @@ ${JSON.stringify(stage1Data, null, 2)}
         },
         { role: 'user', content: userMessage },
       ],
-      // maxTokens: 8000 - Vercel 60秒制限内に収まる現実的なサイズ
+      // maxTokens: 6000 - 約30秒で生成完了する現実的なサイズ（HTML 約4500文字）
       // temperature: 0.5 - スケルトン回避＋確定的な出力
-      { maxTokens: 8000, temperature: 0.5, signal: controller.signal },
+      { maxTokens: 6000, temperature: 0.5, signal: controller.signal },
     );
   } catch (err) {
     const elapsed = Date.now() - startedAt;
@@ -340,14 +340,14 @@ async function runStage2Legacy(prompt: string, grade: string, subject: string): 
     .replace(/\{GRADE\}/g,   gradeLabel)
     .replace(/\{SUBJECT\}/g, subjectLabel);
 
-  // タイムアウト 40秒（Vercel 60秒制限から Stage1 と buffer を引いた値）
+  // タイムアウト 50秒（Vercel 60秒制限から Stage1 8秒を引いた値）
   const controller = new AbortController();
-  const timer = setTimeout(() => controller.abort(), 40000);
+  const timer = setTimeout(() => controller.abort(), 50000);
   try {
     return await completeOpenRouter(
       MODEL_ROUTER['stage2-html'],
       [{ role: 'user', content: systemPrompt }],
-      { maxTokens: 8000, temperature: 0.5, signal: controller.signal },
+      { maxTokens: 6000, temperature: 0.5, signal: controller.signal },
     );
   } finally {
     clearTimeout(timer);
