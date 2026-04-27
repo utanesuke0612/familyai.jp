@@ -85,16 +85,13 @@ function getClientIp(req: NextRequest): string {
   );
 }
 
-// ── プロンプトテンプレート読み込み（教科別） ──────────────────
-const SUBJECT_TEMPLATE: Record<string, string> = {
-  science: 'ai-kyoshitsu-prompt-science.md',
-  math:    'ai-kyoshitsu-prompt-math.md',
-  social:  'ai-kyoshitsu-prompt-social.md',
-};
+// ── プロンプトテンプレート読み込み（統合・全教科共通） ──────────
+// 旧: 教科別3ファイル（science/math/social）→ 新: 単一の統合プロンプト
+// 統合プロンプト内で {SUBJECT} 値ごとに教科別セクションを参照する設計
+const PROMPT_TEMPLATE_PATH = ['skills', 'ai-kyoushitsu-prompt', 'legacy_unified.md'];
 
 function buildPrompt(theme: string, grade: string, subject: string): string {
-  const fileName     = SUBJECT_TEMPLATE[subject] ?? 'ai-kyoshitsu-prompt-science.md';
-  const templatePath = join(process.cwd(), 'content', fileName);
+  const templatePath = join(process.cwd(), ...PROMPT_TEMPLATE_PATH);
   const template     = readFileSync(templatePath, 'utf-8');
   const gradeLabel   = GRADE_LABEL[grade]   ?? grade;
   const subjectLabel = SUBJECT_LABEL[subject] ?? subject;
@@ -136,9 +133,9 @@ async function enrichThemeWithAI(theme: string, grade: string, subject: string):
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), 8000);
   try {
-    // Stage 1 は軽量・無料モデル（qwen3-14b:free）で高速処理
+    // Stage 1: Gemini 2.0 Flash（高速・低コスト・JSON出力得意）
     const spec = await completeOpenRouter(
-      'qwen/qwen3-14b:free',
+      MODEL_ROUTER['stage1-fast'],
       [{ role: 'user', content: enrichPrompt }],
       { maxTokens: 400, temperature: 0.3, signal: controller.signal },
     );
@@ -244,11 +241,11 @@ export async function POST(req: NextRequest) {
     );
   }
 
-  // 8. Stage 2: OpenRouter でHTML生成（html-gen = Gemini 2.5 Flash: 高速・高品質・低コスト）
+  // 8. Stage 2: OpenRouter でHTML生成（stage2-html = Claude Haiku 3.5: HTML品質高・指示追従性◎）
   let rawHtml: string;
   try {
     rawHtml = await completeOpenRouter(
-      MODEL_ROUTER['html-gen'],
+      MODEL_ROUTER['stage2-html'],
       [{ role: 'user', content: systemPrompt }],
       { maxTokens: 8000, temperature: 0.7 },
     );

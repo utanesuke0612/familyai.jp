@@ -52,6 +52,8 @@ export const DIFFICULTY_COLOR: Record<DifficultyLevel, string> = {
  * text-simple    : 汎用チャット・要約など軽量タスク
  * text-quality   : 語学・高品質な長文応答
  * math-reasoning : 数学・論理・コーディング
+ * stage1-fast    : AI教室パイプライン Stage1（テーマ詳細化・JSON設計）
+ * stage2-html    : AI教室パイプライン Stage2（HTML生成）
  * transcribe     : 音声→テキスト
  * image-gen      : テキスト→画像
  * tts-japanese   : テキスト→日本語音声
@@ -61,6 +63,8 @@ export const MODEL_ROUTER = {
   'text-quality':   'qwen/qwen3-235b-a22b-2507',
   'math-reasoning': 'deepseek/deepseek-r1-0528',
   'html-gen':       'google/gemini-2.5-flash',            // HTML/CSS/JS生成向け（高速・高品質）
+  'stage1-fast':    'google/gemini-2.0-flash-001',        // AI教室Stage1: 高速・低コスト・JSON出力得意
+  'stage2-html':    'anthropic/claude-3.5-haiku',         // AI教室Stage2: HTML品質高・指示追従性◎
   'transcribe':     'openai/whisper-large-v3',
   'image-gen':      'black-forest-labs/flux-1.1-pro',
   'tts-japanese':   'openai/gpt-4o-mini-tts-2025-12-15',
