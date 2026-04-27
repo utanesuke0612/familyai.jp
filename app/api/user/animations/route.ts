@@ -107,7 +107,15 @@ export async function DELETE(req: NextRequest) {
       );
     }
 
-    await deleteAnimation(id, session.user.id);
+    // 戻り値（boolean）を検証: race condition で 0 件削除になっていないかを確認
+    const deleted = await deleteAnimation(id, session.user.id);
+    if (!deleted) {
+      // 所有者チェック後の race condition: 同時刻に他経路で削除済み
+      return NextResponse.json(
+        { ok: false, error: '削除に失敗しました。' },
+        { status: 404 },
+      );
+    }
     return NextResponse.json({ ok: true });
   } catch (err) {
     console.error('[DELETE /api/user/animations] DB エラー:', err);
