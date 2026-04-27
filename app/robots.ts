@@ -23,6 +23,8 @@ export default function robots(): MetadataRoute.Robots {
           '/api/',         // API エンドポイントは除外（/api/og は上の allow で許可）
           '/dashboard/',   // ユーザーダッシュボード（将来）
           '/auth/',        // 認証ページ
+          '/mypage/',      // マイページ（履歴など、ログインユーザー個人領域）
+          '/share/',       // シェアリンク（URLを知る人のみ閲覧可・検索結果に出さない）
           '/_next/',       // Next.js 内部
         ],
       },

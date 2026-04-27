@@ -92,6 +92,13 @@ function PreviewModal({ item, onClose }: { item: AnimationItem; onClose: () => v
     finally { setIsSaving(false); }
   }
 
+  function shareToX() {
+    const shareUrl = `${window.location.origin}/share/${item.id}`;
+    const text = `「${item.theme}」をfamilyai.jp AI教室で学んでみた！🎬`;
+    const url = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(shareUrl)}&hashtags=familyai,AI教室`;
+    window.open(url, '_blank', 'noopener,noreferrer,width=600,height=500');
+  }
+
   return (
     <div
       className="fixed inset-0 z-50 flex items-start justify-center overflow-y-auto"
@@ -122,6 +129,12 @@ function PreviewModal({ item, onClose }: { item: AnimationItem; onClose: () => v
             </div>
           </div>
           <div className="flex items-center gap-2 shrink-0">
+            <button onClick={shareToX}
+              className="rounded-full px-4 text-sm font-semibold"
+              style={{ minHeight: 36, background: '#000', color: '#fff' }}
+              title="Xでシェア">
+              𝕏 シェア
+            </button>
             <button onClick={handleSave} disabled={isSaving}
               className="rounded-full px-4 text-sm font-semibold disabled:opacity-50"
               style={{ minHeight: 36, background: col.border, color: '#fff' }}>

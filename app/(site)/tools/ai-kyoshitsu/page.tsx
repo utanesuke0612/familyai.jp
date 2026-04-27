@@ -564,6 +564,13 @@ function ResultPanel({
     finally { setIsSaving(false); }
   }
 
+  function shareToX() {
+    const shareUrl = `${window.location.origin}/share/${id}`;
+    const text = `「${themeLabel}」をfamilyai.jp AI教室で学んでみた！🎬`;
+    const url = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(shareUrl)}&hashtags=familyai,AI教室`;
+    window.open(url, '_blank', 'noopener,noreferrer,width=600,height=500');
+  }
+
   return (
     <div className="rounded-3xl overflow-hidden" style={{ boxShadow: 'var(--shadow-warm)', border: `2px solid ${subjectColor.border}44` }}>
       {/* ヘッダー */}
@@ -584,6 +591,14 @@ function ResultPanel({
           </div>
         </div>
         <div className="flex items-center gap-2">
+          <button
+            onClick={shareToX}
+            className="rounded-xl px-3 py-2 text-xs font-semibold transition-opacity hover:opacity-70"
+            style={{ background: '#000', color: '#fff', boxShadow: 'var(--shadow-warm-sm)' }}
+            title="Xでシェア"
+          >
+            𝕏 シェア
+          </button>
           <button
             onClick={handleSave}
             disabled={isSaving}

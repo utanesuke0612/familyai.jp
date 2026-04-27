@@ -6,28 +6,26 @@
  *
  * iframeのsrc属性に指定するエンドポイント。
  * DBからHTMLを取得してtext/htmlで返す。
- * 本人のみアクセス可能（セッションCookieで認証）。
+ *
+ * 【公開ポリシー】
+ * UUIDで指定されたアニメーションは認証なしで誰でも閲覧可能。
+ * UUIDは128bitエントロピーで実質推測不可能なため、
+ * シェアURLを知る人のみがアクセスできる「秘密のリンク」方式。
+ * （Google Docsのリンク共有と同じ仕組み）
  */
 
 import { NextRequest, NextResponse } from 'next/server';
-import { auth }                       from '@/lib/auth';
 import { getAnimationById }           from '@/lib/repositories/animations';
 
 export const runtime = 'nodejs';
 
 export async function GET(
-  req:     NextRequest,
+  _req:   NextRequest,
   { params }: { params: { id: string } },
 ) {
   const { id } = params;
 
-  // 1. 認証チェック
-  const session = await auth();
-  if (!session?.user?.id) {
-    return new NextResponse('ログインが必要です。', { status: 401 });
-  }
-
-  // 2. DBからHTMLを取得
+  // 1. DBからHTMLを取得
   let animation;
   try {
     animation = await getAnimationById(id);
@@ -36,25 +34,20 @@ export async function GET(
     return new NextResponse('サーバーエラーが発生しました。', { status: 500 });
   }
 
-  // 3. 存在チェック
+  // 2. 存在チェック
   if (!animation) {
     return new NextResponse('見つかりませんでした。', { status: 404 });
   }
 
-  // 4. 所有者チェック（他人のアニメーションは閲覧不可）
-  if (animation.userId !== session.user.id) {
-    return new NextResponse('アクセス権限がありません。', { status: 403 });
-  }
-
-  // 5. HTMLをそのまま返す
+  // 3. HTMLをそのまま返す（公開アクセス可・UUID知る人のみ）
   return new NextResponse(animation.htmlContent, {
     status: 200,
     headers: {
       'Content-Type':    'text/html; charset=utf-8',
       // Next.js デフォルトの DENY を SAMEORIGIN に上書きしてiframe表示を許可
       'X-Frame-Options': 'SAMEORIGIN',
-      // iframeのsandbox属性と組み合わせてセキュリティを確保
-      'Cache-Control':   'private, max-age=3600',
+      // 公開コンテンツ：CDNでもキャッシュ可能（同じUUIDは同じHTML）
+      'Cache-Control':   'public, max-age=3600, s-maxage=86400',
     },
   });
 }
