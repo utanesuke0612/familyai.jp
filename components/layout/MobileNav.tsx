@@ -3,12 +3,17 @@
 /**
  * components/layout/MobileNav.tsx
  * familyai.jp — モバイル用ドロワーナビゲーション
- * shadcn/ui Sheet コンポーネントを使用
+ *
+ * - ハンバーガー → 右側ドロワー
+ * - ナビリンク（ホーム・AI活用事例・AIツール・マイページ）
+ * - ユーザーアバター + 名前 + メール（ログイン時）
+ * - ログイン / ログアウトボタン
  */
 
 import { useState } from 'react';
 import Link from 'next/link';
 import { Menu, X } from 'lucide-react';
+import { useSession, signOut } from 'next-auth/react';
 
 const NAV_LINKS = [
   { href: '/', label: 'ホーム', emoji: '🏠' },
@@ -23,9 +28,14 @@ interface MobileNavProps {
 
 export function MobileNav({ onClose }: MobileNavProps) {
   const [open, setOpen] = useState(false);
+  const { data: session, status } = useSession();
 
   const handleOpen  = () => setOpen(true);
   const handleClose = () => { setOpen(false); onClose?.(); };
+  const handleSignOut = () => { setOpen(false); signOut({ callbackUrl: '/' }); };
+
+  const user    = session?.user;
+  const initial = (user?.name?.[0] ?? user?.email?.[0] ?? '?').toUpperCase();
 
   return (
     <>
@@ -84,6 +94,78 @@ export function MobileNav({ onClose }: MobileNavProps) {
           </button>
         </div>
 
+        {/* ── ユーザープロフィール / 未ログインCTA ── */}
+        {status === 'loading' ? (
+          // 読み込み中スケルトン
+          <div className="px-4 py-4 border-b flex items-center gap-3" style={{ borderColor: 'var(--color-beige-dark)' }}>
+            <div className="w-12 h-12 rounded-full animate-pulse" style={{ background: 'var(--color-beige-dark)' }} />
+            <div className="flex flex-col gap-2 flex-1">
+              <div className="h-3 w-3/4 rounded-full animate-pulse" style={{ background: 'var(--color-beige-dark)' }} />
+              <div className="h-3 w-1/2 rounded-full animate-pulse" style={{ background: 'var(--color-beige)' }} />
+            </div>
+          </div>
+        ) : user ? (
+          // ログイン中: プロフィールカード
+          <div
+            className="px-4 py-4 border-b flex items-center gap-3"
+            style={{ borderColor: 'var(--color-beige-dark)', background: 'rgba(255,255,255,0.5)' }}
+          >
+            <div
+              className="flex items-center justify-center rounded-full overflow-hidden shrink-0"
+              style={{
+                width: '48px',
+                height: '48px',
+                border: '2px solid white',
+                boxShadow: 'var(--shadow-warm-sm)',
+              }}
+            >
+              {user.image ? (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img src={user.image} alt={user.name ?? ''} width={48} height={48} className="object-cover w-full h-full" />
+              ) : (
+                <span
+                  className="flex items-center justify-center w-full h-full text-lg font-bold text-white"
+                  style={{ background: 'var(--color-orange)' }}
+                >
+                  {initial}
+                </span>
+              )}
+            </div>
+            <div className="flex flex-col min-w-0 flex-1">
+              <p className="font-semibold truncate text-sm" style={{ color: 'var(--color-brown)' }}>
+                {user.name ?? 'ユーザー'}
+              </p>
+              <p className="text-xs truncate" style={{ color: 'var(--color-brown-light)' }}>
+                {user.email}
+              </p>
+            </div>
+          </div>
+        ) : (
+          // 未ログイン: ログインCTA
+          <div
+            className="px-4 py-4 border-b flex flex-col gap-2"
+            style={{ borderColor: 'var(--color-beige-dark)' }}
+          >
+            <p className="text-xs" style={{ color: 'var(--color-brown-light)' }}>
+              ログインして全機能を利用しましょう
+            </p>
+            <Link
+              href="/auth/signin"
+              onClick={handleClose}
+              className="flex items-center justify-center gap-2 px-4 rounded-xl text-sm font-bold transition-opacity hover:opacity-85"
+              style={{
+                minHeight: '44px',
+                background: 'var(--color-orange)',
+                color: 'white',
+                boxShadow: 'var(--shadow-warm-sm)',
+              }}
+            >
+              <span aria-hidden="true">👤</span>
+              ログイン
+            </Link>
+          </div>
+        )}
+
         {/* ナビリンク */}
         <ul className="flex flex-col gap-1 p-4 flex-1 overflow-y-auto">
           {NAV_LINKS.map((link) => (
@@ -106,6 +188,30 @@ export function MobileNav({ onClose }: MobileNavProps) {
             </li>
           ))}
         </ul>
+
+        {/* ── ログアウト（ログイン時のみ） ── */}
+        {user && (
+          <div
+            className="px-4 py-3 border-t"
+            style={{ borderColor: 'var(--color-beige-dark)' }}
+          >
+            <button
+              type="button"
+              onClick={handleSignOut}
+              className="flex w-full items-center gap-3 px-4 py-3 rounded-xl font-body font-medium transition-colors min-h-[48px]"
+              style={{ color: 'var(--color-brown-light)' }}
+              onMouseEnter={(e) => {
+                (e.currentTarget as HTMLElement).style.background = 'var(--color-beige)';
+              }}
+              onMouseLeave={(e) => {
+                (e.currentTarget as HTMLElement).style.background = 'transparent';
+              }}
+            >
+              <span className="text-xl" aria-hidden="true">🚪</span>
+              <span>ログアウト</span>
+            </button>
+          </div>
+        )}
 
         {/* Safe Area */}
         <div className="pb-safe" />
