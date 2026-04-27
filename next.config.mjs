@@ -1,5 +1,17 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  // ── サーバーレス関数バンドルに含めるファイル ─────────────
+  // Next.js は route ファイル以外を自動でバンドルしないため、
+  // readFileSync で読み込む skills/*.md を明示的に含める必要がある。
+  // これがないと Vercel デプロイ後に ENOENT エラーになる。
+  experimental: {
+    outputFileTracingIncludes: {
+      '/api/generate-animation': [
+        './skills/ai-kyoushitsu-prompt/**/*',
+      ],
+    },
+  },
+
   // ── セキュリティヘッダー ──────────────────────────────────
   async headers() {
     return [
