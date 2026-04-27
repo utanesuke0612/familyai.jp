@@ -66,13 +66,18 @@ export function MobileNav({ onClose }: MobileNavProps) {
         aria-modal="true"
         aria-label="ナビゲーションメニュー"
         className={`
-          fixed top-0 right-0 h-full w-72 z-modal
+          fixed top-0 right-0 w-72 z-modal
           flex flex-col
           shadow-warm-lg
           transition-transform duration-300 ease-smooth-out
           ${open ? 'translate-x-0' : 'translate-x-full'}
         `}
-        style={{ background: 'var(--color-cream)' }}
+        style={{
+          // h-full に頼らず viewport 全高で確実に背景を覆う
+          height: '100vh',
+          // CSS変数より明示的な hex で透明問題を回避
+          background: '#FDF6ED',
+        }}
       >
         {/* ドロワーヘッダー */}
         <div
@@ -107,8 +112,8 @@ export function MobileNav({ onClose }: MobileNavProps) {
         ) : user ? (
           // ログイン中: プロフィールカード
           <div
-            className="px-4 py-4 border-b flex items-center gap-3"
-            style={{ borderColor: 'var(--color-beige-dark)', background: 'rgba(255,255,255,0.5)' }}
+            className="px-4 py-4 border-b flex items-center gap-3 shrink-0"
+            style={{ borderColor: 'var(--color-beige-dark)', background: '#fffdf8' }}
           >
             <div
               className="flex items-center justify-center rounded-full overflow-hidden shrink-0"
@@ -167,7 +172,10 @@ export function MobileNav({ onClose }: MobileNavProps) {
         )}
 
         {/* ナビリンク */}
-        <ul className="flex flex-col gap-1 p-4 flex-1 overflow-y-auto">
+        <ul
+          className="flex flex-col gap-1 p-4 flex-1 overflow-y-auto"
+          style={{ background: '#FDF6ED' }}
+        >
           {NAV_LINKS.map((link) => (
             <li key={link.href}>
               <Link
@@ -192,8 +200,8 @@ export function MobileNav({ onClose }: MobileNavProps) {
         {/* ── ログアウト（ログイン時のみ） ── */}
         {user && (
           <div
-            className="px-4 py-3 border-t"
-            style={{ borderColor: 'var(--color-beige-dark)' }}
+            className="px-4 py-3 border-t shrink-0"
+            style={{ borderColor: 'var(--color-beige-dark)', background: '#FDF6ED' }}
           >
             <button
               type="button"
