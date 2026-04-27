@@ -281,13 +281,3 @@ published: true
 *04:40*
 
 ## Test
-
-<iframe
-src="https://my-obsidian-images-860837748789-ap-northeast-1-an.s3.ap-northeast-1.amazonaws.com/kage_complete.html"
-width="720"
-height="800"
-style="border:none;border-radius:12px;width:100%;max-width:720px"
-sandbox="allow-scripts"
-loading="lazy"
-title="影のでき方インタラクティブ図解"
-></iframe>
