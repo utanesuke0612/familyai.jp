@@ -60,7 +60,7 @@ export default async function MyPage() {
     <main style={{ background: 'var(--color-cream)' }}>
       {/* ───── ヒーロー ───── */}
       <section
-        className="px-6 py-8 sm:py-10"
+        className="px-4 sm:px-6 py-6 sm:py-10"
         style={{ background: config.bgGradient }}
       >
         <div className="mx-auto flex max-w-5xl flex-col gap-5">
@@ -166,11 +166,11 @@ export default async function MyPage() {
       </section>
 
       {/* ───── コンテンツグリッド ───── */}
-      <section className="px-6 py-8 sm:py-10">
-        <div className="mx-auto grid max-w-5xl gap-6 md:grid-cols-2">
+      <section className="px-4 sm:px-6 py-6 sm:py-10">
+        <div className="mx-auto grid max-w-5xl gap-4 sm:gap-6 md:grid-cols-2">
           {/* 学習カード */}
           <article
-            className="rounded-[28px] p-6"
+            className="rounded-[24px] sm:rounded-[28px] p-5 sm:p-6"
             style={{
               background: 'rgba(255,255,255,0.92)',
               boxShadow: 'var(--shadow-warm-sm)',
@@ -240,7 +240,7 @@ export default async function MyPage() {
 
           {/* AI利用状況カード（プラン比較表） */}
           <article
-            className="rounded-[28px] p-6"
+            className="rounded-[24px] sm:rounded-[28px] p-5 sm:p-6"
             style={{
               background: 'rgba(255,255,255,0.92)',
               boxShadow: 'var(--shadow-warm-sm)',
@@ -259,74 +259,8 @@ export default async function MyPage() {
               </span>
             </p>
 
-            {/* 横スクロール可能なテーブル */}
-            <div className="overflow-x-auto -mx-2 sm:mx-0">
-              <table className="w-full text-sm" style={{ minWidth: 480 }}>
-                <thead>
-                  <tr style={{ borderBottom: '2px solid var(--color-beige-dark)' }}>
-                    <th
-                      className="text-left py-2 px-2 sm:px-3 font-semibold"
-                      style={{ color: 'var(--color-brown)' }}
-                    >
-                      機能
-                    </th>
-                    <PlanHeader title="未ログイン" emoji="👋" current={plan === 'anon'} />
-                    <PlanHeader title="無料会員"   emoji="🌱" current={plan === 'free'} />
-                    <PlanHeader title="プレミアム" emoji="👑" current={plan === 'premium'} />
-                  </tr>
-                </thead>
-                <tbody>
-                  <FeatureRow
-                    feature="🎬 AI教室（アニメ生成）"
-                    desc="理科・算数・社会のアニメをAIで生成"
-                    anon="利用不可"
-                    free="3回/日"
-                    premium="100回/日"
-                    plan={plan}
-                  />
-                  <FeatureRow
-                    feature="💬 AIチャット・解説"
-                    desc="質問への回答・記事の解説"
-                    anon="10回/日"
-                    free="30回/日"
-                    premium="200回/日"
-                    plan={plan}
-                  />
-                  <FeatureRow
-                    feature="📂 履歴から再閲覧"
-                    desc="生成済みアニメを無料で見直し"
-                    anon="利用不可"
-                    free="無制限"
-                    premium="無制限"
-                    plan={plan}
-                  />
-                  <FeatureRow
-                    feature="📤 友達にシェア"
-                    desc="記事・アニメをX・LINEで共有"
-                    anon="可"
-                    free="可"
-                    premium="可"
-                    plan={plan}
-                  />
-                  <FeatureRow
-                    feature="📌 AIメモ帳"
-                    desc="AIとのやりとりを保存"
-                    anon="利用不可"
-                    free="無制限"
-                    premium="無制限"
-                    plan={plan}
-                  />
-                  <FeatureRow
-                    feature="📚 単語ブックマーク"
-                    desc="VOA英語の単語を記録"
-                    anon="利用不可"
-                    free="無制限"
-                    premium="無制限"
-                    plan={plan}
-                  />
-                </tbody>
-              </table>
-            </div>
+            {/* レスポンシブ比較: モバイルはスタックカード、sm以上はテーブル */}
+            <FeatureComparison plan={plan} />
 
             {/* CTA */}
             {plan === 'anon' && (
@@ -372,10 +306,181 @@ export default async function MyPage() {
 }
 
 /* ─────────────────────────────────────────────────────
-   プラン比較テーブル用サブコンポーネント
+   プラン比較サブコンポーネント
+   - モバイル（< sm）: 機能ごとのスタックカード
+   - タブレット以上（>= sm）: 横並びテーブル
 ───────────────────────────────────────────────────── */
 
 type PlanKey = 'anon' | 'free' | 'premium';
+
+interface FeatureItem {
+  feature: string;
+  desc:    string;
+  anon:    string;
+  free:    string;
+  premium: string;
+}
+
+const FEATURES: readonly FeatureItem[] = [
+  {
+    feature: '🎬 AI教室(アニメ生成)',
+    desc:    '理科・算数・社会のアニメをAIで生成',
+    anon:    '利用不可',
+    free:    '3回/日',
+    premium: '100回/日',
+  },
+  {
+    feature: '💬 AIチャット・解説',
+    desc:    '質問への回答・記事の解説',
+    anon:    '10回/日',
+    free:    '30回/日',
+    premium: '200回/日',
+  },
+  {
+    feature: '📂 履歴から再閲覧',
+    desc:    '生成済みアニメを無料で見直し',
+    anon:    '利用不可',
+    free:    '無制限',
+    premium: '無制限',
+  },
+  {
+    feature: '📤 友達にシェア',
+    desc:    '記事・アニメをX・LINEで共有',
+    anon:    '可',
+    free:    '可',
+    premium: '可',
+  },
+  {
+    feature: '📌 AIメモ帳',
+    desc:    'AIとのやりとりを保存',
+    anon:    '利用不可',
+    free:    '無制限',
+    premium: '無制限',
+  },
+  {
+    feature: '📚 単語ブックマーク',
+    desc:    'VOA英語の単語を記録',
+    anon:    '利用不可',
+    free:    '無制限',
+    premium: '無制限',
+  },
+];
+
+const PLAN_META: Record<PlanKey, { emoji: string; title: string }> = {
+  anon:    { emoji: '👋', title: '未ログイン' },
+  free:    { emoji: '🌱', title: '無料会員'   },
+  premium: { emoji: '👑', title: 'プレミアム' },
+};
+
+function FeatureComparison({ plan }: { plan: PlanKey }) {
+  return (
+    <>
+      {/* ── モバイル（< sm）: スタックカード ── */}
+      <div className="flex flex-col gap-3 sm:hidden">
+        {FEATURES.map((f) => (
+          <FeatureMobileCard key={f.feature} item={f} plan={plan} />
+        ))}
+      </div>
+
+      {/* ── タブレット以上（>= sm）: テーブル ── */}
+      <div className="hidden sm:block overflow-x-auto">
+        <table className="w-full text-sm">
+          <thead>
+            <tr style={{ borderBottom: '2px solid var(--color-beige-dark)' }}>
+              <th
+                className="text-left py-2 px-3 font-semibold"
+                style={{ color: 'var(--color-brown)' }}
+              >
+                機能
+              </th>
+              <PlanHeader title={PLAN_META.anon.title}    emoji={PLAN_META.anon.emoji}    current={plan === 'anon'} />
+              <PlanHeader title={PLAN_META.free.title}    emoji={PLAN_META.free.emoji}    current={plan === 'free'} />
+              <PlanHeader title={PLAN_META.premium.title} emoji={PLAN_META.premium.emoji} current={plan === 'premium'} />
+            </tr>
+          </thead>
+          <tbody>
+            {FEATURES.map((f) => (
+              <FeatureRow key={f.feature} {...f} plan={plan} />
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </>
+  );
+}
+
+/** モバイル用: 機能1つを1カードで表示。各プランの値を縦に並べる */
+function FeatureMobileCard({ item, plan }: { item: FeatureItem; plan: PlanKey }) {
+  return (
+    <div
+      className="rounded-2xl p-4 flex flex-col gap-3"
+      style={{
+        background: 'var(--color-cream)',
+        border:     '1px solid var(--color-beige-dark)',
+      }}
+    >
+      <div>
+        <div className="font-semibold text-sm" style={{ color: 'var(--color-brown)' }}>
+          {item.feature}
+        </div>
+        <div className="text-xs mt-0.5" style={{ color: 'var(--color-brown-light)' }}>
+          {item.desc}
+        </div>
+      </div>
+
+      <div className="flex flex-col gap-1.5">
+        <PlanValueRow planKey="anon"    value={item.anon}    plan={plan} />
+        <PlanValueRow planKey="free"    value={item.free}    plan={plan} />
+        <PlanValueRow planKey="premium" value={item.premium} plan={plan} />
+      </div>
+    </div>
+  );
+}
+
+/** モバイルカード内の1行: 「🌱 無料会員 ───── 3回/日」 */
+function PlanValueRow({
+  planKey, value, plan,
+}: {
+  planKey: PlanKey;
+  value:   string;
+  plan:    PlanKey;
+}) {
+  const isCurrent  = planKey === plan;
+  const isDisabled = value === '利用不可';
+  const meta       = PLAN_META[planKey];
+
+  return (
+    <div
+      className="flex items-center justify-between gap-2 rounded-xl px-3 py-2 text-xs"
+      style={{
+        background: isCurrent ? 'rgba(255,140,66,0.12)' : 'rgba(255,255,255,0.6)',
+        border:     isCurrent ? '1.5px solid var(--color-orange)' : '1px solid var(--color-beige-dark)',
+      }}
+    >
+      <span className="flex items-center gap-1.5 min-w-0">
+        <span className="text-sm shrink-0">{meta.emoji}</span>
+        <span
+          className="truncate"
+          style={{
+            color:      isCurrent ? 'var(--color-brown)' : 'var(--color-brown-light)',
+            fontWeight: isCurrent ? 700 : 500,
+          }}
+        >
+          {meta.title}
+          {isCurrent && <span className="ml-1 text-[10px]" style={{ color: 'var(--color-orange)' }}>（あなた）</span>}
+        </span>
+      </span>
+      <span
+        className="shrink-0 font-semibold"
+        style={{
+          color: isDisabled ? 'var(--color-brown-muted)' : (isCurrent ? 'var(--color-orange)' : 'var(--color-brown)'),
+        }}
+      >
+        {isDisabled ? <span style={{ opacity: 0.7 }}>✕ {value}</span> : value}
+      </span>
+    </div>
+  );
+}
 
 function PlanHeader({ title, emoji, current }: { title: string; emoji: string; current: boolean }) {
   return (
