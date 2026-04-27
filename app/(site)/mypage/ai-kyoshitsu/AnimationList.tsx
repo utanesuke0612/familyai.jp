@@ -154,20 +154,21 @@ function PreviewModal({ item, onClose }: { item: AnimationItem; onClose: () => v
             </div>
           </div>
           <div className="flex items-center gap-1.5 shrink-0 flex-wrap justify-end">
+            {/* シェアボタン群 */}
             <button onClick={shareToX}
-              className="rounded-full px-3 text-xs font-semibold"
+              className="rounded-full px-4 text-xs font-semibold"
               style={{ minHeight: 36, background: '#000', color: '#fff' }}
               title="Xでシェア">
-              𝕏
+              𝕏 シェア
             </button>
             <button onClick={shareToLine}
-              className="rounded-full px-3 text-xs font-semibold"
+              className="rounded-full px-4 text-xs font-semibold"
               style={{ minHeight: 36, background: '#06c755', color: '#fff' }}
               title="LINEでシェア">
               💬 LINE
             </button>
             <button onClick={copyShareLink}
-              className="rounded-full px-3 text-xs font-semibold transition-all"
+              className="rounded-full px-4 text-xs font-semibold transition-all"
               style={{
                 minHeight: 36,
                 background: copied ? '#22c55e' : 'rgba(255,255,255,0.8)',
@@ -177,18 +178,27 @@ function PreviewModal({ item, onClose }: { item: AnimationItem; onClose: () => v
               title="リンクコピー">
               {copied ? '✓ コピー済' : '🔗 コピー'}
             </button>
+
+            {/* 区切り線（シェア vs 操作系の区別） */}
+            <span
+              aria-hidden="true"
+              className="mx-1 w-px"
+              style={{ height: 28, background: 'rgba(0,0,0,0.18)' }}
+            />
+
+            {/* 操作ボタン群 */}
             <button onClick={handleSave} disabled={isSaving}
-              className="rounded-full px-3 text-xs font-semibold disabled:opacity-50"
+              className="rounded-full px-4 text-xs font-semibold disabled:opacity-50"
               style={{ minHeight: 36, background: col.border, color: '#fff' }}>
               {isSaving ? '⏳ 保存中…' : '💾 保存'}
             </button>
             <button onClick={handleFullscreen}
-              className="rounded-full px-3 text-xs font-semibold"
+              className="rounded-full px-4 text-xs font-semibold"
               style={{ minHeight: 36, background: 'rgba(255,255,255,0.8)', color: 'var(--color-brown)', border: '1px solid var(--color-beige-dark)' }}>
               {isFullscreen ? '⊠ 戻る' : '⛶ 全画面'}
             </button>
             <button onClick={onClose}
-              className="rounded-full px-3 text-xs font-semibold"
+              className="rounded-full px-4 text-xs font-semibold"
               style={{ minHeight: 36, background: 'rgba(255,255,255,0.8)', color: 'var(--color-brown)', border: '1px solid var(--color-beige-dark)' }}>
               ✕ 閉じる
             </button>

@@ -616,17 +616,18 @@ function ResultPanel({
           </div>
         </div>
         <div className="flex items-center gap-1.5 flex-wrap justify-end">
+          {/* シェアボタン群 */}
           <button
             onClick={shareToX}
-            className="rounded-xl px-2.5 py-2 text-xs font-semibold transition-opacity hover:opacity-70"
+            className="rounded-xl px-3 py-2 text-xs font-semibold transition-opacity hover:opacity-70"
             style={{ background: '#000', color: '#fff', boxShadow: 'var(--shadow-warm-sm)' }}
             title="Xでシェア"
           >
-            𝕏
+            𝕏 シェア
           </button>
           <button
             onClick={shareToLine}
-            className="rounded-xl px-2.5 py-2 text-xs font-semibold transition-opacity hover:opacity-70"
+            className="rounded-xl px-3 py-2 text-xs font-semibold transition-opacity hover:opacity-70"
             style={{ background: '#06c755', color: '#fff', boxShadow: 'var(--shadow-warm-sm)' }}
             title="LINEでシェア"
           >
@@ -634,7 +635,7 @@ function ResultPanel({
           </button>
           <button
             onClick={copyShareLink}
-            className="rounded-xl px-2.5 py-2 text-xs font-semibold transition-all"
+            className="rounded-xl px-3 py-2 text-xs font-semibold transition-all"
             style={{
               background: copied ? '#22c55e' : 'rgba(255,255,255,0.85)',
               color:      copied ? '#fff'    : 'var(--color-brown)',
@@ -644,24 +645,33 @@ function ResultPanel({
           >
             {copied ? '✓ コピー済' : '🔗 コピー'}
           </button>
+
+          {/* 区切り線（シェア vs 操作系の区別） */}
+          <span
+            aria-hidden="true"
+            className="mx-1 h-6 w-px"
+            style={{ background: 'rgba(0,0,0,0.18)' }}
+          />
+
+          {/* 操作ボタン群 */}
           <button
             onClick={handleSave}
             disabled={isSaving}
-            className="rounded-xl px-2.5 py-2 text-xs font-semibold transition-opacity hover:opacity-70 disabled:opacity-50"
+            className="rounded-xl px-3 py-2 text-xs font-semibold transition-opacity hover:opacity-70 disabled:opacity-50"
             style={{ background: subjectColor.border, color: '#fff', boxShadow: 'var(--shadow-warm-sm)' }}
           >
             {isSaving ? '⏳ 保存中…' : '💾 保存'}
           </button>
           <button
             onClick={toggleFullscreen}
-            className="rounded-xl px-2.5 py-2 text-xs font-semibold transition-opacity hover:opacity-70"
+            className="rounded-xl px-3 py-2 text-xs font-semibold transition-opacity hover:opacity-70"
             style={{ background: 'rgba(255,255,255,0.85)', color: 'var(--color-brown)', boxShadow: 'var(--shadow-warm-sm)' }}
           >
             {isFs ? '⊠ 閉じる' : '⛶ 全画面'}
           </button>
           <button
             onClick={onReset}
-            className="rounded-xl px-2.5 py-2 text-xs font-semibold transition-opacity hover:opacity-70"
+            className="rounded-xl px-3 py-2 text-xs font-semibold transition-opacity hover:opacity-70"
             style={{ background: 'rgba(255,255,255,0.85)', color: 'var(--color-brown-light)', boxShadow: 'var(--shadow-warm-sm)' }}
           >
             ✕ 閉じる
