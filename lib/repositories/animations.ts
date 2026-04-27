@@ -3,7 +3,8 @@
  * うごくAI教室 — user_animations テーブル操作
  */
 
-import { eq, desc, and } from 'drizzle-orm';
+import { cache }          from 'react';
+import { eq, desc, and }  from 'drizzle-orm';
 import { db }             from '@/lib/db';
 import { userAnimations } from '@/lib/db/schema';
 import type { NewUserAnimation, UserAnimation } from '@/lib/db/schema';
@@ -21,7 +22,7 @@ export async function createAnimation(data: Omit<NewUserAnimation, 'id' | 'creat
 
 /** IDからアニメーションを1件取得（存在しない場合は null） */
 export async function getAnimationById(id: string): Promise<UserAnimation | null> {
-  
+
   const [row] = await db
     .select()
     .from(userAnimations)
@@ -29,6 +30,15 @@ export async function getAnimationById(id: string): Promise<UserAnimation | null
     .limit(1);
   return row ?? null;
 }
+
+/**
+ * IDからアニメーションを取得（React.cache でリクエスト単位メモ化）。
+ * 同じリクエスト内で複数回呼ばれても DB クエリは 1 回しか走らない。
+ *
+ * 用途: Server Component の generateMetadata と Page 本体で同じ animation を取得する際、
+ * クエリの重複を防ぐ（例: app/(site)/share/[id]/page.tsx）。
+ */
+export const getAnimationByIdCached = cache(getAnimationById);
 
 /** ユーザーの生成履歴を新しい順で取得（最大50件） */
 export async function listUserAnimations(userId: string): Promise<UserAnimation[]> {

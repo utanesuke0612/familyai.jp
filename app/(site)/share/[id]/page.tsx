@@ -10,7 +10,7 @@
 import type { Metadata } from 'next';
 import Link              from 'next/link';
 import { notFound }      from 'next/navigation';
-import { getAnimationById } from '@/lib/repositories/animations';
+import { getAnimationByIdCached } from '@/lib/repositories/animations';
 import { SITE }          from '@/shared';
 import ShareButtons      from './ShareButtons';
 
@@ -35,7 +35,14 @@ const SUBJECT_COLOR: Record<string, string> = {
 export async function generateMetadata(
   { params }: { params: { id: string } },
 ): Promise<Metadata> {
-  const animation = await getAnimationById(params.id).catch(() => null);
+  // DB エラーは fallback metadata で握りつぶす（NotFound と区別したいが metadata 段階では
+  // throw すると Next.js が描画フェーズに到達できないため、安全側でフォールバックを返す）。
+  let animation: Awaited<ReturnType<typeof getAnimationByIdCached>> = null;
+  try {
+    animation = await getAnimationByIdCached(params.id);
+  } catch (err) {
+    console.error('[share/generateMetadata] DB エラー:', err);
+  }
   if (!animation) {
     return {
       title:       'シェアされたアニメーション',
@@ -73,7 +80,11 @@ export async function generateMetadata(
 export default async function ShareAnimationPage(
   { params }: { params: { id: string } },
 ) {
-  const animation = await getAnimationById(params.id).catch(() => null);
+  // DB エラーと NotFound を分離:
+  //   - getAnimationByIdCached が throw → DB 障害として 500 で扱う（catch せず再 throw）
+  //   - row === null               → 該当 ID なし → 404
+  // catch せずに上位 (Next.js) に伝播させると Error Boundary 経由で 500 が返る。
+  const animation = await getAnimationByIdCached(params.id);
   if (!animation) notFound();
 
   const themeColor   = SUBJECT_COLOR[animation.subject] ?? '#ff8c42';

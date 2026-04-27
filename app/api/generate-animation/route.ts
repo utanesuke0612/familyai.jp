@@ -24,9 +24,10 @@
  *   Stage2: Claude Haiku 3.5 → 構造化JSONからHTMLを生成
  *
  * レート制限（1日あたり）:
- *   未ログイン  : 3回/日（IP単位）  ※現在テスト用に100/日
- *   Free        : 5回/日（userId単位）  ※現在テスト用に100/日
+ *   未ログイン  : 利用不可（401 UNAUTHORIZED）
+ *   Free        : 3回/日（userId単位）
  *   Premium     : 100回/日（userId単位）
+ *   Admin       : 無制限（ADMIN_EMAIL 環境変数で指定）
  */
 
 import { NextRequest, NextResponse } from 'next/server';
@@ -66,11 +67,7 @@ const SUBJECT_LABEL: Record<string, string> = {
 };
 
 // ── Redis / Ratelimit lazy init ────────────────────────────────
-// レート制限ポリシー（コスト削減のため）:
-//   - 未ログイン: 利用不可（401 UNAUTHORIZED）
-//   - 無料ユーザー: 3回/日（userId単位）
-//   - プレミアム:   100回/日（userId単位）
-//   - Admin:        無制限（ADMIN_EMAIL 環境変数で指定）
+// レート制限ポリシーは先頭のヘッダーコメントを参照。
 let _redis:   Redis | null = null;
 let _rlFree:  Ratelimit | null = null;
 let _rlPro:   Ratelimit | null = null;
