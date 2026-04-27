@@ -35,9 +35,12 @@ export const MAX_ANIMATION_PROMPT = 500;
 export const AI_KYOSHITSU_DEFAULTS: AiKyoshitsuConfig = {
   stage1Model:       'google/gemini-2.0-flash-001',
   stage2Model:       'google/gemini-2.0-flash-001',
-  stage1TimeoutMs:   8_000,
-  stage2TimeoutMs:   50_000,
-  stage2MaxTokens:   6_000,
+  // タイムアウト合計が Vercel 60秒制限から 10秒以上 buffer を確保
+  // Stage1 10s + Stage2 40s + buffer 10s = 60s
+  stage1TimeoutMs:   10_000,
+  stage2TimeoutMs:   40_000,
+  // Gemini 2.0 Flash で 5000 tokens ≒ 約 20秒で生成完了見込み
+  stage2MaxTokens:   5_000,
   stage2Temperature: 0.5,
   chatModel:         'qwen/qwen3-14b',
 };

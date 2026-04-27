@@ -90,42 +90,46 @@ export interface AiConfigPreset {
 }
 
 export const AI_CONFIG_PRESETS: readonly AiConfigPreset[] = [
+  // 共通方針:
+  //   - Vercel 60秒制限から最低 10〜20秒の buffer を確保
+  //   - Stage1 + Stage2 ≤ 50秒 を目安
+  //   - 各モデルの実速度を考慮した maxTokens 上限
   {
     id:          'cheapest',
     label:       '💰 最安構成',
-    description: '速度・コスト最優先。テストや大量利用に。',
+    description: '速度・コスト最優先（buffer 20秒・最も安定）。テスト・大量利用に。',
     values: {
       stage1Model:       'google/gemini-2.0-flash-001',
       stage2Model:       'google/gemini-2.0-flash-001',
-      stage1TimeoutMs:   8_000,
-      stage2TimeoutMs:   45_000,
-      stage2MaxTokens:   5_000,
+      stage1TimeoutMs:   10_000,
+      stage2TimeoutMs:   30_000,   // 合計 40秒・buffer 20秒
+      stage2MaxTokens:   4_000,
       stage2Temperature: 0.5,
     },
   },
   {
     id:          'balanced',
     label:       '⚖️ バランス（推奨）',
-    description: '速度・品質・コストの中間。通常運用におすすめ。',
+    description: '速度・品質・コストの中間（buffer 15秒）。通常運用におすすめ。',
     values: {
       stage1Model:       'google/gemini-2.0-flash-001',
       stage2Model:       'google/gemini-2.0-flash-001',
-      stage1TimeoutMs:   8_000,
-      stage2TimeoutMs:   50_000,
-      stage2MaxTokens:   6_000,
+      stage1TimeoutMs:   10_000,
+      stage2TimeoutMs:   35_000,   // 合計 45秒・buffer 15秒
+      stage2MaxTokens:   5_000,
       stage2Temperature: 0.5,
     },
   },
   {
     id:          'quality',
     label:       '✨ 品質重視',
-    description: 'Haiku 3.5 で高品質HTML。コスト中・速度可。',
+    description: 'Haiku 3.5 で高品質HTML（buffer 10秒）。コスト中・速度可。',
     values: {
       stage1Model:       'google/gemini-2.0-flash-001',
       stage2Model:       'anthropic/claude-3.5-haiku',
       stage1TimeoutMs:   10_000,
-      stage2TimeoutMs:   45_000,
-      stage2MaxTokens:   6_000,
+      stage2TimeoutMs:   40_000,   // 合計 50秒・buffer 10秒
+      stage2MaxTokens:   5_000,
       stage2Temperature: 0.5,
     },
   },
@@ -137,8 +141,8 @@ export const AI_CONFIG_PRESETS: readonly AiConfigPreset[] = [
       stage1Model:       'google/gemini-2.0-flash-001',
       stage2Model:       'anthropic/claude-sonnet-4',
       stage1TimeoutMs:   10_000,
-      stage2TimeoutMs:   45_000,
-      stage2MaxTokens:   5_000,    // Sonnet 4 は速度遅いため少なめ（5000 ≒ 50秒分）
+      stage2TimeoutMs:   40_000,   // 合計 50秒・buffer 10秒
+      stage2MaxTokens:   3_000,    // Sonnet 4 は 50tok/s なので 3000tok ≒ 60秒（ギリギリ）
       stage2Temperature: 0.5,
     },
   },
