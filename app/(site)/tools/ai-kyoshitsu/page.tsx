@@ -35,7 +35,7 @@ type ViewState =
   | { kind: 'preview';       theme: Theme }
   | { kind: 'generating';    themeLabel: string }
   | { kind: 'result';        id: string; themeLabel: string }
-  | { kind: 'clarification'; message: string }
+  | { kind: 'clarification'; message: string; options: string[]; optionsAvailable: boolean }
   | { kind: 'rate-limit';    message: string; isLoggedIn: boolean }
   | { kind: 'unauthorized' }
   | { kind: 'error';         message: string };
@@ -90,9 +90,12 @@ export default function AiKyoshitsuPage() {
       });
 
       const json = await res.json() as {
-        ok:     boolean;
-        id?:    string;
-        error?: { code: string; message: string };
+        ok:                boolean;
+        id?:               string;
+        error?:            { code: string; message: string };
+        options?:          string[];
+        optionsAvailable?: boolean;
+        suggestion?:       string;
       };
 
       if (!json.ok || !json.id) {
@@ -104,7 +107,18 @@ export default function AiKyoshitsuPage() {
         } else if (code === 'UNAUTHORIZED') {
           setView({ kind: 'unauthorized' });
         } else if (code === 'CLARIFICATION_NEEDED') {
-          setView({ kind: 'clarification', message });
+          setView({
+            kind:             'clarification',
+            message,
+            options:          json.options ?? [],
+            optionsAvailable: json.optionsAvailable ?? false,
+          });
+        } else if (code === 'CONCEPT_NOT_SUITABLE') {
+          // 学習内容として不適切（科目に無関係・難易度不一致など）→ 提案付きエラー
+          const fullMessage = json.suggestion
+            ? `${message}\n\n💡 ${json.suggestion}`
+            : message;
+          setView({ kind: 'error', message: fullMessage });
         } else {
           setView({ kind: 'error', message });
         }
@@ -322,6 +336,7 @@ export default function AiKyoshitsuPage() {
               onGenerate={handleGenerate}
               subjectColor={subjectColor}
               clarificationMessage={view.kind === 'clarification' ? view.message : undefined}
+              clarificationOptions={view.kind === 'clarification' ? view.options : undefined}
             />
           )}
 
@@ -775,7 +790,7 @@ function ErrorPanel({ message, onRetry }: { message: string; onRetry: () => void
 
 function AiInputPanel({
   prompt, setPrompt, grade, subject, isGenerating, onGenerate, subjectColor,
-  clarificationMessage,
+  clarificationMessage, clarificationOptions,
 }: {
   prompt:                string;
   setPrompt:             (v: string) => void;
@@ -785,8 +800,10 @@ function AiInputPanel({
   onGenerate:            () => void;
   subjectColor:          { bg: string; text: string; border: string };
   clarificationMessage?: string;
+  clarificationOptions?: string[];
 }) {
   const canSubmit = !!prompt.trim() && !isGenerating;
+  const hasOptions = !!clarificationOptions && clarificationOptions.length > 0;
 
   return (
     <div
@@ -803,7 +820,7 @@ function AiInputPanel({
       {/* AIからの確認メッセージ（テーマが解釈不能な場合のみ表示） */}
       {clarificationMessage && (
         <div
-          className="rounded-2xl px-4 py-3 flex flex-col gap-2"
+          className="rounded-2xl px-4 py-3 flex flex-col gap-3"
           style={{
             background: `linear-gradient(135deg, ${subjectColor.border}15, ${subjectColor.bg})`,
             border:     `1.5px solid ${subjectColor.border}55`,
@@ -821,9 +838,41 @@ function AiInputPanel({
           >
             {clarificationMessage}
           </p>
-          <p className="text-xs" style={{ color: 'var(--color-brown-muted)' }}>
-            ↓ 下のテーマを書き直してもう一度送ってください
-          </p>
+
+          {/* 選択肢ボタン（候補がある場合） */}
+          {hasOptions && (
+            <div className="flex flex-col gap-2 mt-1">
+              <p className="text-xs font-bold" style={{ color: 'var(--color-brown-light)' }}>
+                ↓ クリックすると入力欄に反映されます
+              </p>
+              <div className="flex flex-col gap-2">
+                {clarificationOptions!.map((option, idx) => (
+                  <button
+                    key={idx}
+                    type="button"
+                    onClick={() => setPrompt(option)}
+                    disabled={isGenerating}
+                    className="rounded-2xl px-4 py-3 text-sm text-left font-semibold transition-all duration-150 hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed"
+                    style={{
+                      background: 'rgba(255,255,255,0.95)',
+                      color:      subjectColor.text,
+                      border:     `1.5px solid ${subjectColor.border}88`,
+                      boxShadow:  '0 1px 3px rgba(0,0,0,0.06)',
+                    }}
+                  >
+                    <span className="mr-1.5" style={{ color: subjectColor.border }}>▸</span>
+                    {option}
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {!hasOptions && (
+            <p className="text-xs" style={{ color: 'var(--color-brown-muted)' }}>
+              ↓ 下のテーマを書き直してもう一度送ってください
+            </p>
+          )}
         </div>
       )}
 

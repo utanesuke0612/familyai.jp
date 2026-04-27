@@ -1,6 +1,6 @@
 /**
  * app/api/generate-animation/route.ts
- * うごくAI教室 — アニメーションHTML生成API
+ * うごくAI教室 — アニメーションHTML生成API（2段階パイプライン）
  *
  * POST /api/generate-animation
  *
@@ -12,15 +12,20 @@
  *   theme:   string   // テーマ名（表示用。promptと同じかカード名）
  * }
  *
- * Response:
- * {
- *   ok:   true
- *   id:   string   // 生成されたアニメーションのDB ID
- * }
+ * Response (成功):
+ * { ok: true, id: string }
+ *
+ * Response (確認が必要):
+ * { ok: false, error: { code: 'CLARIFICATION_NEEDED', message: string },
+ *   options: string[], optionsAvailable: boolean }
+ *
+ * パイプライン:
+ *   Stage1: Gemini 2.0 Flash → 教育設計JSON or 確認質問JSON or エラーJSON
+ *   Stage2: Claude Haiku 3.5 → 構造化JSONからHTMLを生成
  *
  * レート制限（1日あたり）:
- *   未ログイン  : 3回/日（IP単位）
- *   Free        : 5回/日（userId単位）
+ *   未ログイン  : 3回/日（IP単位）  ※現在テスト用に100/日
+ *   Free        : 5回/日（userId単位）  ※現在テスト用に100/日
  *   Premium     : 100回/日（userId単位）
  */
 
@@ -37,7 +42,7 @@ import { MODEL_ROUTER }               from '@/shared';
 import { createAnimation }            from '@/lib/repositories/animations';
 
 export const runtime  = 'nodejs';
-export const maxDuration = 60; // HTML生成は時間がかかるため60秒まで許可
+export const maxDuration = 60;
 
 // ── 入力バリデーション ─────────────────────────────────────────
 const bodySchema = z.object({
@@ -49,14 +54,14 @@ const bodySchema = z.object({
 
 // ── 学年・教科の日本語ラベル ───────────────────────────────────
 const GRADE_LABEL: Record<string, string> = {
-  'elem-low':  '小3・4年生',
-  'elem-high': '小5・6年生',
+  'elem-low':  '小3〜4年生',
+  'elem-high': '小5〜6年生',
   'middle':    '中学生',
 };
 
 const SUBJECT_LABEL: Record<string, string> = {
   science: '理科',
-  math:    '算数・数学',
+  math:    '数学',
   social:  '社会',
 };
 
@@ -85,86 +90,208 @@ function getClientIp(req: NextRequest): string {
   );
 }
 
-// ── プロンプトテンプレート読み込み（統合・全教科共通） ──────────
-// 旧: 教科別3ファイル（science/math/social）→ 新: 単一の統合プロンプト
-// 統合プロンプト内で {SUBJECT} 値ごとに教科別セクションを参照する設計
-const PROMPT_TEMPLATE_PATH = ['skills', 'ai-kyoushitsu-prompt', 'legacy_unified.md'];
+// ── プロンプトテンプレート ─────────────────────────────────────
+const STAGE1_PROMPT_PATH = ['skills', 'ai-kyoushitsu-prompt', 'stage1_system_prompt.md'];
+const STAGE2_PROMPT_PATH = ['skills', 'ai-kyoushitsu-prompt', 'stage2_SKILL.md'];
+const LEGACY_PROMPT_PATH = ['skills', 'ai-kyoushitsu-prompt', 'legacy_unified.md'];
 
-function buildPrompt(theme: string, grade: string, subject: string): string {
-  const templatePath = join(process.cwd(), ...PROMPT_TEMPLATE_PATH);
-  const template     = readFileSync(templatePath, 'utf-8');
-  const gradeLabel   = GRADE_LABEL[grade]   ?? grade;
-  const subjectLabel = SUBJECT_LABEL[subject] ?? subject;
-  return template
-    .replace(/\{THEME\}/g,   theme)
-    .replace(/\{GRADE\}/g,   gradeLabel)
-    .replace(/\{SUBJECT\}/g, subjectLabel);
+function readPromptFile(parts: string[]): string {
+  return readFileSync(join(process.cwd(), ...parts), 'utf-8');
 }
 
-// ── Stage 1: テーマ詳細化プロンプト（インライン） ─────────────
-function buildEnrichPrompt(theme: string, gradeLabel: string, subjectLabel: string, subject: string): string {
-  const subjectGuidance: Record<string, string> = {
-    science: `理科の観点で考える：力の向き・大きさ・物体の動き・現象の因果関係を具体的に。SVGで描くべき矢印・物体・軌跡を明示。`,
-    math:    `算数・数学の観点で考える：座標軸・数値・図形の頂点座標を正確に計算。グリッドの必要性・縮尺・ラベルの位置を明示。`,
-    social:  `社会科の観点で考える：時系列・地理的位置関係・統計の比率を正確に。年号・地名・数値の正確さを最優先に明示。`,
-  };
-  return `あなたは教育SVGアニメーションの設計専門家です。
-以下のテーマを教えるためのSVGアニメーション仕様を設計してください。
+// ── Stage 1 JSON スキーマ ──────────────────────────────────────
+// 成功ケース: 教育設計の完全なJSON
+const stage1SuccessSchema = z.object({
+  meta: z.object({
+    grade_input:        z.string(),
+    stage:              z.enum(['stage_a', 'stage_b', 'stage_c']),
+    subject:            z.string(),
+    subject_note:       z.string().nullable().optional(),
+    furigana_required:  z.boolean(),
+  }),
+  content: z.object({
+    concept_name:        z.string(),
+    concept_name_simple: z.string(),
+    one_line_summary:    z.string(),
+    keywords: z.array(z.object({
+      term:       z.string(),
+      reading:    z.string().optional(),
+      definition: z.string(),
+    })),
+    teaching_flow: z.array(z.object({
+      step:           z.number(),
+      title:          z.string(),
+      explanation:    z.string(),
+      animation_hint: z.string(),
+    })),
+    key_points: z.array(z.string()),
+  }),
+  concept_check: z.object({
+    misconceptions: z.array(z.object({
+      wrong_idea: z.string(),
+      correction: z.string(),
+    })),
+    quiz: z.array(z.object({
+      question:            z.string(),
+      choices:             z.array(z.string()),
+      answer_index:        z.number(),
+      difficulty:          z.enum(['easy', 'normal', 'hard']),
+      is_trick_question:   z.boolean(),
+      explanation_correct: z.string(),
+      explanation_wrong:   z.string(),
+    })),
+  }),
+  design: z.object({
+    animation_style: z.enum(['step', 'loop', 'interactive']),
+    color_theme:     z.string(),
+    complexity:      z.enum(['simple', 'standard', 'detailed']),
+  }),
+});
 
-テーマ: ${theme}
-学年: ${gradeLabel}
-教科: ${subjectLabel}
+// 確認が必要ケース: 質問と選択肢
+const stage1ClarificationSchema = z.object({
+  status:             z.literal('needs_clarification'),
+  round:              z.number().optional(),
+  issue:              z.string().optional(),
+  message:            z.string(),
+  options:            z.array(z.string()),
+  options_available:  z.boolean(),
+});
 
-${subjectGuidance[subject] ?? ''}
+// エラーケース: 学習内容として不適切
+const stage1ErrorSchema = z.object({
+  error:      z.literal(true),
+  reason:     z.string(),
+  suggestion: z.string(),
+});
 
-【重要】テーマが多少抽象的・広めでも、ユーザーに質問せず、あなた自身で具体化してください。
-- 学年と教科を踏まえ、その学年の学習指導要領で最も典型的な「1つの単元・1つの概念」に自動で絞る
-- 例: "電気" + 小3・4年生 → 「豆電球と乾電池の電気の通り道」
-- 例: "電気" + 中学生 → 「オームの法則（電圧・電流・抵抗）」
-- 略語・タイプミスは最も可能性の高い意味で解釈する（例: "光合性" → "光合成"）
-- 必ず仕様書を出力すること。質問文や「〇〇についてもう少し教えてください」のような返答は禁止。
+type Stage1Success       = z.infer<typeof stage1SuccessSchema>;
+type Stage1Clarification = z.infer<typeof stage1ClarificationSchema>;
+type Stage1Error         = z.infer<typeof stage1ErrorSchema>;
+type Stage1Result =
+  | { kind: 'success';       data: Stage1Success }
+  | { kind: 'clarification'; data: Stage1Clarification }
+  | { kind: 'error';         data: Stage1Error }
+  | { kind: 'parse_failed';  rawText: string };
 
-以下の形式で簡潔に出力してください（合計200〜400文字）:
-【核心概念】このアニメーションで示す1つの重要な概念（具体的に絞り込む）
-【SVG要素】描くべき主要な図形・要素（3〜5個）
-【アニメーション】CSSキーフレームで実現する動き（1〜2個）
-【ラベル】SVG内に必ず表示する日本語テキスト
-【ポイント】教育的に正確な要点（3つ）`;
-}
-
-async function enrichThemeWithAI(theme: string, grade: string, subject: string): Promise<string> {
-  const gradeLabel   = GRADE_LABEL[grade]   ?? grade;
-  const subjectLabel = SUBJECT_LABEL[subject] ?? subject;
-  const enrichPrompt = buildEnrichPrompt(theme, gradeLabel, subjectLabel, subject);
-  // Stage 1 は最大8秒でタイムアウト → 失敗してもフォールバックで継続
-  const controller = new AbortController();
-  const timer = setTimeout(() => controller.abort(), 8000);
-  try {
-    // Stage 1: Gemini 2.0 Flash（高速・低コスト・JSON出力得意）
-    const spec = await completeOpenRouter(
-      MODEL_ROUTER['stage1-fast'],
-      [{ role: 'user', content: enrichPrompt }],
-      { maxTokens: 400, temperature: 0.3, signal: controller.signal },
-    );
-    return spec.trim();
-  } catch (err) {
-    console.warn('[generate-animation] Stage1 詳細化スキップ（フォールバック）:', err);
-    // Stage 1 失敗・タイムアウト時はオリジナルのテーマをそのまま使用
-    return theme;
-  } finally {
-    clearTimeout(timer);
+// ── JSON 抽出（モデルが ```json ... ``` で囲む場合に対応） ────
+function extractJson(raw: string): string {
+  const m = raw.match(/```(?:json)?\s*([\s\S]+?)```/i);
+  if (m?.[1]) return m[1].trim();
+  // 先頭の { から最後の } まで抜き出す
+  const first = raw.indexOf('{');
+  const last  = raw.lastIndexOf('}');
+  if (first !== -1 && last !== -1 && last > first) {
+    return raw.slice(first, last + 1).trim();
   }
+  return raw.trim();
 }
 
 // ── HTML 抽出（モデルが ```html ... ``` で囲む場合に対応） ────
 function extractHtml(raw: string): string {
-  // コードブロックがあれば中身だけ取り出す
   const m = raw.match(/```(?:html)?\s*([\s\S]+?)```/i);
   if (m?.[1]) return m[1].trim();
-  // コードブロックなしの場合はそのまま（<!DOCTYPE から始まる想定）
   const docStart = raw.indexOf('<!DOCTYPE');
   if (docStart !== -1) return raw.slice(docStart).trim();
   return raw.trim();
+}
+
+// ── Stage 1 実行 ──────────────────────────────────────────────
+async function runStage1(prompt: string, grade: string, subject: string): Promise<Stage1Result> {
+  const gradeLabel   = GRADE_LABEL[grade]   ?? grade;
+  const subjectLabel = SUBJECT_LABEL[subject] ?? subject;
+
+  let systemPrompt: string;
+  try {
+    systemPrompt = readPromptFile(STAGE1_PROMPT_PATH);
+  } catch (err) {
+    console.error('[Stage1] テンプレート読み込みエラー:', err);
+    return { kind: 'parse_failed', rawText: '' };
+  }
+
+  const userMessage = `学年: ${gradeLabel}
+科目: ${subjectLabel}
+ユーザー指示: ${prompt}`;
+
+  // Stage 1 は最大25秒でタイムアウト（JSON生成は時間がかかる）
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), 25000);
+
+  let rawText: string;
+  try {
+    rawText = await completeOpenRouter(
+      MODEL_ROUTER['stage1-fast'],
+      [
+        { role: 'system', content: systemPrompt },
+        { role: 'user',   content: userMessage  },
+      ],
+      { maxTokens: 4000, temperature: 0.3, signal: controller.signal },
+    );
+  } catch (err) {
+    console.warn('[Stage1] API失敗:', err);
+    return { kind: 'parse_failed', rawText: '' };
+  } finally {
+    clearTimeout(timer);
+  }
+
+  // JSON パース
+  const jsonText = extractJson(rawText);
+  let parsed: unknown;
+  try {
+    parsed = JSON.parse(jsonText);
+  } catch (err) {
+    console.warn('[Stage1] JSON パース失敗:', err);
+    return { kind: 'parse_failed', rawText };
+  }
+
+  // スキーマ判定（順序: error → clarification → success）
+  const errParse = stage1ErrorSchema.safeParse(parsed);
+  if (errParse.success) return { kind: 'error', data: errParse.data };
+
+  const clarParse = stage1ClarificationSchema.safeParse(parsed);
+  if (clarParse.success) return { kind: 'clarification', data: clarParse.data };
+
+  const okParse = stage1SuccessSchema.safeParse(parsed);
+  if (okParse.success) return { kind: 'success', data: okParse.data };
+
+  console.warn('[Stage1] スキーマ検証失敗:', okParse.error.issues.slice(0, 3));
+  return { kind: 'parse_failed', rawText };
+}
+
+// ── Stage 2 実行（構造化JSON入力） ────────────────────────────
+async function runStage2Structured(stage1Data: Stage1Success): Promise<string> {
+  const systemPrompt = readPromptFile(STAGE2_PROMPT_PATH);
+  const userMessage  = `以下のJSON仕様に従って、教育用HTMLファイルを1つ生成してください。
+
+\`\`\`json
+${JSON.stringify(stage1Data, null, 2)}
+\`\`\``;
+
+  return await completeOpenRouter(
+    MODEL_ROUTER['stage2-html'],
+    [
+      { role: 'system', content: systemPrompt },
+      { role: 'user',   content: userMessage  },
+    ],
+    { maxTokens: 8000, temperature: 0.7 },
+  );
+}
+
+// ── Stage 2 フォールバック（legacy_unified.md 使用） ──────────
+async function runStage2Legacy(prompt: string, grade: string, subject: string): Promise<string> {
+  const template     = readPromptFile(LEGACY_PROMPT_PATH);
+  const gradeLabel   = GRADE_LABEL[grade]   ?? grade;
+  const subjectLabel = SUBJECT_LABEL[subject] ?? subject;
+  const systemPrompt = template
+    .replace(/\{THEME\}/g,   prompt)
+    .replace(/\{GRADE\}/g,   gradeLabel)
+    .replace(/\{SUBJECT\}/g, subjectLabel);
+
+  return await completeOpenRouter(
+    MODEL_ROUTER['stage2-html'],
+    [{ role: 'user', content: systemPrompt }],
+    { maxTokens: 8000, temperature: 0.7 },
+  );
 }
 
 // ── POST /api/generate-animation ─────────────────────────────
@@ -197,7 +324,7 @@ export async function POST(req: NextRequest) {
 
   const { prompt, grade, subject, theme } = parsed.data;
 
-  // 3. 認証チェック（未ログインでも生成可能だがレート制限が厳しくなる）
+  // 3. 認証チェック
   const session = await auth();
 
   // 4. レート制限
@@ -225,7 +352,7 @@ export async function POST(req: NextRequest) {
     }
   }
 
-  // 5. ログイン必須チェック（DBに保存するためログインが必要）
+  // 5. ログイン必須チェック
   if (!session?.user?.id) {
     return NextResponse.json(
       { ok: false, error: { code: 'UNAUTHORIZED', message: 'ログインすると生成結果を保存できます。ログインしてください。' } },
@@ -233,48 +360,75 @@ export async function POST(req: NextRequest) {
     );
   }
 
-  // 6. Stage 1: テーマを詳細仕様に変換（安い・速いモデルで高速処理）
-  const enrichedSpec = await enrichThemeWithAI(prompt, grade, subject);
+  // 6. Stage 1 実行
+  const stage1 = await runStage1(prompt, grade, subject);
 
-  // 7. プロンプト組み立て（教科別テンプレート × 詳細仕様を使用）
-  let systemPrompt: string;
-  try {
-    systemPrompt = buildPrompt(enrichedSpec, grade, subject);
-  } catch (err) {
-    console.error('[generate-animation] プロンプト読み込みエラー:', err);
+  // 6a. エラー: 学習内容として不適切（科目に無関係・難易度不一致など）
+  if (stage1.kind === 'error') {
     return NextResponse.json(
-      { ok: false, error: { code: 'SERVER_ERROR', message: 'サーバーエラーが発生しました。' } },
-      { status: 500 },
+      {
+        ok: false,
+        error: {
+          code:    'CONCEPT_NOT_SUITABLE',
+          message: stage1.data.reason,
+        },
+        suggestion: stage1.data.suggestion,
+      },
+      { status: 422 },
     );
   }
 
-  // 8. Stage 2: OpenRouter でHTML生成（stage2-html = Claude Haiku 3.5: HTML品質高・指示追従性◎）
+  // 6b. 確認が必要: 選択肢付き質問を返す
+  if (stage1.kind === 'clarification') {
+    return NextResponse.json(
+      {
+        ok: false,
+        error: {
+          code:    'CLARIFICATION_NEEDED',
+          message: stage1.data.message,
+        },
+        options:          stage1.data.options,
+        optionsAvailable: stage1.data.options_available,
+      },
+      { status: 422 },
+    );
+  }
+
+  // 7. Stage 2 実行
   let rawHtml: string;
   try {
-    rawHtml = await completeOpenRouter(
-      MODEL_ROUTER['stage2-html'],
-      [{ role: 'user', content: systemPrompt }],
-      { maxTokens: 8000, temperature: 0.7 },
-    );
+    if (stage1.kind === 'success') {
+      // 正常パス: 構造化JSONで生成
+      rawHtml = await runStage2Structured(stage1.data);
+    } else {
+      // フォールバック: Stage1失敗時は legacy_unified.md でレガシー生成
+      console.warn('[generate-animation] Stage1失敗 → legacyフォールバック');
+      rawHtml = await runStage2Legacy(prompt, grade, subject);
+    }
   } catch (err) {
-    console.error('[generate-animation] OpenRouter エラー:', err);
+    console.error('[generate-animation] Stage2 エラー:', err);
     return NextResponse.json(
       { ok: false, error: { code: 'AI_ERROR', message: 'AIが一時的に利用できません。しばらくしてからお試しください。' } },
       { status: 502 },
     );
   }
 
-  // 9. HTMLを抽出
+  // 8. HTMLを抽出
   const htmlContent = extractHtml(rawHtml);
   if (!htmlContent.toLowerCase().includes('<html') && !htmlContent.toLowerCase().includes('<!doctype')) {
-    // 追加質問（テーマが曖昧な場合）として返ってきた可能性
+    // HTMLが返らなかった場合は確認質問の可能性として扱う
     return NextResponse.json(
-      { ok: false, error: { code: 'CLARIFICATION_NEEDED', message: htmlContent } },
+      {
+        ok: false,
+        error:            { code: 'CLARIFICATION_NEEDED', message: htmlContent },
+        options:          [],
+        optionsAvailable: false,
+      },
       { status: 422 },
     );
   }
 
-  // 10. DB保存
+  // 9. DB保存
   let animationId: string;
   try {
     animationId = await createAnimation({
