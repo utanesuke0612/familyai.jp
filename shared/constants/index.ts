@@ -15,6 +15,14 @@ export const SITE = {
 } as const;
 
 // ─── カテゴリ設定 ──────────────────────────────────────────────
+// ─── うごくAI教室 関連 ────────────────────────────────────────
+/** 生成 HTML の最大サイズ（バイト・約1MB）
+ *  これを超えた生成結果は 413 を返して DB 保存しない（コスト・容量保護）。 */
+export const MAX_GENERATED_HTML_BYTES = 1_048_576;
+
+/** ユーザー入力テーマの最大文字数（zodスキーマと共通使用）。 */
+export const MAX_ANIMATION_PROMPT = 500;
+
 /** カテゴリの表示ラベル */
 export const CATEGORY_LABEL: Record<ContentCategory, string> = {
   'education': '学習・教育',

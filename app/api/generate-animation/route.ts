@@ -39,7 +39,7 @@ import { Redis }                      from '@upstash/redis';
 import { auth }                       from '@/lib/auth';
 import { verifyCsrf }                 from '@/lib/csrf';
 import { completeOpenRouter, completeOpenRouterWithUsage } from '@/lib/ai/providers/openrouter';
-import { MODEL_ROUTER }               from '@/shared';
+import { MODEL_ROUTER, MAX_GENERATED_HTML_BYTES, MAX_ANIMATION_PROMPT } from '@/shared';
 import { createAnimation }            from '@/lib/repositories/animations';
 
 export const runtime  = 'nodejs';
@@ -47,7 +47,7 @@ export const maxDuration = 60;
 
 // ── 入力バリデーション ─────────────────────────────────────────
 const bodySchema = z.object({
-  prompt:  z.string().min(1).max(500),
+  prompt:  z.string().min(1).max(MAX_ANIMATION_PROMPT),
   grade:   z.enum(['elem-low', 'elem-high', 'middle']),
   subject: z.enum(['science', 'math', 'social']),
   theme:   z.string().min(1).max(200),
@@ -456,6 +456,27 @@ export async function POST(req: NextRequest) {
         optionsAvailable: false,
       },
       { status: 422 },
+    );
+  }
+
+  // 8.5. HTMLサイズ上限チェック（コスト・容量保護）
+  const htmlBytes = Buffer.byteLength(htmlContent, 'utf-8');
+  if (htmlBytes > MAX_GENERATED_HTML_BYTES) {
+    console.warn('[generate-animation] HTML size limit exceeded:', {
+      size:     htmlBytes,
+      maxBytes: MAX_GENERATED_HTML_BYTES,
+      userId:   session.user.id,
+      theme,
+    });
+    return NextResponse.json(
+      {
+        ok: false,
+        error: {
+          code:    'HTML_TOO_LARGE',
+          message: '生成されたアニメーションが大きすぎます。テーマを簡潔にしてもう一度お試しください。',
+        },
+      },
+      { status: 413 },
     );
   }
 
