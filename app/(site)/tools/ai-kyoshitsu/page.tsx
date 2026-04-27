@@ -289,15 +289,6 @@ export default function AiKyoshitsuPage() {
             />
           )}
 
-          {/* 追加質問（テーマが曖昧な場合） */}
-          {view.kind === 'clarification' && (
-            <ClarificationPanel
-              message={view.message}
-              subjectColor={subjectColor}
-              onBack={() => setView({ kind: 'idle' })}
-            />
-          )}
-
           {/* 回数制限 */}
           {view.kind === 'rate-limit' && (
             <RateLimitPanel
@@ -330,6 +321,7 @@ export default function AiKyoshitsuPage() {
               isGenerating={isGenerating}
               onGenerate={handleGenerate}
               subjectColor={subjectColor}
+              clarificationMessage={view.kind === 'clarification' ? view.message : undefined}
             />
           )}
 
@@ -612,38 +604,6 @@ function ResultPanel({
 }
 
 /* ─────────────────────────────────────────────────────
-   追加質問パネル（テーマが曖昧な場合）
-───────────────────────────────────────────────────── */
-
-function ClarificationPanel({ message, subjectColor, onBack }: {
-  message:      string;
-  subjectColor: { bg: string; text: string; border: string };
-  onBack:       () => void;
-}) {
-  return (
-    <div
-      className="rounded-3xl p-6 flex flex-col gap-4"
-      style={{ background: 'rgba(255,255,255,0.9)', boxShadow: 'var(--shadow-warm-sm)', border: `1.5px solid ${subjectColor.border}33` }}
-    >
-      <div className="flex items-center gap-2">
-        <span className="text-xl">🤔</span>
-        <span className="font-bold text-sm" style={{ color: 'var(--color-brown)' }}>AIからの確認</span>
-      </div>
-      <p className="text-sm leading-relaxed" style={{ color: 'var(--color-brown)', whiteSpace: 'pre-wrap' }}>
-        {message}
-      </p>
-      <button
-        onClick={onBack}
-        className="self-start rounded-full px-4 py-2 text-xs font-bold transition-opacity hover:opacity-70"
-        style={{ background: subjectColor.border, color: '#fff' }}
-      >
-        ← テーマを入力し直す
-      </button>
-    </div>
-  );
-}
-
-/* ─────────────────────────────────────────────────────
    回数制限パネル
 ───────────────────────────────────────────────────── */
 
@@ -815,14 +775,16 @@ function ErrorPanel({ message, onRetry }: { message: string; onRetry: () => void
 
 function AiInputPanel({
   prompt, setPrompt, grade, subject, isGenerating, onGenerate, subjectColor,
+  clarificationMessage,
 }: {
-  prompt:       string;
-  setPrompt:    (v: string) => void;
-  grade:        Grade;
-  subject:      Subject;
-  isGenerating: boolean;
-  onGenerate:   () => void;
-  subjectColor: { bg: string; text: string; border: string };
+  prompt:                string;
+  setPrompt:             (v: string) => void;
+  grade:                 Grade;
+  subject:               Subject;
+  isGenerating:          boolean;
+  onGenerate:            () => void;
+  subjectColor:          { bg: string; text: string; border: string };
+  clarificationMessage?: string;
 }) {
   const canSubmit = !!prompt.trim() && !isGenerating;
 
@@ -838,8 +800,37 @@ function AiInputPanel({
         </span>
       </div>
 
+      {/* AIからの確認メッセージ（テーマが解釈不能な場合のみ表示） */}
+      {clarificationMessage && (
+        <div
+          className="rounded-2xl px-4 py-3 flex flex-col gap-2"
+          style={{
+            background: `linear-gradient(135deg, ${subjectColor.border}15, ${subjectColor.bg})`,
+            border:     `1.5px solid ${subjectColor.border}55`,
+          }}
+        >
+          <div className="flex items-center gap-2">
+            <span className="text-lg">🤔</span>
+            <span className="text-xs font-bold" style={{ color: subjectColor.text }}>
+              AIからの確認
+            </span>
+          </div>
+          <p
+            className="text-sm leading-relaxed"
+            style={{ color: 'var(--color-brown)', whiteSpace: 'pre-wrap' }}
+          >
+            {clarificationMessage}
+          </p>
+          <p className="text-xs" style={{ color: 'var(--color-brown-muted)' }}>
+            ↓ 下のテーマを書き直してもう一度送ってください
+          </p>
+        </div>
+      )}
+
       <p className="text-sm leading-relaxed" style={{ color: 'var(--color-brown-light)' }}>
-        上のカードからテーマを選ぶか、自由にテーマを入力してください。
+        {clarificationMessage
+          ? 'テーマをもう少し具体的に入力してください。'
+          : '上のカードからテーマを選ぶか、自由にテーマを入力してください。'}
       </p>
 
       {/* 学年・教科バッジ */}
