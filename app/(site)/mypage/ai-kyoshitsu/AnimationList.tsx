@@ -141,11 +141,26 @@ function PreviewModal({ item, onClose }: { item: AnimationItem; onClose: () => v
         </div>
 
         {/* iframe */}
-        <div ref={wrapRef} style={{ background: '#fdf6ee', ...(isFullscreen ? { overflowY: 'auto', height: '100vh' } : {}) }}>
-          <iframe ref={iframeRef} src={`/api/animations/${item.id}`}
-            width="100%" height={iframeHeight}
-            style={{ display: 'block', border: 'none' }}
-            title={item.theme} sandbox="allow-scripts allow-same-origin" />
+        <div
+          ref={wrapRef}
+          style={{
+            background: '#fdf6ee',
+            ...(isFullscreen ? { height: '100vh', overflow: 'hidden' } : {}),
+          }}
+        >
+          <iframe
+            ref={iframeRef}
+            src={`/api/animations/${item.id}`}
+            width="100%"
+            height={isFullscreen ? undefined : iframeHeight}
+            style={{
+              display: 'block',
+              border:  'none',
+              ...(isFullscreen ? { height: '100vh', width: '100%' } : {}),
+            }}
+            title={item.theme}
+            sandbox="allow-scripts allow-same-origin"
+          />
         </div>
       </div>
     </div>

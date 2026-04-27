@@ -64,6 +64,36 @@ design        : animation_style・color_theme・complexity
 - 外部ファイル（CSS・JS）は作らない。1ファイルに全て含める
 - Google Fontsのみ外部読み込みを許可する
 - 画像ファイルは使わない。全てCSS・SVG・絵文字で表現する
+- **必ずviewportメタタグを設定**: `<meta name="viewport" content="width=device-width, initial-scale=1">`
+- **bodyのmargin/paddingは0**にして、コンテナで余白を制御すること（iframe表示で左右に隙間ができないため）
+
+### iframe親への高さ通知（必須）
+
+生成HTMLは親ページの `<iframe>` 内に表示されるため、コンテンツの高さが
+動的に変わった時（クイズの選択・アニメーション進行など）に親へ通知する
+スクリプトを `</body>` 直前に必ず含めること:
+
+```html
+<script>
+  function notifyParentHeight() {
+    if (window.parent !== window) {
+      window.parent.postMessage(
+        { iframeHeight: document.documentElement.scrollHeight },
+        '*'
+      );
+    }
+  }
+  window.addEventListener('load', notifyParentHeight);
+  window.addEventListener('resize', notifyParentHeight);
+  // 動的コンテンツの変化（クイズ進行など）に対応
+  const ro = new ResizeObserver(notifyParentHeight);
+  ro.observe(document.body);
+  // クリックで内容が変わるケースに備えて50ms後にも再通知
+  document.addEventListener('click', () => setTimeout(notifyParentHeight, 50));
+</script>
+```
+
+このスクリプトは省略禁止。必ず含めること。
 
 ---
 

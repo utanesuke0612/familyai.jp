@@ -401,13 +401,25 @@ function PreviewPanel({
           {isFs ? '⊠ 閉じる' : '⛶ 全画面'}
         </button>
       </div>
-      <div ref={wrapRef} style={{ background: '#fdf6ee', ...(isFs ? { overflowY: 'auto', height: '100vh' } : {}) }}>
+      <div
+        ref={wrapRef}
+        style={{
+          background: '#fdf6ee',
+          ...(isFs ? { height: '100vh', overflow: 'hidden' } : {}),
+        }}
+      >
         {theme.previewUrl ? (
           <iframe
             ref={iframeRef}
             src={theme.previewUrl}
-            width="100%" height={iframeHeight}
-            style={{ display: 'block', border: 'none' }}
+            width="100%"
+            // 全画面時はiframe自体が100vh+内部スクロール、通常時はpostMessage高さ
+            height={isFs ? undefined : iframeHeight}
+            style={{
+              display: 'block',
+              border:  'none',
+              ...(isFs ? { height: '100vh', width: '100%' } : {}),
+            }}
             title={theme.name}
             sandbox="allow-scripts allow-same-origin"
             loading="lazy"
@@ -585,14 +597,24 @@ function ResultPanel({
         </div>
       </div>
 
-      {/* iframe — 全画面時はスクロール可能にする */}
-      <div ref={wrapRef} style={{ background: '#fdf6ee', ...(isFs ? { overflowY: 'auto', height: '100vh' } : {}) }}>
+      {/* iframe — 全画面時はiframe自体が100vh+内部スクロール、通常時はpostMessage高さ */}
+      <div
+        ref={wrapRef}
+        style={{
+          background: '#fdf6ee',
+          ...(isFs ? { height: '100vh', overflow: 'hidden' } : {}),
+        }}
+      >
         <iframe
           ref={iframeRef}
           src={`/api/animations/${id}`}
           width="100%"
-          height={iframeHeight}
-          style={{ display: 'block', border: 'none' }}
+          height={isFs ? undefined : iframeHeight}
+          style={{
+            display: 'block',
+            border:  'none',
+            ...(isFs ? { height: '100vh', width: '100%' } : {}),
+          }}
           title={themeLabel}
           sandbox="allow-scripts allow-same-origin"
         />
