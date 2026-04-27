@@ -276,24 +276,45 @@ async function runStage2Structured(stage1Data: Stage1Success): Promise<string> {
 ${JSON.stringify(stage1Data, null, 2)}
 \`\`\``;
 
-  // プロンプトキャッシュ: システムプロンプト（~5,000トークン）を5分間キャッシュ
-  // 2回目以降のリクエストでは入力コスト 90% 削減（$3/1M → $0.30/1M）
-  const result = await completeOpenRouterWithUsage(
-    MODEL_ROUTER['stage2-html'],
-    [
-      {
-        role: 'system',
-        content: [
-          { type: 'text', text: systemPrompt, cache_control: { type: 'ephemeral' } },
-        ],
-      },
-      { role: 'user', content: userMessage },
-    ],
-    // maxTokens: 16000, temperature: 0.5 - スケルトン回避＋クイズ5問完全実装
-    { maxTokens: 16000, temperature: 0.5 },
-  );
+  // Stage 2 タイムアウト: Vercel 60秒制限を考慮し 45秒で切る
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), 45000);
+  const startedAt = Date.now();
+
+  let result;
+  try {
+    // プロンプトキャッシュ: システムプロンプト（~5,000トークン）を5分間キャッシュ
+    // 2回目以降のリクエストでは入力コスト 90% 削減（$3/1M → $0.30/1M）
+    result = await completeOpenRouterWithUsage(
+      MODEL_ROUTER['stage2-html'],
+      [
+        {
+          role: 'system',
+          content: [
+            { type: 'text', text: systemPrompt, cache_control: { type: 'ephemeral' } },
+          ],
+        },
+        { role: 'user', content: userMessage },
+      ],
+      // maxTokens: 16000, temperature: 0.5 - スケルトン回避＋クイズ5問完全実装
+      { maxTokens: 16000, temperature: 0.5, signal: controller.signal },
+    );
+  } catch (err) {
+    const elapsed = Date.now() - startedAt;
+    const isAbort = (err as Error)?.name === 'AbortError';
+    console.error('[Stage2] OpenRouter エラー詳細:', {
+      elapsed_ms: elapsed,
+      isAbort,
+      errName:    (err as Error)?.name,
+      errMessage: (err as Error)?.message?.slice(0, 500),
+    });
+    throw err;
+  } finally {
+    clearTimeout(timer);
+  }
 
   // キャッシュ効果のログ出力（Vercelログで運用観測用）
+  const elapsed = Date.now() - startedAt;
   if (result.usage) {
     const u = result.usage;
     const cacheRead   = u.cache_read_input_tokens ?? 0;
@@ -301,7 +322,9 @@ ${JSON.stringify(stage1Data, null, 2)}
     const promptTokens = u.prompt_tokens ?? 0;
     const completionTokens = u.completion_tokens ?? 0;
     const cacheHit = cacheRead > 0 ? `✅ HIT(${cacheRead}t)` : cacheWrite > 0 ? `🆕 WRITE(${cacheWrite}t)` : '❌ MISS';
-    console.log(`[Stage2] cache=${cacheHit} prompt=${promptTokens}t completion=${completionTokens}t`);
+    console.log(`[Stage2] cache=${cacheHit} prompt=${promptTokens}t completion=${completionTokens}t elapsed=${elapsed}ms`);
+  } else {
+    console.log(`[Stage2] elapsed=${elapsed}ms (usage not available)`);
   }
 
   return result.content;
@@ -317,11 +340,18 @@ async function runStage2Legacy(prompt: string, grade: string, subject: string): 
     .replace(/\{GRADE\}/g,   gradeLabel)
     .replace(/\{SUBJECT\}/g, subjectLabel);
 
-  return await completeOpenRouter(
-    MODEL_ROUTER['stage2-html'],
-    [{ role: 'user', content: systemPrompt }],
-    { maxTokens: 16000, temperature: 0.5 },
-  );
+  // タイムアウト 45秒（Vercel 60秒制限内）
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), 45000);
+  try {
+    return await completeOpenRouter(
+      MODEL_ROUTER['stage2-html'],
+      [{ role: 'user', content: systemPrompt }],
+      { maxTokens: 16000, temperature: 0.5, signal: controller.signal },
+    );
+  } finally {
+    clearTimeout(timer);
+  }
 }
 
 // ── POST /api/generate-animation ─────────────────────────────
@@ -425,23 +455,41 @@ export async function POST(req: NextRequest) {
     );
   }
 
-  // 7. Stage 2 実行
+  // 7. Stage 2 実行（構造化 → 失敗時 legacy フォールバック）
   let rawHtml: string;
-  try {
-    if (stage1.kind === 'success') {
-      // 正常パス: 構造化JSONで生成
+  if (stage1.kind === 'success') {
+    // 正常パス: 構造化JSONで生成
+    try {
       rawHtml = await runStage2Structured(stage1.data);
-    } else {
-      // フォールバック: Stage1失敗時は legacy_unified.md でレガシー生成
-      console.warn('[generate-animation] Stage1失敗 → legacyフォールバック');
-      rawHtml = await runStage2Legacy(prompt, grade, subject);
+    } catch (structuredErr) {
+      // Stage 2 構造化が失敗 → legacy で再試行
+      const errMsg = (structuredErr as Error)?.message?.slice(0, 200);
+      console.warn('[generate-animation] Stage2構造化失敗 → legacyフォールバック:', errMsg);
+      try {
+        rawHtml = await runStage2Legacy(prompt, grade, subject);
+      } catch (legacyErr) {
+        console.error('[generate-animation] Stage2 legacy も失敗:', {
+          structuredErr: errMsg,
+          legacyErr:     (legacyErr as Error)?.message?.slice(0, 200),
+        });
+        return NextResponse.json(
+          { ok: false, error: { code: 'AI_ERROR', message: 'AIが一時的に利用できません。しばらくしてからお試しください。' } },
+          { status: 502 },
+        );
+      }
     }
-  } catch (err) {
-    console.error('[generate-animation] Stage2 エラー:', err);
-    return NextResponse.json(
-      { ok: false, error: { code: 'AI_ERROR', message: 'AIが一時的に利用できません。しばらくしてからお試しください。' } },
-      { status: 502 },
-    );
+  } else {
+    // Stage 1 が parse_failed の場合: 最初から legacy で生成
+    console.warn('[generate-animation] Stage1失敗 → legacyフォールバック');
+    try {
+      rawHtml = await runStage2Legacy(prompt, grade, subject);
+    } catch (err) {
+      console.error('[generate-animation] Stage2 legacy エラー:', (err as Error)?.message?.slice(0, 200));
+      return NextResponse.json(
+        { ok: false, error: { code: 'AI_ERROR', message: 'AIが一時的に利用できません。しばらくしてからお試しください。' } },
+        { status: 502 },
+      );
+    }
   }
 
   // 8. HTMLを抽出
