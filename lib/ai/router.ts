@@ -2,14 +2,19 @@
  * lib/ai/router.ts
  * familyai.jp — AI モデルルーター（サーバー専用）
  *
- * `type` パラメータに応じて MODEL_ROUTER から最適なモデルを選択し、
- * OpenRouter プロバイダー経由でストリーム生成を実行する。
+ * `type` パラメータに応じてモデルを選択し OpenRouter 経由でストリーム生成。
+ *
+ * モデル選択の優先順位:
+ *   1. 管理画面で chatModel が設定されていれば最優先（type を問わず使用）
+ *   2. それ以外は MODEL_ROUTER[type] に従う
+ *   3. fallback で MODEL_ROUTER.fallback
  *
  * コスト超過時の自動ダウングレードも担当:
  *   text-quality が要求されても月間コストが上限に近い場合 → text-simple に降格
  */
 
-import { MODEL_ROUTER, type ModelRouterType } from '@/shared';
+import { MODEL_ROUTER, type ModelRouterType, AI_KYOSHITSU_DEFAULTS } from '@/shared';
+import { getAiConfig } from '@/lib/config/ai-config';
 import { streamOpenRouter, type OpenRouterMessage, type StreamOptions } from './providers/openrouter';
 
 export interface RouteAIOptions extends StreamOptions {
@@ -32,7 +37,17 @@ export async function routeAI(
       ? 'text-simple'
       : type;
 
-  const model = MODEL_ROUTER[effectiveType] ?? MODEL_ROUTER.fallback;
+  // 管理画面で chatModel が DEFAULTS と異なる値に設定されていれば最優先
+  const cfg = await getAiConfig();
+  const adminOverride =
+    cfg.chatModel && cfg.chatModel !== AI_KYOSHITSU_DEFAULTS.chatModel
+      ? cfg.chatModel
+      : null;
+
+  const model =
+    adminOverride
+    ?? MODEL_ROUTER[effectiveType]
+    ?? MODEL_ROUTER.fallback;
 
   return streamOpenRouter(model, messages, {
     maxTokens:   options.maxTokens,
