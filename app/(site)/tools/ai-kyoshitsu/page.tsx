@@ -154,6 +154,18 @@ export default function AiKyoshitsuPage() {
             >
               📚 学習・教育
             </span>
+            <Link
+              href="/mypage/ai-kyoshitsu"
+              className="rounded-full px-4 py-2 transition-opacity hover:opacity-80 ml-auto"
+              style={{
+                background: 'linear-gradient(135deg, #ff8c42, #ffa563)',
+                color:      '#fff',
+                boxShadow:  '0 2px 8px rgba(255,140,66,0.35)',
+              }}
+              title="過去に生成したアニメーションを再表示できます（コスト削減）"
+            >
+              📂 AI教室履歴を見る
+            </Link>
           </div>
 
           <div className="grid gap-8 lg:grid-cols-[minmax(0,1.3fr)_minmax(280px,0.7fr)] lg:items-start">

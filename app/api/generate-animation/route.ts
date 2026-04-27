@@ -66,28 +66,28 @@ const SUBJECT_LABEL: Record<string, string> = {
 };
 
 // ── Redis / Ratelimit lazy init ────────────────────────────────
+// レート制限ポリシー（コスト削減のため）:
+//   - 未ログイン: 利用不可（401 UNAUTHORIZED）
+//   - 無料ユーザー: 3回/日（userId単位）
+//   - プレミアム:   100回/日（userId単位）
+//   - Admin:        無制限（ADMIN_EMAIL 環境変数で指定）
 let _redis:   Redis | null = null;
-let _rlAnon:  Ratelimit | null = null;
 let _rlFree:  Ratelimit | null = null;
 let _rlPro:   Ratelimit | null = null;
 
 function getRatelimiters() {
   if (!process.env.UPSTASH_REDIS_REST_URL || !process.env.UPSTASH_REDIS_REST_TOKEN) return null;
   if (!_redis) _redis = Redis.fromEnv();
-  if (!_rlAnon) {
-    _rlAnon = new Ratelimit({ redis: _redis, limiter: Ratelimit.slidingWindow(100, '1 d'), prefix: 'ratelimit:anim:anon' }); // TODO: テスト用 → 本番は 3
-    _rlFree = new Ratelimit({ redis: _redis, limiter: Ratelimit.slidingWindow(100, '1 d'), prefix: 'ratelimit:anim:free' }); // TODO: テスト用 → 本番は 5
+  if (!_rlFree) {
+    _rlFree = new Ratelimit({ redis: _redis, limiter: Ratelimit.slidingWindow(3,   '1 d'), prefix: 'ratelimit:anim:free' });
     _rlPro  = new Ratelimit({ redis: _redis, limiter: Ratelimit.slidingWindow(100, '1 d'), prefix: 'ratelimit:anim:pro'  });
   }
-  return { anon: _rlAnon!, free: _rlFree!, pro: _rlPro! };
+  return { free: _rlFree!, pro: _rlPro! };
 }
 
-function getClientIp(req: NextRequest): string {
-  return (
-    req.headers.get('x-forwarded-for')?.split(',')[0]?.trim() ??
-    req.headers.get('x-real-ip') ??
-    '127.0.0.1'
-  );
+function isAdminEmail(email?: string | null): boolean {
+  const adminEmail = process.env.ADMIN_EMAIL;
+  return !!adminEmail && !!email && email === adminEmail;
 }
 
 // ── プロンプトテンプレート ─────────────────────────────────────
@@ -348,40 +348,41 @@ export async function POST(req: NextRequest) {
 
   const { prompt, grade, subject, theme } = parsed.data;
 
-  // 3. 認証チェック
+  // 3. 認証チェック（未ログインは即ブロック）
   const session = await auth();
-
-  // 4. レート制限
-  const ratelimiters = getRatelimiters();
-  if (ratelimiters) {
-    const ip = getClientIp(req);
-    let limiter  = ratelimiters.anon;
-    let limitKey = ip;
-
-    if (session?.user?.id) {
-      const plan = session.user.plan ?? 'free';
-      limiter  = plan === 'premium' ? ratelimiters.pro : ratelimiters.free;
-      limitKey = session.user.id;
-    }
-
-    const { success } = await limiter.limit(limitKey);
-    if (!success) {
-      const message = session?.user?.id
-        ? '本日の生成回数の上限に達しました。明日またお試しください。'
-        : '1日の生成回数の上限（3回）に達しました。ログインするとより多く使えます。';
-      return NextResponse.json(
-        { ok: false, error: { code: 'RATE_LIMIT_EXCEEDED', message } },
-        { status: 429 },
-      );
-    }
-  }
-
-  // 5. ログイン必須チェック
   if (!session?.user?.id) {
     return NextResponse.json(
-      { ok: false, error: { code: 'UNAUTHORIZED', message: 'ログインすると生成結果を保存できます。ログインしてください。' } },
+      {
+        ok: false,
+        error: {
+          code:    'UNAUTHORIZED',
+          message: 'AI教室を利用するにはログインが必要です。ログインしてください。',
+        },
+      },
       { status: 401 },
     );
+  }
+
+  // 4. Admin判定（無制限利用）
+  const isAdmin = isAdminEmail(session.user.email);
+
+  // 5. レート制限（Admin以外）
+  if (!isAdmin) {
+    const ratelimiters = getRatelimiters();
+    if (ratelimiters) {
+      const plan    = session.user.plan ?? 'free';
+      const limiter = plan === 'premium' ? ratelimiters.pro : ratelimiters.free;
+      const { success } = await limiter.limit(session.user.id);
+      if (!success) {
+        const message = plan === 'premium'
+          ? '本日の生成回数の上限（100回）に達しました。明日またお試しください。'
+          : '本日の生成回数の上限（3回）に達しました。プレミアムプランで100回/日まで利用できます。';
+        return NextResponse.json(
+          { ok: false, error: { code: 'RATE_LIMIT_EXCEEDED', message } },
+          { status: 429 },
+        );
+      }
+    }
   }
 
   // 6. Stage 1 実行
