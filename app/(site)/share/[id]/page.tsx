@@ -14,6 +14,13 @@ import { getAnimationByIdCached } from '@/lib/repositories/animations';
 import { SITE }          from '@/shared';
 import ShareButtons      from './ShareButtons';
 
+/**
+ * ISR: アニメーションは生成後 immutable のため、長めにキャッシュしてOK。
+ * 1時間ごとに再検証することで、シェアURLの大量アクセス時の DB 負荷を削減。
+ * （iframe 配信先 /api/animations/:id 側も Cache-Control で同様にキャッシュ済み）
+ */
+export const revalidate = 3600;
+
 // ── 定数 ─────────────────────────────────────────────────────
 const SUBJECT_LABEL: Record<string, string> = {
   science: '🔬 理科',
