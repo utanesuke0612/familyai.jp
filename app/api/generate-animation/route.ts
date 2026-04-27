@@ -37,7 +37,7 @@ import { Ratelimit }                  from '@upstash/ratelimit';
 import { Redis }                      from '@upstash/redis';
 import { auth }                       from '@/lib/auth';
 import { verifyCsrf }                 from '@/lib/csrf';
-import { completeOpenRouter }         from '@/lib/ai/providers/openrouter';
+import { completeOpenRouter, completeOpenRouterWithUsage } from '@/lib/ai/providers/openrouter';
 import { MODEL_ROUTER }               from '@/shared';
 import { createAnimation }            from '@/lib/repositories/animations';
 
@@ -258,7 +258,7 @@ async function runStage1(prompt: string, grade: string, subject: string): Promis
   return { kind: 'parse_failed', rawText };
 }
 
-// ── Stage 2 実行（構造化JSON入力） ────────────────────────────
+// ── Stage 2 実行（構造化JSON入力 + プロンプトキャッシュ） ──────
 async function runStage2Structured(stage1Data: Stage1Success): Promise<string> {
   const systemPrompt = readPromptFile(STAGE2_PROMPT_PATH);
   const userMessage  = `以下のJSON仕様に従って、教育用HTMLファイルを1つ生成してください。
@@ -270,16 +270,35 @@ async function runStage2Structured(stage1Data: Stage1Success): Promise<string> {
 ${JSON.stringify(stage1Data, null, 2)}
 \`\`\``;
 
-  return await completeOpenRouter(
+  // プロンプトキャッシュ: システムプロンプト（~5,000トークン）を5分間キャッシュ
+  // 2回目以降のリクエストでは入力コスト 90% 削減（$3/1M → $0.30/1M）
+  const result = await completeOpenRouterWithUsage(
     MODEL_ROUTER['stage2-html'],
     [
-      { role: 'system', content: systemPrompt },
-      { role: 'user',   content: userMessage  },
+      {
+        role: 'system',
+        content: [
+          { type: 'text', text: systemPrompt, cache_control: { type: 'ephemeral' } },
+        ],
+      },
+      { role: 'user', content: userMessage },
     ],
-    // maxTokens: 16000 (8000→16000) - クイズ5問+完全実装で必要
-    // temperature: 0.5 (0.7→0.5) - スケルトン回避のため確定的な出力を促す
+    // maxTokens: 16000, temperature: 0.5 - スケルトン回避＋クイズ5問完全実装
     { maxTokens: 16000, temperature: 0.5 },
   );
+
+  // キャッシュ効果のログ出力（Vercelログで運用観測用）
+  if (result.usage) {
+    const u = result.usage;
+    const cacheRead   = u.cache_read_input_tokens ?? 0;
+    const cacheWrite  = u.cache_creation_input_tokens ?? 0;
+    const promptTokens = u.prompt_tokens ?? 0;
+    const completionTokens = u.completion_tokens ?? 0;
+    const cacheHit = cacheRead > 0 ? `✅ HIT(${cacheRead}t)` : cacheWrite > 0 ? `🆕 WRITE(${cacheWrite}t)` : '❌ MISS';
+    console.log(`[Stage2] cache=${cacheHit} prompt=${promptTokens}t completion=${completionTokens}t`);
+  }
+
+  return result.content;
 }
 
 // ── Stage 2 フォールバック（legacy_unified.md 使用） ──────────

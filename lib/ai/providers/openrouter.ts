@@ -6,32 +6,74 @@
  * 独自の SSE 形式（`data: {"delta":"..."}` / `data: [DONE]`）に変換して返す。
  */
 
+/**
+ * メッセージ内のコンテンツブロック。
+ * Anthropicプロンプトキャッシュ用に cache_control を指定可能。
+ */
+export interface OpenRouterContentBlock {
+  type:           'text';
+  text:           string;
+  /** Anthropicモデルのみ対応。同じテキストの2回目以降のリクエストでコスト90%削減 */
+  cache_control?: { type: 'ephemeral' };
+}
+
+export type OpenRouterMessageContent = string | OpenRouterContentBlock[];
+
 export interface OpenRouterMessage {
   role:    'system' | 'user' | 'assistant';
-  content: string;
+  content: OpenRouterMessageContent;
 }
 
 export interface StreamOptions {
-  maxTokens?: number;
+  maxTokens?:   number;
   temperature?: number;
-  signal?: AbortSignal;
+  signal?:      AbortSignal;
 }
 
 export interface CompleteOptions {
-  maxTokens?: number;
+  maxTokens?:   number;
   temperature?: number;
-  signal?: AbortSignal;
+  signal?:      AbortSignal;
+  /** 使用統計を取得（キャッシュヒット計測用） */
+  returnUsage?: boolean;
+}
+
+/** モデルの使用統計（キャッシュヒット率の計測に使う） */
+export interface UsageStats {
+  prompt_tokens?:                   number;
+  completion_tokens?:               number;
+  total_tokens?:                    number;
+  /** キャッシュから読まれたトークン数（Anthropicのみ） */
+  cache_read_input_tokens?:         number;
+  /** キャッシュに書き込まれたトークン数（Anthropicのみ・1.25倍料金） */
+  cache_creation_input_tokens?:     number;
 }
 
 /**
  * OpenRouter API を呼び出してテキストを一括で返す（非ストリーミング）。
  * HTML 生成など、全文を受け取ってから処理する用途向け。
+ *
+ * messages の content に `cache_control: { type: 'ephemeral' }` を含む
+ * ContentBlock 配列を渡すと、Anthropicモデルのプロンプトキャッシュが有効化される。
  */
 export async function completeOpenRouter(
   model:    string,
   messages: OpenRouterMessage[],
   options:  CompleteOptions = {},
 ): Promise<string> {
+  const result = await completeOpenRouterWithUsage(model, messages, options);
+  return result.content;
+}
+
+/**
+ * completeOpenRouter のキャッシュ統計付きバージョン。
+ * キャッシュヒット率を計測したい場合はこちらを使用。
+ */
+export async function completeOpenRouterWithUsage(
+  model:    string,
+  messages: OpenRouterMessage[],
+  options:  CompleteOptions = {},
+): Promise<{ content: string; usage?: UsageStats }> {
   const apiKey  = process.env.OPENROUTER_API_KEY;
   const appUrl  = process.env.OPENROUTER_APP_URL  ?? 'https://familyai.jp';
   const appName = process.env.OPENROUTER_APP_NAME ?? 'familyai.jp';
@@ -53,6 +95,8 @@ export async function completeOpenRouter(
       stream:      false,
       max_tokens:  options.maxTokens  ?? 8000,
       temperature: options.temperature ?? 0.7,
+      // キャッシュヒット情報を含めてもらう
+      usage:       { include: true },
     }),
     signal: options.signal,
   });
@@ -64,10 +108,11 @@ export async function completeOpenRouter(
 
   const json = await res.json() as {
     choices?: Array<{ message?: { content?: string } }>;
+    usage?:   UsageStats;
   };
   const content = json.choices?.[0]?.message?.content ?? '';
   if (!content) throw new Error('OpenRouter から空のレスポンスが返りました。');
-  return content;
+  return { content, usage: json.usage };
 }
 
 /**
