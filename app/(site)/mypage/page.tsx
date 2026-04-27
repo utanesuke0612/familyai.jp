@@ -278,21 +278,6 @@ export default async function MyPage() {
                 🌱 無料で登録 → AI教室・履歴・メモ帳が使えます
               </Link>
             )}
-            {plan === 'free' && (
-              <div
-                className="mt-5 rounded-2xl p-4 text-sm leading-relaxed"
-                style={{
-                  background: 'linear-gradient(135deg, #fff8e1, #fff3cd)',
-                  border:     '1.5px solid #ffd54f',
-                  color:      '#7a5000',
-                }}
-              >
-                <p className="font-bold">👑 プレミアムプランで AI教室を 100回/日に拡大！</p>
-                <p className="mt-1 text-xs" style={{ color: '#a07830' }}>
-                  プレミアム機能は準備中です。リリース時にお知らせします。
-                </p>
-              </div>
-            )}
             {plan === 'premium' && (
               <p className="mt-5 text-center text-sm font-semibold" style={{ color: 'var(--color-brown)' }}>
                 👑 プレミアムプランをご利用いただきありがとうございます！
