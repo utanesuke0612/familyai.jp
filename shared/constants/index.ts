@@ -158,3 +158,12 @@ export const ROUTES = {
     rss:          '/api/rss',
   },
 } as const;
+
+// ─── AI教室パイプラインのモデル一覧・プリセット・範囲制限（再エクスポート） ──
+export {
+  AI_MODEL_OPTIONS,
+  AI_CONFIG_PRESETS,
+  AI_CONFIG_RANGES,
+  findAiModel,
+} from './ai-models';
+export type { AiModelOption, AiConfigPreset } from './ai-models';

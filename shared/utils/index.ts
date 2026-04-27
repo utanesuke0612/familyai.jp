@@ -148,3 +148,7 @@ export function buildQueryString(
   const s = sp.toString();
   return s ? `?${s}` : '';
 }
+
+// ─── AI教室コスト試算（再エクスポート） ────────────────────
+export { estimateAiCost, estimateMonthlyCost, TOKEN_ESTIMATE } from './ai-cost';
+export type { AiCostBreakdown } from './ai-cost';

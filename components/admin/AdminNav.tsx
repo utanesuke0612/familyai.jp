@@ -53,6 +53,9 @@ export function AdminNav({ email }: AdminNavProps) {
           <Link href="/admin/users" style={navLinkStyle}>
             👥 会員管理
           </Link>
+          <Link href="/admin/ai-config" style={navLinkStyle}>
+            🛠️ AI設定
+          </Link>
           <Link href="/" target="_blank" style={navLinkStyle}>
             🌐 サイトを見る
           </Link>

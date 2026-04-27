@@ -17,6 +17,8 @@ import {
   timestamp,
   index,
   uniqueIndex,
+  jsonb,
+  serial,
 } from 'drizzle-orm/pg-core';
 
 // ─── articles ─────────────────────────────────────────────────
@@ -149,6 +151,37 @@ export const userAnimations = pgTable(
   }),
 );
 
+// ─── ai_config（管理画面で編集可能なAI教室パイプライン設定）───
+/**
+ * AI教室パイプラインのランタイム設定（DB管理）。
+ * 1行限定（id=1 固定）。partial 値を JSONB で保存し、
+ * 未設定フィールドは shared/constants の AI_KYOSHITSU_DEFAULTS を使う。
+ */
+export const aiConfig = pgTable('ai_config', {
+  id:        integer('id').primaryKey().default(1),  // 常に 1
+  config:    jsonb('config').notNull(),               // Partial<AiKyoshitsuConfig>
+  updatedAt: timestamp('updated_at').defaultNow().notNull(),
+  updatedBy: varchar('updated_by', { length: 255 }),  // 管理者メール
+});
+
+/**
+ * AI教室設定の変更履歴（直近 10 件保持の運用想定）。
+ * PUT 時に1件 INSERT、リセット時に1件 INSERT（空 config）。
+ */
+export const aiConfigHistory = pgTable(
+  'ai_config_history',
+  {
+    id:         serial('id').primaryKey(),
+    config:     jsonb('config').notNull(),                              // 変更後の値（partial）
+    changedAt:  timestamp('changed_at').defaultNow().notNull(),
+    changedBy:  varchar('changed_by', { length: 255 }),
+    changeNote: varchar('change_note', { length: 500 }),                // 変更理由（任意）
+  },
+  (t) => ({
+    idxChangedAt: index('ai_config_history_changed_at_idx').on(t.changedAt),
+  }),
+);
+
 // ─── 型エクスポート（Drizzle の推論型） ───────────────────────
 export type Article              = typeof articles.$inferSelect;
 export type NewArticle           = typeof articles.$inferInsert;
@@ -160,3 +193,7 @@ export type UserVocabBookmark    = typeof userVocabBookmarks.$inferSelect;
 export type NewUserVocabBookmark = typeof userVocabBookmarks.$inferInsert;
 export type UserAnimation        = typeof userAnimations.$inferSelect;
 export type NewUserAnimation     = typeof userAnimations.$inferInsert;
+export type AiConfigRow          = typeof aiConfig.$inferSelect;
+export type NewAiConfigRow       = typeof aiConfig.$inferInsert;
+export type AiConfigHistoryRow   = typeof aiConfigHistory.$inferSelect;
+export type NewAiConfigHistoryRow = typeof aiConfigHistory.$inferInsert;
