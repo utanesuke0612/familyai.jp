@@ -142,6 +142,15 @@ const stage1SuccessSchema = z.object({
     })),
   }),
   design: z.object({
+    /**
+     * presentation_style: 表現スタイル
+     * - animated:        動き・変化を見せるアニメーション中心
+     * - static_diagram:  数値・関係・構造をじっくり見せる静的SVG図
+     * - static_simple:   アイコン+テキスト中心の暗記カード形式
+     * - mixed:           静的全体図 + 部分アニメーション
+     * 旧バージョンとの互換性のため省略可（その場合は animated 扱い）
+     */
+    presentation_style: z.enum(['animated', 'static_diagram', 'static_simple', 'mixed']).optional().default('animated'),
     animation_style: z.enum(['step', 'loop', 'interactive']),
     color_theme:     z.string(),
     complexity:      z.enum(['simple', 'standard', 'detailed']),

@@ -266,7 +266,125 @@ stage_b・stage_c では ruby タグは使わない。
 
 ---
 
+## 表現スタイル（presentation_style）の実装ルール【最重要】
+
+JSONの `design.presentation_style` の値に応じて、HTMLの作り方を切り替えること。
+これは「アニメーションが常に最適とは限らない」ため、内容に応じた表現を選ぶ仕組み。
+
+### 🎬 presentation_style = "animated"
+
+- 従来通りの実装（次セクション「アニメーション実装」参照）
+- teaching_flowをstep/loop/interactiveでアニメーション化
+- 動きと変化で理解を促す
+
+### 🖼️ presentation_style = "static_diagram"
+
+- **アニメーションを使わず、静的なSVG図に集中**
+- teaching_flowは1つの大きな図にまとめる（ステップ送りボタン不要）
+- 図形・矢印・ラベルを多用して構造や関係を明示
+- 数値・座標・寸法を正確に書き込む
+- 凡例・補足ラベルを充実させる
+- アニメーションが必要な場合でも、ホバー時のハイライト程度に留める
+
+実装イメージ:
+```html
+<section class="diagram">
+  <svg viewBox="0 0 800 600" width="100%" height="auto">
+    <!-- 主要な図（じっくり見せる） -->
+    <!-- 全要素を最初から表示 -->
+    <!-- 数値ラベル・矢印・凡例を完全に配置 -->
+  </svg>
+  <div class="diagram-caption">
+    <!-- teaching_flow の内容を文章で補足 -->
+  </div>
+</section>
+```
+
+### 📋 presentation_style = "static_simple"
+
+- **アイコン+テキスト中心の見やすい構成**
+- 大きな絵文字・アイコンと簡潔な説明文
+- カード形式で並列に配置
+- SVG/アニメーションは最小限
+- 暗記カード・対比表のような視覚効果
+
+実装イメージ:
+```html
+<section class="concept-cards">
+  <div class="concept-card">
+    <div class="concept-icon">🌱</div>
+    <h3>種子（しゅし）</h3>
+    <p>植物の元になるもの。土の中で芽を出す準備をしている。</p>
+  </div>
+  <div class="concept-card">
+    <div class="concept-icon">🌿</div>
+    <h3>双葉（ふたば）</h3>
+    <p>種から最初に出てくる2枚の葉。栄養を蓄えている。</p>
+  </div>
+  <!-- ... -->
+</section>
+```
+
+### 🔀 presentation_style = "mixed"
+
+- **静的全体図 + 部分アニメーション** の組み合わせ
+- 最初に全体構造を静的SVGで提示（じっくり観察）
+- 一部の要素にだけ控えめなアニメーションを付ける
+- 「動きを見る」「全体を見る」の切替ボタンを用意してもよい
+
+実装イメージ:
+```html
+<section class="overview">
+  <!-- 静的な全体図 -->
+  <svg viewBox="0 0 800 600">
+    <!-- 構造・配置を完全に表示 -->
+    <!-- アニメーションする要素には class="animate-target" -->
+  </svg>
+</section>
+<section class="motion-detail">
+  <!-- 一部だけ動く -->
+  <svg>...</svg>
+  <p>緑の矢印が水の流れを示します</p>
+</section>
+```
+
+### presentation_style 別のCSS指針
+
+```css
+/* static_diagram の場合 */
+[data-style="static_diagram"] .animation-area {
+  /* アニメーション要素は控えめにする */
+  animation: none;
+}
+[data-style="static_diagram"] svg {
+  /* 図を大きく見せる */
+  max-height: 600px;
+}
+
+/* static_simple の場合 */
+[data-style="static_simple"] .concept-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+}
+[data-style="static_simple"] .concept-icon {
+  font-size: 4rem;
+  text-align: center;
+}
+```
+
+### 重要：presentation_style と animation_style の関係
+
+- `presentation_style = "animated"`：animation_style に従ってアニメーション実装
+- `presentation_style = "static_diagram"`：animation_style は無視（または最小限）
+- `presentation_style = "static_simple"`：animation_style は無視（カード表示のみ）
+- `presentation_style = "mixed"`：animation_style を一部要素にのみ適用
+
+---
+
 ## アニメーション実装（animation_styleに応じて切り替える）
+
+※ 以下は presentation_style = "animated" または "mixed" の場合に適用
 
 ### step型（プロセス・手順の説明）
 
