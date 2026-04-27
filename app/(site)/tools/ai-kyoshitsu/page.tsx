@@ -296,7 +296,12 @@ export default function AiKyoshitsuPage() {
 
           {/* プレビュー（カード選択） */}
           {view.kind === 'preview' && (
-            <PreviewPanel theme={view.theme} grade={grade} subjectColor={subjectColor} />
+            <PreviewPanel
+              theme={view.theme}
+              grade={grade}
+              subjectColor={subjectColor}
+              onClose={() => { setView({ kind: 'idle' }); setPrompt(''); }}
+            />
           )}
 
           {/* 生成中ローディング */}
@@ -363,13 +368,16 @@ export default function AiKyoshitsuPage() {
 ───────────────────────────────────────────────────── */
 
 function PreviewPanel({
-  theme, grade, subjectColor,
+  theme, grade, subjectColor, onClose,
 }: {
-  theme: Theme;
-  grade: Grade;
+  theme:        Theme;
+  grade:        Grade;
   subjectColor: { bg: string; text: string; border: string };
+  onClose:      () => void;
 }) {
   const [iframeHeight, setIframeHeight] = useState(560);
+  const [isSaving,     setIsSaving]     = useState(false);
+  const [copied,       setCopied]       = useState(false);
   const iframeRef = useRef<HTMLIFrameElement>(null);
   const wrapRef   = useRef<HTMLDivElement>(null);
   const [isFs, setIsFs] = useState(false);
@@ -395,23 +403,126 @@ function PreviewPanel({
     else { (wrapRef.current ?? iframeRef.current)?.requestFullscreen({ navigationUI: 'hide' }).catch(() => {}); }
   }
 
+  // 静的テーマのシェアURL: previewUrl をそのまま共有（無ければ tools ページへフォールバック）
+  function getShareUrl(): string {
+    return theme.previewUrl ?? `${window.location.origin}/tools/ai-kyoshitsu`;
+  }
+
+  function shareToX() {
+    const text = `「${theme.name}」をfamilyai.jp AI教室で見たよ！🎬`;
+    const url = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(getShareUrl())}&hashtags=familyai,AI教室`;
+    window.open(url, '_blank', 'noopener,noreferrer,width=600,height=500');
+  }
+
+  function shareToLine() {
+    const url = `https://line.me/R/msg/text/?${encodeURIComponent(`「${theme.name}」のアニメーション解説 ${getShareUrl()}`)}`;
+    window.open(url, '_blank', 'noopener,noreferrer');
+  }
+
+  async function copyShareLink() {
+    try {
+      await navigator.clipboard.writeText(getShareUrl());
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    } catch {
+      const input = document.createElement('input');
+      input.value = getShareUrl();
+      document.body.appendChild(input);
+      input.select();
+      document.execCommand('copy');
+      document.body.removeChild(input);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    }
+  }
+
+  async function handleSave() {
+    if (!theme.previewUrl) return;
+    setIsSaving(true);
+    try { await downloadHtmlFromUrl(theme.previewUrl, theme.name); }
+    finally { setIsSaving(false); }
+  }
+
+  const canShare = !!theme.previewUrl;
+
   return (
     <div className="rounded-3xl overflow-hidden" style={{ boxShadow: 'var(--shadow-warm)', border: `2px solid ${subjectColor.border}44` }}>
-      <div className="flex items-center justify-between px-5 py-4" style={{ background: `${subjectColor.border}18` }}>
-        <div className="flex items-center gap-3">
+      <div className="flex items-center justify-between gap-3 px-5 py-4 flex-wrap" style={{ background: `${subjectColor.border}18` }}>
+        <div className="flex items-center gap-3 min-w-0">
           <span className="text-2xl">{theme.icon}</span>
-          <div>
-            <div className="font-bold text-sm" style={{ color: 'var(--color-brown)' }}>{theme.name}</div>
+          <div className="min-w-0">
+            <div className="font-bold text-sm truncate" style={{ color: 'var(--color-brown)' }}>{theme.name}</div>
             <div className="text-xs" style={{ color: 'var(--color-brown-light)' }}>{GRADE_LABEL[grade]}</div>
           </div>
         </div>
-        <button
-          onClick={toggleFullscreen}
-          className="rounded-xl px-3 py-2 text-xs font-semibold transition-opacity hover:opacity-70"
-          style={{ background: 'rgba(255,255,255,0.85)', color: 'var(--color-brown)', boxShadow: 'var(--shadow-warm-sm)' }}
-        >
-          {isFs ? '⊠ 閉じる' : '⛶ 全画面'}
-        </button>
+        <div className="flex items-center gap-1.5 flex-wrap justify-end">
+          {/* シェアボタン群（previewUrl がある時のみ表示） */}
+          {canShare && (
+            <>
+              <button
+                onClick={shareToX}
+                className="rounded-xl px-3 py-2 text-xs font-semibold transition-opacity hover:opacity-70"
+                style={{ background: '#000', color: '#fff', boxShadow: 'var(--shadow-warm-sm)' }}
+                title="Xでシェア"
+              >
+                𝕏 シェア
+              </button>
+              <button
+                onClick={shareToLine}
+                className="rounded-xl px-3 py-2 text-xs font-semibold transition-opacity hover:opacity-70"
+                style={{ background: '#06c755', color: '#fff', boxShadow: 'var(--shadow-warm-sm)' }}
+                title="LINEでシェア"
+              >
+                💬 LINE
+              </button>
+              <button
+                onClick={copyShareLink}
+                className="rounded-xl px-3 py-2 text-xs font-semibold transition-all"
+                style={{
+                  background: copied ? '#22c55e' : 'rgba(255,255,255,0.85)',
+                  color:      copied ? '#fff'    : 'var(--color-brown)',
+                  boxShadow:  'var(--shadow-warm-sm)',
+                }}
+                title="リンクコピー"
+              >
+                {copied ? '✓ コピー済' : '🔗 コピー'}
+              </button>
+
+              {/* 区切り線 */}
+              <span
+                aria-hidden="true"
+                className="mx-1 h-6 w-px"
+                style={{ background: 'rgba(0,0,0,0.18)' }}
+              />
+            </>
+          )}
+
+          {/* 操作ボタン群 */}
+          {canShare && (
+            <button
+              onClick={handleSave}
+              disabled={isSaving}
+              className="rounded-xl px-3 py-2 text-xs font-semibold transition-opacity hover:opacity-70 disabled:opacity-50"
+              style={{ background: subjectColor.border, color: '#fff', boxShadow: 'var(--shadow-warm-sm)' }}
+            >
+              {isSaving ? '⏳ 保存中…' : '💾 保存'}
+            </button>
+          )}
+          <button
+            onClick={toggleFullscreen}
+            className="rounded-xl px-3 py-2 text-xs font-semibold transition-opacity hover:opacity-70"
+            style={{ background: 'rgba(255,255,255,0.85)', color: 'var(--color-brown)', boxShadow: 'var(--shadow-warm-sm)' }}
+          >
+            {isFs ? '⊠ 閉じる' : '⛶ 全画面'}
+          </button>
+          <button
+            onClick={onClose}
+            className="rounded-xl px-3 py-2 text-xs font-semibold transition-opacity hover:opacity-70"
+            style={{ background: 'rgba(255,255,255,0.85)', color: 'var(--color-brown-light)', boxShadow: 'var(--shadow-warm-sm)' }}
+          >
+            ✕ 閉じる
+          </button>
+        </div>
       </div>
       <div
         ref={wrapRef}
@@ -507,10 +618,22 @@ function GeneratingPanel({ themeLabel, subjectColor }: { themeLabel: string; sub
    生成結果パネル（iframe表示）
 ───────────────────────────────────────────────────── */
 
-/** HTMLをBlobダウンロードする共通ユーティリティ */
+/** HTMLをBlobダウンロードする共通ユーティリティ（DB保存のアニメーション用） */
 async function downloadAnimationHtml(id: string, filename: string) {
   const res  = await fetch(`/api/animations/${id}`);
   const html = await res.text();
+  triggerHtmlDownload(html, filename);
+}
+
+/** 任意のURLからHTMLをダウンロード（静的テーマ・S3など外部URL対応） */
+async function downloadHtmlFromUrl(url: string, filename: string) {
+  const res  = await fetch(url);
+  const html = await res.text();
+  triggerHtmlDownload(html, filename);
+}
+
+/** Blob ダウンロード共通処理 */
+function triggerHtmlDownload(html: string, filename: string) {
   const blob = new Blob([html], { type: 'text/html' });
   const url  = URL.createObjectURL(blob);
   const a    = document.createElement('a');
