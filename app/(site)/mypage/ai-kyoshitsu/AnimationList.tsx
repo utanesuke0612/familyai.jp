@@ -210,9 +210,12 @@ function PreviewModal({ item, onClose }: { item: AnimationItem; onClose: () => v
           ref={wrapRef}
           style={{
             background: '#fdf6ee',
+            position: 'relative',
             ...(isFullscreen ? { height: '100vh', overflow: 'hidden' } : {}),
           }}
         >
+          {/* 全画面時の閉じるボタン（スマホ用 — ESC キーが無いため必須） */}
+          {isFullscreen && <FullscreenCloseButton onClick={handleFullscreen} />}
           <iframe
             ref={iframeRef}
             src={`/api/animations/${item.id}`}
@@ -229,6 +232,43 @@ function PreviewModal({ item, onClose }: { item: AnimationItem; onClose: () => v
         </div>
       </div>
     </div>
+  );
+}
+
+// ── 全画面表示時の閉じるボタン ─────────────────────────────────
+/**
+ * 全画面表示時の閉じるボタン（フローティング）
+ * - スマホには ESC キーが無いため、必ず押せる UI が必要
+ * - position: fixed で iframe の上に固定表示
+ * - タップ領域 48x48（モバイル UX ガイドライン準拠）
+ */
+function FullscreenCloseButton({ onClick }: { onClick: () => void }) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      aria-label="全画面表示を閉じる"
+      className="rounded-full transition-opacity hover:opacity-80 active:opacity-60"
+      style={{
+        position:  'fixed',
+        top:       'max(16px, env(safe-area-inset-top, 16px))',
+        right:     'max(16px, env(safe-area-inset-right, 16px))',
+        zIndex:    2147483647,
+        width:     48,
+        height:    48,
+        background:'rgba(0,0,0,0.65)',
+        color:     '#fff',
+        boxShadow: '0 4px 12px rgba(0,0,0,0.3)',
+        border:    'none',
+        fontSize:  20,
+        fontWeight:700,
+        lineHeight:'48px',
+        textAlign: 'center',
+        cursor:    'pointer',
+      }}
+    >
+      ✕
+    </button>
   );
 }
 
