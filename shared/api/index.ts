@@ -11,6 +11,8 @@ import type {
   ArticleSummary,
   Article,
   AnimationSummary,
+  AiMemoItem,
+  VocabItem,
   PaginatedResult,
   ContentCategory,
   DifficultyLevel,
@@ -221,6 +223,34 @@ export async function fetchUserAnimations(
   baseUrl: string,
 ): Promise<ApiResponse<AnimationSummary[]>> {
   return apiFetch<AnimationSummary[]>(`${baseUrl}/api/user/animations`);
+}
+
+// ─── ユーザー会員データ API ───────────────────────────────────
+
+/**
+ * GET /api/user/ai-memos
+ * ログイン会員の AI メモ一覧を取得する。
+ *
+ * @note Web 版は `lib/ai-memo-store.ts` の hook 経由で fetch するため
+ *       このエンドポイントは主に iOS/Android モバイル・外部クライアント用。
+ */
+export async function fetchUserAiMemos(
+  baseUrl: string,
+): Promise<ApiResponse<AiMemoItem[]>> {
+  return apiFetch<AiMemoItem[]>(`${baseUrl}/api/user/ai-memos`);
+}
+
+/**
+ * GET /api/user/vocab-bookmarks
+ * ログイン会員の単語ブックマーク一覧を取得する。
+ *
+ * @note Web 版は `lib/voaenglish/vocab-store.ts` の hook 経由で fetch するため
+ *       このエンドポイントは主に iOS/Android モバイル・外部クライアント用。
+ */
+export async function fetchUserVocabBookmarks(
+  baseUrl: string,
+): Promise<ApiResponse<VocabItem[]>> {
+  return apiFetch<VocabItem[]>(`${baseUrl}/api/user/vocab-bookmarks`);
 }
 
 // ─── チャット API ──────────────────────────────────────────────

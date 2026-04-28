@@ -15,19 +15,9 @@
 import { useEffect, useState, useCallback } from 'react';
 import { useSession }                        from 'next-auth/react';
 
-export type VocabItem = {
-  /** course/lesson/word をスラッシュでつないだ一意キー（小文字化） */
-  id:           string;
-  word:         string;
-  meaning:      string;
-  pron?:        string;
-  example?:     string;
-  course?:      string;
-  lesson?:      string;
-  lessonTitle?: string;
-  /** エポックミリ秒 */
-  addedAt:      number;
-};
+// 型は shared/types に統合済み。後方互換のため re-export。
+export type { VocabItem } from '@/shared/types';
+import type { VocabItem } from '@/shared/types';
 
 const CHANGE_EVENT = 'familyai:vocab-cloud-changed';
 

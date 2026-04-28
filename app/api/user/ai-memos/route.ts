@@ -16,7 +16,7 @@ import { eq, and }                     from 'drizzle-orm';
 import { auth }                        from '@/lib/auth';
 import { db, userAiMemos }             from '@/lib/db';
 import { verifyCsrf }                  from '@/lib/csrf';
-import type { AiMemoItem }             from '@/lib/ai-memo-store';
+import { toAiMemoItem }                from '@/lib/mappers/ai-memos';
 
 // ── バリデーション ──────────────────────────────────────────────
 const memoItemSchema = z.object({
@@ -42,14 +42,7 @@ export async function GET() {
       .where(eq(userAiMemos.userId, session.user.id))
       .orderBy(userAiMemos.savedAt);
 
-    const items: AiMemoItem[] = rows.map((r) => ({
-      id:           r.memoId,
-      answer:       r.answer,
-      question:     r.question,
-      articleTitle: r.articleTitle,
-      articleSlug:  r.articleSlug ?? undefined,
-      savedAt:      r.savedAt,
-    }));
+    const items = rows.map(toAiMemoItem);
 
     return NextResponse.json({ ok: true, data: items });
   } catch (err) {

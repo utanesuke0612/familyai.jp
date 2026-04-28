@@ -123,6 +123,46 @@ export interface AiKyoshitsuConfig {
   chatModel:          string;
 }
 
+// ─── AI メモ関連 ───────────────────────────────────────────────
+/**
+ * AI メモアイテム（記事ページの AI チャット応答を保存）
+ *
+ * API `/api/user/ai-memos` の data[] と 1:1 対応。
+ * DB スキーマ（lib/db/schema.ts:userAiMemos）から
+ * `lib/mappers/ai-memos.ts` の `toAiMemoItem()` で変換される。
+ */
+export interface AiMemoItem {
+  id:           string;
+  answer:       string;
+  question:     string;
+  articleTitle: string;
+  articleSlug?: string;
+  /** 保存時刻 unix ms */
+  savedAt:      number;
+}
+
+// ─── 単語ブックマーク関連 ──────────────────────────────────────
+/**
+ * 単語ブックマーク（VOA English 等の単語）
+ *
+ * API `/api/user/vocab-bookmarks` の data[] と 1:1 対応。
+ * DB スキーマ（lib/db/schema.ts:userVocabBookmarks）から
+ * `lib/mappers/vocab-bookmarks.ts` の `toVocabItem()` で変換される。
+ */
+export interface VocabItem {
+  /** course/lesson/word をスラッシュでつないだ一意キー（小文字化） */
+  id:           string;
+  word:         string;
+  meaning:      string;
+  pron?:        string;
+  example?:     string;
+  course?:      string;
+  lesson?:      string;
+  lessonTitle?: string;
+  /** 追加時刻 unix ms */
+  addedAt:      number;
+}
+
 // ─── ユーザー関連 ──────────────────────────────────────────────
 /** 認証済みユーザーのプロファイル */
 export interface UserProfile {

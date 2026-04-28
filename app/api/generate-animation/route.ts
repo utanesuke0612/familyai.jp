@@ -218,7 +218,7 @@ async function runStage1(
   try {
     systemPrompt = readPromptFile(STAGE1_PROMPT_PATH);
   } catch (err) {
-    console.error('[Stage1] テンプレート読み込みエラー:', err);
+    console.error('[Stage1] テンプレート読み込みエラー:', err instanceof Error ? err.message : String(err));
     return { kind: 'parse_failed', rawText: '' };
   }
 
@@ -241,7 +241,7 @@ async function runStage1(
       { maxTokens: 4000, temperature: 0.3, signal: controller.signal },
     );
   } catch (err) {
-    console.warn('[Stage1] API失敗:', err);
+    console.warn('[Stage1] API失敗:', err instanceof Error ? err.message : String(err));
     return { kind: 'parse_failed', rawText: '' };
   } finally {
     clearTimeout(timer);
@@ -253,7 +253,7 @@ async function runStage1(
   try {
     parsed = JSON.parse(jsonText);
   } catch (err) {
-    console.warn('[Stage1] JSON パース失敗:', err);
+    console.warn('[Stage1] JSON パース失敗:', err instanceof Error ? err.message : String(err));
     return { kind: 'parse_failed', rawText };
   }
 
@@ -549,7 +549,7 @@ export async function POST(req: NextRequest) {
       htmlContent,
     });
   } catch (err) {
-    console.error('[generate-animation] DB保存エラー:', err);
+    console.error('[generate-animation] DB保存エラー:', err instanceof Error ? err.message : String(err));
     return NextResponse.json(
       { ok: false, error: { code: 'SERVER_ERROR', message: 'サーバーエラーが発生しました。' } },
       { status: 500 },

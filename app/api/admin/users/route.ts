@@ -15,20 +15,32 @@ import { ilike, or, eq, asc, desc, count, and } from 'drizzle-orm';
 import { requireAdmin }  from '@/lib/admin-auth';
 import { db, users }     from '@/lib/db';
 import { escapeLike }    from '@/lib/repositories/articles';
-
-const DEFAULT_PAGE_SIZE = 50;
+import { adminUsersQuerySchema } from '@/lib/schemas/users';
 
 export async function GET(req: NextRequest) {
   const check = await requireAdmin();
   if (!check.ok) return check.response;
 
-  const sp       = req.nextUrl.searchParams;
-  const search   = sp.get('search')?.trim()  ?? '';
-  const plan     = sp.get('plan')             ?? 'all';
-  const sort     = sp.get('sort')             ?? 'newest';
-  const page     = Math.max(1, Number(sp.get('page') ?? 1));
-  const pageSize = Math.min(200, Math.max(1, Number(sp.get('pageSize') ?? DEFAULT_PAGE_SIZE)));
-  const offset   = (page - 1) * pageSize;
+  // ── クエリパラメータ検証（C1: page=abc 等の NaN 攻撃防止） ──
+  const sp     = req.nextUrl.searchParams;
+  const parsed = adminUsersQuerySchema.safeParse({
+    search:   sp.get('search')   ?? undefined,
+    plan:     sp.get('plan')     ?? undefined,
+    sort:     sp.get('sort')     ?? undefined,
+    page:     sp.get('page')     ?? undefined,
+    pageSize: sp.get('pageSize') ?? undefined,
+  });
+  if (!parsed.success) {
+    return NextResponse.json(
+      {
+        ok:    false,
+        error: { code: 'INVALID_PARAMS', message: 'クエリパラメータが不正です。' },
+      },
+      { status: 400 },
+    );
+  }
+  const { search = '', plan, sort, page, pageSize } = parsed.data;
+  const offset = (page - 1) * pageSize;
 
   // ── 絞り込み条件 ──────────────────────────────────────────────
   const conditions = [];

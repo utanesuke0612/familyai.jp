@@ -104,16 +104,6 @@ export const MODEL_ROUTER = {
 
 export type ModelRouterType = Exclude<keyof typeof MODEL_ROUTER, 'fallback'>;
 
-/** @deprecated AI_MODELS → MODEL_ROUTER に移行済み */
-export const AI_MODELS = {
-  article: MODEL_ROUTER['text-simple'],
-  chat:    MODEL_ROUTER['text-simple'],
-  premium: MODEL_ROUTER['text-quality'],
-  light:   MODEL_ROUTER['text-simple'],
-} as const;
-
-export type AiModelKey = keyof typeof AI_MODELS;
-
 // ─── レート制限設定 ────────────────────────────────────────────
 export const RATE_LIMIT = {
   /** 無料ユーザー：チャット API 1時間あたり */

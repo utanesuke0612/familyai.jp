@@ -18,20 +18,9 @@
 import { useEffect, useState, useCallback } from 'react';
 import { useSession }                        from 'next-auth/react';
 
-export type AiMemoItem = {
-  /** crypto.randomUUID() */
-  id:           string;
-  /** 保存した AI の回答テキスト */
-  answer:       string;
-  /** 対応するユーザーの質問 */
-  question:     string;
-  /** 記事タイトル */
-  articleTitle: string;
-  /** 記事スラッグ（あれば） */
-  articleSlug?: string;
-  /** エポックミリ秒 */
-  savedAt:      number;
-};
+// 型は shared/types に統合済み。後方互換のため re-export。
+export type { AiMemoItem } from '@/shared/types';
+import type { AiMemoItem } from '@/shared/types';
 
 // ── API ヘルパー ──────────────────────────────────────────────────
 async function apiSave(items: AiMemoItem[]): Promise<boolean> {

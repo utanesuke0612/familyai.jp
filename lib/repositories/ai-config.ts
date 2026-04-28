@@ -7,7 +7,7 @@
  * 未設定フィールドは shared/constants の DEFAULTS が使われる。
  */
 
-import { desc, eq } from 'drizzle-orm';
+import { desc, eq, notInArray } from 'drizzle-orm';
 import { db } from '@/lib/db';
 import { aiConfig, aiConfigHistory } from '@/lib/db/schema';
 import type { AiKyoshitsuConfig } from '@/shared/types';
@@ -126,8 +126,7 @@ async function pruneHistory(): Promise<void> {
   // ただし changed_at で並べ直しているので、id 順と一致しない可能性あり
   // 安全策: NOT IN サブクエリで削除
   const recentIds = recent.map((r) => r.id);
-  // drizzle の NOT IN 構文: notInArray
-  const { notInArray } = await import('drizzle-orm');
+  // 直近 N 件以外を削除（drizzle の notInArray 演算子を使用）
   await db.delete(aiConfigHistory).where(notInArray(aiConfigHistory.id, recentIds));
   // lastId は使わないが将来 changed_at ベース剪定に切替時のヒント用に残す
   void lastId;

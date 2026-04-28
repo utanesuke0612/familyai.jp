@@ -16,7 +16,7 @@ import { eq, and }                     from 'drizzle-orm';
 import { auth }                        from '@/lib/auth';
 import { db, userVocabBookmarks }      from '@/lib/db';
 import { verifyCsrf }                  from '@/lib/csrf';
-import type { VocabItem }              from '@/lib/voaenglish/vocab-store';
+import { toVocabItem }                 from '@/lib/mappers/vocab-bookmarks';
 
 // ── バリデーション ──────────────────────────────────────────────
 const vocabItemSchema = z.object({
@@ -45,17 +45,7 @@ export async function GET() {
       .where(eq(userVocabBookmarks.userId, session.user.id))
       .orderBy(userVocabBookmarks.addedAt);
 
-    const items: VocabItem[] = rows.map((r) => ({
-      id:          r.vocabId,
-      word:        r.word,
-      meaning:     r.meaning,
-      pron:        r.pron ?? undefined,
-      example:     r.example ?? undefined,
-      course:      r.course ?? undefined,
-      lesson:      r.lesson ?? undefined,
-      lessonTitle: r.lessonTitle ?? undefined,
-      addedAt:     r.addedAt,
-    }));
+    const items = rows.map(toVocabItem);
 
     return NextResponse.json({ ok: true, data: items });
   } catch (err) {
