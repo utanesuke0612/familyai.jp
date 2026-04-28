@@ -12,6 +12,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { useAiMemoList, type AiMemoItem } from '@/lib/ai-memo-store';
 import { MarkdownContent }               from '@/components/ui/MarkdownContent';
+import { rowsToCsv }                     from '@/shared';
 
 function downloadJson(items: AiMemoItem[]) {
   const blob = new Blob([JSON.stringify(items, null, 2)], { type: 'application/json' });
@@ -19,6 +20,29 @@ function downloadJson(items: AiMemoItem[]) {
   const a    = document.createElement('a');
   a.href     = url;
   a.download = `familyai-aimemo-${new Date().toISOString().slice(0, 10)}.json`;
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  URL.revokeObjectURL(url);
+}
+
+/** CSV 形式で書き出す（R3-U3）。Excel の日本語崩れ防止のため UTF-8 BOM 付き */
+function downloadCsv(items: AiMemoItem[]) {
+  const rows = items.map((m) => ({
+    id:           m.id,
+    articleTitle: m.articleTitle,
+    articleSlug:  m.articleSlug ?? '',
+    question:     m.question,
+    answer:       m.answer,
+    savedAt:      new Date(m.savedAt).toISOString(),
+  }));
+  const csv = rowsToCsv(rows, ['id', 'articleTitle', 'articleSlug', 'question', 'answer', 'savedAt']);
+  // BOM (﻿) を先頭に付けて Excel で文字化けを防ぐ
+  const blob = new Blob(['﻿' + csv], { type: 'text/csv;charset=utf-8;' });
+  const url  = URL.createObjectURL(blob);
+  const a    = document.createElement('a');
+  a.href     = url;
+  a.download = `familyai-aimemo-${new Date().toISOString().slice(0, 10)}.csv`;
   document.body.appendChild(a);
   a.click();
   a.remove();
@@ -239,19 +263,36 @@ export default function AiMemoPage() {
             </div>
 
             {items.length > 0 && (
-              <button
-                type="button"
-                onClick={() => downloadJson(items)}
-                className="inline-flex items-center gap-2 rounded-full px-4 text-sm font-semibold"
-                style={{
-                  minHeight:  '44px',
-                  background: 'rgba(255,255,255,0.9)',
-                  color:      'var(--color-brown)',
-                  boxShadow:  'var(--shadow-warm-sm)',
-                }}
-              >
-                📥 JSONで書き出す
-              </button>
+              <div className="flex items-center gap-2 flex-wrap">
+                <button
+                  type="button"
+                  onClick={() => downloadCsv(items)}
+                  className="inline-flex items-center gap-2 rounded-full px-4 text-sm font-semibold"
+                  style={{
+                    minHeight:  '44px',
+                    background: 'rgba(255,255,255,0.9)',
+                    color:      'var(--color-brown)',
+                    boxShadow:  'var(--shadow-warm-sm)',
+                  }}
+                  title="Excelで開ける CSV 形式で書き出す"
+                >
+                  📊 CSVで書き出す
+                </button>
+                <button
+                  type="button"
+                  onClick={() => downloadJson(items)}
+                  className="inline-flex items-center gap-2 rounded-full px-4 text-sm font-semibold"
+                  style={{
+                    minHeight:  '44px',
+                    background: 'rgba(255,255,255,0.9)',
+                    color:      'var(--color-brown)',
+                    boxShadow:  'var(--shadow-warm-sm)',
+                  }}
+                  title="プログラム連携用 JSON 形式で書き出す"
+                >
+                  📥 JSONで書き出す
+                </button>
+              </div>
             )}
           </div>
         </div>

@@ -11,6 +11,7 @@
 import { useMemo } from 'react';
 import Link from 'next/link';
 import { useVocabList, type VocabItem } from '@/lib/voaenglish/vocab-store';
+import { rowsToCsv } from '@/shared';
 
 function speakEnglish(text: string) {
   if (typeof window === 'undefined') return;
@@ -29,6 +30,30 @@ function downloadJson(items: VocabItem[]) {
   const a = document.createElement('a');
   a.href = url;
   a.download = `familyai-vocab-${new Date().toISOString().slice(0, 10)}.json`;
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  URL.revokeObjectURL(url);
+}
+
+/** CSV 形式で書き出す（R3-U3）。Excel の日本語崩れ防止のため UTF-8 BOM 付き */
+function downloadCsv(items: VocabItem[]) {
+  const rows = items.map((v) => ({
+    word:        v.word,
+    meaning:     v.meaning,
+    pron:        v.pron        ?? '',
+    example:     v.example     ?? '',
+    course:      v.course      ?? '',
+    lesson:      v.lesson      ?? '',
+    lessonTitle: v.lessonTitle ?? '',
+    addedAt:     new Date(v.addedAt).toISOString(),
+  }));
+  const csv = rowsToCsv(rows, ['word', 'meaning', 'pron', 'example', 'course', 'lesson', 'lessonTitle', 'addedAt']);
+  const blob = new Blob(['﻿' + csv], { type: 'text/csv;charset=utf-8;' });
+  const url  = URL.createObjectURL(blob);
+  const a    = document.createElement('a');
+  a.href     = url;
+  a.download = `familyai-vocab-${new Date().toISOString().slice(0, 10)}.csv`;
   document.body.appendChild(a);
   a.click();
   a.remove();
@@ -125,19 +150,36 @@ export default function VocabPage() {
               </p>
             </div>
             {items.length > 0 && (
-              <button
-                type="button"
-                onClick={() => downloadJson(items)}
-                className="inline-flex items-center gap-2 rounded-full px-4 text-sm font-semibold"
-                style={{
-                  minHeight: '44px',
-                  background: 'rgba(255,255,255,0.9)',
-                  color: 'var(--color-brown)',
-                  boxShadow: 'var(--shadow-warm-sm)',
-                }}
-              >
-                📥 JSONで書き出す
-              </button>
+              <div className="flex items-center gap-2 flex-wrap">
+                <button
+                  type="button"
+                  onClick={() => downloadCsv(items)}
+                  className="inline-flex items-center gap-2 rounded-full px-4 text-sm font-semibold"
+                  style={{
+                    minHeight: '44px',
+                    background: 'rgba(255,255,255,0.9)',
+                    color: 'var(--color-brown)',
+                    boxShadow: 'var(--shadow-warm-sm)',
+                  }}
+                  title="Excelで開ける CSV 形式で書き出す"
+                >
+                  📊 CSVで書き出す
+                </button>
+                <button
+                  type="button"
+                  onClick={() => downloadJson(items)}
+                  className="inline-flex items-center gap-2 rounded-full px-4 text-sm font-semibold"
+                  style={{
+                    minHeight: '44px',
+                    background: 'rgba(255,255,255,0.9)',
+                    color: 'var(--color-brown)',
+                    boxShadow: 'var(--shadow-warm-sm)',
+                  }}
+                  title="プログラム連携用 JSON 形式で書き出す"
+                >
+                  📥 JSONで書き出す
+                </button>
+              </div>
             )}
           </div>
         </div>

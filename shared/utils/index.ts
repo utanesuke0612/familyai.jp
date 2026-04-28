@@ -149,6 +149,43 @@ export function buildQueryString(
   return s ? `?${s}` : '';
 }
 
+// ─── CSV ユーティリティ（R3-U3） ────────────────────────────
+
+/**
+ * 1セル分の値を CSV エスケープして返す。
+ * - "（ダブルクォート）が含まれる場合: 内部 " を "" に変換
+ * - ,/改行/ダブルクォートのいずれかを含む場合: " で囲む
+ * - その他: そのまま返す
+ */
+function escapeCsvCell(v: unknown): string {
+  if (v === null || v === undefined) return '';
+  let s = typeof v === 'string' ? v : String(v);
+  // 改行は LF に正規化
+  s = s.replace(/\r\n/g, '\n');
+  if (s.includes('"') || s.includes(',') || s.includes('\n')) {
+    s = '"' + s.replace(/"/g, '""') + '"';
+  }
+  return s;
+}
+
+/**
+ * 行配列を CSV テキストに変換する。
+ * - ヘッダ行は keys から自動生成
+ * - 各セルは escapeCsvCell で CSV エスケープ
+ * - Excel の日本語表示崩れ防止のため BOM 付き UTF-8（呼び出し側で付ける想定）
+ *
+ * @example
+ *   rowsToCsv(memos, ['id','question','answer','articleTitle','savedAt'])
+ */
+export function rowsToCsv<T extends Record<string, unknown>>(
+  rows: readonly T[],
+  keys: readonly (keyof T)[],
+): string {
+  const header  = keys.map((k) => escapeCsvCell(String(k))).join(',');
+  const records = rows.map((r) => keys.map((k) => escapeCsvCell(r[k])).join(','));
+  return [header, ...records].join('\n');
+}
+
 // ─── AI教室コスト試算（再エクスポート） ────────────────────
 export { estimateAiCost, estimateMonthlyCost, TOKEN_ESTIMATE } from './ai-cost';
 export type { AiCostBreakdown } from './ai-cost';
