@@ -33,8 +33,8 @@ const TOOLS_BY_CATEGORY: Array<{
     lead: '学習の習慣化、英語、宿題サポートに使えるツールです。',
     tools: [
       {
-        name: 'VOA × AI英語学習',
-        summary: 'VOA Learning English の音声と動画を AI と組み合わせて、毎日10分の英語学習を続けるためのツールです。',
+        name: 'VOA × AI ディクテーション教室',
+        summary: 'VOA（Voice of America）公式素材を聴いて・書いて・声に出すディクテーション学習。疑問はその場で AI に質問できます。',
         href: '/tools/voaenglish',
         status: '公開中',
         cta: '使ってみる',
@@ -98,16 +98,16 @@ export default function ToolsPage({ searchParams }: ToolsPageProps) {
                 className="font-display font-bold leading-tight"
                 style={{ fontSize: 'clamp(30px, 5vw, 54px)', color: 'var(--color-brown)' }}
               >
-                子どもの学びを
+                家族の学びと暮らしを
                 <br />
-                AIツールでサポート
+                AI で応援
               </h1>
               <p
                 className="max-w-2xl text-base leading-relaxed sm:text-lg"
                 style={{ color: 'var(--color-brown-light)' }}
               >
-                英語学習や教育アニメーション生成など、学習・教育に特化したAIツールを公開しています。
-                親子で一緒に、または子ども自身で活用できます。
+                英語学習・教育コンテンツ生成など、家族みんなで使える AI ツールを公開中。
+                お子さまの学習サポートから大人の学び直しまで、親子で一緒にお使いいただけます。
               </p>
             </div>
 

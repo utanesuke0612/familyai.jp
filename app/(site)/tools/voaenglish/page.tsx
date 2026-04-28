@@ -8,7 +8,7 @@ import Link from 'next/link';
 import { SITE } from '@/shared';
 
 export const metadata: Metadata = {
-  title:       `VOA × AI英語学習 | AIツール | ${SITE.name}`,
+  title:       `VOA × AI ディクテーション教室 | AIツール | ${SITE.name}`,
   description: 'VOA Learning English の Beginning / Intermediate / Advanced を、AIと組み合わせて使いやすく整理した英語学習ツールです。',
   alternates:  { canonical: `${SITE.url}/tools/voaenglish` },
 };
@@ -159,20 +159,29 @@ export default function VoaEnglishToolPage({ searchParams }: VoaEnglishToolPageP
             </span>
           </div>
 
-          <div className="grid gap-8 lg:grid-cols-[minmax(0,1.3fr)_minmax(280px,0.7fr)] lg:items-start">
+          <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_220px] lg:items-start">
             <div className="flex flex-col gap-4">
               <h1
                 className="font-display font-bold leading-tight"
-                style={{ fontSize: 'clamp(32px, 5vw, 56px)', color: 'var(--color-brown)' }}
+                style={{ fontSize: 'clamp(26px, 4vw, 44px)', color: 'var(--color-brown)' }}
               >
-                VOA × AI英語学習
+                VOA × AI ディクテーション教室
               </h1>
+              <p
+                className="max-w-2xl text-base leading-relaxed sm:text-lg font-bold"
+                style={{ color: 'var(--color-brown)' }}
+              >
+                <strong>聴いて、書いて、声に出す。繰り返すほど、英語は身につく。</strong>
+              </p>
               <p
                 className="max-w-2xl text-base leading-relaxed sm:text-lg"
                 style={{ color: 'var(--color-brown-light)' }}
               >
-                アメリカ合衆国公式国際放送局「Voice of America（VOA）」が制作する <strong>VOA Learning English</strong>（旧 Special English）を、
-                Beginning / Intermediate / Advanced の3段階で整理し、<strong>AI</strong>と組み合わせて自分のペースで学べる学習ページです。
+                <strong>ディクテーション</strong>は、五感をフル活用する学習法。<br />
+                最も効果的な英語学習法のひとつです。<br />
+                教材は <strong>VOA</strong>（Voice of America）の公式素材。<br />
+                <strong>AIサポート</strong>で、いつでもどこでも自分のペースで。<br />
+                疑問はその場で AI に質問できます。
               </p>
 
             </div>
@@ -190,12 +199,14 @@ export default function VoaEnglishToolPage({ searchParams }: VoaEnglishToolPageP
               >
                 Haste Makes Waste
               </p>
-              <div className="grid grid-cols-3 gap-3 text-center">
+              <div className="grid grid-cols-3 gap-3 text-center lg:grid-cols-1 lg:gap-2">
                 {LEVELS.map((level, index) => (
                   <Link
                     key={level.key}
                     href={selectedLevel === level.key ? '/tools/voaenglish' : `/tools/voaenglish?level=${level.key}`}
-                    className="rounded-2xl px-3 py-4 transition-[transform,box-shadow,opacity] duration-200 hover:-translate-y-1"
+                    /* lg 以上ではカード内を水平レイアウト化（高さを左説明エリアに揃えるため） */
+                    /* 絵文字・数字・ラベルが3カードで縦に揃うよう、左寄せ + 絵文字スロットを固定幅に */
+                    className="rounded-2xl px-3 py-4 transition-[transform,box-shadow,opacity] duration-200 hover:-translate-y-1 lg:flex lg:items-center lg:justify-start lg:gap-3 lg:py-2.5 lg:pl-5"
                     style={{
                       background: level.accent,
                       boxShadow: selectedLevel === level.key ? 'var(--shadow-warm-sm)' : 'none',
@@ -203,11 +214,11 @@ export default function VoaEnglishToolPage({ searchParams }: VoaEnglishToolPageP
                     }}
                     aria-pressed={selectedLevel === level.key}
                   >
-                    <div className="flex items-center justify-center gap-1.5 text-2xl">
-                      <span aria-hidden="true">{level.icon}</span>
+                    <div className="flex items-center justify-center gap-1.5 text-2xl lg:text-xl lg:gap-2 lg:flex-shrink-0">
+                      <span aria-hidden="true" className="lg:inline-block lg:w-8 lg:text-center">{level.icon}</span>
                       <span>{index + 1}</span>
                     </div>
-                    <div className="mt-1 text-xs font-semibold" style={{ color: 'var(--color-brown)' }}>
+                    <div className="mt-1 text-xs font-semibold lg:mt-0" style={{ color: 'var(--color-brown)' }}>
                       {level.level.replace(' Level', '')}
                     </div>
                   </Link>

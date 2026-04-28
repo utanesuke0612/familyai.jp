@@ -8,7 +8,7 @@ import Link from 'next/link';
 import { SITE } from '@/shared';
 
 export const metadata: Metadata = {
-  title:       `Let's Learn English with Anna | VOA × AI英語学習 | ${SITE.name}`,
+  title:       `Let's Learn English with Anna | VOA × AI ディクテーション教室 | ${SITE.name}`,
   description: 'VOAの子ども向け英語コース「Let\'s Learn English with Anna」を、AIと組み合わせて家族で学ぶための入り口です。全40レッスン、CEFR A1–A2。',
   alternates:  { canonical: `${SITE.url}/tools/voaenglish/anna` },
 };
@@ -81,7 +81,7 @@ export default function AnnaTopPage() {
                 boxShadow: 'var(--shadow-warm-sm)',
               }}
             >
-              ← VOA × AI英語学習へ戻る
+              ← VOA × AI ディクテーション教室へ戻る
             </Link>
             <span
               className="rounded-full px-4 py-2"
