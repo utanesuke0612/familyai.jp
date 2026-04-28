@@ -47,6 +47,33 @@ import type { AiKyoshitsuConfig }     from '@/shared/types';
 export const runtime  = 'nodejs';
 export const maxDuration = 60;
 
+// ── R2-K1: フォールバック設定（429 / AbortError 時の自動リトライ用） ──
+/**
+ * Gemini 2.0 Flash 共有プールの 429 / AbortError 多発に対する保険。
+ * 設定モデルが失敗 → このモデルへ 1 回だけリトライする。
+ * Anthropic は OpenRouter 共有プールの混雑から独立しており、最も安定。
+ */
+const FALLBACK_MODEL              = 'anthropic/claude-3.5-haiku';
+/** Stage1 リトライ時のタイムアウト（Haiku は Gemini より遅いので余裕を取る） */
+const FALLBACK_STAGE1_TIMEOUT_MS  = 12_000;
+/**
+ * Stage2 リトライ時のタイムアウト。
+ * Vercel 60秒制限の中で Stage1 + Stage1リトライ + Stage2 の合計を抑えるため
+ * 通常より短め（35秒）に設定。
+ */
+const FALLBACK_STAGE2_TIMEOUT_MS  = 35_000;
+/** Stage2 リトライ時の maxTokens（Haiku 80tok/s × 30s ≒ 2400 tok 程度） */
+const FALLBACK_STAGE2_MAX_TOKENS  = 3_500;
+
+/** API エラーがリトライ価値のある一過性のものか判定する */
+function isRetryableError(err: unknown): boolean {
+  if (!(err instanceof Error)) return false;
+  if (err.name === 'AbortError') return true;
+  // OpenRouter からのエラーメッセージ例: "OpenRouter API エラー: 429 ..."
+  // 429（rate limit）/ 503（service unavailable）/ 502（bad gateway）をリトライ対象に
+  return /\b(429|502|503|504)\b/.test(err.message);
+}
+
 // ── 入力バリデーション ─────────────────────────────────────────
 const bodySchema = z.object({
   prompt:  z.string().min(1).max(MAX_ANIMATION_PROMPT),
@@ -204,50 +231,45 @@ function extractHtml(raw: string): string {
   return raw.trim();
 }
 
-// ── Stage 1 実行 ──────────────────────────────────────────────
-async function runStage1(
-  prompt: string,
-  grade: string,
-  subject: string,
-  cfg: AiKyoshitsuConfig,
-): Promise<Stage1Result> {
+// ── Stage 1 API 呼び出し（retry のために model/timeout を引数化） ───
+/**
+ * Stage1 の OpenRouter API 呼び出し本体。
+ * - 成功時: 生レスポンス文字列を返す
+ * - 失敗時: API エラー（タイムアウト・429 等）は throw する。呼び出し側でリトライ判定。
+ */
+async function callStage1Api(
+  prompt:    string,
+  grade:     string,
+  subject:   string,
+  model:     string,
+  timeoutMs: number,
+): Promise<string> {
   const gradeLabel   = GRADE_LABEL[grade]   ?? grade;
   const subjectLabel = SUBJECT_LABEL[subject] ?? subject;
 
-  let systemPrompt: string;
-  try {
-    systemPrompt = readPromptFile(STAGE1_PROMPT_PATH);
-  } catch (err) {
-    console.error('[Stage1] テンプレート読み込みエラー:', err instanceof Error ? err.message : String(err));
-    return { kind: 'parse_failed', rawText: '' };
-  }
-
-  const userMessage = `学年: ${gradeLabel}
+  const systemPrompt = readPromptFile(STAGE1_PROMPT_PATH);
+  const userMessage  = `学年: ${gradeLabel}
 科目: ${subjectLabel}
 ユーザー指示: ${prompt}`;
 
-  // Stage 1 タイムアウト（cfg 経由・運用中に env で調整可能）
   const controller = new AbortController();
-  const timer = setTimeout(() => controller.abort(), cfg.stage1TimeoutMs);
-
-  let rawText: string;
+  const timer = setTimeout(() => controller.abort(), timeoutMs);
   try {
-    rawText = await completeOpenRouter(
-      cfg.stage1Model,
+    return await completeOpenRouter(
+      model,
       [
         { role: 'system', content: systemPrompt },
         { role: 'user',   content: userMessage  },
       ],
       { maxTokens: 4000, temperature: 0.3, signal: controller.signal },
     );
-  } catch (err) {
-    console.warn('[Stage1] API失敗:', err instanceof Error ? err.message : String(err));
-    return { kind: 'parse_failed', rawText: '' };
   } finally {
     clearTimeout(timer);
   }
+}
 
-  // JSON パース
+/** rawText を JSON / スキーマ検証して Stage1Result に変換する */
+function parseStage1Response(rawText: string): Stage1Result {
   const jsonText = extractJson(rawText);
   let parsed: unknown;
   try {
@@ -256,7 +278,6 @@ async function runStage1(
     console.warn('[Stage1] JSON パース失敗:', err instanceof Error ? err.message : String(err));
     return { kind: 'parse_failed', rawText };
   }
-
   // スキーマ判定（順序: error → clarification → success）
   const errParse = stage1ErrorSchema.safeParse(parsed);
   if (errParse.success) return { kind: 'error', data: errParse.data };
@@ -269,6 +290,51 @@ async function runStage1(
 
   console.warn('[Stage1] スキーマ検証失敗:', okParse.error.issues.slice(0, 3));
   return { kind: 'parse_failed', rawText };
+}
+
+// ── Stage 1 実行（リトライ機構付き） ─────────────────────────────
+/**
+ * Stage1 を実行する。retryable な API エラー（429/AbortError/5xx）に
+ * 当たった場合、FALLBACK_MODEL（Haiku 3.5）で 1 回だけリトライする。
+ *
+ * リトライしない条件:
+ *   - そもそもエラーが retryable でない（テンプレ読み込み失敗等）
+ *   - 設定モデルが既に FALLBACK_MODEL と同じ
+ *   - リトライ後の失敗（無限ループ防止）
+ */
+async function runStage1(
+  prompt: string,
+  grade: string,
+  subject: string,
+  cfg: AiKyoshitsuConfig,
+): Promise<Stage1Result> {
+  let rawText: string;
+  try {
+    rawText = await callStage1Api(prompt, grade, subject, cfg.stage1Model, cfg.stage1TimeoutMs);
+  } catch (err) {
+    const isRetryable = isRetryableError(err);
+    const errMsg      = err instanceof Error ? err.message : String(err);
+    console.warn('[Stage1] API失敗:', errMsg);
+
+    // リトライ判定
+    if (!isRetryable || cfg.stage1Model === FALLBACK_MODEL) {
+      return { kind: 'parse_failed', rawText: '' };
+    }
+    console.warn(`[Stage1] retrying with fallback model: ${FALLBACK_MODEL}`);
+    try {
+      rawText = await callStage1Api(
+        prompt, grade, subject, FALLBACK_MODEL, FALLBACK_STAGE1_TIMEOUT_MS,
+      );
+    } catch (retryErr) {
+      console.warn(
+        '[Stage1] fallback also failed:',
+        retryErr instanceof Error ? retryErr.message : String(retryErr),
+      );
+      return { kind: 'parse_failed', rawText: '' };
+    }
+  }
+
+  return parseStage1Response(rawText);
 }
 
 // ── Stage 2 実行（構造化JSON入力 + プロンプトキャッシュ） ──────
@@ -368,6 +434,38 @@ async function runStage2Legacy(
     );
   } finally {
     clearTimeout(timer);
+  }
+}
+
+// ── R2-K1: Stage 2 リトライラッパー ──────────────────────────
+/**
+ * Stage2（構造化 / legacy 共通）に retry 機構を被せる高階関数。
+ * cfg.stage2Model が既に FALLBACK_MODEL と同じならリトライしない（無駄なため）。
+ *
+ * @param run         実行関数（cfg を受け取って string を返す）
+ * @param cfg         元の AiKyoshitsuConfig
+ * @param logContext  ログ用のラベル（"Stage2-structured" / "Stage2-legacy"）
+ */
+async function runStage2WithRetry(
+  run:        (cfg: AiKyoshitsuConfig) => Promise<string>,
+  cfg:        AiKyoshitsuConfig,
+  logContext: string,
+): Promise<string> {
+  try {
+    return await run(cfg);
+  } catch (err) {
+    const isRetryable = isRetryableError(err);
+    const errMsg      = err instanceof Error ? err.message : String(err);
+    if (!isRetryable || cfg.stage2Model === FALLBACK_MODEL) {
+      throw err;
+    }
+    console.warn(`[${logContext}] retryable error: ${errMsg} → falling back to ${FALLBACK_MODEL}`);
+    return await run({
+      ...cfg,
+      stage2Model:     FALLBACK_MODEL,
+      stage2TimeoutMs: FALLBACK_STAGE2_TIMEOUT_MS,
+      stage2MaxTokens: Math.min(cfg.stage2MaxTokens, FALLBACK_STAGE2_MAX_TOKENS),
+    });
   }
 }
 
@@ -483,12 +581,20 @@ export async function POST(req: NextRequest) {
   let rawHtml: string;
   try {
     if (stage1.kind === 'success') {
-      // 正常パス: 構造化JSONで生成（失敗したら即エラー返却）
-      rawHtml = await runStage2Structured(stage1.data, cfg);
+      // 正常パス: 構造化JSONで生成（429/Abort 時は FALLBACK_MODEL に1回リトライ）
+      rawHtml = await runStage2WithRetry(
+        (effectiveCfg) => runStage2Structured(stage1.data, effectiveCfg),
+        cfg,
+        'Stage2-structured',
+      );
     } else {
-      // Stage 1 が parse_failed の場合: legacy で生成
+      // Stage 1 が parse_failed の場合: legacy で生成（同じく 1 回リトライ可）
       console.warn('[generate-animation] Stage1失敗 → legacyフォールバック');
-      rawHtml = await runStage2Legacy(prompt, grade, subject, cfg);
+      rawHtml = await runStage2WithRetry(
+        (effectiveCfg) => runStage2Legacy(prompt, grade, subject, effectiveCfg),
+        cfg,
+        'Stage2-legacy',
+      );
     }
   } catch (err) {
     console.error('[generate-animation] Stage2 失敗:', {
