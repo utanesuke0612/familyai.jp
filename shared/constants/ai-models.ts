@@ -91,13 +91,29 @@ export interface AiConfigPreset {
 
 export const AI_CONFIG_PRESETS: readonly AiConfigPreset[] = [
   // 共通方針:
-  //   - Vercel 60秒制限から最低 10〜20秒の buffer を確保
-  //   - Stage1 + Stage2 ≤ 50秒 を目安
+  //   - Vercel 60秒制限から最低 8〜20秒の buffer を確保
+  //   - Stage1 + Stage2 ≤ 52秒 を目安
   //   - 各モデルの実速度を考慮した maxTokens 上限
+  //
+  // ⚠️ Gemini 2.0 Flash は OpenRouter 共有プールの 429 / 上流タイムアウトが
+  //    発生しやすい（is_byok=false の場合）。本番運用では「安定運用」推奨。
+  {
+    id:          'stable',
+    label:       '🛡️ 安定運用（推奨）',
+    description: 'Anthropic Haiku 3.5 を全Stageで利用（buffer 8秒）。Gemini共有プール由来の429・AbortErrorを回避できる最も安定な構成。本番運用に最適。',
+    values: {
+      stage1Model:       'anthropic/claude-3.5-haiku',
+      stage2Model:       'anthropic/claude-3.5-haiku',
+      stage1TimeoutMs:   12_000,
+      stage2TimeoutMs:   40_000,   // 合計 52秒・buffer 8秒
+      stage2MaxTokens:   4_000,
+      stage2Temperature: 0.5,
+    },
+  },
   {
     id:          'cheapest',
-    label:       '💰 最安構成',
-    description: '速度・コスト最優先（buffer 20秒・最も安定）。テスト・大量利用に。',
+    label:       '💰 最安構成（テスト用）',
+    description: '速度・コスト最優先（buffer 20秒）。⚠️ Gemini共有プール混雑時は429/AbortErrorで失敗しやすい。本番では「安定運用」を推奨。',
     values: {
       stage1Model:       'google/gemini-2.0-flash-001',
       stage2Model:       'google/gemini-2.0-flash-001',
@@ -109,8 +125,8 @@ export const AI_CONFIG_PRESETS: readonly AiConfigPreset[] = [
   },
   {
     id:          'balanced',
-    label:       '⚖️ バランス（推奨）',
-    description: '速度・品質・コストの中間（buffer 15秒）。通常運用におすすめ。',
+    label:       '⚖️ バランス（Gemini）',
+    description: '速度・品質・コストの中間（buffer 15秒）。⚠️ Gemini 共有プール混雑の影響あり。安定優先なら「安定運用」を選択。',
     values: {
       stage1Model:       'google/gemini-2.0-flash-001',
       stage2Model:       'google/gemini-2.0-flash-001',
@@ -122,8 +138,8 @@ export const AI_CONFIG_PRESETS: readonly AiConfigPreset[] = [
   },
   {
     id:          'quality',
-    label:       '✨ 品質重視',
-    description: 'Haiku 3.5 で高品質HTML（buffer 10秒）。コスト中・速度可。',
+    label:       '✨ 品質重視（Haiku 3.5）',
+    description: 'Stage2 のみ Haiku 3.5 で高品質HTML（buffer 10秒）。Stage1 が Gemini なので 429 リスクは残る。完全安定は「安定運用」。',
     values: {
       stage1Model:       'google/gemini-2.0-flash-001',
       stage2Model:       'anthropic/claude-3.5-haiku',
