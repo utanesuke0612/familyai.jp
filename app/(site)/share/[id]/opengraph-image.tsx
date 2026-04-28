@@ -8,14 +8,28 @@
  *
  * Next.js 14 のファイルベース規約により、build 時に `/share/[id]/opengraph-image`
  * として自動配信される。`generateMetadata` の openGraph.images は不要。
+ *
+ * ⚠️ 保留中の課題（2026-04-28）:
+ *   ローカル dev で `/share/[id]/opengraph-image` を直接開くと 404 が返る。
+ *   Edge runtime → Node.js runtime に変更しても解消せず。原因候補:
+ *     (1) Next.js 14 の opengraph-image 規約が route group `(site)` 配下で
+ *         dev server の File-System Router に正しく登録されない
+ *     (2) DB 取得（getAnimationByIdCached）が dev で起動エラー
+ *     (3) dev server のキャッシュ起因（rm -rf .next で要再検証）
+ *   対策候補:
+ *     A) ファイルを `app/share/[id]/opengraph-image.tsx`（route group 外）に移動
+ *     B) Vercel 本番ビルドでの動作可否を先に確認
+ *   詳細は todo/02_CodingAgent指示書.md の Rev30 行「⚠️ R3-U2 保留」参照。
  */
 
 import { ImageResponse } from 'next/og';
 import { getAnimationByIdCached } from '@/lib/repositories/animations';
 import { SITE } from '@/shared';
 
-// ── Edge runtime（@vercel/og は Edge 最適化済み）─────────────
-export const runtime  = 'edge';
+// ── Node.js runtime（DB 直接読み取りのため Edge ではなく Node を使用）──
+// Drizzle/Neon の bundle 互換性を考慮し、Edge ではなく Node で動かす。
+// next/og の ImageResponse は Node でも動作する。
+export const runtime  = 'nodejs';
 export const size     = { width: 1200, height: 630 };
 export const contentType = 'image/png';
 export const alt      = 'うごくAI教室で生成されたアニメーション';
