@@ -89,6 +89,14 @@ export interface AnimationSummary {
   subject:   AnimationSubject;
   prompt:    string;
   createdAt: string;  // ISO 8601
+  // R3-U1（migration 0011）でユーザーが操作するメタ情報。
+  // 既存サーバー / クライアントとの互換のため optional。
+  /** お気に入りマーク（⭐）。デフォルト false */
+  isFavorite?:  boolean;
+  /** ユーザーが付け直したタイトル。空 / undefined なら theme を表示 */
+  customTitle?: string;
+  /** 公開フラグ。デフォルト true（既存互換）。false なら所有者しか閲覧不可 */
+  isPublic?:    boolean;
 }
 
 /** アニメーション詳細（本文 HTML を含む・所有者のみ取得想定） */

@@ -10,6 +10,7 @@
 import type { Metadata } from 'next';
 import Link              from 'next/link';
 import { notFound }      from 'next/navigation';
+import { auth }          from '@/lib/auth';
 import { getAnimationByIdCached } from '@/lib/repositories/animations';
 import { SITE }          from '@/shared';
 import ShareButtons      from './ShareButtons';
@@ -93,6 +94,14 @@ export default async function ShareAnimationPage(
   // catch せずに上位 (Next.js) に伝播させると Error Boundary 経由で 500 が返る。
   const animation = await getAnimationByIdCached(params.id);
   if (!animation) notFound();
+
+  // R3-K3: 非公開アイテムは所有者しか閲覧不可（情報漏洩防止のため 404）
+  if (animation.isPublic === false) {
+    const session = await auth();
+    if (!session?.user?.id || session.user.id !== animation.userId) {
+      notFound();
+    }
+  }
 
   const themeColor   = SUBJECT_COLOR[animation.subject] ?? '#ff8c42';
   const subjectLabel = SUBJECT_LABEL[animation.subject] ?? animation.subject;

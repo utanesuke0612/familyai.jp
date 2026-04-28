@@ -144,6 +144,15 @@ export const userAnimations = pgTable(
     prompt:      text('prompt').notNull(),                         // ユーザーが入力したプロンプト全文
     htmlContent: text('html_content').notNull(),                   // AIが生成したHTML全文
     createdAt:   timestamp('created_at').defaultNow().notNull(),
+    // R3-U1: ユーザーが履歴ページで操作するメタ情報
+    /** お気に入り（⭐）。マイページの絞り込み・並び替え用（migration 0011） */
+    isFavorite:  boolean('is_favorite').notNull().default(false),
+    /** ユーザーが付け直したタイトル。NULL なら theme をそのまま表示（migration 0011） */
+    customTitle: text('custom_title'),
+    // R3-K3（migration 0012）: 公開フラグ。
+    // - true（既定）: 誰でも /share/[id] で閲覧可能（従来挙動）
+    // - false: 所有者のみ閲覧可能・他人がアクセスすると 404
+    isPublic:    boolean('is_public').notNull().default(true),
   },
   (t) => ({
     idxUserId:    index('user_animations_user_id_idx').on(t.userId),

@@ -53,9 +53,61 @@ export async function listUserAnimations(userId: string): Promise<UserAnimation[
 
 /** アニメーションを削除（本人のみ） */
 export async function deleteAnimation(id: string, userId: string): Promise<boolean> {
-  
+
   const result = await db
     .delete(userAnimations)
+    .where(and(eq(userAnimations.id, id), eq(userAnimations.userId, userId)))
+    .returning({ id: userAnimations.id });
+  return result.length > 0;
+}
+
+// ─── R3-U1: お気に入り / カスタムタイトル更新 ─────────────────
+
+/** 部分更新できるフィールド */
+export interface UpdateAnimationPatch {
+  /** お気に入り（⭐）の ON/OFF */
+  isFavorite?:  boolean;
+  /**
+   * ユーザーが付け直したタイトル。
+   * - 文字列を渡せばその値で上書き（trim され空文字なら null 化）
+   * - null を明示すれば DB 上 NULL に戻す（元の theme を表示）
+   */
+  customTitle?: string | null;
+  /** 公開フラグ（R3-K3・migration 0012） */
+  isPublic?:    boolean;
+}
+
+/**
+ * アニメーションのメタ情報を更新する（本人のみ・migration 0011 対応）。
+ * 更新成功すれば true、対象が存在しないか他人のものなら false。
+ */
+export async function updateAnimation(
+  id:     string,
+  userId: string,
+  patch:  UpdateAnimationPatch,
+): Promise<boolean> {
+  // 渡されたフィールドだけを set 対象にする
+  const set: Partial<{
+    isFavorite:  boolean;
+    customTitle: string | null;
+    isPublic:    boolean;
+  }> = {};
+  if (patch.isFavorite !== undefined) set.isFavorite = patch.isFavorite;
+  if (patch.isPublic   !== undefined) set.isPublic   = patch.isPublic;
+  if (patch.customTitle !== undefined) {
+    if (patch.customTitle === null) {
+      set.customTitle = null;
+    } else {
+      const trimmed = patch.customTitle.trim();
+      set.customTitle = trimmed.length === 0 ? null : trimmed;
+    }
+  }
+  // 何も更新フィールドがなければ no-op で true 扱い（呼び出し側のフロー単純化）
+  if (Object.keys(set).length === 0) return true;
+
+  const result = await db
+    .update(userAnimations)
+    .set(set)
     .where(and(eq(userAnimations.id, id), eq(userAnimations.userId, userId)))
     .returning({ id: userAnimations.id });
   return result.length > 0;

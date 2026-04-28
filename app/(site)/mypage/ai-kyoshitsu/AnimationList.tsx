@@ -272,6 +272,70 @@ function FullscreenCloseButton({ onClick }: { onClick: () => void }) {
   );
 }
 
+// ── R3-U1: タイトル編集ダイアログ ────────────────────────────────
+function EditTitleDialog({
+  initialTitle, onCancel, onSave, isSaving,
+}: {
+  initialTitle: string;
+  onCancel:     () => void;
+  onSave:       (next: string | null) => void;
+  isSaving:     boolean;
+}) {
+  const [value, setValue] = useState(initialTitle);
+
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center" style={{ background: 'rgba(0,0,0,0.45)', padding: 16 }}>
+      <div className="w-full max-w-md rounded-[20px] p-6" style={{ background: 'white', boxShadow: '0 8px 32px rgba(0,0,0,0.2)' }}>
+        <p className="font-bold text-lg mb-2" style={{ color: 'var(--color-brown)' }}>タイトルを変更</p>
+        <p className="text-xs mb-3" style={{ color: 'var(--color-brown-light)' }}>
+          履歴での見た目だけ変わります。共有 URL の表示には影響しません（最大120文字）。
+        </p>
+        <input
+          type="text"
+          value={value}
+          onChange={(e) => setValue(e.target.value)}
+          maxLength={120}
+          autoFocus
+          className="w-full rounded-xl px-3 py-2 text-sm"
+          style={{
+            border:     '1px solid var(--color-beige-dark)',
+            background: 'var(--color-cream)',
+            color:      'var(--color-brown)',
+          }}
+        />
+        <div className="mt-5 flex flex-col gap-2">
+          <div className="flex gap-3">
+            <button
+              onClick={onCancel}
+              disabled={isSaving}
+              className="flex-1 rounded-full text-sm font-semibold"
+              style={{ minHeight: 44, background: 'var(--color-cream)', color: 'var(--color-brown)', border: '1px solid var(--color-beige-dark)' }}
+            >
+              キャンセル
+            </button>
+            <button
+              onClick={() => onSave(value.trim() === '' ? null : value.trim())}
+              disabled={isSaving}
+              className="flex-1 rounded-full text-sm font-semibold"
+              style={{ minHeight: 44, background: isSaving ? '#ccc' : '#ff8c42', color: 'white' }}
+            >
+              {isSaving ? '保存中…' : '保存'}
+            </button>
+          </div>
+          <button
+            onClick={() => onSave(null)}
+            disabled={isSaving}
+            className="text-xs underline"
+            style={{ color: 'var(--color-brown-light)' }}
+          >
+            元のタイトル（テーマ）に戻す
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 // ── 削除確認ダイアログ ────────────────────────────────────────────
 function DeleteDialog({ theme, onCancel, onConfirm, isDeleting }: {
   theme: string; onCancel: () => void; onConfirm: () => void; isDeleting: boolean;
@@ -299,12 +363,21 @@ function DeleteDialog({ theme, onCancel, onConfirm, isDeleting }: {
 }
 
 // ── カード ────────────────────────────────────────────────────────
-function AnimationCard({ item, onPreview, onDeleteRequest }: {
-  item: AnimationItem;
-  onPreview:       (item: AnimationItem) => void;
-  onDeleteRequest: (item: AnimationItem) => void;
+function AnimationCard({
+  item, onPreview, onDeleteRequest, onToggleFavorite, onEditTitle, onTogglePublic,
+}: {
+  item:             AnimationItem;
+  onPreview:        (item: AnimationItem) => void;
+  onDeleteRequest:  (item: AnimationItem) => void;
+  onToggleFavorite: (item: AnimationItem) => void;
+  onEditTitle:      (item: AnimationItem) => void;
+  onTogglePublic:   (item: AnimationItem) => void;
 }) {
-  const col = SUBJECT_COLOR[item.subject] ?? SUBJECT_COLOR.science;
+  const col       = SUBJECT_COLOR[item.subject] ?? SUBJECT_COLOR.science;
+  const displayed = item.customTitle && item.customTitle.length > 0 ? item.customTitle : item.theme;
+  const isFav     = !!item.isFavorite;
+  // R3-K3: isPublic は default true（API が false の時のみ送ってくる契約）
+  const isPublic  = item.isPublic !== false;
   return (
     <article className="rounded-[20px] overflow-hidden flex flex-col"
       style={{ background: 'rgba(255,255,255,0.95)', boxShadow: 'var(--shadow-warm-sm)', border: `1px solid ${col.border}33` }}>
@@ -319,17 +392,91 @@ function AnimationCard({ item, onPreview, onDeleteRequest }: {
             style={{ background: 'var(--color-cream)', color: 'var(--color-brown-light)', border: '1px solid var(--color-beige-dark)' }}>
             {GRADE_LABEL[item.grade] ?? item.grade}
           </span>
+          {/* お気に入りトグル（⭐） */}
+          <button
+            onClick={() => onToggleFavorite(item)}
+            className="ml-auto rounded-full transition-transform hover:scale-110"
+            style={{
+              minWidth:    32,
+              height:      32,
+              background:  isFav ? '#fff8e1' : 'transparent',
+              border:      isFav ? '1px solid #ffd54f' : '1px solid transparent',
+              fontSize:    18,
+              lineHeight:  1,
+              cursor:      'pointer',
+            }}
+            aria-label={isFav ? 'お気に入りから外す' : 'お気に入りに追加'}
+            title={isFav ? 'お気に入りから外す' : 'お気に入りに追加'}
+          >
+            {isFav ? '⭐' : '☆'}
+          </button>
         </div>
-        <p className="font-bold leading-snug line-clamp-2" style={{ color: 'var(--color-brown)', fontSize: 15 }}>
-          {item.theme}
-        </p>
+        <div className="flex items-start gap-1.5">
+          <p
+            className="font-bold leading-snug line-clamp-2 flex-1"
+            style={{ color: 'var(--color-brown)', fontSize: 15 }}
+            title={item.customTitle ? `元のテーマ: ${item.theme}` : undefined}
+          >
+            {displayed}
+          </p>
+          <button
+            onClick={() => onEditTitle(item)}
+            className="rounded-full transition-opacity hover:opacity-70 shrink-0"
+            style={{
+              minWidth:   28,
+              height:     28,
+              background: 'transparent',
+              border:     'none',
+              fontSize:   14,
+              cursor:     'pointer',
+              color:      'var(--color-brown-light)',
+            }}
+            aria-label="タイトルを編集"
+            title="タイトルを編集"
+          >
+            ✏️
+          </button>
+        </div>
         <p className="text-xs mt-auto" style={{ color: 'var(--color-brown-light)' }}>
           {formatDate(item.createdAt)}
+          {item.customTitle && (
+            <span className="ml-2" style={{ color: 'var(--color-brown-muted)' }}>
+              （元: {item.theme}）
+            </span>
+          )}
         </p>
+        {/* 公開状態バッジ（非公開のときのみ表示） */}
+        {!isPublic && (
+          <div
+            className="rounded-full px-2.5 py-0.5 text-xs font-semibold w-fit"
+            style={{
+              background: '#fff7ed',
+              color:      '#c2410c',
+              border:     '1px solid #fdba74',
+            }}
+          >
+            🔒 非公開（自分だけ閲覧可）
+          </div>
+        )}
         <div className="flex gap-2 mt-1">
           <button onClick={() => onPreview(item)} className="flex-1 rounded-full text-sm font-semibold"
             style={{ minHeight: 40, background: col.border, color: 'white' }}>
             ▶ プレビュー
+          </button>
+          {/* 公開/非公開トグル */}
+          <button
+            onClick={() => onTogglePublic(item)}
+            className="rounded-full px-3 text-sm"
+            style={{
+              minHeight:  40,
+              background: isPublic ? 'var(--color-cream)' : '#fff7ed',
+              color:      isPublic ? 'var(--color-brown)' : '#c2410c',
+              border:     `1px solid ${isPublic ? 'var(--color-beige-dark)' : '#fdba74'}`,
+            }}
+            aria-label={isPublic ? '非公開にする' : '公開する'}
+            title={isPublic ? 'クリックで非公開に切替' : 'クリックで公開に切替'}
+          >
+            {isPublic ? '🌐' : '🔒'}
           </button>
           <button onClick={() => onDeleteRequest(item)}
             className="rounded-full px-3 text-sm"
@@ -349,6 +496,10 @@ export default function AnimationList({ initialItems }: { initialItems: Animatio
   const [previewItem,  setPreviewItem]  = useState<AnimationItem | null>(null);
   const [deleteTarget, setDeleteTarget] = useState<AnimationItem | null>(null);
   const [isDeleting,   setIsDeleting]   = useState(false);
+  // R3-U1: お気に入り / タイトル編集
+  const [editTarget,   setEditTarget]   = useState<AnimationItem | null>(null);
+  const [isSavingEdit, setIsSavingEdit] = useState(false);
+  const [favPending,   setFavPending]   = useState<Set<string>>(new Set());
 
   async function handleDelete() {
     if (!deleteTarget) return;
@@ -370,6 +521,95 @@ export default function AnimationList({ initialItems }: { initialItems: Animatio
       alert('削除に失敗しました。');
     } finally {
       setIsDeleting(false);
+    }
+  }
+
+  // R3-U1: お気に入りトグル（楽観的更新）
+  async function handleToggleFavorite(item: AnimationItem) {
+    if (favPending.has(item.id)) return;  // 重複クリック防止
+    const next = !item.isFavorite;
+    // optimistic update
+    setItems((prev) => prev.map((i) => i.id === item.id ? { ...i, isFavorite: next } : i));
+    setFavPending((p) => { const s = new Set(p); s.add(item.id); return s; });
+    try {
+      const res  = await fetch('/api/user/animations', {
+        method:  'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body:    JSON.stringify({ id: item.id, isFavorite: next }),
+      });
+      const json = await res.json() as { ok: boolean; error?: string };
+      if (!json.ok) {
+        // rollback
+        setItems((prev) => prev.map((i) => i.id === item.id ? { ...i, isFavorite: !next } : i));
+        alert(json.error ?? 'お気に入りの更新に失敗しました。');
+      }
+    } catch {
+      setItems((prev) => prev.map((i) => i.id === item.id ? { ...i, isFavorite: !next } : i));
+      alert('通信エラーが発生しました。');
+    } finally {
+      setFavPending((p) => { const s = new Set(p); s.delete(item.id); return s; });
+    }
+  }
+
+  // R3-K3: 公開/非公開トグル（楽観的更新）
+  async function handleTogglePublic(item: AnimationItem) {
+    const wasPublic = item.isPublic !== false;
+    const next      = !wasPublic;
+
+    // 「公開 → 非公開」は意外と気づきにくいので確認ダイアログ
+    if (wasPublic) {
+      const ok = window.confirm(
+        '🔒 このアニメを「非公開」にします。\n\n' +
+        '・あなただけが閲覧できるようになります\n' +
+        '・既存のシェア URL を貼った人には 404 が返ります\n' +
+        '・SNS にシェア済みの場合は表示されなくなります\n\n' +
+        'よろしいですか？',
+      );
+      if (!ok) return;
+    }
+
+    // optimistic update
+    setItems((prev) => prev.map((i) => i.id === item.id ? { ...i, isPublic: next } : i));
+    try {
+      const res  = await fetch('/api/user/animations', {
+        method:  'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body:    JSON.stringify({ id: item.id, isPublic: next }),
+      });
+      const json = await res.json() as { ok: boolean; error?: string };
+      if (!json.ok) {
+        setItems((prev) => prev.map((i) => i.id === item.id ? { ...i, isPublic: wasPublic } : i));
+        alert(json.error ?? '公開設定の更新に失敗しました。');
+      }
+    } catch {
+      setItems((prev) => prev.map((i) => i.id === item.id ? { ...i, isPublic: wasPublic } : i));
+      alert('通信エラーが発生しました。');
+    }
+  }
+
+  // R3-U1: タイトル編集
+  async function handleSaveTitle(next: string | null) {
+    if (!editTarget) return;
+    setIsSavingEdit(true);
+    try {
+      const res  = await fetch('/api/user/animations', {
+        method:  'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body:    JSON.stringify({ id: editTarget.id, customTitle: next }),
+      });
+      const json = await res.json() as { ok: boolean; error?: string };
+      if (json.ok) {
+        setItems((prev) => prev.map((i) =>
+          i.id === editTarget.id ? { ...i, customTitle: next ?? undefined } : i,
+        ));
+        setEditTarget(null);
+      } else {
+        alert(json.error ?? 'タイトルの更新に失敗しました。');
+      }
+    } catch {
+      alert('通信エラーが発生しました。');
+    } finally {
+      setIsSavingEdit(false);
     }
   }
 
@@ -398,9 +638,15 @@ export default function AnimationList({ initialItems }: { initialItems: Animatio
       </p>
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {items.map(item => (
-          <AnimationCard key={item.id} item={item}
+          <AnimationCard
+            key={item.id}
+            item={item}
             onPreview={setPreviewItem}
-            onDeleteRequest={setDeleteTarget} />
+            onDeleteRequest={setDeleteTarget}
+            onToggleFavorite={handleToggleFavorite}
+            onEditTitle={setEditTarget}
+            onTogglePublic={handleTogglePublic}
+          />
         ))}
       </div>
 
@@ -409,10 +655,18 @@ export default function AnimationList({ initialItems }: { initialItems: Animatio
       )}
       {deleteTarget && (
         <DeleteDialog
-          theme={deleteTarget.theme}
+          theme={deleteTarget.customTitle && deleteTarget.customTitle.length > 0 ? deleteTarget.customTitle : deleteTarget.theme}
           onCancel={() => setDeleteTarget(null)}
           onConfirm={handleDelete}
           isDeleting={isDeleting}
+        />
+      )}
+      {editTarget && (
+        <EditTitleDialog
+          initialTitle={editTarget.customTitle && editTarget.customTitle.length > 0 ? editTarget.customTitle : editTarget.theme}
+          onCancel={() => setEditTarget(null)}
+          onSave={handleSaveTitle}
+          isSaving={isSavingEdit}
         />
       )}
     </>

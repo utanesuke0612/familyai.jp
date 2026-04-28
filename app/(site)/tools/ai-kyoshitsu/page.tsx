@@ -615,42 +615,209 @@ function ComingSoonPlaceholder({ theme, subjectColor }: { theme: Theme; subjectC
 }
 
 /* ─────────────────────────────────────────────────────
-   生成中ローディングパネル
+   生成中ローディングパネル（R3-U4 強化版）
+   - 経過時間に応じた段階メッセージ（Stage1 → Stage2 → 仕上げ）
+   - 進捗バー（推定値・60秒満タン）
+   - 豆知識ローテーション（1Aセッションで見飽きないように）
 ───────────────────────────────────────────────────── */
 
-function GeneratingPanel({ themeLabel, subjectColor }: { themeLabel: string; subjectColor: { bg: string; text: string; border: string } }) {
+/** 経過秒数に応じた段階メッセージ */
+const GENERATING_STAGES: ReadonlyArray<{ minSec: number; emoji: string; label: string; sub: string }> = [
+  { minSec:  0, emoji: '🧠', label: 'テーマを理解しています',     sub: '学年と教科に合った内容を考えています…' },
+  { minSec:  8, emoji: '📐', label: '教育設計を組み立て中',         sub: 'キーポイント・クイズ・誤概念を整理しています…' },
+  { minSec: 14, emoji: '🎨', label: 'アニメーションをデザイン中',   sub: '色と動きを決めています…' },
+  { minSec: 24, emoji: '✨', label: 'HTMLを書き上げています',       sub: 'もう少しでお見せできます…' },
+  { minSec: 40, emoji: '🎬', label: 'まもなく完成します',           sub: '最終チェック中…' },
+];
+
+/** ローディング中に表示する豆知識（飽き防止） */
+const FUN_FACTS: readonly string[] = [
+  '💡 AIは数千冊の教科書から学んでいます',
+  '🌍 1回の生成で扱うトークン数は本1冊分くらいです',
+  '⚡ Vercel のサーバーが世界中で並列に動いています',
+  '🎯 教育設計には「足場かけ理論」を取り入れています',
+  '🧪 クイズには「よくある間違い」も組み込まれます',
+  '🔬 子供の好奇心を引き出す表現を選んでいます',
+  '🎨 教科ごとに色のテーマを変えて作成中です',
+];
+
+function GeneratingPanel({
+  themeLabel,
+  subjectColor,
+}: {
+  themeLabel: string;
+  subjectColor: { bg: string; text: string; border: string };
+}) {
+  // 経過秒数（500ms 刻みで更新）
+  const [elapsedSec, setElapsedSec] = useState(0);
+  // ドット
   const [dots, setDots] = useState('');
+  // 豆知識インデックス（5秒ごとに切替）
+  const [factIdx, setFactIdx] = useState(0);
+
   useEffect(() => {
-    const id = setInterval(() => setDots(d => d.length >= 3 ? '' : d + '・'), 600);
-    return () => clearInterval(id);
+    const startedAt = Date.now();
+    const tick = setInterval(() => {
+      setElapsedSec((Date.now() - startedAt) / 1000);
+    }, 500);
+    const dotTimer = setInterval(() => {
+      setDots((d) => (d.length >= 3 ? '' : d + '・'));
+    }, 600);
+    const factTimer = setInterval(() => {
+      setFactIdx((i) => (i + 1) % FUN_FACTS.length);
+    }, 5_000);
+    return () => {
+      clearInterval(tick);
+      clearInterval(dotTimer);
+      clearInterval(factTimer);
+    };
   }, []);
+
+  // 現在の段階を経過秒数から特定
+  const currentStage =
+    [...GENERATING_STAGES].reverse().find((s) => elapsedSec >= s.minSec) ?? GENERATING_STAGES[0];
+  // 進捗 0〜100%（60秒で満タンに近づく・ただし95%で頭打ち）
+  const progressPct = Math.min(95, (elapsedSec / 60) * 100);
 
   return (
     <div
-      className="rounded-3xl flex flex-col items-center justify-center gap-5 py-16 px-6 text-center"
-      style={{ background: 'rgba(255,255,255,0.9)', boxShadow: 'var(--shadow-warm-sm)', minHeight: 280 }}
+      className="rounded-3xl flex flex-col items-center justify-center gap-6 py-12 px-6 text-center"
+      style={{
+        background: 'rgba(255,255,255,0.92)',
+        boxShadow:  'var(--shadow-warm-sm)',
+        minHeight:  340,
+        position:   'relative',
+        overflow:   'hidden',
+      }}
     >
-      {/* スピナー */}
-      <div style={{ position: 'relative', width: 56, height: 56 }}>
-        <svg viewBox="0 0 56 56" style={{ width: 56, height: 56, animation: 'spin 1.2s linear infinite' }}>
-          <circle cx="28" cy="28" r="22" fill="none" stroke="#f0e8dc" strokeWidth="5" />
-          <circle cx="28" cy="28" r="22" fill="none" stroke={subjectColor.border} strokeWidth="5"
-            strokeLinecap="round" strokeDasharray="80 60" />
-        </svg>
-        <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
+      {/* 背景の薄いブロブ */}
+      <div
+        aria-hidden
+        style={{
+          position:     'absolute',
+          top:          -60,
+          right:        -60,
+          width:        220,
+          height:       220,
+          borderRadius: 9999,
+          background:   `radial-gradient(circle, ${subjectColor.border}22 0%, transparent 70%)`,
+          pointerEvents: 'none',
+        }}
+      />
+
+      {/* 段階の絵文字（パルス） */}
+      <div
+        style={{
+          fontSize:   72,
+          lineHeight: 1,
+          animation:  'aiKyoshitsuPulse 2s ease-in-out infinite',
+        }}
+      >
+        {currentStage.emoji}
       </div>
 
-      <div>
-        <p className="text-base font-bold mb-1" style={{ color: 'var(--color-brown)' }}>
-          AIがアニメーションを生成しています{dots}
+      {/* メイン段階テキスト */}
+      <div className="flex flex-col items-center gap-1">
+        <p className="text-lg font-bold" style={{ color: 'var(--color-brown)' }}>
+          {currentStage.label}
+          <span style={{ color: subjectColor.border, marginLeft: 4 }}>{dots}</span>
         </p>
-        <p className="text-sm" style={{ color: 'var(--color-brown-light)' }}>
-          テーマ：<strong style={{ color: subjectColor.border }}>{themeLabel}</strong>
+        <p className="text-xs" style={{ color: 'var(--color-brown-light)' }}>
+          {currentStage.sub}
         </p>
       </div>
-      <p className="text-xs max-w-xs leading-relaxed" style={{ color: 'var(--color-brown-muted)' }}>
-        HTMLの生成には30〜60秒ほどかかります。そのままお待ちください。
-      </p>
+
+      {/* 進捗バー */}
+      <div style={{ width: '100%', maxWidth: 360 }}>
+        <div
+          style={{
+            width:        '100%',
+            height:       8,
+            background:   '#f0e8dc',
+            borderRadius: 9999,
+            overflow:     'hidden',
+            position:     'relative',
+          }}
+        >
+          <div
+            style={{
+              width:      `${progressPct}%`,
+              height:     '100%',
+              background: `linear-gradient(90deg, ${subjectColor.border} 0%, ${subjectColor.border}cc 100%)`,
+              borderRadius: 9999,
+              transition: 'width 0.5s ease-out',
+            }}
+          />
+          {/* 流れるシャイン */}
+          <div
+            aria-hidden
+            style={{
+              position:   'absolute',
+              top:        0,
+              left:       0,
+              right:      0,
+              height:     '100%',
+              background: 'linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.6) 50%, transparent 100%)',
+              animation:  'aiKyoshitsuShine 2s linear infinite',
+              pointerEvents: 'none',
+            }}
+          />
+        </div>
+        <div
+          style={{
+            display:        'flex',
+            justifyContent: 'space-between',
+            marginTop:      6,
+            fontSize:       11,
+            color:          'var(--color-brown-muted)',
+          }}
+        >
+          <span>テーマ: <strong style={{ color: subjectColor.border }}>{themeLabel}</strong></span>
+          <span>{Math.floor(elapsedSec)}秒経過</span>
+        </div>
+      </div>
+
+      {/* 豆知識 */}
+      <div
+        key={factIdx}  // key でフェードイン再発火
+        style={{
+          fontSize:     12,
+          color:        'var(--color-brown-light)',
+          maxWidth:     360,
+          padding:      '8px 16px',
+          background:   subjectColor.bg,
+          borderRadius: 12,
+          animation:    'aiKyoshitsuFadeIn 0.5s ease-out',
+        }}
+      >
+        {FUN_FACTS[factIdx]}
+      </div>
+
+      {/* キャンセル/長時間警告（40秒以降） */}
+      {elapsedSec >= 40 && (
+        <p
+          className="text-xs leading-relaxed max-w-xs"
+          style={{ color: 'var(--color-brown-muted)' }}
+        >
+          通常 30〜50 秒で完成します。混雑時はもう少しかかることがあります。
+        </p>
+      )}
+
+      {/* インライン CSS（このコンポーネントだけのアニメーション） */}
+      <style>{`
+        @keyframes aiKyoshitsuPulse {
+          0%, 100% { transform: scale(1);   filter: drop-shadow(0 4px 12px rgba(0,0,0,0.08)); }
+          50%      { transform: scale(1.08); filter: drop-shadow(0 8px 18px rgba(0,0,0,0.12)); }
+        }
+        @keyframes aiKyoshitsuShine {
+          0%   { transform: translateX(-100%); }
+          100% { transform: translateX(100%); }
+        }
+        @keyframes aiKyoshitsuFadeIn {
+          from { opacity: 0; transform: translateY(4px); }
+          to   { opacity: 1; transform: translateY(0);   }
+        }
+      `}</style>
     </div>
   );
 }

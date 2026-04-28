@@ -44,6 +44,11 @@ export interface AnimationRowSummary {
   subject:   string;
   prompt:    string;
   createdAt: Date | string;
+  // migration 0011（R3-U1）で追加。後方互換のため optional 受け入れ。
+  isFavorite?:  boolean | null;
+  customTitle?: string | null;
+  // migration 0012（R3-K3）で追加。デフォルト true（既存全行は公開）。
+  isPublic?:    boolean | null;
 }
 
 export interface AnimationRow extends AnimationRowSummary {
@@ -53,7 +58,7 @@ export interface AnimationRow extends AnimationRowSummary {
 
 // ── 変換関数 ──────────────────────────────────────────────────
 export function toAnimationSummary(row: AnimationRowSummary): AnimationSummary {
-  return {
+  const summary: AnimationSummary = {
     id:        row.id,
     theme:     row.theme,
     grade:     coerceGrade(row.grade),
@@ -61,6 +66,15 @@ export function toAnimationSummary(row: AnimationRowSummary): AnimationSummary {
     prompt:    row.prompt,
     createdAt: toIso(row.createdAt),
   };
+  // null/undefined は省略（`isFavorite` のデフォルト false は省略表現で十分）
+  if (row.isFavorite)            summary.isFavorite  = true;
+  if (row.customTitle !== null && row.customTitle !== undefined && row.customTitle !== '') {
+    summary.customTitle = row.customTitle;
+  }
+  // R3-K3: isPublic はデフォルト true。false の場合のみ明示する
+  // （既存クライアント・テストで isPublic 未参照の互換維持のため）
+  if (row.isPublic === false) summary.isPublic = false;
+  return summary;
 }
 
 export function toAnimationDetail(row: AnimationRow): Animation {
