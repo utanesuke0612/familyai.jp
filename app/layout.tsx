@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from 'next';
 import { Zen_Kaku_Gothic_New, Shippori_Mincho } from 'next/font/google';
+import { SpeedInsights }     from '@vercel/speed-insights/next';
 import { GoogleAnalytics }  from '@/components/analytics/GoogleAnalytics';
 import { Providers }        from '@/components/Providers';
 import './globals.css';
@@ -110,6 +111,10 @@ export default function RootLayout({
         {process.env.NEXT_PUBLIC_GA_ID && (
           <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID} />
         )}
+
+        {/* Vercel Speed Insights — Real Experience Score / Web Vitals 計測 */}
+        {/* 本番（Vercel）でのみデータ送信される。dev / preview では収集されない。 */}
+        <SpeedInsights />
 
       </body>
     </html>
