@@ -193,15 +193,10 @@ export default async function VoaLessonPage({
             </div>
             <aside className="flex flex-col gap-6 lg:sticky lg:top-[calc(var(--header-height)+24px)]">
               <AIChatWidget
+                mode="aictation"
                 articleTitle={headline}
                 articleSlug={`tools/voaenglish/${course}/${lesson}`}
                 articleExcerpt={`VOA Learning English のコース「${data.courseTitle}」の${headline}。CEFR ${cefr}。${data.voaUrl ? `公式: ${data.voaUrl}` : ''}`}
-                articleCategories={['education']}
-                suggestedQuestions={[
-                  'どんな場面で使う会話？',
-                  '重要な単語と意味を5つ教えて',
-                  '親子で使える例文を3つ作って',
-                ]}
               />
             </aside>
           </div>

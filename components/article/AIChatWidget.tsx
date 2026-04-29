@@ -30,6 +30,14 @@ interface AIChatWidgetProps {
   articleCategories?: string[];
   /** 初期表示のクイック質問（3件推奨）。未指定時は記事向けデフォルト */
   suggestedQuestions?: string[];
+  /**
+   * 表示モード（既定: 'simple'）。
+   *  - 'simple'    : 通常記事ページ用。カテゴリタブなし・suggestedQuestions or デフォルト4問。
+   *  - 'aictation' : AIctation/VOA 英語ディクテーション用。5カテゴリタブ + 各 3 質問・常に text-quality。
+   *
+   * 'aictation' 時は articleCategories と suggestedQuestions は無視される。
+   */
+  mode?: 'simple' | 'aictation';
 }
 
 const DEFAULT_SUGGESTED_QUESTIONS = [
@@ -38,8 +46,64 @@ const DEFAULT_SUGGESTED_QUESTIONS = [
   'このAIツールは安全？',
 ];
 
+// ── AIctation モード用：5 カテゴリ × 3 定型質問 ────────────────
+const AICTATION_CATEGORIES = [
+  {
+    id:        'content',
+    label:     '📖 内容',
+    questions: [
+      'このレッスンの内容を3文で要約して',
+      '誰が・いつ・どこで・何をした？',
+      'このニュースの背景を教えて',
+    ],
+  },
+  {
+    id:        'vocab',
+    label:     '📚 語彙',
+    questions: [
+      '重要単語を5個教えて（意味・例文付き）',
+      '難しい表現をやさしく説明して',
+      'よく使うフレーズを3つ教えて',
+    ],
+  },
+  {
+    id:        'grammar',
+    label:     '📝 文法',
+    questions: [
+      '気になった文法を1つ説明して',
+      '時制（現在・過去・完了）の使われ方を教えて',
+      '受動態の文を見つけて説明して',
+    ],
+  },
+  {
+    id:        'practice',
+    label:     '✍️ 練習',
+    questions: [
+      '英語3文でレッスンの内容をまとめて',
+      '私の英文を添削して：',
+      'このトピックで意見を書くヒントをくれる？',
+    ],
+  },
+  {
+    id:        'review',
+    label:     '🎯 復習',
+    questions: [
+      '重要単語の穴埋め問題を作って',
+      'このレッスンからクイズを3問出して',
+      '難しかった単語を使った例文を作って',
+    ],
+  },
+] as const;
+
+type AictationCategoryId = typeof AICTATION_CATEGORIES[number]['id'];
+
 // ── AI タイプ選択 ──────────────────────────────────────────────
-function selectAiType(categories?: string[]): 'text-simple' | 'text-quality' {
+function selectAiType(
+  categories?: string[],
+  mode?: 'simple' | 'aictation',
+): 'text-simple' | 'text-quality' {
+  // AIctation モードは語学高品質回答に最適化（強制 text-quality）
+  if (mode === 'aictation') return 'text-quality';
   const languageCats = ['education'];
   if (categories?.some((c) => languageCats.includes(c))) return 'text-quality';
   return 'text-simple';
@@ -182,6 +246,48 @@ function ChatBubble({ message, question, articleTitle, articleSlug }: ChatBubble
   );
 }
 
+// ── R3-機能1: AIctation モード用カテゴリタブ ───────────────────
+function CategoryTabs({
+  active,
+  onChange,
+}: {
+  active:   AictationCategoryId;
+  onChange: (id: AictationCategoryId) => void;
+}) {
+  return (
+    <div
+      className="flex gap-1.5 px-2.5 py-2 overflow-x-auto scrollbar-hide"
+      style={{
+        WebkitOverflowScrolling: 'touch',
+        borderBottom: '1px solid var(--color-beige)',
+      }}
+      role="tablist"
+      aria-label="質問カテゴリ"
+    >
+      {AICTATION_CATEGORIES.map((cat) => {
+        const selected = cat.id === active;
+        return (
+          <button
+            key={cat.id}
+            role="tab"
+            aria-selected={selected}
+            onClick={() => onChange(cat.id)}
+            className="shrink-0 rounded-full px-2.5 py-1.5 text-xs font-semibold transition-[background-color,color]"
+            style={{
+              background: selected ? 'var(--color-orange)' : 'var(--color-beige)',
+              color:      selected ? 'white' : 'var(--color-brown-light)',
+              minHeight:  '32px',
+              whiteSpace: 'nowrap',
+            }}
+          >
+            {cat.label}
+          </button>
+        );
+      })}
+    </div>
+  );
+}
+
 // ── ローディングドット ─────────────────────────────────────────
 function TypingIndicator() {
   return (
@@ -222,15 +328,26 @@ export function AIChatWidget({
   articleExcerpt,
   articleCategories,
   suggestedQuestions,
+  mode = 'simple',
 }: AIChatWidgetProps) {
-  const quickQuestions = suggestedQuestions && suggestedQuestions.length > 0
+  const isAictation = mode === 'aictation';
+  // 通常モード: suggestedQuestions or デフォルト 4 問
+  // AIctation モード: 選択中カテゴリの 3 問（後段で activeCategory 経由）
+  const simpleQuickQuestions = suggestedQuestions && suggestedQuestions.length > 0
     ? suggestedQuestions
     : DEFAULT_SUGGESTED_QUESTIONS;
-  const [messages,  setMessages]  = useState<Message[]>([]);
-  const [input,     setInput]     = useState('');
-  const [isLoading, setIsLoading] = useState(false);
-  const [isOpen,    setIsOpen]    = useState(false);
-  const [error,     setError]     = useState<string | null>(null);
+  const [messages,        setMessages]        = useState<Message[]>([]);
+  const [input,           setInput]           = useState('');
+  const [isLoading,       setIsLoading]       = useState(false);
+  const [isOpen,          setIsOpen]          = useState(false);
+  const [error,           setError]           = useState<string | null>(null);
+  // R3-機能1: AIctation モードでのみ使用（デフォルト「内容」タブ）
+  const [activeCategory,  setActiveCategory]  = useState<AictationCategoryId>('content');
+
+  // 現在表示すべきクイック質問（モードで分岐）
+  const quickQuestions: readonly string[] = isAictation
+    ? (AICTATION_CATEGORIES.find((c) => c.id === activeCategory)?.questions ?? [])
+    : simpleQuickQuestions;
   const scrollRef  = useRef<HTMLDivElement>(null);
   const inputRef   = useRef<HTMLTextAreaElement>(null);
   const abortRef   = useRef<AbortController | null>(null);
@@ -288,7 +405,7 @@ export function AIChatWidget({
         method:  'POST',
         headers: { 'Content-Type': 'application/json' },
         body:    JSON.stringify({
-          type:           selectAiType(articleCategories),
+          type:           selectAiType(articleCategories, mode),
           messages:       history,
           articleTitle,
           articleExcerpt: articleExcerpt?.slice(0, 300),
@@ -395,7 +512,7 @@ export function AIChatWidget({
       );
       setError(msg);
     }
-  }, [input, isLoading, messages, articleTitle, articleExcerpt, articleCategories]);
+  }, [input, isLoading, messages, articleTitle, articleExcerpt, articleCategories, mode]);
 
   function handleKeyDown(e: React.KeyboardEvent<HTMLTextAreaElement>) {
     // IME変換中（日本語入力の確定Enter）は送信しない
@@ -421,11 +538,19 @@ export function AIChatWidget({
           <span className="text-2xl" aria-hidden="true">💞</span>
           <div>
             <p className="font-bold text-sm text-white">AIに質問する</p>
-            <p className="text-xs text-white/80">この記事について何でも聞けます</p>
+            <p className="text-xs text-white/80">
+              {isAictation ? 'このレッスンについて何でも聞けます' : 'この記事について何でも聞けます'}
+            </p>
           </div>
         </div>
 
+        {/* AIctation モード: カテゴリタブ */}
+        {isAictation && (
+          <CategoryTabs active={activeCategory} onChange={setActiveCategory} />
+        )}
+
         <div className="p-4 flex flex-col gap-3">
+          {/* タイトル紹介文（両モード共通） */}
           <p className="text-sm" style={{ color: 'var(--color-brown-light)' }}>
             「{articleTitle.length > 20 ? articleTitle.slice(0, 20) + '…' : articleTitle}」について疑問があれば、AIが丁寧にお答えします。
           </p>
@@ -450,10 +575,16 @@ export function AIChatWidget({
   }
 
   // ── 開いた状態（チャット） ────────────────────────────────────
+  // AIctation モードはカテゴリタブと質問チップが追加されるため少し背を高く
   return (
     <div
       className="rounded-2xl overflow-hidden flex flex-col"
-      style={{ background: 'white', boxShadow: 'var(--shadow-warm-sm)', border: '1px solid var(--color-beige)', height: '500px' }}
+      style={{
+        background: 'white',
+        boxShadow:  'var(--shadow-warm-sm)',
+        border:     '1px solid var(--color-beige)',
+        height:     isAictation ? '600px' : '500px',
+      }}
     >
       {/* ヘッダー */}
       <div
@@ -472,6 +603,35 @@ export function AIChatWidget({
           ✕
         </button>
       </div>
+
+      {/* AIctation モード: カテゴリタブ */}
+      {isAictation && (
+        <CategoryTabs active={activeCategory} onChange={setActiveCategory} />
+      )}
+
+      {/* AIctation モード: 質問チップ（クリックで textarea に入力） */}
+      {isAictation && messages.length === 0 && (
+        <div className="px-3 py-2 flex flex-wrap gap-1.5 shrink-0" style={{ borderBottom: '1px solid var(--color-beige)' }}>
+          {quickQuestions.map((q) => (
+            <button
+              key={q}
+              type="button"
+              onClick={() => {
+                setInput(q);
+                setTimeout(() => inputRef.current?.focus(), 0);
+              }}
+              className="text-xs px-2.5 py-1 rounded-full transition-opacity hover:opacity-80"
+              style={{
+                background: 'var(--color-cream)',
+                color:      'var(--color-brown)',
+                border:     '1px solid var(--color-beige-dark)',
+              }}
+            >
+              💬 {q}
+            </button>
+          ))}
+        </div>
+      )}
 
       {/* メッセージ一覧 */}
       <div
