@@ -94,6 +94,10 @@
 > **Codex レビュー対応**: Rev26（11項目・2026-04-20 実装完了／`tsc`＋`lint` PASS 済み）／Rev27（Codex v2 再レビュー 4項目・2026-04-20 実装完了／`tsc`＋`lint`＋`pnpm test 46/46` PASS 済み）
 > **Claude コードレビュー対応**: Rev29（Critical 7件・2026-04-25 検証済み・C1-C6 は commits `1d1d7fc`/`14df190` で対応完了・C7 は Rev25 へ合流）／Rev30（AI教室パイプライン本実装＋管理画面＋C1/C2/C4＋S4/S7/S11＋H4＋T1＋H6・2026-04-28 完了・本番デプロイ済み・H2/H3/H5 は junli 判断で不要）
 > **新機能リリース（2026-04-25〜28）**: 「うごくAI教室」（学年×教科×テーマからアニメーションHTML生成・Stage1/2 パイプライン・/share/[id] 共有ページ・OGP動的生成）／管理画面 `/admin/ai-config`（モデル/タイムアウト/トークン上限を運用中切替・履歴10件・コスト試算・5プリセット【🛡️安定運用 推奨／💰最安／⚖️バランス／✨品質／👑最高品質】）
+>
+> **🚧 機能 1〜3 進行中（2026-04-29〜）**: ① AIChatWidget mode='aictation'（5カテゴリタブ・15質問・コミット `e847c70` 完了）／② PWA 実装（manifest 拡張・Service Worker・オフラインページ・Apple Web App meta・スクロール最適化・実装完了・本番反映前）／③ AIctation センテンス単位ディクテーションプレイヤー（`/tools/voaenglish/[course]/[lesson]` の音声プレイヤー強化・DB スキーマ拡張・Whisper SRT 連携・**未着手**）。詳細は `todo/aictation_page_design_v2.md` および `todo/familyai_coding_agent_v4.md` 参照。
+>
+> **📌 機能 3 後の残タスク（ボトムナビゲーション・別タスク化）**: PWA の体験完成度を上げるため、モバイルで `🏠 ホーム / 📖 記事 / 🛠️ ツール / 👤 マイページ` のボトムナビゲーション（iOS TabBar 風）を追加する。新規 `components/layout/BottomNav.tsx`、`/admin` 配下を除外、Safe area inset bottom 対応、アクティブタブ判定（pathname ベース）、既存 `MobileNav.tsx` との棲み分け検討が必要。約 1〜2 時間。**機能 3（AIctation）完成後にじっくり設計する**（既存ヘッダー/フッターと役割が被るリスクのため、現状機能の運用が落ち着いてから）。
 
 ## ⚠️ 大前提：このプロジェクトはスマホアプリ化を前提に設計する
 

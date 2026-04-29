@@ -793,3 +793,19 @@
 .scrollbar-hide::-webkit-scrollbar {
   display: none;                  /* WebKit (Chrome/Safari) */
 }
+
+/* ── iOS Safari スムーズスクロール（PWA 対応・機能2）─────────── */
+/* PWA standalone 起動時や Safari 通常起動時に、スクロールがカクつかないよう
+   モメンタムスクロール（慣性）を全体に適用する。
+   Safari 13+ で必須プロパティだが、他環境では無視される。 */
+html,
+body {
+  -webkit-overflow-scrolling: touch;
+}
+/* オーバーフローを持つ要素にも適用（チャット履歴・テーブル等） */
+.overflow-y-auto,
+.overflow-x-auto,
+.overflow-auto,
+.overflow-scroll {
+  -webkit-overflow-scrolling: touch;
+}

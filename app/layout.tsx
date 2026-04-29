@@ -69,6 +69,16 @@ export const metadata: Metadata = {
   },
   // icons / manifest は app/icon.tsx、app/apple-icon.tsx、app/manifest.ts が
   // Next.js のファイル規約で自動的に配信するため、ここで明示指定しない（Rev26 #4）。
+
+  // iOS Safari「ホーム画面に追加」時の挙動制御（PWA 対応・機能2）
+  // - apple-mobile-web-app-capable: ホーム画面起動時に standalone（アドレスバーなし全画面）
+  // - apple-mobile-web-app-status-bar-style: ステータスバーをデフォルト色（背景色に追従）
+  // - apple-mobile-web-app-title: ホーム画面アイコン下に表示される名前（manifest.short_name より優先）
+  appleWebApp: {
+    capable:        true,
+    statusBarStyle: 'default',
+    title:          'familyai',
+  },
 };
 
 // ── viewport（テーマカラー・PWA 対応） ───────────────────────
