@@ -1,8 +1,9 @@
 import type { Metadata, Viewport } from 'next';
 import { Zen_Kaku_Gothic_New, Shippori_Mincho } from 'next/font/google';
-import { SpeedInsights }     from '@vercel/speed-insights/next';
-import { GoogleAnalytics }  from '@/components/analytics/GoogleAnalytics';
-import { Providers }        from '@/components/Providers';
+import { SpeedInsights }          from '@vercel/speed-insights/next';
+import { GoogleAnalytics }        from '@/components/analytics/GoogleAnalytics';
+import { Providers }              from '@/components/Providers';
+import { ServiceWorkerRegister }  from '@/components/pwa/ServiceWorkerRegister';
 import './globals.css';
 
 // ── フォント定義 ──────────────────────────────────────────────
@@ -115,6 +116,9 @@ export default function RootLayout({
         {/* Vercel Speed Insights — Real Experience Score / Web Vitals 計測 */}
         {/* 本番（Vercel）でのみデータ送信される。dev / preview では収集されない。 */}
         <SpeedInsights />
+
+        {/* PWA: Service Worker 登録（本番のみ・dev では no-op） */}
+        <ServiceWorkerRegister />
 
       </body>
     </html>
