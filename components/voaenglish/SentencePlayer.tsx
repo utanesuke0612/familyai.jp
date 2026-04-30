@@ -100,99 +100,103 @@ export function SentencePlayer({ audioUrl, sentences, onAllPlayed }: SentencePla
         border:     '1px solid #cfe1f0',
       }}
     >
-      {/* ── 操作ボタン群（再生・前後・リピート・自動停止）──────────── */}
-      <div className="flex flex-wrap items-center gap-2">
-        {/* 再生・停止 */}
-        <button
-          type="button"
-          onClick={() => void actions.toggle()}
-          disabled={!state.isReady}
-          className="rounded-full font-bold transition-opacity hover:opacity-90 disabled:opacity-50"
-          style={{
-            minWidth:   48,
-            minHeight:  48,
-            background: 'var(--color-orange)',
-            color:      'white',
-            fontSize:   20,
-          }}
-          aria-label={state.isPlaying ? '一時停止' : '再生'}
-        >
-          {state.isPlaying ? '⏸' : '▶'}
-        </button>
+      {/* ── 操作ボタン群 ───────────────────────────────────────────
+        モバイルで自然に 2 行に折り返せるよう、再生コントロールと
+        トグル群を別グループにしている（gap-y-2 で行間確保）。
+        トグルは ON/OFF テキストではなく背景色で状態を伝える（短く）。 */}
+      <div className="flex flex-wrap items-center gap-x-2 gap-y-2">
+        {/* 再生コントロール群: ▶ ⏮ ⏭（密着させて 1 ユニット） */}
+        <div className="flex items-center gap-1.5">
+          <button
+            type="button"
+            onClick={() => void actions.toggle()}
+            disabled={!state.isReady}
+            className="rounded-full font-bold transition-opacity hover:opacity-90 disabled:opacity-50"
+            style={{
+              minWidth:   52,
+              minHeight:  52,
+              background: 'var(--color-orange)',
+              color:      'white',
+              fontSize:   22,
+            }}
+            aria-label={state.isPlaying ? '一時停止' : '再生'}
+          >
+            {state.isPlaying ? '⏸' : '▶'}
+          </button>
 
-        {/* 前のセンテンス */}
-        <button
-          type="button"
-          onClick={() => void actions.prevSentence()}
-          disabled={!state.isReady}
-          className="rounded-full transition-opacity hover:opacity-90 disabled:opacity-50"
-          style={{
-            minWidth:   40,
-            minHeight:  40,
-            background: '#fff',
-            color:      'var(--color-brown)',
-            border:     '1px solid #cfe1f0',
-            fontSize:   16,
-          }}
-          aria-label="前のセンテンス"
-          title="前のセンテンス（←）"
-        >
-          ⏮
-        </button>
+          <button
+            type="button"
+            onClick={() => void actions.prevSentence()}
+            disabled={!state.isReady}
+            className="rounded-full transition-opacity hover:opacity-90 disabled:opacity-50"
+            style={{
+              minWidth:   44,
+              minHeight:  44,
+              background: '#fff',
+              color:      'var(--color-brown)',
+              border:     '1px solid #cfe1f0',
+              fontSize:   16,
+            }}
+            aria-label="前のセンテンス"
+            title="前のセンテンス（←キー）"
+          >
+            ⏮
+          </button>
 
-        {/* 次のセンテンス */}
-        <button
-          type="button"
-          onClick={() => void actions.nextSentence()}
-          disabled={!state.isReady}
-          className="rounded-full transition-opacity hover:opacity-90 disabled:opacity-50"
-          style={{
-            minWidth:   40,
-            minHeight:  40,
-            background: '#fff',
-            color:      'var(--color-brown)',
-            border:     '1px solid #cfe1f0',
-            fontSize:   16,
-          }}
-          aria-label="次のセンテンス"
-          title="次のセンテンス（→）"
-        >
-          ⏭
-        </button>
+          <button
+            type="button"
+            onClick={() => void actions.nextSentence()}
+            disabled={!state.isReady}
+            className="rounded-full transition-opacity hover:opacity-90 disabled:opacity-50"
+            style={{
+              minWidth:   44,
+              minHeight:  44,
+              background: '#fff',
+              color:      'var(--color-brown)',
+              border:     '1px solid #cfe1f0',
+              fontSize:   16,
+            }}
+            aria-label="次のセンテンス"
+            title="次のセンテンス（→キー）"
+          >
+            ⏭
+          </button>
+        </div>
 
-        {/* リピート */}
-        <button
-          type="button"
-          onClick={actions.toggleRepeat}
-          className="rounded-full px-3 text-xs font-semibold transition-opacity hover:opacity-90"
-          style={{
-            minHeight:  40,
-            background: state.repeat ? '#2D78C8' : '#fff',
-            color:      state.repeat ? 'white' : 'var(--color-brown)',
-            border:     '1px solid #cfe1f0',
-          }}
-          aria-pressed={state.repeat}
-          title="現在センテンスをリピート（R）"
-        >
-          🔁 リピート: {state.repeat ? 'ON' : 'OFF'}
-        </button>
+        {/* トグル群: 🔁 リピート / ⏹ 自動停止（短いラベル・背景色で状態伝達） */}
+        <div className="flex items-center gap-1.5">
+          <button
+            type="button"
+            onClick={actions.toggleRepeat}
+            className="rounded-full px-3 text-xs font-semibold transition-opacity hover:opacity-90"
+            style={{
+              minHeight:  40,
+              background: state.repeat ? '#2D78C8' : '#fff',
+              color:      state.repeat ? 'white' : 'var(--color-brown)',
+              border:     '1px solid #cfe1f0',
+            }}
+            aria-pressed={state.repeat}
+            title={`現在センテンスをリピート（Rキー）— 現在: ${state.repeat ? 'ON' : 'OFF'}`}
+          >
+            🔁 リピート
+          </button>
 
-        {/* 自動停止 */}
-        <button
-          type="button"
-          onClick={actions.toggleAutoStop}
-          className="rounded-full px-3 text-xs font-semibold transition-opacity hover:opacity-90"
-          style={{
-            minHeight:  40,
-            background: state.autoStop ? '#2D78C8' : '#fff',
-            color:      state.autoStop ? 'white' : 'var(--color-brown)',
-            border:     '1px solid #cfe1f0',
-          }}
-          aria-pressed={state.autoStop}
-          title="センテンス末尾で自動停止（S）"
-        >
-          ⏹ 自動停止: {state.autoStop ? 'ON' : 'OFF'}
-        </button>
+          <button
+            type="button"
+            onClick={actions.toggleAutoStop}
+            className="rounded-full px-3 text-xs font-semibold transition-opacity hover:opacity-90"
+            style={{
+              minHeight:  40,
+              background: state.autoStop ? '#2D78C8' : '#fff',
+              color:      state.autoStop ? 'white' : 'var(--color-brown)',
+              border:     '1px solid #cfe1f0',
+            }}
+            aria-pressed={state.autoStop}
+            title={`センテンス末尾で自動停止（Sキー）— 現在: ${state.autoStop ? 'ON' : 'OFF'}`}
+          >
+            ⏹ 自動停止
+          </button>
+        </div>
       </div>
 
       {/* ── シークバー + 時間表示 ──────────────────────────── */}
@@ -213,7 +217,7 @@ export function SentencePlayer({ audioUrl, sentences, onAllPlayed }: SentencePla
             height:      6,
           }}
         />
-        <div className="flex justify-between text-xs" style={{ color: 'var(--color-brown-light)' }}>
+        <div className="flex justify-between items-center text-xs flex-wrap gap-y-1" style={{ color: 'var(--color-brown-light)' }}>
           <span>{formatTime(state.currentTime)} / {formatTime(state.duration)}</span>
 
           {/* 速度ボタン群 */}

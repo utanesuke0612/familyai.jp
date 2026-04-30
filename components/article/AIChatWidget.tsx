@@ -38,6 +38,15 @@ interface AIChatWidgetProps {
    * 'aictation' 時は articleCategories と suggestedQuestions は無視される。
    */
   mode?: 'simple' | 'aictation';
+  /**
+   * R3-機能3 / AIctation: AI に渡すレッスン全文スクリプト（最大 8000字）。
+   * mode='aictation' で VOA レッスンページから sentences.json を平文化して渡す想定。
+   * 設定すると AI が「3文要約」「重要単語」「文法解説」等の質問に
+   * 実コンテンツを踏まえて回答できるようになる（v2 設計書の lesson.script 相当）。
+   *
+   * mode='simple' でも渡せば追加 context として効くが、通常は不要。
+   */
+  lessonContext?: string;
 }
 
 const DEFAULT_SUGGESTED_QUESTIONS = [
@@ -329,6 +338,7 @@ export function AIChatWidget({
   articleCategories,
   suggestedQuestions,
   mode = 'simple',
+  lessonContext,
 }: AIChatWidgetProps) {
   const isAictation = mode === 'aictation';
   // 通常モード: suggestedQuestions or デフォルト 4 問
@@ -409,6 +419,8 @@ export function AIChatWidget({
           messages:       history,
           articleTitle,
           articleExcerpt: articleExcerpt?.slice(0, 300),
+          // VOA レッスン全文（AIctation のカテゴリ質問が機能するために必須）
+          lessonContext:  lessonContext?.slice(0, 8000),
         }),
         signal: ac.signal,
       });
@@ -512,7 +524,7 @@ export function AIChatWidget({
       );
       setError(msg);
     }
-  }, [input, isLoading, messages, articleTitle, articleExcerpt, articleCategories, mode]);
+  }, [input, isLoading, messages, articleTitle, articleExcerpt, articleCategories, mode, lessonContext]);
 
   function handleKeyDown(e: React.KeyboardEvent<HTMLTextAreaElement>) {
     // IME変換中（日本語入力の確定Enter）は送信しない

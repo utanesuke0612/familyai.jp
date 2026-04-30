@@ -40,3 +40,9 @@ next-env.d.ts
 
 # Claude Code 個人設定（バージョン管理から除外）
 .claude/settings.local.json
+
+# VOA レッスンの SRT/VTT は変換元素材（Whisper 出力等）
+# ランタイムでは <lesson>.sentences.json のみ参照するため git 管理外。
+# ローカルでは引き続き存在 OK・pnpm db:convert-srt で再変換可能。
+content/voaenglish/**/*.srt
+content/voaenglish/**/*.vtt

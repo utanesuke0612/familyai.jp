@@ -110,6 +110,15 @@ export default async function VoaLessonPage({
   const sentences   = getLessonSentences(course, lesson);
   const canPlay     = audioUrl !== null && sentences !== null && sentences.length > 0;
 
+  // R3-機能3 Phase 7: AI チャットボット（mode='aictation'）に渡す全文スクリプト。
+  // sentences のテキスト部分のみ改行連結（タイムスタンプは AI には不要）。
+  // これがないと AI が「3文要約」「重要単語」等のカテゴリ質問に答えられない。
+  // 上限 8000 字（buildArticleSystemPrompt 側で再度 slice される）。
+  const lessonScriptForAi: string =
+    sentences && sentences.length > 0
+      ? sentences.map((s) => s.text).join('\n').slice(0, 8000)
+      : data.description ?? '';
+
   return (
     <main style={{ background: 'var(--color-cream)' }}>
       <header
@@ -296,13 +305,16 @@ export default async function VoaLessonPage({
 
             </div>
 
-            {/* 右カラム: AI チャット（aictation mode）— 機能 1 で実装済 */}
+            {/* 右カラム: AI チャット（aictation mode）— 機能 1 で実装済
+                lessonContext で sentences 全文を渡し、AI がカテゴリ質問に
+                実コンテンツベースで回答できるようにする（Phase 7 追加）。 */}
             <aside className="flex flex-col gap-6 lg:sticky lg:top-[calc(var(--header-height)+24px)]">
               <AIChatWidget
                 mode="aictation"
                 articleTitle={headline}
                 articleSlug={`tools/voaenglish/${course}/${lesson}`}
                 articleExcerpt={`VOA Learning English のコース「${data.courseTitle}」の${headline}。CEFR ${cefr}。${data.voaUrl ? `公式: ${data.voaUrl}` : ''}`}
+                lessonContext={lessonScriptForAi}
               />
             </aside>
           </div>

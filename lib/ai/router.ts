@@ -61,6 +61,13 @@ export async function routeAI(
 export function buildArticleSystemPrompt(opts: {
   articleTitle?:   string | null;
   articleExcerpt?: string | null;
+  /**
+   * R3-機能3 / AIctation: VOA レッスン全文スクリプト。
+   * mode='aictation' の AIChatWidget から sentences.json 平文化文字列で渡される。
+   * これがあると AI が「3文要約」「重要単語」「文法説明」等のカテゴリ質問に
+   * 実コンテンツを踏まえて回答できる（v2 設計書の lesson.script 相当）。
+   */
+  lessonContext?:  string | null;
 }): string {
   const lines = [
     'あなたは familyai.jp のAIアシスタントです。',
@@ -74,6 +81,17 @@ export function buildArticleSystemPrompt(opts: {
   }
   if (opts.articleExcerpt) {
     lines.push(`記事の概要: ${opts.articleExcerpt.slice(0, 300)}`);
+  }
+
+  // VOA レッスン本文（AIctation のカテゴリ質問が機能するための実コンテンツ）
+  if (opts.lessonContext && opts.lessonContext.trim()) {
+    lines.push('\n=== レッスン全文（参照用・上限8000字） ===');
+    lines.push(opts.lessonContext.slice(0, 8000));
+    lines.push('=== ここまで ===');
+    lines.push(
+      '上記スクリプトは VOA Learning English の対話本文です。',
+      '要約・単語抽出・文法解説等は必ずこのスクリプトに基づいて回答してください。',
+    );
   }
 
   lines.push('\nユーザーの質問に上記の記事内容を踏まえて回答してください。');

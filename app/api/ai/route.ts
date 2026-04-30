@@ -51,6 +51,10 @@ const bodySchema = z.object({
   ).min(1).max(20),
   articleTitle:   z.string().max(255).optional().nullable(),
   articleExcerpt: z.string().max(500).optional().nullable(),
+  // R3-機能3 / AIctation: VOA レッスンの全文スクリプトを system prompt に含めるための context
+  // 例: sentences.json を平文化したもの（タイムスタンプ抜きの対話文）
+  // 8000 字 ≒ 約 6,000 input token（Anthropic 換算）で OpenRouter のコストは ¥0.5/回程度
+  lessonContext:  z.string().max(8000).optional().nullable(),
 });
 
 // ── Redis / Ratelimit lazy init ────────────────────────────────
@@ -144,7 +148,7 @@ export async function POST(req: NextRequest) {
     );
   }
 
-  const { type, messages, articleTitle, articleExcerpt } = parsed.data;
+  const { type, messages, articleTitle, articleExcerpt, lessonContext } = parsed.data;
 
   // 3. レート制限チェック（セッション対応: ログイン済みはプラン別制限）
   const ratelimiters = getRatelimiters();
@@ -178,6 +182,7 @@ export async function POST(req: NextRequest) {
   const systemContent = buildArticleSystemPrompt({
     articleTitle,
     articleExcerpt,
+    lessonContext,
   });
 
   const fullMessages = [
