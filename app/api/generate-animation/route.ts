@@ -44,10 +44,8 @@ import { createAnimation }            from '@/lib/repositories/animations';
 import { getAiConfig }                from '@/lib/config/ai-config';
 import type { AiKyoshitsuConfig }     from '@/shared/types';
 import {
-  stage1SuccessSchema,
-  stage1ClarificationSchema,
-  stage1ErrorSchema,
-  type Stage1Success,
+  stage1ResponseSchema,
+  type Stage1Ready,
   type Stage1Result,
 } from '@/lib/ai-kyoshitsu/stage1-schema';
 import {
@@ -288,18 +286,19 @@ function parseStage1Response(rawText: string): Stage1Result {
     console.warn('[Stage1] JSON パース失敗:', err instanceof Error ? err.message : String(err));
     return { kind: 'parse_failed', rawText };
   }
-  // スキーマ判定（順序: error → clarification → success）
-  const errParse = stage1ErrorSchema.safeParse(parsed);
-  if (errParse.success) return { kind: 'error', data: errParse.data };
+  // 新スキーマ（discriminated union）で一括判定
+  const result = stage1ResponseSchema.safeParse(parsed);
+  if (!result.success) {
+    console.warn('[Stage1] スキーマ検証失敗:', result.error.issues.slice(0, 3));
+    return { kind: 'parse_failed', rawText };
+  }
 
-  const clarParse = stage1ClarificationSchema.safeParse(parsed);
-  if (clarParse.success) return { kind: 'clarification', data: clarParse.data };
-
-  const okParse = stage1SuccessSchema.safeParse(parsed);
-  if (okParse.success) return { kind: 'success', data: okParse.data };
-
-  console.warn('[Stage1] スキーマ検証失敗:', okParse.error.issues.slice(0, 3));
-  return { kind: 'parse_failed', rawText };
+  // discriminator (status) ごとに kind を割り当て
+  switch (result.data.status) {
+    case 'ready':                return { kind: 'ready',         data: result.data };
+    case 'needs_clarification':  return { kind: 'clarification', data: result.data };
+    case 'unsuitable':           return { kind: 'unsuitable',    data: result.data };
+  }
 }
 
 // ── Stage 1 実行（リトライ機構付き） ─────────────────────────────
@@ -350,24 +349,30 @@ async function runStage1(
   return parseStage1Response(rawText);
 }
 
-// ── Stage 2 実行（構造化JSON入力 + プロンプトキャッシュ） ──────
+// ── Stage 2 実行（topic 文字列入力 + プロンプトキャッシュ） ──────
+// 簡素化版（Phase 1c-rebuild）: Stage 1 から渡されるのは確定テーマ文字列のみ。
+// Stage 2 が内部で教育設計→HTML 生成までを担う。
 async function runStage2Structured(
-  stage1Data: Stage1Success,
+  stage1Data: Stage1Ready,
+  grade:      string,
+  subject:    string,
   cfg:        AiKyoshitsuConfig,
 ): Promise<string> {
+  const gradeLabel   = GRADE_LABEL[grade]   ?? grade;
+  const subjectLabel = SUBJECT_LABEL[subject] ?? subject;
+
   const systemPrompt = readPromptFile(STAGE2_PROMPT_PATH);
-  const userMessage  = `以下のJSON仕様から教育用HTMLを生成してください。
+  const userMessage  = `以下のテーマで、家庭学習用の教育 HTML を生成してください。
+
+学年: ${gradeLabel}
+科目: ${subjectLabel}
+学習テーマ: ${stage1Data.topic}
 
 ⚠️ 出力形式（厳守）:
-- あなたの応答は HTML コードのみ。1文字目から <!DOCTYPE html> で始める
+- 応答は HTML コードのみ。1 文字目から <!DOCTYPE html> で始める
 - 「了解しました」「生成します」「よろしいですか？」等の確認文・前置きは禁止
 - markdown のコードブロック記号（\`\`\`html）は不要
-- keywordsの全項目、teaching_flowの全ステップ、quizの5問すべてを完全に展開
-- コメントだけのスケルトンは絶対に出力しない
-
-\`\`\`json
-${JSON.stringify(stage1Data, null, 2)}
-\`\`\``;
+- スケルトン・プレースホルダーは禁止（必ず完全実装）`;
 
   // Stage 2 タイムアウト・モデル・パラメータは cfg 経由で運用中に調整可能
   const controller = new AbortController();
@@ -556,7 +561,7 @@ export async function POST(req: NextRequest) {
   const stage1 = await runStage1(prompt, grade, subject, cfg, conversationHistory);
 
   // 6a. エラー: 学習内容として不適切（科目に無関係・難易度不一致など）
-  if (stage1.kind === 'error') {
+  if (stage1.kind === 'unsuitable') {
     return NextResponse.json(
       {
         ok: false,
@@ -570,7 +575,7 @@ export async function POST(req: NextRequest) {
     );
   }
 
-  // 6b. 確認が必要: 選択肢付き質問を返す
+  // 6b. 確認が必要: 選択肢付き質問を返す（options は必ず 2〜4 個）
   if (stage1.kind === 'clarification') {
     return NextResponse.json(
       {
@@ -580,28 +585,26 @@ export async function POST(req: NextRequest) {
           message: stage1.data.message,
         },
         options:          stage1.data.options,
-        optionsAvailable: stage1.data.options_available,
+        optionsAvailable: true,    // 新スキーマでは常に options 2〜4 個を強制
       },
       { status: 422 },
     );
   }
 
   // 7. Stage 2 実行
-  // 注意: Stage2 構造化が失敗（タイムアウト等）した場合に legacy で再試行すると、
-  // 同じモデル・同じ問題で時間が倍増し Vercel 60秒制限を超えるリスクがあるため、
-  // Stage1 が success の場合は構造化のみで再試行なし。
-  // Stage1 が parse_failed の場合のみ legacy にフォールバック。
+  // - Stage 1 が ready: そのテーマで Stage 2 を実行
+  // - Stage 1 が parse_failed: legacy フォールバック（ユーザー入力のまま渡す）
   let rawHtml: string;
   try {
-    if (stage1.kind === 'success') {
-      // 正常パス: 構造化JSONで生成（429/Abort 時は FALLBACK_MODEL に1回リトライ）
+    if (stage1.kind === 'ready') {
+      // 正常パス: 確定テーマで Stage 2 を実行（429/Abort 時は FALLBACK_MODEL に1回リトライ）
       rawHtml = await runStage2WithRetry(
-        (effectiveCfg) => runStage2Structured(stage1.data, effectiveCfg),
+        (effectiveCfg) => runStage2Structured(stage1.data, grade, subject, effectiveCfg),
         cfg,
         'Stage2-structured',
       );
     } else {
-      // Stage 1 が parse_failed の場合: legacy で生成（同じく 1 回リトライ可）
+      // parse_failed: legacy で生成（ユーザー入力のままユニファイド prompt で）
       console.warn('[generate-animation] Stage1失敗 → legacyフォールバック');
       rawHtml = await runStage2WithRetry(
         (effectiveCfg) => runStage2Legacy(prompt, grade, subject, effectiveCfg),
@@ -657,10 +660,13 @@ export async function POST(req: NextRequest) {
   }
 
   // 9. DB保存
-  // Stage1 が success の場合のみ stage1_json を保存（parse_failed 時は NULL のまま）。
-  // 結果パネルの「学習ポイント」「クイズ」タブで再利用するための原データ。
-  const stage1JsonForDb: Stage1Success | null =
-    stage1.kind === 'success' ? stage1.data : null;
+  // Phase 1c-rebuild: Stage 1 が確定テーマ（topic）のみを返すようになったため、
+  // 教育設計 JSON は保存しない。stage1_json カラムには確定テーマだけを最小限の
+  // メタデータとして残す（後方互換のため・将来分析用）。
+  const stage1JsonForDb =
+    stage1.kind === 'ready'
+      ? { status: 'ready', topic: stage1.data.topic }
+      : null;
 
   let animationId: string;
   try {
@@ -681,11 +687,11 @@ export async function POST(req: NextRequest) {
     );
   }
 
-  // Phase 1a: フロントが直後に「学習ポイント」「クイズ」タブを描画できるよう
-  // stage1Json をレスポンスに同梱（DB 再取得を不要にする）。
+  // Phase 1c-rebuild: 結果は HTML 1 枚のみ。学習ポイント・クイズタブは廃止のため
+  // stage1Json をレスポンスに含める必要なし。
   return NextResponse.json({
     ok: true,
     id: animationId,
-    stage1Json: stage1JsonForDb,
+    topic: stage1.kind === 'ready' ? stage1.data.topic : prompt,
   });
 }

@@ -16,7 +16,8 @@ import {
   type Subject,
   type Theme,
 } from '@/lib/ai-kyoshitsu/themes';
-import type { Stage1Success } from '@/lib/ai-kyoshitsu/stage1-schema';
+// Phase 1c-rebuild: Stage 1 が確定テーマのみを返すようになったため、
+// 学習ポイント・クイズタブを廃止。Stage1Success 型は不要。
 import {
   MAX_CONVERSATION_TURNS,
   MAX_TURN_TEXT_LENGTH,
@@ -43,7 +44,7 @@ type ViewState =
   | { kind: 'idle' }
   | { kind: 'preview';      theme: Theme }
   | { kind: 'generating';   themeLabel: string }
-  | { kind: 'result';       id: string; themeLabel: string; stage1Json: Stage1Success | null }
+  | { kind: 'result';       id: string; themeLabel: string }
   | { kind: 'rate-limit';   message: string; isLoggedIn: boolean }
   | { kind: 'unauthorized' };
 
@@ -201,7 +202,7 @@ export default function AiKyoshitsuPage() {
       const json = await res.json() as {
         ok:                boolean;
         id?:               string;
-        stage1Json?:       Stage1Success | null;
+        topic?:            string;
         error?:            { code: string; message: string };
         options?:          string[];
         optionsAvailable?: boolean;
@@ -262,8 +263,8 @@ export default function AiKyoshitsuPage() {
       setView({
         kind:       'result',
         id:         json.id,
-        themeLabel: trimmed,
-        stage1Json: json.stage1Json ?? null,
+        // Stage 1 が整理した「確定テーマ」があればそれを表示、なければユーザー入力を流用
+        themeLabel: json.topic && json.topic.trim() ? json.topic : trimmed,
       });
     } catch {
       replaceThinking({
@@ -499,7 +500,6 @@ export default function AiKyoshitsuPage() {
               themeLabel={view.themeLabel}
               grade={grade}
               subjectColor={subjectColor}
-              stage1Json={view.stage1Json}
               onReset={() => { setView({ kind: 'idle' }); setPrompt(''); }}
             />
           )}
@@ -832,29 +832,21 @@ function triggerHtmlDownload(html: string, filename: string) {
   URL.revokeObjectURL(url);
 }
 
-type ResultTab = 'animation' | 'points' | 'quiz';
-
 function ResultPanel({
-  id, themeLabel, grade, subjectColor, stage1Json, onReset,
+  id, themeLabel, grade, subjectColor, onReset,
 }: {
   id:           string;
   themeLabel:   string;
   grade:        Grade;
   subjectColor: { bg: string; text: string; border: string };
-  stage1Json:   Stage1Success | null;
   onReset:      () => void;
 }) {
   const [iframeHeight, setIframeHeight] = useState(600);
   const [isSaving,     setIsSaving]     = useState(false);
   const [copied,       setCopied]       = useState(false);
-  const [tab,          setTab]          = useState<ResultTab>('animation');
   const iframeRef = useRef<HTMLIFrameElement>(null);
   const wrapRef   = useRef<HTMLDivElement>(null);
   const [isFs, setIsFs] = useState(false);
-
-  // Stage 1 JSON が利用可能かどうか（migration 0014 適用前のレコードは NULL）
-  const hasStage1 = !!stage1Json;
-  const quizCount = stage1Json?.concept_check.quiz.length ?? 0;
 
   useEffect(() => {
     function onMsg(e: MessageEvent) {
@@ -1029,45 +1021,12 @@ function ResultPanel({
         </Link>
       </div>
 
-      {/* ── タブナビゲーション（Phase 1a） ── */}
-      <div
-        className="flex items-stretch overflow-x-auto"
-        style={{
-          background:    '#faf6ef',
-          borderBottom:  `1px solid ${subjectColor.border}22`,
-        }}
-        role="tablist"
-        aria-label="生成結果の表示切替"
-      >
-        <ResultTabButton
-          active={tab === 'animation'}
-          onClick={() => setTab('animation')}
-          subjectColor={subjectColor}
-          label="🎬 アニメーション"
-        />
-        <ResultTabButton
-          active={tab === 'points'}
-          onClick={() => setTab('points')}
-          subjectColor={subjectColor}
-          label="📋 学習ポイント"
-        />
-        <ResultTabButton
-          active={tab === 'quiz'}
-          onClick={() => setTab('quiz')}
-          subjectColor={subjectColor}
-          label={`❓ クイズ${quizCount > 0 ? ` (${quizCount})` : ''}`}
-        />
-      </div>
-
-      {/* ── タブ 1: アニメーション iframe ──────────────────────
-          ※ 他タブに切り替えても iframe を unmount しないよう display で制御。
-            タブを戻したときに再ロードされず、iframe 内部の状態（再生位置等）が保持される。 */}
+      {/* ── アニメーション iframe（Phase 1c-rebuild: タブ廃止・HTML のみ表示） ── */}
       <div
         ref={wrapRef}
         style={{
           background: '#fdf6ee',
           position:   'relative',
-          display:    tab === 'animation' ? 'block' : 'none',
           ...(isFs ? { height: '100vh', overflow: 'hidden' } : {}),
         }}
       >
@@ -1087,24 +1046,6 @@ function ResultPanel({
           sandbox="allow-scripts allow-same-origin"
         />
       </div>
-
-      {/* ── タブ 2: 学習ポイント ── */}
-      {tab === 'points' && (
-        hasStage1 ? (
-          <LearningPointsView data={stage1Json!} subjectColor={subjectColor} />
-        ) : (
-          <Stage1FallbackView subjectColor={subjectColor} />
-        )
-      )}
-
-      {/* ── タブ 3: クイズ ── */}
-      {tab === 'quiz' && (
-        hasStage1 && quizCount > 0 ? (
-          <QuizView data={stage1Json!} subjectColor={subjectColor} />
-        ) : (
-          <Stage1FallbackView subjectColor={subjectColor} note={hasStage1 ? 'このアニメーションにはクイズが含まれていません。' : undefined} />
-        )
-      )}
 
       {/* フッター：別のテーマを生成 */}
       <div
@@ -1126,388 +1067,6 @@ function ResultPanel({
   );
 }
 
-/* ─────────────────────────────────────────────────────
-   結果タブ — タブボタン
-───────────────────────────────────────────────────── */
-function ResultTabButton({
-  active, onClick, subjectColor, label,
-}: {
-  active:       boolean;
-  onClick:      () => void;
-  subjectColor: { bg: string; text: string; border: string };
-  label:        string;
-}) {
-  return (
-    <button
-      type="button"
-      role="tab"
-      aria-selected={active}
-      onClick={onClick}
-      className="relative px-4 py-3 text-sm font-bold whitespace-nowrap transition-colors hover:opacity-80"
-      style={{
-        background: active ? '#fff' : 'transparent',
-        color:      active ? subjectColor.border : 'var(--color-brown-light)',
-        // 下線アクセント（アクティブのみ）
-        boxShadow:  active ? `inset 0 -3px 0 0 ${subjectColor.border}` : 'none',
-        flex:       '0 0 auto',
-      }}
-    >
-      {label}
-    </button>
-  );
-}
-
-/* ─────────────────────────────────────────────────────
-   結果タブ — Stage1 JSON 不在時のフォールバック
-───────────────────────────────────────────────────── */
-function Stage1FallbackView({
-  subjectColor, note,
-}: {
-  subjectColor: { bg: string; text: string; border: string };
-  note?:        string;
-}) {
-  return (
-    <div className="flex flex-col items-center justify-center gap-3 py-16 px-6 text-center" style={{ background: '#fdf6ee', minHeight: 320 }}>
-      <span className="text-4xl">📭</span>
-      <p className="text-sm font-bold" style={{ color: 'var(--color-brown)' }}>
-        {note ?? '学習設計データが利用できません'}
-      </p>
-      {!note && (
-        <p className="text-xs max-w-xs leading-relaxed" style={{ color: 'var(--color-brown-light)' }}>
-          このアニメーションは学習設計データの保存機能が追加される前に生成されたため、
-          学習ポイントとクイズを表示できません。新しく生成し直すと、学習ポイントとクイズが表示されます。
-        </p>
-      )}
-      <span
-        className="inline-block rounded-full px-3 py-1 text-xs font-semibold"
-        style={{ background: subjectColor.bg, color: subjectColor.text }}
-      >
-        🎬 アニメーションは表示できます
-      </span>
-    </div>
-  );
-}
-
-/* ─────────────────────────────────────────────────────
-   結果タブ — 学習ポイントビュー
-───────────────────────────────────────────────────── */
-function LearningPointsView({
-  data, subjectColor,
-}: {
-  data:         Stage1Success;
-  subjectColor: { bg: string; text: string; border: string };
-}) {
-  const { content, concept_check } = data;
-  return (
-    <div className="px-5 sm:px-6 py-6 flex flex-col gap-6" style={{ background: '#fdf6ee' }}>
-      {/* ① 概念名 + 一行サマリ */}
-      <section>
-        <p className="text-xs font-bold mb-1" style={{ color: subjectColor.border }}>
-          学ぶこと
-        </p>
-        <h3 className="text-xl font-bold leading-snug mb-1" style={{ color: 'var(--color-brown)' }}>
-          {content.concept_name}
-        </h3>
-        {content.concept_name_simple && content.concept_name_simple !== content.concept_name && (
-          <p className="text-xs mb-2" style={{ color: 'var(--color-brown-light)' }}>
-            やさしく言うと：<strong>{content.concept_name_simple}</strong>
-          </p>
-        )}
-        <p className="text-sm leading-relaxed" style={{ color: 'var(--color-brown)' }}>
-          {content.one_line_summary}
-        </p>
-      </section>
-
-      {/* ② キーワード */}
-      {content.keywords.length > 0 && (
-        <section>
-          <p className="text-xs font-bold mb-2" style={{ color: subjectColor.border }}>
-            🔑 大事な言葉
-          </p>
-          <div className="grid gap-2 sm:grid-cols-2">
-            {content.keywords.map((kw, i) => (
-              <div
-                key={i}
-                className="rounded-2xl px-4 py-3"
-                style={{
-                  background: 'rgba(255,255,255,0.95)',
-                  border:     `1px solid ${subjectColor.border}33`,
-                  boxShadow:  '0 1px 2px rgba(0,0,0,0.04)',
-                }}
-              >
-                <p className="text-sm font-bold" style={{ color: subjectColor.text }}>
-                  {kw.term}
-                  {kw.reading && (
-                    <span className="ml-1 text-xs font-normal" style={{ color: 'var(--color-brown-light)' }}>
-                      （{kw.reading}）
-                    </span>
-                  )}
-                </p>
-                <p className="text-xs leading-relaxed mt-0.5" style={{ color: 'var(--color-brown)' }}>
-                  {kw.definition}
-                </p>
-              </div>
-            ))}
-          </div>
-        </section>
-      )}
-
-      {/* ③ 学習目標（key_points） */}
-      {content.key_points.length > 0 && (
-        <section>
-          <p className="text-xs font-bold mb-2" style={{ color: subjectColor.border }}>
-            🎯 ここを押さえよう
-          </p>
-          <ul className="flex flex-col gap-2">
-            {content.key_points.map((p, i) => (
-              <li
-                key={i}
-                className="rounded-xl px-3 py-2 text-sm leading-relaxed flex gap-2"
-                style={{ background: subjectColor.bg, color: subjectColor.text }}
-              >
-                <span className="font-bold shrink-0">{i + 1}.</span>
-                <span>{p}</span>
-              </li>
-            ))}
-          </ul>
-        </section>
-      )}
-
-      {/* ④ 学習の流れ（teaching_flow） */}
-      {content.teaching_flow.length > 0 && (
-        <section>
-          <p className="text-xs font-bold mb-2" style={{ color: subjectColor.border }}>
-            🪜 学びの流れ
-          </p>
-          <ol className="flex flex-col gap-3">
-            {content.teaching_flow.map((step) => (
-              <li
-                key={step.step}
-                className="flex gap-3 rounded-2xl p-3"
-                style={{
-                  background: 'rgba(255,255,255,0.95)',
-                  border:     `1px solid ${subjectColor.border}22`,
-                }}
-              >
-                <span
-                  className="rounded-full flex items-center justify-center text-xs font-bold shrink-0"
-                  style={{
-                    width:      28,
-                    height:     28,
-                    background: subjectColor.border,
-                    color:      '#fff',
-                  }}
-                >
-                  {step.step}
-                </span>
-                <div className="flex-1 min-w-0">
-                  <p className="text-sm font-bold mb-0.5" style={{ color: 'var(--color-brown)' }}>
-                    {step.title}
-                  </p>
-                  <p className="text-xs leading-relaxed" style={{ color: 'var(--color-brown-light)' }}>
-                    {step.explanation}
-                  </p>
-                </div>
-              </li>
-            ))}
-          </ol>
-        </section>
-      )}
-
-      {/* ⑤ よくある誤解 */}
-      {concept_check.misconceptions.length > 0 && (
-        <section>
-          <p className="text-xs font-bold mb-2" style={{ color: subjectColor.border }}>
-            ⚠️ よくある誤解
-          </p>
-          <div className="flex flex-col gap-2">
-            {concept_check.misconceptions.map((m, i) => (
-              <div
-                key={i}
-                className="rounded-2xl p-3 flex flex-col gap-1.5"
-                style={{
-                  background: '#fff5f0',
-                  border:     '1px solid #ffd1b3',
-                }}
-              >
-                <p className="text-xs flex gap-1.5">
-                  <span className="font-bold shrink-0" style={{ color: '#c25040' }}>✗</span>
-                  <span style={{ color: '#7a3030' }}>{m.wrong_idea}</span>
-                </p>
-                <p className="text-xs flex gap-1.5">
-                  <span className="font-bold shrink-0" style={{ color: '#2e8b57' }}>○</span>
-                  <span style={{ color: 'var(--color-brown)' }}>{m.correction}</span>
-                </p>
-              </div>
-            ))}
-          </div>
-        </section>
-      )}
-    </div>
-  );
-}
-
-/* ─────────────────────────────────────────────────────
-   結果タブ — クイズビュー（インタラクティブ）
-───────────────────────────────────────────────────── */
-function QuizView({
-  data, subjectColor,
-}: {
-  data:         Stage1Success;
-  subjectColor: { bg: string; text: string; border: string };
-}) {
-  const quizzes = data.concept_check.quiz;
-  // 各設問のユーザー解答（選択した index）— 未回答は -1
-  const [answers, setAnswers] = useState<number[]>(() => quizzes.map(() => -1));
-
-  // 正答数
-  const answeredCount = answers.filter((a) => a >= 0).length;
-  const correctCount  = answers.reduce((acc, a, i) => (a === quizzes[i].answer_index ? acc + 1 : acc), 0);
-  const allAnswered   = answeredCount === quizzes.length;
-
-  function selectAnswer(quizIdx: number, choiceIdx: number) {
-    if (answers[quizIdx] >= 0) return; // 既回答はロック
-    setAnswers((prev) => prev.map((v, i) => (i === quizIdx ? choiceIdx : v)));
-  }
-
-  function resetAll() {
-    setAnswers(quizzes.map(() => -1));
-  }
-
-  return (
-    <div className="px-5 sm:px-6 py-6 flex flex-col gap-5" style={{ background: '#fdf6ee' }}>
-      {/* 進捗・スコア */}
-      <div
-        className="rounded-2xl px-4 py-3 flex items-center justify-between gap-3 flex-wrap"
-        style={{
-          background: allAnswered
-            ? `linear-gradient(135deg, ${subjectColor.border}22, ${subjectColor.border}10)`
-            : 'rgba(255,255,255,0.92)',
-          border: `1px solid ${subjectColor.border}33`,
-        }}
-      >
-        <p className="text-sm font-bold" style={{ color: 'var(--color-brown)' }}>
-          {allAnswered ? '🎉 全問解答完了！' : `📝 ${answeredCount} / ${quizzes.length} 問 解答`}
-        </p>
-        {answeredCount > 0 && (
-          <div className="flex items-center gap-2">
-            <span className="text-xs" style={{ color: 'var(--color-brown-light)' }}>
-              正解: <strong style={{ color: subjectColor.border }}>{correctCount}</strong> / {answeredCount}
-            </span>
-            <button
-              type="button"
-              onClick={resetAll}
-              className="rounded-full px-3 py-1 text-xs font-semibold transition-opacity hover:opacity-80"
-              style={{
-                background: '#fff',
-                color:      'var(--color-brown)',
-                border:     '1px solid #ddd6cc',
-              }}
-            >
-              🔄 もう一度
-            </button>
-          </div>
-        )}
-      </div>
-
-      {/* 設問リスト */}
-      {quizzes.map((q, qIdx) => {
-        const userAns = answers[qIdx];
-        const answered = userAns >= 0;
-        const isCorrect = userAns === q.answer_index;
-        return (
-          <div
-            key={qIdx}
-            className="rounded-2xl p-4 flex flex-col gap-3"
-            style={{
-              background: '#fff',
-              border:     `1.5px solid ${answered ? (isCorrect ? '#a5d6a7' : '#ffb3b3') : '#ddd6cc'}`,
-              boxShadow:  '0 1px 3px rgba(0,0,0,0.04)',
-            }}
-          >
-            <div className="flex items-start gap-2">
-              <span
-                className="rounded-full flex items-center justify-center text-xs font-bold shrink-0 mt-0.5"
-                style={{
-                  width:      24,
-                  height:     24,
-                  background: subjectColor.border,
-                  color:      '#fff',
-                }}
-              >
-                {qIdx + 1}
-              </span>
-              <p className="text-sm font-bold leading-relaxed" style={{ color: 'var(--color-brown)' }}>
-                {q.question}
-              </p>
-              {q.is_trick_question && (
-                <span
-                  className="inline-block rounded-full px-2 py-0.5 text-[10px] font-bold shrink-0"
-                  style={{ background: '#fff3cd', color: '#856404', border: '1px solid #ffd54f' }}
-                  title="ひっかけ問題です"
-                >
-                  ⚠ ひっかけ
-                </span>
-              )}
-            </div>
-
-            <div className="flex flex-col gap-2">
-              {q.choices.map((choice, cIdx) => {
-                const isUserChoice = userAns === cIdx;
-                const isAnswerKey  = q.answer_index === cIdx;
-                let bg = 'rgba(255,255,255,0.95)';
-                let color = 'var(--color-brown)';
-                let border = '1.5px solid #ddd6cc';
-                if (answered) {
-                  if (isAnswerKey) {
-                    bg = '#e8f5e9'; color = '#2e7d32'; border = '1.5px solid #a5d6a7';
-                  } else if (isUserChoice) {
-                    bg = '#fff5f0'; color = '#c25040'; border = '1.5px solid #ffb3b3';
-                  } else {
-                    bg = '#f7f2eb'; color = 'var(--color-brown-light)'; border = '1.5px solid #e8e0d8';
-                  }
-                }
-                return (
-                  <button
-                    key={cIdx}
-                    type="button"
-                    disabled={answered}
-                    onClick={() => selectAnswer(qIdx, cIdx)}
-                    className="rounded-xl px-3 py-2 text-sm font-semibold text-left transition-all hover:opacity-90 disabled:cursor-default"
-                    style={{ background: bg, color, border }}
-                  >
-                    <span className="inline-block mr-2 font-bold" style={{ width: 18 }}>
-                      {String.fromCharCode(65 + cIdx)}.
-                    </span>
-                    {choice}
-                    {answered && isAnswerKey && <span className="ml-2">✓</span>}
-                    {answered && isUserChoice && !isAnswerKey && <span className="ml-2">✗</span>}
-                  </button>
-                );
-              })}
-            </div>
-
-            {answered && (
-              <div
-                className="rounded-xl px-3 py-2 text-xs leading-relaxed"
-                style={{
-                  background: isCorrect ? '#e8f5e9' : '#fff5f0',
-                  color:      isCorrect ? '#2e7d32' : '#7a3030',
-                  border:     `1px solid ${isCorrect ? '#a5d6a7' : '#ffb3b3'}`,
-                }}
-              >
-                <p className="font-bold mb-1">
-                  {isCorrect ? '🎉 正解！' : '😅 残念…正解は ' + String.fromCharCode(65 + q.answer_index) + ' でした'}
-                </p>
-                <p>{isCorrect ? q.explanation_correct : q.explanation_wrong}</p>
-              </div>
-            )}
-          </div>
-        );
-      })}
-    </div>
-  );
-}
 
 /* ─────────────────────────────────────────────────────
    回数制限パネル
