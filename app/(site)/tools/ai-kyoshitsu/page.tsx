@@ -416,10 +416,7 @@ export default function AiKyoshitsuPage() {
             />
           )}
 
-          {/* 生成中ローディング */}
-          {view.kind === 'generating' && (
-            <GeneratingPanel themeLabel={view.themeLabel} subjectColor={subjectColor} />
-          )}
+          {/* 生成中の表示は上の段では行わない（チャットの thinking バブルに集約・Phase 1c+） */}
 
           {/* 生成結果 */}
           {view.kind === 'result' && (
@@ -723,10 +720,9 @@ function ComingSoonPlaceholder({ theme, subjectColor }: { theme: Theme; subjectC
 }
 
 /* ─────────────────────────────────────────────────────
-   生成中ローディングパネル（R3-U4 強化版）
-   - 経過時間に応じた段階メッセージ（Stage1 → Stage2 → 仕上げ）
-   - 進捗バー（推定値・60秒満タン）
-   - 豆知識ローテーション（1Aセッションで見飽きないように）
+   生成中の段階メッセージ・豆知識
+   - Phase 1c+ ではチャット内 thinking バブル（ChatThinkingBubble）で再利用
+   - 上の段の GeneratingPanel は廃止済み
 ───────────────────────────────────────────────────── */
 
 /** 経過秒数に応じた段階メッセージ */
@@ -748,187 +744,6 @@ const FUN_FACTS: readonly string[] = [
   '🔬 子供の好奇心を引き出す表現を選んでいます',
   '🎨 教科ごとに色のテーマを変えて作成中です',
 ];
-
-function GeneratingPanel({
-  themeLabel,
-  subjectColor,
-}: {
-  themeLabel: string;
-  subjectColor: { bg: string; text: string; border: string };
-}) {
-  // 経過秒数（500ms 刻みで更新）
-  const [elapsedSec, setElapsedSec] = useState(0);
-  // ドット
-  const [dots, setDots] = useState('');
-  // 豆知識インデックス（5秒ごとに切替）
-  const [factIdx, setFactIdx] = useState(0);
-
-  useEffect(() => {
-    const startedAt = Date.now();
-    const tick = setInterval(() => {
-      setElapsedSec((Date.now() - startedAt) / 1000);
-    }, 500);
-    const dotTimer = setInterval(() => {
-      setDots((d) => (d.length >= 3 ? '' : d + '・'));
-    }, 600);
-    const factTimer = setInterval(() => {
-      setFactIdx((i) => (i + 1) % FUN_FACTS.length);
-    }, 5_000);
-    return () => {
-      clearInterval(tick);
-      clearInterval(dotTimer);
-      clearInterval(factTimer);
-    };
-  }, []);
-
-  // 現在の段階を経過秒数から特定
-  const currentStage =
-    [...GENERATING_STAGES].reverse().find((s) => elapsedSec >= s.minSec) ?? GENERATING_STAGES[0];
-  // 進捗 0〜100%（60秒で満タンに近づく・ただし95%で頭打ち）
-  const progressPct = Math.min(95, (elapsedSec / 60) * 100);
-
-  return (
-    <div
-      className="rounded-3xl flex flex-col items-center justify-center gap-6 py-12 px-6 text-center"
-      style={{
-        background: 'rgba(255,255,255,0.92)',
-        boxShadow:  'var(--shadow-warm-sm)',
-        minHeight:  340,
-        position:   'relative',
-        overflow:   'hidden',
-      }}
-    >
-      {/* 背景の薄いブロブ */}
-      <div
-        aria-hidden
-        style={{
-          position:     'absolute',
-          top:          -60,
-          right:        -60,
-          width:        220,
-          height:       220,
-          borderRadius: 9999,
-          background:   `radial-gradient(circle, ${subjectColor.border}22 0%, transparent 70%)`,
-          pointerEvents: 'none',
-        }}
-      />
-
-      {/* 段階の絵文字（パルス） */}
-      <div
-        style={{
-          fontSize:   72,
-          lineHeight: 1,
-          animation:  'aiKyoshitsuPulse 2s ease-in-out infinite',
-        }}
-      >
-        {currentStage.emoji}
-      </div>
-
-      {/* メイン段階テキスト */}
-      <div className="flex flex-col items-center gap-1">
-        <p className="text-lg font-bold" style={{ color: 'var(--color-brown)' }}>
-          {currentStage.label}
-          <span style={{ color: subjectColor.border, marginLeft: 4 }}>{dots}</span>
-        </p>
-        <p className="text-xs" style={{ color: 'var(--color-brown-light)' }}>
-          {currentStage.sub}
-        </p>
-      </div>
-
-      {/* 進捗バー */}
-      <div style={{ width: '100%', maxWidth: 360 }}>
-        <div
-          style={{
-            width:        '100%',
-            height:       8,
-            background:   '#f0e8dc',
-            borderRadius: 9999,
-            overflow:     'hidden',
-            position:     'relative',
-          }}
-        >
-          <div
-            style={{
-              width:      `${progressPct}%`,
-              height:     '100%',
-              background: `linear-gradient(90deg, ${subjectColor.border} 0%, ${subjectColor.border}cc 100%)`,
-              borderRadius: 9999,
-              transition: 'width 0.5s ease-out',
-            }}
-          />
-          {/* 流れるシャイン */}
-          <div
-            aria-hidden
-            style={{
-              position:   'absolute',
-              top:        0,
-              left:       0,
-              right:      0,
-              height:     '100%',
-              background: 'linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.6) 50%, transparent 100%)',
-              animation:  'aiKyoshitsuShine 2s linear infinite',
-              pointerEvents: 'none',
-            }}
-          />
-        </div>
-        <div
-          style={{
-            display:        'flex',
-            justifyContent: 'space-between',
-            marginTop:      6,
-            fontSize:       11,
-            color:          'var(--color-brown-muted)',
-          }}
-        >
-          <span>テーマ: <strong style={{ color: subjectColor.border }}>{themeLabel}</strong></span>
-          <span>{Math.floor(elapsedSec)}秒経過</span>
-        </div>
-      </div>
-
-      {/* 豆知識 */}
-      <div
-        key={factIdx}  // key でフェードイン再発火
-        style={{
-          fontSize:     12,
-          color:        'var(--color-brown-light)',
-          maxWidth:     360,
-          padding:      '8px 16px',
-          background:   subjectColor.bg,
-          borderRadius: 12,
-          animation:    'aiKyoshitsuFadeIn 0.5s ease-out',
-        }}
-      >
-        {FUN_FACTS[factIdx]}
-      </div>
-
-      {/* キャンセル/長時間警告（40秒以降） */}
-      {elapsedSec >= 40 && (
-        <p
-          className="text-xs leading-relaxed max-w-xs"
-          style={{ color: 'var(--color-brown-muted)' }}
-        >
-          通常 30〜50 秒で完成します。混雑時はもう少しかかることがあります。
-        </p>
-      )}
-
-      {/* インライン CSS（このコンポーネントだけのアニメーション） */}
-      <style>{`
-        @keyframes aiKyoshitsuPulse {
-          0%, 100% { transform: scale(1);   filter: drop-shadow(0 4px 12px rgba(0,0,0,0.08)); }
-          50%      { transform: scale(1.08); filter: drop-shadow(0 8px 18px rgba(0,0,0,0.12)); }
-        }
-        @keyframes aiKyoshitsuShine {
-          0%   { transform: translateX(-100%); }
-          100% { transform: translateX(100%); }
-        }
-        @keyframes aiKyoshitsuFadeIn {
-          from { opacity: 0; transform: translateY(4px); }
-          to   { opacity: 1; transform: translateY(0);   }
-        }
-      `}</style>
-    </div>
-  );
-}
 
 /* ─────────────────────────────────────────────────────
    生成結果パネル（iframe表示）
@@ -1987,6 +1802,145 @@ function ChatEmptyHint({
 }
 
 /* ─────────────────────────────────────────────────────
+   ChatThinkingBubble — 生成中の段階表示（旧 GeneratingPanel をチャット内に統合）
+   - 経過秒数で段階メッセージを切替（GENERATING_STAGES）
+   - 細い進捗バー（推定値・60秒満タン・95%で頭打ち）
+   - 5秒ごとに豆知識ローテーション（FUN_FACTS）
+───────────────────────────────────────────────────── */
+function ChatThinkingBubble({
+  subjectColor,
+}: {
+  subjectColor: { bg: string; text: string; border: string };
+}) {
+  const [elapsedSec, setElapsedSec] = useState(0);
+  const [factIdx,    setFactIdx]    = useState(0);
+
+  useEffect(() => {
+    const startedAt = Date.now();
+    const tick = setInterval(() => {
+      setElapsedSec((Date.now() - startedAt) / 1000);
+    }, 500);
+    const factTimer = setInterval(() => {
+      setFactIdx((i) => (i + 1) % FUN_FACTS.length);
+    }, 5_000);
+    return () => {
+      clearInterval(tick);
+      clearInterval(factTimer);
+    };
+  }, []);
+
+  const currentStage =
+    [...GENERATING_STAGES].reverse().find((s) => elapsedSec >= s.minSec) ?? GENERATING_STAGES[0];
+  const progressPct = Math.min(95, (elapsedSec / 60) * 100);
+
+  return (
+    <div
+      className="rounded-2xl px-4 py-3 flex flex-col gap-2"
+      style={{
+        background: '#fff',
+        border:     `1px solid ${subjectColor.border}33`,
+        boxShadow:  '0 1px 3px rgba(0,0,0,0.04)',
+      }}
+    >
+      {/* 段階：絵文字 + ラベル */}
+      <div className="flex items-center gap-2">
+        <span
+          style={{
+            fontSize:  20,
+            animation: 'aiKyoshitsuPulse 2s ease-in-out infinite',
+            display:   'inline-block',
+          }}
+        >
+          {currentStage.emoji}
+        </span>
+        <p className="text-sm font-bold leading-snug" style={{ color: 'var(--color-brown)' }}>
+          {currentStage.label}
+        </p>
+      </div>
+
+      {/* サブテキスト */}
+      <p className="text-xs leading-relaxed" style={{ color: 'var(--color-brown-light)' }}>
+        {currentStage.sub}
+      </p>
+
+      {/* 進捗バー（細め） */}
+      <div
+        style={{
+          width:        '100%',
+          height:       4,
+          background:   '#f0e8dc',
+          borderRadius: 9999,
+          overflow:     'hidden',
+          position:     'relative',
+        }}
+      >
+        <div
+          style={{
+            width:        `${progressPct}%`,
+            height:       '100%',
+            background:   `linear-gradient(90deg, ${subjectColor.border} 0%, ${subjectColor.border}cc 100%)`,
+            borderRadius: 9999,
+            transition:   'width 0.5s ease-out',
+          }}
+        />
+        {/* 流れるシャイン */}
+        <div
+          aria-hidden
+          style={{
+            position:      'absolute',
+            top:           0,
+            left:          0,
+            right:         0,
+            height:        '100%',
+            background:    'linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.6) 50%, transparent 100%)',
+            animation:     'aiKyoshitsuShine 2s linear infinite',
+            pointerEvents: 'none',
+          }}
+        />
+      </div>
+
+      {/* 経過秒 + 豆知識（コンパクト） */}
+      <div className="flex items-center justify-between gap-2 text-[11px]" style={{ color: 'var(--color-brown-muted)' }}>
+        <span>{Math.floor(elapsedSec)}秒経過</span>
+        <span
+          key={factIdx}  // key でフェードイン再発火
+          className="text-right"
+          style={{
+            animation: 'aiKyoshitsuFadeIn 0.5s ease-out',
+            maxWidth:  '70%',
+          }}
+        >
+          {FUN_FACTS[factIdx]}
+        </span>
+      </div>
+
+      {/* 40秒以降の長時間警告 */}
+      {elapsedSec >= 40 && (
+        <p className="text-[11px] leading-relaxed" style={{ color: 'var(--color-brown-muted)' }}>
+          通常 30〜50 秒で完成します。混雑時はもう少しかかることがあります。
+        </p>
+      )}
+
+      {/* インライン CSS（旧 GeneratingPanel から流用） */}
+      <style>{`
+        @keyframes aiKyoshitsuPulse {
+          0%, 100% { transform: scale(1);   filter: drop-shadow(0 2px 6px rgba(0,0,0,0.06)); }
+          50%      { transform: scale(1.08); filter: drop-shadow(0 4px 9px rgba(0,0,0,0.10)); }
+        }
+        @keyframes aiKyoshitsuShine {
+          0%   { transform: translateX(-100%); }
+          100% { transform: translateX(100%); }
+        }
+        @keyframes aiKyoshitsuFadeIn {
+          from { opacity: 0; transform: translateY(2px); }
+          to   { opacity: 1; transform: translateY(0);   }
+        }
+      `}</style>
+    </div>
+  );
+}
+
+/* ─────────────────────────────────────────────────────
    ChatBubble — 個別メッセージバブル
 ───────────────────────────────────────────────────── */
 function ChatBubble({
@@ -2034,13 +1988,7 @@ function ChatBubble({
       </span>
       <div className="flex-1 min-w-0 max-w-[85%] sm:max-w-[80%]">
         {msg.variant === 'thinking' && (
-          <div
-            className="rounded-2xl px-4 py-2.5 inline-flex items-center gap-2 text-sm"
-            style={{ background: '#fff', border: '1px solid #e8e0d8', color: 'var(--color-brown-light)' }}
-          >
-            <span style={{ display: 'inline-block', animation: 'spin 1s linear infinite' }}>⟳</span>
-            考えています…
-          </div>
+          <ChatThinkingBubble subjectColor={subjectColor} />
         )}
 
         {msg.variant === 'understood' && (
