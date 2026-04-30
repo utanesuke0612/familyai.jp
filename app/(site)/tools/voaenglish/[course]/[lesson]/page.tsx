@@ -13,8 +13,7 @@ import { notFound } from 'next/navigation';
 
 import { AIChatWidget }         from '@/components/article/AIChatWidget';
 import { MarkdownContent }      from '@/components/ui/MarkdownContent';
-import { SentencePlayer }       from '@/components/voaenglish/SentencePlayer';
-import { HandwritingNote }      from '@/components/voaenglish/HandwritingNote';
+import { DictationPanel }       from '@/components/voaenglish/DictationPanel';
 import { SITE } from '@/shared';
 import {
   getAllLessons,
@@ -261,18 +260,21 @@ export default async function VoaLessonPage({
                 title="Dictation 練習"
                 accent={accent}
               >
-                {/* 手書き推奨メッセージ（常時表示） */}
-                <HandwritingNote />
-
                 {canPlay ? (
-                  <>
-                    {/* R3-機能3 Phase 4: センテンス単位プレイヤー */}
-                    <SentencePlayer
-                      audioUrl={audioUrl!}
-                      sentences={sentences!}
-                      // TODO Phase 6: onAllPlayed で「完璧でしたか？」自己申告ダイアログを表示
-                    />
-                  </>
+                  // R3-機能3 Phase 6: SentencePlayer + 自己申告 + confetti + 進捗保存を統合
+                  <DictationPanel
+                    lessonKey={`${course}/${lesson}`}
+                    lessonTitle={headline}
+                    audioUrl={audioUrl!}
+                    sentences={sentences!}
+                    nextLesson={next ? {
+                      course:       next.course,
+                      slug:         next.slug,
+                      title:        next.title,
+                      lessonNumber: next.lessonNumber,
+                      level:        next.level,
+                    } : null}
+                  />
                 ) : (
                   <div
                     className="rounded-xl p-4 mb-4 text-center"
@@ -290,7 +292,6 @@ export default async function VoaLessonPage({
                     </p>
                   </div>
                 )}
-
               </SectionCard>
 
             </div>
