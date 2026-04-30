@@ -449,7 +449,7 @@ function PreviewPanel({
 
   return (
     <div className="rounded-3xl overflow-hidden" style={{ boxShadow: 'var(--shadow-warm)', border: `2px solid ${subjectColor.border}44` }}>
-      <div className="flex items-center justify-between gap-3 px-5 py-4 flex-wrap" style={{ background: `${subjectColor.border}18` }}>
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 px-5 py-4" style={{ background: `${subjectColor.border}18` }}>
         <div className="flex items-center gap-3 min-w-0">
           <span className="text-2xl">{theme.icon}</span>
           <div className="min-w-0">
@@ -457,7 +457,7 @@ function PreviewPanel({
             <div className="text-xs" style={{ color: 'var(--color-brown-light)' }}>{GRADE_LABEL[grade]}</div>
           </div>
         </div>
-        <div className="flex items-center gap-1.5 flex-wrap justify-end">
+        <div className="flex flex-wrap items-center gap-1.5 justify-start sm:justify-end w-full sm:w-auto">
           {/* シェアボタン群（previewUrl がある時のみ表示） */}
           {canShare && (
             <>
@@ -932,11 +932,11 @@ function ResultPanel({
   return (
     <div className="rounded-3xl overflow-hidden" style={{ boxShadow: 'var(--shadow-warm)', border: `2px solid ${subjectColor.border}44` }}>
       {/* ヘッダー */}
-      <div className="flex items-center justify-between px-5 py-4" style={{ background: `${subjectColor.border}18` }}>
-        <div className="flex items-center gap-3">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 px-5 py-4" style={{ background: `${subjectColor.border}18` }}>
+        <div className="flex items-center gap-3 min-w-0">
           <span className="text-xl">🎬</span>
-          <div>
-            <div className="font-bold text-sm" style={{ color: 'var(--color-brown)' }}>{themeLabel}</div>
+          <div className="min-w-0">
+            <div className="font-bold text-sm truncate" style={{ color: 'var(--color-brown)' }}>{themeLabel}</div>
             <div className="flex items-center gap-2 mt-0.5">
               <span
                 className="inline-block rounded-full px-2 py-0.5 text-xs font-bold"
@@ -948,7 +948,7 @@ function ResultPanel({
             </div>
           </div>
         </div>
-        <div className="flex items-center gap-1.5 flex-wrap justify-end">
+        <div className="flex flex-wrap items-center gap-1.5 justify-start sm:justify-end w-full sm:w-auto">
           {/* シェアボタン群 */}
           <button
             onClick={shareToX}
