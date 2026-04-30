@@ -17,6 +17,11 @@ import {
   type Theme,
 } from '@/lib/ai-kyoshitsu/themes';
 import type { Stage1Success } from '@/lib/ai-kyoshitsu/stage1-schema';
+import {
+  MAX_CONVERSATION_TURNS,
+  MAX_TURN_TEXT_LENGTH,
+  type ConversationTurn,
+} from '@/lib/ai-kyoshitsu/conversation';
 
 /* ───── 定数 ─────────────────────────────────────────── */
 
@@ -62,6 +67,29 @@ let _chatMsgCounter = 0;
 function genChatMsgId(): string {
   _chatMsgCounter += 1;
   return `m${Date.now()}-${_chatMsgCounter}`;
+}
+
+/**
+ * Phase 1c+: ChatMessage[] を API 送信用の ConversationTurn[] に変換。
+ * - thinking バブルは除外（これから AI 応答待ち）
+ * - 直近 MAX_CONVERSATION_TURNS ターンに制限（履歴肥大による Stage 1 トークン浪費を防ぐ）
+ * - 各ターンの text は MAX_TURN_TEXT_LENGTH で切り詰め
+ */
+function chatMessagesToConversationHistory(messages: ChatMessage[]): ConversationTurn[] {
+  const turns: ConversationTurn[] = [];
+  for (const m of messages) {
+    if (m.role === 'user') {
+      turns.push({ role: 'user', text: m.text.slice(0, MAX_TURN_TEXT_LENGTH) });
+      continue;
+    }
+    // role === 'ai'
+    if (m.variant === 'thinking') continue;        // 思考中バブルはスキップ
+    if (m.variant === 'understood' || m.variant === 'clarification' || m.variant === 'error') {
+      turns.push({ role: 'ai', text: m.text.slice(0, MAX_TURN_TEXT_LENGTH) });
+    }
+  }
+  // 直近 N ターン（古い方から削る）
+  return turns.slice(-MAX_CONVERSATION_TURNS);
 }
 
 /* ───── メインコンポーネント ──────────────────────────── */
@@ -123,6 +151,9 @@ export default function AiKyoshitsuPage() {
     const trimmed = rawText.trim();
     if (!trimmed || isGenerating) return;
 
+    // 0. 会話履歴は send 直前の messages で確定（今回追加するユーザー発言は除外）
+    const conversationHistory = chatMessagesToConversationHistory(messages);
+
     // 1. ユーザー発言 + 思考中バブル
     const userMsg:     ChatMessage = { id: genChatMsgId(), role: 'user', text: trimmed };
     const thinkingId   = genChatMsgId();
@@ -150,10 +181,12 @@ export default function AiKyoshitsuPage() {
         method:  'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          prompt:  trimmed,
+          prompt:               trimmed,
           grade,
           subject,
-          theme:   trimmed,
+          theme:                trimmed,
+          // Phase 1c+: 文脈を踏まえた解釈のため直近 N ターンを送信
+          conversationHistory,
         }),
       });
 
@@ -1881,7 +1914,7 @@ function ChatEmptyHint({
 }) {
   return (
     <div className="flex flex-col items-center justify-center text-center gap-2 py-6 px-4">
-      <span className="text-3xl">🤖</span>
+      <span className="text-3xl">💞</span>
       <p className="text-sm font-bold" style={{ color: 'var(--color-brown)' }}>
         どんなテーマで学びたいですか？
       </p>
@@ -2082,7 +2115,7 @@ function ChatBubble({
         }}
         aria-hidden
       >
-        🤖
+        💞
       </span>
       <div className="flex-1 min-w-0 max-w-[85%] sm:max-w-[80%]">
         {msg.variant === 'thinking' && (

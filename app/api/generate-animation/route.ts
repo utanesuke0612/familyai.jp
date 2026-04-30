@@ -50,6 +50,10 @@ import {
   type Stage1Success,
   type Stage1Result,
 } from '@/lib/ai-kyoshitsu/stage1-schema';
+import {
+  conversationHistorySchema,
+  type ConversationTurn,
+} from '@/lib/ai-kyoshitsu/conversation';
 
 export const runtime  = 'nodejs';
 export const maxDuration = 60;
@@ -87,6 +91,12 @@ const bodySchema = z.object({
   grade:   z.enum(['elem-low', 'elem-high', 'middle']),
   subject: z.enum(['science', 'math', 'social']),
   theme:   z.string().min(1).max(200),
+  /**
+   * Phase 1c+: チャット会話履歴（直近 N ターン）。
+   * Stage 1 が文脈を踏まえて反問・解釈できるようにするため。
+   * 省略可（後方互換）。送信されない場合は従来通り単発リクエストとして扱う。
+   */
+  conversationHistory: conversationHistorySchema.optional(),
 });
 
 // ── 学年・教科の日本語ラベル ───────────────────────────────────
@@ -165,19 +175,30 @@ function extractHtml(raw: string): string {
  * - 失敗時: API エラー（タイムアウト・429 等）は throw する。呼び出し側でリトライ判定。
  */
 async function callStage1Api(
-  prompt:    string,
-  grade:     string,
-  subject:   string,
-  model:     string,
-  timeoutMs: number,
+  prompt:               string,
+  grade:                string,
+  subject:              string,
+  model:                string,
+  timeoutMs:            number,
+  conversationHistory?: ConversationTurn[],
 ): Promise<string> {
   const gradeLabel   = GRADE_LABEL[grade]   ?? grade;
   const subjectLabel = SUBJECT_LABEL[subject] ?? subject;
 
   const systemPrompt = readPromptFile(STAGE1_PROMPT_PATH);
-  const userMessage  = `学年: ${gradeLabel}
-科目: ${subjectLabel}
-ユーザー指示: ${prompt}`;
+
+  // Phase 1c+: 過去の対話履歴セクション（あれば差し込む）
+  // 直近 N ターンのみ送信。AI が文脈を踏まえて反問・解釈できるようにする。
+  const historySection =
+    conversationHistory && conversationHistory.length > 0
+      ? `\n\n=== 過去の対話履歴（参考） ===\n${conversationHistory
+          .map((t) => (t.role === 'user' ? `User: ${t.text}` : `AI: ${t.text}`))
+          .join('\n')}\n=== ここまで ===\n`
+      : '';
+
+  const userMessage = `学年: ${gradeLabel}
+科目: ${subjectLabel}${historySection}
+ユーザー指示（今回のメッセージ）: ${prompt}`;
 
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), timeoutMs);
@@ -230,14 +251,17 @@ function parseStage1Response(rawText: string): Stage1Result {
  *   - リトライ後の失敗（無限ループ防止）
  */
 async function runStage1(
-  prompt: string,
-  grade: string,
-  subject: string,
-  cfg: AiKyoshitsuConfig,
+  prompt:               string,
+  grade:                string,
+  subject:              string,
+  cfg:                  AiKyoshitsuConfig,
+  conversationHistory?: ConversationTurn[],
 ): Promise<Stage1Result> {
   let rawText: string;
   try {
-    rawText = await callStage1Api(prompt, grade, subject, cfg.stage1Model, cfg.stage1TimeoutMs);
+    rawText = await callStage1Api(
+      prompt, grade, subject, cfg.stage1Model, cfg.stage1TimeoutMs, conversationHistory,
+    );
   } catch (err) {
     const isRetryable = isRetryableError(err);
     const errMsg      = err instanceof Error ? err.message : String(err);
@@ -250,7 +274,7 @@ async function runStage1(
     console.warn(`[Stage1] retrying with fallback model: ${FALLBACK_MODEL}`);
     try {
       rawText = await callStage1Api(
-        prompt, grade, subject, FALLBACK_MODEL, FALLBACK_STAGE1_TIMEOUT_MS,
+        prompt, grade, subject, FALLBACK_MODEL, FALLBACK_STAGE1_TIMEOUT_MS, conversationHistory,
       );
     } catch (retryErr) {
       console.warn(
@@ -424,7 +448,7 @@ export async function POST(req: NextRequest) {
     );
   }
 
-  const { prompt, grade, subject, theme } = parsed.data;
+  const { prompt, grade, subject, theme, conversationHistory } = parsed.data;
 
   // 3. 認証チェック（未ログインは即ブロック）
   const session = await auth();
@@ -466,8 +490,8 @@ export async function POST(req: NextRequest) {
   // 6. ランタイム設定取得（env / DB / DEFAULTS のレイヤー解決）
   const cfg = await getAiConfig();
 
-  // 6. Stage 1 実行
-  const stage1 = await runStage1(prompt, grade, subject, cfg);
+  // 6. Stage 1 実行（Phase 1c+: 会話履歴を文脈として渡す）
+  const stage1 = await runStage1(prompt, grade, subject, cfg, conversationHistory);
 
   // 6a. エラー: 学習内容として不適切（科目に無関係・難易度不一致など）
   if (stage1.kind === 'error') {
