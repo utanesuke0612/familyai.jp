@@ -84,8 +84,16 @@ function chatMessagesToConversationHistory(messages: ChatMessage[]): Conversatio
     }
     // role === 'ai'
     if (m.variant === 'thinking') continue;        // 思考中バブルはスキップ
-    if (m.variant === 'understood' || m.variant === 'clarification' || m.variant === 'error') {
+    if (m.variant === 'understood' || m.variant === 'error') {
       turns.push({ role: 'ai', text: m.text.slice(0, MAX_TURN_TEXT_LENGTH) });
+    } else if (m.variant === 'clarification') {
+      // clarification は選択肢も合わせて履歴化（LLM が文脈と提示済み候補を理解できるように）
+      const optionsText =
+        m.options.length > 0
+          ? `\n[提示した選択肢: ${m.options.join(' / ')}]`
+          : '';
+      const combined = `${m.text}${optionsText}`.slice(0, MAX_TURN_TEXT_LENGTH);
+      turns.push({ role: 'ai', text: combined });
     }
   }
   // 直近 N ターン（古い方から削る）

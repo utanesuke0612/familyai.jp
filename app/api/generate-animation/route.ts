@@ -191,14 +191,43 @@ async function callStage1Api(
   // 直近 N ターンのみ送信。AI が文脈を踏まえて反問・解釈できるようにする。
   const historySection =
     conversationHistory && conversationHistory.length > 0
-      ? `\n\n=== 過去の対話履歴（参考） ===\n${conversationHistory
+      ? `\n\n=== 過去の対話履歴（参考・直近 ${conversationHistory.length} ターン） ===\n${conversationHistory
           .map((t) => (t.role === 'user' ? `User: ${t.text}` : `AI: ${t.text}`))
           .join('\n')}\n=== ここまで ===\n`
       : '';
 
+  /**
+   * 補足ルール（システムプロンプトを補強・LLM 挙動矯正用）。
+   *
+   * 1. 言語: 日本語応答のみ。英文の混入を完全禁止
+   * 2. 余計な確認禁止: テーマ明確なら直接 success JSON
+   * 3. 履歴活用: 短い了承返答 ("OK"/"これでお願い" 等) は履歴から復元
+   * 4. options 必須: needs_clarification では空配列禁止
+   * 5. 確認系 options 推奨: 同テーマでの意見確認は yes/no/別の 3 択
+   */
+  const correctionRules = `
+
+【重要・必ず守るルール】
+1. 応答テキストは必ず日本語のみ。英語の文（"Would you like...", "Should I..." 等）の
+   混入は完全禁止。日本語の問いかけのみで完結させること。
+2. ユーザー指示が具体的かつ十分明確で、学年と科目の組み合わせとして適切な場合は、
+   確認質問せず直接 success JSON を返すこと。
+   「生成してよろしいですか？」のような事前確認は不要 — そのまま生成に進むこと。
+3. 過去の対話履歴がある場合、最新のユーザー発言が短い了承・続行の意思表示
+   （例: 「これでお願い」「OK」「了解」「うん」「はい」「進めて」「これで」「お願いします」）
+   なら、直前の対話で確認したテーマを使って success JSON を返すこと。
+   この種の発言を新規テーマとして扱ってはいけない（必ず履歴から復元する）。
+4. needs_clarification を返す場合、options は必ず 2〜4 個の具体的な選択肢を含めること。
+   空配列は禁止。options_available も必ず true に。
+5. 同じテーマでユーザーの意向を確認したい場合（生成可否・修正要否など）、
+   options には次のような確認系の選択肢を入れること:
+   ["✅ これでOK", "✏️ もう少し修正", "🆕 別のテーマにする"]
+   または案件に応じた 2〜4 個の確認用フレーズ。
+`;
+
   const userMessage = `学年: ${gradeLabel}
 科目: ${subjectLabel}${historySection}
-ユーザー指示（今回のメッセージ）: ${prompt}`;
+ユーザー指示（今回のメッセージ）: ${prompt}${correctionRules}`;
 
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), timeoutMs);
