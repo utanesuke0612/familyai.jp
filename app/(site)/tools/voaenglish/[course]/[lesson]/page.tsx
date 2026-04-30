@@ -255,10 +255,10 @@ export default async function VoaLessonPage({
               </SectionCard>
 
               {/* ─── ③ Dictation 練習 ─────────────────────────────── */}
+              {/* subtitle は HandwritingNote に統合したのでここでは指定しない */}
               <SectionCard
                 emoji="✍️"
                 title="Dictation 練習"
-                subtitle="紙とペンを用意して、聴いた英語を書き取ってみよう"
                 accent={accent}
               >
                 {/* 手書き推奨メッセージ（常時表示） */}
