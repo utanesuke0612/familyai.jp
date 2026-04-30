@@ -67,16 +67,29 @@ function genChatMsgId(): string {
 /* ───── メインコンポーネント ──────────────────────────── */
 
 export default function AiKyoshitsuPage() {
-  const [grade,    setGrade]    = useState<Grade>('elem-low');
-  const [subject,  setSubject]  = useState<Subject>('science');
-  const [view,     setView]     = useState<ViewState>({ kind: 'idle' });
-  const [prompt,   setPrompt]   = useState('');
-  const [messages, setMessages] = useState<ChatMessage[]>([]);
+  const [grade,         setGrade]         = useState<Grade>('elem-low');
+  const [subject,       setSubject]       = useState<Subject>('science');
+  const [view,          setView]          = useState<ViewState>({ kind: 'idle' });
+  const [prompt,        setPrompt]        = useState('');
+  const [messages,      setMessages]      = useState<ChatMessage[]>([]);
+  const [chatCollapsed, setChatCollapsed] = useState(false);
   const bottomRef = useRef<HTMLDivElement>(null);
+  const resultRef = useRef<HTMLDivElement>(null);
 
   const visibleThemes = filterThemes(grade, subject);
   const subjectColor  = SUBJECT_COLOR[subject];
   const isGenerating  = view.kind === 'generating';
+
+  /* 結果が表示された瞬間にチャットを折りたたみ + 結果へスクロール */
+  useEffect(() => {
+    if (view.kind === 'result') {
+      setChatCollapsed(true);
+      // 折りたたみアニメーション後に結果へスクロール
+      setTimeout(() => {
+        resultRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 200);
+    }
+  }, [view.kind]);
 
   /* カード選択・トグル：上の段に静的プレビュー + チャット入力欄にテーマ名を流し込む */
   function handleCardClick(theme: Theme) {
@@ -116,8 +129,9 @@ export default function AiKyoshitsuPage() {
     const thinkingMsg: ChatMessage = { id: thinkingId, role: 'ai', variant: 'thinking' };
     setMessages((prev) => [...prev, userMsg, thinkingMsg]);
 
-    // 2. 入力欄クリア + 上の段を生成中に
+    // 2. 入力欄クリア + 上の段を生成中に + チャット展開（折りたたみ済みなら開く）
     setPrompt('');
+    setChatCollapsed(false);
     setView({ kind: 'generating', themeLabel: trimmed });
     setTimeout(() => {
       bottomRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -235,6 +249,7 @@ export default function AiKyoshitsuPage() {
   function clearChat() {
     setMessages([]);
     setPrompt('');
+    setChatCollapsed(false);
     setView({ kind: 'idle' });
   }
 
@@ -401,10 +416,30 @@ export default function AiKyoshitsuPage() {
       <section className="px-6 pb-12">
         <div className="mx-auto max-w-5xl flex flex-col gap-6">
 
-          {/* ── 上の段：生成プレビュー領域 ────────────────
-              プレビュー（既製カード）／生成中／結果／ブロック画面が状況に応じて表示される。
-              CLARIFICATION_NEEDED と CONCEPT_NOT_SUITABLE はチャットへ移行したため
-              ここでは扱わない。 */}
+          {/* ── ① チャット領域（最上部） ────────────────────
+              Stage 1 のユーザー ↔ AI 対話 + 生成中 thinking バブル。
+              結果が出ると自動的に折りたたまれ、ヘッダーだけになる（手動で再展開可）。
+              ブロック画面（rate-limit / unauthorized）時のみ非表示。 */}
+          {view.kind !== 'rate-limit' && view.kind !== 'unauthorized' && (
+            <ChatPanel
+              messages={messages}
+              prompt={prompt}
+              setPrompt={setPrompt}
+              grade={grade}
+              subject={subject}
+              isGenerating={isGenerating}
+              subjectColor={subjectColor}
+              collapsed={chatCollapsed}
+              hasResult={view.kind === 'result'}
+              onSend={handleGenerate}
+              onOptionClick={handleOptionClick}
+              onClearChat={clearChat}
+              onToggleCollapse={() => setChatCollapsed((v) => !v)}
+            />
+          )}
+
+          {/* ── ② プレビュー / 結果 / ブロック領域（チャットの下） ── */}
+          <div ref={resultRef} />
 
           {/* プレビュー（既製カード選択時の静的 iframe） */}
           {view.kind === 'preview' && (
@@ -415,8 +450,6 @@ export default function AiKyoshitsuPage() {
               onClose={() => { setView({ kind: 'idle' }); setPrompt(''); }}
             />
           )}
-
-          {/* 生成中の表示は上の段では行わない（チャットの thinking バブルに集約・Phase 1c+） */}
 
           {/* 生成結果 */}
           {view.kind === 'result' && (
@@ -442,24 +475,6 @@ export default function AiKyoshitsuPage() {
           {/* 未ログイン（ブロック画面） */}
           {view.kind === 'unauthorized' && (
             <UnauthorizedPanel onBack={() => setView({ kind: 'idle' })} />
-          )}
-
-          {/* ── 下の段：チャット領域（Phase 1c） ─────────────
-              ブロック画面（rate-limit / unauthorized）以外では常に表示。
-              結果表示中もチャット履歴を残し、続けて関連質問できる。 */}
-          {view.kind !== 'rate-limit' && view.kind !== 'unauthorized' && (
-            <ChatPanel
-              messages={messages}
-              prompt={prompt}
-              setPrompt={setPrompt}
-              grade={grade}
-              subject={subject}
-              isGenerating={isGenerating}
-              subjectColor={subjectColor}
-              onSend={handleGenerate}
-              onOptionClick={handleOptionClick}
-              onClearChat={clearChat}
-            />
           )}
 
         </div>
@@ -1602,29 +1617,98 @@ function UnauthorizedPanel({ onBack }: { onBack: () => void }) {
 
 function ChatPanel({
   messages, prompt, setPrompt, grade, subject, isGenerating, subjectColor,
-  onSend, onOptionClick, onClearChat,
+  collapsed, hasResult,
+  onSend, onOptionClick, onClearChat, onToggleCollapse,
 }: {
-  messages:      ChatMessage[];
-  prompt:        string;
-  setPrompt:     (v: string) => void;
-  grade:         Grade;
-  subject:       Subject;
-  isGenerating:  boolean;
-  subjectColor:  { bg: string; text: string; border: string };
-  onSend:        () => void;
-  onOptionClick: (option: string) => void;
-  onClearChat:   () => void;
+  messages:         ChatMessage[];
+  prompt:           string;
+  setPrompt:        (v: string) => void;
+  grade:            Grade;
+  subject:          Subject;
+  isGenerating:     boolean;
+  subjectColor:     { bg: string; text: string; border: string };
+  collapsed:        boolean;
+  hasResult:        boolean;
+  onSend:           () => void;
+  onOptionClick:    (option: string) => void;
+  onClearChat:      () => void;
+  onToggleCollapse: () => void;
 }) {
   const canSubmit       = !!prompt.trim() && !isGenerating;
   const messagesEndRef  = useRef<HTMLDivElement>(null);
   const hasMessages     = messages.length > 0;
 
-  // 新メッセージ追加時にチャット末尾へスクロール
-  useEffect(() => {
-    if (!hasMessages) return;
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth', block: 'end' });
-  }, [messages.length, hasMessages]);
+  // 最終 AI メッセージ（折りたたみ時のプレビュー用）
+  const lastAiMsg = [...messages].reverse().find((m) => m.role === 'ai');
+  const lastAiPreview =
+    lastAiMsg?.role === 'ai'
+      ? (lastAiMsg.variant === 'thinking'
+          ? '考えています…'
+          : lastAiMsg.variant === 'understood'
+            ? `✨ ${lastAiMsg.text}`
+            : lastAiMsg.variant === 'clarification'
+              ? `🤔 ${lastAiMsg.text}`
+              : lastAiMsg.variant === 'error'
+                ? `⚠️ ${lastAiMsg.text}`
+                : '')
+      : '';
 
+  // 新メッセージ追加時にチャット末尾へスクロール（折りたたみ時はスキップ）
+  useEffect(() => {
+    if (!hasMessages || collapsed) return;
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth', block: 'end' });
+  }, [messages.length, hasMessages, collapsed]);
+
+  // ── 折りたたみモード：ヘッダー 1 行 + 最後の AI メッセージ抜粋 ──
+  if (collapsed) {
+    return (
+      <button
+        type="button"
+        onClick={onToggleCollapse}
+        className="rounded-2xl p-4 flex items-center gap-3 text-left transition-all hover:-translate-y-0.5 w-full"
+        style={{
+          background: hasResult
+            ? `linear-gradient(135deg, ${subjectColor.bg}, #fff)`
+            : 'rgba(255,255,255,0.92)',
+          boxShadow: 'var(--shadow-warm-sm)',
+          border:    `1px solid ${subjectColor.border}33`,
+        }}
+        title="チャットを開く"
+      >
+        <span className="text-xl shrink-0">💬</span>
+        <div className="flex-1 min-w-0">
+          <div className="flex items-center gap-2 flex-wrap">
+            <span className="font-bold text-sm" style={{ color: 'var(--color-brown)' }}>
+              AI教室チャット
+            </span>
+            <span
+              className="inline-block rounded-full px-2 py-0.5 text-[10px] font-bold"
+              style={{ background: subjectColor.border, color: '#fff' }}
+            >
+              {messages.length} メッセージ
+            </span>
+          </div>
+          {lastAiPreview && (
+            <p
+              className="text-xs leading-snug truncate mt-0.5"
+              style={{ color: 'var(--color-brown-light)' }}
+            >
+              {lastAiPreview}
+            </p>
+          )}
+        </div>
+        <span
+          className="shrink-0 text-sm font-bold"
+          style={{ color: subjectColor.border }}
+          aria-hidden
+        >
+          ▼ 開く
+        </span>
+      </button>
+    );
+  }
+
+  // ── 通常モード ─────────────────────────────────
   return (
     <div
       className="rounded-[30px] p-5 sm:p-6 flex flex-col gap-4"
@@ -1638,18 +1722,32 @@ function ChatPanel({
             AI教室チャット
           </span>
         </div>
-        {hasMessages && (
-          <button
-            type="button"
-            onClick={onClearChat}
-            disabled={isGenerating}
-            className="rounded-full px-3 py-1 text-xs font-semibold transition-opacity hover:opacity-80 disabled:opacity-40"
-            style={{ background: '#fff', color: 'var(--color-brown-light)', border: '1px solid #ddd6cc' }}
-            title="会話をクリアして新しいテーマで始める"
-          >
-            🆕 新しいテーマ
-          </button>
-        )}
+        <div className="flex items-center gap-2">
+          {hasMessages && (
+            <button
+              type="button"
+              onClick={onClearChat}
+              disabled={isGenerating}
+              className="rounded-full px-3 py-1 text-xs font-semibold transition-opacity hover:opacity-80 disabled:opacity-40"
+              style={{ background: '#fff', color: 'var(--color-brown-light)', border: '1px solid #ddd6cc' }}
+              title="会話をクリアして新しいテーマで始める"
+            >
+              🆕 新しいテーマ
+            </button>
+          )}
+          {/* 折りたたみボタン（結果がある時のみ表示。生成前は隠す ＝ 初心者の混乱防止） */}
+          {hasResult && (
+            <button
+              type="button"
+              onClick={onToggleCollapse}
+              className="rounded-full px-3 py-1 text-xs font-semibold transition-opacity hover:opacity-80"
+              style={{ background: '#fff', color: 'var(--color-brown-light)', border: '1px solid #ddd6cc' }}
+              title="チャットを折りたたむ"
+            >
+              ▲ 閉じる
+            </button>
+          )}
+        </div>
       </div>
 
       {/* 学年・教科バッジ */}
