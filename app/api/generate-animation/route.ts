@@ -43,6 +43,13 @@ import { MAX_GENERATED_HTML_BYTES, MAX_ANIMATION_PROMPT } from '@/shared';
 import { createAnimation }            from '@/lib/repositories/animations';
 import { getAiConfig }                from '@/lib/config/ai-config';
 import type { AiKyoshitsuConfig }     from '@/shared/types';
+import {
+  stage1SuccessSchema,
+  stage1ClarificationSchema,
+  stage1ErrorSchema,
+  type Stage1Success,
+  type Stage1Result,
+} from '@/lib/ai-kyoshitsu/stage1-schema';
 
 export const runtime  = 'nodejs';
 export const maxDuration = 60;
@@ -126,88 +133,8 @@ function readPromptFile(parts: string[]): string {
 }
 
 // ── Stage 1 JSON スキーマ ──────────────────────────────────────
-// 成功ケース: 教育設計の完全なJSON
-const stage1SuccessSchema = z.object({
-  meta: z.object({
-    grade_input:        z.string(),
-    stage:              z.enum(['stage_a', 'stage_b', 'stage_c']),
-    subject:            z.string(),
-    subject_note:       z.string().nullable().optional(),
-    furigana_required:  z.boolean(),
-  }),
-  content: z.object({
-    concept_name:        z.string(),
-    concept_name_simple: z.string(),
-    one_line_summary:    z.string(),
-    keywords: z.array(z.object({
-      term:       z.string(),
-      reading:    z.string().optional(),
-      definition: z.string(),
-    })),
-    teaching_flow: z.array(z.object({
-      step:           z.number(),
-      title:          z.string(),
-      explanation:    z.string(),
-      animation_hint: z.string(),
-    })),
-    key_points: z.array(z.string()),
-  }),
-  concept_check: z.object({
-    misconceptions: z.array(z.object({
-      wrong_idea: z.string(),
-      correction: z.string(),
-    })),
-    quiz: z.array(z.object({
-      question:            z.string(),
-      choices:             z.array(z.string()),
-      answer_index:        z.number(),
-      difficulty:          z.enum(['easy', 'normal', 'hard']),
-      is_trick_question:   z.boolean(),
-      explanation_correct: z.string(),
-      explanation_wrong:   z.string(),
-    })),
-  }),
-  design: z.object({
-    /**
-     * presentation_style: 表現スタイル
-     * - animated:        動き・変化を見せるアニメーション中心
-     * - static_diagram:  数値・関係・構造をじっくり見せる静的SVG図
-     * - static_simple:   アイコン+テキスト中心の暗記カード形式
-     * - mixed:           静的全体図 + 部分アニメーション
-     * 旧バージョンとの互換性のため省略可（その場合は animated 扱い）
-     */
-    presentation_style: z.enum(['animated', 'static_diagram', 'static_simple', 'mixed']).optional().default('animated'),
-    animation_style: z.enum(['step', 'loop', 'interactive']),
-    color_theme:     z.string(),
-    complexity:      z.enum(['simple', 'standard', 'detailed']),
-  }),
-});
-
-// 確認が必要ケース: 質問と選択肢
-const stage1ClarificationSchema = z.object({
-  status:             z.literal('needs_clarification'),
-  round:              z.number().optional(),
-  issue:              z.string().optional(),
-  message:            z.string(),
-  options:            z.array(z.string()),
-  options_available:  z.boolean(),
-});
-
-// エラーケース: 学習内容として不適切
-const stage1ErrorSchema = z.object({
-  error:      z.literal(true),
-  reason:     z.string(),
-  suggestion: z.string(),
-});
-
-type Stage1Success       = z.infer<typeof stage1SuccessSchema>;
-type Stage1Clarification = z.infer<typeof stage1ClarificationSchema>;
-type Stage1Error         = z.infer<typeof stage1ErrorSchema>;
-type Stage1Result =
-  | { kind: 'success';       data: Stage1Success }
-  | { kind: 'clarification'; data: Stage1Clarification }
-  | { kind: 'error';         data: Stage1Error }
-  | { kind: 'parse_failed';  rawText: string };
+// スキーマ・型は lib/ai-kyoshitsu/stage1-schema.ts に集約（UI 側と共有）。
+// 当ファイルでは parseStage1Response / runStage1 などで使うため import している。
 
 // ── JSON 抽出（モデルが ```json ... ``` で囲む場合に対応） ────
 function extractJson(raw: string): string {
@@ -644,6 +571,11 @@ export async function POST(req: NextRequest) {
   }
 
   // 9. DB保存
+  // Stage1 が success の場合のみ stage1_json を保存（parse_failed 時は NULL のまま）。
+  // 結果パネルの「学習ポイント」「クイズ」タブで再利用するための原データ。
+  const stage1JsonForDb: Stage1Success | null =
+    stage1.kind === 'success' ? stage1.data : null;
+
   let animationId: string;
   try {
     animationId = await createAnimation({
@@ -653,6 +585,7 @@ export async function POST(req: NextRequest) {
       subject,
       prompt,
       htmlContent,
+      stage1Json:  stage1JsonForDb,
     });
   } catch (err) {
     console.error('[generate-animation] DB保存エラー:', err instanceof Error ? err.message : String(err));
@@ -662,5 +595,11 @@ export async function POST(req: NextRequest) {
     );
   }
 
-  return NextResponse.json({ ok: true, id: animationId });
+  // Phase 1a: フロントが直後に「学習ポイント」「クイズ」タブを描画できるよう
+  // stage1Json をレスポンスに同梱（DB 再取得を不要にする）。
+  return NextResponse.json({
+    ok: true,
+    id: animationId,
+    stage1Json: stage1JsonForDb,
+  });
 }
