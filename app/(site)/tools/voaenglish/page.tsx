@@ -287,8 +287,23 @@ export default function VoaEnglishToolPage({ searchParams }: VoaEnglishToolPageP
                   } as const;
                   const cardInner = (
                     <>
-                      <div className="inline-flex rounded-full px-3 py-1 text-xs font-bold" style={{ background: section.accent, color: 'var(--color-brown)' }}>
-                        {isInternal ? 'VOA × AI' : 'VOA'}
+                      <div className="flex items-center justify-between gap-2">
+                        <div className="inline-flex rounded-full px-3 py-1 text-xs font-bold" style={{ background: section.accent, color: 'var(--color-brown)' }}>
+                          {isInternal ? 'VOA × AI' : 'VOA'}
+                        </div>
+                        {!isInternal && (
+                          <span
+                            className="inline-flex rounded-full px-2.5 py-1 text-[11px] font-bold"
+                            style={{
+                              background: '#fff3cd',
+                              color:      '#8a6d1d',
+                              border:     '1px solid #ffd54f',
+                            }}
+                            aria-label="準備中"
+                          >
+                            🚧 準備中
+                          </span>
+                        )}
                       </div>
                       <h3
                         className="mt-4 text-xl font-bold leading-tight"
