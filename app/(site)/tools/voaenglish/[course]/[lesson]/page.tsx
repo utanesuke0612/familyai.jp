@@ -11,17 +11,19 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 
-import { ArticleBody }          from '@/components/article/ArticleBody';
 import { AIChatWidget }         from '@/components/article/AIChatWidget';
-import { FloatingShareButtons } from '@/components/article/FloatingShareButtons';
 import { MarkdownContent }      from '@/components/ui/MarkdownContent';
+import { SentencePlayer }       from '@/components/voaenglish/SentencePlayer';
+import { HandwritingNote }      from '@/components/voaenglish/HandwritingNote';
 import { SITE } from '@/shared';
 import {
   getAllLessons,
   getAdjacentLessons,
   getLesson,
+  resolveLessonAudioUrl,
   type LessonLevel,
 } from '@/lib/voaenglish/lessons';
+import { getLessonSentences } from '@/lib/voaenglish/sentences';
 
 type PageParams = {
   course: string;
@@ -103,6 +105,11 @@ export default async function VoaLessonPage({
   const headline = data.lessonNumber
     ? `Lesson ${data.lessonNumber}: ${data.title}`
     : data.title;
+
+  // R3-機能3 Phase 4: SentencePlayer に渡すデータ（無ければ null → プレイヤー非表示）
+  const audioUrl    = resolveLessonAudioUrl(data.audioPath);
+  const sentences   = getLessonSentences(course, lesson);
+  const canPlay     = audioUrl !== null && sentences !== null && sentences.length > 0;
 
   return (
     <main style={{ background: 'var(--color-cream)' }}>
@@ -254,47 +261,36 @@ export default async function VoaLessonPage({
                 subtitle="紙とペンを用意して、聴いた英語を書き取ってみよう"
                 accent={accent}
               >
-                {/* TODO Phase 4: ここに SentencePlayer（センテンス単位プレイヤー）と
-                    自己申告ボタン（😓💪🌟）+ confetti + 進捗管理を実装する。
-                    現状は骨格として、既存スクリプト本文を「参考スクリプト」として表示。 */}
-                <div
-                  className="rounded-xl p-4 mb-4 text-center"
-                  style={{
-                    background: 'rgba(255,255,255,0.7)',
-                    border:     '1px dashed var(--color-beige-dark)',
-                  }}
-                >
-                  <span className="text-3xl block mb-2" aria-hidden="true">🚧</span>
-                  <p className="text-sm font-bold mb-1" style={{ color: 'var(--color-brown)' }}>
-                    センテンス単位プレイヤー実装中
-                  </p>
-                  <p className="text-xs leading-relaxed" style={{ color: 'var(--color-brown-light)' }}>
-                    タイムスタンプ付き音声 + 自己申告（😓💪🌟）が近日公開予定です。
-                    完璧（🌟）になるまで次のレッスンには進めない設計です。
-                  </p>
-                </div>
+                {/* 手書き推奨メッセージ（常時表示） */}
+                <HandwritingNote />
 
-                {/* 参考スクリプト（既存の vocab annotation 付き本文）。
-                    Phase 4 完成後はセンテンス単位プレイヤーに統合される予定。 */}
-                <details className="rounded-xl">
-                  <summary
-                    className="cursor-pointer text-sm font-semibold py-2 px-3 rounded-xl"
+                {canPlay ? (
+                  <>
+                    {/* R3-機能3 Phase 4: センテンス単位プレイヤー */}
+                    <SentencePlayer
+                      audioUrl={audioUrl!}
+                      sentences={sentences!}
+                      // TODO Phase 6: onAllPlayed で「完璧でしたか？」自己申告ダイアログを表示
+                    />
+                  </>
+                ) : (
+                  <div
+                    className="rounded-xl p-4 mb-4 text-center"
                     style={{
-                      background: 'var(--color-cream)',
-                      color:      'var(--color-brown)',
-                      border:     '1px solid var(--color-beige-dark)',
+                      background: 'rgba(255,255,255,0.7)',
+                      border:     '1px dashed var(--color-beige-dark)',
                     }}
                   >
-                    📜 参考スクリプトを開く（クリックで展開）
-                  </summary>
-                  <div className="mt-4">
-                    <ArticleBody content={data.body} className="!max-w-none" />
-                    <FloatingShareButtons
-                      title={headline}
-                      url={`${SITE.url}/tools/voaenglish/${course}/${lesson}`}
-                    />
+                    <span className="text-3xl block mb-2" aria-hidden="true">🔧</span>
+                    <p className="text-sm font-bold mb-1" style={{ color: 'var(--color-brown)' }}>
+                      このレッスンの音声は準備中です
+                    </p>
+                    <p className="text-xs leading-relaxed" style={{ color: 'var(--color-brown-light)' }}>
+                      MP3 / SRT が準備でき次第、センテンス単位プレイヤーが表示されます。
+                    </p>
                   </div>
-                </details>
+                )}
+
               </SectionCard>
 
             </div>

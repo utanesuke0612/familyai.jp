@@ -26,8 +26,15 @@ export type LessonFrontmatter = {
   // R3-機能3（AIctation センテンスプレイヤー）で追加された任意フィールド
   /** ① レッスン概要（日本語）。① 概要セクションで表示される。複数行可（YAML の `|` 記法推奨） */
   description?: string;
-  /** ② 会話を聞いて、読んでみよう セクションで使う MP3 ファイル URL（Vercel Blob 等） */
-  audioUrl?: string;
+  /**
+   * MP3 ファイルのパスまたは URL。
+   * - 相対パス（推奨）: 例 "voaenglish/01_01_Anna/lesson-01.mp3"
+   *   → 環境変数 `NEXT_PUBLIC_VOA_BLOB_BASE` をプレフィックスとして合成される。
+   *   → CDN ホスト変更時に env 1 行で全レッスン切替可能。
+   * - フル URL（後方互換・非推奨）: "https://...vercel-storage.com/.../lesson-01.mp3"
+   *   → そのまま使われる。
+   */
+  audioPath?: string;
   /** ② 会話を聞いて、読んでみよう セクションで使う動画 iframe URL（VOA 公式 embed 等。任意） */
   videoUrl?: string;
 };
@@ -58,7 +65,12 @@ function parseLessonFile(absolutePath: string, relativeFilename: string): Lesson
     voaUrl:       data.voaUrl ? String(data.voaUrl) : undefined,
     published:    data.published !== false,
     description:  data.description ? String(data.description) : undefined,
-    audioUrl:     data.audioUrl   ? String(data.audioUrl)   : undefined,
+    // audioUrl（旧フィールド・後方互換）も audioPath として受け入れる
+    audioPath:    data.audioPath
+      ? String(data.audioPath)
+      : data.audioUrl
+        ? String(data.audioUrl)
+        : undefined,
     videoUrl:     data.videoUrl   ? String(data.videoUrl)   : undefined,
     body:         content.trim(),
     filename:     relativeFilename,
@@ -126,4 +138,35 @@ export function getAdjacentLessons(course: string, slug: string): {
     prev: idx > 0 ? list[idx - 1] : null,
     next: idx < list.length - 1 ? list[idx + 1] : null,
   };
+}
+
+/**
+ * audioPath からプレイヤーで再生する完全な URL を組み立てる。
+ *
+ * - フィールドが空 → null（プレイヤー非表示）
+ * - "http://" / "https://" で始まる → そのまま返す（後方互換）
+ * - それ以外 → 環境変数 `NEXT_PUBLIC_VOA_BLOB_BASE` をプレフィックスして返す
+ *
+ * env 例:
+ *   NEXT_PUBLIC_VOA_BLOB_BASE=https://wburwyoveed0y4ug.private.blob.vercel-storage.com
+ *
+ * 例:
+ *   audioPath = "voaenglish/01_01_Anna/lesson-01.mp3"
+ *   → "https://wburw...vercel-storage.com/voaenglish/01_01_Anna/lesson-01.mp3"
+ */
+export function resolveLessonAudioUrl(audioPath: string | undefined): string | null {
+  if (!audioPath || audioPath.trim() === '') return null;
+  const trimmed = audioPath.trim();
+  // 既にフル URL ならそのまま
+  if (/^https?:\/\//i.test(trimmed)) return trimmed;
+  // 相対パスは env でホストを補完
+  const base = process.env.NEXT_PUBLIC_VOA_BLOB_BASE?.replace(/\/$/, '');
+  if (!base) {
+    // env 未設定時は警告のみ（プレイヤー側で null 扱いにフォールバック）
+    if (process.env.NODE_ENV !== 'production') {
+      console.warn('[voaenglish] NEXT_PUBLIC_VOA_BLOB_BASE is not set; cannot resolve audioPath:', trimmed);
+    }
+    return null;
+  }
+  return `${base}/${trimmed.replace(/^\//, '')}`;
 }

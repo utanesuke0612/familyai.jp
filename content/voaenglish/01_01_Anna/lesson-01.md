@@ -16,6 +16,7 @@ description: |
   これからのコース全体で出てくるキャラクターたちの最初の挨拶のシーンです。
 # ② で使う動画 iframe URL（VOA 公式 embed）
 videoUrl: https://learningenglish.voanews.com/embed/player/0/6654472.html?type=video
-# ② / ③ で使う MP3 ファイル URL（Vercel Blob にアップロード後に追記）
-audioUrl: ""
+# ② / ③ で使う MP3 ファイルのパス（Vercel Blob 上の相対パス）
+# フル URL は env NEXT_PUBLIC_VOA_BLOB_BASE をプレフィックスして合成される
+audioPath: voaenglish/01_01_Anna/lesson-01.mp3
 ---
