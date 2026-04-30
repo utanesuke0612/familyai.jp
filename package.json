@@ -17,7 +17,8 @@
     "db:studio": "drizzle-kit studio",
     "db:drop": "drizzle-kit drop",
     "db:seed": "tsx lib/db/seed.ts",
-    "db:sync": "tsx scripts/sync-articles.ts"
+    "db:sync": "tsx scripts/sync-articles.ts",
+    "db:convert-srt": "tsx scripts/convert-srt.ts"
   },
   "dependencies": {
     "@base-ui/react": "^1.4.0",

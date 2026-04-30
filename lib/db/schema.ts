@@ -191,6 +191,34 @@ export const aiConfigHistory = pgTable(
   }),
 );
 
+// ─── lessons_progress（R3-機能3 Phase 3）─────────────────────
+/**
+ * AIctation/VOA レッスンの進捗管理（migration 0013）。
+ *
+ * - lesson_key: "<course>/<slug>" 形式（例: "anna/lesson-01"）— Q2=A 採用
+ * - 同一ユーザー × 同一レッスンは UNIQUE 制約で 1 行限定
+ * - 😓💪 押下 → attempts +1
+ * - 🌟 押下 → status='completed', completed_at=now()
+ * - アカウント削除と同時にカスケード削除
+ */
+export const lessonsProgress = pgTable(
+  'lessons_progress',
+  {
+    id:          uuid('id').defaultRandom().primaryKey(),
+    userId:      uuid('user_id').notNull().references(() => users.id, { onDelete: 'cascade' }),
+    lessonKey:   text('lesson_key').notNull(),
+    status:      varchar('status', { length: 20 }).notNull().default('in_progress'),
+    attempts:    integer('attempts').notNull().default(0),
+    completedAt: timestamp('completed_at'),
+    createdAt:   timestamp('created_at').defaultNow().notNull(),
+    updatedAt:   timestamp('updated_at').defaultNow().notNull(),
+  },
+  (t) => ({
+    uniqUserLesson: uniqueIndex('lessons_progress_unique').on(t.userId, t.lessonKey),
+    idxUserId:      index('lessons_progress_user_id_idx').on(t.userId),
+  }),
+);
+
 // ─── 型エクスポート（Drizzle の推論型） ───────────────────────
 export type Article              = typeof articles.$inferSelect;
 export type NewArticle           = typeof articles.$inferInsert;
@@ -206,3 +234,5 @@ export type AiConfigRow          = typeof aiConfig.$inferSelect;
 export type NewAiConfigRow       = typeof aiConfig.$inferInsert;
 export type AiConfigHistoryRow   = typeof aiConfigHistory.$inferSelect;
 export type NewAiConfigHistoryRow = typeof aiConfigHistory.$inferInsert;
+export type LessonProgressRow      = typeof lessonsProgress.$inferSelect;
+export type NewLessonProgressRow   = typeof lessonsProgress.$inferInsert;

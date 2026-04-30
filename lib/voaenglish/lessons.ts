@@ -23,6 +23,13 @@ export type LessonFrontmatter = {
   thumbnail?: string;
   voaUrl?: string;
   published: boolean;
+  // R3-機能3（AIctation センテンスプレイヤー）で追加された任意フィールド
+  /** ① レッスン概要（日本語）。① 概要セクションで表示される。複数行可（YAML の `|` 記法推奨） */
+  description?: string;
+  /** ② 会話を聞いて、読んでみよう セクションで使う MP3 ファイル URL（Vercel Blob 等） */
+  audioUrl?: string;
+  /** ② 会話を聞いて、読んでみよう セクションで使う動画 iframe URL（VOA 公式 embed 等。任意） */
+  videoUrl?: string;
 };
 
 export type Lesson = LessonFrontmatter & {
@@ -32,9 +39,8 @@ export type Lesson = LessonFrontmatter & {
 
 const CONTENT_DIR = path.join(process.cwd(), 'content', 'voaenglish');
 
-function parseLessonFile(filename: string): Lesson | null {
-  const filePath = path.join(CONTENT_DIR, filename);
-  const raw = fs.readFileSync(filePath, 'utf8');
+function parseLessonFile(absolutePath: string, relativeFilename: string): Lesson | null {
+  const raw = fs.readFileSync(absolutePath, 'utf8');
   const { data, content } = matter(raw);
 
   if (!data.slug || !data.course || !data.level || !data.title) {
@@ -51,16 +57,44 @@ function parseLessonFile(filename: string): Lesson | null {
     thumbnail:    data.thumbnail ? String(data.thumbnail) : undefined,
     voaUrl:       data.voaUrl ? String(data.voaUrl) : undefined,
     published:    data.published !== false,
+    description:  data.description ? String(data.description) : undefined,
+    audioUrl:     data.audioUrl   ? String(data.audioUrl)   : undefined,
+    videoUrl:     data.videoUrl   ? String(data.videoUrl)   : undefined,
     body:         content.trim(),
-    filename,
+    filename:     relativeFilename,
   };
+}
+
+/** content/voaenglish 配下を再帰的に走査して .md 絶対パスを集める */
+function collectMarkdownFiles(dir: string): Array<{ abs: string; rel: string }> {
+  const out: Array<{ abs: string; rel: string }> = [];
+  const stack: string[] = [dir];
+  while (stack.length > 0) {
+    const current = stack.pop()!;
+    let entries: fs.Dirent[];
+    try {
+      entries = fs.readdirSync(current, { withFileTypes: true });
+    } catch {
+      continue;
+    }
+    for (const entry of entries) {
+      const abs = path.join(current, entry.name);
+      if (entry.isDirectory()) {
+        stack.push(abs);
+      } else if (entry.isFile() && entry.name.endsWith('.md')) {
+        out.push({ abs, rel: path.relative(CONTENT_DIR, abs) });
+      }
+    }
+  }
+  return out;
 }
 
 export const getAllLessons = cache((): Lesson[] => {
   if (!fs.existsSync(CONTENT_DIR)) return [];
-  const files = fs.readdirSync(CONTENT_DIR).filter((f) => f.endsWith('.md'));
+  // サブディレクトリ（コース別フォルダ）も再帰的に拾う
+  const files = collectMarkdownFiles(CONTENT_DIR);
   const lessons = files
-    .map(parseLessonFile)
+    .map(({ abs, rel }) => parseLessonFile(abs, rel))
     .filter((l): l is Lesson => l !== null && l.published);
 
   lessons.sort((a, b) => {

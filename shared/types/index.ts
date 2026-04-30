@@ -105,6 +105,39 @@ export interface Animation extends AnimationSummary {
   userId:      string;
 }
 
+// ─── VOA / AIctation センテンスプレイヤー（R3-機能3）──────────
+
+/**
+ * タイムスタンプ付きセンテンス（1 文 = 1 オブジェクト）。
+ * SRT/VTT を `pnpm db:convert-srt` で JSON 化したもの。
+ *
+ * - `start` / `end`: 秒（小数）。MP3 上の時刻範囲。
+ * - `text`: 本文。スピーカープレフィックス（"DrJill: ..." 等）は含めたまま。
+ *   表示時にプレイヤー側で正規表現で分けて表示する。
+ *
+ * 配置場所:
+ *   content/voaenglish/<course>/<lessonSlug>.sentences.json
+ * 例:
+ *   content/voaenglish/01_01_Anna/lesson-01.sentences.json
+ */
+export interface Sentence {
+  start: number;
+  end:   number;
+  text:  string;
+}
+
+/**
+ * レッスン進捗（LessonsProgress テーブル / API レスポンス）。
+ * - `lessonKey` は `"<course>/<slug>"` 形式（例: `"anna/lesson-01"`）。
+ * - `status='completed'` のとき `completedAt` が ISO 文字列で入る。
+ */
+export interface LessonProgress {
+  lessonKey:    string;
+  status:       'in_progress' | 'completed';
+  attempts:     number;
+  completedAt?: string;  // ISO 8601
+}
+
 /**
  * うごくAI教室パイプラインのランタイム設定。
  *
