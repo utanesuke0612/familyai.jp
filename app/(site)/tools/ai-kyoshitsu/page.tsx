@@ -29,32 +29,56 @@ const GRADE_COLOR: Record<Grade, { bg: string; text: string }> = {
   'middle':    { bg: '#9575cd', text: '#fff' },
 };
 
-/* ───── ViewState 型 ─────────────────────────────────── */
+/* ───── ViewState 型（上の段＝生成プレビュー領域） ───────────
+ * Phase 1c で 'clarification' と 'error' は ChatMessage に移行した。
+ * 上の段で表示するのは「視覚的な進捗・結果・ブロック画面」のみ。
+ */
 
 type ViewState =
   | { kind: 'idle' }
-  | { kind: 'preview';       theme: Theme }
-  | { kind: 'generating';    themeLabel: string }
-  | { kind: 'result';        id: string; themeLabel: string; stage1Json: Stage1Success | null }
-  | { kind: 'clarification'; message: string; options: string[]; optionsAvailable: boolean }
-  | { kind: 'rate-limit';    message: string; isLoggedIn: boolean }
-  | { kind: 'unauthorized' }
-  | { kind: 'error';         message: string };
+  | { kind: 'preview';      theme: Theme }
+  | { kind: 'generating';   themeLabel: string }
+  | { kind: 'result';       id: string; themeLabel: string; stage1Json: Stage1Success | null }
+  | { kind: 'rate-limit';   message: string; isLoggedIn: boolean }
+  | { kind: 'unauthorized' };
+
+/* ───── ChatMessage 型（下の段＝対話領域・Phase 1c） ────────
+ * AI とユーザーの対話履歴。1 セッション内で累積し、結果表示後も残る。
+ *  - user           : ユーザーの発言（テーマ送信・選択肢クリック）
+ *  - ai/thinking    : AI 思考中スピナー（応答が返ったら別 variant に置換）
+ *  - ai/understood  : AI が Stage 1 を理解できたとき（Stage 2 自動起動を案内）
+ *  - ai/clarification: AI からの確認質問。options[] あればチャット内ボタンで返信
+ *  - ai/error       : 学習内容として不適切（CONCEPT_NOT_SUITABLE）等
+ */
+type ChatMessage =
+  | { id: string; role: 'user'; text: string }
+  | { id: string; role: 'ai';   variant: 'thinking' }
+  | { id: string; role: 'ai';   variant: 'understood';    text: string }
+  | { id: string; role: 'ai';   variant: 'clarification'; text: string; options: string[] }
+  | { id: string; role: 'ai';   variant: 'error';         text: string };
+
+// ID 採番（再 render に依存しないシンプルな増分）
+let _chatMsgCounter = 0;
+function genChatMsgId(): string {
+  _chatMsgCounter += 1;
+  return `m${Date.now()}-${_chatMsgCounter}`;
+}
 
 /* ───── メインコンポーネント ──────────────────────────── */
 
 export default function AiKyoshitsuPage() {
-  const [grade,   setGrade]   = useState<Grade>('elem-low');
-  const [subject, setSubject] = useState<Subject>('science');
-  const [view,    setView]    = useState<ViewState>({ kind: 'idle' });
-  const [prompt,  setPrompt]  = useState('');
+  const [grade,    setGrade]    = useState<Grade>('elem-low');
+  const [subject,  setSubject]  = useState<Subject>('science');
+  const [view,     setView]     = useState<ViewState>({ kind: 'idle' });
+  const [prompt,   setPrompt]   = useState('');
+  const [messages, setMessages] = useState<ChatMessage[]>([]);
   const bottomRef = useRef<HTMLDivElement>(null);
 
   const visibleThemes = filterThemes(grade, subject);
   const subjectColor  = SUBJECT_COLOR[subject];
   const isGenerating  = view.kind === 'generating';
 
-  /* カード選択・トグル */
+  /* カード選択・トグル：上の段に静的プレビュー + チャット入力欄にテーマ名を流し込む */
   function handleCardClick(theme: Theme) {
     if (view.kind === 'preview' && view.theme.id === theme.id) {
       setView({ kind: 'idle' });
@@ -68,15 +92,44 @@ export default function AiKyoshitsuPage() {
     }, 80);
   }
 
-  /* AI 生成 */
-  async function handleGenerate() {
-    const trimmed = prompt.trim();
+  /**
+   * チャットメッセージ送信 → /api/generate-animation 呼び出し → 応答に応じてチャットを更新。
+   *
+   * フロー:
+   *   1. ユーザー発言 + AI 思考中バブルをチャットに追加
+   *   2. 上の段を 'generating' にして進捗バー表示
+   *   3. POST → 応答に応じて思考中バブルを以下に置換:
+   *        success            → 'understood' バブル + view='result'
+   *        CLARIFICATION      → 'clarification' バブル（選択肢ボタン付き）+ view='idle'
+   *        CONCEPT_NOT_SUITABLE → 'error' バブル + view='idle'
+   *        RATE_LIMIT / UNAUTH → 思考中バブルを除去して上の段でブロック表示
+   *
+   * Q5=A の通り、API 側は変更せず UI レイヤーで会話履歴を管理する。
+   */
+  async function sendMessage(rawText: string) {
+    const trimmed = rawText.trim();
     if (!trimmed || isGenerating) return;
 
+    // 1. ユーザー発言 + 思考中バブル
+    const userMsg:     ChatMessage = { id: genChatMsgId(), role: 'user', text: trimmed };
+    const thinkingId   = genChatMsgId();
+    const thinkingMsg: ChatMessage = { id: thinkingId, role: 'ai', variant: 'thinking' };
+    setMessages((prev) => [...prev, userMsg, thinkingMsg]);
+
+    // 2. 入力欄クリア + 上の段を生成中に
+    setPrompt('');
     setView({ kind: 'generating', themeLabel: trimmed });
     setTimeout(() => {
       bottomRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }, 80);
+
+    // 思考中バブルを「役割つきの別バブル」に置換するヘルパ
+    const replaceThinking = (replacement: ChatMessage) => {
+      setMessages((prev) => prev.map((m) => (m.id === thinkingId ? replacement : m)));
+    };
+    const removeThinking = () => {
+      setMessages((prev) => prev.filter((m) => m.id !== thinkingId));
+    };
 
     try {
       const res = await fetch('/api/generate-animation', {
@@ -105,28 +158,52 @@ export default function AiKyoshitsuPage() {
         const message = json.error?.message ?? 'エラーが発生しました。';
 
         if (code === 'RATE_LIMIT_EXCEEDED') {
+          // ブロック画面：思考中は消し、上の段を rate-limit パネルに切替
+          removeThinking();
           setView({ kind: 'rate-limit', message, isLoggedIn: true });
         } else if (code === 'UNAUTHORIZED') {
+          removeThinking();
           setView({ kind: 'unauthorized' });
         } else if (code === 'CLARIFICATION_NEEDED') {
-          setView({
-            kind:             'clarification',
-            message,
-            options:          json.options ?? [],
-            optionsAvailable: json.optionsAvailable ?? false,
+          // チャット内に AI 反問を表示（選択肢があれば inline ボタン）
+          replaceThinking({
+            id:      genChatMsgId(),
+            role:    'ai',
+            variant: 'clarification',
+            text:    message,
+            options: json.options ?? [],
           });
+          setView({ kind: 'idle' });
         } else if (code === 'CONCEPT_NOT_SUITABLE') {
-          // 学習内容として不適切（科目に無関係・難易度不一致など）→ 提案付きエラー
           const fullMessage = json.suggestion
             ? `${message}\n\n💡 ${json.suggestion}`
             : message;
-          setView({ kind: 'error', message: fullMessage });
+          replaceThinking({
+            id:      genChatMsgId(),
+            role:    'ai',
+            variant: 'error',
+            text:    fullMessage,
+          });
+          setView({ kind: 'idle' });
         } else {
-          setView({ kind: 'error', message });
+          replaceThinking({
+            id:      genChatMsgId(),
+            role:    'ai',
+            variant: 'error',
+            text:    message,
+          });
+          setView({ kind: 'idle' });
         }
         return;
       }
 
+      // 成功: Stage 1 + Stage 2 完了 → AI 「理解しました」 + 上の段 = 結果
+      replaceThinking({
+        id:      genChatMsgId(),
+        role:    'ai',
+        variant: 'understood',
+        text:    `「${trimmed}」のアニメーションを作成しました。上の段から見られます！`,
+      });
       setView({
         kind:       'result',
         id:         json.id,
@@ -134,8 +211,31 @@ export default function AiKyoshitsuPage() {
         stage1Json: json.stage1Json ?? null,
       });
     } catch {
-      setView({ kind: 'error', message: '通信エラーが発生しました。しばらくしてからお試しください。' });
+      replaceThinking({
+        id:      genChatMsgId(),
+        role:    'ai',
+        variant: 'error',
+        text:    '通信エラーが発生しました。しばらくしてからお試しください。',
+      });
+      setView({ kind: 'idle' });
     }
+  }
+
+  /* テキストエリアの「送信」ボタン用 */
+  function handleGenerate() {
+    void sendMessage(prompt);
+  }
+
+  /* チャット内の選択肢ボタン用（AI 反問の選択肢を即送信） */
+  function handleOptionClick(option: string) {
+    void sendMessage(option);
+  }
+
+  /* チャット履歴をクリア（「新しいテーマで始める」ボタン用） */
+  function clearChat() {
+    setMessages([]);
+    setPrompt('');
+    setView({ kind: 'idle' });
   }
 
   return (
@@ -301,7 +401,12 @@ export default function AiKyoshitsuPage() {
       <section className="px-6 pb-12">
         <div className="mx-auto max-w-5xl flex flex-col gap-6">
 
-          {/* プレビュー（カード選択） */}
+          {/* ── 上の段：生成プレビュー領域 ────────────────
+              プレビュー（既製カード）／生成中／結果／ブロック画面が状況に応じて表示される。
+              CLARIFICATION_NEEDED と CONCEPT_NOT_SUITABLE はチャットへ移行したため
+              ここでは扱わない。 */}
+
+          {/* プレビュー（既製カード選択時の静的 iframe） */}
           {view.kind === 'preview' && (
             <PreviewPanel
               theme={view.theme}
@@ -328,7 +433,7 @@ export default function AiKyoshitsuPage() {
             />
           )}
 
-          {/* 回数制限 */}
+          {/* 回数制限（ブロック画面） */}
           {view.kind === 'rate-limit' && (
             <RateLimitPanel
               message={view.message}
@@ -337,31 +442,26 @@ export default function AiKyoshitsuPage() {
             />
           )}
 
-          {/* 未ログイン */}
+          {/* 未ログイン（ブロック画面） */}
           {view.kind === 'unauthorized' && (
             <UnauthorizedPanel onBack={() => setView({ kind: 'idle' })} />
           )}
 
-          {/* エラー */}
-          {view.kind === 'error' && (
-            <ErrorPanel
-              message={view.message}
-              onRetry={() => { setView({ kind: 'idle' }); }}
-            />
-          )}
-
-          {/* AI入力パネル（生成結果表示中は非表示） */}
-          {view.kind !== 'result' && (
-            <AiInputPanel
+          {/* ── 下の段：チャット領域（Phase 1c） ─────────────
+              ブロック画面（rate-limit / unauthorized）以外では常に表示。
+              結果表示中もチャット履歴を残し、続けて関連質問できる。 */}
+          {view.kind !== 'rate-limit' && view.kind !== 'unauthorized' && (
+            <ChatPanel
+              messages={messages}
               prompt={prompt}
               setPrompt={setPrompt}
               grade={grade}
               subject={subject}
               isGenerating={isGenerating}
-              onGenerate={handleGenerate}
               subjectColor={subjectColor}
-              clarificationMessage={view.kind === 'clarification' ? view.message : undefined}
-              clarificationOptions={view.kind === 'clarification' ? view.options : undefined}
+              onSend={handleGenerate}
+              onOptionClick={handleOptionClick}
+              onClearChat={clearChat}
             />
           )}
 
@@ -1679,100 +1779,311 @@ function UnauthorizedPanel({ onBack }: { onBack: () => void }) {
 }
 
 /* ─────────────────────────────────────────────────────
-   エラーパネル
+   ChatPanel — Phase 1c: チャット型 UI
+   ・上の段（GeneratingPanel / ResultPanel）と並ぶ「下の段」
+   ・Stage 1 のユーザー ↔ AI 対話を時系列バブルで表示
+   ・選択肢ボタンは AI バブル内に inline 表示（クリックで即送信）
 ───────────────────────────────────────────────────── */
 
-function ErrorPanel({ message, onRetry }: { message: string; onRetry: () => void }) {
+function ChatPanel({
+  messages, prompt, setPrompt, grade, subject, isGenerating, subjectColor,
+  onSend, onOptionClick, onClearChat,
+}: {
+  messages:      ChatMessage[];
+  prompt:        string;
+  setPrompt:     (v: string) => void;
+  grade:         Grade;
+  subject:       Subject;
+  isGenerating:  boolean;
+  subjectColor:  { bg: string; text: string; border: string };
+  onSend:        () => void;
+  onOptionClick: (option: string) => void;
+  onClearChat:   () => void;
+}) {
+  const canSubmit       = !!prompt.trim() && !isGenerating;
+  const messagesEndRef  = useRef<HTMLDivElement>(null);
+  const hasMessages     = messages.length > 0;
+
+  // 新メッセージ追加時にチャット末尾へスクロール
+  useEffect(() => {
+    if (!hasMessages) return;
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth', block: 'end' });
+  }, [messages.length, hasMessages]);
+
   return (
     <div
-      className="rounded-3xl p-6 flex flex-col gap-4"
-      style={{ background: '#fff5f5', boxShadow: 'var(--shadow-warm-sm)', border: '1.5px solid #ffb3b3' }}
+      className="rounded-[30px] p-5 sm:p-6 flex flex-col gap-4"
+      style={{ background: 'rgba(255,255,255,0.92)', boxShadow: 'var(--shadow-warm-sm)' }}
     >
-      <div className="flex items-center gap-2">
-        <span className="text-xl">⚠️</span>
-        <span className="font-bold text-sm" style={{ color: '#c0392b' }}>エラーが発生しました</span>
+      {/* ヘッダー */}
+      <div className="flex items-center justify-between gap-2 flex-wrap">
+        <div className="flex items-center gap-2">
+          <span className="text-xl">💬</span>
+          <span className="font-bold text-base" style={{ color: 'var(--color-brown)' }}>
+            AI教室チャット
+          </span>
+        </div>
+        {hasMessages && (
+          <button
+            type="button"
+            onClick={onClearChat}
+            disabled={isGenerating}
+            className="rounded-full px-3 py-1 text-xs font-semibold transition-opacity hover:opacity-80 disabled:opacity-40"
+            style={{ background: '#fff', color: 'var(--color-brown-light)', border: '1px solid #ddd6cc' }}
+            title="会話をクリアして新しいテーマで始める"
+          >
+            🆕 新しいテーマ
+          </button>
+        )}
       </div>
-      <p className="text-sm leading-relaxed" style={{ color: '#7a3030' }}>{message}</p>
-      <button
-        onClick={onRetry}
-        className="self-start rounded-full px-4 py-2 text-xs font-bold transition-opacity hover:opacity-70"
-        style={{ background: '#e74c3c', color: '#fff' }}
+
+      {/* 学年・教科バッジ */}
+      <div className="flex items-center gap-2 flex-wrap text-xs" style={{ color: 'var(--color-brown-muted)' }}>
+        <span>学年：</span>
+        <span
+          className="inline-block rounded-full px-2.5 py-0.5 font-bold"
+          style={{ background: GRADE_COLOR[grade].bg, color: GRADE_COLOR[grade].text }}
+        >
+          {GRADE_LABEL[grade]}
+        </span>
+        <span>／教科：</span>
+        <span
+          className="inline-block rounded-full px-2.5 py-0.5 font-bold"
+          style={{ background: subjectColor.border, color: '#fff' }}
+        >
+          {SUBJECT_LABEL[subject]}
+        </span>
+        <span>（上のボタンで変更できます）</span>
+      </div>
+
+      {/* メッセージリスト */}
+      <div
+        className="flex flex-col gap-3 rounded-2xl p-3 sm:p-4"
+        style={{
+          background: 'var(--color-beige)',
+          maxHeight:  hasMessages ? 480 : undefined,
+          overflowY:  hasMessages ? 'auto' : undefined,
+          minHeight:  hasMessages ? 120 : undefined,
+        }}
       >
-        ← 戻る
-      </button>
+        {!hasMessages ? (
+          <ChatEmptyHint subjectColor={subjectColor} />
+        ) : (
+          <>
+            {messages.map((m) => (
+              <ChatBubble
+                key={m.id}
+                msg={m}
+                subjectColor={subjectColor}
+                isGenerating={isGenerating}
+                onOptionClick={onOptionClick}
+              />
+            ))}
+            <div ref={messagesEndRef} />
+          </>
+        )}
+      </div>
+
+      {/* コンポーザー（テキストエリア + 送信） */}
+      <div className="flex flex-col sm:flex-row gap-2 items-stretch">
+        <textarea
+          value={prompt}
+          onChange={(e) => setPrompt(e.target.value)}
+          onKeyDown={(e) => {
+            // Cmd/Ctrl + Enter で送信
+            if ((e.metaKey || e.ctrlKey) && e.key === 'Enter' && canSubmit) {
+              e.preventDefault();
+              onSend();
+            }
+          }}
+          disabled={isGenerating}
+          placeholder={hasMessages
+            ? '返信や追加の質問を入力…'
+            : '例：「磁石の力を小学生にわかりやすく」「二次関数のグラフ」など'}
+          rows={2}
+          className="flex-1 rounded-2xl px-4 py-3 text-sm resize-none outline-none transition-shadow disabled:opacity-50"
+          style={{
+            background: '#fff',
+            border:     '1.5px solid #ddd6cc',
+            color:      'var(--color-brown)',
+            fontFamily: "'Hiragino Kaku Gothic ProN', Meiryo, sans-serif",
+            boxShadow:  'inset 0 1px 3px rgba(0,0,0,0.06)',
+          }}
+          onFocus={(e) => {
+            if (isGenerating) return;
+            e.currentTarget.style.border    = `1.5px solid ${subjectColor.border}`;
+            e.currentTarget.style.boxShadow = `0 0 0 3px ${subjectColor.border}22, inset 0 1px 3px rgba(0,0,0,0.04)`;
+          }}
+          onBlur={(e) => {
+            e.currentTarget.style.border    = '1.5px solid #ddd6cc';
+            e.currentTarget.style.boxShadow = 'inset 0 1px 3px rgba(0,0,0,0.06)';
+          }}
+        />
+        <button
+          onClick={onSend}
+          disabled={!canSubmit}
+          className="rounded-2xl px-5 py-3 text-sm font-bold transition-all duration-150 disabled:opacity-40 disabled:cursor-not-allowed flex items-center justify-center gap-2 sm:self-auto self-stretch sm:w-auto"
+          style={{
+            background: canSubmit
+              ? `linear-gradient(135deg, ${subjectColor.border}, ${subjectColor.border}cc)`
+              : '#ccc',
+            color:     '#fff',
+            boxShadow: canSubmit ? 'var(--shadow-warm)' : 'none',
+            minWidth:  120,
+          }}
+        >
+          {isGenerating
+            ? <><span style={{ display: 'inline-block', animation: 'spin 1s linear infinite' }}>⟳</span>送信中</>
+            : <>🎬 送信</>
+          }
+        </button>
+      </div>
+
+      {/* フッターヒント */}
+      {!hasMessages && (
+        <div
+          className="rounded-2xl px-4 py-3 text-xs leading-relaxed"
+          style={{ background: 'var(--color-beige)', color: 'var(--color-brown-light)' }}
+        >
+          <span className="font-bold" style={{ color: 'var(--color-brown)' }}>💡 使い方のヒント：</span>
+          テーマは具体的に入力するほど、正確なアニメーションが生成されます。
+          <br />
+          例：「てこの原理」より{' '}
+          <span className="font-bold" style={{ color: 'var(--color-orange)' }}>
+            「てこの原理：支点・力点・作用点の関係を小学4年生向けに」
+          </span>
+        </div>
+      )}
     </div>
   );
 }
 
 /* ─────────────────────────────────────────────────────
-   AI入力パネル
+   ChatEmptyHint — メッセージ空時のオンボーディング
 ───────────────────────────────────────────────────── */
-
-function AiInputPanel({
-  prompt, setPrompt, grade, subject, isGenerating, onGenerate, subjectColor,
-  clarificationMessage, clarificationOptions,
+function ChatEmptyHint({
+  subjectColor,
 }: {
-  prompt:                string;
-  setPrompt:             (v: string) => void;
-  grade:                 Grade;
-  subject:               Subject;
-  isGenerating:          boolean;
-  onGenerate:            () => void;
-  subjectColor:          { bg: string; text: string; border: string };
-  clarificationMessage?: string;
-  clarificationOptions?: string[];
+  subjectColor: { bg: string; text: string; border: string };
 }) {
-  const canSubmit = !!prompt.trim() && !isGenerating;
-  const hasOptions = !!clarificationOptions && clarificationOptions.length > 0;
-
   return (
-    <div
-      className="rounded-[30px] p-6 sm:p-8 flex flex-col gap-4"
-      style={{ background: 'rgba(255,255,255,0.9)', boxShadow: 'var(--shadow-warm-sm)' }}
-    >
-      <div className="flex items-center gap-2">
-        <span className="text-xl">💬</span>
-        <span className="font-bold text-base" style={{ color: 'var(--color-brown)' }}>
-          AIにきく・テーマを入力
-        </span>
-      </div>
+    <div className="flex flex-col items-center justify-center text-center gap-2 py-6 px-4">
+      <span className="text-3xl">🤖</span>
+      <p className="text-sm font-bold" style={{ color: 'var(--color-brown)' }}>
+        どんなテーマで学びたいですか？
+      </p>
+      <p className="text-xs leading-relaxed max-w-md" style={{ color: 'var(--color-brown-light)' }}>
+        上のカードから選ぶか、下の入力欄に自由に書いてください。
+        AI がテーマを理解できない時は、もう少し詳しく聞き返します。
+      </p>
+      <span
+        className="inline-block rounded-full px-3 py-1 text-[11px] font-semibold mt-1"
+        style={{ background: subjectColor.bg, color: subjectColor.text }}
+      >
+        ✨ Stage 1：対話で理解 → Stage 2：上の段でアニメ生成
+      </span>
+    </div>
+  );
+}
 
-      {/* AIからの確認メッセージ（テーマが解釈不能な場合のみ表示） */}
-      {clarificationMessage && (
+/* ─────────────────────────────────────────────────────
+   ChatBubble — 個別メッセージバブル
+───────────────────────────────────────────────────── */
+function ChatBubble({
+  msg, subjectColor, isGenerating, onOptionClick,
+}: {
+  msg:           ChatMessage;
+  subjectColor:  { bg: string; text: string; border: string };
+  isGenerating:  boolean;
+  onOptionClick: (option: string) => void;
+}) {
+  // ── ユーザー発言：右寄せ・濃色背景 ──────────────────
+  if (msg.role === 'user') {
+    return (
+      <div className="flex justify-end">
         <div
-          className="rounded-2xl px-4 py-3 flex flex-col gap-3"
+          className="rounded-2xl px-4 py-2.5 max-w-[85%] sm:max-w-[75%] text-sm leading-relaxed"
           style={{
-            background: `linear-gradient(135deg, ${subjectColor.border}15, ${subjectColor.bg})`,
-            border:     `1.5px solid ${subjectColor.border}55`,
+            background: subjectColor.border,
+            color:      '#fff',
+            boxShadow:  '0 1px 3px rgba(0,0,0,0.08)',
+            whiteSpace: 'pre-wrap',
           }}
         >
-          <div className="flex items-center gap-2">
-            <span className="text-lg">🤔</span>
-            <span className="text-xs font-bold" style={{ color: subjectColor.text }}>
-              AIからの確認
-            </span>
-          </div>
-          <p
-            className="text-sm leading-relaxed"
-            style={{ color: 'var(--color-brown)', whiteSpace: 'pre-wrap' }}
-          >
-            {clarificationMessage}
-          </p>
+          {msg.text}
+        </div>
+      </div>
+    );
+  }
 
-          {/* 選択肢ボタン（候補がある場合） */}
-          {hasOptions && (
-            <div className="flex flex-col gap-2 mt-1">
-              <p className="text-xs font-bold" style={{ color: 'var(--color-brown-light)' }}>
-                ↓ クリックすると入力欄に反映されます
-              </p>
-              <div className="flex flex-col gap-2">
-                {clarificationOptions!.map((option, idx) => (
+  // ── AI 発言：左寄せ・白背景・variant 別 ───────────────
+  return (
+    <div className="flex items-start gap-2">
+      <span
+        className="rounded-full flex items-center justify-center text-base shrink-0"
+        style={{
+          width:      32,
+          height:     32,
+          background: '#fff',
+          border:     `1.5px solid ${subjectColor.border}55`,
+          marginTop:  2,
+        }}
+        aria-hidden
+      >
+        🤖
+      </span>
+      <div className="flex-1 min-w-0 max-w-[85%] sm:max-w-[80%]">
+        {msg.variant === 'thinking' && (
+          <div
+            className="rounded-2xl px-4 py-2.5 inline-flex items-center gap-2 text-sm"
+            style={{ background: '#fff', border: '1px solid #e8e0d8', color: 'var(--color-brown-light)' }}
+          >
+            <span style={{ display: 'inline-block', animation: 'spin 1s linear infinite' }}>⟳</span>
+            考えています…
+          </div>
+        )}
+
+        {msg.variant === 'understood' && (
+          <div
+            className="rounded-2xl px-4 py-2.5 text-sm leading-relaxed"
+            style={{
+              background: `linear-gradient(135deg, ${subjectColor.bg}, #fff)`,
+              border:     `1px solid ${subjectColor.border}33`,
+              color:      'var(--color-brown)',
+              whiteSpace: 'pre-wrap',
+            }}
+          >
+            <span className="font-bold mr-1">✨ 理解しました！</span>
+            {msg.text}
+          </div>
+        )}
+
+        {msg.variant === 'clarification' && (
+          <div className="flex flex-col gap-2">
+            <div
+              className="rounded-2xl px-4 py-2.5 text-sm leading-relaxed"
+              style={{
+                background: '#fff',
+                border:     `1px solid ${subjectColor.border}55`,
+                color:      'var(--color-brown)',
+                whiteSpace: 'pre-wrap',
+              }}
+            >
+              <span className="font-bold mr-1" style={{ color: subjectColor.text }}>🤔 確認させてください：</span>
+              {msg.text}
+            </div>
+            {msg.options.length > 0 && (
+              <div className="flex flex-col gap-1.5 pl-1">
+                <p className="text-[11px] font-semibold" style={{ color: 'var(--color-brown-muted)' }}>
+                  ↓ クリックで返信
+                </p>
+                {msg.options.map((opt, i) => (
                   <button
-                    key={idx}
+                    key={i}
                     type="button"
-                    onClick={() => setPrompt(option)}
                     disabled={isGenerating}
-                    className="rounded-2xl px-4 py-3 text-sm text-left font-semibold transition-all duration-150 hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed"
+                    onClick={() => onOptionClick(opt)}
+                    className="rounded-2xl px-4 py-2.5 text-sm text-left font-semibold transition-all duration-150 hover:-translate-y-0.5 hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:translate-y-0"
                     style={{
                       background: 'rgba(255,255,255,0.95)',
                       color:      subjectColor.text,
@@ -1781,116 +2092,28 @@ function AiInputPanel({
                     }}
                   >
                     <span className="mr-1.5" style={{ color: subjectColor.border }}>▸</span>
-                    {option}
+                    {opt}
                   </button>
                 ))}
               </div>
-            </div>
-          )}
-
-          {!hasOptions && (
-            <p className="text-xs" style={{ color: 'var(--color-brown-muted)' }}>
-              ↓ 下のテーマを書き直してもう一度送ってください
-            </p>
-          )}
-        </div>
-      )}
-
-      <p className="text-sm leading-relaxed" style={{ color: 'var(--color-brown-light)' }}>
-        {clarificationMessage
-          ? 'テーマをもう少し具体的に入力してください。'
-          : '上のカードからテーマを選ぶか、自由にテーマを入力してください。'}
-      </p>
-
-      {/* 学年・教科バッジ */}
-      <div className="flex items-center gap-3 flex-wrap">
-        <div className="flex items-center gap-2">
-          <span className="text-xs" style={{ color: 'var(--color-brown-muted)' }}>学年：</span>
-          <span
-            className="inline-block rounded-full px-3 py-0.5 text-xs font-bold"
-            style={{ background: GRADE_COLOR[grade].bg, color: GRADE_COLOR[grade].text }}
-          >
-            {GRADE_LABEL[grade]}
-          </span>
-        </div>
-        <div className="flex items-center gap-2">
-          <span className="text-xs" style={{ color: 'var(--color-brown-muted)' }}>教科：</span>
-          <span
-            className="inline-block rounded-full px-3 py-0.5 text-xs font-bold"
-            style={{ background: subjectColor.border, color: '#fff' }}
-          >
-            {SUBJECT_LABEL[subject]}
-          </span>
-        </div>
-        <span className="text-xs" style={{ color: 'var(--color-brown-muted)' }}>
-          （上のボタンで変更できます）
-        </span>
-      </div>
-
-      {/* テキストエリア */}
-      <textarea
-        value={prompt}
-        onChange={(e) => setPrompt(e.target.value)}
-        disabled={isGenerating}
-        placeholder="例：「磁石の力を小学生にわかりやすく」「二次関数のグラフ」など"
-        rows={3}
-        className="w-full rounded-2xl px-4 py-3 text-sm resize-none outline-none transition-shadow disabled:opacity-50"
-        style={{
-          background: 'rgba(255,255,255,0.9)',
-          border:     '1.5px solid #ddd6cc',
-          color:      'var(--color-brown)',
-          fontFamily: "'Hiragino Kaku Gothic ProN', Meiryo, sans-serif",
-          boxShadow:  'inset 0 1px 3px rgba(0,0,0,0.06)',
-        }}
-        onFocus={(e) => {
-          if (isGenerating) return;
-          e.currentTarget.style.border    = `1.5px solid ${subjectColor.border}`;
-          e.currentTarget.style.boxShadow = `0 0 0 3px ${subjectColor.border}22, inset 0 1px 3px rgba(0,0,0,0.04)`;
-        }}
-        onBlur={(e) => {
-          e.currentTarget.style.border    = '1.5px solid #ddd6cc';
-          e.currentTarget.style.boxShadow = 'inset 0 1px 3px rgba(0,0,0,0.06)';
-        }}
-      />
-
-      {/* 生成ボタン */}
-      <div className="flex items-center gap-3 flex-wrap">
-        <button
-          onClick={onGenerate}
-          disabled={!canSubmit}
-          className="rounded-2xl px-6 py-3 text-sm font-bold transition-all duration-150 disabled:opacity-40 disabled:cursor-not-allowed flex items-center gap-2"
-          style={{
-            background: canSubmit
-              ? `linear-gradient(135deg, ${subjectColor.border}, ${subjectColor.border}cc)`
-              : '#ccc',
-            color:     '#fff',
-            boxShadow: canSubmit ? 'var(--shadow-warm)' : 'none',
-          }}
-        >
-          {isGenerating
-            ? <><span style={{ display: 'inline-block', animation: 'spin 1s linear infinite' }}>⟳</span> 生成中…</>
-            : '🎬 アニメーションを生成'
-          }
-        </button>
-        {isGenerating && (
-          <span className="text-xs" style={{ color: 'var(--color-brown-muted)' }}>
-            生成には30〜60秒かかります
-          </span>
+            )}
+          </div>
         )}
-      </div>
 
-      {/* ヒント */}
-      <div
-        className="rounded-2xl px-4 py-3 text-xs leading-relaxed"
-        style={{ background: 'var(--color-beige)', color: 'var(--color-brown-light)' }}
-      >
-        <span className="font-bold" style={{ color: 'var(--color-brown)' }}>💡 使い方のヒント：</span>
-        {'テーマは具体的に入力するほど、正確なアニメーションが生成されます。'}
-        <br />
-        例：「てこの原理」より{' '}
-        <span className="font-bold" style={{ color: 'var(--color-orange)' }}>
-          「てこの原理：支点・力点・作用点の関係を小学4年生向けに」
-        </span>
+        {msg.variant === 'error' && (
+          <div
+            className="rounded-2xl px-4 py-2.5 text-sm leading-relaxed"
+            style={{
+              background: '#fff5f5',
+              border:     '1px solid #ffb3b3',
+              color:      '#7a3030',
+              whiteSpace: 'pre-wrap',
+            }}
+          >
+            <span className="font-bold mr-1" style={{ color: '#c0392b' }}>⚠️</span>
+            {msg.text}
+          </div>
+        )}
       </div>
     </div>
   );
