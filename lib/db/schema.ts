@@ -153,6 +153,13 @@ export const userAnimations = pgTable(
     // - true（既定）: 誰でも /share/[id] で閲覧可能（従来挙動）
     // - false: 所有者のみ閲覧可能・他人がアクセスすると 404
     isPublic:    boolean('is_public').notNull().default(true),
+    /**
+     * R3-K Phase 1a（migration 0014）: Stage 1 で生成された教育設計 JSON。
+     * 結果パネルの「📋 学習ポイント」「❓ クイズ」タブで再利用するため永続化する。
+     * 既存レコード（migration 適用前）は NULL となり、UI 側でフォールバック表示。
+     * スキーマは lib/ai-kyoshitsu/stage1-schema.ts の Stage1Success と一致。
+     */
+    stage1Json:  jsonb('stage1_json'),
   },
   (t) => ({
     idxUserId:    index('user_animations_user_id_idx').on(t.userId),
