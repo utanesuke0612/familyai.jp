@@ -21,12 +21,12 @@
  *   - nextLesson（次のレッスン情報・任意）
  */
 
-import { useCallback, useState } from 'react';
+import { useCallback, useRef, useState } from 'react';
 import { useSession } from 'next-auth/react';
 import type { Sentence } from '@/shared/types';
 import { saveLocalProgress } from '@/lib/voaenglish/progress-store';
 import { HandwritingNote }   from './HandwritingNote';
-import { SentencePlayer }    from './SentencePlayer';
+import { SentencePlayer, type SentencePlayerHandle }    from './SentencePlayer';
 import { CompletionDialog }  from './CompletionDialog';
 import { NextLessonCta, type NextLessonInfo } from './NextLessonCta';
 import type { SelfReportAction } from './SelfReport';
@@ -52,6 +52,9 @@ export function DictationPanel({
 
   const { data: session } = useSession();
   const isLoggedIn = !!session?.user?.id;
+
+  // SentencePlayer から reset() を呼ぶための ref（😓 / 💪 押下時に最初に戻す）
+  const playerRef = useRef<SentencePlayerHandle>(null);
 
   // 全再生完了 → モーダル表示
   const handleAllPlayed = useCallback(() => {
@@ -97,6 +100,11 @@ export function DictationPanel({
       setShowDialog(false);
       setIsSubmitting(false);
 
+      // 😓 / 💪 押下時：プレイヤーを最初に戻す（v2 設計書通り）
+      if (action === 'retry' || action === 'good') {
+        playerRef.current?.reset();
+      }
+
       // 🌟 完璧時の演出（Q3=A）
       if (action === 'perfect') {
         setCompleted(true);
@@ -136,6 +144,7 @@ export function DictationPanel({
     <>
       <HandwritingNote />
       <SentencePlayer
+        ref={playerRef}
         audioUrl={audioUrl}
         sentences={sentences}
         onAllPlayed={handleAllPlayed}

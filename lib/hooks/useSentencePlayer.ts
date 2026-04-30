@@ -85,6 +85,8 @@ export interface SentencePlayerActions {
   setPlaybackRate:  (rate: PlaybackRate) => void;
   toggleAutoStop:   () => void;
   toggleRepeat:     () => void;
+  /** プレイヤーを最初（currentTime=0）に戻して停止する。😓 / 💪 押下時に使用 */
+  reset:            () => void;
 }
 
 /**
@@ -284,6 +286,25 @@ export function useSentencePlayer(
     setState((s) => ({ ...s, repeat: !s.repeat }));
   }, []);
 
+  /**
+   * プレイヤーを最初（currentTime=0）に戻して停止。
+   * 自己申告 😓「もう一度やる」/ 💪「頑張りました」押下時に
+   * DictationPanel から呼び出される（v2 設計書通り）。
+   */
+  const reset = useCallback(() => {
+    const a = audioRef.current;
+    if (!a) return;
+    a.pause();
+    a.currentTime = 0;
+    currentIndexRef.current = 0;
+    setState((s) => ({
+      ...s,
+      isPlaying:    false,
+      currentTime:  0,
+      currentIndex: 0,
+    }));
+  }, []);
+
   const actions: SentencePlayerActions = {
     play,
     pause,
@@ -295,6 +316,7 @@ export function useSentencePlayer(
     setPlaybackRate,
     toggleAutoStop,
     toggleRepeat,
+    reset,
   };
 
   return [state, actions];

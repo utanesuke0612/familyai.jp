@@ -21,7 +21,7 @@
  *   />
  */
 
-import { useEffect, useRef } from 'react';
+import { forwardRef, useEffect, useImperativeHandle, useRef } from 'react';
 import { useSentencePlayer, type PlaybackRate } from '@/lib/hooks/useSentencePlayer';
 import type { Sentence } from '@/shared/types';
 import { SentenceList } from './SentenceList';
@@ -31,6 +31,14 @@ interface SentencePlayerProps {
   sentences:     readonly Sentence[];
   /** 全再生終了時のコールバック（Phase 6 で自己申告ダイアログ表示用・Q5=C）*/
   onAllPlayed?:  () => void;
+}
+
+/**
+ * 親（DictationPanel）が ref 経由で呼び出せるアクション。
+ * 自己申告 😓 / 💪 押下時の「最初に戻す」を実現する。
+ */
+export interface SentencePlayerHandle {
+  reset: () => void;
 }
 
 const PLAYBACK_RATES: PlaybackRate[] = [0.75, 1.0, 1.25];
@@ -43,7 +51,8 @@ function formatTime(sec: number): string {
   return `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
 }
 
-export function SentencePlayer({ audioUrl, sentences, onAllPlayed }: SentencePlayerProps) {
+export const SentencePlayer = forwardRef<SentencePlayerHandle, SentencePlayerProps>(
+  function SentencePlayer({ audioUrl, sentences, onAllPlayed }, ref) {
   const [state, actions] = useSentencePlayer({
     audioUrl,
     sentences,
@@ -52,6 +61,11 @@ export function SentencePlayer({ audioUrl, sentences, onAllPlayed }: SentencePla
     initialPlaybackRate: 1.0,
     onEnded:             onAllPlayed,
   });
+
+  // 親（DictationPanel）から reset() を呼べるようにする
+  useImperativeHandle(ref, () => ({
+    reset: () => actions.reset(),
+  }), [actions]);
 
   // ── キーボードショートカット（PC・@media hover で実機判別） ──────
   // モバイルでも window.addEventListener は登録するが、実質キーボード操作は来ない
@@ -274,4 +288,4 @@ export function SentencePlayer({ audioUrl, sentences, onAllPlayed }: SentencePla
       />
     </div>
   );
-}
+});
