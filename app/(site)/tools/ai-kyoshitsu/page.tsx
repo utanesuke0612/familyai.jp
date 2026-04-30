@@ -1714,21 +1714,21 @@ function ChatPanel({
             <span className="font-bold text-sm" style={{ color: 'var(--color-brown)' }}>
               AI教室チャット
             </span>
-            <span
-              className="inline-block rounded-full px-2 py-0.5 text-[10px] font-bold"
-              style={{ background: subjectColor.border, color: '#fff' }}
-            >
-              {messages.length} メッセージ
-            </span>
+            {hasMessages && (
+              <span
+                className="inline-block rounded-full px-2 py-0.5 text-[10px] font-bold"
+                style={{ background: subjectColor.border, color: '#fff' }}
+              >
+                {messages.length} メッセージ
+              </span>
+            )}
           </div>
-          {lastAiPreview && (
-            <p
-              className="text-xs leading-snug truncate mt-0.5"
-              style={{ color: 'var(--color-brown-light)' }}
-            >
-              {lastAiPreview}
-            </p>
-          )}
+          <p
+            className="text-xs leading-snug truncate mt-0.5"
+            style={{ color: 'var(--color-brown-light)' }}
+          >
+            {lastAiPreview || 'クリックで開く・テーマを入力できます'}
+          </p>
         </div>
         <span
           className="shrink-0 text-sm font-bold"
@@ -1768,18 +1768,16 @@ function ChatPanel({
               🆕 新しいテーマ
             </button>
           )}
-          {/* 折りたたみボタン（結果がある時のみ表示。生成前は隠す ＝ 初心者の混乱防止） */}
-          {hasResult && (
-            <button
-              type="button"
-              onClick={onToggleCollapse}
-              className="rounded-full px-3 py-1 text-xs font-semibold transition-opacity hover:opacity-80"
-              style={{ background: '#fff', color: 'var(--color-brown-light)', border: '1px solid #ddd6cc' }}
-              title="チャットを折りたたむ"
-            >
-              ▲ 閉じる
-            </button>
-          )}
+          {/* 折りたたみボタン（常時表示・どの状態でも開閉可能） */}
+          <button
+            type="button"
+            onClick={onToggleCollapse}
+            className="rounded-full px-3 py-1 text-xs font-semibold transition-opacity hover:opacity-80"
+            style={{ background: '#fff', color: 'var(--color-brown-light)', border: '1px solid #ddd6cc' }}
+            title="チャットを折りたたむ"
+          >
+            ▲ 閉じる
+          </button>
         </div>
       </div>
 
