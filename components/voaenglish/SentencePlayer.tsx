@@ -56,7 +56,7 @@ export const SentencePlayer = forwardRef<SentencePlayerHandle, SentencePlayerPro
   const [state, actions] = useSentencePlayer({
     audioUrl,
     sentences,
-    initialAutoStop:     true,    // Q3
+    initialAutoStop:     false,   // デフォルト OFF（ユーザーが必要に応じて手動 ON）
     initialRepeat:       false,
     initialPlaybackRate: 1.0,
     onEnded:             onAllPlayed,
