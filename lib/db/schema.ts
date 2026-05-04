@@ -226,6 +226,36 @@ export const lessonsProgress = pgTable(
   }),
 );
 
+// ─── ai_echo_entries（AI Echo 機能・migration 0015）──────────
+/**
+ * AI Echo: ユーザーが書いた英文 + AI フィードバックを保存する。
+ *
+ * - lesson_key  : "<course>/<slug>" 形式（lessons_progress と同じ命名規則）
+ * - lesson_title: 表示用のレッスン名（参照切れ対策で正規化せず保存）
+ * - level       : 1 / 2 / 3（🌱 / 🌿 / 🌳）
+ * - user_input  : ユーザーが書いた英文
+ * - ai_feedback : AI が返した日本語フィードバック
+ * - 未ログイン時は保存しない（ログインユーザーのみ）
+ * - アカウント削除と同時にカスケード削除
+ */
+export const aiEchoEntries = pgTable(
+  'ai_echo_entries',
+  {
+    id:          uuid('id').defaultRandom().primaryKey(),
+    userId:      uuid('user_id').notNull().references(() => users.id, { onDelete: 'cascade' }),
+    lessonKey:   text('lesson_key').notNull(),
+    lessonTitle: text('lesson_title').notNull(),
+    level:       integer('level').notNull(),
+    userInput:   text('user_input').notNull(),
+    aiFeedback:  text('ai_feedback').notNull(),
+    createdAt:   timestamp('created_at').defaultNow().notNull(),
+  },
+  (t) => ({
+    idxUserLesson:  index('ai_echo_entries_user_lesson_idx').on(t.userId, t.lessonKey),
+    idxUserCreated: index('ai_echo_entries_user_created_idx').on(t.userId, t.createdAt),
+  }),
+);
+
 // ─── 型エクスポート（Drizzle の推論型） ───────────────────────
 export type Article              = typeof articles.$inferSelect;
 export type NewArticle           = typeof articles.$inferInsert;
@@ -243,3 +273,5 @@ export type AiConfigHistoryRow   = typeof aiConfigHistory.$inferSelect;
 export type NewAiConfigHistoryRow = typeof aiConfigHistory.$inferInsert;
 export type LessonProgressRow      = typeof lessonsProgress.$inferSelect;
 export type NewLessonProgressRow   = typeof lessonsProgress.$inferInsert;
+export type AiEchoEntry            = typeof aiEchoEntries.$inferSelect;
+export type NewAiEchoEntry         = typeof aiEchoEntries.$inferInsert;
