@@ -22,6 +22,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import type { Sentence } from '@/shared/types';
+import { AnnotatedSentence } from './AnnotatedSentence';
 
 interface SentenceListProps {
   sentences:    readonly Sentence[];
@@ -31,10 +32,19 @@ interface SentenceListProps {
 }
 
 /**
- * "Speaker: text..." 形式を {speaker, text} に分解。
+ * speaker プレフィックスを {speaker, text} に分解。
+ * 対応形式（後方互換 + markdown 太字）:
+ *   - "Speaker: text..."        ← 旧形式（既存 sentences.json）
+ *   - "**Speaker:** text..."    ← 新形式（コロン内側）
+ *   - "**Speaker**: text..."    ← 新形式（コロン外側）
+ *   - "**Speaker** text..."     ← markdown 太字のみ
  * コロンを含まない場合は speaker=null・text=入力をそのまま返す。
  */
 function splitSpeaker(line: string): { speaker: string | null; text: string } {
+  // 1. **Speaker:** text  または **Speaker**: text  → markdown 太字
+  const md = line.match(/^\*\*([A-Za-z][A-Za-z0-9_ ]*?)\s*:?\s*\*\*\s*:?\s*(.*)$/);
+  if (md) return { speaker: md[1].trim(), text: md[2] };
+  // 2. Speaker: text  → 旧形式
   const m = line.match(/^([A-Za-z][A-Za-z0-9_]*)\s*:\s*(.*)$/);
   if (m) return { speaker: m[1], text: m[2] };
   return { speaker: null, text: line };
@@ -135,7 +145,7 @@ export function SentenceList({ sentences, currentIndex, isPlaying, onJump }: Sen
                         color:      'var(--color-brown)',
                       }}
                     >
-                      {text}
+                      <AnnotatedSentence text={text} />
                     </p>
                   </button>
                 </li>
