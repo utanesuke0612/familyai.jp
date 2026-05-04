@@ -305,11 +305,18 @@ export default async function VoaLessonPage({
               </SectionCard>
 
               {/* ─── ④ AI Echo（聴写プレイヤー直下・常時表示） ─────────── */}
-              <AIEchoPanel
-                lessonKey={`${course}/${lesson}`}
-                lessonTitle={headline}
-                lessonScript={lessonScriptForAi}
-              />
+              <SectionCard
+                emoji="🔊"
+                title="AI Echo"
+                subtitle="学んだことを、自分の言葉で。聴いて・書いて・自分の言葉で表現する 3 ステップで定着しよう。"
+                accent={accent}
+              >
+                <AIEchoPanel
+                  lessonKey={`${course}/${lesson}`}
+                  lessonTitle={headline}
+                  lessonScript={lessonScriptForAi}
+                />
+              </SectionCard>
 
             </div>
 
