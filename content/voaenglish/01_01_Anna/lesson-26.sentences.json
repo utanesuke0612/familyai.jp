@@ -1,0 +1,407 @@
+[
+  {
+    "start": 3.52,
+    "end": 5.12,
+    "text": "Speaker 1: Hello, I'm Dr."
+  },
+  {
+    "start": 5.12,
+    "end": 5.92,
+    "text": "Speaker 1: Jill."
+  },
+  {
+    "start": 5.92,
+    "end": 9.68,
+    "text": "Speaker 1: Welcome to Let's Learn English with Anna."
+  },
+  {
+    "start": 9.519,
+    "end": 14,
+    "text": "Speaker 1: Our days are filled with lots of things to do."
+  },
+  {
+    "start": 14,
+    "end": 18.72,
+    "text": "Speaker 1: Some things we do every day, like help around the house."
+  },
+  {
+    "start": 18.619,
+    "end": 21.82,
+    "text": "Speaker 1: brush our hair, eat dinner."
+  },
+  {
+    "start": 21.82,
+    "end": 24.22,
+    "text": "Speaker 1: Some things we have to do."
+  },
+  {
+    "start": 24.22,
+    "end": 26.619,
+    "text": "Speaker 1: So we write them down."
+  },
+  {
+    "start": 26.619,
+    "end": 28.86,
+    "text": "Speaker 1: What do you do in a day?"
+  },
+  {
+    "start": 28.86,
+    "end": 30.539,
+    "text": "Speaker 1: Let's visit Anna."
+  },
+  {
+    "start": 30.539,
+    "end": 32.78,
+    "text": "Speaker 1: She answers the question."
+  },
+  {
+    "start": 32.54,
+    "end": 35.34,
+    "text": "Speaker 1: What do you do in a day?"
+  },
+  {
+    "start": 36.14,
+    "end": 37.26,
+    "text": "Speaker 2: Hi there."
+  },
+  {
+    "start": 37.26,
+    "end": 38.78,
+    "text": "Speaker 2: Welcome back."
+  },
+  {
+    "start": 38.78,
+    "end": 41.579,
+    "text": "Speaker 3: Anna, I have our question."
+  },
+  {
+    "start": 41.579,
+    "end": 44.46,
+    "text": "Speaker 3: What do you do in a day?"
+  },
+  {
+    "start": 44.46,
+    "end": 46.62,
+    "text": "Speaker 2: Right on time, Max."
+  },
+  {
+    "start": 46.44,
+    "end": 49.48,
+    "text": "Speaker 2: In my day planner, it says 9 a."
+  },
+  {
+    "start": 49.48,
+    "end": 49.72,
+    "text": "Speaker 2: m."
+  },
+  {
+    "start": 49.96,
+    "end": 51.88,
+    "text": "Speaker 2: Get question."
+  },
+  {
+    "start": 51.88,
+    "end": 56.28,
+    "text": "Speaker 3: A day planner is helpful and important."
+  },
+  {
+    "start": 56.42,
+    "end": 60.42,
+    "text": "Speaker 2: In my day planner is my to-do list."
+  },
+  {
+    "start": 60.42,
+    "end": 66.9,
+    "text": "Speaker 2: On my to-do list, I write the things I do every day."
+  },
+  {
+    "start": 66.9,
+    "end": 68.42,
+    "text": "Speaker 3: Did you write?"
+  },
+  {
+    "start": 68.24,
+    "end": 69.76,
+    "text": "Speaker 3: Brush my teeth?"
+  },
+  {
+    "start": 69.76,
+    "end": 71.12,
+    "text": "Speaker 2: No, Max."
+  },
+  {
+    "start": 71.12,
+    "end": 74.16,
+    "text": "Speaker 3: Did you write eat breakfast?"
+  },
+  {
+    "start": 74.48,
+    "end": 75.76,
+    "text": "Speaker 2: No, Max."
+  },
+  {
+    "start": 75.76,
+    "end": 79.28,
+    "text": "Speaker 2: Those are things I do every day."
+  },
+  {
+    "start": 79.12,
+    "end": 84.16,
+    "text": "Speaker 2: So, I do not write them on my to-do list."
+  },
+  {
+    "start": 84.16,
+    "end": 90,
+    "text": "Speaker 2: On my to-do list, I write things I need to do."
+  },
+  {
+    "start": 90,
+    "end": 91.28,
+    "text": "Speaker 2: Like."
+  },
+  {
+    "start": 91.74,
+    "end": 95.979,
+    "text": "Speaker 2: Clean my clothes and hang them."
+  },
+  {
+    "start": 95.979,
+    "end": 98.619,
+    "text": "Speaker 2: Sweep the floor."
+  },
+  {
+    "start": 98.619,
+    "end": 100.86,
+    "text": "Speaker 2: Wash the car."
+  },
+  {
+    "start": 100.82,
+    "end": 103.78,
+    "text": "Speaker 2: I want to go to the park today."
+  },
+  {
+    "start": 103.78,
+    "end": 107.22,
+    "text": "Speaker 2: Daisy, I am busy today."
+  },
+  {
+    "start": 107.22,
+    "end": 110.82,
+    "text": "Speaker 2: So we cannot go to the park."
+  },
+  {
+    "start": 110.82,
+    "end": 112.74,
+    "text": "Speaker 2: I have an idea."
+  },
+  {
+    "start": 112.74,
+    "end": 114.9,
+    "text": "Speaker 2: I can help you."
+  },
+  {
+    "start": 114.54,
+    "end": 116.14,
+    "text": "Speaker 2: Thanks, Daisy."
+  },
+  {
+    "start": 116.14,
+    "end": 121.26,
+    "text": "Speaker 2: But you cannot do my work."
+  },
+  {
+    "start": 121.26,
+    "end": 125.34,
+    "text": "Speaker 2: Your day planner and to-do list are gone."
+  },
+  {
+    "start": 125.34,
+    "end": 127.26,
+    "text": "Speaker 1: So we can go to the park."
+  },
+  {
+    "start": 127.26,
+    "end": 129.26,
+    "text": "Speaker 3: Oh, Daisy."
+  },
+  {
+    "start": 129.64,
+    "end": 134.04,
+    "text": "Speaker 1: English has some small but helpful words."
+  },
+  {
+    "start": 134.04,
+    "end": 139.08,
+    "text": "Speaker 1: Anna, Max, and Daisy just used all of them."
+  },
+  {
+    "start": 139.14,
+    "end": 141.62,
+    "text": "Speaker 1: Let's see them again."
+  },
+  {
+    "start": 141.62,
+    "end": 148.579,
+    "text": "Speaker 1: The small, helpful words are and, but, and so."
+  },
+  {
+    "start": 148.86,
+    "end": 155.5,
+    "text": "Speaker 1: and joins two or more things that go together or happen together."
+  },
+  {
+    "start": 155.5,
+    "end": 160.06,
+    "text": "Speaker 3: A day planner is helpful and important."
+  },
+  {
+    "start": 161.28,
+    "end": 167.76,
+    "text": "Speaker 1: But joins two thoughts that are different or opposite."
+  },
+  {
+    "start": 168,
+    "end": 169.76,
+    "text": "Speaker 2: Thanks, Daisy."
+  },
+  {
+    "start": 169.76,
+    "end": 172.08,
+    "text": "Speaker 2: But you cannot do"
+  },
+  {
+    "start": 172.52,
+    "end": 175.16,
+    "text": "Speaker 2: My work."
+  },
+  {
+    "start": 175.16,
+    "end": 179.879,
+    "text": "Speaker 1: So shows one thing causing another thing to happen."
+  },
+  {
+    "start": 179.879,
+    "end": 183.319,
+    "text": "Speaker 2: Daisy, I am busy today."
+  },
+  {
+    "start": 183.32,
+    "end": 190.68,
+    "text": "Speaker 2: So we cannot go to the park, but and so"
+  },
+  {
+    "start": 191.62,
+    "end": 199.14,
+    "text": "Speaker 2: They are small words, but they are important and common."
+  },
+  {
+    "start": 199.14,
+    "end": 202.34,
+    "text": "Speaker 2: So you need to learn them."
+  },
+  {
+    "start": 202.34,
+    "end": 205.3,
+    "text": "Speaker 3: Anna, you said them all."
+  },
+  {
+    "start": 207,
+    "end": 213.159,
+    "text": "Speaker 2: Fill in the blank with and but or so."
+  },
+  {
+    "start": 213.159,
+    "end": 215.48,
+    "text": "Speaker 2: I like to wash dishes"
+  },
+  {
+    "start": 216.84,
+    "end": 220.92,
+    "text": "Speaker 2: I do not like to sweep the floor."
+  },
+  {
+    "start": 220.92,
+    "end": 228.44,
+    "text": "Speaker 2: I like to wash dishes, but I do not like to sweep the floor."
+  },
+  {
+    "start": 229.22,
+    "end": 232.98,
+    "text": "Speaker 2: I like to help around the house."
+  },
+  {
+    "start": 232.98,
+    "end": 235.7,
+    "text": "Speaker 2: I clean my room."
+  },
+  {
+    "start": 235.7,
+    "end": 238.739,
+    "text": "Speaker 2: I like to help around the house."
+  },
+  {
+    "start": 238.739,
+    "end": 242.099,
+    "text": "Speaker 2: So I clean my room."
+  },
+  {
+    "start": 242.86,
+    "end": 246.299,
+    "text": "Speaker 2: Now let's hear from some friends."
+  },
+  {
+    "start": 246.299,
+    "end": 249.34,
+    "text": "Speaker 2: They talk about their days."
+  },
+  {
+    "start": 249.34,
+    "end": 252.379,
+    "text": "Speaker 2: In the morning I get dressed and brush my teeth."
+  },
+  {
+    "start": 252.379,
+    "end": 255.659,
+    "text": "Speaker 4: In the morning I met my bed."
+  },
+  {
+    "start": 258.98,
+    "end": 264.18,
+    "text": "Speaker 4: In the afternoon, I do my homework."
+  },
+  {
+    "start": 264.76,
+    "end": 272.52,
+    "text": "Speaker 1: Anna's day planner and her to-do list are gone, but she still has to do the work."
+  },
+  {
+    "start": 272.88,
+    "end": 275.84,
+    "text": "Speaker 1: So, what is going to happen?"
+  },
+  {
+    "start": 276.16,
+    "end": 278.4,
+    "text": "Speaker 2: Daisy, I was wrong."
+  },
+  {
+    "start": 278.4,
+    "end": 280.88,
+    "text": "Speaker 2: You can do my work."
+  },
+  {
+    "start": 281.44,
+    "end": 286.56,
+    "text": "Speaker 2: I am helping, but I do not like it."
+  },
+  {
+    "start": 286.8,
+    "end": 291.12,
+    "text": "Speaker 1: Now you can talk about the things you do in a day."
+  },
+  {
+    "start": 291.12,
+    "end": 296,
+    "text": "Speaker 1: And come back again to Let's Learn English with Anna."
+  }
+]

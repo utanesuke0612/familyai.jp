@@ -1,0 +1,402 @@
+[
+  {
+    "start": 6.64,
+    "end": 8.16,
+    "text": "Speaker 1: Hello, I'm Dr."
+  },
+  {
+    "start": 8.16,
+    "end": 8.88,
+    "text": "Speaker 1: Jill."
+  },
+  {
+    "start": 8.88,
+    "end": 12.4,
+    "text": "Speaker 1: Welcome to Let's Learn English with Anna."
+  },
+  {
+    "start": 12.219,
+    "end": 15.82,
+    "text": "Speaker 1: I like to cook and eat."
+  },
+  {
+    "start": 15.82,
+    "end": 19.26,
+    "text": "Speaker 1: But some dishes are new to me."
+  },
+  {
+    "start": 19.26,
+    "end": 21.98,
+    "text": "Speaker 1: So I use a recipe."
+  },
+  {
+    "start": 22.16,
+    "end": 25.76,
+    "text": "Speaker 1: A recipe tells me how to make a dish."
+  },
+  {
+    "start": 25.76,
+    "end": 29.12,
+    "text": "Speaker 1: For example, use two lemons."
+  },
+  {
+    "start": 29.12,
+    "end": 29.76,
+    "text": "Speaker 1: Beet"
+  },
+  {
+    "start": 29.94,
+    "end": 33.7,
+    "text": "Speaker 1: five eggs or add some sugar."
+  },
+  {
+    "start": 33.7,
+    "end": 37.38,
+    "text": "Speaker 1: Today we talk about making food."
+  },
+  {
+    "start": 37.38,
+    "end": 40.02,
+    "text": "Speaker 1: What food can you make?"
+  },
+  {
+    "start": 40.24,
+    "end": 41.92,
+    "text": "Speaker 1: Let's visit Anna."
+  },
+  {
+    "start": 41.92,
+    "end": 46.64,
+    "text": "Speaker 1: She answers the question, what food can you make?"
+  },
+  {
+    "start": 47.28,
+    "end": 50.4,
+    "text": "Speaker 2: I have our question for today."
+  },
+  {
+    "start": 50.4,
+    "end": 53.44,
+    "text": "Speaker 2: What food can you make?"
+  },
+  {
+    "start": 53.42,
+    "end": 55.82,
+    "text": "Speaker 3: What food can you make?"
+  },
+  {
+    "start": 55.82,
+    "end": 60.379,
+    "text": "Speaker 3: Today we talk about food, so I am happy."
+  },
+  {
+    "start": 60.379,
+    "end": 65.019,
+    "text": "Speaker 3: Well, I am hungry, so I am not happy."
+  },
+  {
+    "start": 65.019,
+    "end": 66.94,
+    "text": "Speaker 3: Hi Daisy!"
+  },
+  {
+    "start": 66.82,
+    "end": 72.5,
+    "text": "Speaker 3: I am part Italian, so I like to make pasta."
+  },
+  {
+    "start": 72.5,
+    "end": 73.78,
+    "text": "Speaker 3: I use oil"
+  },
+  {
+    "start": 74.82,
+    "end": 78.34,
+    "text": "Speaker 3: And garlic to make the pasta."
+  },
+  {
+    "start": 78.34,
+    "end": 81.54,
+    "text": "Speaker 3: Then I add meatballs."
+  },
+  {
+    "start": 81.54,
+    "end": 84.26,
+    "text": "Speaker 3: I added three meatballs."
+  },
+  {
+    "start": 84.26,
+    "end": 86.34,
+    "text": "Speaker 3: One, two, three."
+  },
+  {
+    "start": 86.72,
+    "end": 88.08,
+    "text": "Speaker 3: Yum."
+  },
+  {
+    "start": 88.08,
+    "end": 92.48,
+    "text": "Speaker 3: Max, taste a meatball."
+  },
+  {
+    "start": 92.48,
+    "end": 94.96,
+    "text": "Speaker 4: Yum tasty."
+  },
+  {
+    "start": 94.96,
+    "end": 96.48,
+    "text": "Speaker 3: That's right, Max."
+  },
+  {
+    "start": 96.48,
+    "end": 98.56,
+    "text": "Speaker 3: Mmm, tasty."
+  },
+  {
+    "start": 98.56,
+    "end": 101.36,
+    "text": "Speaker 3: I want a meatball."
+  },
+  {
+    "start": 101.259,
+    "end": 103.42,
+    "text": "Speaker 3: I want a meatball."
+  },
+  {
+    "start": 103.42,
+    "end": 106.38,
+    "text": "Speaker 3: Sorry, Daisy."
+  },
+  {
+    "start": 106.38,
+    "end": 108.7,
+    "text": "Speaker 1: I have a question for you."
+  },
+  {
+    "start": 108.7,
+    "end": 110.78,
+    "text": "Speaker 1: What is a noun?"
+  },
+  {
+    "start": 111.28,
+    "end": 116.4,
+    "text": "Speaker 1: Nouns are people, places, things, and ideas."
+  },
+  {
+    "start": 116.4,
+    "end": 120.48,
+    "text": "Speaker 1: Some nouns we count, like meatballs."
+  },
+  {
+    "start": 120.48,
+    "end": 125.36,
+    "text": "Speaker 1: And some nouns we do not count, like water."
+  },
+  {
+    "start": 125.42,
+    "end": 128.459,
+    "text": "Speaker 3: You can count lemons."
+  },
+  {
+    "start": 128.459,
+    "end": 131.02,
+    "text": "Speaker 3: One, two, three, four."
+  },
+  {
+    "start": 131.02,
+    "end": 133.42,
+    "text": "Speaker 3: I have four lemons"
+  },
+  {
+    "start": 133.92,
+    "end": 136.88,
+    "text": "Speaker 3: Four is more than one."
+  },
+  {
+    "start": 136.88,
+    "end": 141.92,
+    "text": "Speaker 3: So I add S to the end of lemon."
+  },
+  {
+    "start": 141.92,
+    "end": 143.44,
+    "text": "Speaker 3: Lemons!"
+  },
+  {
+    "start": 144.14,
+    "end": 147.74,
+    "text": "Speaker 3: We can count dishes."
+  },
+  {
+    "start": 147.74,
+    "end": 151.42,
+    "text": "Speaker 3: I made three dishes for dinner."
+  },
+  {
+    "start": 151.42,
+    "end": 155.42,
+    "text": "Speaker 3: I added ES to the end of dish."
+  },
+  {
+    "start": 155.62,
+    "end": 160.18,
+    "text": "Speaker 3: This shows I have more than one."
+  },
+  {
+    "start": 160.18,
+    "end": 163.06,
+    "text": "Speaker 3: Some things you cannot count."
+  },
+  {
+    "start": 163.06,
+    "end": 168.02,
+    "text": "Speaker 3: You do not add S or E S to words like"
+  },
+  {
+    "start": 168.78,
+    "end": 173.18,
+    "text": "Speaker 3: Rice, pasta, and salt."
+  },
+  {
+    "start": 173.18,
+    "end": 174.86,
+    "text": "Speaker 3: Now you try."
+  },
+  {
+    "start": 174.86,
+    "end": 179.34,
+    "text": "Speaker 3: Are these count or non-count foods?"
+  },
+  {
+    "start": 180.54,
+    "end": 187.819,
+    "text": "Speaker 5: Can count Bananas Eggs Nuts Grapes"
+  },
+  {
+    "start": 188.12,
+    "end": 200.12,
+    "text": "Speaker 5: Tomatoes cannot count milk sugar fish bread tea."
+  },
+  {
+    "start": 200.12,
+    "end": 201.4,
+    "text": "Speaker 1: Thanks, Anna"
+  },
+  {
+    "start": 201.5,
+    "end": 204.14,
+    "text": "Speaker 1: Next, we hear from some friends."
+  },
+  {
+    "start": 204.14,
+    "end": 208.3,
+    "text": "Speaker 1: They answer the question, what food can you make?"
+  },
+  {
+    "start": 208.62,
+    "end": 212.14,
+    "text": "Speaker 1: I make many cakes and cookies for my family."
+  },
+  {
+    "start": 212.54,
+    "end": 213.1,
+    "text": "Speaker 1: I like"
+  },
+  {
+    "start": 213.66,
+    "end": 217.18,
+    "text": "Speaker 1: Tomate guys with vegetables."
+  },
+  {
+    "start": 218.3,
+    "end": 221.5,
+    "text": "Speaker 6: I make my famous egg dish."
+  },
+  {
+    "start": 221.74,
+    "end": 224.06,
+    "text": "Speaker 6: This for eggs!"
+  },
+  {
+    "start": 224.06,
+    "end": 225.18,
+    "text": "Speaker 6: One tomato"
+  },
+  {
+    "start": 226.12,
+    "end": 232.28,
+    "text": "Speaker 6: Some butter and salt."
+  },
+  {
+    "start": 232.28,
+    "end": 235.72,
+    "text": "Speaker 1: Anna is making a tasty dish for a picnic."
+  },
+  {
+    "start": 235.72,
+    "end": 240.44,
+    "text": "Speaker 1: I wonder what dish Anna is making for her picnic."
+  },
+  {
+    "start": 240.14,
+    "end": 241.739,
+    "text": "Speaker 1: Let's watch."
+  },
+  {
+    "start": 241.739,
+    "end": 245.18,
+    "text": "Speaker 3: I am making s'm'ores for my picnic."
+  },
+  {
+    "start": 245.18,
+    "end": 249.659,
+    "text": "Speaker 3: Each s'more gets two crackers."
+  },
+  {
+    "start": 250.76,
+    "end": 255.8,
+    "text": "Speaker 3: Some chocolate and one marshmallow."
+  },
+  {
+    "start": 256.84,
+    "end": 262.28,
+    "text": "Speaker 3: First, I need to cook the marshmallow over a fire."
+  },
+  {
+    "start": 264.32,
+    "end": 267.92,
+    "text": "Speaker 3: Ooh, this one is a little too dark."
+  },
+  {
+    "start": 267.92,
+    "end": 270.32,
+    "text": "Speaker 3: This one is burnt."
+  },
+  {
+    "start": 272.56,
+    "end": 274.08,
+    "text": "Speaker 3: I did it!"
+  },
+  {
+    "start": 273.7,
+    "end": 276.74,
+    "text": "Speaker 3: I made four s'mores for my picnic."
+  },
+  {
+    "start": 276.74,
+    "end": 283.86,
+    "text": "Speaker 3: I used eight graham crackers, some chocolate, and a bag of marshmallows."
+  },
+  {
+    "start": 284.9,
+    "end": 288.18,
+    "text": "Speaker 1: They look bad but taste good."
+  },
+  {
+    "start": 288.44,
+    "end": 296.04,
+    "text": "Speaker 1: Thanks for joining us today and come back again to watch Let's Learn English with Anna."
+  }
+]
