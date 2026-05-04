@@ -2,416 +2,416 @@
   {
     "start": 4.16,
     "end": 5.84,
-    "text": "Speaker 1: Hello, I'm Dr."
+    "text": "**Speaker 1:** Hello, I'm Dr."
   },
   {
     "start": 5.84,
     "end": 6.5600000000000005,
-    "text": "Speaker 1: Jill."
+    "text": "**Speaker 1:** Jill."
   },
   {
     "start": 6.5600000000000005,
     "end": 9.68,
-    "text": "Speaker 1: Welcome to Let's Learn English with Anna"
+    "text": "**Speaker 1:** {Welcome|ようこそ} to Let's Learn English with Anna"
   },
   {
     "start": 9.96,
     "end": 14.6,
-    "text": "Speaker 1: Today we talk about places in your town."
+    "text": "**Speaker 1:** Today we {talk|話す/議論する} about {places|場所} in your town."
   },
   {
     "start": 14.6,
     "end": 18.44,
-    "text": "Speaker 1: Does it have a post office and a bank?"
+    "text": "**Speaker 1:** Does it have a {post office|郵便局} and a bank?"
   },
   {
     "start": 18.44,
     "end": 22.68,
-    "text": "Speaker 1: Do you live near a fire station or library?"
+    "text": "**Speaker 1:** Do you {live|住む} near a {fire station|消防署} or {library|図書館}?"
   },
   {
     "start": 22.92,
     "end": 26.04,
-    "text": "Speaker 1: What places are in your town?"
+    "text": "**Speaker 1:** What {places|場所} are in your town?"
   },
   {
     "start": 26.28,
     "end": 28.28,
-    "text": "Speaker 1: Let's visit Anna."
+    "text": "**Speaker 1:** Let's visit Anna."
   },
   {
     "start": 28.28,
     "end": 34.04,
-    "text": "Speaker 1: She helps us answer the question, what places are in your town?"
+    "text": "**Speaker 1:** She helps us {answer|答える} the {question|質問}, what places are in your town?"
   },
   {
     "start": 34.98,
     "end": 39.86,
-    "text": "Speaker 2: Hello, my pet cat Meepers is sick."
+    "text": "**Speaker 2:** Hello, my {pet|ペット} cat Meepers is {sick|病気の}."
   },
   {
     "start": 39.86,
     "end": 42.74,
-    "text": "Speaker 2: I need an animal hospital."
+    "text": "**Speaker 2:** I need an {animal hospital|動物病院}."
   },
   {
     "start": 43.78,
     "end": 47.7,
-    "text": "Speaker 2: Where is it?"
+    "text": "**Speaker 2:** Where is it?"
   },
   {
     "start": 47.7,
     "end": 51.94,
-    "text": "Speaker 3: Anna, you can find places with your phone"
+    "text": "**Speaker 3:** Anna, you can {find|見つける} {places|場所} with your phone"
   },
   {
     "start": 51.7,
     "end": 56.26,
-    "text": "Speaker 2: I know Max, but reading a map is an important skill."
+    "text": "**Speaker 2:** I know Max, but {reading|読む} a map is an {important|重要な} skill."
   },
   {
     "start": 56.26,
     "end": 59.14,
-    "text": "Speaker 2: Did you lose your phone again?"
+    "text": "**Speaker 2:** Did you lose your phone again?"
   },
   {
     "start": 59.14,
     "end": 62.5,
-    "text": "Speaker 2: And I lost my phone again."
+    "text": "**Speaker 2:** And I lost my phone again."
   },
   {
     "start": 62.52,
     "end": 65.4,
-    "text": "Speaker 3: Use the travel walkie-talkies."
+    "text": "**Speaker 3:** Use the {travel|旅行の} {walkie-talkies|トランシーバー}."
   },
   {
     "start": 65.4,
     "end": 67.32,
-    "text": "Speaker 3: You can get there fast."
+    "text": "**Speaker 3:** You can get there {fast|速く}."
   },
   {
     "start": 67.32,
     "end": 69.72,
-    "text": "Speaker 2: Great idea, Max."
+    "text": "**Speaker 2:** Great idea, Max."
   },
   {
     "start": 69.72,
     "end": 71.08,
-    "text": "Speaker 2: Where are they?"
+    "text": "**Speaker 2:** Where are they?"
   },
   {
     "start": 71.4,
     "end": 74.52,
-    "text": "Speaker 2: They are behind the couch."
+    "text": "**Speaker 2:** They are behind the couch."
   },
   {
     "start": 78.76,
     "end": 82.2,
-    "text": "Speaker 2: Daisy, did you use them again?"
+    "text": "**Speaker 2:** Daisy, did you use them again?"
   },
   {
     "start": 82.2,
     "end": 84.04,
-    "text": "Speaker 2: No."
+    "text": "**Speaker 2:** No."
   },
   {
     "start": 84.04,
     "end": 85,
-    "text": "Speaker 2: Yes."
+    "text": "**Speaker 2:** Yes."
   },
   {
     "start": 85,
     "end": 86.84,
-    "text": "Speaker 2: Did you break them?"
+    "text": "**Speaker 2:** Did you break them?"
   },
   {
     "start": 86.84,
     "end": 89.96,
-    "text": "Speaker 2: Of course not."
+    "text": "**Speaker 2:** Of course not."
   },
   {
     "start": 89.48,
     "end": 92.04,
-    "text": "Speaker 2: It is okay, meepers."
+    "text": "**Speaker 2:** It is okay, meepers."
   },
   {
     "start": 92.04,
     "end": 95.08,
-    "text": "Speaker 2: We are going to the animal hospital."
+    "text": "**Speaker 2:** We are going to the {animal hospital|動物病院}."
   },
   {
     "start": 95.08,
     "end": 98.04,
-    "text": "Speaker 1: Anna's cat needs medical help."
+    "text": "**Speaker 1:** Anna's cat needs {medical|医療の} help."
   },
   {
     "start": 98.04,
     "end": 101.08,
-    "text": "Speaker 1: She needs an animal hospital."
+    "text": "**Speaker 1:** She needs an {animal hospital|動物病院}."
   },
   {
     "start": 101.659,
     "end": 106.78,
-    "text": "Speaker 1: An animal hospital is one of the services in a town."
+    "text": "**Speaker 1:** An {animal|動物の|/ˈænɪməl/} hospital is one of the {services|サービス/施設|/ˈsɜːrvɪsɪz/} in a town."
   },
   {
     "start": 106.78,
     "end": 109.58,
-    "text": "Speaker 1: What are some other services?"
+    "text": "**Speaker 1:** What are some other services?"
   },
   {
     "start": 110.46,
     "end": 115.58,
-    "text": "Speaker 1: At a post office, we mail letters and packages."
+    "text": "**Speaker 1:** At a post office, we {mail|郵送する|/meɪl/} letters and {packages|小包/荷物|/ˈpækɪdʒɪz/}."
   },
   {
     "start": 115.58,
     "end": 119.18,
-    "text": "Speaker 1: At a hair salon, we get a haircut."
+    "text": "**Speaker 1:** At a hair salon, we get a {haircut|散髪|/ˈhɛərˌkʌt/}."
   },
   {
     "start": 119.18,
     "end": 122.94,
-    "text": "Speaker 1: At a laundromat, we clean our clothes."
+    "text": "**Speaker 1:** At a {laundromat|コインランドリー|/ˈlɔːndrəmæt/}, we clean our clothes."
   },
   {
     "start": 122.92,
     "end": 125.799,
-    "text": "Speaker 1: Now, let's hear from some friends."
+    "text": "**Speaker 1:** Now, let's hear from some friends."
   },
   {
     "start": 125.799,
     "end": 129.88,
-    "text": "Speaker 1: They talk about helpful places in their town"
+    "text": "**Speaker 1:** They talk about helpful places in their town"
   },
   {
     "start": 130.78,
     "end": 133.82,
-    "text": "Speaker 1: My favorite grandson is near my home."
+    "text": "**Speaker 1:** My {favorite|大好きな|/ˈfeɪvərɪt/} grandson is near my home."
   },
   {
     "start": 133.82,
     "end": 136.38,
-    "text": "Speaker 4: I is very open with my family."
+    "text": "**Speaker 4:** I is very {open|オープンな/正直な|/ˈoʊpən/} with my family."
   },
   {
     "start": 136.38,
     "end": 140.06,
-    "text": "Speaker 4: My town has many shops."
+    "text": "**Speaker 4:** My town has many shops."
   },
   {
     "start": 139.52,
     "end": 142.72,
-    "text": "Speaker 4: I like to shop for books."
+    "text": "**Speaker 4:** I like to shop for books."
   },
   {
     "start": 142.72,
     "end": 146.16,
-    "text": "Speaker 4: We have a gas station in our town."
+    "text": "**Speaker 4:** We have a {gas|ガソリン|/ɡæs/} station in our town."
   },
   {
     "start": 146.16,
     "end": 147.84,
-    "text": "Speaker 1: Thanks friends."
+    "text": "**Speaker 1:** Thanks friends."
   },
   {
     "start": 147.84,
     "end": 152.88,
-    "text": "Speaker 1: They said many places in their town and their locations."
+    "text": "**Speaker 1:** They said many places in their town and their {locations|場所/位置|/loʊˈkeɪʃənz/}."
   },
   {
     "start": 152.82,
     "end": 161.06,
-    "text": "Speaker 1: To talk about location, we use words like next to and across from."
+    "text": "**Speaker 1:** To talk about location, we use words like next to and across from."
   },
   {
     "start": 161.32,
     "end": 165,
-    "text": "Speaker 1: Let's look at a map to learn more."
+    "text": "**Speaker 1:** Let's look at a map to learn more."
   },
   {
     "start": 166.44,
     "end": 170.52,
-    "text": "Speaker 1: The police station is across from the hospital."
+    "text": "**Speaker 1:** The police station is across from the hospital."
   },
   {
     "start": 172.319,
     "end": 176,
-    "text": "Speaker 1: The hospital is next to the fire station."
+    "text": "**Speaker 1:** The hospital is next to the fire station."
   },
   {
     "start": 178.72,
     "end": 182.879,
-    "text": "Speaker 1: The library is between the police station and the school"
+    "text": "**Speaker 1:** The library is {between|〜の間に|/bɪˈtwiːn/} the police station and the school"
   },
   {
     "start": 184.58,
     "end": 187.86,
-    "text": "Speaker 1: Those are all very useful places."
+    "text": "**Speaker 1:** Those are all very {useful|役立つ|/ˈjuːsfəl/} places."
   },
   {
     "start": 187.86,
     "end": 190.9,
-    "text": "Speaker 1: Now let's go back to Anna."
+    "text": "**Speaker 1:** Now let's go back to Anna."
   },
   {
     "start": 190.9,
     "end": 193.86,
-    "text": "Speaker 1: Did she find the animal hospital?"
+    "text": "**Speaker 1:** Did she find the animal hospital?"
   },
   {
     "start": 194.94,
     "end": 197.34,
-    "text": "Speaker 1: Did she get lost?"
+    "text": "**Speaker 1:** Did she get {lost|迷子になった|/lɔːst/}?"
   },
   {
     "start": 197.58,
     "end": 199.66,
-    "text": "Speaker 2: Let's find out."
+    "text": "**Speaker 2:** Let's find out."
   },
   {
     "start": 199.66,
     "end": 203.58,
-    "text": "Speaker 2: Okay, Max, send me to the animal hospital."
+    "text": "**Speaker 2:** Okay, Max, send me to the animal hospital."
   },
   {
     "start": 205.86,
     "end": 212.18,
-    "text": "Speaker 2: Max, I am next to a school, not an animal hospital."
+    "text": "**Speaker 2:** Max, I am next to a school, not an animal hospital."
   },
   {
     "start": 212.18,
     "end": 213.7,
-    "text": "Speaker 3: Sorry, Anna."
+    "text": "**Speaker 3:** Sorry, Anna."
   },
   {
     "start": 213.7,
     "end": 215.54,
-    "text": "Speaker 3: Let me try again."
+    "text": "**Speaker 3:** Let me try again."
   },
   {
     "start": 215.54,
     "end": 215.86,
-    "text": "Speaker 2: Okay"
+    "text": "**Speaker 2:** Okay"
   },
   {
     "start": 217.879,
     "end": 219.72,
-    "text": "Speaker 3: Where are you now?"
+    "text": "**Speaker 3:** Where are you now?"
   },
   {
     "start": 219.72,
     "end": 225.319,
-    "text": "Speaker 2: Max, I am in front of a bank, not an animal hospital."
+    "text": "**Speaker 2:** Max, I am in front of a {bank|銀行|/bæŋk/|I went to the bank to withdraw money.}, not an animal hospital."
   },
   {
     "start": 224.84,
     "end": 228.12,
-    "text": "Speaker 3: Let me try again."
+    "text": "**Speaker 3:** Let me try again."
   },
   {
     "start": 228.12,
     "end": 232.28,
-    "text": "Speaker 2: Max, I am across the street from a fire station."
+    "text": "**Speaker 2:** Max, I am across the street from a {fire station|消防署|/ˈfaɪər steɪʃən/|Firefighters work at the fire station.}"
   },
   {
     "start": 232.28,
     "end": 235.56,
-    "text": "Speaker 2: The travel walkie-talkies are not working."
+    "text": "**Speaker 2:** The travel {walkie-talkies|トランシーバー|/ˈwɔːki ˈtɔːkiz/|We used walkie-talkies to communicate.} are not working."
   },
   {
     "start": 236.28,
     "end": 239.88,
-    "text": "Speaker 2: No, Max, dentist."
+    "text": "**Speaker 2:** No, Max, {dentist|歯医者|/ˈdentɪst/|I visit the dentist twice a year.}"
   },
   {
     "start": 239.88,
     "end": 242.2,
-    "text": "Speaker 2: This is an alley."
+    "text": "**Speaker 2:** This is an {alley|路地|/ˈæli/|The cat ran down the dark alley.}"
   },
   {
     "start": 242.2,
     "end": 245.56,
-    "text": "Speaker 2: No, market."
+    "text": "**Speaker 2:** No, market."
   },
   {
     "start": 245.56,
     "end": 249.72,
-    "text": "Speaker 2: Max, I am behind a store."
+    "text": "**Speaker 2:** Max, I am behind a store."
   },
   {
     "start": 250.44,
     "end": 252.2,
-    "text": "Speaker 2: By the trash."
+    "text": "**Speaker 2:** By the trash."
   },
   {
     "start": 252.2,
     "end": 256.36,
-    "text": "Speaker 2: Oh, but I see the animal hospital I can send you."
+    "text": "**Speaker 2:** Oh, but I see the animal hospital I can send you."
   },
   {
     "start": 256.36,
     "end": 257.48,
-    "text": "Speaker 2: No, no, no, no."
+    "text": "**Speaker 2:** No, no, no, no."
   },
   {
     "start": 257.48,
     "end": 259,
-    "text": "Speaker 2: It is not far."
+    "text": "**Speaker 2:** It is not far."
   },
   {
     "start": 259,
     "end": 260.76,
-    "text": "Speaker 2: I can walk."
+    "text": "**Speaker 2:** I can walk."
   },
   {
     "start": 260.76,
     "end": 262.04,
-    "text": "Speaker 2: Thanks."
+    "text": "**Speaker 2:** Thanks."
   },
   {
     "start": 262.04,
     "end": 263,
-    "text": "Speaker 3: Good luck."
+    "text": "**Speaker 3:** Good luck."
   },
   {
     "start": 263,
     "end": 264.36,
-    "text": "Speaker 2: But we really need to hide"
+    "text": "**Speaker 2:** But we really need to {hide|隠れる/隠す|/haɪd/|Children hide during hide-and-seek.}"
   },
   {
     "start": 264.879,
     "end": 268.159,
-    "text": "Speaker 2: The travel walkie-talkies from Daisy."
+    "text": "**Speaker 2:** The travel walkie-talkies from Daisy."
   },
   {
     "start": 268.159,
     "end": 275.919,
-    "text": "Speaker 2: Okay, see you at home."
+    "text": "**Speaker 2:** Okay, see you at home."
   },
   {
     "start": 275.919,
     "end": 278.4,
-    "text": "Speaker 1: I love the beach."
+    "text": "**Speaker 1:** I love the beach."
   },
   {
     "start": 278.72,
     "end": 282.24,
-    "text": "Speaker 1: Wow, we saw a lot of places!"
+    "text": "**Speaker 1:** Wow, we saw a lot of places!"
   },
   {
     "start": 282.24,
     "end": 286.32,
-    "text": "Speaker 1: And we learned some useful location words."
+    "text": "**Speaker 1:** And we learned some useful {location|場所|/loʊˈkeɪʃən/|Location is important for camping.} words."
   },
   {
     "start": 286.32,
     "end": 290.88,
-    "text": "Speaker 1: Use them to describe service places in your town"
+    "text": "**Speaker 1:** Use them to describe service places in your town"
   },
   {
     "start": 291.5,
     "end": 297.58,
-    "text": "Speaker 1: And join us again next time on Let's Learn English with Anna."
+    "text": "**Speaker 1:** And join us again next time on Let's Learn English with Anna."
   }
 ]

@@ -2,446 +2,446 @@
   {
     "start": 6.88,
     "end": 8.72,
-    "text": "DrJill: Hello, I'm Dr."
+    "text": "**DrJill:** Hello, I'm Dr."
   },
   {
     "start": 8.72,
     "end": 9.68,
-    "text": "DrJill: Jill."
+    "text": "**DrJill:** Jill."
   },
   {
     "start": 9.68,
     "end": 13.84,
-    "text": "DrJill: Welcome to Let's Learn English with Anna."
+    "text": "**DrJill:** Welcome to Let's Learn English with Anna."
   },
   {
     "start": 13.62,
     "end": 16.26,
-    "text": "DrJill: This is a garden."
+    "text": "**DrJill:** This is a {garden|庭/園/植物園|/ˈɡɑːrdən/|My garden has many flowers}."
   },
   {
     "start": 16.26,
     "end": 20.26,
-    "text": "DrJill: Today we talk about gardens."
+    "text": "**DrJill:** Today we {talk|話す/語る|/tɔːk/|Let's talk about science} about gardens."
   },
   {
     "start": 20.26,
     "end": 23.14,
-    "text": "DrJill: Now let's visit Anna."
+    "text": "**DrJill:** Now let's {visit|訪問する|/ˈvɪzɪt/|I visit my friend today} Anna."
   },
   {
     "start": 23.14,
     "end": 28.02,
-    "text": "DrJill: She answers the question, how does a garden grow?"
+    "text": "**DrJill:** She {answers|答える|/ˈænsərz/|She answers the phone} the question, how does a garden grow?"
   },
   {
     "start": 28.96,
     "end": 30.48,
-    "text": "DrJill: Hi there."
+    "text": "**DrJill:** Hi there."
   },
   {
     "start": 30.48,
     "end": 33.12,
-    "text": "DrJill: Seeds are magic."
+    "text": "**DrJill:** {Seeds|種/種子|/siːdz/|Plant seeds in the soil} are {magic|魔法/不思議な|/ˈmædʒɪk/|Magic happens in nature}."
   },
   {
     "start": 33.12,
     "end": 39.52,
-    "text": "DrJill: These small seeds can grow into a big plant."
+    "text": "**DrJill:** These small seeds can {grow|成長する|/ɡroʊ/|Plants grow with water} into a big plant."
   },
   {
     "start": 39.52,
     "end": 42.16,
-    "text": "DrJill: But how does a garden grow?"
+    "text": "**DrJill:** But how does a garden grow?"
   },
   {
     "start": 42.22,
     "end": 46.22,
-    "text": "Anna: I plant these seeds."
+    "text": "**Anna:** I {plant|植える|/plænt/|I plant flowers in spring} these seeds."
   },
   {
     "start": 46.22,
     "end": 50.46,
-    "text": "Anna: I put dirt in the pot."
+    "text": "**Anna:** I put {dirt|土/泥|/dɜːrt/|Dirt is good for plants} in the pot."
   },
   {
     "start": 50.46,
     "end": 53.1,
-    "text": "Anna: I put seeds in the dirt"
+    "text": "**Anna:** I put seeds in the dirt"
   },
   {
     "start": 54.92,
     "end": 58.44,
-    "text": "Anna: Then I water it."
+    "text": "**Anna:** Then I {water|水をやる|/ˈwɔːtər/|Water the plants every day} it."
   },
   {
     "start": 58.44,
     "end": 60.44,
-    "text": "Max: Wait, stop!"
+    "text": "**Max:** Wait, stop!"
   },
   {
     "start": 60.44,
     "end": 63.079,
-    "text": "Max: That is not water!"
+    "text": "**Max:** That is not water!"
   },
   {
     "start": 63.079,
     "end": 66.119,
-    "text": "Max: Danger, danger, danger!"
+    "text": "**Max:** {Danger|危険|/ˈdeɪndʒər/|Danger is near}, danger, danger!"
   },
   {
     "start": 66.119,
     "end": 68.119,
-    "text": "Max: What is happening?"
+    "text": "**Max:** What is happening?"
   },
   {
     "start": 69.76,
     "end": 73.92,
-    "text": "Max: Danger, danger, danger."
+    "text": "**Max:** Danger, danger, danger."
   },
   {
     "start": 77.52,
     "end": 81.92,
-    "text": "Daisy: Hi, I am Daisy."
+    "text": "**Daisy:** Hi, I am Daisy."
   },
   {
     "start": 81.52,
     "end": 83.6,
-    "text": "Daisy: Who are you?"
+    "text": "**Daisy:** Who are you?"
   },
   {
     "start": 83.92,
     "end": 85.439,
-    "text": "Daisy: Where am I?"
+    "text": "**Daisy:** Where am I?"
   },
   {
     "start": 85.439,
     "end": 87.28,
-    "text": "Max: Danger, Audon."
+    "text": "**Max:** Danger, {Audon|未知の言葉/名前}."
   },
   {
     "start": 87.28,
     "end": 89.039,
-    "text": "Max: Danger."
+    "text": "**Max:** Danger."
   },
   {
     "start": 89.039,
     "end": 90.88,
-    "text": "Daisy: It is hot."
+    "text": "**Daisy:** It is hot."
   },
   {
     "start": 90.88,
     "end": 92.64,
-    "text": "Daisy: I need water."
+    "text": "**Daisy:** I need water."
   },
   {
     "start": 92.64,
     "end": 93.52,
-    "text": "Daisy: Water me"
+    "text": "**Daisy:** Water me"
   },
   {
     "start": 94.42,
     "end": 97.86,
-    "text": "Anna: Seeds are magic."
+    "text": "**Anna:** Seeds are magic."
   },
   {
     "start": 97.86,
     "end": 98.979,
-    "text": "DrJill: Wow!"
+    "text": "**DrJill:** Wow!"
   },
   {
     "start": 98.979,
     "end": 108.82,
-    "text": "DrJill: With seeds, dirt, water, and sun, you can grow fruits, vegetables, and flowers."
+    "text": "**DrJill:** With {seeds|種/種子|/siːdz/|Some seeds are small.}, {dirt|土/泥|/dɜːrt/|Dirt is good for plants.}, water, and sun, you can grow {fruits|果物|/fruːts/|Fruits are sweet and healthy.}, {vegetables|野菜|/ˈvedʒtəbəlz/|Vegetables are good for you.}, and {flowers|花|/ˈflaʊərz/|Flowers have beautiful colors.}."
   },
   {
     "start": 108.86,
     "end": 111.26,
-    "text": "DrJill: But nice flowers."
+    "text": "**DrJill:** But nice flowers."
   },
   {
     "start": 111.26,
     "end": 115.02,
-    "text": "DrJill: Let's hear some friends talk about gardens."
+    "text": "**DrJill:** Let's hear some friends talk about {gardens|庭/園|/ˈɡɑːrdənz/|Gardens have many plants.}."
   },
   {
     "start": 115.02,
     "end": 117.18,
-    "text": "Students: This is a peppermint."
+    "text": "**Students:** This is a {peppermint|ペパーミント|/ˈpepərˌmɪnt/|Peppermint is a fresh herb.}."
   },
   {
     "start": 117.18,
     "end": 119.18,
-    "text": "Students: It grows in my garden"
+    "text": "**Students:** It {grows|成長する|/ɡroʊz/|Plants grow with water and sun.} in my garden"
   },
   {
     "start": 119.62,
     "end": 124.02,
-    "text": "Speaker 7: I am growing hog plum in my garden."
+    "text": "**Speaker 7:** I am growing {hog plum|スモモ|/hɒɡ plʌm/|Hog plum is a type of fruit.} in my garden."
   },
   {
     "start": 124.02,
     "end": 126.9,
-    "text": "Speaker 7: I grow many plants in my garden."
+    "text": "**Speaker 7:** I grow many {plants|植物|/plænts/|Plants need care and water.} in my garden."
   },
   {
     "start": 128.68,
     "end": 130.36,
-    "text": "Speaker 7: Plant."
+    "text": "**Speaker 7:** {Plant|植物/植える|/plænt/|Plant seeds in good soil.}."
   },
   {
     "start": 130.36,
     "end": 131.64,
-    "text": "DrJill: Garden."
+    "text": "**DrJill:** Garden."
   },
   {
     "start": 131.64,
     "end": 132.84,
-    "text": "DrJill: Water."
+    "text": "**DrJill:** Water."
   },
   {
     "start": 132.84,
     "end": 135.48,
-    "text": "DrJill: These are important garden words."
+    "text": "**DrJill:** These are important garden words."
   },
   {
     "start": 135.48,
     "end": 138.04,
-    "text": "DrJill: And they have two jobs."
+    "text": "**DrJill:** And they have two jobs."
   },
   {
     "start": 138.12,
     "end": 143,
-    "text": "DrJill: They are nouns and verbs."
+    "text": "**DrJill:** They are {nouns|名詞|/naʊnz/|Nouns name things and ideas.} and {verbs|動詞|/vɜːrbz/|Verbs show actions.}."
   },
   {
     "start": 143,
     "end": 148.52,
-    "text": "DrJill: Nouns are people, places, things, and ideas."
+    "text": "**DrJill:** {Nouns|名詞|/naʊnz/|Nouns describe people and things.} are people, places, things, and ideas."
   },
   {
     "start": 148.52,
     "end": 151.32,
-    "text": "DrJill: So fruit is a noun."
+    "text": "**DrJill:** So {fruit|果物|/fruːt/|Fruit is sweet and healthy.} is a noun."
   },
   {
     "start": 151.2,
     "end": 153.2,
-    "text": "DrJill: Verbs are actions."
+    "text": "**DrJill:** {Verbs|動詞|/vɜːrbz/|Verbs tell what we do.} are actions."
   },
   {
     "start": 153.2,
     "end": 155.28,
-    "text": "DrJill: They are things we do."
+    "text": "**DrJill:** They are things we do."
   },
   {
     "start": 155.28,
     "end": 158.16,
-    "text": "DrJill: So eating is a verb."
+    "text": "**DrJill:** So {eating|食べること|/ˈiːtɪŋ/|Eating is important for health.} is a verb."
   },
   {
     "start": 158.48,
     "end": 160.4,
-    "text": "DrJill: Let's go back to Anna."
+    "text": "**DrJill:** Let's go back to Anna."
   },
   {
     "start": 160.4,
     "end": 162.239,
-    "text": "DrJill: She tells us more."
+    "text": "**DrJill:** She tells us more."
   },
   {
     "start": 162.96,
     "end": 166.4,
-    "text": "Anna: Today we visit a garden."
+    "text": "**Anna:** Today we {visit|訪問する|/ˈvɪzɪt/|We visit friends and places.} a garden."
   },
   {
     "start": 166.4,
     "end": 168.16,
-    "text": "Students: I love gardens."
+    "text": "**Students:** I love gardens."
   },
   {
     "start": 168.16,
     "end": 169.36,
-    "text": "Students: Take me."
+    "text": "**Students:** Take me."
   },
   {
     "start": 169.36,
     "end": 170.96,
-    "text": "Students: Take me."
+    "text": "**Students:** Take me."
   },
   {
     "start": 170.92,
     "end": 174.28,
-    "text": "Daisy: Daisy, please ask nicely."
+    "text": "**Daisy:** Daisy, please ask nicely."
   },
   {
     "start": 174.28,
     "end": 177.32,
-    "text": "Daisy: Yes, Daisy, ask nicely."
+    "text": "**Daisy:** Yes, Daisy, ask nicely."
   },
   {
     "start": 177.32,
     "end": 178.6,
-    "text": "Daisy: Who are you?"
+    "text": "**Daisy:** Who are you?"
   },
   {
     "start": 178.6,
     "end": 178.84,
-    "text": "Daisy: You"
+    "text": "**Daisy:** You"
   },
   {
     "start": 179.24,
     "end": 181.8,
-    "text": "Daisy: Big blue mailbox."
+    "text": "**Daisy:** Big blue {mailbox|郵便受け|/ˈmeɪlbɒks/|Mailbox is where we get letters.}."
   },
   {
     "start": 181.8,
     "end": 184.92,
-    "text": "Anna: Please, Max, Daisy, no fighting."
+    "text": "**Anna:** Please, Max, Daisy, no fighting."
   },
   {
     "start": 184.92,
     "end": 186.2,
-    "text": "Daisy: Yes, I am."
+    "text": "**Daisy:** Yes, I am."
   },
   {
     "start": 187.32,
     "end": 191.48,
-    "text": "Anna: Max, please take me to the garden."
+    "text": "**Anna:** Max, please take me to the {garden|庭/園|/ˈɡɑːrdən/|I love my garden}."
   },
   {
     "start": 198.72,
     "end": 200.88,
-    "text": "Anna: I am in a garden."
+    "text": "**Anna:** I am in a garden."
   },
   {
     "start": 200.88,
     "end": 202.72,
-    "text": "Anna: Thanks, Max."
+    "text": "**Anna:** Thanks, Max."
   },
   {
     "start": 202.86,
     "end": 207.58,
-    "text": "Anna: Many plants grow in a garden."
+    "text": "**Anna:** Many {plants|植物/草木|/plænts/|Plants need water to grow} grow in a garden."
   },
   {
     "start": 207.58,
     "end": 210.7,
-    "text": "Anna: Garden begins with the letter G."
+    "text": "**Anna:** Garden begins with the letter G."
   },
   {
     "start": 210.7,
     "end": 211.9,
-    "text": "Anna: G."
+    "text": "**Anna:** G."
   },
   {
     "start": 211.9,
     "end": 213.34,
-    "text": "Anna: Garden."
+    "text": "**Anna:** Garden."
   },
   {
     "start": 213.94,
     "end": 217.14,
-    "text": "Anna: Hey, let's play a game."
+    "text": "**Anna:** Hey, let's play a {game|ゲーム/遊び|/ɡeɪm/|Let's play a fun game}."
   },
   {
     "start": 217.14,
     "end": 220.26,
-    "text": "Anna: The teacher explains."
+    "text": "**Anna:** The teacher {explains|説明する|/ɪkˈspleɪnz/|She explains the lesson clearly}."
   },
   {
     "start": 220.26,
     "end": 222.42,
-    "text": "DrJill: Anna says a sentence."
+    "text": "**DrJill:** Anna says a sentence."
   },
   {
     "start": 222.36,
     "end": 229,
-    "text": "DrJill: Max S is the underlying word, a noun, or a verb."
+    "text": "**DrJill:** Max S is the {underlying|根本的な/基本的な|/ˌʌndərˈlaɪɪŋ/|The underlying problem is complex}."
   },
   {
     "start": 229,
     "end": 231.72,
-    "text": "DrJill: Okay, Anna, we are ready."
+    "text": "**DrJill:** Okay, Anna, we are ready."
   },
   {
     "start": 232.32,
     "end": 237.52,
-    "text": "DrJill: A sunflower grows in the garden."
+    "text": "**DrJill:** A {sunflower|ひまわり|/ˈsʌnflaʊər/|Sunflowers grow tall} grows in the garden."
   },
   {
     "start": 237.52,
     "end": 241.36,
-    "text": "Max: Is garden a noun or a verb?"
+    "text": "**Max:** Is garden a noun or a verb?"
   },
   {
     "start": 241.88,
     "end": 244.92,
-    "text": "Max: It is a noun, a thing."
+    "text": "**Max:** It is a noun, a thing."
   },
   {
     "start": 244.92,
     "end": 247.8,
-    "text": "Max: She waters the eggplant"
+    "text": "**Max:** She {waters|水をやる|/ˈwɔːtərz/|She waters the plants daily} the {eggplant|なす|/ˈeɡplænt/|Eggplant is a vegetable}."
   },
   {
     "start": 248.92,
     "end": 252.84,
-    "text": "Max: Is water a noun or a verb?"
+    "text": "**Max:** Is water a noun or a verb?"
   },
   {
     "start": 253.4,
     "end": 256.52,
-    "text": "Max: Here, water is a verb."
+    "text": "**Max:** Here, water is a verb."
   },
   {
     "start": 256.52,
     "end": 261,
-    "text": "DrJill: Now you can talk about gardens with your family and friends."
+    "text": "**DrJill:** Now you can talk about gardens with your family and friends."
   },
   {
     "start": 260.84,
     "end": 264.04,
-    "text": "DrJill: You can ask, do you garden?"
+    "text": "**DrJill:** You can ask, do you garden?"
   },
   {
     "start": 264.04,
     "end": 268.04,
-    "text": "DrJill: Or what is growing in your garden?"
+    "text": "**DrJill:** Or what is growing in your garden?"
   },
   {
     "start": 268.28,
     "end": 273.4,
-    "text": "DrJill: And join us again next time on Let's Learn English with Anna."
+    "text": "**DrJill:** And join us again next time on Let's Learn English with Anna."
   },
   {
     "start": 273.4,
     "end": 275.08,
-    "text": "DrJill: It is very quiet."
+    "text": "**DrJill:** It is very quiet."
   },
   {
     "start": 275.36,
     "end": 277.919,
-    "text": "DrJill: Max, where is Daisy?"
+    "text": "**DrJill:** Max, where is Daisy?"
   },
   {
     "start": 277.919,
     "end": 279.44,
-    "text": "DrJill: What did you do?"
+    "text": "**DrJill:** What did you do?"
   },
   {
     "start": 279.759,
     "end": 283.039,
-    "text": "Max: Daisy is in a new garden."
+    "text": "**Max:** Daisy is in a new garden."
   },
   {
     "start": 284.1,
     "end": 286.1,
-    "text": "Max: Far away."
+    "text": "**Max:** Far away."
   },
   {
     "start": 291.06,
     "end": 293.62,
-    "text": "Daisy: Help me, help me"
+    "text": "**Daisy:** Help me, help me"
   }
 ]

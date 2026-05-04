@@ -2,97 +2,97 @@
   {
     "start": 7.2,
     "end": 8.8,
-    "text": "DrJill: Hello, I'm Dr."
+    "text": "**DrJill:** Hello, I'm Dr."
   },
   {
     "start": 8.8,
     "end": 9.6,
-    "text": "DrJill: Jill."
+    "text": "**DrJill:** Jill."
   },
   {
     "start": 9.6,
     "end": 13.2,
-    "text": "DrJill: Welcome to Let's Learn English with Anna."
+    "text": "**DrJill:** {Welcome|ようこそ/歓迎} to Let's Learn English with Anna."
   },
   {
     "start": 12.94,
     "end": 17.98,
-    "text": "DrJill: Today we talk about the things we are doing at this moment."
+    "text": "**DrJill:** Today we {talk|話す} about the things we are doing at this moment."
   },
   {
     "start": 17.98,
     "end": 24.06,
-    "text": "DrJill: For example, I am talking, you are listening."
+    "text": "**DrJill:** For example, I am {talking|話している}, you are {listening|聞いている}."
   },
   {
     "start": 24.119,
     "end": 29.64,
-    "text": "DrJill: For this, we need a special ending for the action word."
+    "text": "**DrJill:** For this, we need a special {ending|語尾/終わり} for the action word."
   },
   {
     "start": 29.64,
     "end": 31.96,
-    "text": "DrJill: See if you can find it."
+    "text": "**DrJill:** See if you can {find|見つける} it."
   },
   {
     "start": 32.119,
     "end": 34.6,
-    "text": "DrJill: But now let's visit Anna."
+    "text": "**DrJill:** But now let's {visit|訪れる} Anna."
   },
   {
     "start": 34.84,
     "end": 39,
-    "text": "DrJill: She answers the question, what are you doing?"
+    "text": "**DrJill:** She {answers|答える} the question, what are you doing?"
   },
   {
     "start": 41.8,
     "end": 44.68,
-    "text": "Anna: Hello, I am Anna."
+    "text": "**Anna:** Hello, I am Anna."
   },
   {
     "start": 44.68,
     "end": 47.079,
-    "text": "Anna: I am building a tower"
+    "text": "**Anna:** I am {building|建設する} a tower"
   },
   {
     "start": 48.82,
     "end": 53.38,
-    "text": "Anna: I am using 30 wooden locks."
+    "text": "**Anna:** I am using 30 wooden {locks|錠/留め金}."
   },
   {
     "start": 53.38,
     "end": 56.02,
-    "text": "Max: Anna, you have a text."
+    "text": "**Max:** Anna, you have a text."
   },
   {
     "start": 56.02,
     "end": 56.98,
-    "text": "Max: Shh!"
+    "text": "**Max:** Shh!"
   },
   {
     "start": 56.98,
     "end": 59.86,
-    "text": "Anna: Max, I cannot talk right now"
+    "text": "**Anna:** Max, I cannot {talk|話す} right now"
   },
   {
     "start": 62.28,
     "end": 66.12,
-    "text": "Max: Anna, you have a text."
+    "text": "**Max:** Anna, you have a text."
   },
   {
     "start": 66.12,
     "end": 70.84,
-    "text": "Max: Anna, Anna, Anna."
+    "text": "**Max:** Anna, Anna, Anna."
   },
   {
     "start": 70.72,
     "end": 71.84,
-    "text": "Anna: Anna."
+    "text": "**Anna:** Anna."
   },
   {
     "start": 71.84,
     "end": 75.68,
-    "text": "Anna: Max, you are saying my name so much."
+    "text": "**Anna:** Max, you are saying my name so much."
   },
   {
     "start": 75.68,
@@ -107,266 +107,266 @@
   {
     "start": 80.56,
     "end": 83.6,
-    "text": "Anna: I am finishing my countwork"
+    "text": "**Anna:** I am {finishing|終える} my {countwork|計算作業}."
   },
   {
     "start": 87.86,
     "end": 90.979,
-    "text": "DrJill: Oh dear, Anna's not building."
+    "text": "**DrJill:** Oh dear, Anna's not building."
   },
   {
     "start": 90.979,
     "end": 93.14,
-    "text": "DrJill: She is yelling."
+    "text": "**DrJill:** She is {yelling|叫ぶ}."
   },
   {
     "start": 93.64,
     "end": 99.56,
-    "text": "DrJill: Build building yell yelling."
+    "text": "**DrJill:** {Build|建てる} {building|建物} {yell|叫ぶ} {yelling|叫んでいる}."
   },
   {
     "start": 99.56,
     "end": 102.28,
-    "text": "DrJill: What is the special ending?"
+    "text": "**DrJill:** What is the special ending?"
   },
   {
     "start": 102.28,
     "end": 103.4,
-    "text": "DrJill: That's right."
+    "text": "**DrJill:** That's right."
   },
   {
     "start": 105.02,
     "end": 106.86,
-    "text": "DrJill: But that's not all."
+    "text": "**DrJill:** But that's not all."
   },
   {
     "start": 106.86,
     "end": 112.06,
-    "text": "DrJill: We also need to add is, m, r."
+    "text": "**DrJill:** We also need to add is, m, r."
   },
   {
     "start": 112.06,
     "end": 114.38,
-    "text": "DrJill: Let's go to our friends."
+    "text": "**DrJill:** Let's go to our friends."
   },
   {
     "start": 114.34,
     "end": 117.46,
-    "text": "DrJill: They tell us what they are doing."
+    "text": "**DrJill:** They {tell|伝える/言う}us what they are doing."
   },
   {
     "start": 117.46,
     "end": 126.1,
-    "text": "DrJill: Listen and watch for the in ending and the verbs is, am, and are."
+    "text": "**DrJill:** Listen and watch for the in {ending|語尾} and the verbs is, am, and are."
   },
   {
     "start": 126.1,
     "end": 128.34,
-    "text": "Students: Today I'm helping"
+    "text": "**Students:** Today I'm {helping|手伝う/助ける}"
   },
   {
     "start": 128.72,
     "end": 130.399,
-    "text": "Students: My dad."
+    "text": "**Students:** My dad."
   },
   {
     "start": 130.399,
     "end": 132.799,
-    "text": "Students: I like to read."
+    "text": "**Students:** I like to {read|読む}"
   },
   {
     "start": 132.799,
     "end": 135.68,
-    "text": "Students: I'm reading a book right now."
+    "text": "**Students:** I'm reading a book right now."
   },
   {
     "start": 135.68,
     "end": 140.4,
-    "text": "Students: I text my friend every day and I'm texting her right now."
+    "text": "**Students:** I {text|テキストメッセージを送る} my friend every day and I'm {texting|メッセージを送っている} her right now."
   },
   {
     "start": 140.819,
     "end": 146.34,
-    "text": "Anna: Listen to the sound at the beginning of these words."
+    "text": "**Anna:** Listen to the sound at the beginning of these words."
   },
   {
     "start": 146.34,
     "end": 148.019,
-    "text": "Anna: Egg."
+    "text": "**Anna:** Egg."
   },
   {
     "start": 148.019,
     "end": 149.94,
-    "text": "Anna: Elephant."
+    "text": "**Anna:** Elephant."
   },
   {
     "start": 149.94,
     "end": 151.7,
-    "text": "Anna: Every."
+    "text": "**Anna:** Every."
   },
   {
     "start": 152.14,
     "end": 157.58,
-    "text": "Anna: That is the short e sound of the letter E."
+    "text": "**Anna:** That is the short e sound of the letter E."
   },
   {
     "start": 157.58,
     "end": 162.38,
-    "text": "Anna: It is also in the middle of help text"
+    "text": "**Anna:** It is also in the middle of {help|助ける/手伝う} {text|テキスト}"
   },
   {
     "start": 163.459,
     "end": 170.26,
-    "text": "DrJill: And okay, now let's see if you can do it."
+    "text": "**DrJill:** And okay, now let's see if you can do it."
   },
   {
     "start": 170.26,
     "end": 172.9,
-    "text": "DrJill: Anna shows us some actions."
+    "text": "**DrJill:** Anna {shows|見せる/示す} us some actions."
   },
   {
     "start": 172.9,
     "end": 175.14,
-    "text": "DrJill: Say what she is doing"
+    "text": "**DrJill:** Say what she is doing"
   },
   {
     "start": 175.98,
     "end": 177.5,
-    "text": "DrJill: Let's try it."
+    "text": "**DrJill:** Let's try it."
   },
   {
     "start": 178.46,
     "end": 181.18,
-    "text": "Anna: I am at the beach."
+    "text": "**Anna:** I am at the beach."
   },
   {
     "start": 185.54,
     "end": 189.459,
-    "text": "Anna: I am walking on the beach."
+    "text": "**Anna:** I am {walking|歩く} on the beach."
   },
   {
     "start": 192.819,
     "end": 196.579,
-    "text": "Anna: I am sitting on the sand."
+    "text": "**Anna:** I am {sitting|座る} on the sand."
   },
   {
     "start": 200.3,
     "end": 203.74,
-    "text": "Anna: I am playing in the sand."
+    "text": "**Anna:** I am {playing|遊ぶ} in the sand."
   },
   {
     "start": 208.36,
     "end": 212.04,
-    "text": "Anna: I am standing in the water."
+    "text": "**Anna:** I am {standing|立つ} in the water."
   },
   {
     "start": 217.04,
     "end": 220,
-    "text": "Anna: I am walking in the sea."
+    "text": "**Anna:** I am walking in the sea."
   },
   {
     "start": 224.56,
     "end": 226.16,
-    "text": "DrJill: Thanks Anna."
+    "text": "**DrJill:** Thanks Anna."
   },
   {
     "start": 226.16,
     "end": 228.4,
-    "text": "DrJill: That is very helpful."
+    "text": "**DrJill:** That is very {helpful|役立つ/有益な}."
   },
   {
     "start": 228.4,
     "end": 231.84,
-    "text": "DrJill: Now let's listen to our friends again."
+    "text": "**DrJill:** Now let's listen to our friends again."
   },
   {
     "start": 231.84,
     "end": 234.48,
-    "text": "DrJill: Who is helping his dad?"
+    "text": "**DrJill:** Who is {helping|手伝う/助ける} his dad?"
   },
   {
     "start": 234.48,
     "end": 238.72,
-    "text": "Students: Today I'm helping my dad."
+    "text": "**Students:** Today I'm helping my dad."
   },
   {
     "start": 238.86,
     "end": 241.18,
-    "text": "Students: I like to read."
+    "text": "**Students:** I like to read."
   },
   {
     "start": 241.18,
     "end": 244.06,
-    "text": "Students: I'm reading a book right now."
+    "text": "**Students:** I'm reading a book right now."
   },
   {
     "start": 244.14,
     "end": 248.86,
-    "text": "DrJill: I text my friend every day and I'm texting her right now."
+    "text": "**DrJill:** I {text|メッセージを送る} my friend every day and I'm {texting|メッセージを送っている} her right now."
   },
   {
     "start": 248.76,
     "end": 250.92,
-    "text": "DrJill: Who is helping his dad?"
+    "text": "**DrJill:** Who is {helping|手伝う/助ける} his dad?"
   },
   {
     "start": 250.92,
     "end": 254.76,
-    "text": "DrJill: That's right, Felix is helping his dad."
+    "text": "**DrJill:** That's right, Felix is {helping|手伝う/助ける} his dad."
   },
   {
     "start": 254.76,
     "end": 257.16,
-    "text": "DrJill: Now it is your turn."
+    "text": "**DrJill:** Now it is your turn."
   },
   {
     "start": 257.16,
     "end": 260.44,
-    "text": "DrJill: Have fun with ing words."
+    "text": "**DrJill:** Have fun with {ing|進行形を表す語尾} words."
   },
   {
     "start": 260.42,
     "end": 262.18,
-    "text": "DrJill: Play this game."
+    "text": "**DrJill:** Play this game."
   },
   {
     "start": 262.18,
     "end": 268.9,
-    "text": "DrJill: Do an action and have your friends and family guess the action in English."
+    "text": "**DrJill:** Do an {action|動作/行動} and have your friends and family guess the action in English."
   },
   {
     "start": 268.9,
     "end": 272.02,
-    "text": "DrJill: Ask, what am I doing?"
+    "text": "**DrJill:** Ask, what am I doing?"
   },
   {
     "start": 272.94,
     "end": 275.02,
-    "text": "DrJill: Goodbye, Max."
+    "text": "**DrJill:** Goodbye, Max."
   },
   {
     "start": 275.02,
     "end": 276.78,
-    "text": "Anna: Goodbye, Anna."
+    "text": "**Anna:** Goodbye, Anna."
   },
   {
     "start": 276.78,
     "end": 279.819,
-    "text": "Anna: Goodbye and come back again."
+    "text": "**Anna:** Goodbye and come back again."
   },
   {
     "start": 279.819,
     "end": 285.659,
-    "text": "Anna: Sing, I am singing, I am singing a little song."
+    "text": "**Anna:** {Sing|歌う}, I am {singing|歌っている}, I am singing a little song."
   },
   {
     "start": 285.659,
     "end": 286.699,
-    "text": "Anna: Wave."
+    "text": "**Anna:** Wave."
   },
   {
     "start": 286.9,
     "end": 291.14,
-    "text": "Anna: I am waving, waving goodbye, but not for long"
+    "text": "**Anna:** I am {waving|手を振っている}, waving goodbye, but not for long"
   }
 ]

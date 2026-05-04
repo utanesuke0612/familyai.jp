@@ -17,17 +17,17 @@
   {
     "start": 13.04,
     "end": 18.8,
-    "text": "We all share planet Earth, so we should all take care of it."
+    "text": "We all share {planet|惑星/地球|/ˈplænɪt/|The planet is beautiful.} Earth, so we should all take care of it."
   },
   {
     "start": 18.8,
     "end": 22.08,
-    "text": "For example, I recycle."
+    "text": "For example, I {recycle|リサイクルする|/ˈriːsaɪkl/|I recycle plastic bottles.}"
   },
   {
     "start": 21.94,
     "end": 24.58,
-    "text": "How can you help the environment?"
+    "text": "How can you help the {environment|環境|/ɪnˈvaɪrənmənt/|We must protect the environment.}?"
   },
   {
     "start": 24.9,
@@ -37,7 +37,7 @@
   {
     "start": 37.42,
     "end": 41.34,
-    "text": "Speaker 2: Our question is, how can you help the environment?"
+    "text": "**Speaker 2:** Our question is, how can you help the environment?"
   },
   {
     "start": 41.34,
@@ -52,7 +52,7 @@
   {
     "start": 45.48,
     "end": 49.16,
-    "text": "Well, last year I planted many trees."
+    "text": "Well, last year I {planted|植えた|/ˈplæntɪd/|I planted flowers in my garden.} many trees."
   },
   {
     "start": 49.16,
@@ -62,7 +62,7 @@
   {
     "start": 55.02,
     "end": 60.14,
-    "text": "Hmm, a plant is growing up my tree."
+    "text": "Hmm, a {plant|植物|/plænt/|A plant needs water to grow.} is growing up my tree."
   },
   {
     "start": 60.14,
@@ -72,7 +72,7 @@
   {
     "start": 63.9,
     "end": 68.86,
-    "text": "When I do not know a plant, I find it on my phone app."
+    "text": "When I do not know a plant, I find it on my phone {app|アプリ|/æp/|I use a weather app.}."
   },
   {
     "start": 70.96,
@@ -82,7 +82,7 @@
   {
     "start": 76.64,
     "end": 77.92,
-    "text": "Bad vine."
+    "text": "Bad {vine|つる性植物|/vaɪn/|The vine grew quickly on the wall.}"
   },
   {
     "start": 77.92,
@@ -97,7 +97,7 @@
   {
     "start": 82.94,
     "end": 86.94,
-    "text": "When a vine grows in a tree, it can hurt the tree."
+    "text": "When a vine grows in a tree, it can {hurt|傷つける/害する|/hɜːrt/|The thorn can hurt your hand.} the tree."
   },
   {
     "start": 87.42,
@@ -107,7 +107,7 @@
   {
     "start": 89.9,
     "end": 92.46,
-    "text": "I should remove that vine."
+    "text": "I should {remove|取り除く|/rɪˈmuːv/|Please remove the trash.} that vine."
   },
   {
     "start": 93.14,
@@ -127,7 +127,7 @@
   {
     "start": 104.02,
     "end": 108.18,
-    "text": "It helps her identify plants."
+    "text": "It helps her {identify|識別する/特定する|/aɪˈdentɪfaɪ/|Can you identify this animal?} plants."
   },
   {
     "start": 108.18,
@@ -147,32 +147,32 @@
   {
     "start": 128.94,
     "end": 132.22,
-    "text": "Speaker 5: When I am tired, I rest."
+    "text": "**Speaker 5:** When I am tired, I rest."
   },
   {
     "start": 132.54,
     "end": 135.5,
-    "text": "Speaker 5: When I am hungry, I eat"
+    "text": "**Speaker 5:** When I am {hungry|空腹の|/ˈhʌŋɡri/|I am hungry after exercise.}, I eat"
   },
   {
     "start": 136.44,
     "end": 141.48,
-    "text": "Speaker 5: When I play soccer with my friends, I have fun."
+    "text": "**Speaker 5:** When I play {soccer|サッカー|/ˈsɑːkər/|I love playing soccer.} with my friends, I have fun."
   },
   {
     "start": 141.48,
     "end": 144.92,
-    "text": "There are many other ways to help the environment."
+    "text": "There are many other ways to help the {environment|環境|/ɪnˈvaɪrənmənt/|We must protect the environment.}."
   },
   {
     "start": 144.92,
     "end": 149,
-    "text": "When we go a short distance, we can walk."
+    "text": "When we go a {short|短い|/ʃɔːrt/|It's a short walk to the store.} distance, we can walk."
   },
   {
     "start": 148.64,
     "end": 154.56,
-    "text": "When a container is empty, we can reuse or recycle it."
+    "text": "When a {container|容器|/kənˈteɪnər/|Put the food in a container.} is empty, we can reuse or recycle it."
   },
   {
     "start": 154.56,
@@ -182,27 +182,27 @@
   {
     "start": 157.2,
     "end": 161.92,
-    "text": "They answer the question, how can you help the environment?"
+    "text": "They answer the {question|質問|/ˈkwestʃən/|I have a question for you.}, how can you help the environment?"
   },
   {
     "start": 161.82,
     "end": 168.22,
-    "text": "You can help the environment by cleaning up trash on the floor."
+    "text": "You can help the environment by {cleaning|掃除する|/ˈkliːnɪŋ/|I am cleaning my room.} up trash on the floor."
   },
   {
     "start": 168.22,
     "end": 172.46,
-    "text": "Speaker 6: I help the environment by riding my bike and recycling."
+    "text": "**Speaker 6:** I help the environment by {riding|乗る|/ˈraɪdɪŋ/|I am riding a bicycle.} my bike and recycling."
   },
   {
     "start": 173.68,
     "end": 177.44,
-    "text": "Speaker 6: Recycle as much as possible."
+    "text": "**Speaker 6:** Recycle as much as possible."
   },
   {
     "start": 177.44,
     "end": 184.96,
-    "text": "Speaker 7: I help the environment by recycling."
+    "text": "**Speaker 7:** I help the environment by recycling."
   },
   {
     "start": 186.28,
@@ -222,7 +222,7 @@
   {
     "start": 194.28,
     "end": 200.44,
-    "text": "When giving advice or suggestions, you can use the word should."
+    "text": "When giving {advice|助言|/ædˈvaɪs/|Can I give you some advice?} or suggestions, you can use the word should."
   },
   {
     "start": 200.58,
@@ -247,7 +247,7 @@
   {
     "start": 217.42,
     "end": 219.9,
-    "text": "I need to rinse my face!"
+    "text": "I need to {rinse|すすぐ|/rɪns/|Please rinse the dishes.} my face!"
   },
   {
     "start": 222.959,
@@ -302,17 +302,17 @@
   {
     "start": 263.92,
     "end": 267.2,
-    "text": "You should practice the English in this video."
+    "text": "You should {practice|練習する/訓練する|/ˈpræktɪs/|I practice English every day.} the English in this video."
   },
   {
     "start": 267.2,
     "end": 270.72,
-    "text": "It will help you talk about saving the planet."
+    "text": "It will help you {talk|話す/語る|/tɔːk/|Let's talk about our plans.} about saving the {planet|惑星/地球|/ˈplænɪt/|We must protect our planet.}"
   },
   {
     "start": 270.72,
     "end": 274.48,
-    "text": "I hope that vine did not hurt Anna's tree."
+    "text": "I hope that {vine|つる/蔓|/vaɪn/|The vine grows on the wall.} did not hurt Anna's tree."
   },
   {
     "start": 274.74,
@@ -332,11 +332,11 @@
   {
     "start": 286.52,
     "end": 288.52,
-    "text": "But now I am dirty."
+    "text": "But now I am {dirty|汚い/汚れた|/ˈdɜːrti/|My hands are dirty after gardening.}"
   },
   {
     "start": 288.52,
     "end": 291.8,
-    "text": "When you are dirty, you should take a bath"
+    "text": "When you are dirty, you should take a {bath|入浴/バス|/bæθ/|I take a bath every night.}"
   }
 ]

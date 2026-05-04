@@ -2,82 +2,82 @@
   {
     "start": 7.6,
     "end": 9.12,
-    "text": "Speaker 1: Hello, I'm Dr."
+    "text": "**Speaker 1:** Hello, I'm Dr."
   },
   {
     "start": 9.12,
     "end": 9.68,
-    "text": "Speaker 1: Jill."
+    "text": "**Speaker 1:** Jill."
   },
   {
     "start": 9.68,
     "end": 12.88,
-    "text": "Speaker 1: Welcome to Let's Learn English with Anna."
+    "text": "**Speaker 1:** Welcome to Let's Learn English with Anna."
   },
   {
     "start": 12.82,
     "end": 17.3,
-    "text": "Speaker 1: Exercise keeps us healthy, so it is important."
+    "text": "**Speaker 1:** {Exercise|運動/体を動かすこと|/ˈeksərsaɪz/|Exercise is good for health.} keeps us {healthy|健康な|/ˈhelθi/|Eat vegetables to stay healthy.}, so it is important."
   },
   {
     "start": 17.3,
     "end": 20.66,
-    "text": "Speaker 1: But exercise is also fun!"
+    "text": "**Speaker 1:** But exercise is also fun!"
   },
   {
     "start": 20.66,
     "end": 24.18,
-    "text": "Speaker 1: And there are many ways to exercise."
+    "text": "**Speaker 1:** And there are many ways to {exercise|運動する|/ˈeksərsaɪz/|Let's exercise together.}."
   },
   {
     "start": 24.32,
     "end": 28,
-    "text": "Speaker 1: What kind of exercise do you like to do?"
+    "text": "**Speaker 1:** What kind of {exercise|運動|/ˈeksərsaɪz/|Daily exercise is important.} do you like to do?"
   },
   {
     "start": 28,
     "end": 30.88,
-    "text": "Speaker 1: Do you like to swim?"
+    "text": "**Speaker 1:** Do you like to swim?"
   },
   {
     "start": 30.88,
     "end": 32.32,
-    "text": "Speaker 1: To walk?"
+    "text": "**Speaker 1:** To walk?"
   },
   {
     "start": 32.94,
     "end": 35.18,
-    "text": "Speaker 1: To play sports?"
+    "text": "**Speaker 1:** To play {sports|スポーツ|/spɔːrts/|Sports keep you active.}?"
   },
   {
     "start": 35.18,
     "end": 37.1,
-    "text": "Speaker 1: Or to dance?"
+    "text": "**Speaker 1:** Or to dance?"
   },
   {
     "start": 37.1,
     "end": 41.5,
-    "text": "Speaker 1: In other words, how do you like to exercise?"
+    "text": "**Speaker 1:** In other words, how do you like to {exercise|運動する|/ˈeksərsaɪz/|Exercise helps you stay fit.}?"
   },
   {
     "start": 41.42,
     "end": 45.1,
-    "text": "Speaker 1: That is the question Anna helps us answer."
+    "text": "**Speaker 1:** That is the question Anna helps us answer."
   },
   {
     "start": 45.1,
     "end": 47.98,
-    "text": "Speaker 1: How do you like to exercise?"
+    "text": "**Speaker 1:** How do you like to exercise?"
   },
   {
     "start": 48.94,
     "end": 50.219,
-    "text": "Speaker 1: Hello!"
+    "text": "**Speaker 1:** Hello!"
   },
   {
     "start": 51.98,
     "end": 53.18,
-    "text": "Speaker 1: Welcome!"
+    "text": "**Speaker 1:** Welcome!"
   },
   {
     "start": 53.42,
@@ -87,7 +87,7 @@
   {
     "start": 59.66,
     "end": 62.7,
-    "text": "I do not like to lift weights."
+    "text": "I do not like to {lift|持ち上げる|/lɪft/|Lift the box carefully.} {weights|重り/重量物|/weɪts/|Weights help build muscle.}."
   },
   {
     "start": 64.22,
@@ -97,7 +97,7 @@
   {
     "start": 68.78,
     "end": 70.38,
-    "text": "Speaker 3: Do you like to run?"
+    "text": "**Speaker 3:** Do you like to run?"
   },
   {
     "start": 70.7,
@@ -107,12 +107,12 @@
   {
     "start": 73.5,
     "end": 76.38,
-    "text": "Do you like to play basketball?"
+    "text": "Do you like to play {basketball|バスケットボール|/ˈbæskɪtbɔːl/|Basketball is a popular sport.}?"
   },
   {
     "start": 76.32,
     "end": 79.76,
-    "text": "I am not good at ball sports."
+    "text": "I am not good at ball {sports|スポーツ|/spɔːrts/|Sports are fun and healthy.}."
   },
   {
     "start": 79.76,
@@ -132,7 +132,7 @@
   {
     "start": 95.42,
     "end": 98.54,
-    "text": "Speaker 3: Those are great ways to exercise."
+    "text": "**Speaker 3:** Those are great ways to exercise."
   },
   {
     "start": 98.54,
@@ -147,47 +147,47 @@
   {
     "start": 104.299,
     "end": 109.58,
-    "text": "Or you can also do them separately, like most people."
+    "text": "Or you can also do them {separately|別々に|/ˈsepərətli/|We can work separately.}, like most people."
   },
   {
     "start": 112.6,
     "end": 120.84,
-    "text": "Speaker 1: Notice that when Anna talked with Max and Daisy about actions, they used two verb forms together."
+    "text": "**Speaker 1:** Notice that when Anna talked with Max and Daisy about {actions|行動/動作|/ˈækʃənz/|Human actions are important.}, they used two verb forms together."
   },
   {
     "start": 120.82,
     "end": 126.74,
-    "text": "Speaker 1: The first may be like, want, need, or plan."
+    "text": "**Speaker 1:** The first may be like, {want|欲しい/望む|/wɒnt/|I want to go home.}, need, or plan."
   },
   {
     "start": 126.74,
     "end": 130.66,
-    "text": "Speaker 1: The second verb has to before it."
+    "text": "**Speaker 1:** The second verb has to before it."
   },
   {
     "start": 130.66,
     "end": 135.14,
-    "text": "Speaker 1: So you hear Anna sing, I like to swim."
+    "text": "**Speaker 1:** So you hear Anna {sing|歌う|/sɪŋ/|I like to sing songs.}, I like to swim."
   },
   {
     "start": 136.08,
     "end": 144.88,
-    "text": "Speaker 1: When we talk about things we like, want, need, or plan to do, we use to plus a verb."
+    "text": "**Speaker 1:** When we talk about things we like, want, need, or plan to do, we use to plus a verb."
   },
   {
     "start": 145.02,
     "end": 147.099,
-    "text": "Speaker 1: Now let's go back to Anna."
+    "text": "**Speaker 1:** Now let's go back to Anna."
   },
   {
     "start": 147.099,
     "end": 148.86,
-    "text": "Speaker 1: She tells us more."
+    "text": "**Speaker 1:** She tells us more."
   },
   {
     "start": 149.34,
     "end": 151.819,
-    "text": "Speaker 1: What do you like to do?"
+    "text": "**Speaker 1:** What do you like to do?"
   },
   {
     "start": 151.819,
@@ -212,17 +212,17 @@
   {
     "start": 166.04,
     "end": 169.48,
-    "text": "In the morning, I like to jog."
+    "text": "In the morning, I like to {jog|ジョギングする|/dʒɒɡ/|I jog every morning}."
   },
   {
     "start": 169.48,
     "end": 173.319,
-    "text": "I want to play basketball after school."
+    "text": "I want to play {basketball|バスケットボール|/ˈbæskɪtbɔːl/|I play basketball after school}."
   },
   {
     "start": 173.319,
     "end": 176.36,
-    "text": "I need to exercise more."
+    "text": "I need to {exercise|運動する|/ˈeksərsaɪz/|I exercise three times a week}."
   },
   {
     "start": 177.8,
@@ -282,87 +282,87 @@
   {
     "start": 216.88,
     "end": 222.8,
-    "text": "Speaker 1: Adding to to a verb helps us talk about what we want to do."
+    "text": "**Speaker 1:** Adding to to a verb helps us talk about what we want to do."
   },
   {
     "start": 222.8,
     "end": 225.12,
-    "text": "Speaker 1: Next, we hear from some friends."
+    "text": "**Speaker 1:** Next, we hear from some friends."
   },
   {
     "start": 225.12,
     "end": 228.08,
-    "text": "Speaker 1: They talk about how they exercise."
+    "text": "**Speaker 1:** They talk about how they {exercise|運動する|/ˈeksərsaɪz/|Regular exercise is healthy}."
   },
   {
     "start": 228.02,
     "end": 231.7,
-    "text": "Speaker 1: Watch for two before verbs."
+    "text": "**Speaker 1:** Watch for two before verbs."
   },
   {
     "start": 231.7,
     "end": 237.459,
-    "text": "My favorite spot is food verb."
+    "text": "My {favorite|お気に入りの} spot is {food|食べ物/料理} verb."
   },
   {
     "start": 237.459,
     "end": 239.62,
-    "text": "For exercise I like to do"
+    "text": "For {exercise|運動/エクササイズ} I like to {do|する/行う}"
   },
   {
     "start": 244.739,
     "end": 248.819,
-    "text": "Speaker 5: My favorite sport is basketball."
+    "text": "**Speaker 5:** My {favorite|お気に入りの} sport is {basketball|バスケットボール}."
   },
   {
     "start": 248.819,
     "end": 251.86,
-    "text": "I like to play lacrosse on the beach."
+    "text": "I like to {play|遊ぶ/演奏する} {lacrosse|ラクロス} on the {beach|浜辺}."
   },
   {
     "start": 251.86,
     "end": 255.54,
-    "text": "My favorite sport is baseball."
+    "text": "My {favorite|お気に入りの} sport is {baseball|野球}."
   },
   {
     "start": 255.44,
     "end": 257.12,
-    "text": "Speaker 1: Thanks friends!"
+    "text": "**Speaker 1:** Thanks friends!"
   },
   {
     "start": 257.12,
     "end": 260.32,
-    "text": "Speaker 1: Those are some great ways to exercise."
+    "text": "**Speaker 1:** Those are some {great|素晴らしい} ways to {exercise|運動する}."
   },
   {
     "start": 260.32,
     "end": 265.6,
-    "text": "Speaker 1: Now you can practice talking about your favorite way to exercise."
+    "text": "**Speaker 1:** Now you can {practice|練習する} talking about your {favorite|お気に入りの} way to exercise."
   },
   {
     "start": 265.539,
     "end": 270.9,
-    "text": "Speaker 1: See you again on Let's Learn English with Anna."
+    "text": "**Speaker 1:** See you again on Let's Learn English with Anna."
   },
   {
     "start": 270.9,
     "end": 274.18,
-    "text": "Speaker 3: Look, Anna just sent a video."
+    "text": "**Speaker 3:** Look, Anna just sent a {video|ビデオ}."
   },
   {
     "start": 274.18,
     "end": 277.94,
-    "text": "Speaker 3: She planned to swim and to dance."
+    "text": "**Speaker 3:** She {planned|計画した} to {swim|泳ぐ} and to dance."
   },
   {
     "start": 277.72,
     "end": 280.44,
-    "text": "Speaker 3: And she's doing both."
+    "text": "**Speaker 3:** And she's doing both."
   },
   {
     "start": 280.44,
     "end": 286.52,
-    "text": "Speaker 3: Go on and go."
+    "text": "**Speaker 3:** Go on and go."
   },
   {
     "start": 286.52,

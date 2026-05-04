@@ -2,401 +2,401 @@
   {
     "start": 7.04,
     "end": 8.64,
-    "text": "DrJill: Hello, I'm Dr."
+    "text": "**DrJill:** Hello, I'm Dr."
   },
   {
     "start": 8.64,
     "end": 9.44,
-    "text": "DrJill: Jill."
+    "text": "**DrJill:** Jill."
   },
   {
     "start": 9.44,
     "end": 12.72,
-    "text": "DrJill: Welcome to Let's Learn English with Anna."
+    "text": "**DrJill:** Welcome to Let's Learn English with Anna."
   },
   {
     "start": 12.72,
     "end": 14.88,
-    "text": "DrJill: It is fun to visit friends."
+    "text": "**DrJill:** It is fun to {visit|訪問する/会いに行く|/ˈvɪzɪt/|I visit my grandparents.} friends."
   },
   {
     "start": 14.7,
     "end": 18.3,
-    "text": "DrJill: Today, Anna plans to visit a friend."
+    "text": "**DrJill:** Today, Anna {plans|計画する/予定を立てる|/plænz/|She plans to travel.} to visit a friend."
   },
   {
     "start": 18.3,
     "end": 20.86,
-    "text": "DrJill: But where does her friend live?"
+    "text": "**DrJill:** But where does her friend {live|住む/暮らす|/lɪv/|I live in Tokyo.}?"
   },
   {
     "start": 21.18,
     "end": 23.34,
-    "text": "DrJill: I will give you a clue."
+    "text": "**DrJill:** I will give you a {clue|手がかり/ヒント|/kluː/|A clue helps solve mysteries.}"
   },
   {
     "start": 23.119,
     "end": 26.56,
-    "text": "DrJill: It is by the sea."
+    "text": "**DrJill:** It is by the {sea|海|/siː/|We swim in the sea.}"
   },
   {
     "start": 26.56,
     "end": 29.68,
-    "text": "DrJill: A clue is information."
+    "text": "**DrJill:** A clue is {information|情報|/ˌɪnfərˈmeɪʃn/|I need more information.}"
   },
   {
     "start": 29.68,
     "end": 33.36,
-    "text": "DrJill: Clues help you answer a question."
+    "text": "**DrJill:** Clues help you answer a {question|質問/問い|/ˈkwestʃən/|I have a question for you.}"
   },
   {
     "start": 33.62,
     "end": 36.34,
-    "text": "DrJill: So where is Anna going?"
+    "text": "**DrJill:** So where is Anna going?"
   },
   {
     "start": 36.579,
     "end": 38.739,
-    "text": "DrJill: Let's visit her treehouse."
+    "text": "**DrJill:** Let's visit her {treehouse|木の上の小屋|/ˈtriːhaʊs/|Kids love playing in a treehouse.}"
   },
   {
     "start": 38.739,
     "end": 41.22,
-    "text": "DrJill: She gives us more clues."
+    "text": "**DrJill:** She gives us more clues."
   },
   {
     "start": 41.8,
     "end": 42.92,
-    "text": "Anna: Welcome!"
+    "text": "**Anna:** Welcome!"
   },
   {
     "start": 42.92,
     "end": 47.16,
-    "text": "Anna: I am Anna, and I am so happy!"
+    "text": "**Anna:** I am Anna, and I am so {happy|幸せな/嬉しい|/ˈhæpi/|I am happy today.}!"
   },
   {
     "start": 47.16,
     "end": 50.36,
-    "text": "Anna: My friend wants me to visit!"
+    "text": "**Anna:** My friend wants me to visit!"
   },
   {
     "start": 50.42,
     "end": 53.94,
-    "text": "Anna: Max, guess where she lives?"
+    "text": "**Anna:** Max, guess where she lives?"
   },
   {
     "start": 53.94,
     "end": 57.78,
-    "text": "Max: Spain, Seoul, Sweden?"
+    "text": "**Max:** Spain, Seoul, Sweden?"
   },
   {
     "start": 57.78,
     "end": 59.3,
-    "text": "Anna: Wait, Max."
+    "text": "**Anna:** Wait, Max."
   },
   {
     "start": 58.7,
     "end": 61.58,
-    "text": "Anna: I will give you two clues."
+    "text": "**Anna:** I will give you two clues."
   },
   {
     "start": 61.58,
     "end": 65.1,
-    "text": "Max: Okay, clues help us find answers."
+    "text": "**Max:** Okay, clues help us find {answers|答え/解答|/ˈænsərz/|I found the right answers.}"
   },
   {
     "start": 65.1,
     "end": 66.54,
-    "text": "Max: I like answers."
+    "text": "**Max:** I like answers."
   },
   {
     "start": 66.54,
     "end": 68.54,
-    "text": "Anna: I know you do, Max."
+    "text": "**Anna:** I know you do, Max."
   },
   {
     "start": 68.54,
     "end": 71.98,
-    "text": "Anna: Here is clue number one."
+    "text": "**Anna:** Here is clue number one."
   },
   {
     "start": 72.26,
     "end": 79.22,
-    "text": "Max: S on Sun, you are going someplace sunny."
+    "text": "**Max:** S on Sun, you are going someplace {sunny|日当たりの良い/晴れた|/ˈsʌni/|It's a sunny day today.}"
   },
   {
     "start": 79.22,
     "end": 83.14,
-    "text": "Anna: Yes, here is clue number two."
+    "text": "**Anna:** Yes, here is clue number two."
   },
   {
     "start": 84.22,
     "end": 90.46,
-    "text": "Max: And Sand, you are going someplace, Sonny and Sandy."
+    "text": "**Max:** And Sand, you are going someplace, Sonny and {Sandy|砂の/砂浜の|/ˈsændi/|Sandy beaches are beautiful.}"
   },
   {
     "start": 90.46,
     "end": 94.86,
-    "text": "Max: I know you are going to the beach."
+    "text": "**Max:** I know you are going to the {beach|浜辺/海岸|/biːtʃ/|We play at the beach.}"
   },
   {
     "start": 94.86,
     "end": 95.82,
-    "text": "Max: Woohoo!"
+    "text": "**Max:** Woohoo!"
   },
   {
     "start": 96.52,
     "end": 99.079,
-    "text": "DrJill: Where is Anna going?"
+    "text": "**DrJill:** Where is Anna going?"
   },
   {
     "start": 99.079,
     "end": 102.119,
-    "text": "DrJill: Let's hear the clues again."
+    "text": "**DrJill:** Let's hear the {clues|手がかり/ヒント} again."
   },
   {
     "start": 102.28,
     "end": 104.119,
-    "text": "DrJill: Sea?"
+    "text": "**DrJill:** Sea?"
   },
   {
     "start": 104.119,
     "end": 105.799,
-    "text": "DrJill: Sun?"
+    "text": "**DrJill:** Sun?"
   },
   {
     "start": 105.799,
     "end": 106.28,
-    "text": "DrJill: Sand"
+    "text": "**DrJill:** Sand"
   },
   {
     "start": 107.62,
     "end": 108.9,
-    "text": "DrJill: The beach!"
+    "text": "**DrJill:** The beach!"
   },
   {
     "start": 108.9,
     "end": 111.54,
-    "text": "DrJill: Today we talk about the beach."
+    "text": "**DrJill:** Today we talk about the {beach|浜辺/海岸} ."
   },
   {
     "start": 111.54,
     "end": 113.54,
-    "text": "DrJill: But that is not all."
+    "text": "**DrJill:** But that is not all."
   },
   {
     "start": 113.54,
     "end": 116.9,
-    "text": "DrJill: We also learn about S-words in the words"
+    "text": "**DrJill:** We also learn about S-words in the words"
   },
   {
     "start": 117.58,
     "end": 120.299,
-    "text": "DrJill: In and on."
+    "text": "**DrJill:** In and on."
   },
   {
     "start": 120.299,
     "end": 123.259,
-    "text": "DrJill: You can do many fun things at the beach."
+    "text": "**DrJill:** You can do many fun things at the beach."
   },
   {
     "start": 123.259,
     "end": 125.82,
-    "text": "DrJill: That is our question for today."
+    "text": "**DrJill:** That is our question for today."
   },
   {
     "start": 125.82,
     "end": 129.179,
-    "text": "DrJill: What do you do at the beach?"
+    "text": "**DrJill:** What do you do at the beach?"
   },
   {
     "start": 129.179,
     "end": 132.14,
-    "text": "DrJill: Let's hear from some friends."
+    "text": "**DrJill:** Let's hear from some friends."
   },
   {
     "start": 132.14,
     "end": 135.5,
-    "text": "DrJill: They talk about things to do at the beach."
+    "text": "**DrJill:** They talk about things to do at the beach."
   },
   {
     "start": 135.5,
     "end": 138.14,
-    "text": "Students: I love to swim in the sea."
+    "text": "**Students:** I love to {swim|泳ぐ} in the sea."
   },
   {
     "start": 138.68,
     "end": 142.36,
-    "text": "Students: At the beach I like to dig in the sand."
+    "text": "**Students:** At the beach I like to {dig|掘る} in the sand."
   },
   {
     "start": 142.36,
     "end": 145.56,
-    "text": "Students: At the beach, I like to throw frisbee."
+    "text": "**Students:** At the beach, I like to {throw|投げる} frisbee."
   },
   {
     "start": 145.56,
     "end": 147.8,
-    "text": "Students: This is a frisbee."
+    "text": "**Students:** This is a frisbee."
   },
   {
     "start": 148.9,
     "end": 150.9,
-    "text": "DrJill: Thanks, friends."
+    "text": "**DrJill:** Thanks, friends."
   },
   {
     "start": 150.9,
     "end": 156.58,
-    "text": "DrJill: Now listen to these words Sun, Sand"
+    "text": "**DrJill:** Now listen to these words Sun, Sand"
   },
   {
     "start": 157.66,
     "end": 159.58,
-    "text": "DrJill: C."
+    "text": "**DrJill:** C."
   },
   {
     "start": 159.58,
     "end": 161.82,
-    "text": "DrJill: How are they the same?"
+    "text": "**DrJill:** How are they the same?"
   },
   {
     "start": 161.82,
     "end": 165.26,
-    "text": "DrJill: They all begin with the same letter."
+    "text": "**DrJill:** They all begin with the same letter."
   },
   {
     "start": 165.26,
     "end": 167.18,
-    "text": "DrJill: Let's go back to Anna."
+    "text": "**DrJill:** Let's go back to Anna."
   },
   {
     "start": 167.18,
     "end": 170.78,
-    "text": "DrJill: She helps us say S words."
+    "text": "**DrJill:** She helps us say S words."
   },
   {
     "start": 171.84,
     "end": 178.16,
-    "text": "Anna: Okay, at the beginning of S words, do not say s."
+    "text": "**Anna:** Okay, at the beginning of S words, do not say s."
   },
   {
     "start": 178.16,
     "end": 182.239,
-    "text": "Anna: Say s like a snake."
+    "text": "**Anna:** Say s like a {snake|ヘビ} ."
   },
   {
     "start": 183.04,
     "end": 184.56,
-    "text": "Anna: Say it with me."
+    "text": "**Anna:** Say it with me."
   },
   {
     "start": 185.26,
     "end": 190.46,
-    "text": "Anna: Snake, good."
+    "text": "**Anna:** Snake, good."
   },
   {
     "start": 190.46,
     "end": 197.42,
-    "text": "Anna: The beach is sunny, so I need sunglasses"
+    "text": "**Anna:** The beach is {sunny|晴れた/日差しのある}, so I need {sunglasses|サングラス}"
   },
   {
     "start": 198.6,
     "end": 204.2,
-    "text": "Anna: Sunscreen and a sun hat."
+    "text": "**Anna:** {Sunscreen|日焼け止め|/ˈsʌnˌskriːn/|Apply sunscreen before going outside.} and a {sun hat|つばの広い帽子|/sʌn hæt/|Wear a sun hat to protect from sun.}"
   },
   {
     "start": 204.2,
     "end": 207.8,
-    "text": "Anna: They are on the table."
+    "text": "**Anna:** They are on the table."
   },
   {
     "start": 208.78,
     "end": 215.58,
-    "text": "Anna: I put them in my bag."
+    "text": "**Anna:** I put them in my bag."
   },
   {
     "start": 215.58,
     "end": 218.86,
-    "text": "DrJill: Now it is time to go to the beach."
+    "text": "**DrJill:** Now it is time to go to the {beach|浜辺/海岸|/biːtʃ/|Let's go to the beach today.}"
   },
   {
     "start": 218.82,
     "end": 220.98,
-    "text": "DrJill: Max is not going."
+    "text": "**DrJill:** Max is not going."
   },
   {
     "start": 220.98,
     "end": 224.9,
-    "text": "DrJill: Sand and sea are not good for a computer."
+    "text": "**DrJill:** {Sand|砂|/sænd/|Sand is soft under my feet.} and {sea|海|/siː/|The sea looks beautiful today.} are not good for a computer."
   },
   {
     "start": 224.9,
     "end": 232.26,
-    "text": "DrJill: Words like on and in tell where things are or where things happen."
+    "text": "**DrJill:** Words like on and in tell where things are or where things happen."
   },
   {
     "start": 232.22,
     "end": 237.099,
-    "text": "DrJill: Listen for the words in and on."
+    "text": "**DrJill:** Listen for the words in and on."
   },
   {
     "start": 237.099,
     "end": 239.9,
-    "text": "Anna: I am at the beach."
+    "text": "**Anna:** I am at the beach."
   },
   {
     "start": 239.9,
     "end": 241.98,
-    "text": "Anna: At the beach, I see"
+    "text": "**Anna:** At the beach, I see"
   },
   {
     "start": 243.12,
     "end": 248.64,
-    "text": "Anna: Sun, sand, and sea."
+    "text": "**Anna:** {Sun|太陽|/sʌn/|The sun is bright today.}, {sand|砂|/sænd/|Sand feels warm.}, and {sea|海|/siː/|The sea is blue.}"
   },
   {
     "start": 248.64,
     "end": 254.16,
-    "text": "Anna: At the beach, people ride bikes on the sand."
+    "text": "**Anna:** At the beach, people ride {bikes|自転車|/baɪks/|Kids love riding bikes.} on the sand."
   },
   {
     "start": 254.54,
     "end": 259.9,
-    "text": "Anna: At the beach, kids dig in the sand."
+    "text": "**Anna:** At the beach, kids {dig|掘る|/dɪɡ/|Kids dig holes in the sand.} in the sand."
   },
   {
     "start": 259.9,
     "end": 265.1,
-    "text": "Anna: At the beach, people swim in the sea."
+    "text": "**Anna:** At the beach, people {swim|泳ぐ|/swɪm/|Let's swim in the sea.} in the sea."
   },
   {
     "start": 265.34,
     "end": 272.78,
-    "text": "Anna: At the beach, people swim in the ocean, they play on the sand, they ride bikes on the beach"
+    "text": "**Anna:** At the beach, people swim in the {ocean|大洋|/ˈoʊʃən/|The ocean is very big.}, they play on the sand, they ride bikes on the beach"
   },
   {
     "start": 273.24,
     "end": 277.08,
-    "text": "Anna: There is a lot to do and see at the beach."
+    "text": "**Anna:** There is a lot to do and see at the beach."
   },
   {
     "start": 282.24,
     "end": 285.12,
-    "text": "DrJill: Thanks for showing us the beach, Anna."
+    "text": "**DrJill:** Thanks for showing us the beach, Anna."
   },
   {
     "start": 285.12,
     "end": 288.32,
-    "text": "DrJill: Now you can talk to people about the beach."
+    "text": "**DrJill:** Now you can talk to people about the beach."
   },
   {
     "start": 288.32,
     "end": 290.48,
-    "text": "DrJill: Use S words."
+    "text": "**DrJill:** Use S words."
   },
   {
     "start": 290.42,
     "end": 295.86,
-    "text": "DrJill: And come see us again on Let's Learn English with Anna."
+    "text": "**DrJill:** And come see us again on Let's Learn English with Anna."
   }
 ]

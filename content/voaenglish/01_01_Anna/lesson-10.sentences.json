@@ -2,471 +2,471 @@
   {
     "start": 6.72,
     "end": 9.2,
-    "text": "DrJill: Hello, I am Doctor Jill."
+    "text": "**DrJill:** Hello, I am Doctor Jill."
   },
   {
     "start": 9.24,
     "end": 13,
-    "text": "DrJill: Welcome to Let's Learn English with Anna."
+    "text": "**DrJill:** Welcome to Let's Learn English with Anna."
   },
   {
     "start": 13,
     "end": 15.16,
-    "text": "DrJill: Time is important."
+    "text": "**DrJill:** {Time|時間/時刻} is important."
   },
   {
     "start": 15.16,
     "end": 17.8,
-    "text": "DrJill: It helps us plan our days."
+    "text": "**DrJill:** It helps us {plan|計画する} our days."
   },
   {
     "start": 17.8,
     "end": 22.52,
-    "text": "DrJill: For example, I start work at 9 o'clock in the morning."
+    "text": "**DrJill:** For example, I start work at 9 o'clock in the {morning|朝}."
   },
   {
     "start": 23.14,
     "end": 25.619,
-    "text": "DrJill: So let's visit Anna."
+    "text": "**DrJill:** So let's {visit|訪問する} Anna."
   },
   {
     "start": 25.619,
     "end": 27.7,
-    "text": "DrJill: She answers the question."
+    "text": "**DrJill:** She {answers|答える} the question."
   },
   {
     "start": 27.7,
     "end": 29.78,
-    "text": "DrJill: What time is it?"
+    "text": "**DrJill:** What time is it?"
   },
   {
     "start": 32,
     "end": 35.84,
-    "text": "Anna: Every morning I drink my coffee at 7 a."
+    "text": "**Anna:** Every morning I {drink|飲む} my coffee at 7 a."
   },
   {
     "start": 35.84,
     "end": 36.239,
-    "text": "Anna: m."
+    "text": "**Anna:** m."
   },
   {
     "start": 36.48,
     "end": 38.8,
-    "text": "Anna: and listen to the birds."
+    "text": "**Anna:** and listen to the {birds|鳥}."
   },
   {
     "start": 38.82,
     "end": 41.06,
-    "text": "Max: Time to start the show."
+    "text": "**Max:** Time to start the show."
   },
   {
     "start": 41.06,
     "end": 44.98,
-    "text": "Anna: Max, it is only seven o'clock in the morning."
+    "text": "**Anna:** Max, it is only seven o'clock in the morning."
   },
   {
     "start": 44.98,
     "end": 46.98,
-    "text": "Max: No, it is not."
+    "text": "**Max:** No, it is not."
   },
   {
     "start": 46.98,
     "end": 48.02,
-    "text": "Anna: What time is it?"
+    "text": "**Anna:** What time is it?"
   },
   {
     "start": 48.02,
     "end": 50.66,
-    "text": "Max: It is nine o'clock in the morning."
+    "text": "**Max:** It is nine o'clock in the morning."
   },
   {
     "start": 50.66,
     "end": 52.9,
-    "text": "Anna: No, time to start the show."
+    "text": "**Anna:** No, time to start the show."
   },
   {
     "start": 55.28,
     "end": 57.36,
-    "text": "Anna: Hi, I'm Anna."
+    "text": "**Anna:** Hi, I'm Anna."
   },
   {
     "start": 57.36,
     "end": 60,
-    "text": "Anna: Welcome to my tree house."
+    "text": "**Anna:** Welcome to my {tree house|ツリーハウス}."
   },
   {
     "start": 60,
     "end": 63.68,
-    "text": "Anna: Today we ask, what time is it?"
+    "text": "**Anna:** Today we ask, what time is it?"
   },
   {
     "start": 63.72,
     "end": 66.92,
-    "text": "Max: It is time for you to buy a watch."
+    "text": "**Max:** It is time for you to buy a {watch|時計}."
   },
   {
     "start": 66.92,
     "end": 67.72,
-    "text": "Anna: Ha ha!"
+    "text": "**Anna:** Ha ha!"
   },
   {
     "start": 67.72,
     "end": 70.28,
-    "text": "Anna: Very funny, Max."
+    "text": "**Anna:** Very {funny|面白い}, Max."
   },
   {
     "start": 70.28,
     "end": 72.52,
-    "text": "Anna: Actually, that that's kind of funny."
+    "text": "**Anna:** Actually, that that's kind of funny."
   },
   {
     "start": 73.82,
     "end": 77.1,
-    "text": "DrJill: Anna is late for her own show."
+    "text": "**DrJill:** Anna is {late|遅れている} for her own show."
   },
   {
     "start": 77.1,
     "end": 78.86,
-    "text": "DrJill: Max is right."
+    "text": "**DrJill:** Max is right."
   },
   {
     "start": 78.86,
     "end": 81.1,
-    "text": "DrJill: She does need a watch."
+    "text": "**DrJill:** She does need a watch."
   },
   {
     "start": 81.1,
     "end": 84.86,
-    "text": "DrJill: The show starts at 9 o'clock in the morning."
+    "text": "**DrJill:** The show starts at 9 o'clock in the morning."
   },
   {
     "start": 85.18,
     "end": 87.899,
-    "text": "DrJill: Let's say that in English."
+    "text": "**DrJill:** Let's say that in English."
   },
   {
     "start": 87.899,
     "end": 92.619,
-    "text": "DrJill: The show starts at 9 o'clock in the morning."
+    "text": "**DrJill:** The show starts at 9 o'clock in the morning."
   },
   {
     "start": 92.619,
     "end": 95.5,
-    "text": "DrJill: Now let's listen to our friends."
+    "text": "**DrJill:** Now let's {listen|聞く/注目する} to our friends."
   },
   {
     "start": 95.42,
     "end": 98.54,
-    "text": "DrJill: They talk about times of the day."
+    "text": "**DrJill:** They {talk|話す} about times of the day."
   },
   {
     "start": 98.54,
     "end": 103.979,
-    "text": "DrJill: It is only four o'clock, but I'm so tired."
+    "text": "**DrJill:** It is only four o'clock, but I'm so {tired|疲れた/眠い}."
   },
   {
     "start": 103.56,
     "end": 104.68,
-    "text": "Students: It is 7 p."
+    "text": "**Students:** It is 7 p."
   },
   {
     "start": 104.68,
     "end": 105,
-    "text": "Students: m."
+    "text": "**Students:** m."
   },
   {
     "start": 105.16,
     "end": 106.6,
-    "text": "Students: It is time for dinner."
+    "text": "**Students:** It is time for {dinner|夕食}."
   },
   {
     "start": 106.6,
     "end": 107.96,
-    "text": "Students: Oh no, it's 1."
+    "text": "**Students:** Oh no, it's 1."
   },
   {
     "start": 107.96,
     "end": 108.52,
-    "text": "Students: 15."
+    "text": "**Students:** 15."
   },
   {
     "start": 108.52,
     "end": 109.56,
-    "text": "Students: I have math class."
+    "text": "**Students:** I have {math|数学} class."
   },
   {
     "start": 109.56,
     "end": 111.08,
-    "text": "Students: I hate math."
+    "text": "**Students:** I {hate|嫌う/大嫌い} math."
   },
   {
     "start": 111.32,
     "end": 112.92,
-    "text": "DrJill: Thanks, friends."
+    "text": "**DrJill:** Thanks, friends."
   },
   {
     "start": 112.92,
     "end": 116.36,
-    "text": "DrJill: Now we go back to Anna's Treehouse."
+    "text": "**DrJill:** Now we go {back|戻る} to Anna's Treehouse."
   },
   {
     "start": 116.02,
     "end": 118.579,
-    "text": "DrJill: She helps us with the letter."
+    "text": "**DrJill:** She {helps|助ける} us with the letter."
   },
   {
     "start": 118.579,
     "end": 119.86,
-    "text": "DrJill: Which one?"
+    "text": "**DrJill:** Which one?"
   },
   {
     "start": 120.34,
     "end": 126.659,
-    "text": "DrJill: It's in the words pizza, party, and panda."
+    "text": "**DrJill:** It's in the words {pizza|ピザ}, {party|パーティー}, and {panda|パンダ}."
   },
   {
     "start": 126.82,
     "end": 130.74,
-    "text": "Anna: The letter P makes the p sound."
+    "text": "**Anna:** The letter P makes the p sound."
   },
   {
     "start": 130.74,
     "end": 134.98,
-    "text": "Anna: With the p sound, air comes out."
+    "text": "**Anna:** With the p sound, air comes out."
   },
   {
     "start": 134.98,
     "end": 137.14,
-    "text": "Anna: Listen and watch."
+    "text": "**Anna:** Listen and watch."
   },
   {
     "start": 138.64,
     "end": 139.92,
-    "text": "Anna: Panda."
+    "text": "**Anna:** Panda."
   },
   {
     "start": 139.92,
     "end": 141.2,
-    "text": "Anna: Party."
+    "text": "**Anna:** Party."
   },
   {
     "start": 141.2,
     "end": 142.4,
-    "text": "Anna: Pet."
+    "text": "**Anna:** Pet."
   },
   {
     "start": 142.4,
     "end": 143.76,
-    "text": "Anna: Pizza."
+    "text": "**Anna:** Pizza."
   },
   {
     "start": 145.28,
     "end": 147.68,
-    "text": "DrJill: Now you can try."
+    "text": "**DrJill:** Now you can try."
   },
   {
     "start": 147.68,
     "end": 149.2,
-    "text": "DrJill: Thanks, Anna."
+    "text": "**DrJill:** Thanks, Anna."
   },
   {
     "start": 149.32,
     "end": 153.88,
-    "text": "DrJill: You can try the pu sound with a piece of paper too."
+    "text": "**DrJill:** You can try the pu sound with a piece of {paper|紙}."
   },
   {
     "start": 155.8,
     "end": 158.28,
-    "text": "DrJill: Let's hear our friends again."
+    "text": "**DrJill:** Let's hear our friends again."
   },
   {
     "start": 158.32,
     "end": 160.16,
-    "text": "DrJill: Who has math at 1."
+    "text": "**DrJill:** Who has math at 1."
   },
   {
     "start": 160.24,
     "end": 161.28,
-    "text": "DrJill: 15?"
+    "text": "**DrJill:** 15?"
   },
   {
     "start": 161.28,
     "end": 166.48,
-    "text": "Students: It is only 4 o'clock, but I'm so tired."
+    "text": "**Students:** It is only 4 o'clock, but I'm so tired."
   },
   {
     "start": 166.24,
     "end": 167.36,
-    "text": "Students: It is 7 p."
+    "text": "**Students:** It is 7 p."
   },
   {
     "start": 167.36,
     "end": 167.6,
-    "text": "Students: m."
+    "text": "**Students:** m."
   },
   {
     "start": 167.76,
     "end": 169.28,
-    "text": "Students: It is time for dinner."
+    "text": "**Students:** It is time for {dinner|夕食|/ˈdɪnər/|We eat dinner at 6 pm.}"
   },
   {
     "start": 169.28,
     "end": 170.56,
-    "text": "Students: Oh no, it's 1."
+    "text": "**Students:** Oh no, it's 1."
   },
   {
     "start": 170.56,
     "end": 171.12,
-    "text": "Students: 15."
+    "text": "**Students:** 15."
   },
   {
     "start": 171.12,
     "end": 172.24,
-    "text": "Students: I have math class."
+    "text": "**Students:** I have {math|数学|/mæθ/|I love math class.} class."
   },
   {
     "start": 172.24,
     "end": 173.76,
-    "text": "DrJill: I hate math."
+    "text": "**DrJill:** I hate {math|数学|/mæθ/|Math is difficult.}"
   },
   {
     "start": 173.76,
     "end": 174.88,
-    "text": "DrJill: That's right."
+    "text": "**DrJill:** That's right."
   },
   {
     "start": 174.88,
     "end": 176.56,
-    "text": "DrJill: Alex has math at 1."
+    "text": "**DrJill:** Alex has math at 1."
   },
   {
     "start": 176.64,
     "end": 178,
-    "text": "DrJill: 15."
+    "text": "**DrJill:** 15."
   },
   {
     "start": 178.08,
     "end": 180.88,
-    "text": "DrJill: Now back to Anna."
+    "text": "**DrJill:** Now back to Anna."
   },
   {
     "start": 180.88,
     "end": 182.72,
-    "text": "DrJill: She is at the zoo."
+    "text": "**DrJill:** She is at the {zoo|動物園|/zuː/|I like visiting the zoo.}"
   },
   {
     "start": 182.72,
     "end": 183.76,
-    "text": "DrJill: Let's watch"
+    "text": "**DrJill:** Let's watch"
   },
   {
     "start": 185.74,
     "end": 187.98,
-    "text": "Anna: Today is Saturday."
+    "text": "**Anna:** Today is Saturday."
   },
   {
     "start": 187.98,
     "end": 190.3,
-    "text": "Anna: I am at the zoo."
+    "text": "**Anna:** I am at the {zoo|動物園|/zuː/|The zoo is fun.}"
   },
   {
     "start": 200.7,
     "end": 203.9,
-    "text": "Anna: There is a panda party."
+    "text": "**Anna:** There is a {panda|パンダ|/ˈpændə/|Pandas are black and white.} party."
   },
   {
     "start": 204.54,
     "end": 207.02,
-    "text": "Anna: I love pandas"
+    "text": "**Anna:** I {love|大好き/愛する|/lʌv/|I love my family.} pandas"
   },
   {
     "start": 209.799,
     "end": 215.239,
-    "text": "Anna: The panda party is all day."
+    "text": "**Anna:** The panda party is all day."
   },
   {
     "start": 218.16,
     "end": 223.12,
-    "text": "Anna: At eight fifteen, the pandas eat their treats."
+    "text": "**Anna:** At eight fifteen, the pandas eat their {treats|おやつ/ご褒美|/triːts/|Kids love sweet treats.}"
   },
   {
     "start": 230.26,
     "end": 235.46,
-    "text": "Anna: The movie starts in two minutes."
+    "text": "**Anna:** The movie starts in two minutes."
   },
   {
     "start": 235.46,
     "end": 236.82,
-    "text": "Anna: Let's go."
+    "text": "**Anna:** Let's go."
   },
   {
     "start": 240,
     "end": 242.4,
-    "text": "Anna: The movie starts at 10 a."
+    "text": "**Anna:** The movie starts at 10 a."
   },
   {
     "start": 242.4,
     "end": 242.72,
-    "text": "Anna: m."
+    "text": "**Anna:** m."
   },
   {
     "start": 243.36,
     "end": 244.72,
-    "text": "Anna: I am late."
+    "text": "**Anna:** I am late."
   },
   {
     "start": 245.28,
     "end": 248.959,
-    "text": "Anna: Now I am walking fast through the zoo"
+    "text": "**Anna:** Now I am {walking|歩いている|/ˈwɔːkɪŋ/|I am walking to school.} fast through the zoo"
   },
   {
     "start": 257.04,
     "end": 258.48,
-    "text": "Anna: I cannot get in"
+    "text": "**Anna:** I cannot get in"
   },
   {
     "start": 258.66,
     "end": 261.22,
-    "text": "Anna: I am late."
+    "text": "**Anna:** I am late."
   },
   {
     "start": 262.82,
     "end": 265.38,
-    "text": "Anna: The movie is playing."
+    "text": "**Anna:** The movie is {playing|上映されている|/ˈpleɪɪŋ/|The movie is playing now.}"
   },
   {
     "start": 272.14,
     "end": 276.3,
-    "text": "DrJill: Anna is late again."
+    "text": "**DrJill:** Anna is late again."
   },
   {
     "start": 276.3,
     "end": 279.18,
-    "text": "DrJill: Max is right."
+    "text": "**DrJill:** Max is right."
   },
   {
     "start": 279.18,
     "end": 280.86,
-    "text": "DrJill: What time is it?"
+    "text": "**DrJill:** What time is it?"
   },
   {
     "start": 281.1,
     "end": 284.78,
-    "text": "DrJill: It is time for Anna to buy a watch"
+    "text": "**DrJill:** It is time for Anna to {buy|買う/購入する|/baɪ/|I will buy a new book.} a {watch|腕時計|/wɒtʃ/|My watch is broken.}"
   },
   {
     "start": 285.32,
     "end": 290.76,
-    "text": "DrJill: Join us again next time on Let's Learn English with Anna."
+    "text": "**DrJill:** Join us again next time on Let's Learn English with Anna."
   },
   {
     "start": 290.76,
     "end": 291.4,
-    "text": "DrJill: Bye."
+    "text": "**DrJill:** Bye."
   },
   {
     "start": 291.4,
     "end": 293.24,
-    "text": "DrJill: Come back again."
+    "text": "**DrJill:** Come {back|戻る/帰る|/bæk/|Please come back tomorrow.}"
   }
 ]

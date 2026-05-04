@@ -2,476 +2,476 @@
   {
     "start": 6.72,
     "end": 8.24,
-    "text": "DrJill: Hello, I'm Dr."
+    "text": "**DrJill:** Hello, I'm Dr."
   },
   {
     "start": 8.24,
     "end": 8.96,
-    "text": "DrJill: Jill."
+    "text": "**DrJill:** Jill."
   },
   {
     "start": 8.96,
     "end": 12.24,
-    "text": "DrJill: Welcome to Let's Learn English with Anna."
+    "text": "**DrJill:** Welcome to Let's Learn English with Anna."
   },
   {
     "start": 12.48,
     "end": 13.44,
-    "text": "DrJill: Bugs!"
+    "text": "**DrJill:** {Bugs|虫/昆虫|/bʌɡz/|Some bugs are colorful.}!"
   },
   {
     "start": 13.68,
     "end": 18.16,
-    "text": "DrJill: There are more bugs than any other animal on the planet."
+    "text": "**DrJill:** There are more {bugs|虫/昆虫} than any other {animal|動物} on the planet."
   },
   {
     "start": 18.16,
     "end": 21.2,
-    "text": "DrJill: They have important jobs in nature."
+    "text": "**DrJill:** They have important {jobs|仕事/役割} in nature."
   },
   {
     "start": 21.2,
     "end": 25.119,
-    "text": "DrJill: And there are many different kinds of bugs."
+    "text": "**DrJill:** And there are many different {kinds|種類} of bugs."
   },
   {
     "start": 24.74,
     "end": 26.98,
-    "text": "DrJill: Now let's visit Anna."
+    "text": "**DrJill:** Now let's visit Anna."
   },
   {
     "start": 26.98,
     "end": 29.14,
-    "text": "DrJill: She answers the question."
+    "text": "**DrJill:** She answers the question."
   },
   {
     "start": 29.14,
     "end": 31.94,
-    "text": "DrJill: What is your favorite bug?"
+    "text": "**DrJill:** What is your favorite bug?"
   },
   {
     "start": 33.46,
     "end": 36.02,
-    "text": "Anna: I love nature."
+    "text": "**Anna:** I love {nature|自然}."
   },
   {
     "start": 36.6,
     "end": 40.839,
-    "text": "Anna: But nature has something I do not love."
+    "text": "**Anna:** But nature has something I do not love."
   },
   {
     "start": 40.839,
     "end": 42.6,
-    "text": "Anna: Bugs."
+    "text": "**Anna:** {Bugs|虫/昆虫}."
   },
   {
     "start": 42.6,
     "end": 44.519,
-    "text": "Anna: Lots of bugs."
+    "text": "**Anna:** Lots of {bugs|虫/昆虫}."
   },
   {
     "start": 44.839,
     "end": 47.32,
-    "text": "Max: Bugs are important, Anna."
+    "text": "**Max:** {Bugs|虫/昆虫} are important, Anna."
   },
   {
     "start": 48.42,
     "end": 51.539,
-    "text": "Anna: Max, do not move."
+    "text": "**Anna:** Max, do not move."
   },
   {
     "start": 51.539,
     "end": 54.82,
-    "text": "Anna: You have a big bug on your back."
+    "text": "**Anna:** You have a big {bug|虫/昆虫} on your back."
   },
   {
     "start": 54.82,
     "end": 56.26,
-    "text": "Anna: Hold still."
+    "text": "**Anna:** Hold still."
   },
   {
     "start": 56.339,
     "end": 57.219,
-    "text": "Anna: Anna?"
+    "text": "**Anna:** Anna?"
   },
   {
     "start": 57.219,
     "end": 59.059,
-    "text": "Max: What are you doing?"
+    "text": "**Max:** What are you doing?"
   },
   {
     "start": 59.059,
     "end": 59.86,
-    "text": "Max: Ow!"
+    "text": "**Max:** Ow!"
   },
   {
     "start": 59.86,
     "end": 60.98,
-    "text": "Anna: Where's the bug?"
+    "text": "**Anna:** Where's the bug?"
   },
   {
     "start": 60.98,
     "end": 62.579,
-    "text": "Anna: Where's the bug?"
+    "text": "**Anna:** Where's the bug?"
   },
   {
     "start": 62.52,
     "end": 66.44,
-    "text": "Max: Anna, I have the question for today."
+    "text": "**Max:** Anna, I have the question for today."
   },
   {
     "start": 67,
     "end": 69.16,
-    "text": "Anna: What is your favorite bug?"
+    "text": "**Anna:** What is your favorite bug?"
   },
   {
     "start": 69.16,
     "end": 71.16,
-    "text": "Anna: Who has a favorite bug?"
+    "text": "**Anna:** Who has a favorite bug?"
   },
   {
     "start": 71.48,
     "end": 73.32,
-    "text": "Anna: Ah, bug!"
+    "text": "**Anna:** Ah, {bug|虫/昆虫}!"
   },
   {
     "start": 74.84,
     "end": 76.12,
-    "text": "DrJill: Uh-oh."
+    "text": "**DrJill:** Uh-oh."
   },
   {
     "start": 76.5,
     "end": 81.22,
-    "text": "DrJill: Oh dear, Anna is really afraid of bugs."
+    "text": "**DrJill:** Oh dear, Anna is really {afraid|恐れている/怖い} of bugs."
   },
   {
     "start": 81.22,
     "end": 84.58,
-    "text": "DrJill: Maybe she does not have a favorite."
+    "text": "**DrJill:** Maybe she does not have a favorite."
   },
   {
     "start": 84.58,
     "end": 88.34,
-    "text": "DrJill: My favorite bug is the butterfly."
+    "text": "**DrJill:** My favorite {bug|虫|/bʌɡ/|Some bugs are colorful.} is the {butterfly|チョウ|/ˈbʌtərflaɪ/|Butterfly wings are beautiful.}."
   },
   {
     "start": 88.64,
     "end": 95.04,
-    "text": "DrJill: Some English words are made of two words, like butterfly."
+    "text": "**DrJill:** Some English words are made of two words, like {butterfly|チョウ|/ˈbʌtərflaɪ/|Butterfly is a compound word}."
   },
   {
     "start": 95.04,
     "end": 96.479,
-    "text": "DrJill: Butter?"
+    "text": "**DrJill:** Butter?"
   },
   {
     "start": 96.479,
     "end": 98,
-    "text": "DrJill: Fly."
+    "text": "**DrJill:** Fly."
   },
   {
     "start": 98,
     "end": 99.92,
-    "text": "DrJill: Butterfly."
+    "text": "**DrJill:** Butterfly."
   },
   {
     "start": 100.02,
     "end": 103.219,
-    "text": "DrJill: Here are some bugs with two word names."
+    "text": "**DrJill:** Here are some {bugs|虫|/bʌɡz/|Bugs live everywhere.} with two word names."
   },
   {
     "start": 103.219,
     "end": 105.219,
-    "text": "DrJill: Grasshopper."
+    "text": "**DrJill:** {Grasshopper|バッタ|/ˈɡræsˌhɑːpər/|Grasshoppers jump high.}"
   },
   {
     "start": 105.219,
     "end": 107.38,
-    "text": "DrJill: Grasshopper."
+    "text": "**DrJill:** Grasshopper."
   },
   {
     "start": 107.38,
     "end": 109.22,
-    "text": "DrJill: Dragonfly."
+    "text": "**DrJill:** {Dragonfly|トンボ|/ˈdræɡənˌflaɪ/|Dragonflies have big wings.}"
   },
   {
     "start": 109.22,
     "end": 111.06,
-    "text": "DrJill: Dragonfly"
+    "text": "**DrJill:** Dragonfly"
   },
   {
     "start": 112.08,
     "end": 114.56,
-    "text": "DrJill: Firefly."
+    "text": "**DrJill:** {Firefly|ホタル|/ˈfaɪərˌflaɪ/|Fireflies glow at night.}"
   },
   {
     "start": 114.56,
     "end": 117.759,
-    "text": "DrJill: Firefly."
+    "text": "**DrJill:** Firefly."
   },
   {
     "start": 117.759,
     "end": 120.32,
-    "text": "DrJill: Now let's hear from some friends"
+    "text": "**DrJill:** Now let's hear from some friends"
   },
   {
     "start": 120.22,
     "end": 123.1,
-    "text": "DrJill: They talk about their favorite bugs."
+    "text": "**DrJill:** They talk about their favorite bugs."
   },
   {
     "start": 123.1,
     "end": 125.74,
-    "text": "DrJill: My favorite bug is a beetle."
+    "text": "**DrJill:** My favorite {bug|虫|/bʌɡ/|Some bugs are interesting.} is a {beetle|カブトムシ|/ˈbiːtl/|Beetles have hard shells.}"
   },
   {
     "start": 125.74,
     "end": 127.98,
-    "text": "Students: My favorite bugs are bees."
+    "text": "**Students:** My favorite bugs are {bees|ミツバチ|/biːz/|Bees make honey.}"
   },
   {
     "start": 127.98,
     "end": 130.46,
-    "text": "Students: Bees make honey."
+    "text": "**Students:** Bees make honey."
   },
   {
     "start": 130.1,
     "end": 132.9,
-    "text": "Students: Grasshoppers are my favorite bug."
+    "text": "**Students:** {Grasshoppers|バッタ|/ˈɡræsˌhɑːpərz/|Grasshoppers jump in grass.} are my favorite bug."
   },
   {
     "start": 132.9,
     "end": 136.02,
-    "text": "Students: They can jump really high."
+    "text": "**Students:** They can jump really high."
   },
   {
     "start": 137.3,
     "end": 139.62,
-    "text": "Max: Anna, you have mail."
+    "text": "**Max:** Anna, you have mail."
   },
   {
     "start": 139.62,
     "end": 141.14,
-    "text": "Anna: Thanks, Max."
+    "text": "**Anna:** Thanks, Max."
   },
   {
     "start": 144.959,
     "end": 148.72,
-    "text": "Anna: Bug hunt."
+    "text": "**Anna:** {Bug|虫|/bʌɡ/|Bugs are everywhere.} hunt."
   },
   {
     "start": 148.72,
     "end": 152.56,
-    "text": "Anna: Please come to our bug hunt today at one p."
+    "text": "**Anna:** Please come to our bug hunt today at one p."
   },
   {
     "start": 152.56,
     "end": 152.879,
-    "text": "Anna: m."
+    "text": "**Anna:** m."
   },
   {
     "start": 153.68,
     "end": 155.04,
-    "text": "Anna: Bug hunt?"
+    "text": "**Anna:** Bug hunt?"
   },
   {
     "start": 155.04,
     "end": 156.48,
-    "text": "Anna: No way."
+    "text": "**Anna:** No way."
   },
   {
     "start": 156.64,
     "end": 157.92,
-    "text": "Max: Arna."
+    "text": "**Max:** Arna."
   },
   {
     "start": 157.92,
     "end": 160.08,
-    "text": "Max: What is a bug hunt?"
+    "text": "**Max:** What is a {bug|虫|/bʌɡ/|Bugs are small animals.} hunt?"
   },
   {
     "start": 160.08,
     "end": 163.2,
-    "text": "Anna: You go outdoors and find bugs."
+    "text": "**Anna:** You go {outdoors|屋外で|/aʊtˈdɔːrz/|Let's play outdoors.} and find bugs."
   },
   {
     "start": 162.84,
     "end": 164.84,
-    "text": "Anna: But I am afraid of bugs."
+    "text": "**Anna:** But I am {afraid|恐れている|/əˈfreɪd/|I am afraid of spiders.} of bugs."
   },
   {
     "start": 164.84,
     "end": 169.16,
-    "text": "Max: Ana, there is no need to fear bugs."
+    "text": "**Max:** Ana, there is no need to {fear|恐れる/怖がる} {bugs|虫|/bʌɡz/|Some bugs are friendly}."
   },
   {
     "start": 169.16,
     "end": 170.6,
-    "text": "Max: They help us"
+    "text": "**Max:** They help us"
   },
   {
     "start": 171.12,
     "end": 174.24,
-    "text": "Max: And some bugs are cute, like ladybugs."
+    "text": "**Max:** And some bugs are {cute|かわいい/愛らしい}, like {ladybugs|テントウムシ|/ˈleɪdibʌɡz/|Ladybugs are red and black}."
   },
   {
     "start": 174.24,
     "end": 175.84,
-    "text": "Anna: Ladybugs are cute."
+    "text": "**Anna:** Ladybugs are cute."
   },
   {
     "start": 175.84,
     "end": 178.32,
-    "text": "Anna: I am not afraid of a ladybug."
+    "text": "**Anna:** I am not afraid of a ladybug."
   },
   {
     "start": 178.32,
     "end": 180.24,
-    "text": "Anna: Okay."
+    "text": "**Anna:** Okay."
   },
   {
     "start": 180.72,
     "end": 182.56,
-    "text": "DrJill: I can try."
+    "text": "**DrJill:** I can try."
   },
   {
     "start": 183.66,
     "end": 187.5,
-    "text": "DrJill: Anna can see many bugs on a bug hunt."
+    "text": "**DrJill:** Anna can see many {bugs|虫|/bʌɡz/|Some bugs are small} on a bug hunt."
   },
   {
     "start": 187.5,
     "end": 191.18,
-    "text": "DrJill: How do you talk about many things?"
+    "text": "**DrJill:** How do you talk about many things?"
   },
   {
     "start": 191.52,
     "end": 197.76,
-    "text": "DrJill: With some nouns you add S to the end, like with bug."
+    "text": "**DrJill:** With some {nouns|名詞} you add S to the end, like with bug."
   },
   {
     "start": 197.76,
     "end": 202,
-    "text": "DrJill: One bug, many bugs."
+    "text": "**DrJill:** One bug, many bugs."
   },
   {
     "start": 202,
     "end": 205.12,
-    "text": "DrJill: But some nouns end in Y."
+    "text": "**DrJill:** But some nouns end in Y."
   },
   {
     "start": 204.74,
     "end": 206.66,
-    "text": "DrJill: like fly."
+    "text": "**DrJill:** like {fly|ハエ/飛ぶ|/flaɪ/|Flies can be annoying}."
   },
   {
     "start": 206.66,
     "end": 213.86,
-    "text": "DrJill: For these words you take away the Y and add I E S to the end."
+    "text": "**DrJill:** For these words you take away the Y and add I E S to the end."
   },
   {
     "start": 213.86,
     "end": 217.22,
-    "text": "DrJill: One fly, two flies"
+    "text": "**DrJill:** One fly, two flies"
   },
   {
     "start": 218.22,
     "end": 222.54,
-    "text": "DrJill: Let's learn more on Anna's bug hunt."
+    "text": "**DrJill:** Let's learn more on Anna's bug hunt."
   },
   {
     "start": 222.54,
     "end": 230.22,
-    "text": "Anna: On my list, I need to find a butterfly, a dragonfly, and a firefly."
+    "text": "**Anna:** On my list, I need to find a {butterfly|チョウ|/ˈbʌtərflaɪ/|Butterflies have colorful wings}, a {dragonfly|トンボ|/ˈdræɡənflaɪ/|Dragonflies fly quickly}, and a {firefly|ホタル|/ˈfaɪərflaɪ/|Fireflies glow at night}."
   },
   {
     "start": 230.22,
     "end": 232.379,
-    "text": "Anna: Hey, a butterfly!"
+    "text": "**Anna:** Hey, a butterfly!"
   },
   {
     "start": 233.739,
     "end": 236.06,
-    "text": "Anna: One butterfly."
+    "text": "**Anna:** One butterfly."
   },
   {
     "start": 236.78,
     "end": 239.26,
-    "text": "Anna: Many butterflies."
+    "text": "**Anna:** Many butterflies."
   },
   {
     "start": 240.94,
     "end": 242.62,
-    "text": "Anna: Butterfly check"
+    "text": "**Anna:** Butterfly check"
   },
   {
     "start": 244.2,
     "end": 247.08,
-    "text": "Anna: Now let's find a dragonfly."
+    "text": "**Anna:** Now let's find a dragonfly."
   },
   {
     "start": 247.08,
     "end": 249.96,
-    "text": "Anna: Ooh, dragonflies are hard to find."
+    "text": "**Anna:** Ooh, dragonflies are hard to find."
   },
   {
     "start": 249.96,
     "end": 252.6,
-    "text": "Anna: Hey look, there's a dragonfly!"
+    "text": "**Anna:** Hey look, there's a dragonfly!"
   },
   {
     "start": 253.7,
     "end": 257.38,
-    "text": "Anna: One dragonfly."
+    "text": "**Anna:** One dragonfly."
   },
   {
     "start": 257.38,
     "end": 260.9,
-    "text": "Anna: Many dragonflies."
+    "text": "**Anna:** Many dragonflies."
   },
   {
     "start": 260.9,
     "end": 262.82,
-    "text": "Anna: Dragonfly check"
+    "text": "**Anna:** Dragonfly check"
   },
   {
     "start": 264.44,
     "end": 268.04,
-    "text": "Anna: My list has one more bug to find."
+    "text": "**Anna:** My list has one more bug to find."
   },
   {
     "start": 268.04,
     "end": 269.64,
-    "text": "Anna: A Fodderfly."
+    "text": "**Anna:** A Fodderfly."
   },
   {
     "start": 273.48,
     "end": 280.44,
-    "text": "Anna: One firefly, many fireflies done"
+    "text": "**Anna:** One firefly, many fireflies done"
   },
   {
     "start": 282.22,
     "end": 283.419,
-    "text": "DrJill: Good work!"
+    "text": "**DrJill:** Good work!"
   },
   {
     "start": 283.419,
     "end": 286.94,
-    "text": "DrJill: Now you can talk about your favorite bugs."
+    "text": "**DrJill:** Now you can {talk|話す/語る|/tɔːk/|Let's talk about music.} about your {favorite|好きな/お気に入りの|/ˈfeɪvərɪt/|This is my favorite book.} bugs."
   },
   {
     "start": 286.94,
     "end": 289.74,
-    "text": "DrJill: One or many."
+    "text": "**DrJill:** One or many."
   },
   {
     "start": 289.74,
     "end": 292.139,
-    "text": "DrJill: And join us again next time on"
+    "text": "**DrJill:** And join us again next time on"
   },
   {
     "start": 292.46,
     "end": 295.659,
-    "text": "DrJill: Let's learn English with Anna."
+    "text": "**DrJill:** Let's learn English with Anna."
   }
 ]

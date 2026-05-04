@@ -2,476 +2,476 @@
   {
     "start": 6.4,
     "end": 8.08,
-    "text": "Speaker 1: Hello, I'm Dr."
+    "text": "**Speaker 1:** Hello, I'm Dr."
   },
   {
     "start": 8.08,
     "end": 8.72,
-    "text": "Speaker 1: Jill."
+    "text": "**Speaker 1:** Jill."
   },
   {
     "start": 8.72,
     "end": 12.16,
-    "text": "Speaker 1: Welcome to Let's Learn English with Anna."
+    "text": "**Speaker 1:** {Welcome|ようこそ} to Let's Learn English with Anna."
   },
   {
     "start": 12.12,
     "end": 14.92,
-    "text": "Speaker 1: Today we talk about school."
+    "text": "**Speaker 1:** Today we {talk|話す} about {school|学校}."
   },
   {
     "start": 14.92,
     "end": 17.88,
-    "text": "Speaker 1: Schools are wonderful places."
+    "text": "**Speaker 1:** Schools are {wonderful|素晴らしい} places."
   },
   {
     "start": 17.88,
     "end": 20.92,
-    "text": "Speaker 1: Students can study many things."
+    "text": "**Speaker 1:** Students can {study|勉強する} many things."
   },
   {
     "start": 20.92,
     "end": 24.6,
-    "text": "Speaker 1: English, math, and science."
+    "text": "**Speaker 1:** English, math, and {science|科学}."
   },
   {
     "start": 24.84,
     "end": 30.28,
-    "text": "Speaker 1: They can study art, music, and history."
+    "text": "**Speaker 1:** They can study art, music, and {history|歴史}."
   },
   {
     "start": 30.28,
     "end": 33.72,
-    "text": "Speaker 1: But students do other things at school."
+    "text": "**Speaker 1:** But students do other things at school."
   },
   {
     "start": 33.66,
     "end": 38.3,
-    "text": "Speaker 1: They play, eat, and exercise too."
+    "text": "**Speaker 1:** They play, eat, and {exercise|運動する} too."
   },
   {
     "start": 38.3,
     "end": 40.62,
-    "text": "Speaker 1: What do you do in school?"
+    "text": "**Speaker 1:** What do you do in school?"
   },
   {
     "start": 40.62,
     "end": 42.3,
-    "text": "Speaker 1: Let's visit Anna."
+    "text": "**Speaker 1:** Let's {visit|訪問する} Anna."
   },
   {
     "start": 42.3,
     "end": 44.62,
-    "text": "Speaker 1: She helps us answer the question"
+    "text": "**Speaker 1:** She helps us answer the question"
   },
   {
     "start": 44.72,
     "end": 47.36,
-    "text": "Speaker 1: What do you do in school?"
+    "text": "**Speaker 1:** What do you do in school?"
   },
   {
     "start": 47.36,
     "end": 49.12,
-    "text": "Speaker 1: I love to learn."
+    "text": "**Speaker 1:** I love to learn."
   },
   {
     "start": 49.12,
     "end": 50.96,
-    "text": "Speaker 2: So I love school."
+    "text": "**Speaker 2:** So I love school."
   },
   {
     "start": 50.96,
     "end": 54.4,
-    "text": "Speaker 2: At school you can learn many things."
+    "text": "**Speaker 2:** At school you can learn many things."
   },
   {
     "start": 54.4,
     "end": 57.76,
-    "text": "Speaker 3: I like to study math and computers"
+    "text": "**Speaker 3:** I like to {study|勉強する} math and {computers|コンピューター}."
   },
   {
     "start": 58.02,
     "end": 63.46,
-    "text": "Speaker 2: I like to learn about music and science."
+    "text": "**Speaker 2:** I like to learn about music and science."
   },
   {
     "start": 63.46,
     "end": 68.02,
-    "text": "Speaker 2: In school, can I learn about powerful rulers?"
+    "text": "**Speaker 2:** In school, can I learn about {powerful|強力な} rulers?"
   },
   {
     "start": 67.939,
     "end": 70.74,
-    "text": "Speaker 2: Yes, Daisy, you can learn about them."
+    "text": "**Speaker 2:** Yes, Daisy, you can learn about them."
   },
   {
     "start": 70.74,
     "end": 73.299,
-    "text": "Speaker 2: Can I learn about money?"
+    "text": "**Speaker 2:** Can I learn about money?"
   },
   {
     "start": 73.299,
     "end": 76.42,
-    "text": "Speaker 2: Yes, that is a type of map."
+    "text": "**Speaker 2:** Yes, that is a type of map."
   },
   {
     "start": 76.42,
     "end": 78.5,
-    "text": "Speaker 2: I want to go to school."
+    "text": "**Speaker 2:** I want to go to school."
   },
   {
     "start": 78.5,
     "end": 80.659,
-    "text": "Speaker 2: That's great, Daisy."
+    "text": "**Speaker 2:** That's great, Daisy."
   },
   {
     "start": 80.62,
     "end": 84.3,
-    "text": "Speaker 2: I can learn to be rich and powerful."
+    "text": "**Speaker 2:** I can learn to be {rich|裕福な} and {powerful|強力な}."
   },
   {
     "start": 84.3,
     "end": 86.86,
-    "text": "Speaker 2: Great, Daisy."
+    "text": "**Speaker 2:** Great, Daisy."
   },
   {
     "start": 86.86,
     "end": 89.1,
-    "text": "Speaker 3: It is not Ravana."
+    "text": "**Speaker 3:** It is not Ravana."
   },
   {
     "start": 89.14,
     "end": 92.1,
-    "text": "Speaker 3: It is really not great."
+    "text": "**Speaker 3:** It is really not great."
   },
   {
     "start": 92.1,
     "end": 96.9,
-    "text": "Speaker 1: In school, sometimes we use supplies to help us learn"
+    "text": "**Speaker 1:** In school, sometimes we use {supplies|学用品} to help us learn"
   },
   {
     "start": 97.04,
     "end": 104.24,
-    "text": "Speaker 1: Some are common, like pens, pencils, paper, glue, and scissors."
+    "text": "**Speaker 1:** Some are {common|普通の/一般的な|/ˈkɒmən/|This is a common mistake.}, like pens, pencils, paper, glue, and {scissors|はさみ|/ˈsɪzərz/|Use scissors to cut paper carefully.}."
   },
   {
     "start": 104.24,
     "end": 107.04,
-    "text": "Speaker 1: Some are special, like a computer"
+    "text": "**Speaker 1:** Some are special, like a {computer|コンピューター|/kəmˈpjuːtər/|I use a computer for homework.}"
   },
   {
     "start": 107.62,
     "end": 110.66,
-    "text": "Speaker 1: But they all help us learn."
+    "text": "**Speaker 1:** But they all help us learn."
   },
   {
     "start": 110.66,
     "end": 114.9,
-    "text": "Speaker 1: Next, Anna shows us her school supplies."
+    "text": "**Speaker 1:** Next, Anna shows us her {school supplies|学用品|/skuːl səˈplaɪz/|I bought new school supplies.}"
   },
   {
     "start": 114.9,
     "end": 117.06,
-    "text": "Speaker 2: This is my backpack."
+    "text": "**Speaker 2:** This is my {backpack|リュックサック|/ˈbækpæk/|I carry my books in my backpack.}."
   },
   {
     "start": 117.06,
     "end": 120.98,
-    "text": "Speaker 2: My school supplies are on the table."
+    "text": "**Speaker 2:** My school supplies are on the table."
   },
   {
     "start": 120.92,
     "end": 123.88,
-    "text": "Speaker 2: School supplies, listen please!"
+    "text": "**Speaker 2:** School supplies, listen please!"
   },
   {
     "start": 123.88,
     "end": 129.16,
-    "text": "Speaker 2: I say your name and you get in my backpack."
+    "text": "**Speaker 2:** I say your name and you get in my backpack."
   },
   {
     "start": 129.16,
     "end": 130.36,
-    "text": "Speaker 2: Get ready"
+    "text": "**Speaker 2:** Get ready"
   },
   {
     "start": 130.92,
     "end": 138.2,
-    "text": "Speaker 2: Notebooks, pens, pencils, get in my backpack."
+    "text": "**Speaker 2:** Notebooks, pens, pencils, get in my backpack."
   },
   {
     "start": 138.2,
     "end": 138.84,
-    "text": "Speaker 2: Next"
+    "text": "**Speaker 2:** Next"
   },
   {
     "start": 139.24,
     "end": 146.92,
-    "text": "Speaker 2: Eraser, ruler, in my backpack."
+    "text": "**Speaker 2:** Eraser, ruler, in my backpack."
   },
   {
     "start": 146.92,
     "end": 149,
-    "text": "Speaker 2: I packed my backpack."
+    "text": "**Speaker 2:** I packed my backpack."
   },
   {
     "start": 149.08,
     "end": 150.12,
-    "text": "Speaker 2: Reach!"
+    "text": "**Speaker 2:** Reach!"
   },
   {
     "start": 150.12,
     "end": 151.24,
-    "text": "Speaker 2: Scissors."
+    "text": "**Speaker 2:** Scissors."
   },
   {
     "start": 151.24,
     "end": 151.64,
-    "text": "Speaker 2: Tape"
+    "text": "**Speaker 2:** Tape"
   },
   {
     "start": 152.24,
     "end": 153.44,
-    "text": "Speaker 2: Stapler."
+    "text": "**Speaker 2:** Stapler."
   },
   {
     "start": 153.44,
     "end": 154.48,
-    "text": "Speaker 2: Laptop."
+    "text": "**Speaker 2:** Laptop."
   },
   {
     "start": 154.48,
     "end": 155.76,
-    "text": "Speaker 2: Dictionary."
+    "text": "**Speaker 2:** Dictionary."
   },
   {
     "start": 155.76,
     "end": 158.24,
-    "text": "Speaker 2: Get into Anna's backpack."
+    "text": "**Speaker 2:** Get into Anna's backpack."
   },
   {
     "start": 160.8,
     "end": 162.16,
-    "text": "Speaker 2: My backpack is"
+    "text": "**Speaker 2:** My backpack is"
   },
   {
     "start": 162.52,
     "end": 165,
-    "text": "Speaker 2: Really full."
+    "text": "**Speaker 2:** Really full."
   },
   {
     "start": 165,
     "end": 167.48,
-    "text": "Speaker 2: Now let's hear from some friends."
+    "text": "**Speaker 2:** Now let's hear from some friends."
   },
   {
     "start": 167.48,
     "end": 170.28,
-    "text": "Speaker 2: They talk about their school days."
+    "text": "**Speaker 2:** They talk about their {school days|学校生活|/skuːl deɪz/|I miss my school days.}"
   },
   {
     "start": 170.599,
     "end": 171.8,
-    "text": "Speaker 2: Daisy?"
+    "text": "**Speaker 2:** Daisy?"
   },
   {
     "start": 171.8,
     "end": 172.68,
-    "text": "Speaker 2: Max?"
+    "text": "**Speaker 2:** Max?"
   },
   {
     "start": 172.68,
     "end": 174.2,
-    "text": "Speaker 2: A little help?"
+    "text": "**Speaker 2:** A little help?"
   },
   {
     "start": 177,
     "end": 182.44,
-    "text": "Speaker 4: In school, I study math, English, and Chinese."
+    "text": "**Speaker 4:** In school, I study math, English, and {Chinese|中国語|/ˈtʃaɪˌniːz/|I learn Chinese at school.}."
   },
   {
     "start": 182.44,
     "end": 186.12,
-    "text": "Speaker 4: My favorite subject in school is art."
+    "text": "**Speaker 4:** My favorite {subject|科目|/ˈsʌbdʒɪkt/|Math is my favorite subject.} in school is art."
   },
   {
     "start": 186.84,
     "end": 190.76,
-    "text": "Speaker 5: My favorite subject in school is English."
+    "text": "**Speaker 5:** My favorite subject in school is English."
   },
   {
     "start": 190.76,
     "end": 197.08,
-    "text": "Speaker 5: I go to school online so I can stay home."
+    "text": "**Speaker 5:** I go to {school|学校|/skuːl/|I go to school every day.} online so I can stay home."
   },
   {
     "start": 197.08,
     "end": 199.8,
-    "text": "Speaker 1: We talked about subjects at school"
+    "text": "**Speaker 1:** We talked about {subjects|科目|/ˈsʌbdʒɪkts/|Math is my favorite subject.} at school"
   },
   {
     "start": 199.74,
     "end": 203.5,
-    "text": "Speaker 1: And we talked about supplies for school."
+    "text": "**Speaker 1:** And we talked about {supplies|学用品|/səˈplaɪz/|I bought new school supplies.} for school."
   },
   {
     "start": 203.5,
     "end": 207.26,
-    "text": "Speaker 1: Now let's learn rooms in a school."
+    "text": "**Speaker 1:** Now let's learn {rooms|部屋|/ruːmz/|These are different rooms in the school.} in a school."
   },
   {
     "start": 207.26,
     "end": 210.7,
-    "text": "Speaker 1: Let's see what happens in each room."
+    "text": "**Speaker 1:** Let's see what happens in each room."
   },
   {
     "start": 211.22,
     "end": 215.379,
-    "text": "Speaker 2: Max, can you send me to school with the travel walkie-talkies?"
+    "text": "**Speaker 2:** Max, can you send me to school with the {travel|旅行の|/ˈtrævəl/|We travel by car.} walkie-talkies?"
   },
   {
     "start": 215.379,
     "end": 216.9,
-    "text": "Speaker 3: Yes, Anna."
+    "text": "**Speaker 3:** Yes, Anna."
   },
   {
     "start": 216.9,
     "end": 217.7,
-    "text": "Speaker 2: No!"
+    "text": "**Speaker 2:** No!"
   },
   {
     "start": 217.7,
     "end": 222.42,
-    "text": "Speaker 2: I want to go to school."
+    "text": "**Speaker 2:** I want to go to school."
   },
   {
     "start": 222.42,
     "end": 225.54,
-    "text": "Speaker 2: Oh no!"
+    "text": "**Speaker 2:** Oh no!"
   },
   {
     "start": 224.72,
     "end": 228.72,
-    "text": "Speaker 3: Oh yes, Daisy went to school."
+    "text": "**Speaker 3:** Oh yes, Daisy went to school."
   },
   {
     "start": 228.72,
     "end": 233.12,
-    "text": "Speaker 2: Max, show me Daisy at school."
+    "text": "**Speaker 2:** Max, show me Daisy at school."
   },
   {
     "start": 235.4,
     "end": 240.36,
-    "text": "Speaker 2: Oh Max, she is in a classroom."
+    "text": "**Speaker 2:** Oh Max, she is in a {classroom|教室|/ˈklæsruːm/|Students learn in the classroom.}"
   },
   {
     "start": 240.36,
     "end": 244.04,
-    "text": "Speaker 2: Oh, you study in a classroom."
+    "text": "**Speaker 2:** Oh, you study in a classroom."
   },
   {
     "start": 244.04,
     "end": 245.24,
-    "text": "Speaker 2: Classroom"
+    "text": "**Speaker 2:** Classroom"
   },
   {
     "start": 245.68,
     "end": 248.48,
-    "text": "Speaker 6: Sit down and open your books."
+    "text": "**Speaker 6:** Sit down and open your {books|本|/bʊks/|I read many books.}"
   },
   {
     "start": 248.48,
     "end": 250.48,
-    "text": "Speaker 2: I forgot my book."
+    "text": "**Speaker 2:** I forgot my book."
   },
   {
     "start": 251.599,
     "end": 254.08,
-    "text": "Speaker 2: Now she's in the library."
+    "text": "**Speaker 2:** Now she's in the {library|図書館|/ˈlaɪbreri/|I borrow books from the library.}"
   },
   {
     "start": 254.08,
     "end": 256.959,
-    "text": "Speaker 2: You read in a library."
+    "text": "**Speaker 2:** You read in a library."
   },
   {
     "start": 256.959,
     "end": 258.639,
-    "text": "Speaker 2: Library."
+    "text": "**Speaker 2:** Library."
   },
   {
     "start": 258.36,
     "end": 261.96,
-    "text": "Speaker 2: Mommy, mami, mommy, mommy, mommy."
+    "text": "**Speaker 2:** Mommy, mami, mommy, mommy, mommy."
   },
   {
     "start": 261.96,
     "end": 262.92,
-    "text": "Speaker 2: Shh!"
+    "text": "**Speaker 2:** Shh!"
   },
   {
     "start": 262.92,
     "end": 266.2,
-    "text": "Speaker 7: Do not sing in the library."
+    "text": "**Speaker 7:** Do not {sing|歌う|/sɪŋ/|I like to sing songs.} in the library."
   },
   {
     "start": 266.2,
     "end": 268.6,
-    "text": "Speaker 2: Daisy is in the gym"
+    "text": "**Speaker 2:** Daisy is in the {gym|体育館|/dʒɪm/|We exercise in the gym.}"
   },
   {
     "start": 269.18,
     "end": 272.06,
-    "text": "Speaker 2: You exercise in a gym."
+    "text": "**Speaker 2:** You exercise in a gym."
   },
   {
     "start": 272.06,
     "end": 273.34,
-    "text": "Speaker 2: Gym."
+    "text": "**Speaker 2:** Gym."
   },
   {
     "start": 273.34,
     "end": 274.14,
-    "text": "Speaker 6: Line up."
+    "text": "**Speaker 6:** Line up."
   },
   {
     "start": 274.14,
     "end": 276.06,
-    "text": "Speaker 6: Catch the ball, flower."
+    "text": "**Speaker 6:** {Catch|捕まえる|/kætʃ/|Can you catch the ball?} the ball, flower."
   },
   {
     "start": 276.06,
     "end": 277.82,
-    "text": "Speaker 2: Ow."
+    "text": "**Speaker 2:** Ow."
   },
   {
     "start": 277.82,
     "end": 279.18,
-    "text": "Speaker 2: Uh-oh."
+    "text": "**Speaker 2:** Uh-oh."
   },
   {
     "start": 279.539,
     "end": 282.34,
-    "text": "Speaker 2: She is at the principal's office."
+    "text": "**Speaker 2:** She is at the {principal's|校長の|principal's office} {office|事務所/オフィス}."
   },
   {
     "start": 282.34,
     "end": 284.34,
-    "text": "Speaker 2: Principal."
+    "text": "**Speaker 2:** {Principal|校長}."
   },
   {
     "start": 284.34,
     "end": 286.659,
-    "text": "Speaker 6: Daisy, come in."
+    "text": "**Speaker 6:** {Daisy|女性の名前}, come in."
   },
   {
     "start": 286.979,
     "end": 290.74,
-    "text": "Speaker 2: I did not do anything."
+    "text": "**Speaker 2:** I did not do {anything|何も/何かを}."
   },
   {
     "start": 290.92,
     "end": 297,
-    "text": "Speaker 1: Join us again next time on Let's Learn English with Anna."
+    "text": "**Speaker 1:** Join us {again|再び/もう一度|/əˈɡen/|Let's try again.} next time on Let's Learn English with Anna."
   }
 ]

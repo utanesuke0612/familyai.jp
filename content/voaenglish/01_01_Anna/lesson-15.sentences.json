@@ -2,416 +2,416 @@
   {
     "start": 2.48,
     "end": 4,
-    "text": "DrJill: Hello, I'm Dr."
+    "text": "**DrJill:** Hello, I'm Dr."
   },
   {
     "start": 4,
     "end": 4.72,
-    "text": "DrJill: Jill."
+    "text": "**DrJill:** Jill."
   },
   {
     "start": 4.72,
     "end": 8.56,
-    "text": "DrJill: Welcome to Let's Learn English with Anna."
+    "text": "**DrJill:** Welcome to Let's Learn English with Anna."
   },
   {
     "start": 8.56,
     "end": 13.2,
-    "text": "DrJill: It is fun to be outdoors and enjoy nature."
+    "text": "**DrJill:** It is fun to be {outdoors|野外の/屋外|/ˈaʊtdɔːrz/|We enjoy outdoors in summer.} and enjoy {nature|自然|/ˈneɪtʃər/|Nature is beautiful.}"
   },
   {
     "start": 13.32,
     "end": 18.04,
-    "text": "DrJill: Some people go outdoors for many days."
+    "text": "**DrJill:** Some people go outdoors for many days."
   },
   {
     "start": 18.04,
     "end": 23,
-    "text": "DrJill: They do everything outdoors, even sleep."
+    "text": "**DrJill:** They do everything outdoors, even {sleep|眠る|/sliːp/|We sleep at night.}"
   },
   {
     "start": 23.88,
     "end": 27.24,
-    "text": "DrJill: We call this camping."
+    "text": "**DrJill:** We call this {camping|キャンプ|/ˈkæmpɪŋ/|Camping is fun in summer.}"
   },
   {
     "start": 27.24,
     "end": 31.56,
-    "text": "DrJill: Now let's visit Anna's treehouse to learn more."
+    "text": "**DrJill:** Now let's visit Anna's {treehouse|木の上の小屋|/ˈtriːhaʊs/|A treehouse is high in a tree.} to learn more."
   },
   {
     "start": 31.56,
     "end": 33.96,
-    "text": "DrJill: She answers the question."
+    "text": "**DrJill:** She answers the question."
   },
   {
     "start": 33.92,
     "end": 36.719,
-    "text": "DrJill: What is camping?"
+    "text": "**DrJill:** What is camping?"
   },
   {
     "start": 39.92,
     "end": 41.44,
-    "text": "Anna: Hi, welcome."
+    "text": "**Anna:** Hi, welcome."
   },
   {
     "start": 41.44,
     "end": 42.399,
-    "text": "Anna: Hi, Max."
+    "text": "**Anna:** Hi, Max."
   },
   {
     "start": 42.399,
     "end": 43.6,
-    "text": "Anna: Hi, Daisy."
+    "text": "**Anna:** Hi, Daisy."
   },
   {
     "start": 43.6,
     "end": 44.559,
-    "text": "Max: Hello, Anna."
+    "text": "**Max:** Hello, Anna."
   },
   {
     "start": 44.719,
     "end": 46.559,
-    "text": "Anna: What do you see in the back?"
+    "text": "**Anna:** What do you see in the back?"
   },
   {
     "start": 46.38,
     "end": 49.34,
-    "text": "Anna: This is my camping box."
+    "text": "**Anna:** This is my {camping|キャンプ用の|/ˈkæmpɪŋ/|Camping gear is important.} box."
   },
   {
     "start": 49.34,
     "end": 50.78,
-    "text": "Anna: What is that?"
+    "text": "**Anna:** What is that?"
   },
   {
     "start": 50.78,
     "end": 53.34,
-    "text": "Anna: A box holds things."
+    "text": "**Anna:** A box holds things."
   },
   {
     "start": 53.34,
     "end": 54.7,
-    "text": "Anna: B-O-X."
+    "text": "**Anna:** B-O-X."
   },
   {
     "start": 54.7,
     "end": 56.14,
-    "text": "Anna: It ends in X."
+    "text": "**Anna:** It ends in X."
   },
   {
     "start": 56.14,
     "end": 58.38,
-    "text": "Anna: X makes the Ks sound"
+    "text": "**Anna:** X makes the Ks sound"
   },
   {
     "start": 59.02,
     "end": 62.06,
-    "text": "Students: I know the word box."
+    "text": "**Students:** I know the word box."
   },
   {
     "start": 62.06,
     "end": 64.78,
-    "text": "Students: I mean, what is camping?"
+    "text": "**Students:** I mean, what is camping?"
   },
   {
     "start": 64.78,
     "end": 68.14,
-    "text": "Max: Anna, I have our question for today."
+    "text": "**Max:** Anna, I have our question for today."
   },
   {
     "start": 68.14,
     "end": 71.1,
-    "text": "Students: Anna, answer my question first."
+    "text": "**Students:** Anna, answer my question first."
   },
   {
     "start": 70.64,
     "end": 72.08,
-    "text": "Students: What is happening?"
+    "text": "**Students:** What is happening?"
   },
   {
     "start": 72.32,
     "end": 74.24,
-    "text": "Max: What me first?"
+    "text": "**Max:** What me first."
   },
   {
     "start": 74.24,
     "end": 75.92,
-    "text": "Max: The question is helpful."
+    "text": "**Max:** The question is {helpful|役立つ/有益な|/ˈhelpfəl/|A helpful friend is good.}"
   },
   {
     "start": 76,
     "end": 79.28,
-    "text": "Anna: Daisy, please let me get the question first"
+    "text": "**Anna:** Daisy, please let me get the question first"
   },
   {
     "start": 82.259,
     "end": 84.34,
-    "text": "Anna: What is camping?"
+    "text": "**Anna:** What is camping?"
   },
   {
     "start": 84.34,
     "end": 85.78,
-    "text": "Anna: Max, you are right."
+    "text": "**Anna:** Max, you are right."
   },
   {
     "start": 85.78,
     "end": 87.78,
-    "text": "Anna: The question is helpful."
+    "text": "**Anna:** The {question|質問/問題} is helpful."
   },
   {
     "start": 89.34,
     "end": 95.74,
-    "text": "Anna: Camping is playing, eating, and sleeping outdoors."
+    "text": "**Anna:** {Camping|キャンプ/野外活動} is playing, eating, and sleeping outdoors."
   },
   {
     "start": 96.22,
     "end": 98.94,
-    "text": "Anna: Hey, I have an idea."
+    "text": "**Anna:** Hey, I have an {idea|アイデア/考え}."
   },
   {
     "start": 98.94,
     "end": 100.94,
-    "text": "Anna: Let's go camping!"
+    "text": "**Anna:** Let's go camping!"
   },
   {
     "start": 101.259,
     "end": 103.979,
-    "text": "Students: No, no, no."
+    "text": "**Students:** No, no, no."
   },
   {
     "start": 104.24,
     "end": 107.28,
-    "text": "Students: I do not like the outdoors."
+    "text": "**Students:** I do not like the {outdoors|野外/屋外}."
   },
   {
     "start": 107.28,
     "end": 110.56,
-    "text": "Students: I am an indoor flower."
+    "text": "**Students:** I am an {indoor|屋内の} flower."
   },
   {
     "start": 111.84,
     "end": 115.36,
-    "text": "DrJill: You can do many fun things on a camping trip."
+    "text": "**DrJill:** You can do many fun things on a camping trip."
   },
   {
     "start": 115.36,
     "end": 117.28,
-    "text": "DrJill: You can fish."
+    "text": "**DrJill:** You can {fish|魚を釣る}."
   },
   {
     "start": 117.48,
     "end": 120.84,
-    "text": "DrJill: Boat, hike, and swim."
+    "text": "**DrJill:** Boat, {hike|ハイキングする}, and swim."
   },
   {
     "start": 120.84,
     "end": 126.84,
-    "text": "DrJill: You can sit around a campfire and roast marshmallows and sing songs."
+    "text": "**DrJill:** You can sit around a {campfire|キャンプファイヤー} and {roast|焼く} marshmallows and sing songs."
   },
   {
     "start": 126.84,
     "end": 129.32,
-    "text": "DrJill: Now let's hear from some friends"
+    "text": "**DrJill:** Now let's hear from some friends"
   },
   {
     "start": 129.52,
     "end": 133.28,
-    "text": "DrJill: They talk about things to do on a camping trip."
+    "text": "**DrJill:** They talk about things to do on a camping trip."
   },
   {
     "start": 133.28,
     "end": 134.959,
-    "text": "Students: Camping is fun."
+    "text": "**Students:** Camping is fun."
   },
   {
     "start": 134.959,
     "end": 137.92,
-    "text": "Students: You sleep outside in a tent."
+    "text": "**Students:** You sleep outside in a {tent|テント}."
   },
   {
     "start": 137.82,
     "end": 141.58,
-    "text": "Students: My favorite part of camping is fishing."
+    "text": "**Students:** My favorite part of camping is fishing."
   },
   {
     "start": 141.58,
     "end": 143.26,
-    "text": "Students: I love to fish."
+    "text": "**Students:** I love to fish."
   },
   {
     "start": 143.26,
     "end": 147.34,
-    "text": "DrJill: On a camping trip, I always bring a sleeping bag."
+    "text": "**DrJill:** On a camping trip, I always bring a {sleeping bag|寝袋}."
   },
   {
     "start": 147.32,
     "end": 155.88,
-    "text": "DrJill: Camping is fun, but you need special things to go camping, like a tent and sleeping bag."
+    "text": "**DrJill:** Camping is fun, but you need special things to go camping, like a tent and sleeping bag."
   },
   {
     "start": 156.44,
     "end": 160.84,
-    "text": "DrJill: A list can help you bring all the right things."
+    "text": "**DrJill:** A list can help you bring all the right things."
   },
   {
     "start": 160.84,
     "end": 165,
-    "text": "DrJill: Anna needs to pack her camping things in order."
+    "text": "**DrJill:** Anna needs to pack her camping things in {order|順序}."
   },
   {
     "start": 165,
     "end": 167.24,
-    "text": "DrJill: So she makes a list."
+    "text": "**DrJill:** So she makes a list."
   },
   {
     "start": 167.68,
     "end": 176.64,
-    "text": "DrJill: And she uses helpful numbers like first, second, third, fourth, and more."
+    "text": "**DrJill:** And she uses helpful numbers like first, second, third, fourth, and more."
   },
   {
     "start": 177.379,
     "end": 180.659,
-    "text": "DrJill: Listen for these words."
+    "text": "**DrJill:** Listen for these words."
   },
   {
     "start": 180.659,
     "end": 183.54,
-    "text": "Anna: I am going camping."
+    "text": "**Anna:** I am going camping."
   },
   {
     "start": 183.54,
     "end": 188.659,
-    "text": "Anna: I need to pack my camping things in order."
+    "text": "**Anna:** I need to pack my camping things in order."
   },
   {
     "start": 189.18,
     "end": 191.5,
-    "text": "Anna: A list helps."
+    "text": "**Anna:** A list helps."
   },
   {
     "start": 192.3,
     "end": 194.06,
-    "text": "Anna: Camping things."
+    "text": "**Anna:** Camping things."
   },
   {
     "start": 194.06,
     "end": 197.74,
-    "text": "Anna: Please get in my car."
+    "text": "**Anna:** Please get in my car."
   },
   {
     "start": 197.7,
     "end": 198.98,
-    "text": "Anna: In order."
+    "text": "**Anna:** In order."
   },
   {
     "start": 201.38,
     "end": 204.26,
-    "text": "Anna: First is a tent."
+    "text": "**Anna:** First is a {tent|テント|/tent/|I put my tent near the lake.}"
   },
   {
     "start": 206.1,
     "end": 208.9,
-    "text": "Anna: Second is a cot"
+    "text": "**Anna:** Second is a {cot|簡易ベッド/折りたたみベッド|/kɒt/|The camper used a cot.}"
   },
   {
     "start": 213.02,
     "end": 217.1,
-    "text": "Anna: Third is a sleeping bag."
+    "text": "**Anna:** Third is a {sleeping bag|寝袋|/ˈsliːpɪŋ bæɡ/|I zip up my sleeping bag.}"
   },
   {
     "start": 219.38,
     "end": 222.26,
-    "text": "Anna: Fourth is a grill."
+    "text": "**Anna:** Fourth is a {grill|グリル/焼き網|/ɡrɪl/|We cook food on the grill.}"
   },
   {
     "start": 225.14,
     "end": 229.38,
-    "text": "Anna: Fifth is a flashlight."
+    "text": "**Anna:** Fifth is a {flashlight|懐中電灯|/ˈflæʃlaɪt/|I use a flashlight at night.}"
   },
   {
     "start": 230.06,
     "end": 231.18,
-    "text": "Anna: Thank you."
+    "text": "**Anna:** Thank you."
   },
   {
     "start": 232.46,
     "end": 235.02,
-    "text": "Anna: Thank you, Camping Things."
+    "text": "**Anna:** Thank you, Camping Things."
   },
   {
     "start": 235.02,
     "end": 236.3,
-    "text": "Anna: Thank you."
+    "text": "**Anna:** Thank you."
   },
   {
     "start": 239.12,
     "end": 241.28,
-    "text": "DrJill: Now let's play a game."
+    "text": "**DrJill:** Now let's play a game."
   },
   {
     "start": 241.28,
     "end": 244.96,
-    "text": "DrJill: Here are five things Anna needs for camping."
+    "text": "**DrJill:** Here are five things Anna needs for camping."
   },
   {
     "start": 247.78,
     "end": 249.78,
-    "text": "Students: Which thing is third?"
+    "text": "**Students:** Which thing is third?"
   },
   {
     "start": 249.78,
     "end": 255.14,
-    "text": "Anna: The sleeping bag is third on the list."
+    "text": "**Anna:** The sleeping bag is third on the list."
   },
   {
     "start": 255.14,
     "end": 256.82,
-    "text": "Students: Which thing?"
+    "text": "**Students:** Which thing?"
   },
   {
     "start": 256.82,
     "end": 258.18,
-    "text": "Students: is fifth."
+    "text": "**Students:** is fifth."
   },
   {
     "start": 258.18,
     "end": 262.74,
-    "text": "Anna: The flashlight is fifth on the list."
+    "text": "**Anna:** The flashlight is fifth on the list."
   },
   {
     "start": 263.06,
     "end": 266.1,
-    "text": "Students: Which thing is first?"
+    "text": "**Students:** Which thing is first?"
   },
   {
     "start": 266.1,
     "end": 271.22,
-    "text": "Anna: The tent is first on the list."
+    "text": "**Anna:** The tent is first on the list."
   },
   {
     "start": 270.16,
     "end": 271.12,
-    "text": "DrJill: Great job!"
+    "text": "**DrJill:** Great job!"
   },
   {
     "start": 271.36,
     "end": 277.44,
-    "text": "DrJill: Use words like first, second, and third to tell the order of things."
+    "text": "**DrJill:** Use words like first, second, and third to tell the {order|順序/順番|/ˈɔːrdər/|Put things in order.} of things."
   },
   {
     "start": 277.44,
     "end": 282.16,
-    "text": "DrJill: And you can talk about camping in English with your friends and family"
+    "text": "**DrJill:** And you can talk about camping in English with your friends and family"
   },
   {
     "start": 282.96,
     "end": 288,
-    "text": "DrJill: Join us again next time on Let's Learn English with Anna."
+    "text": "**DrJill:** Join us again next time on Let's Learn English with Anna."
   },
   {
     "start": 288,
     "end": 293.52,
-    "text": "Students: Take me home, country road."
+    "text": "**Students:** Take me home, country road."
   }
 ]

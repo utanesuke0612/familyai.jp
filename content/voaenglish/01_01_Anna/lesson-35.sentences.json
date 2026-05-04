@@ -2,12 +2,12 @@
   {
     "start": 0.16,
     "end": 2.96,
-    "text": "They shared how they use computers."
+    "text": "They {shared|共有した/語った|/ʃɛərd/|We shared our stories.} how they use {computers|コンピューター|/kəmˈpjuːtərz/|Computers help us work faster.}."
   },
   {
     "start": 0.24,
     "end": 7.44,
-    "text": "In the past, computers were really big, but today they can fit in our hand."
+    "text": "In the past, {computers|コンピューター|/kəmˈpjuːtərz/|Modern computers are powerful.} were really {big|大きい|/bɪɡ/|This book is big.}, but today they can fit in our hand."
   },
   {
     "start": 0.24,
@@ -17,17 +17,17 @@
   {
     "start": 0.24,
     "end": 6.08,
-    "text": "Today, Anna answers that question, how do you use computers?"
+    "text": "Today, Anna answers that {question|質問|/ˈkwɛstʃən/|I have a question for you.}, how do you use computers?"
   },
   {
     "start": 0.24,
     "end": 4.96,
-    "text": "She will play Max's new game later or in the future."
+    "text": "She will play Max's new {game|ゲーム|/ɡeɪm/|Let's play a game.} later or in the future."
   },
   {
     "start": 0.24,
     "end": 3.04,
-    "text": "Anna is playing Max's video game."
+    "text": "Anna is playing Max's video {game|ゲーム|/ɡeɪm/|This game is fun.}."
   },
   {
     "start": 0.24,
@@ -37,22 +37,22 @@
   {
     "start": 0.32,
     "end": 7.04,
-    "text": "So computers are always changing and they help us in many ways."
+    "text": "So {computers|コンピューター|/kəmˈpjuːtərz/|Computers solve complex problems.} are always changing and they help us in many ways."
   },
   {
     "start": 0.32,
     "end": 5.12,
-    "text": "I use my phone to text and to call people."
+    "text": "I use my {phone|電話|/foʊn/|My phone is ringing.} to text and to call people."
   },
   {
     "start": 0.32,
     "end": 4.48,
-    "text": "Using Will, I can guess the future."
+    "text": "Using Will, I can {guess|推測する|/ɡɛs/|I guess it will rain.} the future."
   },
   {
     "start": 0.32,
     "end": 2.8,
-    "text": "I need to walk more."
+    "text": "I need to {walk|歩く|/wɔːk/|Let's walk to the park.} more."
   },
   {
     "start": 0.32,
@@ -62,47 +62,47 @@
   {
     "start": 0.32,
     "end": 6.08,
-    "text": "Computers are useful, but remember to use technology carefully."
+    "text": "{Computers|コンピューター|/kəmˈpjuːtərz/|Computers process information quickly.} are useful, but remember to use {technology|技術|/tɛkˈnɑːlədʒi/|Technology changes rapidly.} carefully."
   },
   {
     "start": 0.48,
     "end": 5.6,
-    "text": "Ana, our question is, how do you use computers?"
+    "text": "Ana, our {question|質問|/ˈkwɛstʃən/|Can I ask a question?} is, how do you use computers?"
   },
   {
     "start": 0.48,
     "end": 4.5600000000000005,
-    "text": "Listen for computer and technology words."
+    "text": "Listen for {computer|コンピューター|/kəmˈpjuːtər/|My computer is slow.} and {technology|技術|/tɛkˈnɑːlədʒi/|Technology evolves quickly.} words."
   },
   {
     "start": 0.56,
     "end": 6.24,
-    "text": "Using will, I can make a promise for the future."
+    "text": "Using will, I can make a {promise|約束|/ˈprɑːmɪs/|I promise to help you.} for the future."
   },
   {
     "start": 0.56,
     "end": 4,
-    "text": "Max, I do not like to play video games."
+    "text": "Max, I do not like to play video {games|ゲーム|/ɡeɪmz/|Video games can be fun.}."
   },
   {
     "start": 0.56,
     "end": 2.08,
-    "text": "I love this game."
+    "text": "I love this {game|ゲーム|/ɡeɪm/|This game is exciting.}."
   },
   {
     "start": 0.64,
     "end": 7.52,
-    "text": "And tomorrow I will walk 10,000 steps, I promise."
+    "text": "And tomorrow I will {walk|歩く|/wɔːk/|We walk to school.} 10,000 steps, I promise."
   },
   {
     "start": 0.64,
     "end": 5.52,
-    "text": "Earlier, I promised to play Max's video game."
+    "text": "Earlier, I {promised|約束した|/ˈprɑːmɪst/|I promised to be there.} to play Max's video game."
   },
   {
     "start": 0.64,
     "end": 6.4,
-    "text": "Oh no, the internet is down, I have zero connection."
+    "text": "Oh no, the {internet|インターネット|/ˈɪntərnɛt/|The internet is fast.} is down, I have zero connection."
   },
   {
     "start": 0.96,
@@ -117,7 +117,7 @@
   {
     "start": 1.8399999999999999,
     "end": 8.08,
-    "text": "Tomorrow I will take a walk for my 10,000 steps."
+    "text": "Tomorrow I will {take|取る/歩く|/teɪk/|Take a deep breath.} a walk for my 10,000 steps."
   },
   {
     "start": 2.08,
@@ -127,77 +127,77 @@
   {
     "start": 2.32,
     "end": 4.8,
-    "text": "I like the music."
+    "text": "I like the {music|音楽|/ˈmjuːzɪk/|I love classical music.}."
   },
   {
     "start": 2.4,
     "end": 4.64,
-    "text": "She is in my video game."
+    "text": "She is in my video {game|ゲーム|/ɡeɪm/|Let's play a game.}."
   },
   {
     "start": 2.64,
     "end": 7.44,
-    "text": "Later, I will play your game."
+    "text": "Later, I will play your {game|ゲーム|/ɡeɪm/|This game is interesting.}."
   },
   {
     "start": 2.8,
     "end": 4.64,
-    "text": "Do not walk now."
+    "text": "Do not {walk|歩く|/wɔːk/|Walk slowly.} now."
   },
   {
     "start": 2.96,
     "end": 9.44,
-    "text": "For me, I sometimes work online, so I need a good internet connection."
+    "text": "For me, I sometimes {work|働く|/wɜːrk/|I work hard every day.} online, so I need a good {internet|インターネット|/ˈɪntərnɛt/|The internet connects people.} connection."
   },
   {
     "start": 3.04,
     "end": 4.5600000000000005,
-    "text": "Will she like it?"
+    "text": "Will she {like|好きになる/気に入る|/laɪk/|I like pizza.} it?"
   },
   {
     "start": 3.2,
     "end": 5.92,
-    "text": "Anna, you are bad."
+    "text": "Anna, you are {bad|悪い/だめ|/bæd/|That was a bad idea.}"
   },
   {
     "start": 3.44,
     "end": 7.2,
-    "text": "She teaches us more about the word will."
+    "text": "She {teaches|教える|/ˈtiːtʃɪz/|She teaches English.} us more about the word will."
   },
   {
     "start": 3.6,
     "end": 6.32,
-    "text": "She is playing Max's video game."
+    "text": "She is {playing|プレイする/遊ぶ|/ˈpleɪɪŋ/|Kids are playing soccer.} Max's video game."
   },
   {
     "start": 4,
     "end": 5.92,
-    "text": "But my game is fun."
+    "text": "But my game is {fun|楽しい|/fʌn/|This game is fun.}"
   },
   {
     "start": 4.48,
     "end": 7.28,
-    "text": "Tomorrow I think it will rain"
+    "text": "Tomorrow I think it will {rain|雨が降る|/reɪn/|It will rain today.}"
   },
   {
     "start": 4.5600000000000005,
     "end": 9.36,
-    "text": "I like texting my friends on my phone."
+    "text": "I like {texting|メッセージを送る|/ˈtekstɪŋ/|I'm texting my friend.} my friends on my phone."
   },
   {
     "start": 4.5600000000000005,
     "end": 6.08,
-    "text": "Will she win?"
+    "text": "Will she {win|勝つ|/wɪn/|Will she win the game?}"
   },
   {
     "start": 4.64,
     "end": 7.36,
-    "text": "Try my new video game app."
+    "text": "Try my new video game {app|アプリ|/æp/|I use a fitness app.}"
   },
   {
     "start": 4.8,
     "end": 7.04,
-    "text": "Oh, the colors are pretty."
+    "text": "Oh, the {colors|色|/ˈkʌlərz/|The colors are bright.} are pretty."
   },
   {
     "start": 4.8,
@@ -207,22 +207,22 @@
   {
     "start": 4.96,
     "end": 8.96,
-    "text": "We use Will to talk about future actions."
+    "text": "We use Will to talk about future {actions|行動/動作|/ˈækʃənz/|Future actions are important.}"
   },
   {
     "start": 5.12,
     "end": 9.36,
-    "text": "I use an exercise app to count my steps."
+    "text": "I use an {exercise|運動/エクササイズ|/ˈeksərsaɪz/|Exercise is good for health.} app to count my steps."
   },
   {
     "start": 5.84,
     "end": 9.92,
-    "text": "I will play your video game later."
+    "text": "I will {play|プレイする/遊ぶ|/pleɪ/|Let's play a game.} your video game later."
   },
   {
     "start": 5.92,
     "end": 8.64,
-    "text": "Max, you are a computer."
+    "text": "Max, you are a {computer|コンピューター|/kəmˈpjuːtər/|A computer helps us work.}"
   },
   {
     "start": 5.92,
@@ -232,7 +232,7 @@
   {
     "start": 6.08,
     "end": 7.68,
-    "text": "Keep watching!"
+    "text": "Keep {watching|見ている|/ˈwɑːtʃɪŋ/|Keep watching the movie.}!"
   },
   {
     "start": 6.08,
@@ -247,12 +247,12 @@
   {
     "start": 6.24,
     "end": 8.72,
-    "text": "I will do better in school"
+    "text": "I will do better in {school|学校|/skuːl/|I like my school.}"
   },
   {
     "start": 6.32,
     "end": 8.48,
-    "text": "What will happen next?"
+    "text": "What will {happen|起こる|/ˈhæpən/|What will happen next?} next?"
   },
   {
     "start": 6.4,
@@ -262,7 +262,7 @@
   {
     "start": 6.72,
     "end": 9.92,
-    "text": "I think you will play tomorrow."
+    "text": "I think you will {play|プレイする/遊ぶ|/pleɪ/|Let's play together.} tomorrow."
   },
   {
     "start": 6.88,
@@ -272,12 +272,12 @@
   {
     "start": 7.04,
     "end": 9.68,
-    "text": "How do you use computers?"
+    "text": "How do you use {computers|コンピューター|/kəmˈpjuːtərz/|Computers help us work.}?"
   },
   {
     "start": 7.2,
     "end": 11.2,
-    "text": "Sometimes we need to talk about the future."
+    "text": "Sometimes we need to talk about the {future|未来|/ˈfjuːtʃər/|The future looks bright.}"
   },
   {
     "start": 7.28,
@@ -287,22 +287,22 @@
   {
     "start": 7.36,
     "end": 10.88,
-    "text": "I downloaded it to your phone."
+    "text": "I {downloaded|ダウンロードした|/ˈdaʊnloʊdɪd/|I downloaded a new app.} it to your phone."
   },
   {
     "start": 7.44,
     "end": 10.8,
-    "text": "And they are getting faster and smarter."
+    "text": "And they are getting {faster|速い/より速く|/ˈfæstər/|Computers are getting faster.} and {smarter|賢い/より賢く|/ˈsmɑːrtər/|AI is getting smarter.}"
   },
   {
     "start": 7.44,
     "end": 11.6,
-    "text": "Tomorrow I will walk 10,000 steps."
+    "text": "Tomorrow I will {walk|歩く|/wɔːk/|I will walk to school.} 10,000 steps."
   },
   {
     "start": 7.52,
     "end": 13.2,
-    "text": "Anna uses technology for many things, but not to play video games."
+    "text": "Anna uses {technology|技術/テクノロジー|/tekˈnɑːlədʒi/|Technology helps us solve problems.} for many things, but not to {play|遊ぶ/演奏する|/pleɪ/|Let's play a game.} video games."
   },
   {
     "start": 7.52,
@@ -317,22 +317,22 @@
   {
     "start": 7.68,
     "end": 10.4,
-    "text": "But now let's hear from some friends."
+    "text": "But now let's hear from some {friends|友人/仲間|/frendz/|My friends are coming over.}"
   },
   {
     "start": 7.92,
     "end": 10.08,
-    "text": "Welcome to my treehouse."
+    "text": "Welcome to my {treehouse|木の上の小屋|/ˈtriːhaʊs/|I built a treehouse in my backyard.}"
   },
   {
     "start": 8.08,
     "end": 10.32,
-    "text": "I think you will like it"
+    "text": "I think you will {like|好む/好きである|/laɪk/|I like ice cream.} it"
   },
   {
     "start": 8.64,
     "end": 11.36,
-    "text": "You help me with the show."
+    "text": "You help me with the {show|番組/ショー|/ʃoʊ/|This is a great TV show.}"
   },
   {
     "start": 8.72,
@@ -342,17 +342,17 @@
   {
     "start": 8.96,
     "end": 14.88,
-    "text": "Will lets us make promises and guesses about what is going to happen."
+    "text": "{Will|助動詞（意志/推量）|/wɪl/|I will help you tomorrow.} lets us make {promises|約束|/ˈprɒmɪsɪz/|I promise to help you.} and guesses about what is going to happen."
   },
   {
     "start": 9.36,
     "end": 13.12,
-    "text": "You walked a thousand steps yesterday."
+    "text": "You walked a thousand {steps|歩/段階|/steps/|Take small steps forward.} yesterday."
   },
   {
     "start": 9.36,
     "end": 14.48,
-    "text": "I like to play video games on my tablet."
+    "text": "I like to play video games on my {tablet|タブレット|/ˈtæblət/|I read books on my tablet.}"
   },
   {
     "start": 9.44,
@@ -362,7 +362,7 @@
   {
     "start": 9.44,
     "end": 12.48,
-    "text": "And I love taking selfies."
+    "text": "And I love taking {selfies|自撮り写真|/ˈsɛlfi/|I take selfies with my friends.}"
   },
   {
     "start": 9.6,
@@ -372,12 +372,12 @@
   {
     "start": 10.4,
     "end": 14.72,
-    "text": "They answer the question, how do you use computers?"
+    "text": "They answer the {question|質問|/ˈkwestʃən/|I have a question for you.}, how do you use {computers|コンピューター|/kəmˈpjuːtərz/|Computers are useful for work.}?"
   },
   {
     "start": 11.36,
     "end": 14.64,
-    "text": "I use my laptop to work."
+    "text": "I use my {laptop|ノートパソコン|/ˈlæptɒp/|My laptop is very fast.} to work."
   },
   {
     "start": 13.36,

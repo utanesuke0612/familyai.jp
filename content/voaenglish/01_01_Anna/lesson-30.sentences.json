@@ -2,401 +2,401 @@
   {
     "start": 6.64,
     "end": 8.16,
-    "text": "Speaker 1: Hello, I'm Dr."
+    "text": "**Speaker 1:** Hello, I'm Dr."
   },
   {
     "start": 8.16,
     "end": 8.88,
-    "text": "Speaker 1: Jill."
+    "text": "**Speaker 1:** Jill."
   },
   {
     "start": 8.88,
     "end": 12.4,
-    "text": "Speaker 1: Welcome to Let's Learn English with Anna."
+    "text": "**Speaker 1:** {Welcome|ようこそ} to Let's Learn English with Anna."
   },
   {
     "start": 12.219,
     "end": 15.82,
-    "text": "Speaker 1: I like to cook and eat."
+    "text": "**Speaker 1:** I {like|好き} to {cook|料理する} and {eat|食べる}."
   },
   {
     "start": 15.82,
     "end": 19.26,
-    "text": "Speaker 1: But some dishes are new to me."
+    "text": "**Speaker 1:** But some {dishes|料理} are {new|新しい} to me."
   },
   {
     "start": 19.26,
     "end": 21.98,
-    "text": "Speaker 1: So I use a recipe."
+    "text": "**Speaker 1:** So I use a {recipe|レシピ}."
   },
   {
     "start": 22.16,
     "end": 25.76,
-    "text": "Speaker 1: A recipe tells me how to make a dish."
+    "text": "**Speaker 1:** A recipe tells me how to {make|作る} a dish."
   },
   {
     "start": 25.76,
     "end": 29.12,
-    "text": "Speaker 1: For example, use two lemons."
+    "text": "**Speaker 1:** For example, use two {lemons|レモン}."
   },
   {
     "start": 29.12,
     "end": 29.76,
-    "text": "Speaker 1: Beet"
+    "text": "**Speaker 1:** {Beet|ビート（野菜）}"
   },
   {
     "start": 29.94,
     "end": 33.7,
-    "text": "Speaker 1: five eggs or add some sugar."
+    "text": "**Speaker 1:** five eggs or add some {sugar|砂糖}."
   },
   {
     "start": 33.7,
     "end": 37.38,
-    "text": "Speaker 1: Today we talk about making food."
+    "text": "**Speaker 1:** Today we {talk|話す} about making food."
   },
   {
     "start": 37.38,
     "end": 40.02,
-    "text": "Speaker 1: What food can you make?"
+    "text": "**Speaker 1:** What food can you make?"
   },
   {
     "start": 40.24,
     "end": 41.92,
-    "text": "Speaker 1: Let's visit Anna."
+    "text": "**Speaker 1:** Let's visit Anna."
   },
   {
     "start": 41.92,
     "end": 46.64,
-    "text": "Speaker 1: She answers the question, what food can you make?"
+    "text": "**Speaker 1:** She answers the question, what food can you make?"
   },
   {
     "start": 47.28,
     "end": 50.4,
-    "text": "Speaker 2: I have our question for today."
+    "text": "**Speaker 2:** I have our question for today."
   },
   {
     "start": 50.4,
     "end": 53.44,
-    "text": "Speaker 2: What food can you make?"
+    "text": "**Speaker 2:** What food can you make?"
   },
   {
     "start": 53.42,
     "end": 55.82,
-    "text": "Speaker 3: What food can you make?"
+    "text": "**Speaker 3:** What food can you make?"
   },
   {
     "start": 55.82,
     "end": 60.379,
-    "text": "Speaker 3: Today we talk about food, so I am happy."
+    "text": "**Speaker 3:** Today we {talk|話す} about food, so I am {happy|幸せな}."
   },
   {
     "start": 60.379,
     "end": 65.019,
-    "text": "Speaker 3: Well, I am hungry, so I am not happy."
+    "text": "**Speaker 3:** Well, I am {hungry|空腹の}, so I am not happy."
   },
   {
     "start": 65.019,
     "end": 66.94,
-    "text": "Speaker 3: Hi Daisy!"
+    "text": "**Speaker 3:** Hi Daisy!"
   },
   {
     "start": 66.82,
     "end": 72.5,
-    "text": "Speaker 3: I am part Italian, so I like to make pasta."
+    "text": "**Speaker 3:** I am part {Italian|イタリア人の}, so I like to make {pasta|パスタ}."
   },
   {
     "start": 72.5,
     "end": 73.78,
-    "text": "Speaker 3: I use oil"
+    "text": "**Speaker 3:** I use {oil|油}"
   },
   {
     "start": 74.82,
     "end": 78.34,
-    "text": "Speaker 3: And garlic to make the pasta."
+    "text": "**Speaker 3:** And {garlic|ニンニク} to make the pasta."
   },
   {
     "start": 78.34,
     "end": 81.54,
-    "text": "Speaker 3: Then I add meatballs."
+    "text": "**Speaker 3:** Then I add {meatballs|ミートボール}."
   },
   {
     "start": 81.54,
     "end": 84.26,
-    "text": "Speaker 3: I added three meatballs."
+    "text": "**Speaker 3:** I added three meatballs."
   },
   {
     "start": 84.26,
     "end": 86.34,
-    "text": "Speaker 3: One, two, three."
+    "text": "**Speaker 3:** One, two, three."
   },
   {
     "start": 86.72,
     "end": 88.08,
-    "text": "Speaker 3: Yum."
+    "text": "**Speaker 3:** Yum."
   },
   {
     "start": 88.08,
     "end": 92.48,
-    "text": "Speaker 3: Max, taste a meatball."
+    "text": "**Speaker 3:** Max, taste a meatball."
   },
   {
     "start": 92.48,
     "end": 94.96,
-    "text": "Speaker 4: Yum tasty."
+    "text": "**Speaker 4:** Yum tasty."
   },
   {
     "start": 94.96,
     "end": 96.48,
-    "text": "Speaker 3: That's right, Max."
+    "text": "**Speaker 3:** That's right, Max."
   },
   {
     "start": 96.48,
     "end": 98.56,
-    "text": "Speaker 3: Mmm, tasty."
+    "text": "**Speaker 3:** Mmm, {tasty|おいしい|/ˈteɪsti/|This cake is very tasty}."
   },
   {
     "start": 98.56,
     "end": 101.36,
-    "text": "Speaker 3: I want a meatball."
+    "text": "**Speaker 3:** I want a {meatball|ミートボール|/ˈmiːtbɔːl/|I love eating meatball pasta}."
   },
   {
     "start": 101.259,
     "end": 103.42,
-    "text": "Speaker 3: I want a meatball."
+    "text": "**Speaker 3:** I want a meatball."
   },
   {
     "start": 103.42,
     "end": 106.38,
-    "text": "Speaker 3: Sorry, Daisy."
+    "text": "**Speaker 3:** Sorry, Daisy."
   },
   {
     "start": 106.38,
     "end": 108.7,
-    "text": "Speaker 1: I have a question for you."
+    "text": "**Speaker 1:** I have a question for you."
   },
   {
     "start": 108.7,
     "end": 110.78,
-    "text": "Speaker 1: What is a noun?"
+    "text": "**Speaker 1:** What is a {noun|名詞/語|/naʊn/|A noun names something}."
   },
   {
     "start": 111.28,
     "end": 116.4,
-    "text": "Speaker 1: Nouns are people, places, things, and ideas."
+    "text": "**Speaker 1:** Nouns are {people|人々|/ˈpiːpəl/|People are walking here}, {places|場所|/ˈpleɪsɪz/|Many places have unique cultures}, things, and ideas."
   },
   {
     "start": 116.4,
     "end": 120.48,
-    "text": "Speaker 1: Some nouns we count, like meatballs."
+    "text": "**Speaker 1:** Some nouns we {count|数える|/kaʊnt/|I can count my books}."
   },
   {
     "start": 120.48,
     "end": 125.36,
-    "text": "Speaker 1: And some nouns we do not count, like water."
+    "text": "**Speaker 1:** And some nouns we do not count, like water."
   },
   {
     "start": 125.42,
     "end": 128.459,
-    "text": "Speaker 3: You can count lemons."
+    "text": "**Speaker 3:** You can count {lemons|レモン|/ˈlemənz/|I buy fresh lemons}."
   },
   {
     "start": 128.459,
     "end": 131.02,
-    "text": "Speaker 3: One, two, three, four."
+    "text": "**Speaker 3:** One, two, three, four."
   },
   {
     "start": 131.02,
     "end": 133.42,
-    "text": "Speaker 3: I have four lemons"
+    "text": "**Speaker 3:** I have four lemons"
   },
   {
     "start": 133.92,
     "end": 136.88,
-    "text": "Speaker 3: Four is more than one."
+    "text": "**Speaker 3:** Four is more than one."
   },
   {
     "start": 136.88,
     "end": 141.92,
-    "text": "Speaker 3: So I add S to the end of lemon."
+    "text": "**Speaker 3:** So I add S to the end of lemon."
   },
   {
     "start": 141.92,
     "end": 143.44,
-    "text": "Speaker 3: Lemons!"
+    "text": "**Speaker 3:** Lemons!"
   },
   {
     "start": 144.14,
     "end": 147.74,
-    "text": "Speaker 3: We can count dishes."
+    "text": "**Speaker 3:** We can count {dishes|皿/料理|/ˈdɪʃɪz/|I wash these dishes}."
   },
   {
     "start": 147.74,
     "end": 151.42,
-    "text": "Speaker 3: I made three dishes for dinner."
+    "text": "**Speaker 3:** I made three dishes for dinner."
   },
   {
     "start": 151.42,
     "end": 155.42,
-    "text": "Speaker 3: I added ES to the end of dish."
+    "text": "**Speaker 3:** I added ES to the end of dish."
   },
   {
     "start": 155.62,
     "end": 160.18,
-    "text": "Speaker 3: This shows I have more than one."
+    "text": "**Speaker 3:** This shows I have more than one."
   },
   {
     "start": 160.18,
     "end": 163.06,
-    "text": "Speaker 3: Some things you cannot count."
+    "text": "**Speaker 3:** Some things you cannot count."
   },
   {
     "start": 163.06,
     "end": 168.02,
-    "text": "Speaker 3: You do not add S or E S to words like"
+    "text": "**Speaker 3:** You do not add S or E S to words like"
   },
   {
     "start": 168.78,
     "end": 173.18,
-    "text": "Speaker 3: Rice, pasta, and salt."
+    "text": "**Speaker 3:** {Rice|米|/raɪs/|Rice is a staple food}, {pasta|パスタ|/ˈpæstə/|I love eating pasta}, and salt."
   },
   {
     "start": 173.18,
     "end": 174.86,
-    "text": "Speaker 3: Now you try."
+    "text": "**Speaker 3:** Now you try."
   },
   {
     "start": 174.86,
     "end": 179.34,
-    "text": "Speaker 3: Are these count or non-count foods?"
+    "text": "**Speaker 3:** Are these count or non-count foods?"
   },
   {
     "start": 180.54,
     "end": 187.819,
-    "text": "Speaker 5: Can count Bananas Eggs Nuts Grapes"
+    "text": "**Speaker 5:** Can count {Bananas|バナナ|/bəˈnænəz/|Bananas are yellow} {Eggs|卵|/egz/|Eggs are protein-rich} {Nuts|ナッツ|/nʌts/|Nuts are healthy snacks} {Grapes|ブドウ|/greɪps/|Grapes grow on vines}"
   },
   {
     "start": 188.12,
     "end": 200.12,
-    "text": "Speaker 5: Tomatoes cannot count milk sugar fish bread tea."
+    "text": "**Speaker 5:** {Tomatoes|トマト|/təˈmeɪtoʊz/|Tomatoes are red} cannot count milk sugar fish bread tea."
   },
   {
     "start": 200.12,
     "end": 201.4,
-    "text": "Speaker 1: Thanks, Anna"
+    "text": "**Speaker 1:** Thanks, Anna"
   },
   {
     "start": 201.5,
     "end": 204.14,
-    "text": "Speaker 1: Next, we hear from some friends."
+    "text": "**Speaker 1:** Next, we hear from some friends."
   },
   {
     "start": 204.14,
     "end": 208.3,
-    "text": "Speaker 1: They answer the question, what food can you make?"
+    "text": "**Speaker 1:** They answer the question, what food can you make?"
   },
   {
     "start": 208.62,
     "end": 212.14,
-    "text": "Speaker 1: I make many cakes and cookies for my family."
+    "text": "**Speaker 1:** I make many {cakes|ケーキ|/keɪks/|I bake delicious cakes} and {cookies|クッキー|/ˈkʊkiz/|Cookies are sweet treats} for my family."
   },
   {
     "start": 212.54,
     "end": 213.1,
-    "text": "Speaker 1: I like"
+    "text": "**Speaker 1:** I like"
   },
   {
     "start": 213.66,
     "end": 217.18,
-    "text": "Speaker 1: Tomate guys with vegetables."
+    "text": "**Speaker 1:** {Tomate|トマト/野菜} guys with {vegetables|野菜/食材}."
   },
   {
     "start": 218.3,
     "end": 221.5,
-    "text": "Speaker 6: I make my famous egg dish."
+    "text": "**Speaker 6:** I make my {famous|有名な/すごい} egg dish."
   },
   {
     "start": 221.74,
     "end": 224.06,
-    "text": "Speaker 6: This for eggs!"
+    "text": "**Speaker 6:** This for eggs!"
   },
   {
     "start": 224.06,
     "end": 225.18,
-    "text": "Speaker 6: One tomato"
+    "text": "**Speaker 6:** One {tomato|トマト}"
   },
   {
     "start": 226.12,
     "end": 232.28,
-    "text": "Speaker 6: Some butter and salt."
+    "text": "**Speaker 6:** Some butter and salt."
   },
   {
     "start": 232.28,
     "end": 235.72,
-    "text": "Speaker 1: Anna is making a tasty dish for a picnic."
+    "text": "**Speaker 1:** Anna is making a {tasty|おいしい/美味しい} dish for a picnic."
   },
   {
     "start": 235.72,
     "end": 240.44,
-    "text": "Speaker 1: I wonder what dish Anna is making for her picnic."
+    "text": "**Speaker 1:** I wonder what dish Anna is making for her picnic."
   },
   {
     "start": 240.14,
     "end": 241.739,
-    "text": "Speaker 1: Let's watch."
+    "text": "**Speaker 1:** Let's watch."
   },
   {
     "start": 241.739,
     "end": 245.18,
-    "text": "Speaker 3: I am making s'm'ores for my picnic."
+    "text": "**Speaker 3:** I am making {s'm'ores|スモア（マシュマロとチョコのお菓子）} for my picnic."
   },
   {
     "start": 245.18,
     "end": 249.659,
-    "text": "Speaker 3: Each s'more gets two crackers."
+    "text": "**Speaker 3:** Each s'more gets two {crackers|クラッカー/せんべい}."
   },
   {
     "start": 250.76,
     "end": 255.8,
-    "text": "Speaker 3: Some chocolate and one marshmallow."
+    "text": "**Speaker 3:** Some chocolate and one {marshmallow|マシュマロ}."
   },
   {
     "start": 256.84,
     "end": 262.28,
-    "text": "Speaker 3: First, I need to cook the marshmallow over a fire."
+    "text": "**Speaker 3:** First, I need to {cook|調理する/焼く} the marshmallow over a fire."
   },
   {
     "start": 264.32,
     "end": 267.92,
-    "text": "Speaker 3: Ooh, this one is a little too dark."
+    "text": "**Speaker 3:** Ooh, this one is a little too {dark|暗い/焦げた}."
   },
   {
     "start": 267.92,
     "end": 270.32,
-    "text": "Speaker 3: This one is burnt."
+    "text": "**Speaker 3:** This one is {burnt|焦げた/燃えた}."
   },
   {
     "start": 272.56,
     "end": 274.08,
-    "text": "Speaker 3: I did it!"
+    "text": "**Speaker 3:** I did it!"
   },
   {
     "start": 273.7,
     "end": 276.74,
-    "text": "Speaker 3: I made four s'mores for my picnic."
+    "text": "**Speaker 3:** I made four s'mores for my picnic."
   },
   {
     "start": 276.74,
     "end": 283.86,
-    "text": "Speaker 3: I used eight graham crackers, some chocolate, and a bag of marshmallows."
+    "text": "**Speaker 3:** I used eight {graham crackers|グラハムクラッカー}, some chocolate, and a bag of marshmallows."
   },
   {
     "start": 284.9,
     "end": 288.18,
-    "text": "Speaker 1: They look bad but taste good."
+    "text": "**Speaker 1:** They look bad but taste good."
   },
   {
     "start": 288.44,
     "end": 296.04,
-    "text": "Speaker 1: Thanks for joining us today and come back again to watch Let's Learn English with Anna."
+    "text": "**Speaker 1:** Thanks for joining us today and come back again to watch Let's Learn English with Anna."
   }
 ]

@@ -2,481 +2,481 @@
   {
     "start": 6.72,
     "end": 9.28,
-    "text": "DrJill: Hello, I'm Doctor Gill."
+    "text": "**DrJill:** Hello, I'm Doctor Gill."
   },
   {
     "start": 9.26,
     "end": 12.78,
-    "text": "DrJill: Welcome to Let's Learn English with Anna."
+    "text": "**DrJill:** Welcome to Let's Learn English with Anna."
   },
   {
     "start": 12.78,
     "end": 15.42,
-    "text": "DrJill: Today we talk about birthdays."
+    "text": "**DrJill:** Today we {talk|話す/話題にする} about {birthdays|誕生日}."
   },
   {
     "start": 15.42,
     "end": 16.38,
-    "text": "DrJill: Yay!"
+    "text": "**DrJill:** Yay!"
   },
   {
     "start": 16.62,
     "end": 19.1,
-    "text": "DrJill: When is your birthday?"
+    "text": "**DrJill:** When is your birthday?"
   },
   {
     "start": 19.1,
     "end": 22.78,
-    "text": "DrJill: To answer this, we need some special words."
+    "text": "**DrJill:** To answer this, we need some {special|特別な/特殊な} words."
   },
   {
     "start": 22.78,
     "end": 23.98,
-    "text": "DrJill: What are they?"
+    "text": "**DrJill:** What are they?"
   },
   {
     "start": 24.119,
     "end": 28.119,
-    "text": "DrJill: Let's visit Anna's Treehouse and find out."
+    "text": "**DrJill:** Let's visit Anna's {Treehouse|ツリーハウス} and find out."
   },
   {
     "start": 28.119,
     "end": 33.239,
-    "text": "DrJill: She answers the question, when is your birthday?"
+    "text": "**DrJill:** She answers the question, when is your birthday?"
   },
   {
     "start": 33,
     "end": 34.2,
-    "text": "Anna: Hi Max."
+    "text": "**Anna:** Hi Max."
   },
   {
     "start": 34.2,
     "end": 35.32,
-    "text": "Anna: Hi Daisy."
+    "text": "**Anna:** Hi Daisy."
   },
   {
     "start": 35.32,
     "end": 36.76,
-    "text": "Max: Hello, Anna."
+    "text": "**Max:** Hello, Anna."
   },
   {
     "start": 36.76,
     "end": 39,
-    "text": "Max: I have our question for today."
+    "text": "**Max:** I have our question for today."
   },
   {
     "start": 39,
     "end": 40.12,
-    "text": "Anna: Awesome!"
+    "text": "**Anna:** {Awesome|素晴らしい}!"
   },
   {
     "start": 40.44,
     "end": 43.72,
-    "text": "Anna: When is your birthday?"
+    "text": "**Anna:** When is your birthday?"
   },
   {
     "start": 43.72,
     "end": 44.04,
-    "text": "Anna: Oh"
+    "text": "**Anna:** Oh"
   },
   {
     "start": 44.72,
     "end": 50.48,
-    "text": "Anna: To answer this question, we need special words."
+    "text": "**Anna:** To answer this question, we need {special|特別な/特殊な} words."
   },
   {
     "start": 50.48,
     "end": 51.12,
-    "text": "Anna: Cake!"
+    "text": "**Anna:** Cake!"
   },
   {
     "start": 51.28,
     "end": 52.32,
-    "text": "Anna: We need cake!"
+    "text": "**Anna:** We need cake!"
   },
   {
     "start": 52.48,
     "end": 55.52,
-    "text": "Anna: No, Daisy, we do not need cake."
+    "text": "**Anna:** No, Daisy, we do not need cake."
   },
   {
     "start": 55.52,
     "end": 57.6,
-    "text": "Anna: Well, not right now."
+    "text": "**Anna:** Well, not right now."
   },
   {
     "start": 57.6,
     "end": 59.92,
-    "text": "Max: We need the month of the year."
+    "text": "**Max:** We need the month of the year."
   },
   {
     "start": 59.92,
     "end": 61.52,
-    "text": "Anna: Right, Max."
+    "text": "**Anna:** Right, Max."
   },
   {
     "start": 61.52,
     "end": 63.76,
-    "text": "Anna: So let's sing"
+    "text": "**Anna:** So let's sing"
   },
   {
     "start": 64.439,
     "end": 67.079,
-    "text": "Anna: The months of the year song."
+    "text": "**Anna:** The months of the year song."
   },
   {
     "start": 67.079,
     "end": 72.28,
-    "text": "Anna: January, February, March, and April, May."
+    "text": "**Anna:** January, February, March, and April, May."
   },
   {
     "start": 72.28,
     "end": 75.32,
-    "text": "Anna: June, July, and August"
+    "text": "**Anna:** June, July, and August"
   },
   {
     "start": 75.82,
     "end": 85.66,
-    "text": "Anna: September, October, November, December, twelve months in a year."
+    "text": "**Anna:** September, October, November, December, twelve months in a year."
   },
   {
     "start": 86.82,
     "end": 88.1,
-    "text": "DrJill: I want cake."
+    "text": "**DrJill:** I want cake."
   },
   {
     "start": 88.1,
     "end": 89.46,
-    "text": "DrJill: Do you cake?"
+    "text": "**DrJill:** Do you cake?"
   },
   {
     "start": 90.02,
     "end": 95.54,
-    "text": "DrJill: To tell people your birthday, you need to know the months of the year."
+    "text": "**DrJill:** To {tell|伝える/話す} people your {birthday|誕生日} , you need to know the {months|月} of the year."
   },
   {
     "start": 95.88,
     "end": 98.92,
-    "text": "DrJill: Say or sing them in order."
+    "text": "**DrJill:** Say or sing them in order."
   },
   {
     "start": 98.92,
     "end": 101,
-    "text": "DrJill: This helps you learn."
+    "text": "**DrJill:** This helps you learn."
   },
   {
     "start": 101,
     "end": 103.4,
-    "text": "DrJill: A calendar can help too."
+    "text": "**DrJill:** A {calendar|カレンダー} can help too."
   },
   {
     "start": 103.98,
     "end": 108.3,
-    "text": "DrJill: Next, our friends talk about their birthdays."
+    "text": "**DrJill:** Next, our friends talk about their birthdays."
   },
   {
     "start": 108.3,
     "end": 111.18,
-    "text": "DrJill: Listen for the names of months."
+    "text": "**DrJill:** Listen for the names of months."
   },
   {
     "start": 111.58,
     "end": 114.38,
-    "text": "DrJill: My birthday is in May."
+    "text": "**DrJill:** My birthday is in May."
   },
   {
     "start": 114.52,
     "end": 118.92,
-    "text": "Students: My birthday is in the month of November."
+    "text": "**Students:** My birthday is in the month of November."
   },
   {
     "start": 118.92,
     "end": 121.079,
-    "text": "Students: My birthday is in December."
+    "text": "**Students:** My birthday is in December."
   },
   {
     "start": 121.079,
     "end": 124.28,
-    "text": "Students: My birthday is December 17th."
+    "text": "**Students:** My birthday is December 17th."
   },
   {
     "start": 124.28,
     "end": 127.479,
-    "text": "Students: My birthday is in August"
+    "text": "**Students:** My birthday is in August"
   },
   {
     "start": 128.36,
     "end": 129.88,
-    "text": "DrJill: Thanks friends!"
+    "text": "**DrJill:** Thanks friends!"
   },
   {
     "start": 130.119,
     "end": 133,
-    "text": "DrJill: They talked about their birthdays!"
+    "text": "**DrJill:** They {talked|話した} about their birthdays!"
   },
   {
     "start": 133,
     "end": 135.4,
-    "text": "DrJill: To show an action is done"
+    "text": "**DrJill:** To show an {action|行動} is done"
   },
   {
     "start": 135.26,
     "end": 142.06,
-    "text": "DrJill: Sometimes you add E D to the end of a word, like fa."
+    "text": "**DrJill:** Sometimes you add E D to the end of a word, like fa."
   },
   {
     "start": 142.06,
     "end": 143.1,
-    "text": "DrJill: But sometimes"
+    "text": "**DrJill:** But sometimes"
   },
   {
     "start": 143.36,
     "end": 148.959,
-    "text": "DrJill: You change the whole word, like with the verb to be."
+    "text": "**DrJill:** You change the whole word, like with the verb to be."
   },
   {
     "start": 148.959,
     "end": 151.92,
-    "text": "DrJill: His birthday is today."
+    "text": "**DrJill:** His birthday is today."
   },
   {
     "start": 152.16,
     "end": 154.56,
-    "text": "DrJill: It is not over yet."
+    "text": "**DrJill:** It is not over yet."
   },
   {
     "start": 154.56,
     "end": 158.48,
-    "text": "DrJill: Her birthday was yesterday."
+    "text": "**DrJill:** Her birthday was yesterday."
   },
   {
     "start": 158.48,
     "end": 160.24,
-    "text": "DrJill: It is over."
+    "text": "**DrJill:** It is over."
   },
   {
     "start": 160.24,
     "end": 163.84,
-    "text": "DrJill: The word make is another example."
+    "text": "**DrJill:** The word {make|作る} is another example."
   },
   {
     "start": 163.84,
     "end": 165.52,
-    "text": "DrJill: I made a cake"
+    "text": "**DrJill:** I {made|作った} a cake"
   },
   {
     "start": 166.02,
     "end": 168.18,
-    "text": "DrJill: The cake is done."
+    "text": "**DrJill:** The cake is done."
   },
   {
     "start": 168.18,
     "end": 172.66,
-    "text": "DrJill: Next, Anna gets ready for a birthday party."
+    "text": "**DrJill:** Next, Anna gets ready for a {birthday|誕生日} party."
   },
   {
     "start": 172.66,
     "end": 175.38,
-    "text": "DrJill: But whose birthday is it?"
+    "text": "**DrJill:** But whose birthday is it?"
   },
   {
     "start": 175.52,
     "end": 178.16,
-    "text": "Anna: Let's find out."
+    "text": "**Anna:** Let's find out."
   },
   {
     "start": 178.16,
     "end": 181.52,
-    "text": "Anna: My birthday was last month."
+    "text": "**Anna:** My birthday was last month."
   },
   {
     "start": 181.52,
     "end": 183.04,
-    "text": "Anna: It is over."
+    "text": "**Anna:** It is over."
   },
   {
     "start": 183.04,
     "end": 186.56,
-    "text": "Anna: But my son's birthday is tomorrow."
+    "text": "**Anna:** But my son's birthday is tomorrow."
   },
   {
     "start": 186.72,
     "end": 189.519,
-    "text": "Anna: I have a lot to do."
+    "text": "**Anna:** I have a lot to {do|する/行う|/duː/|I do my homework every day.}"
   },
   {
     "start": 189.519,
     "end": 194.799,
-    "text": "Anna: I need to buy things for the party."
+    "text": "**Anna:** I need to buy {things|もの/品物|/θɪŋz/|I bought many things at the store.} for the {party|パーティー/祝会|/ˈpɑːrti/|We had a fun party last night.}"
   },
   {
     "start": 194.799,
     "end": 198,
-    "text": "Anna: Wrap his birthday gifts."
+    "text": "**Anna:** Wrap his {birthday|誕生日|/ˈbɜːrθdeɪ/|My birthday is in June.} {gifts|贈り物|/gɪfts/|I love receiving gifts.}"
   },
   {
     "start": 198.44,
     "end": 201.32,
-    "text": "Anna: Make cupcakes."
+    "text": "**Anna:** Make {cupcakes|カップケーキ|/ˈkʌpkeɪks/|She baked delicious cupcakes.}"
   },
   {
     "start": 201.32,
     "end": 203.72,
-    "text": "Anna: Set up the party."
+    "text": "**Anna:** Set up the {party|パーティー/祝会|/ˈpɑːrti/|We set up the party decorations.}"
   },
   {
     "start": 203.72,
     "end": 206.44,
-    "text": "Anna: But first, I need to shop"
+    "text": "**Anna:** But first, I need to {shop|買い物をする|/ʃɑːp/|I like to shop on weekends.}"
   },
   {
     "start": 207.88,
     "end": 213.4,
-    "text": "DrJill: While Anna gets ready for the party, let's talk about shapes."
+    "text": "**DrJill:** While Anna gets ready for the party, let's talk about shapes."
   },
   {
     "start": 213.4,
     "end": 216.04,
-    "text": "DrJill: Common shapes are square"
+    "text": "**DrJill:** Common shapes are {square|正方形|/skwɛr/|Draw a square on the paper.}"
   },
   {
     "start": 216.86,
     "end": 222.7,
-    "text": "DrJill: Rectangle, circle, triangle, and star."
+    "text": "**DrJill:** Rectangle, circle, triangle, and star."
   },
   {
     "start": 222.7,
     "end": 226.38,
-    "text": "DrJill: Now let's see Anna's finished party."
+    "text": "**DrJill:** Now let's see Anna's finished party."
   },
   {
     "start": 226.44,
     "end": 229.64,
-    "text": "Anna: I am ready for my son's birthday party."
+    "text": "**Anna:** I am ready for my son's birthday party."
   },
   {
     "start": 229.64,
     "end": 231.24,
-    "text": "Anna: I wrapped his gifts."
+    "text": "**Anna:** I wrapped his gifts."
   },
   {
     "start": 231.24,
     "end": 233.08,
-    "text": "Anna: I bought a card."
+    "text": "**Anna:** I bought a card."
   },
   {
     "start": 233.08,
     "end": 238.04,
-    "text": "Anna: They are rectangles."
+    "text": "**Anna:** They are {rectangles|長方形|/ˈrɛktæŋɡəlz/|Rectangles have four sides.}"
   },
   {
     "start": 238.04,
     "end": 240.76,
-    "text": "Anna: The party horns."
+    "text": "**Anna:** The party {horns|ホーン/角笛|/hɔːrnz/|We blew party horns.}"
   },
   {
     "start": 240.12,
     "end": 244.28,
-    "text": "Anna: Are triangles."
+    "text": "**Anna:** Are triangles."
   },
   {
     "start": 244.28,
     "end": 246.52,
-    "text": "Anna: I bought plates."
+    "text": "**Anna:** I bought {plates|皿/プレート|/pleɪts/|We need paper plates.}"
   },
   {
     "start": 246.52,
     "end": 248.28,
-    "text": "Anna: They are circles"
+    "text": "**Anna:** They are circles"
   },
   {
     "start": 250.82,
     "end": 253.06,
-    "text": "Anna: I bought napkins."
+    "text": "**Anna:** I bought {napkins|ナプキン|/ˈnæpkɪnz/|Put napkins on the table.}"
   },
   {
     "start": 253.38,
     "end": 259.14,
-    "text": "Anna: They are square."
+    "text": "**Anna:** They are square."
   },
   {
     "start": 259.36,
     "end": 261.04,
-    "text": "Anna: I'm like a cupcake."
+    "text": "**Anna:** I'm like a cupcake."
   },
   {
     "start": 261.04,
     "end": 264.24,
-    "text": "Anna: Daisy, the party starts at 5 p."
+    "text": "**Anna:** Daisy, the party starts at 5 p."
   },
   {
     "start": 264.24,
     "end": 264.56,
-    "text": "Anna: m."
+    "text": "**Anna:** m."
   },
   {
     "start": 264.8,
     "end": 266.24,
-    "text": "Anna: But you can help."
+    "text": "**Anna:** But you can help."
   },
   {
     "start": 266.24,
     "end": 268.88,
-    "text": "Anna: You can hold the balloons."
+    "text": "**Anna:** You can hold the {balloons|風船|/bəˈluːnz/|Kids love colorful balloons.}"
   },
   {
     "start": 268.88,
     "end": 270.56,
-    "text": "Anna: They float."
+    "text": "**Anna:** They {float|浮かぶ/漂う|/floʊt/|Balloons float in the sky.}"
   },
   {
     "start": 271.44,
     "end": 273.12,
-    "text": "Anna: I am floating"
+    "text": "**Anna:** I am floating"
   },
   {
     "start": 273.46,
     "end": 274.1,
-    "text": "Students: Help!"
+    "text": "**Students:** Help!"
   },
   {
     "start": 274.18,
     "end": 275.22,
-    "text": "Students: I am floating!"
+    "text": "**Students:** I am floating!"
   },
   {
     "start": 275.22,
     "end": 275.86,
-    "text": "Students: I am floating!"
+    "text": "**Students:** I am floating!"
   },
   {
     "start": 276.1,
     "end": 277.3,
-    "text": "Students: J remember!"
+    "text": "**Students:** J remember!"
   },
   {
     "start": 277.3,
     "end": 279.139,
-    "text": "Students: The party starts at five!"
+    "text": "**Students:** The {party|パーティー/祝会|/ˈpɑːrti/|We had a fun party.} starts at five!"
   },
   {
     "start": 279.139,
     "end": 280.82,
-    "text": "Students: Get me down!"
+    "text": "**Students:** {Get|取得する/得る|/ɡet/|Get your book.} me down!"
   },
   {
     "start": 281.84,
     "end": 284.64,
-    "text": "DrJill: It's fun to celebrate a birthday."
+    "text": "**DrJill:** It's fun to {celebrate|祝う/記念する|/ˈseləbreɪt/|We celebrate birthdays.} a birthday."
   },
   {
     "start": 284.64,
     "end": 289.44,
-    "text": "DrJill: Now you can talk about your birthday in English."
+    "text": "**DrJill:** Now you can {talk|話す/語る|/tɔːk/|Let's talk about music.} about your birthday in English."
   },
   {
     "start": 289.44,
     "end": 294.48,
-    "text": "DrJill: And join us again next time for Let's Learn English with Anna"
+    "text": "**DrJill:** And join us again next time for Let's Learn English with Anna"
   }
 ]

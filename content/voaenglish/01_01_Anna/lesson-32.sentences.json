@@ -2,52 +2,52 @@
   {
     "start": 7.96,
     "end": 9.32,
-    "text": "Speaker 1: Hello, I'm Dr."
+    "text": "**Speaker 1:** Hello, I'm Dr."
   },
   {
     "start": 9.32,
     "end": 10.04,
-    "text": "Speaker 1: Jill."
+    "text": "**Speaker 1:** Jill."
   },
   {
     "start": 10.04,
     "end": 12.92,
-    "text": "Speaker 1: Welcome to Let's Learn English with Anna."
+    "text": "**Speaker 1:** Welcome to Let's Learn English with Anna."
   },
   {
     "start": 13.16,
     "end": 16.279,
-    "text": "Speaker 1: A hobby can be any activity."
+    "text": "**Speaker 1:** A {hobby|趣味|/ˈhɒbi/|My hobby is reading books.} can be any activity."
   },
   {
     "start": 16.279,
     "end": 18.68,
-    "text": "Speaker 1: You do them in your free time."
+    "text": "**Speaker 1:** You do them in your {free time|自由時間|/friː taɪm/|I play games in my free time.}"
   },
   {
     "start": 18.82,
     "end": 23.54,
-    "text": "Speaker 1: Drawing, painting, and gardening are popular hobbies."
+    "text": "**Speaker 1:** {Drawing|描くこと/絵を描くこと|/ˈdrɔːɪŋ/|Drawing is a relaxing hobby.}, {painting|絵を描くこと/塗装|/ˈpeɪntɪŋ/|Painting helps me express myself.}, and {gardening|園芸|/ˈɡɑːrdənɪŋ/|Gardening is my weekend hobby.} are popular hobbies."
   },
   {
     "start": 23.54,
     "end": 27.7,
-    "text": "Speaker 1: Some people make things or collect things as a hobby."
+    "text": "**Speaker 1:** Some people make things or {collect|集める|/kəˈlekt/|I collect stamps as a hobby.} things as a hobby."
   },
   {
     "start": 27.7,
     "end": 29.46,
-    "text": "Speaker 1: What is your hobby?"
+    "text": "**Speaker 1:** What is your hobby?"
   },
   {
     "start": 29.46,
     "end": 32.82,
-    "text": "Speaker 1: That is a question Anna helps us answer."
+    "text": "**Speaker 1:** That is a question Anna helps us answer."
   },
   {
     "start": 32.619,
     "end": 35.18,
-    "text": "Speaker 1: What is your hobby?"
+    "text": "**Speaker 1:** What is your hobby?"
   },
   {
     "start": 41.26,
@@ -67,12 +67,12 @@
   {
     "start": 46.56,
     "end": 49.2,
-    "text": "Is a metal detector."
+    "text": "Is a {metal detector|金属探知機|/ˈmetl dɪˈtektər/|A metal detector finds hidden objects.}"
   },
   {
     "start": 49.2,
     "end": 53.36,
-    "text": "It detects or finds metal."
+    "text": "It {detects|検出する/見つける|/dɪˈtekts/|Sensors detect movement.} or finds metal."
   },
   {
     "start": 54,
@@ -82,12 +82,12 @@
   {
     "start": 59.059,
     "end": 63.14,
-    "text": "You found one big old nail."
+    "text": "You found one big old {nail|釘|/neɪl/|He hammered a nail into the wood.}"
   },
   {
     "start": 63.14,
     "end": 67.7,
-    "text": "It is a metal spike from an old railroad."
+    "text": "It is a metal {spike|尖った金属片/釘|/spaɪk/|A metal spike can be sharp.} from an old railroad."
   },
   {
     "start": 67.7,
@@ -117,12 +117,12 @@
   {
     "start": 81.2,
     "end": 87.28,
-    "text": "Speaker 3: I tried bird watching."
+    "text": "**Speaker 3:** I tried {bird watching|野鳥観察|/bɜːrd ˈwɑːtʃɪŋ/|Bird watching is peaceful.}"
   },
   {
     "start": 87.28,
     "end": 94.479,
-    "text": "I tried rock climbing."
+    "text": "I tried {rock climbing|ロッククライミング|/rɒk ˈklaɪmɪŋ/|Rock climbing is an exciting sport.}"
   },
   {
     "start": 93.7,
@@ -137,7 +137,7 @@
   {
     "start": 98.979,
     "end": 103.06,
-    "text": "There is a kite festival in DC."
+    "text": "There is a {kite|凧|/kaɪt/|Let's fly a kite today.} festival in DC."
   },
   {
     "start": 103.22,
@@ -152,47 +152,47 @@
   {
     "start": 107.62,
     "end": 113.3,
-    "text": "Or you can keep looking for more big old nails in the dirt"
+    "text": "Or you can keep {looking|探す/見つける|/ˈlʊkɪŋ/|Keep looking for the answer.} for more {big|大きな|/bɪɡ/|A big dog is barking.} old {nails|釘|/neɪlz/|Hammer the nails into the wood.} in the dirt"
   },
   {
     "start": 116.299,
     "end": 120.78,
-    "text": "Speaker 1: Birdwatching, rock climbing, kite flying."
+    "text": "**Speaker 1:** {Birdwatching|野鳥観察|/ˈbɜːrdˌwɑːtʃɪŋ/|Birdwatching is a relaxing hobby.}, rock {climbing|登山/クライミング|/ˈklaɪmɪŋ/|Rock climbing is exciting.}, kite {flying|凧揚げ|/ˈflaɪɪŋ/|Kite flying is fun in the park.}."
   },
   {
     "start": 120.78,
     "end": 123.9,
-    "text": "Speaker 1: What do these hobbies have in common?"
+    "text": "**Speaker 1:** What do these {hobbies|趣味|/ˈhɑːbiz/|I have many hobbies.} have in common?"
   },
   {
     "start": 123.9,
     "end": 127.979,
-    "text": "Speaker 1: They all use a special type of English word."
+    "text": "**Speaker 1:** They all use a special type of English word."
   },
   {
     "start": 127.92,
     "end": 136.8,
-    "text": "Speaker 1: You start with a verb, then you add ing to the end, and you get a special type of noun."
+    "text": "**Speaker 1:** You start with a {verb|動詞|/vɜːrb/|A verb shows action.}, then you add ing to the end, and you get a special type of noun."
   },
   {
     "start": 136.92,
     "end": 140.84,
-    "text": "Speaker 1: They help us talk about actions in a new way."
+    "text": "**Speaker 1:** They help us talk about actions in a new way."
   },
   {
     "start": 140.84,
     "end": 143.4,
-    "text": "Speaker 1: Let's see some examples."
+    "text": "**Speaker 1:** Let's see some examples."
   },
   {
     "start": 143.4,
     "end": 146.92,
-    "text": "Speaker 1: My hobby is playing Roblox."
+    "text": "**Speaker 1:** My hobby is {playing|遊ぶ/演奏する|/ˈpleɪɪŋ/|I enjoy playing games.} Roblox."
   },
   {
     "start": 153.14,
     "end": 156.98,
-    "text": "Bake I bake cakes."
+    "text": "Bake I {bake|焼く|/beɪk/|I bake cookies.} cakes."
   },
   {
     "start": 156.98,
@@ -217,12 +217,12 @@
   {
     "start": 169.34,
     "end": 172.14,
-    "text": "I sing every day."
+    "text": "I {sing|歌う|/sɪŋ/|I sing in the choir.} every day."
   },
   {
     "start": 172.64,
     "end": 175.36,
-    "text": "I like singing."
+    "text": "I like {singing|歌うこと|/ˈsɪŋɪŋ/|Singing makes me happy.}"
   },
   {
     "start": 175.36,
@@ -237,27 +237,27 @@
   {
     "start": 181.52,
     "end": 184.08,
-    "text": "I build things."
+    "text": "I {build|建てる/作る|/bɪld/|I build model cars.} things."
   },
   {
     "start": 184.08,
     "end": 187.52,
-    "text": "I like building."
+    "text": "I like {building|建設/製作|/ˈbɪldɪŋ/|Building things is fun.}"
   },
   {
     "start": 187.52,
     "end": 188.879,
-    "text": "Speaker 1: Great job."
+    "text": "**Speaker 1:** Great job."
   },
   {
     "start": 188.879,
     "end": 191.2,
-    "text": "Speaker 1: Next we hear from some friends."
+    "text": "**Speaker 1:** Next we hear from some friends."
   },
   {
     "start": 191.2,
     "end": 194.239,
-    "text": "Speaker 1: They talk about their hobbies."
+    "text": "**Speaker 1:** They talk about their hobbies."
   },
   {
     "start": 194.02,
@@ -267,57 +267,57 @@
   {
     "start": 196.739,
     "end": 201.379,
-    "text": "In my spare time I like to read and paint."
+    "text": "In my {spare|空いた/余分な|/sper/|I have spare time.} time I like to read and paint."
   },
   {
     "start": 201.86,
     "end": 206.42,
-    "text": "Speaker 7: In my spare time I like stargazing."
+    "text": "**Speaker 7:** In my {spare|空いた/余分な|/sper/|I have spare time.} time I like {stargazing|星空観察|/ˈstɑːrˌɡeɪzɪŋ/|Stargazing is peaceful.}"
   },
   {
     "start": 207.82,
     "end": 211.18,
-    "text": "Speaker 8: My hobby is drove."
+    "text": "**Speaker 8:** My hobby is {drove|運転した|/droʊv/|I drove to the store.}"
   },
   {
     "start": 211.18,
     "end": 215.34,
-    "text": "Speaker 8: In my spare time, I like blank chairs."
+    "text": "**Speaker 8:** In my spare time, I like {blank|空白の/無地の|/blæŋk/|A blank page is empty.} chairs."
   },
   {
     "start": 215.34,
     "end": 219.02,
-    "text": "Speaker 8: In my spare time, I like making Legos"
+    "text": "**Speaker 8:** In my spare time, I like {making|作ること|/ˈmeɪkɪŋ/|Making things is creative.} Legos"
   },
   {
     "start": 219.62,
     "end": 221.22,
-    "text": "Speaker 1: Thanks friends!"
+    "text": "**Speaker 1:** Thanks friends!"
   },
   {
     "start": 221.22,
     "end": 223.46,
-    "text": "Speaker 1: Now let's go back to Anna."
+    "text": "**Speaker 1:** Now let's go back to Anna."
   },
   {
     "start": 223.46,
     "end": 226.58,
-    "text": "Speaker 1: She wants to try her new hobby."
+    "text": "**Speaker 1:** She wants to try her {hobby|趣味|/ˈhɒbi/|My hobby is reading books.}"
   },
   {
     "start": 226.58,
     "end": 230.5,
-    "text": "Speaker 1: So she is at an outdoor kite party."
+    "text": "**Speaker 1:** So she is at an outdoor {kite|凧|/kaɪt/|Let's fly a kite together.} party."
   },
   {
     "start": 231.04,
     "end": 233.84,
-    "text": "Speaker 1: Well, of course it is outdoors."
+    "text": "**Speaker 1:** Well, of course it is {outdoors|屋外で|/ˌaʊtˈdɔːrz/|We play outdoors in summer.}"
   },
   {
     "start": 233.84,
     "end": 236.239,
-    "text": "Speaker 1: Let's watch."
+    "text": "**Speaker 1:** Let's watch."
   },
   {
     "start": 236.239,
@@ -332,7 +332,7 @@
   {
     "start": 241.08,
     "end": 243.8,
-    "text": "I see so many kites."
+    "text": "I see so many {kites|凧|/kaɪts/|Colorful kites are flying high.}"
   },
   {
     "start": 243.8,
@@ -342,12 +342,12 @@
   {
     "start": 245.4,
     "end": 250.28,
-    "text": "You are on the ground, but the kite is in the air."
+    "text": "You are on the ground, but the kite is in the {air|空中|/ɛr/|Birds fly in the air.}"
   },
   {
     "start": 250.28,
     "end": 253.4,
-    "text": "But I cannot fly a kite."
+    "text": "But I cannot {fly|飛ばす|/flaɪ/|Let's fly a kite together.} a kite."
   },
   {
     "start": 253.4,
@@ -377,21 +377,21 @@
   {
     "start": 278.92,
     "end": 280.92,
-    "text": "Speaker 1: What is your hobby?"
+    "text": "**Speaker 1:** What is your hobby?"
   },
   {
     "start": 280.92,
     "end": 283.32,
-    "text": "Speaker 1: Do you have more than one?"
+    "text": "**Speaker 1:** Do you have more than one?"
   },
   {
     "start": 283.32,
     "end": 287,
-    "text": "Speaker 1: Now you can talk about your hobbies."
+    "text": "**Speaker 1:** Now you can talk about your hobbies."
   },
   {
     "start": 287,
     "end": 291.64,
-    "text": "Speaker 1: See you next time on Let's Learn English with Anna."
+    "text": "**Speaker 1:** See you next time on Let's Learn English with Anna."
   }
 ]

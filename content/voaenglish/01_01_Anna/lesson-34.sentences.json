@@ -2,72 +2,72 @@
   {
     "start": 7.28,
     "end": 8.8,
-    "text": "Speaker 1: Hello, I'm Dr."
+    "text": "**Speaker 1:** Hello, I'm Dr."
   },
   {
     "start": 8.8,
     "end": 9.52,
-    "text": "Speaker 1: Jill."
+    "text": "**Speaker 1:** Jill."
   },
   {
     "start": 9.52,
     "end": 13.28,
-    "text": "Speaker 1: Welcome to Let's Learn English with Anna."
+    "text": "**Speaker 1:** Welcome to Let's Learn English with Anna."
   },
   {
     "start": 14,
     "end": 15.44,
-    "text": "Speaker 1: Music."
+    "text": "**Speaker 1:** {Music|音楽|/ˈmjuːzɪk/|I love listening to music}."
   },
   {
     "start": 15.44,
     "end": 18.32,
-    "text": "Speaker 1: I love to listen to music."
+    "text": "**Speaker 1:** I love to {listen|聴く/聞く|/ˈlɪsn/|Listen to the radio} to music."
   },
   {
     "start": 18.32,
     "end": 21.76,
-    "text": "Speaker 1: Sometimes I like fast dance music."
+    "text": "**Speaker 1:** Sometimes I like {fast|速い/素早い|/fæst/|Fast cars are exciting} dance music."
   },
   {
     "start": 21.76,
     "end": 25.68,
-    "text": "Speaker 1: And sometimes I like slow, peaceful music."
+    "text": "**Speaker 1:** And sometimes I like {slow|遅い/ゆっくり|/sloʊ/|Slow music is relaxing}, {peaceful|平和な/穏やかな|/ˈpiːsfəl/|Peaceful music helps me relax} music."
   },
   {
     "start": 26,
     "end": 27.84,
-    "text": "Speaker 1: What about you?"
+    "text": "**Speaker 1:** What about you?"
   },
   {
     "start": 27.84,
     "end": 30,
-    "text": "Speaker 1: What music do you like?"
+    "text": "**Speaker 1:** What music do you like?"
   },
   {
     "start": 30.24,
     "end": 34,
-    "text": "Speaker 1: Today, Anna helps us answer that question."
+    "text": "**Speaker 1:** Today, Anna helps us {answer|答える|/ˈænsər/|Can you answer the question?} that question."
   },
   {
     "start": 34,
     "end": 36.24,
-    "text": "Speaker 1: What music do you like?"
+    "text": "**Speaker 1:** What music do you like?"
   },
   {
     "start": 37.72,
     "end": 40.52,
-    "text": "Hi, welcome to my tree house!"
+    "text": "Hi, {welcome|ようこそ|/ˈwelkəm/|Welcome to my home} to my {tree house|ツリーハウス|/triː haʊs/|A house built in a tree}!"
   },
   {
     "start": 40.52,
     "end": 47.8,
-    "text": "Today I am writing a new song."
+    "text": "Today I am writing a new {song|歌/曲|/sɔːŋ/|I love this song}."
   },
   {
     "start": 48.7,
     "end": 53.1,
-    "text": "Speaker 3: Our question today is, what music do you like?"
+    "text": "**Speaker 3:** Our question today is, what music do you like?"
   },
   {
     "start": 53.42,
@@ -77,12 +77,12 @@
   {
     "start": 56.7,
     "end": 60.22,
-    "text": "Which instrument can you play, Anna?"
+    "text": "Which {instrument|楽器|/ˈɪnstrəmənt/|Play an instrument} can you play, Anna?"
   },
   {
     "start": 60.44,
     "end": 65,
-    "text": "I can play one instrument, the ukulele."
+    "text": "I can play one {instrument|楽器|/ˈɪnstrəmənt/|Learn to play an instrument}, the {ukulele|ウクレレ|/juːkəˈleɪli/|Ukulele is a small guitar}."
   },
   {
     "start": 65,
@@ -122,67 +122,67 @@
   {
     "start": 84.32,
     "end": 86.4,
-    "text": "I love quiet."
+    "text": "I love {quiet|静か|/ˈkwaɪət/|A quiet room is peaceful}."
   },
   {
     "start": 86.4,
     "end": 89.52,
-    "text": "Daisy, you are so funny."
+    "text": "Daisy, you are so {funny|面白い|/ˈfʌni/|That joke is funny}."
   },
   {
     "start": 89.52,
     "end": 91.84,
-    "text": "I am not joking."
+    "text": "I am not {joking|冗談を言う|/ˈdʒoʊkɪŋ/|I am not joking around}."
   },
   {
     "start": 93.78,
     "end": 96.74,
-    "text": "Speaker 1: Which instrument can you play?"
+    "text": "**Speaker 1:** Which instrument can you play?"
   },
   {
     "start": 97.06,
     "end": 99.46,
-    "text": "Speaker 1: Who is your favorite singer?"
+    "text": "**Speaker 1:** Who is your {favorite|お気に入りの|/ˈfeɪvərɪt/|My favorite color is blue} singer?"
   },
   {
     "start": 99.7,
     "end": 102.18,
-    "text": "Speaker 1: What song can you sing?"
+    "text": "**Speaker 1:** What song can you sing?"
   },
   {
     "start": 102.18,
     "end": 105.94,
-    "text": "Speaker 1: We can ask lots of questions about music."
+    "text": "**Speaker 1:** We can ask lots of {questions|質問/問い合わせ|/ˈkwestʃənz/|I have many questions about the book.} about {music|音楽|/ˈmjuːzɪk/|I love listening to music.}"
   },
   {
     "start": 106.28,
     "end": 107.32,
-    "text": "Speaker 1: Which?"
+    "text": "**Speaker 1:** Which?"
   },
   {
     "start": 107.32,
     "end": 107.96,
-    "text": "Speaker 1: Who?"
+    "text": "**Speaker 1:** Who?"
   },
   {
     "start": 108.28,
     "end": 109.72,
-    "text": "Speaker 1: What?"
+    "text": "**Speaker 1:** What?"
   },
   {
     "start": 109.72,
     "end": 112.84,
-    "text": "Speaker 1: They are question words."
+    "text": "**Speaker 1:** They are {question|質問の|/ˈkwestʃən/|I have a question for you.} words."
   },
   {
     "start": 112.84,
     "end": 117.8,
-    "text": "Speaker 1: They help you find out more about any topic, like music."
+    "text": "**Speaker 1:** They help you find out more about any {topic|話題/主題|/ˈtɒpɪk/|Let's discuss an interesting topic.}, like music."
   },
   {
     "start": 118.48,
     "end": 122.24,
-    "text": "Speaker 1: Now Anna shows us how to use them."
+    "text": "**Speaker 1:** Now Anna shows us how to use them."
   },
   {
     "start": 122.72,
@@ -202,17 +202,17 @@
   {
     "start": 132.34,
     "end": 135.459,
-    "text": "Who is your favorite singer?"
+    "text": "Who is your {favorite|お気に入りの|/ˈfeɪvərɪt/|This is my favorite book.} singer?"
   },
   {
     "start": 135.78,
     "end": 138.66,
-    "text": "Which band do you like?"
+    "text": "Which {band|バンド/楽団|/bænd/|The rock band played loudly.} do you like?"
   },
   {
     "start": 139.459,
     "end": 142.98,
-    "text": "How many instruments can you name?"
+    "text": "How many {instruments|楽器|/ˈɪnstrəmənts/|Musicians play different instruments.} can you name?"
   },
   {
     "start": 143.64,
@@ -232,7 +232,7 @@
   {
     "start": 162.66,
     "end": 165.62,
-    "text": "Which instrument is this?"
+    "text": "Which {instrument|楽器|/ˈɪnstrəmənts/|This is a musical instrument.} is this?"
   },
   {
     "start": 166.74,
@@ -242,7 +242,7 @@
   {
     "start": 169.94,
     "end": 173.46,
-    "text": "What instrument makes this sound?"
+    "text": "What {instrument|楽器|/ˈɪnstrəmənts/|Each instrument has a unique sound.} makes this sound?"
   },
   {
     "start": 173.72,
@@ -257,7 +257,7 @@
   {
     "start": 181.52,
     "end": 184.64,
-    "text": "You are listening to a flute."
+    "text": "You are listening to a {flute|フルート|/fluːt/|The flute plays a soft melody.}"
   },
   {
     "start": 188.72,
@@ -272,62 +272,62 @@
   {
     "start": 196.2,
     "end": 198.92,
-    "text": "Speaker 6: My name is Sam and I play the bass."
+    "text": "**Speaker 6:** My name is Sam and I play the {bass|ベース|/beɪs/|The bass provides a deep sound.}"
   },
   {
     "start": 198.92,
     "end": 200.68,
-    "text": "Speaker 7: My name is Jonathan Zelaya."
+    "text": "**Speaker 7:** My name is Jonathan Zelaya."
   },
   {
     "start": 200.92,
     "end": 202.04,
-    "text": "Speaker 7: I play the drums."
+    "text": "**Speaker 7:** I play the drums."
   },
   {
     "start": 206.28,
     "end": 209.72,
-    "text": "Speaker 8: Hi, my name is Matthew and I play guitar."
+    "text": "**Speaker 8:** Hi, my name is Matthew and I play {guitar|ギター|/gɪˈtɑːr/|I learned to play guitar last year.}"
   },
   {
     "start": 210.98,
     "end": 215.86,
-    "text": "Friends and family came to hear them play."
+    "text": "Friends and {family|家族|/ˈfæmɪli/|My family supports me.} came to hear them play."
   },
   {
     "start": 222.86,
     "end": 225.34,
-    "text": "Speaker 1: Those guys can really rock!"
+    "text": "**Speaker 1:** Those guys can really {rock|演奏する/盛り上がる|/rɒk/|The band will rock the stage.}!"
   },
   {
     "start": 225.34,
     "end": 228.86,
-    "text": "Speaker 1: It is fun to listen to music outdoors."
+    "text": "**Speaker 1:** It is fun to {listen|聴く/聞く|/ˈlɪsən/|I listen to music every day.} to music {outdoors|屋外で|/ˈaʊtdɔːrz/|We play games outdoors.}."
   },
   {
     "start": 228.86,
     "end": 231.42,
-    "text": "Speaker 1: Next, we hear from some friends."
+    "text": "**Speaker 1:** Next, we hear from some friends."
   },
   {
     "start": 231.42,
     "end": 233.98,
-    "text": "Speaker 1: They talk about music."
+    "text": "**Speaker 1:** They {talk|話す|/tɔːk/|Let's talk about music.} about music."
   },
   {
     "start": 235.019,
     "end": 237.66,
-    "text": "Speaker 9: I play the guitar."
+    "text": "**Speaker 9:** I {play|演奏する/弾く|/pleɪ/|I play guitar every weekend.} the guitar."
   },
   {
     "start": 237.48,
     "end": 240.92,
-    "text": "Speaker 9: I love playing the piano."
+    "text": "**Speaker 9:** I love {playing|演奏すること|/ˈpleɪɪŋ/|Playing music makes me happy.} the piano."
   },
   {
     "start": 240.92,
     "end": 243.4,
-    "text": "Speaker 9: I play Zevin."
+    "text": "**Speaker 9:** I play Zevin."
   },
   {
     "start": 246.54,
@@ -337,32 +337,32 @@
   {
     "start": 252.62,
     "end": 254.379,
-    "text": "Speaker 1: Thanks, guys."
+    "text": "**Speaker 1:** Thanks, guys."
   },
   {
     "start": 254.22,
     "end": 256.699,
-    "text": "Speaker 1: And thank you for joining us."
+    "text": "**Speaker 1:** And thank you for {joining|参加する|/ˈdʒɔɪnɪŋ/|Join us for the concert.} us."
   },
   {
     "start": 256.699,
     "end": 258.699,
-    "text": "Speaker 1: You heard a rock band."
+    "text": "**Speaker 1:** You heard a {rock|ロック音楽|/rɒk/|Rock music is exciting.} band."
   },
   {
     "start": 258.699,
     "end": 262.699,
-    "text": "Speaker 1: Plus, you learned many music and question words."
+    "text": "**Speaker 1:** Plus, you learned many music and {question|質問/疑問|/ˈkwestʃən/|I have a question for you.} words."
   },
   {
     "start": 262.84,
     "end": 267.56,
-    "text": "Speaker 1: So now you can talk about the music you like with others."
+    "text": "**Speaker 1:** So now you can talk about the music you like with others."
   },
   {
     "start": 267.56,
     "end": 272.68,
-    "text": "Speaker 1: And join us again next time on Let's Learn English with Anna."
+    "text": "**Speaker 1:** And join us again next time on Let's Learn English with Anna."
   },
   {
     "start": 272.72,
@@ -377,7 +377,7 @@
   {
     "start": 276.4,
     "end": 279.04,
-    "text": "I like loud rock music."
+    "text": "I like {loud|大きな/騒々しい|/laʊd/|The music is too loud.} rock music."
   },
   {
     "start": 279.04,
