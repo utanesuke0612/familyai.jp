@@ -14,6 +14,7 @@ import { notFound } from 'next/navigation';
 import { AIChatWidget }         from '@/components/article/AIChatWidget';
 import { MarkdownContent }      from '@/components/ui/MarkdownContent';
 import { DictationPanel }       from '@/components/voaenglish/DictationPanel';
+import { AIEchoPanel }          from '@/components/voaenglish/AIEchoPanel';
 import { SITE } from '@/shared';
 import {
   getAllLessons,
@@ -302,6 +303,13 @@ export default async function VoaLessonPage({
                   </div>
                 )}
               </SectionCard>
+
+              {/* ─── ④ AI Echo（聴写プレイヤー直下・常時表示） ─────────── */}
+              <AIEchoPanel
+                lessonKey={`${course}/${lesson}`}
+                lessonTitle={headline}
+                lessonScript={lessonScriptForAi}
+              />
 
             </div>
 
