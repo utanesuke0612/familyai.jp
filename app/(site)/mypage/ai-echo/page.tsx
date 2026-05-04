@@ -45,10 +45,15 @@ export default async function AiEchoHistoryPage() {
       >
         <div className="mx-auto max-w-5xl">
           {/* パンくず */}
-          <div className="flex items-center gap-2 text-sm mb-5" style={{ color: 'var(--color-brown-light)' }}>
-            <Link href="/mypage" style={{ color: 'var(--color-orange)' }}>マイページ</Link>
-            <span>›</span>
-            <span>AI Echo 履歴</span>
+          <div
+            className="flex items-center gap-2 text-sm mb-5 leading-none"
+            style={{ color: 'var(--color-brown-light)' }}
+          >
+            <Link href="/mypage" className="leading-none" style={{ color: 'var(--color-orange)' }}>
+              マイページ
+            </Link>
+            <span aria-hidden="true" className="leading-none translate-y-[-1px]">›</span>
+            <span className="leading-none">AI Echo 履歴</span>
           </div>
 
           <div className="flex flex-wrap items-center justify-between gap-4">
