@@ -18,9 +18,3 @@ videoUrl: https://learningenglish.voanews.com/embed/player/0/6983024.html?type=v
 # フル URL は env NEXT_PUBLIC_VOA_BLOB_BASE をプレフィックスして合成される
 audioPath: voaenglish/01_01_Anna/lesson-20.mp3
 ---
-
-# 📖 まずは日本語でチェック
-
-# 🎧 会話を聞いて、読んでみよう
-
-# ✨ AIと一緒に、もっと分かる
