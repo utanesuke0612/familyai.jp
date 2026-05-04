@@ -282,12 +282,9 @@ export function AIEchoPanel({ lessonKey, lessonTitle, lessonScript }: AIEchoPane
       <div
         className="px-1 sm:px-2 py-5 flex flex-col gap-4"
       >
-        {/* タイトル + 説明 + ヒント */}
+        {/* 説明 + ヒント（タブにすでにタイトルがあるので重複は省略） */}
         <div>
-          <p className="text-base font-bold" style={{ color: 'var(--color-brown)' }}>
-            {meta.emoji} {meta.label} — {meta.subtitle}
-          </p>
-          <p className="text-sm mt-1.5 leading-relaxed" style={{ color: 'var(--color-brown)' }}>
+          <p className="text-sm leading-relaxed" style={{ color: 'var(--color-brown)' }}>
             {meta.description}
           </p>
           <p className="text-xs mt-1.5 leading-relaxed" style={{ color: 'var(--color-brown-light)' }}>
