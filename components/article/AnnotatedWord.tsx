@@ -11,6 +11,7 @@
  */
 
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { createPortal } from 'react-dom';
 import { usePathname } from 'next/navigation';
 import { buildVocabId, useVocabBookmark } from '@/lib/voaenglish/vocab-store';
 
@@ -37,9 +38,25 @@ function speakEnglish(text: string) {
   }
 }
 
+/** ツールチップ寸法（縦は実測のため初期値、横は w-72 = 288px 固定） */
+const TIP_W   = 288;
+const TIP_H   = 160;        // 平均的高さの推定（meaning + example）
+const MARGIN  = 8;          // viewport edge との最小マージン
+const SPACING = 8;          // 単語とツールチップの隙間
+
+type Placement = {
+  /** viewport 左上を原点とする座標（position: fixed） */
+  top:    number;
+  left:   number;
+  /** 単語の上 or 下 どちらに表示するか（小さな三角矢印用に保持） */
+  vertical: 'above' | 'below';
+};
+
 export function AnnotatedWord({ word, meaning, pron, example }: AnnotatedWordProps) {
-  const [open, setOpen] = useState(false);
-  const wrapRef = useRef<HTMLSpanElement>(null);
+  const [open,    setOpen]    = useState(false);
+  const [pos,     setPos]     = useState<Placement | null>(null);
+  const wrapRef    = useRef<HTMLSpanElement>(null);
+  const tooltipRef = useRef<HTMLSpanElement>(null);
   const closeTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const pathname = usePathname() ?? '';
 
@@ -76,15 +93,73 @@ export function AnnotatedWord({ word, meaning, pron, example }: AnnotatedWordPro
   );
   const { bookmarked, toggle, isLoggedIn } = useVocabBookmark(id);
 
-  // 外側クリックで閉じる（モバイルのタップ対応）
+  // 外側クリックで閉じる（Portal の tooltipRef も除外）
   useEffect(() => {
     if (!open) return;
     const onDocClick = (e: MouseEvent) => {
-      if (!wrapRef.current?.contains(e.target as Node)) setOpen(false);
+      const t = e.target as Node;
+      if (wrapRef.current?.contains(t))    return;
+      if (tooltipRef.current?.contains(t)) return;
+      setOpen(false);
     };
     document.addEventListener('mousedown', onDocClick);
     return () => document.removeEventListener('mousedown', onDocClick);
   }, [open]);
+
+  // ── ツールチップ位置計算（viewport 内に収まるよう smart placement） ─────
+  const measure = useCallback(() => {
+    if (!wrapRef.current) return;
+    const rect = wrapRef.current.getBoundingClientRect();
+
+    // ツールチップ実測高さ（あれば）／推定値（初回）
+    const tipH = tooltipRef.current?.offsetHeight ?? TIP_H;
+
+    // 上下: 上方に十分なスペースがあれば above、なければ below
+    const spaceAbove = rect.top;
+    const spaceBelow = window.innerHeight - rect.bottom;
+    const vertical: Placement['vertical'] =
+      spaceAbove >= tipH + SPACING + MARGIN || spaceAbove > spaceBelow
+        ? 'above'
+        : 'below';
+
+    const top = vertical === 'above'
+      ? rect.top - tipH - SPACING
+      : rect.bottom + SPACING;
+
+    // 左右: 単語中心に揃えつつ、viewport 端でクランプ
+    const desiredLeft = rect.left + rect.width / 2 - TIP_W / 2;
+    const left = Math.max(
+      MARGIN,
+      Math.min(window.innerWidth - TIP_W - MARGIN, desiredLeft),
+    );
+
+    setPos({ top, left, vertical });
+  }, []);
+
+  // open 中は scroll / resize で再計算
+  useEffect(() => {
+    if (!open) {
+      setPos(null);
+      return;
+    }
+    measure();
+    // 内側コンテナの scroll もキャプチャするため capture: true
+    const onUpdate = () => measure();
+    window.addEventListener('scroll', onUpdate, true);
+    window.addEventListener('resize', onUpdate);
+    return () => {
+      window.removeEventListener('scroll', onUpdate, true);
+      window.removeEventListener('resize', onUpdate);
+    };
+  }, [open, measure]);
+
+  // 初回レンダー後、実測高さで再計算（推定値とのズレ補正）
+  useEffect(() => {
+    if (!open || !tooltipRef.current) return;
+    // 1 frame 後にレイアウト確定値で測り直す
+    const id = requestAnimationFrame(() => measure());
+    return () => cancelAnimationFrame(id);
+  }, [open, measure]);
 
   const handleBookmark = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -104,47 +179,22 @@ export function AnnotatedWord({ word, meaning, pron, example }: AnnotatedWordPro
     speakEnglish(word);
   };
 
-  return (
-    <span
-      ref={wrapRef}
-      className="annot-word relative inline-block"
-      onMouseEnter={() => { cancelClose(); setOpen(true); }}
-      onMouseLeave={scheduleClose}
-    >
-      <span
-        role="button"
-        tabIndex={0}
-        aria-label={`${word}: ${meaning}`}
-        onClick={() => setOpen((v) => !v)}
-        onKeyDown={(e) => {
-          if (e.key === 'Enter' || e.key === ' ') {
-            e.preventDefault();
-            setOpen((v) => !v);
-          } else if (e.key === 'Escape') {
-            setOpen(false);
-          }
-        }}
-        style={{
-          cursor:                'help',
-          textDecoration:        'underline',
-          textDecorationStyle:   'dotted',
-          textDecorationColor:   'var(--color-orange)',
-          textUnderlineOffset:   '3px',
-          textDecorationThickness: '2px',
-          color:                 'inherit',
-          fontWeight:            'inherit',
-        }}
-      >
-        {word}
-      </span>
-
-      {open && (
+  // ── ツールチップの中身（Portal で body に描画） ──────────────────
+  // overflow:hidden / scroll コンテナで切り取られないよう、body 直下に固定配置。
+  // 位置は measure() が計算した pos（top/left）を使う。
+  const tooltipNode = open && pos && typeof document !== 'undefined'
+    ? createPortal(
         <span
+          ref={tooltipRef}
           role="tooltip"
           onMouseEnter={cancelClose}
           onMouseLeave={scheduleClose}
-          className="absolute bottom-full left-1/2 z-20 mb-2 block w-72 -translate-x-1/2 rounded-xl p-3 text-left text-sm"
+          className="block w-72 rounded-xl p-3 text-left text-sm"
           style={{
+            position:   'fixed',
+            top:        pos.top,
+            left:       pos.left,
+            zIndex:     9999,
             background: 'white',
             boxShadow:  'var(--shadow-warm)',
             border:     '1px solid var(--color-beige-dark)',
@@ -241,8 +291,45 @@ export function AnnotatedWord({ word, meaning, pron, example }: AnnotatedWordPro
               例：{example}
             </span>
           )}
-        </span>
-      )}
+        </span>,
+        document.body,
+      )
+    : null;
+
+  return (
+    <span
+      ref={wrapRef}
+      className="annot-word relative inline-block"
+      onMouseEnter={() => { cancelClose(); setOpen(true); }}
+      onMouseLeave={scheduleClose}
+    >
+      <span
+        role="button"
+        tabIndex={0}
+        aria-label={`${word}: ${meaning}`}
+        onClick={() => setOpen((v) => !v)}
+        onKeyDown={(e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            setOpen((v) => !v);
+          } else if (e.key === 'Escape') {
+            setOpen(false);
+          }
+        }}
+        style={{
+          cursor:                'help',
+          textDecoration:        'underline',
+          textDecorationStyle:   'dotted',
+          textDecorationColor:   'var(--color-orange)',
+          textUnderlineOffset:   '3px',
+          textDecorationThickness: '2px',
+          color:                 'inherit',
+          fontWeight:            'inherit',
+        }}
+      >
+        {word}
+      </span>
+      {tooltipNode}
     </span>
   );
 }
