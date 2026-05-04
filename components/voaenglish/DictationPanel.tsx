@@ -5,20 +5,19 @@
  * familyai.jp — Dictation 練習セクションのオーケストレーター（R3-機能3 Phase 6）
  *
  * 役割:
- *   - HandwritingNote / SentencePlayer / CompletionDialog / NextLessonCta を統合
+ *   - HandwritingNote / SentencePlayer / CompletionDialog を統合
  *   - 全再生終了 → ダイアログ自動表示（Q5=C）
  *   - 自己申告 → API or localStorage 保存（Q4=B）
- *   - 🌟 → confetti 演出 + NextLessonCta 表示
+ *   - 🌟 → confetti 演出
  *
  * 状態管理:
  *   - showDialog : ダイアログ表示制御
- *   - completed  : 🌟 が押されたか（NextLessonCta 表示判定）
  *   - isSubmitting: API リクエスト中
  *
  * Server Component から渡されるべき props:
  *   - lessonKey: "anna/lesson-01"
  *   - audioUrl, sentences, lessonTitle
- *   - nextLesson（次のレッスン情報・任意）
+ *   - nextLesson（次のレッスン情報・現在は未使用・将来用）
  */
 
 import { useCallback, useRef, useState } from 'react';
@@ -28,7 +27,6 @@ import { saveLocalProgress } from '@/lib/voaenglish/progress-store';
 import { HandwritingNote }   from './HandwritingNote';
 import { SentencePlayer, type SentencePlayerHandle }    from './SentencePlayer';
 import { CompletionDialog }  from './CompletionDialog';
-import { NextLessonCta, type NextLessonInfo } from './NextLessonCta';
 import type { SelfReportAction } from './SelfReport';
 
 interface DictationPanelProps {
@@ -36,7 +34,6 @@ interface DictationPanelProps {
   lessonTitle:  string;
   audioUrl:     string;
   sentences:    readonly Sentence[];
-  nextLesson:   NextLessonInfo | null;
 }
 
 export function DictationPanel({
@@ -44,10 +41,8 @@ export function DictationPanel({
   lessonTitle,
   audioUrl,
   sentences,
-  nextLesson,
 }: DictationPanelProps) {
   const [showDialog,   setShowDialog]   = useState(false);
-  const [completed,    setCompleted]    = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const { data: session } = useSession();
@@ -107,7 +102,6 @@ export function DictationPanel({
 
       // 🌟 完璧時の演出（Q3=A）
       if (action === 'perfect') {
-        setCompleted(true);
         // 動的 import でバンドルサイズを最小化
         try {
           const { default: confetti } = await import('canvas-confetti');
@@ -161,10 +155,6 @@ export function DictationPanel({
         />
       )}
 
-      {/* 🌟 完璧時の次レッスン CTA */}
-      {completed && (
-        <NextLessonCta next={nextLesson} />
-      )}
     </>
   );
 }

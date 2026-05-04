@@ -277,13 +277,6 @@ export default async function VoaLessonPage({
                     lessonTitle={headline}
                     audioUrl={audioUrl!}
                     sentences={sentences!}
-                    nextLesson={next ? {
-                      course:       next.course,
-                      slug:         next.slug,
-                      title:        next.title,
-                      lessonNumber: next.lessonNumber,
-                      level:        next.level,
-                    } : null}
                   />
                 ) : (
                   <div

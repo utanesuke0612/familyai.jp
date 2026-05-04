@@ -42,7 +42,7 @@ function speakEnglish(text: string) {
 const TIP_W   = 288;
 const TIP_H   = 160;        // 平均的高さの推定（meaning + example）
 const MARGIN  = 8;          // viewport edge との最小マージン
-const SPACING = 8;          // 単語とツールチップの隙間
+const SPACING = 4;          // 単語とツールチップの隙間（半分に縮小）
 
 type Placement = {
   /** viewport 左上を原点とする座標（position: fixed） */
