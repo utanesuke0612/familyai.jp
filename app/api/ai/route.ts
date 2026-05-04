@@ -28,6 +28,7 @@ import { Ratelimit }      from '@upstash/ratelimit';
 import { Redis }          from '@upstash/redis';
 import { z }              from 'zod';
 import { routeAI, buildArticleSystemPrompt } from '@/lib/ai/router';
+import { buildAiEchoSystemPrompt }  from '@/lib/ai/ai-echo-prompt';
 import { verifyCsrf }     from '@/lib/csrf';
 import { auth }           from '@/lib/auth';
 
@@ -55,6 +56,16 @@ const bodySchema = z.object({
   // 例: sentences.json を平文化したもの（タイムスタンプ抜きの対話文）
   // 8000 字 ≒ 約 6,000 input token（Anthropic 換算）で OpenRouter のコストは ¥0.5/回程度
   lessonContext:  z.string().max(8000).optional().nullable(),
+  /**
+   * AI Echo: 機能識別子。'ai-echo' のとき AI Echo 専用の system prompt を使う。
+   * 省略 or 他の値なら従来の buildArticleSystemPrompt を使う（後方互換）。
+   */
+  feature:        z.enum(['ai-echo']).optional().nullable(),
+  /**
+   * AI Echo: 評価レベル（feature='ai-echo' のときのみ必須）。
+   * 1 = 🌱 内容のみ / 2 = 🌿 内容+文法+語彙 / 3 = 🌳 内容+意見+論理性
+   */
+  level:          z.union([z.literal(1), z.literal(2), z.literal(3)]).optional().nullable(),
 });
 
 // ── Redis / Ratelimit lazy init ────────────────────────────────
@@ -148,7 +159,7 @@ export async function POST(req: NextRequest) {
     );
   }
 
-  const { type, messages, articleTitle, articleExcerpt, lessonContext } = parsed.data;
+  const { type, messages, articleTitle, articleExcerpt, lessonContext, feature, level } = parsed.data;
 
   // 3. レート制限チェック（セッション対応: ログイン済みはプラン別制限）
   const ratelimiters = getRatelimiters();
@@ -179,11 +190,14 @@ export async function POST(req: NextRequest) {
   }
 
   // 4. システムプロンプト構築
-  const systemContent = buildArticleSystemPrompt({
-    articleTitle,
-    articleExcerpt,
-    lessonContext,
-  });
+  // feature='ai-echo' なら専用プロンプト、それ以外は従来の記事/レッスン用プロンプト。
+  const systemContent = feature === 'ai-echo' && level
+    ? buildAiEchoSystemPrompt(level, lessonContext)
+    : buildArticleSystemPrompt({
+        articleTitle,
+        articleExcerpt,
+        lessonContext,
+      });
 
   const fullMessages = [
     { role: 'system' as const, content: systemContent },
