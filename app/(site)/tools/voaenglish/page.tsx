@@ -50,8 +50,8 @@ const LEVELS: LevelSection[] = [
       },
       {
         title: "Let's Learn English - Level 2",
-        summary: '初級から次の段階に進むためのコースで、週ごとのレッスン形式で学べます。',
-        href: 'https://learningenglish.voanews.com/p/6765.html',
+        summary: '初級から次の段階に進むためのコースで、週ごとのレッスン形式で学べます。全30レッスン。',
+        href: '/tools/voaenglish/level-2',
       },
     ],
   },
