@@ -2,57 +2,57 @@
   {
     "start": 4.32,
     "end": 5.76,
-    "text": "**Speaker 1:** Hello, I'm Dr."
+    "text": "**DrJill:** Hello, I'm Dr."
   },
   {
     "start": 5.76,
     "end": 6.4,
-    "text": "**Speaker 1:** Jill."
+    "text": "**DrJill:** Jill."
   },
   {
     "start": 6.4,
     "end": 9.52,
-    "text": "**Speaker 1:** Welcome to Let's Learn English with Anna."
+    "text": "**DrJill:** Welcome to Let's Learn English with Anna."
   },
   {
     "start": 9.52,
     "end": 13.2,
-    "text": "**Speaker 1:** People around the world live in different {countries|国々|/ˈkʌntriz/|Many countries have unique cultures.}"
+    "text": "**DrJill:** People around the world live in different {countries|国々|/ˈkʌntriz/|Many countries have unique cultures.}"
   },
   {
     "start": 12.6,
     "end": 21.32,
-    "text": "**Speaker 1:** We eat different {foods|食べ物|/fuːdz/|I like trying different foods.} and speak different {languages|言語|/ˈlæŋɡwɪdʒɪz/|People speak many languages worldwide.}, but we share something big, a solar system."
+    "text": "**DrJill:** We eat different {foods|食べ物|/fuːdz/|I like trying different foods.} and speak different {languages|言語|/ˈlæŋɡwɪdʒɪz/|People speak many languages worldwide.}, but we share something big, a solar system."
   },
   {
     "start": 21.22,
     "end": 25.46,
-    "text": "**Speaker 1:** In English, solar means {sun|太陽|/sʌn/|The sun is very bright.}"
+    "text": "**DrJill:** In English, solar means {sun|太陽|/sʌn/|The sun is very bright.}"
   },
   {
     "start": 25.46,
     "end": 32.66,
-    "text": "**Speaker 1:** So a solar system is a sun with {objects|物体|/ˈɒbdʒɪkts/|Some objects float in space.} {orbiting|回る|/ˈɔːrbɪtɪŋ/|Planets are orbiting the sun.} around it."
+    "text": "**DrJill:** So a solar system is a sun with {objects|物体|/ˈɒbdʒɪkts/|Some objects float in space.} {orbiting|回る|/ˈɔːrbɪtɪŋ/|Planets are orbiting the sun.} around it."
   },
   {
     "start": 32.66,
     "end": 35.3,
-    "text": "**Speaker 1:** But what are those objects?"
+    "text": "**DrJill:** But what are those objects?"
   },
   {
     "start": 35.02,
     "end": 37.82,
-    "text": "**Speaker 1:** What is in our solar system?"
+    "text": "**DrJill:** What is in our solar system?"
   },
   {
     "start": 37.82,
     "end": 41.66,
-    "text": "**Speaker 1:** Today, Anna helps us answer that question."
+    "text": "**DrJill:** Today, Anna helps us answer that question."
   },
   {
     "start": 41.66,
     "end": 44.94,
-    "text": "**Speaker 1:** What is in our solar system?"
+    "text": "**DrJill:** What is in our solar system?"
   },
   {
     "start": 45.58,
@@ -77,7 +77,7 @@
   {
     "start": 54.54,
     "end": 60.699,
-    "text": "**Speaker 3:** Anna, our question today is, what is in our solar system?"
+    "text": "**Max:** Anna, our question today is, what is in our solar system?"
   },
   {
     "start": 60.62,
@@ -87,7 +87,7 @@
   {
     "start": 68.78,
     "end": 72.3,
-    "text": "**Speaker 3:** There are many moons in our solar system."
+    "text": "**Max:** There are many moons in our solar system."
   },
   {
     "start": 72.3,
@@ -97,7 +97,7 @@
   {
     "start": 74.94,
     "end": 80.22,
-    "text": "**Speaker 3:** The sun rises in the east and sets in the west."
+    "text": "**Max:** The sun rises in the east and sets in the west."
   },
   {
     "start": 79.92,
@@ -107,7 +107,7 @@
   {
     "start": 84.479,
     "end": 89.04,
-    "text": "**Speaker 3:** At night, {stars|星|/stɑːrz/|Stars shine brightly at night.} can help us find our way too."
+    "text": "**Max:** At night, {stars|星|/stɑːrz/|Stars shine brightly at night.} can help us find our way too."
   },
   {
     "start": 89.12,
@@ -162,47 +162,47 @@
   {
     "start": 119.74,
     "end": 126.06,
-    "text": "**Speaker 1:** We all see the same {moon|月} at night and the same sun during the day."
+    "text": "**DrJill:** We all see the same {moon|月} at night and the same sun during the day."
   },
   {
     "start": 125.82,
     "end": 131.02,
-    "text": "**Speaker 1:** The Sun is a {star|星} at the center of our solar system."
+    "text": "**DrJill:** The Sun is a {star|星} at the center of our solar system."
   },
   {
     "start": 131.02,
     "end": 135.9,
-    "text": "**Speaker 1:** All the {planets|惑星} {rotate|回転する} or move around it."
+    "text": "**DrJill:** All the {planets|惑星} {rotate|回転する} or move around it."
   },
   {
     "start": 135.92,
     "end": 139.84,
-    "text": "**Speaker 1:** There are eight planets in our solar system."
+    "text": "**DrJill:** There are eight planets in our solar system."
   },
   {
     "start": 139.84,
     "end": 144.96,
-    "text": "**Speaker 1:** There were nine planets, but {Pluto|冥王星} is no longer a planet."
+    "text": "**DrJill:** There were nine planets, but {Pluto|冥王星} is no longer a planet."
   },
   {
     "start": 144.96,
     "end": 147.2,
-    "text": "**Speaker 1:** Poor Pluto!"
+    "text": "**DrJill:** Poor Pluto!"
   },
   {
     "start": 147.2,
     "end": 150.4,
-    "text": "**Speaker 1:** Can you {name|名前を挙げる} all eight planets?"
+    "text": "**DrJill:** Can you {name|名前を挙げる} all eight planets?"
   },
   {
     "start": 150.06,
     "end": 152.06,
-    "text": "**Speaker 1:** Let's go back to Anna."
+    "text": "**DrJill:** Let's go back to Anna."
   },
   {
     "start": 152.06,
     "end": 154.22,
-    "text": "**Speaker 1:** She helps us."
+    "text": "**DrJill:** She helps us."
   },
   {
     "start": 154.22,
@@ -282,12 +282,12 @@
   {
     "start": 218.6,
     "end": 222.04,
-    "text": "**Speaker 1:** What do you know about our solar system?"
+    "text": "**DrJill:** What do you know about our solar system?"
   },
   {
     "start": 221.76,
     "end": 224.88,
-    "text": "**Speaker 1:** Let's answer some questions about it."
+    "text": "**DrJill:** Let's answer some questions about it."
   },
   {
     "start": 224.88,
@@ -322,27 +322,27 @@
   {
     "start": 238.5,
     "end": 243.3,
-    "text": "**Speaker 1:** We talked about the Sun, {planets|惑星|/ˈplænɪts/|Planets rotate around the sun.}, and moons."
+    "text": "**DrJill:** We talked about the Sun, {planets|惑星|/ˈplænɪts/|Planets rotate around the sun.}, and moons."
   },
   {
     "start": 243.12,
     "end": 248.72,
-    "text": "**Speaker 1:** But there are {comets|彗星|/ˈkɑːmɪts/|Comets have long tails.} and {asteroids|小惑星|/ˈæstərɔɪdz/|Asteroids are rocky objects.} in our solar system too."
+    "text": "**DrJill:** But there are {comets|彗星|/ˈkɑːmɪts/|Comets have long tails.} and {asteroids|小惑星|/ˈæstərɔɪdz/|Asteroids are rocky objects.} in our solar system too."
   },
   {
     "start": 248.72,
     "end": 252.16,
-    "text": "**Speaker 1:** There are many {stars|星|/stɑːrz/|Stars shine brightly at night.} in the night sky."
+    "text": "**DrJill:** There are many {stars|星|/stɑːrz/|Stars shine brightly at night.} in the night sky."
   },
   {
     "start": 252.22,
     "end": 255.42,
-    "text": "**Speaker 1:** But they are not in our solar system."
+    "text": "**DrJill:** But they are not in our solar system."
   },
   {
     "start": 255.42,
     "end": 258.78,
-    "text": "**Speaker 1:** There is only one star, our sun."
+    "text": "**DrJill:** There is only one star, our sun."
   },
   {
     "start": 258.78,
@@ -382,21 +382,21 @@
   {
     "start": 277.46,
     "end": 280.58,
-    "text": "**Speaker 1:** Talking about our solar system is fun."
+    "text": "**DrJill:** Talking about our solar system is fun."
   },
   {
     "start": 280.58,
     "end": 285.46,
-    "text": "**Speaker 1:** It is even more fun watching Anna and Daisy {explore|探検する|/ɪkˈsplɔːr/|Explorers discover new places.} solar system."
+    "text": "**DrJill:** It is even more fun watching Anna and Daisy {explore|探検する|/ɪkˈsplɔːr/|Explorers discover new places.} solar system."
   },
   {
     "start": 286.5,
     "end": 291.46,
-    "text": "**Speaker 1:** Practice using the words in this show to talk about our solar system."
+    "text": "**DrJill:** Practice using the words in this show to talk about our solar system."
   },
   {
     "start": 291.46,
     "end": 296.66,
-    "text": "**Speaker 1:** And join us again next time on Let's Learn English with Anna."
+    "text": "**DrJill:** And join us again next time on Let's Learn English with Anna."
   }
 ]

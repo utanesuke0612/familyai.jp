@@ -2,187 +2,187 @@
   {
     "start": 6.88,
     "end": 8.32,
-    "text": "**Speaker 1:** Hello, I'm Dr."
+    "text": "**DrJill:** Hello, I'm Dr."
   },
   {
     "start": 8.32,
     "end": 9.12,
-    "text": "**Speaker 1:** Jill."
+    "text": "**DrJill:** Jill."
   },
   {
     "start": 9.12,
     "end": 12.64,
-    "text": "**Speaker 1:** Welcome to Let's Learn English with Anna."
+    "text": "**DrJill:** Welcome to Let's Learn English with Anna."
   },
   {
     "start": 12.44,
     "end": 15.24,
-    "text": "**Speaker 1:** There are many {countries|国々|/ˈkʌntriz/|Many countries have unique cultures.} in the world."
+    "text": "**DrJill:** There are many {countries|国々|/ˈkʌntriz/|Many countries have unique cultures.} in the world."
   },
   {
     "start": 15.24,
     "end": 17.48,
-    "text": "**Speaker 1:** What {country|国|/ˈkʌntri/|My country is beautiful.} are you from?"
+    "text": "**DrJill:** What {country|国|/ˈkʌntri/|My country is beautiful.} are you from?"
   },
   {
     "start": 17.72,
     "end": 23.88,
-    "text": "**Speaker 1:** Today Anna helps us answer the question, what country are you from?"
+    "text": "**DrJill:** Today Anna helps us answer the question, what country are you from?"
   },
   {
     "start": 24.779,
     "end": 26.22,
-    "text": "**Speaker 2:** Hi everyone!"
+    "text": "**Anna:** Hi everyone!"
   },
   {
     "start": 26.46,
     "end": 28.699,
-    "text": "**Speaker 3:** What country are you from?"
+    "text": "**Max:** What country are you from?"
   },
   {
     "start": 28.939,
     "end": 31.019,
-    "text": "**Speaker 3:** That is our {question|質問|/ˈkwestʃən/|I have a question for you.}"
+    "text": "**Max:** That is our {question|質問|/ˈkwestʃən/|I have a question for you.}"
   },
   {
     "start": 31.019,
     "end": 34.699,
-    "text": "**Speaker 2:** My family is from {Italy|イタリア} and {Hungary|ハンガリー}."
+    "text": "**Anna:** My family is from {Italy|イタリア} and {Hungary|ハンガリー}."
   },
   {
     "start": 34.3,
     "end": 36.46,
-    "text": "**Speaker 3:** Do you like {Italian|イタリアの} food?"
+    "text": "**Max:** Do you like {Italian|イタリアの} food?"
   },
   {
     "start": 36.46,
     "end": 39.34,
-    "text": "**Speaker 3:** I love {pizza|ピザ} and {pasta|パスタ}."
+    "text": "**Max:** I love {pizza|ピザ} and {pasta|パスタ}."
   },
   {
     "start": 39.34,
     "end": 42.86,
-    "text": "**Speaker 2:** I do, but my favorite food is {Chinese|中国の}."
+    "text": "**Anna:** I do, but my favorite food is {Chinese|中国の}."
   },
   {
     "start": 42.86,
     "end": 45.98,
-    "text": "**Speaker 2:** I lived in China for years."
+    "text": "**Anna:** I lived in China for years."
   },
   {
     "start": 46.18,
     "end": 49.46,
-    "text": "**Speaker 2:** I want to {travel|旅行する|/ˈtrævəl/|I want to travel the world.} to many countries."
+    "text": "**Anna:** I want to {travel|旅行する|/ˈtrævəl/|I want to travel the world.} to many countries."
   },
   {
     "start": 49.46,
     "end": 54.58,
-    "text": "**Speaker 2:** I want to travel north, south, east, west."
+    "text": "**Anna:** I want to travel north, south, east, west."
   },
   {
     "start": 54.62,
     "end": 57.82,
-    "text": "**Speaker 3:** You can use the {travel|旅行用の} walkie-talkies."
+    "text": "**Max:** You can use the {travel|旅行用の} walkie-talkies."
   },
   {
     "start": 57.82,
     "end": 63.42,
-    "text": "**Speaker 2:** No Max, I bought a {magic|魔法の|/ˈmædʒɪk/|Magic is amazing.} map on the internet."
+    "text": "**Anna:** No Max, I bought a {magic|魔法の|/ˈmædʒɪk/|Magic is amazing.} map on the internet."
   },
   {
     "start": 63.42,
     "end": 65.42,
-    "text": "**Speaker 2:** I can travel by map."
+    "text": "**Anna:** I can travel by map."
   },
   {
     "start": 65.42,
     "end": 66.46,
-    "text": "**Speaker 3:** Magic map"
+    "text": "**Max:** Magic map"
   },
   {
     "start": 66.6,
     "end": 69.88,
-    "text": "**Speaker 3:** Did you read the {instructions|説明書|/ˌɪnˈstrʌkʃənz/|Read the instructions carefully.} carefully, Anna?"
+    "text": "**Max:** Did you read the {instructions|説明書|/ˌɪnˈstrʌkʃənz/|Read the instructions carefully.} carefully, Anna?"
   },
   {
     "start": 70.119,
     "end": 73.32,
-    "text": "**Speaker 2:** The instruction book is big."
+    "text": "**Anna:** The instruction book is big."
   },
   {
     "start": 73.64,
     "end": 77.32,
-    "text": "**Speaker 3:** But Anna, instructions are {important|重要な|/ɪmˈpɔːrtənt/|This is an important decision.}"
+    "text": "**Max:** But Anna, instructions are {important|重要な|/ɪmˈpɔːrtənt/|This is an important decision.}"
   },
   {
     "start": 77.36,
     "end": 79.68,
-    "text": "**Speaker 2:** Max, you worry too much!"
+    "text": "**Anna:** Max, you worry too much!"
   },
   {
     "start": 80.16,
     "end": 83.2,
-    "text": "**Speaker 3:** To be safe, take the walkie-talkie."
+    "text": "**Max:** To be safe, take the walkie-talkie."
   },
   {
     "start": 83.2,
     "end": 85.84,
-    "text": "**Speaker 2:** Max, nothing is going to happen!"
+    "text": "**Anna:** Max, nothing is going to happen!"
   },
   {
     "start": 85.88,
     "end": 90.28,
-    "text": "**Speaker 2:** this time."
+    "text": "**Anna:** this time."
   },
   {
     "start": 90.28,
     "end": 94.68,
-    "text": "**Speaker 1:** A country is a place, so it is a {noun|名詞|/naʊn/|A noun names something.}"
+    "text": "**DrJill:** A country is a place, so it is a {noun|名詞|/naʊn/|A noun names something.}"
   },
   {
     "start": 94.68,
     "end": 99.16,
-    "text": "**Speaker 1:** We can change it to an {adjective|形容詞|/ˈædʒɪktɪv/|An adjective describes a noun.} by changing the ending"
+    "text": "**DrJill:** We can change it to an {adjective|形容詞|/ˈædʒɪktɪv/|An adjective describes a noun.} by changing the ending"
   },
   {
     "start": 99.62,
     "end": 104.1,
-    "text": "**Speaker 1:** But with some countries, the whole spelling changes."
+    "text": "**DrJill:** But with some countries, the whole spelling changes."
   },
   {
     "start": 104.1,
     "end": 111.3,
-    "text": "**Speaker 1:** For example, I am from {America|アメリカ}, so I say I am {American|アメリカの/アメリカ人の}"
+    "text": "**DrJill:** For example, I am from {America|アメリカ}, so I say I am {American|アメリカの/アメリカ人の}"
   },
   {
     "start": 112.54,
     "end": 115.26,
-    "text": "**Speaker 1:** Now let's go back to Anna."
+    "text": "**DrJill:** Now let's go back to Anna."
   },
   {
     "start": 115.26,
     "end": 118.46,
-    "text": "**Speaker 1:** She shows us some {examples|例/見本}."
+    "text": "**DrJill:** She shows us some {examples|例/見本}."
   },
   {
     "start": 118.46,
     "end": 124.14,
-    "text": "**Speaker 2:** I can turn a country name, a {noun|名詞/単語}, into an {adjective|形容詞}."
+    "text": "**Anna:** I can turn a country name, a {noun|名詞/単語}, into an {adjective|形容詞}."
   },
   {
     "start": 124.54,
     "end": 131.58,
-    "text": "**Speaker 2:** Senegal, Senegalese, Vietnam, Vietnamese."
+    "text": "**Anna:** Senegal, Senegalese, Vietnam, Vietnamese."
   },
   {
     "start": 131.74,
     "end": 135.1,
-    "text": "**Speaker 2:** E-S-E is just one {ending|語尾/終わり}."
+    "text": "**Anna:** E-S-E is just one {ending|語尾/終わり}."
   },
   {
     "start": 135.1,
     "end": 136.86,
-    "text": "**Speaker 2:** There are many."
+    "text": "**Anna:** There are many."
   },
   {
     "start": 136.84,
@@ -247,32 +247,32 @@
   {
     "start": 169.44,
     "end": 176.96,
-    "text": "**Speaker 1:** French, Greece, Greek, Denmark, Danish"
+    "text": "**DrJill:** French, Greece, Greek, Denmark, Danish"
   },
   {
     "start": 177.92,
     "end": 184.96,
-    "text": "**Speaker 1:** I love to eat {Japanese|日本の} food and listen to {Brazilian|ブラジルの} music."
+    "text": "**DrJill:** I love to eat {Japanese|日本の} food and listen to {Brazilian|ブラジルの} music."
   },
   {
     "start": 184.96,
     "end": 189.36,
-    "text": "**Speaker 1:** Other English nouns change to {adjectives|形容詞} with an ending."
+    "text": "**DrJill:** Other English nouns change to {adjectives|形容詞} with an ending."
   },
   {
     "start": 189.24,
     "end": 195.48,
-    "text": "**Speaker 1:** The four {directions|方向} are north, south, east, and west."
+    "text": "**DrJill:** The four {directions|方向} are north, south, east, and west."
   },
   {
     "start": 195.48,
     "end": 200.28,
-    "text": "**Speaker 1:** In English, we can make them an adjective with a simple ending."
+    "text": "**DrJill:** In English, we can make them an adjective with a simple ending."
   },
   {
     "start": 200.28,
     "end": 202.28,
-    "text": "**Speaker 1:** Get ready to try!"
+    "text": "**DrJill:** Get ready to try!"
   },
   {
     "start": 202.84,
@@ -297,101 +297,101 @@
   {
     "start": 213.92,
     "end": 215.28,
-    "text": "**Speaker 1:** Good job!"
+    "text": "**DrJill:** Good job!"
   },
   {
     "start": 215.28,
     "end": 216.959,
-    "text": "**Speaker 1:** Let's go back to Anna."
+    "text": "**DrJill:** Let's go back to Anna."
   },
   {
     "start": 216.959,
     "end": 220.72,
-    "text": "**Speaker 1:** Is she still {planning|計画している/予定している} to {travel|旅行する/移動する} around the world by map?"
+    "text": "**DrJill:** Is she still {planning|計画している/予定している} to {travel|旅行する/移動する} around the world by map?"
   },
   {
     "start": 220.959,
     "end": 222.64,
-    "text": "**Speaker 1:** Let's see."
+    "text": "**DrJill:** Let's see."
   },
   {
     "start": 222.52,
     "end": 224.92,
-    "text": "**Speaker 2:** I have my {magic|魔法の} map."
+    "text": "**Anna:** I have my {magic|魔法の} map."
   },
   {
     "start": 224.92,
     "end": 226.84,
-    "text": "**Speaker 2:** I am ready to go."
+    "text": "**Anna:** I am ready to go."
   },
   {
     "start": 226.84,
     "end": 229.4,
-    "text": "**Speaker 2:** Oh wait, I mean my {toothbrush|歯ブラシ}"
+    "text": "**Anna:** Oh wait, I mean my {toothbrush|歯ブラシ}"
   },
   {
     "start": 229.8,
     "end": 240.04,
-    "text": "**Speaker 2:** and my phone oh my and my {hair pick|髪用のブラシ} now i am ready to go magic map go"
+    "text": "**Anna:** and my phone oh my and my {hair pick|髪用のブラシ} now i am ready to go magic map go"
   },
   {
     "start": 241.26,
     "end": 247.819,
-    "text": "**Speaker 2:** Here, I want to {visit|訪れる/観光する} northern countries."
+    "text": "**Anna:** Here, I want to {visit|訪れる/観光する} northern countries."
   },
   {
     "start": 247.819,
     "end": 255.66,
-    "text": "**Speaker 2:** Denmark, Sweden, Finland."
+    "text": "**Anna:** Denmark, Sweden, Finland."
   },
   {
     "start": 255.58,
     "end": 260.22,
-    "text": "**Speaker 2:** Now let's visit some southern countries."
+    "text": "**Anna:** Now let's visit some southern countries."
   },
   {
     "start": 260.22,
     "end": 265.26,
-    "text": "**Speaker 2:** Brazil, Chile."
+    "text": "**Anna:** Brazil, Chile."
   },
   {
     "start": 265.5,
     "end": 269.02,
-    "text": "**Speaker 2:** Hi Max, my trip was {amazing|驚くべき/素晴らしい}."
+    "text": "**Anna:** Hi Max, my trip was {amazing|驚くべき/素晴らしい}."
   },
   {
     "start": 269.02,
     "end": 270.62,
-    "text": "**Speaker 3:** Where are you?"
+    "text": "**Max:** Where are you?"
   },
   {
     "start": 270.62,
     "end": 273.26,
-    "text": "**Speaker 2:** I am at an {airport|空港}."
+    "text": "**Anna:** I am at an {airport|空港}."
   },
   {
     "start": 273.26,
     "end": 276.46,
-    "text": "**Speaker 3:** Use your magic map to come home."
+    "text": "**Max:** Use your magic map to come home."
   },
   {
     "start": 276.32,
     "end": 282.16,
-    "text": "**Speaker 2:** The magic map {ran out of|使い切った/なくなった} power over the northern part of {Canada|カナダ}."
+    "text": "**Anna:** The magic map {ran out of|使い切った/なくなった} power over the northern part of {Canada|カナダ}."
   },
   {
     "start": 282.16,
     "end": 285.36,
-    "text": "**Speaker 1:** Now you can tell people where you are from."
+    "text": "**DrJill:** Now you can tell people where you are from."
   },
   {
     "start": 285.26,
     "end": 291.1,
-    "text": "**Speaker 1:** You can talk about different {cultures|文化} too and different places to visit."
+    "text": "**DrJill:** You can talk about different {cultures|文化} too and different places to visit."
   },
   {
     "start": 291.1,
     "end": 295.58,
-    "text": "**Speaker 1:** See you next time on Let's Learn English with Anna."
+    "text": "**DrJill:** See you next time on Let's Learn English with Anna."
   }
 ]

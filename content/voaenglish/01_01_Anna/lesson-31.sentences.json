@@ -2,62 +2,62 @@
   {
     "start": 5.6,
     "end": 7.12,
-    "text": "**Speaker 1:** Hello, I'm Dr."
+    "text": "**DrJill:** Hello, I'm Dr."
   },
   {
     "start": 7.12,
     "end": 7.76,
-    "text": "**Speaker 1:** Jill."
+    "text": "**DrJill:** Jill."
   },
   {
     "start": 7.76,
     "end": 11.2,
-    "text": "**Speaker 1:** {Welcome|ようこそ/歓迎} to Let's Learn English with Anna."
+    "text": "**DrJill:** {Welcome|ようこそ/歓迎} to Let's Learn English with Anna."
   },
   {
     "start": 10.86,
     "end": 14.62,
-    "text": "**Speaker 1:** Today we {talk|話す} about something really {important|重要な/大切な}."
+    "text": "**DrJill:** Today we {talk|話す} about something really {important|重要な/大切な}."
   },
   {
     "start": 14.62,
     "end": 15.9,
-    "text": "**Speaker 1:** Friends."
+    "text": "**DrJill:** Friends."
   },
   {
     "start": 15.9,
     "end": 19.18,
-    "text": "**Speaker 1:** We have {fun|楽しい} with our friends during {good times|良い時}."
+    "text": "**DrJill:** We have {fun|楽しい} with our friends during {good times|良い時}."
   },
   {
     "start": 19.42,
     "end": 23.1,
-    "text": "**Speaker 1:** And they help us during {bad times|悪い時}."
+    "text": "**DrJill:** And they help us during {bad times|悪い時}."
   },
   {
     "start": 23.1,
     "end": 26.14,
-    "text": "**Speaker 1:** But what do friends do together?"
+    "text": "**DrJill:** But what do friends do together?"
   },
   {
     "start": 26.46,
     "end": 29.34,
-    "text": "**Speaker 1:** That is the question Anna {answers|答える}."
+    "text": "**DrJill:** That is the question Anna {answers|答える}."
   },
   {
     "start": 29.34,
     "end": 32.3,
-    "text": "**Speaker 1:** What do friends do together?"
+    "text": "**DrJill:** What do friends do together?"
   },
   {
     "start": 33.12,
     "end": 34.08,
-    "text": "**Speaker 2:** Hello!"
+    "text": "**Anna:** Hello!"
   },
   {
     "start": 34.08,
     "end": 35.84,
-    "text": "**Speaker 2:** {Welcome|ようこそ/歓迎} to my {tree house|木の家}."
+    "text": "**Anna:** {Welcome|ようこそ/歓迎} to my {tree house|木の家}."
   },
   {
     "start": 35.84,
@@ -67,27 +67,27 @@
   {
     "start": 41.68,
     "end": 45.76,
-    "text": "**Speaker 2:** Well, some friends make things together."
+    "text": "**Anna:** Well, some friends make things together."
   },
   {
     "start": 45.3,
     "end": 50.98,
-    "text": "**Speaker 2:** Today I am making a {friendship|友情} {bracelet|腕輪}."
+    "text": "**Anna:** Today I am making a {friendship|友情} {bracelet|腕輪}."
   },
   {
     "start": 50.98,
     "end": 53.78,
-    "text": "**Speaker 2:** I want to make a {friendship|友情} bracelet."
+    "text": "**Anna:** I want to make a {friendship|友情} bracelet."
   },
   {
     "start": 53.92,
     "end": 55.12,
-    "text": "**Speaker 2:** For me."
+    "text": "**Anna:** For me."
   },
   {
     "start": 55.12,
     "end": 59.92,
-    "text": "**Speaker 2:** Daisy, friends make {friendship|友情} bracelets for each other."
+    "text": "**Anna:** Daisy, friends make {friendship|友情} bracelets for each other."
   },
   {
     "start": 59.92,
@@ -97,17 +97,17 @@
   {
     "start": 62.719,
     "end": 65.199,
-    "text": "**Speaker 2:** Max, you are her friend."
+    "text": "**Anna:** Max, you are her friend."
   },
   {
     "start": 65.199,
     "end": 66.32,
-    "text": "**Speaker 2:** But we {fight|戦う/争う}"
+    "text": "**Anna:** But we {fight|戦う/争う}"
   },
   {
     "start": 67.12,
     "end": 70.16,
-    "text": "**Speaker 2:** Sometimes friends {fight|戦う/争う}."
+    "text": "**Anna:** Sometimes friends {fight|戦う/争う}."
   },
   {
     "start": 70.16,
@@ -117,57 +117,57 @@
   {
     "start": 72.72,
     "end": 74.8,
-    "text": "**Speaker 2:** I have an idea."
+    "text": "**Anna:** I have an idea."
   },
   {
     "start": 74.8,
     "end": 78.4,
-    "text": "**Speaker 2:** You two must make {friendship|友情} bracelets"
+    "text": "**Anna:** You two must make {friendship|友情} bracelets"
   },
   {
     "start": 78.62,
     "end": 80.3,
-    "text": "**Speaker 2:** For each other."
+    "text": "**Anna:** For each other."
   },
   {
     "start": 80.46,
     "end": 82.7,
-    "text": "**Speaker 2:** Great idea, Anna."
+    "text": "**Anna:** Great idea, Anna."
   },
   {
     "start": 82.7,
     "end": 85.58,
-    "text": "**Speaker 2:** I do not make things."
+    "text": "**Anna:** I do not make things."
   },
   {
     "start": 85.58,
     "end": 89.1,
-    "text": "**Speaker 2:** Daisy, this time you must"
+    "text": "**Anna:** Daisy, this time you must"
   },
   {
     "start": 89.96,
     "end": 92.84,
-    "text": "**Speaker 1:** We do many things with our friends."
+    "text": "**DrJill:** We do many things with our friends."
   },
   {
     "start": 92.84,
     "end": 99.4,
-    "text": "**Speaker 1:** {Friends|友人/仲間|/frendz/|My friends are very kind.} can {eat|食べる|/iːt/|We eat lunch together.} together, play {games|ゲーム/遊び|/ɡeɪmz/|We play games after school.}, or just spend time together."
+    "text": "**DrJill:** {Friends|友人/仲間|/frendz/|My friends are very kind.} can {eat|食べる|/iːt/|We eat lunch together.} together, play {games|ゲーム/遊び|/ɡeɪmz/|We play games after school.}, or just spend time together."
   },
   {
     "start": 99.14,
     "end": 102.9,
-    "text": "**Speaker 1:** In English, we call that {hanging out|一緒に過ごす|/ˈhæŋɪŋ aʊt/|We like hanging out on weekends.}."
+    "text": "**DrJill:** In English, we call that {hanging out|一緒に過ごす|/ˈhæŋɪŋ aʊt/|We like hanging out on weekends.}."
   },
   {
     "start": 103.22,
     "end": 106.02,
-    "text": "**Speaker 1:** Now let's hear from some friends."
+    "text": "**DrJill:** Now let's hear from some friends."
   },
   {
     "start": 106.02,
     "end": 110.1,
-    "text": "**Speaker 1:** They talk about things they do with their friends."
+    "text": "**DrJill:** They talk about things they do with their friends."
   },
   {
     "start": 110.52,
@@ -182,246 +182,246 @@
   {
     "start": 116.68,
     "end": 121.72,
-    "text": "**Speaker 5:** I often {help|助ける|/help/|I help my mom with dishes.} my sister with {homework|宿題|/ˈhoʊmwɜːrk/|I do my homework every day.}"
+    "text": "**Students:** I often {help|助ける|/help/|I help my mom with dishes.} my sister with {homework|宿題|/ˈhoʊmwɜːrk/|I do my homework every day.}"
   },
   {
     "start": 124.04,
     "end": 127.24,
-    "text": "**Speaker 6:** During school I {eat|食べる|/iːt/|We eat lunch together.} lunch with my friends."
+    "text": "**Students:** During school I {eat|食べる|/iːt/|We eat lunch together.} lunch with my friends."
   },
   {
     "start": 127.24,
     "end": 129.56,
-    "text": "**Speaker 6:** This is my {lunchbox|弁当箱|/ˈlʌntʃbɒks/|I packed my lunch in this lunchbox.}"
+    "text": "**Students:** This is my {lunchbox|弁当箱|/ˈlʌntʃbɒks/|I packed my lunch in this lunchbox.}"
   },
   {
     "start": 129.56,
     "end": 130.84,
-    "text": "**Speaker 1:** Thanks."
+    "text": "**DrJill:** Thanks."
   },
   {
     "start": 130.64,
     "end": 132.879,
-    "text": "**Speaker 1:** Now let's go back to Anna."
+    "text": "**DrJill:** Now let's go back to Anna."
   },
   {
     "start": 132.879,
     "end": 135.439,
-    "text": "**Speaker 1:** She talks about {adverbs|副詞|/ˈædvɜːrbz/|Adverbs describe actions.}"
+    "text": "**DrJill:** She talks about {adverbs|副詞|/ˈædvɜːrbz/|Adverbs describe actions.}"
   },
   {
     "start": 135.439,
     "end": 138,
-    "text": "**Speaker 1:** Adverbs have many uses."
+    "text": "**DrJill:** Adverbs have many uses."
   },
   {
     "start": 138,
     "end": 142.319,
-    "text": "**Speaker 1:** For example, they tell how we do something."
+    "text": "**DrJill:** For example, they tell how we do something."
   },
   {
     "start": 142.879,
     "end": 147.84,
-    "text": "**Speaker 1:** They also can tell us how often actions happen."
+    "text": "**DrJill:** They also can tell us how often actions happen."
   },
   {
     "start": 148.159,
     "end": 150.239,
-    "text": "**Speaker 1:** Look at this sentence."
+    "text": "**DrJill:** Look at this sentence."
   },
   {
     "start": 150.239,
     "end": 153.04,
-    "text": "**Speaker 1:** Do you see any adverbs?"
+    "text": "**DrJill:** Do you see any adverbs?"
   },
   {
     "start": 153.84,
     "end": 158,
-    "text": "**Speaker 1:** The friends {usually|通常/よく|/ˈjuːʒuəli/|I usually eat breakfast at home.} played {happily|楽しそうに/喜んで|/ˈhæpɪli/|They played happily in the park.}"
+    "text": "**DrJill:** The friends {usually|通常/よく|/ˈjuːʒuəli/|I usually eat breakfast at home.} played {happily|楽しそうに/喜んで|/ˈhæpɪli/|They played happily in the park.}"
   },
   {
     "start": 158,
     "end": 162.319,
-    "text": "**Speaker 1:** Happily and usually are adverbs."
+    "text": "**DrJill:** Happily and usually are adverbs."
   },
   {
     "start": 163.08,
     "end": 170.28,
-    "text": "**Speaker 1:** Happily tells how the friends played and usually tells how often."
+    "text": "**DrJill:** Happily tells how the friends played and usually tells how often."
   },
   {
     "start": 170.72,
     "end": 173.36,
-    "text": "**Speaker 1:** Great job finding adverbs!"
+    "text": "**DrJill:** Great job finding adverbs!"
   },
   {
     "start": 173.36,
     "end": 176.159,
-    "text": "**Speaker 1:** Now let's talk about another word."
+    "text": "**DrJill:** Now let's talk about another word."
   },
   {
     "start": 176.48,
     "end": 177.68,
-    "text": "**Speaker 1:** Must."
+    "text": "**DrJill:** Must."
   },
   {
     "start": 177.68,
     "end": 181.12,
-    "text": "**Speaker 1:** Must means you have to do something."
+    "text": "**DrJill:** Must means you have to do something."
   },
   {
     "start": 181.12,
     "end": 183.439,
-    "text": "**Speaker 1:** You do not have a choice."
+    "text": "**DrJill:** You do not have a choice."
   },
   {
     "start": 183.62,
     "end": 185.78,
-    "text": "**Speaker 1:** Let's go back to Anna."
+    "text": "**DrJill:** Let's go back to Anna."
   },
   {
     "start": 185.78,
     "end": 190.34,
-    "text": "**Speaker 1:** She and a friend are making {friendship|友情|/ˈfrendʃɪp/|Our friendship is strong.} bracelets together."
+    "text": "**DrJill:** She and a friend are making {friendship|友情|/ˈfrendʃɪp/|Our friendship is strong.} bracelets together."
   },
   {
     "start": 190.34,
     "end": 193.06,
-    "text": "**Speaker 1:** Listen for the word must."
+    "text": "**DrJill:** Listen for the word must."
   },
   {
     "start": 194.32,
     "end": 198.08,
-    "text": "**Speaker 2:** My friend Zuri and I are going to make {friendship|友情|/ˈfrendʃɪp/|Our friendship is strong.} bracelets."
+    "text": "**Anna:** My friend Zuri and I are going to make {friendship|友情|/ˈfrendʃɪp/|Our friendship is strong.} bracelets."
   },
   {
     "start": 198.08,
     "end": 198.88,
-    "text": "**Speaker 2:** Yay!"
+    "text": "**Anna:** Yay!"
   },
   {
     "start": 199.12,
     "end": 202.24,
-    "text": "**Speaker 2:** This is how you make a {friendship bracelet|友情のブレスレット|/ˈfrendʃɪp ˈbreɪslət/|I made a friendship bracelet for my best friend}."
+    "text": "**Anna:** This is how you make a {friendship bracelet|友情のブレスレット|/ˈfrendʃɪp ˈbreɪslət/|I made a friendship bracelet for my best friend}."
   },
   {
     "start": 201.8,
     "end": 205.72,
-    "text": "**Speaker 6:** We can {pick up|拾う/選ぶ|/pɪk ʌp/|Pick up your toys.} one of our favorite animals that we like and pick up."
+    "text": "**Students:** We can {pick up|拾う/選ぶ|/pɪk ʌp/|Pick up your toys.} one of our favorite animals that we like and pick up."
   },
   {
     "start": 205.96,
     "end": 207.56,
-    "text": "**Speaker 2:** You need {beads|ビーズ|/bɪdz/|Colorful beads for a craft project}."
+    "text": "**Anna:** You need {beads|ビーズ|/bɪdz/|Colorful beads for a craft project}."
   },
   {
     "start": 207.56,
     "end": 210.92,
-    "text": "**Speaker 2:** The beads must have {holes|穴|/hoʊlz/|The button has two holes.}"
+    "text": "**Anna:** The beads must have {holes|穴|/hoʊlz/|The button has two holes.}"
   },
   {
     "start": 211.86,
     "end": 215.62,
-    "text": "**Speaker 2:** You also need {string|ひも/糸|/strɪŋ/|Tie the string carefully.}"
+    "text": "**Anna:** You also need {string|ひも/糸|/strɪŋ/|Tie the string carefully.}"
   },
   {
     "start": 215.62,
     "end": 219.22,
-    "text": "**Speaker 2:** The string must fit through the hole."
+    "text": "**Anna:** The string must fit through the hole."
   },
   {
     "start": 219.22,
     "end": 222.579,
-    "text": "**Speaker 2:** Then you put the string through the hole."
+    "text": "**Anna:** Then you put the string through the hole."
   },
   {
     "start": 223.78,
     "end": 232.18,
-    "text": "**Speaker 2:** You can spell your friend's name with beads, but you must spell it {right|正しく|/raɪt/|Write the word right.}"
+    "text": "**Anna:** You can spell your friend's name with beads, but you must spell it {right|正しく|/raɪt/|Write the word right.}"
   },
   {
     "start": 232.18,
     "end": 236.819,
-    "text": "**Speaker 2:** Finally, you must {tie|結ぶ/縛る|/taɪ/|Tie your shoelaces.} the end of the string."
+    "text": "**Anna:** Finally, you must {tie|結ぶ/縛る|/taɪ/|Tie your shoelaces.} the end of the string."
   },
   {
     "start": 237.54,
     "end": 240.099,
-    "text": "**Speaker 2:** Sara, you did a great job."
+    "text": "**Anna:** Sara, you did a great job."
   },
   {
     "start": 240.099,
     "end": 242.579,
-    "text": "**Speaker 2:** Now let's go back to the {treehouse|ツリーハウス|/ˈtriːhaʊs/|Kids love playing in a treehouse.}"
+    "text": "**Anna:** Now let's go back to the {treehouse|ツリーハウス|/ˈtriːhaʊs/|Kids love playing in a treehouse.}"
   },
   {
     "start": 242.579,
     "end": 246.26,
-    "text": "**Speaker 2:** I want to see Max and Daisy's friendship bracelets"
+    "text": "**Anna:** I want to see Max and Daisy's friendship bracelets"
   },
   {
     "start": 246.54,
     "end": 247.66,
-    "text": "**Speaker 6:** Good idea."
+    "text": "**Students:** Good idea."
   },
   {
     "start": 247.66,
     "end": 252.06,
-    "text": "**Speaker 6:** Let's go see their friendship bracelets right now."
+    "text": "**Students:** Let's go see their friendship bracelets right now."
   },
   {
     "start": 252.06,
     "end": 253.58,
-    "text": "**Speaker 6:** Let's go."
+    "text": "**Students:** Let's go."
   },
   {
     "start": 255.64,
     "end": 258.919,
-    "text": "**Speaker 2:** Daisy, what did you do?"
+    "text": "**Anna:** Daisy, what did you do?"
   },
   {
     "start": 259.239,
     "end": 262.6,
-    "text": "**Speaker 2:** I made Max a friendship {chain|チェーン/鎖|/tʃeɪn/|A gold chain around my neck.}"
+    "text": "**Anna:** I made Max a friendship {chain|チェーン/鎖|/tʃeɪn/|A gold chain around my neck.}"
   },
   {
     "start": 262.6,
     "end": 267,
-    "text": "**Speaker 2:** I said friendship bracelet, not chain."
+    "text": "**Anna:** I said friendship bracelet, not chain."
   },
   {
     "start": 267,
     "end": 269.08,
-    "text": "**Speaker 2:** You must {unlock|解放する/開く|/ʌnˈlɒk/|Unlock the door with a key.} him."
+    "text": "**Anna:** You must {unlock|解放する/開く|/ʌnˈlɒk/|Unlock the door with a key.} him."
   },
   {
     "start": 269.42,
     "end": 273.26,
-    "text": "**Speaker 2:** Until next time, I must help my friend."
+    "text": "**Anna:** Until next time, I must help my friend."
   },
   {
     "start": 276.06,
     "end": 278.86,
-    "text": "**Speaker 2:** Hold still."
+    "text": "**Anna:** Hold still."
   },
   {
     "start": 279.34,
     "end": 283.1,
-    "text": "**Speaker 1:** Friends make life happy and {interesting|面白い/興味深い|/ˈɪntrəstɪŋ/|An interesting story keeps me engaged.}"
+    "text": "**DrJill:** Friends make life happy and {interesting|面白い/興味深い|/ˈɪntrəstɪŋ/|An interesting story keeps me engaged.}"
   },
   {
     "start": 283.1,
     "end": 286.46,
-    "text": "**Speaker 1:** And friends also help each other."
+    "text": "**DrJill:** And friends also help each other."
   },
   {
     "start": 286.46,
     "end": 290.54,
-    "text": "**Speaker 1:** Use the words you learned to talk about your friends."
+    "text": "**DrJill:** Use the words you learned to talk about your friends."
   },
   {
     "start": 290.52,
     "end": 295,
-    "text": "**Speaker 1:** Join us again next time on Let's Learn English with Anna."
+    "text": "**DrJill:** Join us again next time on Let's Learn English with Anna."
   }
 ]

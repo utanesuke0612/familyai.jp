@@ -2,406 +2,406 @@
   {
     "start": 3.52,
     "end": 5.12,
-    "text": "**Speaker 1:** Hello, I'm Dr."
+    "text": "**DrJill:** Hello, I'm Dr."
   },
   {
     "start": 5.12,
     "end": 5.92,
-    "text": "**Speaker 1:** Jill."
+    "text": "**DrJill:** Jill."
   },
   {
     "start": 5.92,
     "end": 9.68,
-    "text": "**Speaker 1:** {Welcome|ようこそ/歓迎} to Let's Learn English with Anna."
+    "text": "**DrJill:** {Welcome|ようこそ/歓迎} to Let's Learn English with Anna."
   },
   {
     "start": 9.519,
     "end": 14,
-    "text": "**Speaker 1:** Our {days|日々} are filled with lots of things to do."
+    "text": "**DrJill:** Our {days|日々} are filled with lots of things to do."
   },
   {
     "start": 14,
     "end": 18.72,
-    "text": "**Speaker 1:** Some things we do every day, like {help|手伝う} around the house."
+    "text": "**DrJill:** Some things we do every day, like {help|手伝う} around the house."
   },
   {
     "start": 18.619,
     "end": 21.82,
-    "text": "**Speaker 1:** {brush|歯を磨く/髪をとかす} our hair, eat dinner."
+    "text": "**DrJill:** {brush|歯を磨く/髪をとかす} our hair, eat dinner."
   },
   {
     "start": 21.82,
     "end": 24.22,
-    "text": "**Speaker 1:** Some things we have to do."
+    "text": "**DrJill:** Some things we have to do."
   },
   {
     "start": 24.22,
     "end": 26.619,
-    "text": "**Speaker 1:** So we write them down."
+    "text": "**DrJill:** So we write them down."
   },
   {
     "start": 26.619,
     "end": 28.86,
-    "text": "**Speaker 1:** What do you do in a day?"
+    "text": "**DrJill:** What do you do in a day?"
   },
   {
     "start": 28.86,
     "end": 30.539,
-    "text": "**Speaker 1:** Let's visit Anna."
+    "text": "**DrJill:** Let's visit Anna."
   },
   {
     "start": 30.539,
     "end": 32.78,
-    "text": "**Speaker 1:** She {answers|答える} the question."
+    "text": "**DrJill:** She {answers|答える} the question."
   },
   {
     "start": 32.54,
     "end": 35.34,
-    "text": "**Speaker 1:** What do you do in a day?"
+    "text": "**DrJill:** What do you do in a day?"
   },
   {
     "start": 36.14,
     "end": 37.26,
-    "text": "**Speaker 2:** Hi there."
+    "text": "**Anna:** Hi there."
   },
   {
     "start": 37.26,
     "end": 38.78,
-    "text": "**Speaker 2:** Welcome back."
+    "text": "**Anna:** Welcome back."
   },
   {
     "start": 38.78,
     "end": 41.579,
-    "text": "**Speaker 3:** Anna, I have our question."
+    "text": "**Max:** Anna, I have our question."
   },
   {
     "start": 41.579,
     "end": 44.46,
-    "text": "**Speaker 3:** What do you do in a day?"
+    "text": "**Max:** What do you do in a day?"
   },
   {
     "start": 44.46,
     "end": 46.62,
-    "text": "**Speaker 2:** Right on time, Max."
+    "text": "**Anna:** Right on time, Max."
   },
   {
     "start": 46.44,
     "end": 49.48,
-    "text": "**Speaker 2:** In my {day planner|スケジュール帳}, it says 9 a."
+    "text": "**Anna:** In my {day planner|スケジュール帳}, it says 9 a."
   },
   {
     "start": 49.48,
     "end": 49.72,
-    "text": "**Speaker 2:** m."
+    "text": "**Anna:** m."
   },
   {
     "start": 49.96,
     "end": 51.88,
-    "text": "**Speaker 2:** Get question."
+    "text": "**Anna:** Get question."
   },
   {
     "start": 51.88,
     "end": 56.28,
-    "text": "**Speaker 3:** A day planner is {helpful|役立つ} and important."
+    "text": "**Max:** A day planner is {helpful|役立つ} and important."
   },
   {
     "start": 56.42,
     "end": 60.42,
-    "text": "**Speaker 2:** In my day planner is my {to-do list|やることリスト}."
+    "text": "**Anna:** In my day planner is my {to-do list|やることリスト}."
   },
   {
     "start": 60.42,
     "end": 66.9,
-    "text": "**Speaker 2:** On my to-do list, I write the things I do every day."
+    "text": "**Anna:** On my to-do list, I write the things I do every day."
   },
   {
     "start": 66.9,
     "end": 68.42,
-    "text": "**Speaker 3:** Did you write?"
+    "text": "**Max:** Did you write?"
   },
   {
     "start": 68.24,
     "end": 69.76,
-    "text": "**Speaker 3:** Brush my teeth?"
+    "text": "**Max:** Brush my teeth?"
   },
   {
     "start": 69.76,
     "end": 71.12,
-    "text": "**Speaker 2:** No, Max."
+    "text": "**Anna:** No, Max."
   },
   {
     "start": 71.12,
     "end": 74.16,
-    "text": "**Speaker 3:** Did you write eat breakfast?"
+    "text": "**Max:** Did you write eat breakfast?"
   },
   {
     "start": 74.48,
     "end": 75.76,
-    "text": "**Speaker 2:** No, Max."
+    "text": "**Anna:** No, Max."
   },
   {
     "start": 75.76,
     "end": 79.28,
-    "text": "**Speaker 2:** Those are things I do every day."
+    "text": "**Anna:** Those are things I do every day."
   },
   {
     "start": 79.12,
     "end": 84.16,
-    "text": "**Speaker 2:** So, I do not write them on my to-do list."
+    "text": "**Anna:** So, I do not write them on my to-do list."
   },
   {
     "start": 84.16,
     "end": 90,
-    "text": "**Speaker 2:** On my {to-do list|やるべきことリスト}/タスクリスト/, I write things I need to do."
+    "text": "**Anna:** On my {to-do list|やるべきことリスト}/タスクリスト/, I write things I need to do."
   },
   {
     "start": 90,
     "end": 91.28,
-    "text": "**Speaker 2:** Like."
+    "text": "**Anna:** Like."
   },
   {
     "start": 91.74,
     "end": 95.979,
-    "text": "**Speaker 2:** {Clean|掃除する} my clothes and {hang|干す} them."
+    "text": "**Anna:** {Clean|掃除する} my clothes and {hang|干す} them."
   },
   {
     "start": 95.979,
     "end": 98.619,
-    "text": "**Speaker 2:** {Sweep|掃く} the floor."
+    "text": "**Anna:** {Sweep|掃く} the floor."
   },
   {
     "start": 98.619,
     "end": 100.86,
-    "text": "**Speaker 2:** Wash the car."
+    "text": "**Anna:** Wash the car."
   },
   {
     "start": 100.82,
     "end": 103.78,
-    "text": "**Speaker 2:** I want to go to the park today."
+    "text": "**Anna:** I want to go to the park today."
   },
   {
     "start": 103.78,
     "end": 107.22,
-    "text": "**Speaker 2:** Daisy, I am {busy|忙しい} today."
+    "text": "**Anna:** Daisy, I am {busy|忙しい} today."
   },
   {
     "start": 107.22,
     "end": 110.82,
-    "text": "**Speaker 2:** So we cannot go to the park."
+    "text": "**Anna:** So we cannot go to the park."
   },
   {
     "start": 110.82,
     "end": 112.74,
-    "text": "**Speaker 2:** I have an idea."
+    "text": "**Anna:** I have an idea."
   },
   {
     "start": 112.74,
     "end": 114.9,
-    "text": "**Speaker 2:** I can help you."
+    "text": "**Anna:** I can help you."
   },
   {
     "start": 114.54,
     "end": 116.14,
-    "text": "**Speaker 2:** Thanks, Daisy."
+    "text": "**Anna:** Thanks, Daisy."
   },
   {
     "start": 116.14,
     "end": 121.26,
-    "text": "**Speaker 2:** But you cannot do my work."
+    "text": "**Anna:** But you cannot do my work."
   },
   {
     "start": 121.26,
     "end": 125.34,
-    "text": "**Speaker 2:** Your {day planner|スケジュール帳} and to-do list are gone."
+    "text": "**Anna:** Your {day planner|スケジュール帳} and to-do list are gone."
   },
   {
     "start": 125.34,
     "end": 127.26,
-    "text": "**Speaker 1:** So we can go to the park."
+    "text": "**DrJill:** So we can go to the park."
   },
   {
     "start": 127.26,
     "end": 129.26,
-    "text": "**Speaker 3:** Oh, Daisy."
+    "text": "**Max:** Oh, Daisy."
   },
   {
     "start": 129.64,
     "end": 134.04,
-    "text": "**Speaker 1:** English has some small but helpful words."
+    "text": "**DrJill:** English has some small but helpful words."
   },
   {
     "start": 134.04,
     "end": 139.08,
-    "text": "**Speaker 1:** Anna, Max, and Daisy just used all of them."
+    "text": "**DrJill:** Anna, Max, and Daisy just used all of them."
   },
   {
     "start": 139.14,
     "end": 141.62,
-    "text": "**Speaker 1:** Let's see them again."
+    "text": "**DrJill:** Let's see them again."
   },
   {
     "start": 141.62,
     "end": 148.579,
-    "text": "**Speaker 1:** The small, helpful words are and, but, and so."
+    "text": "**DrJill:** The small, helpful words are and, but, and so."
   },
   {
     "start": 148.86,
     "end": 155.5,
-    "text": "**Speaker 1:** and joins two or more things that go together or happen together."
+    "text": "**DrJill:** and joins two or more things that go together or happen together."
   },
   {
     "start": 155.5,
     "end": 160.06,
-    "text": "**Speaker 3:** A {day planner|スケジュール帳} is helpful and {important|重要な}."
+    "text": "**Max:** A {day planner|スケジュール帳} is helpful and {important|重要な}."
   },
   {
     "start": 161.28,
     "end": 167.76,
-    "text": "**Speaker 1:** But joins two thoughts that are different or opposite."
+    "text": "**DrJill:** But joins two thoughts that are different or opposite."
   },
   {
     "start": 168,
     "end": 169.76,
-    "text": "**Speaker 2:** Thanks, Daisy."
+    "text": "**Anna:** Thanks, Daisy."
   },
   {
     "start": 169.76,
     "end": 172.08,
-    "text": "**Speaker 2:** But you cannot do"
+    "text": "**Anna:** But you cannot do"
   },
   {
     "start": 172.52,
     "end": 175.16,
-    "text": "**Speaker 2:** My work."
+    "text": "**Anna:** My work."
   },
   {
     "start": 175.16,
     "end": 179.879,
-    "text": "**Speaker 1:** So shows one thing causing another thing to happen."
+    "text": "**DrJill:** So shows one thing causing another thing to happen."
   },
   {
     "start": 179.879,
     "end": 183.319,
-    "text": "**Speaker 2:** Daisy, I am busy today."
+    "text": "**Anna:** Daisy, I am busy today."
   },
   {
     "start": 183.32,
     "end": 190.68,
-    "text": "**Speaker 2:** So we cannot go to the park, but and so"
+    "text": "**Anna:** So we cannot go to the park, but and so"
   },
   {
     "start": 191.62,
     "end": 199.14,
-    "text": "**Speaker 2:** They are small words, but they are important and common."
+    "text": "**Anna:** They are small words, but they are important and common."
   },
   {
     "start": 199.14,
     "end": 202.34,
-    "text": "**Speaker 2:** So you need to learn them."
+    "text": "**Anna:** So you need to learn them."
   },
   {
     "start": 202.34,
     "end": 205.3,
-    "text": "**Speaker 3:** Anna, you said {them|それら/それらのもの|/ðɛm/|I gave them to her.} all."
+    "text": "**Max:** Anna, you said {them|それら/それらのもの|/ðɛm/|I gave them to her.} all."
   },
   {
     "start": 207,
     "end": 213.159,
-    "text": "**Speaker 2:** Fill in the {blank|空欄/空白|/blæŋk/|Please fill in the blank.} with and but or so."
+    "text": "**Anna:** Fill in the {blank|空欄/空白|/blæŋk/|Please fill in the blank.} with and but or so."
   },
   {
     "start": 213.159,
     "end": 215.48,
-    "text": "**Speaker 2:** I like to {wash|洗う/洗濯する|/wɒʃ/|I wash my car every week.} dishes"
+    "text": "**Anna:** I like to {wash|洗う/洗濯する|/wɒʃ/|I wash my car every week.} dishes"
   },
   {
     "start": 216.84,
     "end": 220.92,
-    "text": "**Speaker 2:** I do not like to {sweep|掃く/掃除する|/swiːp/|I sweep the floor every day.} the floor."
+    "text": "**Anna:** I do not like to {sweep|掃く/掃除する|/swiːp/|I sweep the floor every day.} the floor."
   },
   {
     "start": 220.92,
     "end": 228.44,
-    "text": "**Speaker 2:** I like to wash dishes, but I do not like to sweep the floor."
+    "text": "**Anna:** I like to wash dishes, but I do not like to sweep the floor."
   },
   {
     "start": 229.22,
     "end": 232.98,
-    "text": "**Speaker 2:** I like to {help|助ける/手伝う|/help/|Can you help me?} around the house."
+    "text": "**Anna:** I like to {help|助ける/手伝う|/help/|Can you help me?} around the house."
   },
   {
     "start": 232.98,
     "end": 235.7,
-    "text": "**Speaker 2:** I clean my room."
+    "text": "**Anna:** I clean my room."
   },
   {
     "start": 235.7,
     "end": 238.739,
-    "text": "**Speaker 2:** I like to help around the house."
+    "text": "**Anna:** I like to help around the house."
   },
   {
     "start": 238.739,
     "end": 242.099,
-    "text": "**Speaker 2:** So I clean my room."
+    "text": "**Anna:** So I clean my room."
   },
   {
     "start": 242.86,
     "end": 246.299,
-    "text": "**Speaker 2:** Now let's hear from some {friends|友人/仲間|/frɛndz/|My friends are coming over.}."
+    "text": "**Anna:** Now let's hear from some {friends|友人/仲間|/frɛndz/|My friends are coming over.}."
   },
   {
     "start": 246.299,
     "end": 249.34,
-    "text": "**Speaker 2:** They talk about their {days|日/一日|/deɪz/|I have busy days.}."
+    "text": "**Anna:** They talk about their {days|日/一日|/deɪz/|I have busy days.}."
   },
   {
     "start": 249.34,
     "end": 252.379,
-    "text": "**Speaker 2:** In the morning I get {dressed|着替える/服を着る|/drɛst/|I dressed quickly.} and brush my teeth."
+    "text": "**Anna:** In the morning I get {dressed|着替える/服を着る|/drɛst/|I dressed quickly.} and brush my teeth."
   },
   {
     "start": 252.379,
     "end": 255.659,
-    "text": "**Speaker 4:** In the morning I {met|会った/出会う|/mɛt/|I met my friend.} my bed."
+    "text": "**Students:** In the morning I {met|会った/出会う|/mɛt/|I met my friend.} my bed."
   },
   {
     "start": 258.98,
     "end": 264.18,
-    "text": "**Speaker 4:** In the afternoon, I do my {homework|宿題|/ˈhoʊmwɜːrk/|I finish my homework early.}."
+    "text": "**Students:** In the afternoon, I do my {homework|宿題|/ˈhoʊmwɜːrk/|I finish my homework early.}."
   },
   {
     "start": 264.76,
     "end": 272.52,
-    "text": "**Speaker 1:** Anna's day {planner|手帳/スケジュール帳|/ˈplænər/|I use a planner.} and her to-do list are gone, but she still has to do the work."
+    "text": "**DrJill:** Anna's day {planner|手帳/スケジュール帳|/ˈplænər/|I use a planner.} and her to-do list are gone, but she still has to do the work."
   },
   {
     "start": 272.88,
     "end": 275.84,
-    "text": "**Speaker 1:** So, what is going to {happen|起こる/発生する|/ˈhæpən/|What will happen next?}."
+    "text": "**DrJill:** So, what is going to {happen|起こる/発生する|/ˈhæpən/|What will happen next?}."
   },
   {
     "start": 276.16,
     "end": 278.4,
-    "text": "**Speaker 2:** Daisy, I was wrong."
+    "text": "**Anna:** Daisy, I was wrong."
   },
   {
     "start": 278.4,
     "end": 280.88,
-    "text": "**Speaker 2:** You can do my work."
+    "text": "**Anna:** You can do my work."
   },
   {
     "start": 281.44,
     "end": 286.56,
-    "text": "**Speaker 2:** I am {helping|手伝っている/助けている|/ˈhɛlpɪŋ/|I am helping my friend.}, but I do not like it."
+    "text": "**Anna:** I am {helping|手伝っている/助けている|/ˈhɛlpɪŋ/|I am helping my friend.}, but I do not like it."
   },
   {
     "start": 286.8,
     "end": 291.12,
-    "text": "**Speaker 1:** Now you can talk about the things you do in a day."
+    "text": "**DrJill:** Now you can talk about the things you do in a day."
   },
   {
     "start": 291.12,
     "end": 296,
-    "text": "**Speaker 1:** And come back again to Let's Learn English with Anna."
+    "text": "**DrJill:** And come back again to Let's Learn English with Anna."
   }
 ]
