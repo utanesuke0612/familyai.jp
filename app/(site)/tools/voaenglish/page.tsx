@@ -46,7 +46,7 @@ const LEVELS: LevelSection[] = [
       {
         title: "Let's Learn English - Level 1",
         summary: '初心者向けの52週コースです。動画、語彙、スピーキング、ワークシートが揃っています。',
-        href: 'https://learningenglish.voanews.com/p/5644.html',
+        href: '/tools/voaenglish/level-1',
       },
       {
         title: "Let's Learn English - Level 2",
