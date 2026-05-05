@@ -1,0 +1,462 @@
+[
+  {
+    "start": 1.8399999999999999,
+    "end": 3.2,
+    "text": "**Anna:** Hi Ashley!"
+  },
+  {
+    "start": 3.2,
+    "end": 4.16,
+    "text": "**Ashley:** Hey Anna!"
+  },
+  {
+    "start": 4.16,
+    "end": 5.28,
+    "text": "**Ashley:** How was your {weekend|週末|/ˈwiːkˌend/|I had a great weekend.}?"
+  },
+  {
+    "start": 5.28,
+    "end": 6.24,
+    "text": "**Anna:** It was great."
+  },
+  {
+    "start": 6.24,
+    "end": 8.72,
+    "text": "**Anna:** I went to the DC State {Fair|祭り/見本市|/fɛr/|We visited the county fair.}"
+  },
+  {
+    "start": 8.72,
+    "end": 11.2,
+    "text": "**Ashley:** I would have gone, but I was {busy|忙しい|/ˈbɪzi/|I am busy with work.}"
+  },
+  {
+    "start": 11.2,
+    "end": 12.32,
+    "text": "**Ashley:** How was it?"
+  },
+  {
+    "start": 12.32,
+    "end": 14.72,
+    "text": "**Anna:** It was {awesome|素晴らしい|/ˈɔːsəm/|That concert was awesome!}"
+  },
+  {
+    "start": 14.82,
+    "end": 19.619,
+    "text": "**Anna:** I won first place in a {pet|ペット|/pɛt/|My pet cat is very friendly.} contest."
+  },
+  {
+    "start": 19.619,
+    "end": 22.82,
+    "text": "**Ashley:** But you don't have a pet, do you?"
+  },
+  {
+    "start": 23.06,
+    "end": 25.46,
+    "text": "**Anna:** Yes and no."
+  },
+  {
+    "start": 25.46,
+    "end": 27.94,
+    "text": "**Anna:** What do you mean by {pet|ペット|/pɛt/|I love my pet dog.}?"
+  },
+  {
+    "start": 28.26,
+    "end": 32.02,
+    "text": "**Anna:** A pet is an animal that lives with you."
+  },
+  {
+    "start": 32.02,
+    "end": 34.02,
+    "text": "**Anna:** People love their pets."
+  },
+  {
+    "start": 33.76,
+    "end": 37.6,
+    "text": "**Ashley:** Ashley said, You don't have a pet, do you?"
+  },
+  {
+    "start": 37.6,
+    "end": 43.519,
+    "text": "**Anna:** She used a {tag|タグ/小さな|/tæɡ/|Add a tag to the question.} question, a small question at the end of a sentence."
+  },
+  {
+    "start": 43.519,
+    "end": 46.16,
+    "text": "**Anna:** Let's look for more of them."
+  },
+  {
+    "start": 46.56,
+    "end": 48.24,
+    "text": "**Anna:** Lock a pet!"
+  },
+  {
+    "start": 48.24,
+    "end": 50.4,
+    "text": "**Anna:** Who's this cute little {dog|犬|/dɔɡ/|My dog loves to play.}?"
+  },
+  {
+    "start": 50.4,
+    "end": 53.36,
+    "text": "**Ashley:** Oh right, you haven't met my dog, have you?"
+  },
+  {
+    "start": 53.36,
+    "end": 54.48,
+    "text": "**Ashley:** This is Dublin."
+  },
+  {
+    "start": 54.48,
+    "end": 56.8,
+    "text": "**Anna:** Hi Dublin, nice to meet you."
+  },
+  {
+    "start": 56.8,
+    "end": 58.4,
+    "text": "**Anna:** He's so cute."
+  },
+  {
+    "start": 58.4,
+    "end": 59.2,
+    "text": "**Ashley:** Thanks"
+  },
+  {
+    "start": 59.22,
+    "end": 61.94,
+    "text": "**Ashley:** So tell me about the state fair."
+  },
+  {
+    "start": 61.94,
+    "end": 68.18,
+    "text": "**Anna:** There were the usual things, fair food, cute babies, music, but"
+  },
+  {
+    "start": 68.939,
+    "end": 75.579,
+    "text": "**Anna:** There must have been a {dozen|12個/多数|/ˈdʌzən/|I bought a dozen eggs.} different contests, and some were pretty strange."
+  },
+  {
+    "start": 75.579,
+    "end": 78.539,
+    "text": "**Anna:** There was a contest to see who could {spit|つばを吐く|/spɪt/|Don't spit on the ground.}"
+  },
+  {
+    "start": 78.84,
+    "end": 81.08,
+    "text": "**Anna:** a watermelon seed the farthest."
+  },
+  {
+    "start": 81.08,
+    "end": 86.04,
+    "text": "**Anna:** You should have seen all the people who wanted to spit a watermelon seed."
+  },
+  {
+    "start": 86.04,
+    "end": 88.6,
+    "text": "**Anna:** And it was {pretty|とても/かなり|/ˈprɪti/|She is pretty smart.} fun to watch."
+  },
+  {
+    "start": 88.6,
+    "end": 93.32,
+    "text": "**Anna:** But Ashley, the {pet|ペット|/pet/|My pet is a dog.} contests were the best."
+  },
+  {
+    "start": 92.9,
+    "end": 95.38,
+    "text": "**Anna:** First, there was a pet {parade|パレード|/pəˈreɪd/|The parade was colorful.}"
+  },
+  {
+    "start": 95.38,
+    "end": 98.5,
+    "text": "**Anna:** Lots of people walked with their dogs."
+  },
+  {
+    "start": 98.5,
+    "end": 106.18,
+    "text": "**Ashley:** That sounds so fun, but Anna, tell me, how did you win a pet contest?"
+  },
+  {
+    "start": 106.02,
+    "end": 108.1,
+    "text": "**Ashley:** Without a pet."
+  },
+  {
+    "start": 108.1,
+    "end": 114.02,
+    "text": "**Anna:** Okay, the closest thing I have is my pet rock"
+  },
+  {
+    "start": 115.68,
+    "end": 120.88,
+    "text": "**Anna:** I know it's {silly|馬鹿げた/おかしな|/ˈsɪli/|That joke is silly.}, but I've had it since I was a little girl."
+  },
+  {
+    "start": 120.88,
+    "end": 124.32,
+    "text": "**Anna:** So for a {joke|冗談|/dʒoʊk/|He told a funny joke.}, I brought it to the fair."
+  },
+  {
+    "start": 123.9,
+    "end": 129.899,
+    "text": "**Anna:** But then I was {invited|招待された|/ɪnˈvaɪtɪd/|I was invited to the party.} to enter the {one-of-a-kind|唯一の/特別な|/wʌn əv ə ˈkaɪnd/|This is a one-of-a-kind gift.} pet contest."
+  },
+  {
+    "start": 129.899,
+    "end": 131.58,
+    "text": "**Anna:** And I won!"
+  },
+  {
+    "start": 131.58,
+    "end": 138.14,
+    "text": "**Ashley:** Anna, only you could have won a pet contest with a pet rock."
+  },
+  {
+    "start": 138.04,
+    "end": 139.96,
+    "text": "**Ashley:** I should have brought Dublin."
+  },
+  {
+    "start": 139.96,
+    "end": 141.56,
+    "text": "**Ashley:** He would have won a contest."
+  },
+  {
+    "start": 141.56,
+    "end": 144.28,
+    "text": "**Anna:** It's not very easy to win one of these."
+  },
+  {
+    "start": 144.28,
+    "end": 146.12,
+    "text": "**Ashley:** Does he have a costume?"
+  },
+  {
+    "start": 146.24,
+    "end": 149.04,
+    "text": "**Anna:** They had a {costume|衣装/コスチューム|/ˈkɒstjuːm/|She wore a beautiful costume.} contest."
+  },
+  {
+    "start": 149.04,
+    "end": 152.64,
+    "text": "**Anna:** You should have seen this little girl."
+  },
+  {
+    "start": 152.64,
+    "end": 158.24,
+    "text": "**Anna:** She and her dog wore {matching|同じ/マッチする|/ˈmætʃɪŋ/|They wore matching shirts.} princess costumes."
+  },
+  {
+    "start": 158.06,
+    "end": 160.459,
+    "text": "**Ashley:** Dublin doesn't wear costumes."
+  },
+  {
+    "start": 160.459,
+    "end": 163.18,
+    "text": "**Anna:** Does he know any {tricks|芸/トリック|/trɪks/|Dogs can learn many tricks.}?"
+  },
+  {
+    "start": 163.18,
+    "end": 165.42,
+    "text": "**Ashley:** Come this way."
+  },
+  {
+    "start": 166.06,
+    "end": 168.22,
+    "text": "**Ashley:** Now, watch this"
+  },
+  {
+    "start": 171.84,
+    "end": 178.16,
+    "text": "**Ashley:** Oh my god"
+  },
+  {
+    "start": 178.64,
+    "end": 180.48,
+    "text": "**Anna:** You caught it, Dublin!"
+  },
+  {
+    "start": 180.48,
+    "end": 182.48,
+    "text": "**Anna:** Oh, and you {killed|殺した/成功した|/kɪld/|He killed the target.} it!"
+  },
+  {
+    "start": 182.48,
+    "end": 184.239,
+    "text": "**Ashley:** Oh!"
+  },
+  {
+    "start": 184.239,
+    "end": 185.68,
+    "text": "**Anna:** Good dog!"
+  },
+  {
+    "start": 185.68,
+    "end": 189.28,
+    "text": "**Anna:** Ashley, he could have won the best {catch|捕まえる/キャッチ|/kætʃ/|Can you catch the ball?} contest"
+  },
+  {
+    "start": 189.64,
+    "end": 191.64,
+    "text": "**Anna:** Oh, good boy."
+  },
+  {
+    "start": 191.64,
+    "end": 194.68,
+    "text": "**Anna:** Ashley, {pets|ペット/動物|/pets/|I love my pets.} are fun, aren't they?"
+  },
+  {
+    "start": 194.68,
+    "end": 195.48,
+    "text": "**Anna:** Yes."
+  },
+  {
+    "start": 195.48,
+    "end": 198.2,
+    "text": "**Ashley:** And they become part of your {family|家族|/ˈfæmɪli/|My family is very close.}"
+  },
+  {
+    "start": 198.42,
+    "end": 199.46,
+    "text": "**Anna:** Ashley?"
+  },
+  {
+    "start": 199.46,
+    "end": 202.02,
+    "text": "**Anna:** I think I want a {dog|犬|/dɔɡ/|I love my dog.}"
+  },
+  {
+    "start": 202.02,
+    "end": 204.74,
+    "text": "**Anna:** No, I know I want a dog."
+  },
+  {
+    "start": 204.74,
+    "end": 206.82,
+    "text": "**Ashley:** It's a big {responsibility|責任|/rɪˌspɒnsəˈbɪləti/|Responsibility is important.}"
+  },
+  {
+    "start": 206.82,
+    "end": 210.18,
+    "text": "**Anna:** You may want to {spend|過ごす/費やす|/spend/|I spend time with friends.} time with a dog first."
+  },
+  {
+    "start": 210.18,
+    "end": 212.82,
+    "text": "**Anna:** That is a great idea."
+  },
+  {
+    "start": 212.74,
+    "end": 215.94,
+    "text": "**Anna:** But where can I find a dog?"
+  },
+  {
+    "start": 215.94,
+    "end": 219.7,
+    "text": "**Ashley:** You know, Anna, I have some {shopping|買い物|/ˈʃɒpɪŋ/|I go shopping every weekend.} to do"
+  },
+  {
+    "start": 220.3,
+    "end": 223.18,
+    "text": "**Ashley:** Do you want to watch Dublin for a couple of hours?"
+  },
+  {
+    "start": 223.18,
+    "end": 224.46,
+    "text": "**Anna:** Yes, I would."
+  },
+  {
+    "start": 224.46,
+    "end": 227.02,
+    "text": "**Anna:** I will take very good {care|世話/注意|/ker/|Take care of yourself.} of him."
+  },
+  {
+    "start": 227.02,
+    "end": 228.06,
+    "text": "**Ashley:** I know you will."
+  },
+  {
+    "start": 228.06,
+    "end": 229.66,
+    "text": "**Anna:** Here's his {leash|リード/引き紐|/liːʃ/|Put the dog on a leash.}"
+  },
+  {
+    "start": 229.66,
+    "end": 230.94,
+    "text": "**Anna:** Thank you."
+  },
+  {
+    "start": 230.94,
+    "end": 233.1,
+    "text": "**Anna:** Okay, I'll miss you."
+  },
+  {
+    "start": 233.32,
+    "end": 236.68,
+    "text": "**Anna:** Aww, I don't want you to be {lonely|孤独な|/ˈloʊnli/|He feels lonely today.}"
+  },
+  {
+    "start": 236.68,
+    "end": 239.56,
+    "text": "**Anna:** Here, Rocky can stay with you."
+  },
+  {
+    "start": 239.56,
+    "end": 242.76,
+    "text": "**Ashley:** Anna, I really don't need okay."
+  },
+  {
+    "start": 242.76,
+    "end": 243.96,
+    "text": "**Ashley:** Thanks, Anna."
+  },
+  {
+    "start": 243.96,
+    "end": 244.44,
+    "text": "**Anna:** Sure."
+  },
+  {
+    "start": 244.44,
+    "end": 245.32,
+    "text": "**Anna:** Bye, Ashley."
+  },
+  {
+    "start": 245.32,
+    "end": 246.28,
+    "text": "**Anna:** Come on, Dublin."
+  },
+  {
+    "start": 246.28,
+    "end": 247.96,
+    "text": "**Anna:** Bye, Rocky."
+  },
+  {
+    "start": 247.34,
+    "end": 247.9,
+    "text": "**Anna:** Hi!"
+  },
+  {
+    "start": 248.14,
+    "end": 251.1,
+    "text": "**Anna:** Anna's rock is {cute|かわいい|/kjuːt/|That puppy is cute.}, isn't it?"
+  },
+  {
+    "start": 251.1,
+    "end": 254.14,
+    "text": "**Anna:** Oh, there is another {tag|タグ/付け札|/tæɡ/|Write a tag on the item.} question."
+  },
+  {
+    "start": 254.14,
+    "end": 256.94,
+    "text": "**Anna:** You found some more, didn't you?"
+  },
+  {
+    "start": 256.76,
+    "end": 259.72,
+    "text": "**Ashley:** You haven't {met|出会った/会った|/met/|I met my best friend last year.} my {dog|犬|/dɒɡ/|My dog loves to play fetch.}, have you?"
+  },
+  {
+    "start": 259.72,
+    "end": 265.48,
+    "text": "**Anna:** Go to the VOA Learning English {website|ウェブサイト|/ˈwebsaɪt/|I found useful information on this website.} to learn more."
+  }
+]

@@ -1,0 +1,462 @@
+[
+  {
+    "start": 0.96,
+    "end": 3.2800000000000002,
+    "text": "**Anna:** Hi {Kaveh|カベ（人名）}, let's go to lunch."
+  },
+  {
+    "start": 3.2800000000000002,
+    "end": 5.44,
+    "text": "**Kaveh:** Oh, I know a {great|素晴らしい/素敵な|/ɡreɪt/|This is a great day.} place."
+  },
+  {
+    "start": 5.44,
+    "end": 9.44,
+    "text": "**Kaveh:** When I first {started|始めた/開始した|/stɑːrtɪd/|I started my new job today.} working here, I would go every day."
+  },
+  {
+    "start": 9.42,
+    "end": 10.54,
+    "text": "**Kaveh:** Great."
+  },
+  {
+    "start": 10.78,
+    "end": 12.06,
+    "text": "**Anna:** Oh no."
+  },
+  {
+    "start": 12.06,
+    "end": 13.26,
+    "text": "**Kaveh:** What's wrong?"
+  },
+  {
+    "start": 13.26,
+    "end": 15.02,
+    "text": "**Anna:** I {lost|なくした/失った|/lɔːst/|I lost my wallet yesterday.} my key."
+  },
+  {
+    "start": 15.02,
+    "end": 17.18,
+    "text": "**Anna:** I just had it this morning."
+  },
+  {
+    "start": 17.18,
+    "end": 19.58,
+    "text": "**Kaveh:** You should {check|確認する/調べる|/tʃek/|Please check your email.} the lost and found office."
+  },
+  {
+    "start": 19.58,
+    "end": 21.18,
+    "text": "**Anna:** Great idea."
+  },
+  {
+    "start": 21.22,
+    "end": 22.42,
+    "text": "**Anna:** Where is it?"
+  },
+  {
+    "start": 22.42,
+    "end": 28.42,
+    "text": "**Anna:** Oh, it {used|以前は〜だった|/juːzd/|I used to live in Tokyo.} to be across from the cafeteria, but now it's down in the {basement|地下室|/ˈbeɪsmənt/|The basement is cool in summer.} next to the elevators."
+  },
+  {
+    "start": 28.42,
+    "end": 30.9,
+    "text": "**Anna:** It's really hard to find."
+  },
+  {
+    "start": 30.92,
+    "end": 34.68,
+    "text": "**Anna:** The lost and found is hard to find."
+  },
+  {
+    "start": 35.72,
+    "end": 37.16,
+    "text": "**Anna:** That's funny."
+  },
+  {
+    "start": 37.16,
+    "end": 38.44,
+    "text": "**Anna:** It is."
+  },
+  {
+    "start": 42.16,
+    "end": 52.879,
+    "text": "**Anna:** I hope Anna can find the Lost and Found office, used to and would describe something that happened repeatedly in the past."
+  },
+  {
+    "start": 52.66,
+    "end": 59.3,
+    "text": "**Anna:** Kave uses wood when he says When I first started working here, I would go every day."
+  },
+  {
+    "start": 59.3,
+    "end": 64.02,
+    "text": "**Anna:** There are two differences between used to and wood."
+  },
+  {
+    "start": 64.02,
+    "end": 67.22,
+    "text": "**Anna:** Number one, we use wood."
+  },
+  {
+    "start": 67.02,
+    "end": 70.86,
+    "text": "**Anna:** Only when we say the time period first."
+  },
+  {
+    "start": 70.86,
+    "end": 72.06,
+    "text": "**Anna:** Number two."
+  },
+  {
+    "start": 72.06,
+    "end": 74.38,
+    "text": "**Anna:** For verbs like be, think"
+  },
+  {
+    "start": 74.84,
+    "end": 80.36,
+    "text": "**Anna:** feel, see, and understand, we can only use used to."
+  },
+  {
+    "start": 80.36,
+    "end": 81.799,
+    "text": "**Anna:** Kave says."
+  },
+  {
+    "start": 81.799,
+    "end": 84.44,
+    "text": "**Anna:** It used to be across from the cafeteria."
+  },
+  {
+    "start": 84.44,
+    "end": 86.44,
+    "text": "**Professor Bot:** Keep listening for more"
+  },
+  {
+    "start": 87.78,
+    "end": 89.78,
+    "text": "**Anna:** These signs are wrong."
+  },
+  {
+    "start": 90.1,
+    "end": 92.66,
+    "text": "**Anna:** There, that's better."
+  },
+  {
+    "start": 96.86,
+    "end": 98.78,
+    "text": "**Serenity:** Come in."
+  },
+  {
+    "start": 99.26,
+    "end": 101.5,
+    "text": "**Serenity:** I am Serenity."
+  },
+  {
+    "start": 101.5,
+    "end": 103.82,
+    "text": "**Anna:** Hi, Serenity."
+  },
+  {
+    "start": 103.82,
+    "end": 105.34,
+    "text": "**Professor Bot:** I'm Anna."
+  },
+  {
+    "start": 105.34,
+    "end": 108.22,
+    "text": "**Serenity:** {Please|どうぞ/お願いします|/pliːz/|Please come in.} sit down."
+  },
+  {
+    "start": 108.32,
+    "end": 111.44,
+    "text": "**Serenity:** How can I {help|助ける/援助する|/help/|Can I help you today?} you?"
+  },
+  {
+    "start": 111.44,
+    "end": 113.84,
+    "text": "**Anna:** I {lost|なくした/失った|/lɒst/|I lost my keys.} something very {important|重要な|/ɪmˈpɔːrtənt/|This is an important document.}."
+  },
+  {
+    "start": 113.84,
+    "end": 114.8,
+    "text": "**Serenity:** Shh."
+  },
+  {
+    "start": 115.12,
+    "end": 118,
+    "text": "**Serenity:** I already know you need help."
+  },
+  {
+    "start": 118,
+    "end": 118.96,
+    "text": "**Anna:** Yes."
+  },
+  {
+    "start": 118.72,
+    "end": 121.28,
+    "text": "**Anna:** I need help finding the {key|鍵/キー|/kiː/|This is the key to my house.}."
+  },
+  {
+    "start": 122.08,
+    "end": 124.96,
+    "text": "**Serenity:** You need to find the key."
+  },
+  {
+    "start": 124.96,
+    "end": 127.76,
+    "text": "**Anna:** The key that will give you {happiness|幸福/喜び|/ˈhæpinəs/|Happiness is important in life.}."
+  },
+  {
+    "start": 127.76,
+    "end": 131.84,
+    "text": "**Anna:** Yes, finding this key will make me very happy."
+  },
+  {
+    "start": 132.879,
+    "end": 136.959,
+    "text": "**Serenity:** First, Anna, let me tell you a little bit about myself."
+  },
+  {
+    "start": 136.959,
+    "end": 137.76,
+    "text": "**Anna:** Okay."
+  },
+  {
+    "start": 138.079,
+    "end": 144.959,
+    "text": "**Anna:** I used to be a very {important|重要な|/ɪmˈpɔːrtənt/|This is an important meeting.} person with a very important job."
+  },
+  {
+    "start": 145.12,
+    "end": 147.36,
+    "text": "**Anna:** I made a lot of {money|お金/収入|/ˈmʌni/|I need money to buy food.}."
+  },
+  {
+    "start": 147.36,
+    "end": 149.28,
+    "text": "**Kaveh:** I mean a lot."
+  },
+  {
+    "start": 149.28,
+    "end": 151.76,
+    "text": "**Anna:** Wow Good for you."
+  },
+  {
+    "start": 151.76,
+    "end": 153.44,
+    "text": "**Anna:** No, no."
+  },
+  {
+    "start": 153.44,
+    "end": 155.28,
+    "text": "**Serenity:** It was bad for me."
+  },
+  {
+    "start": 155.28,
+    "end": 159.76,
+    "text": "**Serenity:** I lost the most important thing the key."
+  },
+  {
+    "start": 159.66,
+    "end": 162.14,
+    "text": "**Serenity:** You've lost it too, haven't you, Anna?"
+  },
+  {
+    "start": 162.14,
+    "end": 163.74,
+    "text": "**Kaveh:** Haven't you?"
+  },
+  {
+    "start": 163.74,
+    "end": 167.58,
+    "text": "**Anna:** I guess so how does this {work|働く/機能する|/wɜːrk/|How does this machine work?} or something or No, no forms"
+  },
+  {
+    "start": 167.58,
+    "end": 172.86,
+    "text": "**Anna:** Do I have to fill out a {form|書式/用紙|/fɔːrm/|Please fill out this form.} or something or No, no forms"
+  },
+  {
+    "start": 173.32,
+    "end": 177,
+    "text": "**Serenity:** Just answer this one {question|質問|/ˈkwestʃən/|I have a question for you.}."
+  },
+  {
+    "start": 177,
+    "end": 180.68,
+    "text": "**Anna:** As a child, what did you used to do"
+  },
+  {
+    "start": 181.04,
+    "end": 182.16,
+    "text": "**Anna:** To feel {happy|幸せな/嬉しい|/ˈhæpi/|I am happy today.}."
+  },
+  {
+    "start": 182.16,
+    "end": 187.44,
+    "text": "**Anna:** When I was little, I used to {sing|歌う|/sɪŋ/|I love to sing songs.} all the time with my family."
+  },
+  {
+    "start": 188.24,
+    "end": 190.08,
+    "text": "**Anna:** Those were {good|良い/素晴らしい} times"
+  },
+  {
+    "start": 190.62,
+    "end": 193.02,
+    "text": "**Serenity:** {Singing|歌うこと} is so {joyful|喜びに満ちた/楽しい}."
+  },
+  {
+    "start": 193.02,
+    "end": 194.94,
+    "text": "**Serenity:** I used to {sing|歌う}."
+  },
+  {
+    "start": 194.94,
+    "end": 199.26,
+    "text": "**Anna:** But now that I started my {business|事業/仕事}, I've just been too busy."
+  },
+  {
+    "start": 199.54,
+    "end": 201.06,
+    "text": "**Serenity:** Too busy?"
+  },
+  {
+    "start": 201.06,
+    "end": 203.78,
+    "text": "**Anna:** Anna, why don't you sing again?"
+  },
+  {
+    "start": 203.78,
+    "end": 205.54,
+    "text": "**Anna:** I sing everywhere."
+  },
+  {
+    "start": 205.54,
+    "end": 211.86,
+    "text": "**Anna:** I sing in the {office|事務所}, I sing on the {metro|地下鉄}, I sing in the {elevators|エレベーター}, I sing on the {escalators|エスカレーター}, I sing in the bathroom."
+  },
+  {
+    "start": 212.04,
+    "end": 217.08,
+    "text": "**Anna:** Serenity, serenity, I really need to find my {key|鍵}."
+  },
+  {
+    "start": 217.08,
+    "end": 218.44,
+    "text": "**Anna:** Yeah."
+  },
+  {
+    "start": 218.44,
+    "end": 221.32,
+    "text": "**Serenity:** Yes, we need to find the key."
+  },
+  {
+    "start": 221.22,
+    "end": 223.379,
+    "text": "**Serenity:** The key to {happiness|幸福}."
+  },
+  {
+    "start": 223.379,
+    "end": 227.14,
+    "text": "**Anna:** No, no, I just need to find the key to my {apartment|アパート}."
+  },
+  {
+    "start": 227.22,
+    "end": 228.42,
+    "text": "**Serenity:** I used to know"
+  },
+  {
+    "start": 228.94,
+    "end": 232.379,
+    "text": "**Anna:** But now I don't do you, Anna?"
+  },
+  {
+    "start": 232.379,
+    "end": 233.26,
+    "text": "**Kaveh:** I don't know."
+  },
+  {
+    "start": 233.26,
+    "end": 235.739,
+    "text": "**Anna:** I think I left it in the {ladies'|女性用} room."
+  },
+  {
+    "start": 236.22,
+    "end": 239.66,
+    "text": "**Anna:** Y you know, this isn't the {lost and found|遺失物保管所}, is it?"
+  },
+  {
+    "start": 239.66,
+    "end": 241.739,
+    "text": "**Serenity:** It could be the lost and found."
+  },
+  {
+    "start": 241.739,
+    "end": 243.66,
+    "text": "**Anna:** I'm lost."
+  },
+  {
+    "start": 243.66,
+    "end": 246.14,
+    "text": "**Serenity:** And I used to find {joy|喜び} for people."
+  },
+  {
+    "start": 246.14,
+    "end": 247.9,
+    "text": "**Serenity:** I used to find joy."
+  },
+  {
+    "start": 247.9,
+    "end": 250.86,
+    "text": "**Anna:** You know, this is a bad time for you."
+  },
+  {
+    "start": 250.86,
+    "end": 254.14,
+    "text": "**Anna:** Uh I'll find the lost and found myself."
+  },
+  {
+    "start": 254.38,
+    "end": 256.06,
+    "text": "**Anna:** Bye, thanks."
+  },
+  {
+    "start": 256.04,
+    "end": 263.88,
+    "text": "**Serenity:** I used to find joy."
+  },
+  {
+    "start": 263.88,
+    "end": 264.84,
+    "text": "**Anna:** I found my key."
+  },
+  {
+    "start": 265.48,
+    "end": 268.04,
+    "text": "**Serenity:** I used to find joy."
+  },
+  {
+    "start": 271.3,
+    "end": 272.66,
+    "text": "**Anna:** Oh no!"
+  },
+  {
+    "start": 272.98,
+    "end": 275.38,
+    "text": "**Professor Bot:** Serenity lost her joy."
+  },
+  {
+    "start": 275.38,
+    "end": 278.34,
+    "text": "**Professor Bot:** But at least Anna found her {key|鍵|/kiː/|I lost my key yesterday.}."
+  },
+  {
+    "start": 278.34,
+    "end": 281.46,
+    "text": "**Professor Bot:** {Check out|確認する/調べる|/tʃek aʊt/|Check out this cool website.} our website for more."
+  }
+]

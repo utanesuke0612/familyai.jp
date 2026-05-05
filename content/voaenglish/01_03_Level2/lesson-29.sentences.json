@@ -1,0 +1,462 @@
+[
+  {
+    "start": 1.6,
+    "end": 3.92,
+    "text": "**Penelope:** Hey Anna, what are you {reading|読んでいる}?"
+  },
+  {
+    "start": 3.92,
+    "end": 6.96,
+    "text": "**Anna:** I'm reading about {fire safety|防火安全}."
+  },
+  {
+    "start": 6.96,
+    "end": 7.44,
+    "text": "**Anna:** Ms."
+  },
+  {
+    "start": 7.44,
+    "end": 12,
+    "text": "**Anna:** Weaver named me {Fire Safety Monitor|防火安全モニター}."
+  },
+  {
+    "start": 11.84,
+    "end": 17.76,
+    "text": "**Penelope:** But the only time we have a {fire emergency|火災緊急事態} is when someone burns a piece of {toast|トースト}."
+  },
+  {
+    "start": 17.76,
+    "end": 19.04,
+    "text": "**Anna:** That is true"
+  },
+  {
+    "start": 19.1,
+    "end": 22.46,
+    "text": "**Penelope:** But fire safety is very {serious|深刻な/重大な}."
+  },
+  {
+    "start": 22.46,
+    "end": 23.82,
+    "text": "**Anna:** Very serious."
+  },
+  {
+    "start": 23.82,
+    "end": 28.78,
+    "text": "**Anna:** If there is a fire emergency, I have to {help|助ける} everyone out of the {building|建物}."
+  },
+  {
+    "start": 28.78,
+    "end": 32.86,
+    "text": "**Anna:** Well then, if I were you, I'd {learn|学ぶ} as much as possible."
+  },
+  {
+    "start": 33.559,
+    "end": 35.16,
+    "text": "**Anna:** You're right."
+  },
+  {
+    "start": 35.16,
+    "end": 37.879,
+    "text": "**Anna:** And I know just who to {call|電話する/呼ぶ}."
+  },
+  {
+    "start": 37.879,
+    "end": 41.32,
+    "text": "**Anna:** Hmm, I wonder where Anna's going."
+  },
+  {
+    "start": 41.52,
+    "end": 49.12,
+    "text": "**Anna:** Today, we are {reviewing|復習する} {conditionals|条件文} and learning helpful language for {emergencies|緊急事態}."
+  },
+  {
+    "start": 49.12,
+    "end": 54.64,
+    "text": "**Anna:** If Anna {studies|勉強する} hard, she'll be a great fire safety monitor."
+  },
+  {
+    "start": 54.64,
+    "end": 56.72,
+    "text": "**Anna:** That's a {conditional|条件文}."
+  },
+  {
+    "start": 56.72,
+    "end": 57.68,
+    "text": "**Anna:** It uses if"
+  },
+  {
+    "start": 58.24,
+    "end": 63.52,
+    "text": "**Anna:** To show that something is true only when something else is true."
+  },
+  {
+    "start": 63.52,
+    "end": 67.12,
+    "text": "**Anna:** Let's find out where Anna is going."
+  },
+  {
+    "start": 66.939,
+    "end": 74.14,
+    "text": "**Anna:** And if you want to learn fire emergency language, keep {watching|見続ける}."
+  },
+  {
+    "start": 74.14,
+    "end": 75.82,
+    "text": "**Anna:** Hi, {firefighter|消防士} Jones."
+  },
+  {
+    "start": 75.82,
+    "end": 76.86,
+    "text": "**Firefighter Jones:** Hey, how are you, Anna?"
+  },
+  {
+    "start": 76.86,
+    "end": 77.74,
+    "text": "**Anna:** I'm well, thanks."
+  },
+  {
+    "start": 77.74,
+    "end": 78.7,
+    "text": "**Firefighter Jones:** How are you?"
+  },
+  {
+    "start": 78.7,
+    "end": 80.14,
+    "text": "**Anna:** Hi, Firefighter Hatcher."
+  },
+  {
+    "start": 80.22,
+    "end": 81.02,
+    "text": "**Firefighter Hatcher:** Hi, Anna, how are you?"
+  },
+  {
+    "start": 81.02,
+    "end": 81.659,
+    "text": "**Anna:** I'm well, thanks."
+  },
+  {
+    "start": 81.7,
+    "end": 83.06,
+    "text": "**Anna:** Welcome to our {firehouse|消防署}."
+  },
+  {
+    "start": 83.06,
+    "end": 83.619,
+    "text": "**Anna:** Thank you."
+  },
+  {
+    "start": 83.619,
+    "end": 84.42,
+    "text": "**Anna:** Come on in."
+  },
+  {
+    "start": 84.42,
+    "end": 85.46,
+    "text": "**Anna:** Thanks."
+  },
+  {
+    "start": 88.74,
+    "end": 91.619,
+    "text": "**Anna:** This is where the {firefighters|消防士} eat."
+  },
+  {
+    "start": 94.62,
+    "end": 100.94,
+    "text": "**Anna:** This is where we {rest|休憩する}."
+  },
+  {
+    "start": 100.94,
+    "end": 103.1,
+    "text": "**Anna:** This is where we {exercise|運動する}."
+  },
+  {
+    "start": 105.36,
+    "end": 111.2,
+    "text": "**Anna:** This is where the fire trucks are {parked|駐車する/停める} and {maintained|整備する/手入れする}."
+  },
+  {
+    "start": 111.2,
+    "end": 113.36,
+    "text": "**Anna:** This place is {beautiful|美しい}."
+  },
+  {
+    "start": 113.36,
+    "end": 116.48,
+    "text": "**Anna:** You know the {firehouse|消防署} is a firefighter's second home"
+  },
+  {
+    "start": 117.04,
+    "end": 124.4,
+    "text": "**Anna:** Firefighter Jones, firefighter Hatcher, can you tell me some ways to {prepare|準備する} for a fire emergency?"
+  },
+  {
+    "start": 124.4,
+    "end": 125.36,
+    "text": "**Penelope:** Sure, Anna."
+  },
+  {
+    "start": 125.36,
+    "end": 127.52,
+    "text": "**Anna:** There's one really important thing you can do."
+  },
+  {
+    "start": 127.52,
+    "end": 129.44,
+    "text": "**Anna:** It's install a {fire alarm|火災警報器}."
+  },
+  {
+    "start": 129.44,
+    "end": 130.64,
+    "text": "**Anna:** Test it monthly and make sure that"
+  },
+  {
+    "start": 131.16,
+    "end": 132.68,
+    "text": "**Anna:** Batteries are fully {charged|充電された}."
+  },
+  {
+    "start": 132.68,
+    "end": 135,
+    "text": "**Anna:** Let's talk about those {emergency|緊急の} exits."
+  },
+  {
+    "start": 135,
+    "end": 138.68,
+    "text": "**Anna:** Uh in your home, office, and schools, know where your emergency exits are {located|位置している}."
+  },
+  {
+    "start": 138.68,
+    "end": 141.48,
+    "text": "**Anna:** What about {fire extinguishers|消火器}?"
+  },
+  {
+    "start": 141.48,
+    "end": 143.56,
+    "text": "**Anna:** Everyone should know how to use a fire extinguisher."
+  },
+  {
+    "start": 143.56,
+    "end": 145.8,
+    "text": "**Anna:** Uh have one handy and practice using it."
+  },
+  {
+    "start": 146,
+    "end": 147.84,
+    "text": "**Anna:** What if we need to get out?"
+  },
+  {
+    "start": 147.84,
+    "end": 152,
+    "text": "**Anna:** We should have an {evacuation|避難} plan and practice getting out safely with fire joys."
+  },
+  {
+    "start": 152,
+    "end": 157.52,
+    "text": "**Anna:** If I'm in a building and it's on fire, should I use the elevator?"
+  },
+  {
+    "start": 156.9,
+    "end": 158.739,
+    "text": "**Anna:** No, always use the stairs."
+  },
+  {
+    "start": 158.739,
+    "end": 162.739,
+    "text": "**Anna:** What other safety tips should I know?"
+  },
+  {
+    "start": 162.739,
+    "end": 166.42,
+    "text": "**Anna:** Stay low, the smoke rises, the air is clear and close to the ground."
+  },
+  {
+    "start": 167.22,
+    "end": 168.9,
+    "text": "**Anna:** Stay low."
+  },
+  {
+    "start": 168.9,
+    "end": 170.019,
+    "text": "**Anna:** Anything else?"
+  },
+  {
+    "start": 170.019,
+    "end": 171.86,
+    "text": "**Anna:** If you touch a door and it's hot,"
+  },
+  {
+    "start": 172.14,
+    "end": 173.019,
+    "text": "**Anna:** Don't open it."
+  },
+  {
+    "start": 173.019,
+    "end": 175.019,
+    "text": "**Anna:** There might be a fire on the other side."
+  },
+  {
+    "start": 175.019,
+    "end": 179.34,
+    "text": "**Anna:** What do I do if my clothes catch on fire?"
+  },
+  {
+    "start": 179.34,
+    "end": 180.459,
+    "text": "**Anna:** Do not {run|走る/走らない}"
+  },
+  {
+    "start": 180.459,
+    "end": 183.26,
+    "text": "**Anna:** If you {run|走る/走らない}, the fire will {burn|燃える/燃やす|/bɜːrn/|The wood will burn quickly.} faster."
+  },
+  {
+    "start": 183.26,
+    "end": 186.14,
+    "text": "**Anna:** You must {stop|止まる/停止する}, {drop|落とす/落ちる}, and {roll|転がる/回転する}."
+  },
+  {
+    "start": 186.14,
+    "end": 186.54,
+    "text": "**Anna:** Thanks to"
+  },
+  {
+    "start": 187.22,
+    "end": 187.939,
+    "text": "**Anna:** So much."
+  },
+  {
+    "start": 187.939,
+    "end": 193.14,
+    "text": "**Anna:** I've learned a lot and I can't wait to {share|共有する/分かち合う} this {information|情報} with others."
+  },
+  {
+    "start": 193.14,
+    "end": 194.42,
+    "text": "**Anna:** Thanks for coming, Anna."
+  },
+  {
+    "start": 194.42,
+    "end": 196.42,
+    "text": "**Anna:** It's been a {pleasure|喜び/楽しみ} meeting you."
+  },
+  {
+    "start": 197.78,
+    "end": 200.739,
+    "text": "**Penelope:** So Anna, how was the visit to the {fire station|消防署}?"
+  },
+  {
+    "start": 200.739,
+    "end": 206.34,
+    "text": "**Anna:** I learned a lot, and {firefighters|消防士} have a very {difficult|難しい/困難な} job."
+  },
+  {
+    "start": 207.24,
+    "end": 208.92,
+    "text": "**Penelope:** Do you smell {smoke|煙}?"
+  },
+  {
+    "start": 208.92,
+    "end": 209.56,
+    "text": "**Anna:** No."
+  },
+  {
+    "start": 209.56,
+    "end": 214.52,
+    "text": "**Anna:** So like I was saying, I learned how to {smoke|吸う/燃やす} - Anna, I smell smoke."
+  },
+  {
+    "start": 214.52,
+    "end": 217.64,
+    "text": "**Anna:** If you smell smoke, call the {fire department|消防署}."
+  },
+  {
+    "start": 218.38,
+    "end": 221.98,
+    "text": "**Anna:** If you smell smoke, get out of the building."
+  },
+  {
+    "start": 221.98,
+    "end": 225.26,
+    "text": "**Penelope:** Come on, people, we have a fire {emergency|緊急事態}."
+  },
+  {
+    "start": 225.26,
+    "end": 229.82,
+    "text": "**Anna:** Leave your things and {evacuate|避難する} calmly and quickly."
+  },
+  {
+    "start": 229.82,
+    "end": 232.14,
+    "text": "**Anna:** Very good."
+  },
+  {
+    "start": 232.48,
+    "end": 236.72,
+    "text": "**Penelope:** We have a fire emergency."
+  },
+  {
+    "start": 236.72,
+    "end": 237.52,
+    "text": "**Anna:** No."
+  },
+  {
+    "start": 237.52,
+    "end": 238.64,
+    "text": "**Anna:** Take the stairs."
+  },
+  {
+    "start": 239.36,
+    "end": 240.16,
+    "text": "**Anna:** Let's get out."
+  },
+  {
+    "start": 240.16,
+    "end": 241.44,
+    "text": "**Anna:** Let's get out safely."
+  },
+  {
+    "start": 241.44,
+    "end": 244,
+    "text": "**Anna:** We got out in less than six minutes."
+  },
+  {
+    "start": 244,
+    "end": 245.28,
+    "text": "**Anna:** Good job, people"
+  },
+  {
+    "start": 246.04,
+    "end": 247.88,
+    "text": "**Anna:** Wait, where's Pete?"
+  },
+  {
+    "start": 247.88,
+    "end": 248.76,
+    "text": "**Penelope:** I know where he is."
+  },
+  {
+    "start": 248.76,
+    "end": 249.56,
+    "text": "**Penelope:** I'll go get him."
+  },
+  {
+    "start": 249.56,
+    "end": 252.44,
+    "text": "**Anna:** No, never go back into a {burning|燃えている} building."
+  },
+  {
+    "start": 253.56,
+    "end": 255.48,
+    "text": "**Anna:** The fire department's coming."
+  },
+  {
+    "start": 255.48,
+    "end": 257.16,
+    "text": "**Anna:** Stay {calm|落ち着く/冷静に|/kɑːm/|Calm down and take a deep breath.}, Pete!"
+  },
+  {
+    "start": 256.86,
+    "end": 271.5,
+    "text": "**Anna:** {Help|助け/援助} is on the way."
+  }
+]

@@ -1,0 +1,477 @@
+[
+  {
+    "start": 1.6,
+    "end": 2.56,
+    "text": "**Bruna:** Hi Anna."
+  },
+  {
+    "start": 2.56,
+    "end": 4.16,
+    "text": "**Anna:** Hi Bruno, what's {up|調子/状況|/ʌp/|What's up with you today?}?"
+  },
+  {
+    "start": 4.16,
+    "end": 6.64,
+    "text": "**Bruna:** I thought we could meet for {lunch|昼食|/lʌntʃ/|Let's have lunch together.} today."
+  },
+  {
+    "start": 6.64,
+    "end": 9.28,
+    "text": "**Bruna:** I wish I could, but I can't."
+  },
+  {
+    "start": 9.28,
+    "end": 12.24,
+    "text": "**Anna:** I have to {research|調査する/研究する|/rɪˈsɜːrtʃ/|I will research this topic.} Peru for a story."
+  },
+  {
+    "start": 12.34,
+    "end": 13.7,
+    "text": "**Bruna:** How's it going?"
+  },
+  {
+    "start": 13.7,
+    "end": 14.9,
+    "text": "**Anna:** Not so good."
+  },
+  {
+    "start": 14.9,
+    "end": 19.22,
+    "text": "**Anna:** I've been {reading|読書する|/ˈriːdɪŋ/|I am reading a book.} about Peru and listening to Peruvian music."
+  },
+  {
+    "start": 19.22,
+    "end": 22.58,
+    "text": "**Anna:** I really want to {understand|理解する|/ˌʌndərˈstænd/|Do you understand me?} Peru."
+  },
+  {
+    "start": 22.92,
+    "end": 24.6,
+    "text": "**Anna:** I hope it's enough."
+  },
+  {
+    "start": 24.6,
+    "end": 26.52,
+    "text": "**Bruna:** You should {visit|訪問する|/ˈvɪzɪt/|I will visit my friend.} Peru."
+  },
+  {
+    "start": 26.52,
+    "end": 28.84,
+    "text": "**Anna:** I wish You can."
+  },
+  {
+    "start": 28.84,
+    "end": 33.48,
+    "text": "**Anna:** Bruna, I don't have the money or time to go to Peru."
+  },
+  {
+    "start": 33.48,
+    "end": 35.96,
+    "text": "**Anna:** My {deadline|締め切り|/ˈdeadlaɪn/|The deadline is tomorrow.} is tomorrow."
+  },
+  {
+    "start": 35.96,
+    "end": 36.92,
+    "text": "**Bruna:** No."
+  },
+  {
+    "start": 36.86,
+    "end": 39.02,
+    "text": "**Bruna:** I don't mean to really go there."
+  },
+  {
+    "start": 39.02,
+    "end": 43.1,
+    "text": "**Bruna:** The {museum|博物館|/mjuˈziːəm/|I visited a museum today.} where I work is having a Peruvian festival today."
+  },
+  {
+    "start": 43.1,
+    "end": 45.26,
+    "text": "**Bruna:** Anna?"
+  },
+  {
+    "start": 45.26,
+    "end": 46.54,
+    "text": "**Bruna:** Anna, are you there?"
+  },
+  {
+    "start": 47.12,
+    "end": 49.92,
+    "text": "**Anna:** Hello again, Professor Bot here."
+  },
+  {
+    "start": 49.92,
+    "end": 53.92,
+    "text": "**Anna:** Today we will hear about wishes and hopes."
+  },
+  {
+    "start": 53.92,
+    "end": 57.92,
+    "text": "**Anna:** Bruna asked Anna to go to lunch, but she answered,"
+  },
+  {
+    "start": 58.42,
+    "end": 61.059,
+    "text": "**Bruna:** I wish I could, but I can't."
+  },
+  {
+    "start": 61.219,
+    "end": 65.22,
+    "text": "**Anna:** Listen for more hope and wish sentences."
+  },
+  {
+    "start": 65.299,
+    "end": 66.259,
+    "text": "**Bruna:** Hi Anna."
+  },
+  {
+    "start": 66.259,
+    "end": 67.46,
+    "text": "**Bruna:** Hi Bruno."
+  },
+  {
+    "start": 67,
+    "end": 69.4,
+    "text": "**Anna:** Thanks for telling me about this {event|出来事/イベント|/ɪˈvent/|This is an important event.}"
+  },
+  {
+    "start": 69.4,
+    "end": 70.04,
+    "text": "**Bruna:** Sure."
+  },
+  {
+    "start": 70.04,
+    "end": 72.36,
+    "text": "**Bruna:** It's much better than {staring|じっと見つめる|/ˈstɛrɪŋ/|Stop staring at me.} at your computer."
+  },
+  {
+    "start": 72.36,
+    "end": 73.88,
+    "text": "**Anna:** I hope it helps with your story."
+  },
+  {
+    "start": 73.88,
+    "end": 75.56,
+    "text": "**Anna:** I'm sure it will."
+  },
+  {
+    "start": 75.68,
+    "end": 78,
+    "text": "**Anna:** So what should we see first?"
+  },
+  {
+    "start": 78,
+    "end": 81.28,
+    "text": "**Bruna:** {Dance|踊り/ダンス|/dæns/|Let's dance together.} and {music|音楽|/ˈmjuːzɪk/|I love classical music.} are very important to Peruvian culture."
+  },
+  {
+    "start": 81.28,
+    "end": 82.799,
+    "text": "**Bruna:** So let's watch the dancers."
+  },
+  {
+    "start": 82.799,
+    "end": 84.479,
+    "text": "**Anna:** Great, let's go!"
+  },
+  {
+    "start": 85.72,
+    "end": 90.6,
+    "text": "**Bruna:** There's this very special Peruvian {dance|踊り/ダンス} called {marinera|マリネラ} {nortenia|北部の}."
+  },
+  {
+    "start": 90.6,
+    "end": 95.56,
+    "text": "**Anna:** I love the marinera nortina."
+  },
+  {
+    "start": 95.22,
+    "end": 96.82,
+    "text": "**Bruna:** Marinera Nortena."
+  },
+  {
+    "start": 96.82,
+    "end": 99.38,
+    "text": "**Anna:** Marinera Nortina."
+  },
+  {
+    "start": 99.62,
+    "end": 100.66,
+    "text": "**Bruna:** No."
+  },
+  {
+    "start": 100.66,
+    "end": 103.38,
+    "text": "**Bruna:** Marinera Nortena."
+  },
+  {
+    "start": 103.62,
+    "end": 106.02,
+    "text": "**Anna:** I love the {marriage|結婚} dance."
+  },
+  {
+    "start": 105.74,
+    "end": 112.06,
+    "text": "**Anna:** Bruna, I read about this dance, but it is much more {romantic|ロマンチック} in person."
+  },
+  {
+    "start": 112.06,
+    "end": 115.1,
+    "text": "**Bruna:** The dancers are giving {lessons|レッスン/授業} after their {performance|公演/演技}."
+  },
+  {
+    "start": 115.1,
+    "end": 116.3,
+    "text": "**Bruna:** You should try it."
+  },
+  {
+    "start": 116.3,
+    "end": 117.82,
+    "text": "**Anna:** I'd love to"
+  },
+  {
+    "start": 118.34,
+    "end": 121.06,
+    "text": "**Anna:** But I'm not ready to get married."
+  },
+  {
+    "start": 121.22,
+    "end": 125.299,
+    "text": "**Anna:** I mean, one day I hope to meet the right guy."
+  },
+  {
+    "start": 125.299,
+    "end": 127.94,
+    "text": "**Anna:** We'll buy matching {motorcycles|オートバイ} and"
+  },
+  {
+    "start": 128.04,
+    "end": 131.64,
+    "text": "**Anna:** {Ride|乗る} into the sunset, the wind blowing through our hair."
+  },
+  {
+    "start": 131.64,
+    "end": 135.72,
+    "text": "**Bruna:** Anna, Anna, the dance just shows the {courtship|求愛} tradition."
+  },
+  {
+    "start": 135.72,
+    "end": 138.2,
+    "text": "**Anna:** It doesn't mean you will get married"
+  },
+  {
+    "start": 138.7,
+    "end": 139.659,
+    "text": "**Anna:** Oh."
+  },
+  {
+    "start": 139.659,
+    "end": 141.5,
+    "text": "**Anna:** Well, I'll try anyway."
+  },
+  {
+    "start": 141.5,
+    "end": 144.939,
+    "text": "**Bruna:** Don't forget, this {festival|祭り/フェスティバル} also shows Peruvian art."
+  },
+  {
+    "start": 144.939,
+    "end": 147.42,
+    "text": "**Anna:** I hope I have time to see everything."
+  },
+  {
+    "start": 147.42,
+    "end": 151.019,
+    "text": "**Anna:** Anna, I wish I could join you, but I have some work to do."
+  },
+  {
+    "start": 150.6,
+    "end": 151.88,
+    "text": "**Anna:** Of course, of course."
+  },
+  {
+    "start": 151.88,
+    "end": 153.16,
+    "text": "**Anna:** You go back to work."
+  },
+  {
+    "start": 153.16,
+    "end": 154.92,
+    "text": "**Anna:** I'll check out the art."
+  },
+  {
+    "start": 154.92,
+    "end": 155.56,
+    "text": "**Bruna:** Okay."
+  },
+  {
+    "start": 155.56,
+    "end": 158.12,
+    "text": "**Bruna:** I'm hoping to {finish|終える/完了する} in about an hour."
+  },
+  {
+    "start": 158.12,
+    "end": 159.08,
+    "text": "**Bruna:** Let's meet then."
+  },
+  {
+    "start": 159.08,
+    "end": 159.48,
+    "text": "**Anna:** Great."
+  },
+  {
+    "start": 159.48,
+    "end": 160.28,
+    "text": "**Anna:** See you then."
+  },
+  {
+    "start": 160.28,
+    "end": 161.56,
+    "text": "**Anna:** Yeah."
+  },
+  {
+    "start": 160.76,
+    "end": 164.6,
+    "text": "**Anna:** Did you notice any {sentences|文章} with hope or wish?"
+  },
+  {
+    "start": 164.6,
+    "end": 169.56,
+    "text": "**Anna:** Anna says, One day I {hope|望む} to meet the right guy."
+  },
+  {
+    "start": 169.879,
+    "end": 177.079,
+    "text": "**Anna:** That's an example of using hope with an {infinitive|不定詞} to talk about doing something in the future."
+  },
+  {
+    "start": 177.079,
+    "end": 179.159,
+    "text": "**Anna:** Keep watching."
+  },
+  {
+    "start": 179.159,
+    "end": 184.36,
+    "text": "**Anna:** Oh wow, I can make my own {Peruvian|ペルーの} art."
+  },
+  {
+    "start": 184.08,
+    "end": 185.44,
+    "text": "**Bruna:** Ah, how's it going?"
+  },
+  {
+    "start": 185.44,
+    "end": 186.32,
+    "text": "**Bruna:** Hi Bruno."
+  },
+  {
+    "start": 186.32,
+    "end": 188.32,
+    "text": "**Bruna:** You know you're in the {kids|子供の} section, right?"
+  },
+  {
+    "start": 188.32,
+    "end": 190.8,
+    "text": "**Anna:** I'm in the art making section."
+  },
+  {
+    "start": 190.8,
+    "end": 191.84,
+    "text": "**Bruna:** I see that."
+  },
+  {
+    "start": 191.84,
+    "end": 193.44,
+    "text": "**Bruna:** Your art is very nice."
+  },
+  {
+    "start": 193.44,
+    "end": 195.28,
+    "text": "**Bruna:** I {wish|願う} I could do art like that."
+  },
+  {
+    "start": 195.28,
+    "end": 197.12,
+    "text": "**Anna:** Oh no, this one's not mine"
+  },
+  {
+    "start": 198.28,
+    "end": 200.12,
+    "text": "**Anna:** This is mine."
+  },
+  {
+    "start": 200.12,
+    "end": 201.159,
+    "text": "**Anna:** Wow."
+  },
+  {
+    "start": 201.159,
+    "end": 201.879,
+    "text": "**Bruna:** Really?"
+  },
+  {
+    "start": 201.879,
+    "end": 203.4,
+    "text": "**Bruna:** That's really nice."
+  },
+  {
+    "start": 203.4,
+    "end": 204.04,
+    "text": "**Anna:** Thanks."
+  },
+  {
+    "start": 204.04,
+    "end": 207.079,
+    "text": "**Anna:** And thanks for telling me about this {festival|祭り/祭典}."
+  },
+  {
+    "start": 207.079,
+    "end": 210.12,
+    "text": "**Anna:** I learned so much about Peru."
+  },
+  {
+    "start": 210.02,
+    "end": 211.86,
+    "text": "**Anna:** Oh, we still have time."
+  },
+  {
+    "start": 211.86,
+    "end": 212.66,
+    "text": "**Bruna:** Time for what?"
+  },
+  {
+    "start": 213.06,
+    "end": 216.02,
+    "text": "**Anna:** Time for {Marinera|マリネラ} Norteña."
+  },
+  {
+    "start": 216.02,
+    "end": 218.66,
+    "text": "**Anna:** Do you remember what Anna said?"
+  },
+  {
+    "start": 218.66,
+    "end": 221.06,
+    "text": "**Anna:** I really want to {understand|理解する/分かる|/ˌʌndərˈstænd/|I want to understand this book.} Peru."
+  },
+  {
+    "start": 221.32,
+    "end": 226.12,
+    "text": "**Anna:** I hope you {understand|理解する/分かる|/ˌʌndərˈstænd/|I hope you understand my point.} Peru a little better now too."
+  },
+  {
+    "start": 226.12,
+    "end": 230.04,
+    "text": "**Anna:** And I wish I could {talk|話す/語る|/tɔːk/|Let's talk about our plans.} with you more about grammar."
+  },
+  {
+    "start": 230.04,
+    "end": 232.68,
+    "text": "**Anna:** But that's all the {time|時間/時|/taɪm/|We have a short time to finish.} we have today."
+  },
+  {
+    "start": 232.68,
+    "end": 235.88,
+    "text": "**Anna:** Go to the {website|ウェブサイト/ウェブページ|/ˈwebsaɪt/|Visit our website for more information.} to learn more."
+  }
+]

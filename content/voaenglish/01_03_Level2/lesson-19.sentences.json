@@ -1,0 +1,437 @@
+[
+  {
+    "start": 0.96,
+    "end": 4.4,
+    "text": "**Anna:** Hi, can you tell me how to get to your {movie theater|映画館}?"
+  },
+  {
+    "start": 6.8,
+    "end": 7.84,
+    "text": "**Anna:** Oh, that's easy."
+  },
+  {
+    "start": 7.84,
+    "end": 8.88,
+    "text": "**Anna:** Okay, thank you."
+  },
+  {
+    "start": 8.88,
+    "end": 9.76,
+    "text": "**Anna:** Bye."
+  },
+  {
+    "start": 9.78,
+    "end": 10.98,
+    "text": "**Anna:** Hi Pete."
+  },
+  {
+    "start": 10.98,
+    "end": 12.98,
+    "text": "**Anna:** Thanks for the movie {invitation|招待}."
+  },
+  {
+    "start": 12.98,
+    "end": 14.74,
+    "text": "**Pete:** Yeah, sure Anna."
+  },
+  {
+    "start": 14.74,
+    "end": 15.86,
+    "text": "**Anna:** I love movies."
+  },
+  {
+    "start": 15.86,
+    "end": 16.82,
+    "text": "**Anna:** I love the {plot|筋書き/ストーリー}."
+  },
+  {
+    "start": 16.82,
+    "end": 18.02,
+    "text": "**Anna:** I love the {set design|舞台美術/セットデザイン}."
+  },
+  {
+    "start": 18.02,
+    "end": 18.66,
+    "text": "**Anna:** I love the {cost|費用/コスト}."
+  },
+  {
+    "start": 19.519,
+    "end": 20.16,
+    "text": "**Anna:** I love it."
+  },
+  {
+    "start": 21.68,
+    "end": 24.8,
+    "text": "**Anna:** I take movies very {seriously|真剣に}."
+  },
+  {
+    "start": 24.8,
+    "end": 27.279,
+    "text": "**Anna:** You're not one of those people who talk"
+  },
+  {
+    "start": 27.42,
+    "end": 29.58,
+    "text": "**Anna:** During a movie, are you?"
+  },
+  {
+    "start": 29.58,
+    "end": 32.3,
+    "text": "**Anna:** No."
+  },
+  {
+    "start": 32.3,
+    "end": 33.26,
+    "text": "**Pete:** Good."
+  },
+  {
+    "start": 33.82,
+    "end": 35.98,
+    "text": "**Professor Bot:** Anna loves movies."
+  },
+  {
+    "start": 35.72,
+    "end": 38.84,
+    "text": "**Anna:** And she loves talking about movies."
+  },
+  {
+    "start": 38.84,
+    "end": 41.72,
+    "text": "**Anna:** And Pete doesn't sound happy about that."
+  },
+  {
+    "start": 41.72,
+    "end": 43.96,
+    "text": "**Anna:** But he's trying to be {polite|丁寧な}."
+  },
+  {
+    "start": 43.96,
+    "end": 46.76,
+    "text": "**Anna:** He can do that with {indirect questions|間接的な質問}."
+  },
+  {
+    "start": 46.76,
+    "end": 49.48,
+    "text": "**Anna:** We can ask a question directly."
+  },
+  {
+    "start": 49.4,
+    "end": 51.48,
+    "text": "**Anna:** Where is your movie theater?"
+  },
+  {
+    "start": 51.48,
+    "end": 54.2,
+    "text": "**Anna:** Or indirectly as Anna does."
+  },
+  {
+    "start": 54.2,
+    "end": 56.92,
+    "text": "**Anna:** Can you tell me how to get to your movie theater"
+  },
+  {
+    "start": 56.6,
+    "end": 63.16,
+    "text": "**Anna:** They have the same meaning, but indirect questions are more polite and a little more formal."
+  },
+  {
+    "start": 63.16,
+    "end": 65.72,
+    "text": "**Anna:** Many indirect questions begin with"
+  },
+  {
+    "start": 65.96,
+    "end": 72.92,
+    "text": "**Anna:** Can or could you tell me would or do you mind would it be possible or do you know?"
+  },
+  {
+    "start": 72.92,
+    "end": 73.56,
+    "text": "**Anna:** Hmm"
+  },
+  {
+    "start": 73.56,
+    "end": 76.28,
+    "text": "**Anna:** Do you know if Anna will {stop|止める/やめる} talking?"
+  },
+  {
+    "start": 76.28,
+    "end": 77.56,
+    "text": "**Anna:** I sure don't."
+  },
+  {
+    "start": 77.56,
+    "end": 78.6,
+    "text": "**Anna:** {Keep|続ける} watching."
+  },
+  {
+    "start": 78.6,
+    "end": 84.04,
+    "text": "**Anna:** And this time look for {indirect|間接的な} questions that begin with, would you mind?"
+  },
+  {
+    "start": 85.719,
+    "end": 89.479,
+    "text": "**Anna:** I love the {smell|匂い} of popcorn."
+  },
+  {
+    "start": 90.52,
+    "end": 93.24,
+    "text": "**Anna:** I love seats that {rock|揺れる/動く}."
+  },
+  {
+    "start": 94.2,
+    "end": 97.24,
+    "text": "**Pete:** I love when people are {quiet|静かな}."
+  },
+  {
+    "start": 104.04,
+    "end": 106.2,
+    "text": "**Pete:** Well look the {previews|予告編} are starting."
+  },
+  {
+    "start": 106.2,
+    "end": 108.52,
+    "text": "**Anna:** I love to see what movies are {coming out|公開される}."
+  },
+  {
+    "start": 108.52,
+    "end": 110.28,
+    "text": "**Anna:** Oh, this one looks good."
+  },
+  {
+    "start": 111.68,
+    "end": 115.759,
+    "text": "**Pete:** The previews are part of the movie {experience|経験}."
+  },
+  {
+    "start": 115.759,
+    "end": 117.68,
+    "text": "**Pete:** So would you mind not talking?"
+  },
+  {
+    "start": 117.68,
+    "end": 118.64,
+    "text": "**Anna:** Oh sure."
+  },
+  {
+    "start": 132.08,
+    "end": 135.12,
+    "text": "**Pete:** I was {wondering|疑問に思う/考えている}, are you almost finished with that?"
+  },
+  {
+    "start": 135.12,
+    "end": 140.56,
+    "text": "**Anna:** No, there's still a lot of {milkshake|ミルクセーキ} at the bottom."
+  },
+  {
+    "start": 141.26,
+    "end": 144.06,
+    "text": "**Pete:** Oh, would you mind not {trending|流行している} so loudly?"
+  },
+  {
+    "start": 144.06,
+    "end": 146.86,
+    "text": "**Anna:** I'll try, but it's really {thick|濃い/分厚い}."
+  },
+  {
+    "start": 149.62,
+    "end": 151.54,
+    "text": "**Pete:** Anna, what are you doing?"
+  },
+  {
+    "start": 151.54,
+    "end": 153.38,
+    "text": "**Anna:** Shh."
+  },
+  {
+    "start": 153.38,
+    "end": 156.18,
+    "text": "**Pete:** I'm not the one making all the noise."
+  },
+  {
+    "start": 158.38,
+    "end": 159.74,
+    "text": "**Anna:** I'm done now"
+  },
+  {
+    "start": 171.38,
+    "end": 176.34,
+    "text": "**Anna:** Anna, would you mind {opening|開ける} that a little bit more quietly?"
+  },
+  {
+    "start": 176.34,
+    "end": 178.58,
+    "text": "**Anna:** I'll try."
+  },
+  {
+    "start": 183.76,
+    "end": 186.56,
+    "text": "**Pete:** Anna, just give it to me."
+  },
+  {
+    "start": 187.62,
+    "end": 190.42,
+    "text": "**Anna:** Shh, it's not mine."
+  },
+  {
+    "start": 190.42,
+    "end": 192.26,
+    "text": "**Anna:** I'm opening it for her."
+  },
+  {
+    "start": 192.26,
+    "end": 194.02,
+    "text": "**Anna:** Shh."
+  },
+  {
+    "start": 194.02,
+    "end": 194.58,
+    "text": "**Pete:** Here"
+  },
+  {
+    "start": 197.5,
+    "end": 201.98,
+    "text": "**Anna:** Now, would you mind being more quiet?"
+  },
+  {
+    "start": 209.26,
+    "end": 215.5,
+    "text": "**Anna:** Excuse me, would you mind {turning down|下げる/弱める} your phone light?"
+  },
+  {
+    "start": 216.86,
+    "end": 220.46,
+    "text": "**Anna:** Oh sorry, I {forgot|忘れた|/fərˈɡɑːt/|I forgot my keys at home.} to turn my phone off."
+  },
+  {
+    "start": 220.46,
+    "end": 223.42,
+    "text": "**Anna:** Oh no, I {dropped|落とした|/drɑːpt/|I dropped my book on the floor.} it."
+  },
+  {
+    "start": 223.42,
+    "end": 224.62,
+    "text": "**Anna:** Where is it?"
+  },
+  {
+    "start": 224.86,
+    "end": 227.18,
+    "text": "**Anna:** Oh no, can you"
+  },
+  {
+    "start": 227.3,
+    "end": 230.1,
+    "text": "**Pete:** Please turn your phone off."
+  },
+  {
+    "start": 230.1,
+    "end": 234.1,
+    "text": "**Anna:** Excuse me, would you mind {lending|貸す|/ˈlendɪŋ/|Can you lend me a pencil?} me your phone light for a minute?"
+  },
+  {
+    "start": 234.1,
+    "end": 236.58,
+    "text": "**Pete:** No, I'll get it."
+  },
+  {
+    "start": 239.06,
+    "end": 240.18,
+    "text": "**Pete:** Look, people"
+  },
+  {
+    "start": 240.46,
+    "end": 242.54,
+    "text": "**Pete:** I'm not the {noisy|うるさい|/ˈnɔɪzi/|The party was very noisy.} one here."
+  },
+  {
+    "start": 242.54,
+    "end": 245.18,
+    "text": "**Pete:** So you need to {shush|静かにさせる|/ʃʊʃ/|Shush, the baby is sleeping.} the right person."
+  },
+  {
+    "start": 245.18,
+    "end": 247.02,
+    "text": "**Pete:** And I should know about shushing."
+  },
+  {
+    "start": 247.02,
+    "end": 248.38,
+    "text": "**Pete:** I shush people"
+  },
+  {
+    "start": 248.44,
+    "end": 249.319,
+    "text": "**Pete:** All the time."
+  },
+  {
+    "start": 249.319,
+    "end": 250.76,
+    "text": "**Anna:** Excuse me, sir."
+  },
+  {
+    "start": 250.76,
+    "end": 253.319,
+    "text": "**Anna:** You can't {yell|大声で叫ぶ|/jel/|Don't yell at me!} in a movie theater."
+  },
+  {
+    "start": 253.319,
+    "end": 255.16,
+    "text": "**Anna:** Would you mind coming with me?"
+  },
+  {
+    "start": 255.16,
+    "end": 257.079,
+    "text": "**Anna:** You're {kicking|追い出す|/ˈkɪkɪŋ/|They kicked him out of the club.} me out?"
+  },
+  {
+    "start": 257.079,
+    "end": 258.04,
+    "text": "**Anna:** Me?"
+  },
+  {
+    "start": 258.04,
+    "end": 261,
+    "text": "**Anna:** But I'm always the {quiet|静かな|/ˈkwaɪət/|She is a quiet person.} one in the movie!"
+  },
+  {
+    "start": 262.34,
+    "end": 264.34,
+    "text": "**Anna:** Pete should know better."
+  },
+  {
+    "start": 264.34,
+    "end": 267.38,
+    "text": "**Anna:** You have to be quiet in a movie theater."
+  },
+  {
+    "start": 267.38,
+    "end": 269.86,
+    "text": "**Anna:** Shh, the movie's starting."
+  },
+  {
+    "start": 271.12,
+    "end": 272.479,
+    "text": "**Professor Bot:** That's a {surprise|驚き|/sərˈpraɪz/|What a nice surprise!}."
+  },
+  {
+    "start": 272.479,
+    "end": 275.199,
+    "text": "**Professor Bot:** I thought Anna would be the noisy one."
+  },
+  {
+    "start": 275.199,
+    "end": 278,
+    "text": "**Anna:** Well, she was with her food."
+  },
+  {
+    "start": 278,
+    "end": 280.24,
+    "text": "**Anna:** But Pete did all of the talking."
+  },
+  {
+    "start": 280.24,
+    "end": 285.44,
+    "text": "**Anna:** At least he tried to be {polite|丁寧な|/pəˈlaɪt/|He was very polite to the guests.} by using indirect questions."
+  }
+]

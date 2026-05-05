@@ -1,0 +1,507 @@
+[
+  {
+    "start": 0.8,
+    "end": 3.36,
+    "text": "**Ashley:** Anna, where are you going in such a {hurry|急いで|/ˈhʌri/|She's in a hurry to catch the bus.}?"
+  },
+  {
+    "start": 3.36,
+    "end": 5.84,
+    "text": "**Anna:** Oh hi Ashley, the nurse's {office|診療所|/ˈɔfɪs/|I'm going to the school office.}"
+  },
+  {
+    "start": 5.84,
+    "end": 9.2,
+    "text": "**Anna:** Today I get the results from my {blood|血液|/blʌd/|A blood test checks your health.} test."
+  },
+  {
+    "start": 9.04,
+    "end": 10.16,
+    "text": "**Ashley:** I'm sure you're fine."
+  },
+  {
+    "start": 10.16,
+    "end": 11.2,
+    "text": "**Ashley:** Don't worry."
+  },
+  {
+    "start": 11.92,
+    "end": 14.72,
+    "text": "**Anna:** You know, I used to {dream|夢見る|/driːm/|I dream of becoming a doctor.} of being a nurse."
+  },
+  {
+    "start": 14.72,
+    "end": 17.36,
+    "text": "**Anna:** It is such an {honorable|名誉ある|/ˈɑnərəbəl/|A teacher has an honorable profession.} career."
+  },
+  {
+    "start": 17.36,
+    "end": 19.92,
+    "text": "**Anna:** Is there something you've dreamed of doing?"
+  },
+  {
+    "start": 19.92,
+    "end": 21.04,
+    "text": "**Ashley:** Sure."
+  },
+  {
+    "start": 21.04,
+    "end": 23.76,
+    "text": "**Ashley:** I would love to be a {dog|犬|/dɔɡ/|My dog likes to play fetch.} trainer."
+  },
+  {
+    "start": 23.52,
+    "end": 27.36,
+    "text": "**Anna:** Actually, I've taught my dog Dublin lots of {tricks|芸/技|/trɪks/|Dogs can learn many tricks.}"
+  },
+  {
+    "start": 27.36,
+    "end": 29.12,
+    "text": "**Anna:** Well, I'm off to the nurse."
+  },
+  {
+    "start": 29.12,
+    "end": 29.68,
+    "text": "**Anna:** Bye."
+  },
+  {
+    "start": 29.68,
+    "end": 30.56,
+    "text": "**Ashley:** Bye Anna."
+  },
+  {
+    "start": 30.56,
+    "end": 31.6,
+    "text": "**Anna:** Bye, Dublin."
+  },
+  {
+    "start": 35.7,
+    "end": 39.62,
+    "text": "**Nurse:** I'm looking at her test results, and they're not {good|良い/良好な|/ɡʊd/|The test results look good.}"
+  },
+  {
+    "start": 39.62,
+    "end": 43.94,
+    "text": "**Nurse:** In fact, I'm afraid she's not going to {make|成功する/なる|/meɪk/|I hope she will make it.} it."
+  },
+  {
+    "start": 43.94,
+    "end": 44.9,
+    "text": "**Anna:** What?"
+  },
+  {
+    "start": 45.12,
+    "end": 47.76,
+    "text": "**Anna:** I'm not going to make it."
+  },
+  {
+    "start": 47.76,
+    "end": 50.64,
+    "text": "**Anna:** I'm dying."
+  },
+  {
+    "start": 50.64,
+    "end": 52.399,
+    "text": "**Nurse:** Anna, come in."
+  },
+  {
+    "start": 52.399,
+    "end": 53.68,
+    "text": "**Nurse:** How are you?"
+  },
+  {
+    "start": 54,
+    "end": 58.48,
+    "text": "**Anna:** I guess not so good I'm dying?"
+  },
+  {
+    "start": 58.48,
+    "end": 60,
+    "text": "**Nurse:** What are you talking about?"
+  },
+  {
+    "start": 60,
+    "end": 62.4,
+    "text": "**Anna:** I just heard you on the {phone|電話|/foʊn/|She's talking on the phone.}"
+  },
+  {
+    "start": 61.9,
+    "end": 65.1,
+    "text": "**Anna:** Just tell me how much longer do I have?"
+  },
+  {
+    "start": 65.1,
+    "end": 67.02,
+    "text": "**Nurse:** I wasn't talking about you."
+  },
+  {
+    "start": 67.02,
+    "end": 70.3,
+    "text": "**Nurse:** A student of mine didn't do well on her science {test|テスト/試験|/test/|I passed my math test.}"
+  },
+  {
+    "start": 70.3,
+    "end": 73.82,
+    "text": "**Anna:** So she's not going to make it to {graduation|卒業|/ɡrædʒuˈeɪʃən/|Graduation is an important day.}"
+  },
+  {
+    "start": 73.82,
+    "end": 74.3,
+    "text": "**Anna:** Woo"
+  },
+  {
+    "start": 75.78,
+    "end": 77.22,
+    "text": "**Anna:** Thank goodness."
+  },
+  {
+    "start": 77.22,
+    "end": 78.18,
+    "text": "**Music:** For a minute?"
+  },
+  {
+    "start": 78.18,
+    "end": 81.3,
+    "text": "**Anna:** My whole {life|人生} passed before my eyes."
+  },
+  {
+    "start": 81.3,
+    "end": 84.42,
+    "text": "**Anna:** There are so many things I haven't done yet."
+  },
+  {
+    "start": 84.82,
+    "end": 86.34,
+    "text": "**Anna:** Well {life|人生} is short."
+  },
+  {
+    "start": 86.34,
+    "end": 89.86,
+    "text": "**Anna:** It's important to do something you {love|愛する/大好きな} every day."
+  },
+  {
+    "start": 89.32,
+    "end": 92.92,
+    "text": "**Anna:** I couldn't agree more."
+  },
+  {
+    "start": 92.92,
+    "end": 94.76,
+    "text": "**Nurse:** Let's talk about your {blood|血液} test."
+  },
+  {
+    "start": 94.76,
+    "end": 97.08,
+    "text": "**Nurse:** Your {cholesterol|コレステロール} is really low."
+  },
+  {
+    "start": 97.08,
+    "end": 98.36,
+    "text": "**Anna:** Awesome!"
+  },
+  {
+    "start": 98.92,
+    "end": 100.04,
+    "text": "**Jonathan:** Okay, Anna."
+  },
+  {
+    "start": 100.04,
+    "end": 102.52,
+    "text": "**Jonathan:** Say something and I'll check your {sound|音/音声} level"
+  },
+  {
+    "start": 102.52,
+    "end": 103.399,
+    "text": "**Anna:** Testing."
+  },
+  {
+    "start": 103.399,
+    "end": 105.079,
+    "text": "**Anna:** One, two, three."
+  },
+  {
+    "start": 105.079,
+    "end": 106.439,
+    "text": "**Anna:** Testing."
+  },
+  {
+    "start": 106.439,
+    "end": 110.679,
+    "text": "**Anna:** Jonathan, I've been {wondering|不思議に思う/疑問に思う} something."
+  },
+  {
+    "start": 110.679,
+    "end": 114.119,
+    "text": "**Anna:** What's at the top of your {bucket|バケツ/目標} list"
+  },
+  {
+    "start": 114.8,
+    "end": 116.16,
+    "text": "**Jonathan:** That's easy."
+  },
+  {
+    "start": 116.16,
+    "end": 120.24,
+    "text": "**Jonathan:** I'd love to win the World {Karaoke|カラオケ} Contest."
+  },
+  {
+    "start": 120.48,
+    "end": 122.48,
+    "text": "**Anna:** This is so {strange|奇妙な/変な}."
+  },
+  {
+    "start": 122.48,
+    "end": 124.4,
+    "text": "**Anna:** I just saw on Twitter"
+  },
+  {
+    "start": 124.74,
+    "end": 129.06,
+    "text": "**Anna:** that they are having {auditions|オーディション} in DC this weekend."
+  },
+  {
+    "start": 129.06,
+    "end": 130.58,
+    "text": "**Jonathan:** Are you serious?"
+  },
+  {
+    "start": 130.58,
+    "end": 132.34,
+    "text": "**Jonathan:** Can you read the story by yourself?"
+  },
+  {
+    "start": 132.34,
+    "end": 133.62,
+    "text": "**Ashley:** Sure, absolutely."
+  },
+  {
+    "start": 133.62,
+    "end": 134.42,
+    "text": "**Jonathan:** Thanks."
+  },
+  {
+    "start": 134.42,
+    "end": 135.06,
+    "text": "**Anna:** You go"
+  },
+  {
+    "start": 136.02,
+    "end": 143.3,
+    "text": "**Anna:** Penelope, I was {wondering|不思議に思う/疑問に思う} if you still dream of being a dancer."
+  },
+  {
+    "start": 144.48,
+    "end": 148.08,
+    "text": "**Penelope:** Only every day, well guess what?"
+  },
+  {
+    "start": 148.08,
+    "end": 151.84,
+    "text": "**Anna:** A famous dancer is having a {flash|閃光/突然の} mob around the corner"
+  },
+  {
+    "start": 151.74,
+    "end": 155.1,
+    "text": "**Anna:** {Hundreds|何百もの|/ˈhʌndrədz/|Hundreds of people came to the party.} of people are dancing together."
+  },
+  {
+    "start": 155.1,
+    "end": 156.94,
+    "text": "**Penelope:** No way."
+  },
+  {
+    "start": 156.94,
+    "end": 160.22,
+    "text": "**Anna:** If you {leave|去る|/liːv/|Please leave the room.} right now, you can join them."
+  },
+  {
+    "start": 160.86,
+    "end": 162.14,
+    "text": "**Anna:** Bye!"
+  },
+  {
+    "start": 163.72,
+    "end": 166.84,
+    "text": "**Anna:** Pete, what's one of your {dreams|夢/希望|/driːmz/|I have big dreams for my future.}?"
+  },
+  {
+    "start": 167.24,
+    "end": 170.84,
+    "text": "**Pete:** Well, last night I {dreamt|夢を見た|/drɛmt/|I dreamt about flying.} I was in a spaceship."
+  },
+  {
+    "start": 170.84,
+    "end": 175.64,
+    "text": "**Anna:** I was flying through {outer space|宇宙|/ˈaʊtər speɪs/|Astronauts explore outer space.} with these two beautiful Not that kind of dream."
+  },
+  {
+    "start": 175.76,
+    "end": 179.2,
+    "text": "**Anna:** I mean your hopes for the future."
+  },
+  {
+    "start": 179.2,
+    "end": 180.48,
+    "text": "**Anna:** Oh."
+  },
+  {
+    "start": 180.48,
+    "end": 186.72,
+    "text": "**Anna:** I plan on {selling|売る|/ˈsɛlɪŋ/|We are selling our old car.} my book to Hollywood and becoming rich and famous."
+  },
+  {
+    "start": 186.72,
+    "end": 190.16,
+    "text": "**Anna:** Oh, that's going to be {difficult|難しい|/ˈdɪfɪkəlt/|Math can be difficult sometimes.}."
+  },
+  {
+    "start": 191.739,
+    "end": 193.099,
+    "text": "**Pete:** It's my agent."
+  },
+  {
+    "start": 193.099,
+    "end": 194.14,
+    "text": "**Pete:** Hello?"
+  },
+  {
+    "start": 195.099,
+    "end": 196.379,
+    "text": "**Pete:** Uh-huh."
+  },
+  {
+    "start": 197.019,
+    "end": 197.579,
+    "text": "**Ashley:** Sure"
+  },
+  {
+    "start": 198.42,
+    "end": 200.9,
+    "text": "**Pete:** I can be in Los Angeles tomorrow."
+  },
+  {
+    "start": 201.38,
+    "end": 203.86,
+    "text": "**Anna:** Well, good job, Anna!"
+  },
+  {
+    "start": 204.66,
+    "end": 207.7,
+    "text": "**Anna:** My work here is done."
+  },
+  {
+    "start": 207.7,
+    "end": 209.78,
+    "text": "**Anna:** Almost."
+  },
+  {
+    "start": 210.88,
+    "end": 224.32,
+    "text": "**Music:** You can search, but you won't find the answer without a dream You can reach for the star"
+  },
+  {
+    "start": 224.92,
+    "end": 233.8,
+    "text": "**Music:** But you won't get there without a dream, without dre"
+  },
+  {
+    "start": 241.36,
+    "end": 243.2,
+    "text": "**Anna:** Hannah, what's going on?"
+  },
+  {
+    "start": 243.2,
+    "end": 245.04,
+    "text": "**Anna:** Where is everybody?"
+  },
+  {
+    "start": 245.04,
+    "end": 246.16,
+    "text": "**Anna:** I don't know."
+  },
+  {
+    "start": 246.16,
+    "end": 248.16,
+    "text": "**Anna:** Uh maybe something is uh"
+  },
+  {
+    "start": 248.46,
+    "end": 250.3,
+    "text": "**Anna:** Going around the office."
+  },
+  {
+    "start": 250.3,
+    "end": 252.54,
+    "text": "**Anna:** You mean {germs|細菌|/dʒɜːrmz/|Germs can make you sick.}?"
+  },
+  {
+    "start": 254.06,
+    "end": 256.62,
+    "text": "**Anna:** Anna, you better use some of this hand cleaner."
+  },
+  {
+    "start": 256.62,
+    "end": 258.62,
+    "text": "**Anna:** You don't want to get sick too."
+  },
+  {
+    "start": 258.62,
+    "end": 260.14,
+    "text": "**Anna:** Right."
+  },
+  {
+    "start": 260.12,
+    "end": 262.68,
+    "text": "**Anna:** Okay, thanks."
+  },
+  {
+    "start": 262.68,
+    "end": 264.759,
+    "text": "**Anna:** Not {germs|細菌/病原体|/dʒɜːrmz/|Wash your hands to avoid germs.}"
+  },
+  {
+    "start": 264.759,
+    "end": 266.68,
+    "text": "**Anna:** {Dreams|夢/目標|/driːmz/|I have big dreams for my future.}, Miss Weaver."
+  },
+  {
+    "start": 266.68,
+    "end": 267.319,
+    "text": "**Anna:** Dreams."
+  },
+  {
+    "start": 267.319,
+    "end": 268.599,
+    "text": "**Ashley:** What'd you say, Anna?"
+  },
+  {
+    "start": 268.599,
+    "end": 270.199,
+    "text": "**Anna:** Nothing."
+  },
+  {
+    "start": 270.96,
+    "end": 276.16,
+    "text": "**Anna:** We hope you have {enjoyed|楽しんだ/満喫した|/ɪnˈdʒɔɪd/|I enjoyed the movie very much.} level two of Let's Learn English."
+  },
+  {
+    "start": 276.16,
+    "end": 280.56,
+    "text": "**Anna:** Everyone is following their {dreams|夢/目標|/driːmz/|Follow your dreams and never give up.}, big and small."
+  },
+  {
+    "start": 280.56,
+    "end": 282.56,
+    "text": "**Anna:** What are your {dreams|夢/目標|/driːmz/|Dreams can inspire us to achieve great things.}?"
+  },
+  {
+    "start": 282.3,
+    "end": 286.62,
+    "text": "**Anna:** Our dream is for you to keep learning English."
+  },
+  {
+    "start": 286.62,
+    "end": 289.419,
+    "text": "**Anna:** Thanks for watching!"
+  }
+]

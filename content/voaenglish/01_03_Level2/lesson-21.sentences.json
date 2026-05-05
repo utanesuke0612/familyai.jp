@@ -1,0 +1,397 @@
+[
+  {
+    "start": 1.12,
+    "end": 2.16,
+    "text": "**Anna:** Got it."
+  },
+  {
+    "start": 2.16,
+    "end": 5.76,
+    "text": "**Anna:** Pete, I {promise|約束する|/ˈprɒmɪs/|I promise to help you.} I won't tell anyone."
+  },
+  {
+    "start": 5.76,
+    "end": 6.88,
+    "text": "**Anna:** Bye."
+  },
+  {
+    "start": 7.52,
+    "end": 10,
+    "text": "**Anna:** He is so {strange|変な/奇妙な|/streɪndʒ/|That's a strange idea.}"
+  },
+  {
+    "start": 9.68,
+    "end": 10.56,
+    "text": "**Ashley:** Hey Anna."
+  },
+  {
+    "start": 10.56,
+    "end": 11.52,
+    "text": "**Anna:** Hi Ashley."
+  },
+  {
+    "start": 11.52,
+    "end": 13.36,
+    "text": "**Anna:** Are you {talking|話している|/ˈtɔːkɪŋ/|We are talking about music.} to yourself again?"
+  },
+  {
+    "start": 13.68,
+    "end": 15.04,
+    "text": "**Anna:** No, not this time."
+  },
+  {
+    "start": 15.04,
+    "end": 16.48,
+    "text": "**Anna:** I was {talking|話していた} to Pete."
+  },
+  {
+    "start": 16.48,
+    "end": 18,
+    "text": "**Ashley:** How's he doing?"
+  },
+  {
+    "start": 18,
+    "end": 19.2,
+    "text": "**Anna:** Good."
+  },
+  {
+    "start": 19.52,
+    "end": 24.56,
+    "text": "**Anna:** He has a {birthday|誕生日} coming up, but he told me not to tell anyone."
+  },
+  {
+    "start": 24.56,
+    "end": 26,
+    "text": "**Ashley:** Why?"
+  },
+  {
+    "start": 26,
+    "end": 29.76,
+    "text": "**Anna:** Well, from the way he was speaking"
+  },
+  {
+    "start": 30.14,
+    "end": 35.98,
+    "text": "**Anna:** I don't think he likes {cake|ケーキ} or {presents|プレゼント} or fun."
+  },
+  {
+    "start": 36.059,
+    "end": 37.98,
+    "text": "**Ashley:** That sounds like Pete."
+  },
+  {
+    "start": 37.98,
+    "end": 39.58,
+    "text": "**Anna:** Well, I don't care."
+  },
+  {
+    "start": 39.58,
+    "end": 41.66,
+    "text": "**Anna:** I'm getting him a {present|プレゼント}."
+  },
+  {
+    "start": 41.84,
+    "end": 47.04,
+    "text": "**Anna:** Do you know where I can buy something {unique|ユニークな/特別な|/juːˈniːk/|This is a unique gift.}?"
+  },
+  {
+    "start": 47.04,
+    "end": 48.08,
+    "text": "**Anna:** I do."
+  },
+  {
+    "start": 48.08,
+    "end": 49.76,
+    "text": "**Ashley:** Tanglewood works"
+  },
+  {
+    "start": 50.12,
+    "end": 53,
+    "text": "**Anna:** You will definitely find something {unique|ユニークな} there."
+  },
+  {
+    "start": 53,
+    "end": 53.64,
+    "text": "**Anna:** Great."
+  },
+  {
+    "start": 53.64,
+    "end": 55.72,
+    "text": "**Anna:** I'll go this weekend."
+  },
+  {
+    "start": 55.96,
+    "end": 61.559,
+    "text": "**Anna:** Now, {speaking|話している} of Pete's birthday, what else should I do?"
+  },
+  {
+    "start": 61.559,
+    "end": 64.68,
+    "text": "**Anna:** I know, I'll {rent|借りる} him a {clown|道化師|/klaʊn/|The clown made children laugh.}!"
+  },
+  {
+    "start": 65.14,
+    "end": 66.18,
+    "text": "**Ashley:** Yeah."
+  },
+  {
+    "start": 66.18,
+    "end": 68.74,
+    "text": "**Anna:** He'll never {speak|話す} to you again."
+  },
+  {
+    "start": 68.74,
+    "end": 71.46,
+    "text": "**Anna:** No."
+  },
+  {
+    "start": 71.46,
+    "end": 76.18,
+    "text": "**Professor Bot:** Did you hear Ashley and Anna using the words talk and speak?"
+  },
+  {
+    "start": 76.18,
+    "end": 79.46,
+    "text": "**Anna:** {Talk|話す/会話する|/tɔːk/|Let's talk about our day.} and {speak|言う/話す|/spiːk/|Can you speak louder?} both mean to say words."
+  },
+  {
+    "start": 79.54,
+    "end": 84.5,
+    "text": "**Anna:** And many times you can use either word without losing any {meaning|意味}."
+  },
+  {
+    "start": 84.5,
+    "end": 89.14,
+    "text": "**Anna:** But there are some {differences|違い} in when we use these words."
+  },
+  {
+    "start": 88.96,
+    "end": 99.44,
+    "text": "**Anna:** The word {talk|話す|/tɔːk/|We talk every morning.} is usually used for {conversations|会話} between two or more people and {informal|くだけた} situations such as between friends or family."
+  },
+  {
+    "start": 99.16,
+    "end": 103.64,
+    "text": "**Anna:** For example, Ashley asks Anna, Are you {talking|話している} to yourself again?"
+  },
+  {
+    "start": 103.64,
+    "end": 113.88,
+    "text": "**Anna:** {Speak|話す|/spiːk/|Please speak clearly.} is usually used for one-way communication, such as {presentations|発表} or formal situations such as a boss speaking with her workers."
+  },
+  {
+    "start": 114.12,
+    "end": 118.6,
+    "text": "**Anna:** to talk about language ability and in polite requests."
+  },
+  {
+    "start": 118.6,
+    "end": 122.52,
+    "text": "**Anna:** Keep watching and listen for the words talk and speak"
+  },
+  {
+    "start": 125.4,
+    "end": 128.28,
+    "text": "**Sue:** Hey there, {welcome|ようこそ|/ˈwelkəm/|Welcome to our store.} to Tanglewood Works."
+  },
+  {
+    "start": 128.28,
+    "end": 129.16,
+    "text": "**Sue:** I'm Sue."
+  },
+  {
+    "start": 129.16,
+    "end": 130.6,
+    "text": "**Sue:** How can I help you today?"
+  },
+  {
+    "start": 130.6,
+    "end": 131.4,
+    "text": "**Anna:** Hi Sue."
+  },
+  {
+    "start": 131.4,
+    "end": 132.44,
+    "text": "**Ashley:** I'm Anna."
+  },
+  {
+    "start": 132.44,
+    "end": 134.84,
+    "text": "**Anna:** A friend told me about your {store|店}."
+  },
+  {
+    "start": 134.84,
+    "end": 136.12,
+    "text": "**Anna:** She said, Anna"
+  },
+  {
+    "start": 136.74,
+    "end": 138.98,
+    "text": "**Anna:** This place is really {unique|独特の|/juːˈniːk/|This design is very unique.}"
+  },
+  {
+    "start": 138.98,
+    "end": 139.86,
+    "text": "**Sue:** We are."
+  },
+  {
+    "start": 139.86,
+    "end": 146.82,
+    "text": "**Anna:** Here at Tangowood Works, we focus on things that are {handmade|手作りの}, {reclaimed|再利用された}, and {recycled|リサイクルされた}."
+  },
+  {
+    "start": 146.82,
+    "end": 150.74,
+    "text": "**Anna:** Wow, that is really good for the {environment|環境}."
+  },
+  {
+    "start": 150.4,
+    "end": 152.4,
+    "text": "**Sue:** It's really good for you too."
+  },
+  {
+    "start": 152.4,
+    "end": 158.4,
+    "text": "**Anna:** Local {artists|アーティスト} made all of these {one-of-a-kind|唯一無二の} pieces and I paint most of the {furniture|家具}."
+  },
+  {
+    "start": 158.4,
+    "end": 159.68,
+    "text": "**Anna:** Can I look around?"
+  },
+  {
+    "start": 159.68,
+    "end": 161.439,
+    "text": "**Sue:** Oh, please do."
+  },
+  {
+    "start": 162.74,
+    "end": 166.02,
+    "text": "**Sue:** So Anna, don't you like to make things?"
+  },
+  {
+    "start": 166.02,
+    "end": 166.82,
+    "text": "**Anna:** Me?"
+  },
+  {
+    "start": 167.14,
+    "end": 168.34,
+    "text": "**Anna:** Oh no."
+  },
+  {
+    "start": 168.34,
+    "end": 172.18,
+    "text": "**Anna:** Every time I try to make something, something goes wrong."
+  },
+  {
+    "start": 172.18,
+    "end": 173.94,
+    "text": "**Anna:** Oh, oh, sorry."
+  },
+  {
+    "start": 173.94,
+    "end": 175.06,
+    "text": "**Anna:** Sorry."
+  },
+  {
+    "start": 176.34,
+    "end": 178.02,
+    "text": "**Sue:** It's okay."
+  },
+  {
+    "start": 178.02,
+    "end": 181.54,
+    "text": "**Sue:** Anna, everybody can {make|作る/創る|/meɪk/|I make a cake every Sunday.} something."
+  },
+  {
+    "start": 183.78,
+    "end": 188.34,
+    "text": "**Anna:** So this piece is very {interesting|興味深い|/ˈɪntrəstɪŋ/|This book is very interesting.}"
+  },
+  {
+    "start": 188.34,
+    "end": 193.14,
+    "text": "**Sue:** You know, when I found these pieces, they were {broken|壊れた/破損した|/ˈbroʊkən/|The vase was broken.} and in a {dumpster|ゴミ捨て場|/ˈdʌmpstər/|We found old furniture in the dumpster.}"
+  },
+  {
+    "start": 193.14,
+    "end": 199.14,
+    "text": "**Anna:** But they spoke to me and they said, save me, Sue, save me."
+  },
+  {
+    "start": 199.64,
+    "end": 203.56,
+    "text": "**Anna:** So what do you mean they spoke to you?"
+  },
+  {
+    "start": 203.56,
+    "end": 209.08,
+    "text": "**Sue:** When I see something {special|特別な|/ˈspeʃəl/|This is a special moment.} that someone has thrown away, I can almost hear it talk."
+  },
+  {
+    "start": 210.379,
+    "end": 212.939,
+    "text": "**Anna:** Yeah, it's not saying anything."
+  },
+  {
+    "start": 212.939,
+    "end": 216.62,
+    "text": "**Sue:** Anna, it's not easy to see the {treasure|宝/価値あるもの|/ˈtreʒər/|This old coin is a real treasure.} in trash."
+  },
+  {
+    "start": 216.62,
+    "end": 218.06,
+    "text": "**Anna:** Or hear it talk."
+  },
+  {
+    "start": 218.24,
+    "end": 219.6,
+    "text": "**Sue:** But you can learn."
+  },
+  {
+    "start": 219.6,
+    "end": 225.68,
+    "text": "**Anna:** In fact, I teach private classes and one is called Turning Trash to Treasure."
+  },
+  {
+    "start": 225.68,
+    "end": 230.32,
+    "text": "**Sue:** Next week, bring in some trash and we'll turn it into treasure."
+  },
+  {
+    "start": 230.32,
+    "end": 231.36,
+    "text": "**Sue:** Just remember"
+  },
+  {
+    "start": 231.64,
+    "end": 234.519,
+    "text": "**Sue:** Pick some trash that speaks to you."
+  },
+  {
+    "start": 234.519,
+    "end": 235.4,
+    "text": "**Anna:** Got it."
+  },
+  {
+    "start": 235.4,
+    "end": 238.04,
+    "text": "**Anna:** I'll see you next week."
+  },
+  {
+    "start": 238.04,
+    "end": 242.36,
+    "text": "**Professor Bot:** Will Anna find trash that speaks to her?"
+  },
+  {
+    "start": 242.36,
+    "end": 243.959,
+    "text": "**Anna:** What will it say?"
+  },
+  {
+    "start": 243.959,
+    "end": 246.28,
+    "text": "**Anna:** We'll find out next week."
+  }
+]

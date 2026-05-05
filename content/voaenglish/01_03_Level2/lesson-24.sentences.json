@@ -1,0 +1,512 @@
+[
+  {
+    "start": 2.88,
+    "end": 4.08,
+    "text": "**Anna:** Hi!"
+  },
+  {
+    "start": 4.08,
+    "end": 6.88,
+    "text": "**Anna:** I see you {like|好き/好む|/laɪk/|I like pizza.} superhero {culture|文化/習慣|/ˈkʌltʃər/|Pop culture is interesting.}"
+  },
+  {
+    "start": 6.88,
+    "end": 7.92,
+    "text": "**Anna:** Me too."
+  },
+  {
+    "start": 7.92,
+    "end": 13.28,
+    "text": "**Anna:** In fact, tonight I'm going to the big {superhero|スーパーヒーロー|/ˈsuːpərhɪəroʊ/|Superman is a famous superhero.} {convention|大会/集会|/kənˈvenʃən/|Comic convention is popular.}"
+  },
+  {
+    "start": 13.28,
+    "end": 14.48,
+    "text": "**Young Man:** Are you going?"
+  },
+  {
+    "start": 14.48,
+    "end": 14.8,
+    "text": "**Young Man:** Um"
+  },
+  {
+    "start": 15.24,
+    "end": 15.96,
+    "text": "**Anna:** I don't know."
+  },
+  {
+    "start": 15.96,
+    "end": 17.96,
+    "text": "**Anna:** Well, you'd {better|よい/ましな|/ˈbetər/|You better hurry up.} decide soon."
+  },
+  {
+    "start": 17.96,
+    "end": 21.08,
+    "text": "**Anna:** Last year it {sold|売った|/soʊld/|He sold his car.} out."
+  },
+  {
+    "start": 21.08,
+    "end": 27.96,
+    "text": "**Anna:** So since we're talking about superheroes, would you rather {become|なる/変身する|/bɪˈkʌm/|I want to become a doctor.} a superhero?"
+  },
+  {
+    "start": 27.92,
+    "end": 35.76,
+    "text": "**Anna:** By {accident|事故/偶然|/ˈæksɪdənt/|It was just an accident.} like Spider-Man, or be born a superhero like Wonder Woman."
+  },
+  {
+    "start": 35.76,
+    "end": 37.2,
+    "text": "**Anna:** Take your time."
+  },
+  {
+    "start": 38.079,
+    "end": 40.079,
+    "text": "**Anna:** It's a big question."
+  },
+  {
+    "start": 41.36,
+    "end": 43.36,
+    "text": "**Anna:** I {thought|考えた|/θɔːt/|I thought about it carefully.} about it for days."
+  },
+  {
+    "start": 43.36,
+    "end": 48.079,
+    "text": "**Young Man:** Okay, if I had to choose, I'd rather be born a superhero."
+  },
+  {
+    "start": 48.079,
+    "end": 50.4,
+    "text": "**Anna:** I'd rather become a superhero"
+  },
+  {
+    "start": 50.48,
+    "end": 52.56,
+    "text": "**Anna:** By an {unexpected|予期せぬ/突然の|/ˌʌnɪkˈspektɪd/|An unexpected gift arrived.} accident."
+  },
+  {
+    "start": 52.56,
+    "end": 55.04,
+    "text": "**Young Man:** Aren't all accidents unexpected?"
+  },
+  {
+    "start": 55.6,
+    "end": 62.24,
+    "text": "**Anna:** Well, yeah."
+  },
+  {
+    "start": 62.24,
+    "end": 63.28,
+    "text": "**Young Man:** What was that?"
+  },
+  {
+    "start": 63.28,
+    "end": 64.64,
+    "text": "**Young Man:** Are you okay?"
+  },
+  {
+    "start": 64.64,
+    "end": 64.96,
+    "text": "**Anna:** I'm"
+  },
+  {
+    "start": 65.56,
+    "end": 67.08,
+    "text": "**Anna:** Better than okay."
+  },
+  {
+    "start": 67.08,
+    "end": 69.32,
+    "text": "**Anna:** I feel {super|超/非常に|/ˈsuːpər/|That's super cool.}"
+  },
+  {
+    "start": 69.32,
+    "end": 72.68,
+    "text": "**Anna:** Oh no, Anna was just hit by {lightning|稲妻/雷|/ˈlaɪtnɪŋ/|Lightning struck the tree.}"
+  },
+  {
+    "start": 72.68,
+    "end": 74.36,
+    "text": "**Anna:** She had better get help."
+  },
+  {
+    "start": 74.36,
+    "end": 76.92,
+    "text": "**Anna:** We use had better to give advice."
+  },
+  {
+    "start": 76.92,
+    "end": 79.96,
+    "text": "**Anna:** It is very {informal|くだけた/非公式の|/ɪnˈfɔːrməl/|Informal language is casual.} and stronger than should."
+  },
+  {
+    "start": 80.72,
+    "end": 81.36,
+    "text": "**Anna:** Ought to."
+  },
+  {
+    "start": 81.36,
+    "end": 85.04,
+    "text": "**Anna:** For example, Anna says, you'd better decide soon."
+  },
+  {
+    "start": 85.04,
+    "end": 87.28,
+    "text": "**Anna:** Last year it {sold|売れた/売り切れた} out."
+  },
+  {
+    "start": 87.52,
+    "end": 88.16,
+    "text": "**Anna:** When we use"
+  },
+  {
+    "start": 88.46,
+    "end": 93.82,
+    "text": "**Anna:** {Had better|〜した方がよい} we usually {shorten|短縮する} the word had for personal pronouns."
+  },
+  {
+    "start": 93.82,
+    "end": 100.78,
+    "text": "**Anna:** We use {would rather|〜したい} to say what we or someone else prefers to do or have."
+  },
+  {
+    "start": 100.36,
+    "end": 107.24,
+    "text": "**Anna:** For example, the boy says, Okay, if I had to choose, I'd rather be born a {superhero|superhero/スーパーヒーロー}."
+  },
+  {
+    "start": 107.24,
+    "end": 113.32,
+    "text": "**Anna:** With would rather, we also shorten the word would when used with personal pronouns."
+  },
+  {
+    "start": 113.32,
+    "end": 114.84,
+    "text": "**Anna:** Keep watching and listen for"
+  },
+  {
+    "start": 115.2,
+    "end": 118,
+    "text": "**Anna:** Or had better and would rather."
+  },
+  {
+    "start": 118,
+    "end": 120.479,
+    "text": "**Anna:** You'd better see a {doctor|医者}."
+  },
+  {
+    "start": 120.479,
+    "end": 122.079,
+    "text": "**Anna:** I've never felt better."
+  },
+  {
+    "start": 122.079,
+    "end": 126.799,
+    "text": "**Anna:** You were just {struck|打たれた/襲われた} by lightning and what happened to your hair and your clothes?"
+  },
+  {
+    "start": 126.799,
+    "end": 128.16,
+    "text": "**Anna:** I don't know."
+  },
+  {
+    "start": 128.6,
+    "end": 131.16,
+    "text": "**Anna:** Wait, I do know."
+  },
+  {
+    "start": 131.16,
+    "end": 136.28,
+    "text": "**Anna:** This is my {super suit|スーパースーツ} and this is my {origin story|起源の物語}."
+  },
+  {
+    "start": 136.28,
+    "end": 138.44,
+    "text": "**Young Man:** What are you talking about?"
+  },
+  {
+    "start": 138.1,
+    "end": 141.62,
+    "text": "**Anna:** An {origin story|起源の物語} tells the beginning of a superhero."
+  },
+  {
+    "start": 141.62,
+    "end": 142.66,
+    "text": "**Anna:** You should know that."
+  },
+  {
+    "start": 142.66,
+    "end": 145.3,
+    "text": "**Anna:** You're not making any sense, lady."
+  },
+  {
+    "start": 145.3,
+    "end": 146.74,
+    "text": "**Anna:** I would rather be called"
+  },
+  {
+    "start": 147.36,
+    "end": 149.12,
+    "text": "**Announcer:** Lightning boat lady!"
+  },
+  {
+    "start": 149.12,
+    "end": 151.68,
+    "text": "**Anna:** It'll sound great in a {theme song|テーマソング}!"
+  },
+  {
+    "start": 151.68,
+    "end": 153.84,
+    "text": "**Announcer:** Lightning boat lady!"
+  },
+  {
+    "start": 154.4,
+    "end": 157.68,
+    "text": "**Anna:** Now I need to find my {superpowers|超能力}!"
+  },
+  {
+    "start": 157.68,
+    "end": 160.4,
+    "text": "**Young Man:** Um, I really think wait, don't tell me"
+  },
+  {
+    "start": 160.46,
+    "end": 162.3,
+    "text": "**Anna:** I'll read your mind."
+  },
+  {
+    "start": 162.3,
+    "end": 165.1,
+    "text": "**Anna:** You are thinking you'd like to be my {super helper|スーパーヘルパー}."
+  },
+  {
+    "start": 165.42,
+    "end": 166.7,
+    "text": "**Young Man:** I was not thinking that."
+  },
+  {
+    "start": 166.7,
+    "end": 168.3,
+    "text": "**Anna:** That you'd like to live in a {tree house|ツリーハウス}."
+  },
+  {
+    "start": 168.3,
+    "end": 168.7,
+    "text": "**Young Man:** No."
+  },
+  {
+    "start": 168.7,
+    "end": 170.22,
+    "text": "**Anna:** That you should eat more {vegetables|野菜}."
+  },
+  {
+    "start": 170.22,
+    "end": 171.66,
+    "text": "**Young Man:** Please {stop|止める|/stɒp/|Stop talking right now.} talking."
+  },
+  {
+    "start": 171.66,
+    "end": 173.58,
+    "text": "**Young Man:** You really should get some {help|助け/支援|/help/|Can you help me, please?}."
+  },
+  {
+    "start": 173.58,
+    "end": 174.78,
+    "text": "**Anna:** Mine reading is not"
+  },
+  {
+    "start": 175.54,
+    "end": 177.38,
+    "text": "**Anna:** my superpower."
+  },
+  {
+    "start": 177.38,
+    "end": 180.58,
+    "text": "**Anna:** Maybe I can become {invisible|見えない|/ɪnˈvɪzəbəl/|Ghosts are invisible.}."
+  },
+  {
+    "start": 180.58,
+    "end": 185.38,
+    "text": "**Anna:** Hmm, I am invisible."
+  },
+  {
+    "start": 185.38,
+    "end": 186.74,
+    "text": "**Anna:** You can't see me."
+  },
+  {
+    "start": 186.74,
+    "end": 187.86,
+    "text": "**Anna:** Who am I?"
+  },
+  {
+    "start": 187.86,
+    "end": 189.06,
+    "text": "**Anna:** I'm not here."
+  },
+  {
+    "start": 189.06,
+    "end": 190.26,
+    "text": "**Anna:** You can't see me."
+  },
+  {
+    "start": 190.94,
+    "end": 195.42,
+    "text": "**Young Man:** I can see you and so can everybody else."
+  },
+  {
+    "start": 195.42,
+    "end": 198.94,
+    "text": "**Anna:** No power of {invisibility|不可視性|/ɪnvɪzəˈbɪləti/|Invisibility is a superhero power.}."
+  },
+  {
+    "start": 198.94,
+    "end": 201.82,
+    "text": "**Anna:** Maybe I can create a {force|力/強制|/fɔːrs/|Gravity is a natural force.} field"
+  },
+  {
+    "start": 204.98,
+    "end": 207.86,
+    "text": "**Anna:** I feel it working."
+  },
+  {
+    "start": 207.86,
+    "end": 209.22,
+    "text": "**Anna:** Nothing can hurt."
+  },
+  {
+    "start": 209.22,
+    "end": 211.38,
+    "text": "**Anna:** Ow, that wasn't very {nice|良い/親切な|/naɪs/|That was a nice gift.}."
+  },
+  {
+    "start": 212.019,
+    "end": 214.58,
+    "text": "**Anna:** I see I have a lot of work to do."
+  },
+  {
+    "start": 214.58,
+    "end": 216.66,
+    "text": "**Anna:** Well goodbye, {non-super|並の/普通の|/nɒn-ˈsuːpər/|A non-super hero is just normal.} person."
+  },
+  {
+    "start": 217.02,
+    "end": 220.06,
+    "text": "**Anna:** Wait, I'd better go with you, you might get {worse|悪化する|/wɜːrs/|His condition got worse.}."
+  },
+  {
+    "start": 220.06,
+    "end": 221.739,
+    "text": "**Anna:** That's even possible."
+  },
+  {
+    "start": 221.739,
+    "end": 224.78,
+    "text": "**Anna:** That's very nice of you, ordinary human"
+  },
+  {
+    "start": 224.64,
+    "end": 227.599,
+    "text": "**Anna:** But I'd rather go by myself."
+  },
+  {
+    "start": 227.599,
+    "end": 229.76,
+    "text": "**Anna:** This is a {quest|探求/冒険|/kwest/|A quest for treasure is exciting.}."
+  },
+  {
+    "start": 229.76,
+    "end": 233.04,
+    "text": "**Young Man:** Every time you speak I get more {confused|混乱した|/kənˈfjuːzd/|I'm confused by this problem.}."
+  },
+  {
+    "start": 233.04,
+    "end": 237.12,
+    "text": "**Anna:** A quest is a part of all superhero stories."
+  },
+  {
+    "start": 237.12,
+    "end": 239.36,
+    "text": "**Anna:** You really need to work on your superhero stuff."
+  },
+  {
+    "start": 240.12,
+    "end": 241.64,
+    "text": "**Anna:** Now stand back."
+  },
+  {
+    "start": 241.64,
+    "end": 245.319,
+    "text": "**Anna:** I've never {flown|飛んだ|/floʊn/|Birds have flown over the mountain.} before."
+  },
+  {
+    "start": 246.2,
+    "end": 247.159,
+    "text": "**Young Man:** And you're not"
+  },
+  {
+    "start": 247.44,
+    "end": 248.64,
+    "text": "**Young Man:** Flying now."
+  },
+  {
+    "start": 248.64,
+    "end": 251.68,
+    "text": "**Anna:** {Flying|飛ぶこと/空を飛ぶ|/ˈflaɪɪŋ/|Birds are flying high.} is not my {superpower|超能力|/ˈsuːpərpaʊər/|Superhero movies show superpowers.}."
+  },
+  {
+    "start": 251.68,
+    "end": 253.04,
+    "text": "**Anna:** That's too bad."
+  },
+  {
+    "start": 253.04,
+    "end": 256.4,
+    "text": "**Anna:** It's going to be {expensive|高価な/費用がかかる|/ɪkˈspensɪv/|Luxury cars are expensive.} to Uber everywhere."
+  },
+  {
+    "start": 256.76,
+    "end": 259.16,
+    "text": "**Anna:** You know, I'd rather {walk|歩く|/wɔːk/|Let's walk to the park.}."
+  },
+  {
+    "start": 259.16,
+    "end": 261.16,
+    "text": "**Anna:** It's a nice day."
+  },
+  {
+    "start": 261.16,
+    "end": 264.2,
+    "text": "**Anna:** Goodbye, {non-superperson|超能力のない人|/nɒn-ˈsuːpərpɜːrsən/|A normal person without special abilities.}."
+  },
+  {
+    "start": 265.12,
+    "end": 267.92,
+    "text": "**Young Man:** I'm not talking to {strangers|見知らぬ人|/ˈstreɪndʒərz/|Don't talk to strangers.} again."
+  },
+  {
+    "start": 268.48,
+    "end": 272.56,
+    "text": "**Announcer:** Will {Lightning|稲妻/電光|/ˈlaɪtnɪŋ/|Lightning strikes during storms.} Boat Lady find her {superpowers|超能力|/ˈsuːpərpaʊərz/|Superheroes have amazing superpowers.} ever?"
+  },
+  {
+    "start": 272.8,
+    "end": 273.6,
+    "text": "**Announcer:** Ouch!"
+  },
+  {
+    "start": 273.76,
+    "end": 276.24,
+    "text": "**Anna:** Did that {brick|レンガ|/brɪk/|The wall is made of brick.} wall hurt?"
+  },
+  {
+    "start": 275.8,
+    "end": 280.12,
+    "text": "**Anna:** Will this young man ever talk to a stranger again?"
+  },
+  {
+    "start": 280.12,
+    "end": 285.72,
+    "text": "**Announcer:** Find out on the next episode of Let's Learn English!"
+  }
+]

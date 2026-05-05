@@ -1,0 +1,472 @@
+[
+  {
+    "start": 0.16,
+    "end": 0.96,
+    "text": "**Anna:** Hello."
+  },
+  {
+    "start": 0.96,
+    "end": 1.6,
+    "text": "**Professor Bot:** Anna."
+  },
+  {
+    "start": 1.6,
+    "end": 2.96,
+    "text": "**Anna:** This is Miss {Weaver|教師/先生|/ˈwiːvər/|Miss Weaver is my teacher}."
+  },
+  {
+    "start": 2.96,
+    "end": 3.84,
+    "text": "**Anna:** Miss Weaver."
+  },
+  {
+    "start": 3.84,
+    "end": 7.36,
+    "text": "**Anna:** Tomorrow you'll be {interviewing|インタビューする|/ˌɪntərˈvjuːɪŋ/|I am interviewing a famous actor.} musician Emma G."
+  },
+  {
+    "start": 7.36,
+    "end": 8.8,
+    "text": "**Anna:** Emma G?"
+  },
+  {
+    "start": 8.8,
+    "end": 11.92,
+    "text": "**Anna:** I will be {talking|話す|/ˈtɔːkɪŋ/|We are talking about music.} to Emma G?"
+  },
+  {
+    "start": 12.78,
+    "end": 13.5,
+    "text": "**Professor Bot:** Anna?"
+  },
+  {
+    "start": 13.74,
+    "end": 15.5,
+    "text": "**Anna:** Anna, are you there?"
+  },
+  {
+    "start": 16.46,
+    "end": 17.58,
+    "text": "**Professor Bot:** Anna and Ms."
+  },
+  {
+    "start": 17.58,
+    "end": 23.02,
+    "text": "**Professor Bot:** Weaver used the {future|未来の|/ˈfjuːtʃər/|The future is exciting.} continuous verb tense to talk about the interview."
+  },
+  {
+    "start": 23.02,
+    "end": 26.7,
+    "text": "**Anna:** We use future continuous to talk about actions that will be"
+  },
+  {
+    "start": 27.22,
+    "end": 30.66,
+    "text": "**Anna:** In progress at or around a time in the future."
+  },
+  {
+    "start": 30.66,
+    "end": 32.02,
+    "text": "**Anna:** For example, Ms."
+  },
+  {
+    "start": 32.02,
+    "end": 36.66,
+    "text": "**Anna:** Weaver says, Tomorrow you'll be interviewing musician Emma G."
+  },
+  {
+    "start": 36.9,
+    "end": 40.02,
+    "text": "**Anna:** There are two options for future continuous."
+  },
+  {
+    "start": 40.02,
+    "end": 41.54,
+    "text": "**Anna:** The first is will be"
+  },
+  {
+    "start": 42.22,
+    "end": 45.26,
+    "text": "**Anna:** plus the ing form of the verb."
+  },
+  {
+    "start": 45.26,
+    "end": 53.1,
+    "text": "**Anna:** And the second is B plus going to be plus the ing form of the verb."
+  },
+  {
+    "start": 53.1,
+    "end": 55.1,
+    "text": "**Anna:** Keep {watching|見守る|/ˈwɒtʃɪŋ/|I am watching a movie.} for more."
+  },
+  {
+    "start": 57.22,
+    "end": 60.9,
+    "text": "**Anna:** And welcome to the music today."
+  },
+  {
+    "start": 60.9,
+    "end": 67.22,
+    "text": "**Anna:** Musician Emma G will be {joining|参加する|/ˈdʒɔɪnɪŋ/|We are joining the club.} us here."
+  },
+  {
+    "start": 67.22,
+    "end": 70.42,
+    "text": "**Anna:** She is a wonderful {songwriter|作曲家|/ˈsɔːŋraɪtər/|The songwriter wrote a beautiful song.}."
+  },
+  {
+    "start": 69.84,
+    "end": 72.159,
+    "text": "**Anna:** And an amazing {singer|歌手|/ˈsɪŋər/|The singer performed on stage.}."
+  },
+  {
+    "start": 72.159,
+    "end": 73.759,
+    "text": "**Anna:** And I love her."
+  },
+  {
+    "start": 74.56,
+    "end": 77.759,
+    "text": "**Anna:** Let's give a warm {welcome|歓迎/出迎え|/ˈwelkəm/|Welcome to our show.} to Emma G."
+  },
+  {
+    "start": 78,
+    "end": 80.56,
+    "text": "**Anna:** Hi, thank you for coming on the show."
+  },
+  {
+    "start": 81.92,
+    "end": 82.56,
+    "text": "**Anna:** Great."
+  },
+  {
+    "start": 82.88,
+    "end": 84,
+    "text": "**Anna:** Please here."
+  },
+  {
+    "start": 84.6,
+    "end": 87.88,
+    "text": "**Anna:** We can't wait to hear you sing."
+  },
+  {
+    "start": 87.88,
+    "end": 93.08,
+    "text": "**Anna:** I {listen|聴く/注目する} to your music a lot, so I feel like I know you."
+  },
+  {
+    "start": 92.9,
+    "end": 94.82,
+    "text": "**Anna:** Is that strange?"
+  },
+  {
+    "start": 94.82,
+    "end": 98.1,
+    "text": "**Anna:** Anna, {listening|聴くこと} to music can be a very {personal|個人的な} experience."
+  },
+  {
+    "start": 98.1,
+    "end": 99.7,
+    "text": "**Anna:** So no, that's not strange."
+  },
+  {
+    "start": 99.7,
+    "end": 100.34,
+    "text": "**Anna:** Good."
+  },
+  {
+    "start": 100.34,
+    "end": 101.78,
+    "text": "**Anna:** Because I made something"
+  },
+  {
+    "start": 102.22,
+    "end": 106.22,
+    "text": "**Anna:** for you a {video|映像} {scrapbook|スクラップブック} of our friendship."
+  },
+  {
+    "start": 106.22,
+    "end": 110.38,
+    "text": "**Anna:** I took {photos|写真} of you and added myself."
+  },
+  {
+    "start": 110,
+    "end": 112.64,
+    "text": "**Anna:** I worked on it all weekend."
+  },
+  {
+    "start": 113.44,
+    "end": 115.52,
+    "text": "**Anna:** That that thing."
+  },
+  {
+    "start": 115.76,
+    "end": 118.08,
+    "text": "**Anna:** Is that even is that even legal?"
+  },
+  {
+    "start": 118.08,
+    "end": 121.84,
+    "text": "**Anna:** Now Emma, let's talk about your {schedule|スケジュール}"
+  },
+  {
+    "start": 122.22,
+    "end": 128.78,
+    "text": "**Anna:** Tell me uh I mean tell us exactly where you will be and when."
+  },
+  {
+    "start": 128.78,
+    "end": 130.3,
+    "text": "**Anna:** Exactly."
+  },
+  {
+    "start": 130.3,
+    "end": 131.1,
+    "text": "**Anna:** Sure."
+  },
+  {
+    "start": 131.1,
+    "end": 136.86,
+    "text": "**Anna:** Uh well in early June I'll be uh {performing|演奏する/上演する} at several {venues|会場} across Austin, Texas."
+  },
+  {
+    "start": 136.94,
+    "end": 139.099,
+    "text": "**Anna:** That's my vacation week."
+  },
+  {
+    "start": 139.34,
+    "end": 140.86,
+    "text": "**Anna:** I can meet you there."
+  },
+  {
+    "start": 140.86,
+    "end": 142.86,
+    "text": "**Anna:** We can tour the city."
+  },
+  {
+    "start": 142.86,
+    "end": 144.86,
+    "text": "**Anna:** We can have lunch."
+  },
+  {
+    "start": 145.24,
+    "end": 147.32,
+    "text": "**Anna:** Uh yeah, maybe."
+  },
+  {
+    "start": 147.32,
+    "end": 153.16,
+    "text": "**Anna:** Uh then in mid-July I'm gonna be teaching at a music camp in Chicago."
+  },
+  {
+    "start": 153.32,
+    "end": 155.8,
+    "text": "**Anna:** I will be visiting my sister then."
+  },
+  {
+    "start": 155.8,
+    "end": 159.48,
+    "text": "**Anna:** She only lives six hours from Chicago."
+  },
+  {
+    "start": 159.48,
+    "end": 161.16,
+    "text": "**Anna:** I could drive over."
+  },
+  {
+    "start": 161.16,
+    "end": 163.32,
+    "text": "**Anna:** We could hang out."
+  },
+  {
+    "start": 164.04,
+    "end": 165.959,
+    "text": "**Anna:** Yeah, uh maybe."
+  },
+  {
+    "start": 165.959,
+    "end": 170.12,
+    "text": "**Anna:** You know, maybe now's a good time for some music."
+  },
+  {
+    "start": 170.12,
+    "end": 172.84,
+    "text": "**Anna:** That's a great idea."
+  },
+  {
+    "start": 172.84,
+    "end": 173.48,
+    "text": "**Anna:** Now"
+  },
+  {
+    "start": 173.5,
+    "end": 176.22,
+    "text": "**Anna:** Let's hear a {song|歌|/sɔːŋ/|I love to sing a song.} from Emma G."
+  },
+  {
+    "start": 176.62,
+    "end": 176.94,
+    "text": "**Anna:** A."
+  },
+  {
+    "start": 178.38,
+    "end": 180.78,
+    "text": "**Anna:** I wrote this {song|歌|/sɔːŋ/|I love to sing a song.} a {couple|組/二組|/ˈkʌpəl/|A couple of friends came.} of years ago."
+  },
+  {
+    "start": 180.78,
+    "end": 185.74,
+    "text": "**Anna:** It's called {Wary|用心深い|/ˈwɛri/|Be wary of strangers.}"
+  },
+  {
+    "start": 185.74,
+    "end": 188.38,
+    "text": "**Anna:** Do you believe in how?"
+  },
+  {
+    "start": 188.66,
+    "end": 198.26,
+    "text": "**Anna:** Happy {ending|結末/終わり|/ˈendɪŋ/|A happy ending to the story.}, do you really believe"
+  },
+  {
+    "start": 199.54,
+    "end": 207.299,
+    "text": "**Anna:** That we could be I think something is wrong."
+  },
+  {
+    "start": 207.299,
+    "end": 209.54,
+    "text": "**Anna:** Uh I hear a {voice|声|/vɔɪs/|I hear a voice in the distance.} in the background."
+  },
+  {
+    "start": 209.54,
+    "end": 211.62,
+    "text": "**Anna:** Sorry, sorry Emma, that was me."
+  },
+  {
+    "start": 211.62,
+    "end": 213.86,
+    "text": "**Anna:** I'm just so {excited|興奮した|/ɪkˈsaɪtɪd/|I was excited about the trip.}"
+  },
+  {
+    "start": 213.68,
+    "end": 215.2,
+    "text": "**Anna:** I just No problem."
+  },
+  {
+    "start": 215.2,
+    "end": 217.28,
+    "text": "**Anna:** I'm I'm I'm glad you like the song."
+  },
+  {
+    "start": 217.28,
+    "end": 219.12,
+    "text": "**Anna:** You go ahead."
+  },
+  {
+    "start": 219.52,
+    "end": 220.24,
+    "text": "**Anna:** Okay okay."
+  },
+  {
+    "start": 222.16,
+    "end": 227.44,
+    "text": "**Anna:** Do you believe in happy {ending|結末/終わり|/ˈendɪŋ/|A happy ending to the story.}"
+  },
+  {
+    "start": 232.72,
+    "end": 235.68,
+    "text": "**Anna:** Anna, there there's no {tambourine|タンバリン|/ˌtæmbəˈriːn/|Play the tambourine in the band.} in this."
+  },
+  {
+    "start": 236.24,
+    "end": 237.52,
+    "text": "**Anna:** I'm so sorry."
+  },
+  {
+    "start": 237.52,
+    "end": 238.96,
+    "text": "**Anna:** I'm so sorry, Emma."
+  },
+  {
+    "start": 238.96,
+    "end": 239.2,
+    "text": "**Anna:** I just"
+  },
+  {
+    "start": 240.24,
+    "end": 243.76,
+    "text": "**Anna:** See, I've always wanted to {sing|歌う|/sɪŋ/|I love to sing in the choir.} with you."
+  },
+  {
+    "start": 243.76,
+    "end": 248,
+    "text": "**Anna:** Well, come on over then and we can {sing|歌う|/sɪŋ/|I love to sing in the choir.} a song together first."
+  },
+  {
+    "start": 248,
+    "end": 249.84,
+    "text": "**Anna:** No, I couldn't."
+  },
+  {
+    "start": 249.66,
+    "end": 251.1,
+    "text": "**Anna:** Come on, it'll be fun."
+  },
+  {
+    "start": 251.1,
+    "end": 254.94,
+    "text": "**Anna:** Okay, here I brought my favorite song."
+  },
+  {
+    "start": 254.94,
+    "end": 257.18,
+    "text": "**Anna:** Oh, uh oh, okay."
+  },
+  {
+    "start": 257.18,
+    "end": 259.42,
+    "text": "**Anna:** Actually, I like this song."
+  },
+  {
+    "start": 259.42,
+    "end": 259.739,
+    "text": "**Anna:** Um"
+  },
+  {
+    "start": 261.16,
+    "end": 262.28,
+    "text": "**Anna:** Are you ready?"
+  },
+  {
+    "start": 262.28,
+    "end": 264.04,
+    "text": "**Anna:** Yes, yes."
+  },
+  {
+    "start": 264.04,
+    "end": 266.6,
+    "text": "**Anna:** Okay."
+  },
+  {
+    "start": 267.8,
+    "end": 275,
+    "text": "**Anna:** Every {breath|息/呼吸|/breθ/|Take a deep breath.} you take, every {move|動き/動作|/muːv/|Make a careful move.} you make."
+  },
+  {
+    "start": 275.92,
+    "end": 283.36,
+    "text": "**Anna:** Every {bone|骨|/boʊn/|My bone hurts.} you break, every {step|歩/ステップ|/step/|Take a step forward.} you take, I'll be watching you."
+  },
+  {
+    "start": 284.48,
+    "end": 288.64,
+    "text": "**Anna:** I'll be watching you."
+  },
+  {
+    "start": 288.64,
+    "end": 290.16,
+    "text": "**Anna:** I'll be watching"
+  }
+]

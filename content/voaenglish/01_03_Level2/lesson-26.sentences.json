@@ -1,0 +1,567 @@
+[
+  {
+    "start": 5.68,
+    "end": 8.48,
+    "text": "**Anna:** This {article|記事/論文} is so interesting."
+  },
+  {
+    "start": 8.48,
+    "end": 10.16,
+    "text": "**Anna:** Pete, listen to this."
+  },
+  {
+    "start": 10.16,
+    "end": 14.96,
+    "text": "**Anna:** Somewhere in the world there is someone who looks just like you."
+  },
+  {
+    "start": 15.96,
+    "end": 19,
+    "text": "**Pete:** No one is this {handsome|ハンサム/格好いい}."
+  },
+  {
+    "start": 19,
+    "end": 21.8,
+    "text": "**Anna:** Oh Pete, there's something between your {teeth|歯}."
+  },
+  {
+    "start": 22.92,
+    "end": 23.56,
+    "text": "**Pete:** Is it gone?"
+  },
+  {
+    "start": 23.56,
+    "end": 24.76,
+    "text": "**Anna:** No, no, it's still there."
+  },
+  {
+    "start": 24.76,
+    "end": 26.92,
+    "text": "**Anna:** Just the There you got it"
+  },
+  {
+    "start": 27.1,
+    "end": 31.1,
+    "text": "**Anna:** But think of it, there could be two of us in the world."
+  },
+  {
+    "start": 31.1,
+    "end": 34.46,
+    "text": "**Anna:** Two anas?"
+  },
+  {
+    "start": 34.46,
+    "end": 39.58,
+    "text": "**Anna:** Today we're {reviewing|復習する/見直す} ways to describe and compare people."
+  },
+  {
+    "start": 39.3,
+    "end": 42.82,
+    "text": "**Anna:** Keep watching for {descriptions|描写/説明} of people."
+  },
+  {
+    "start": 42.82,
+    "end": 46.82,
+    "text": "**Pete:** Actually, Anna, maybe your {silly|馬鹿げた/くだらない} article is right."
+  },
+  {
+    "start": 46.82,
+    "end": 51.78,
+    "text": "**Pete:** Yesterday at work, I met a woman who looks just like you."
+  },
+  {
+    "start": 51.78,
+    "end": 52.42,
+    "text": "**Anna:** Really?"
+  },
+  {
+    "start": 52.42,
+    "end": 53.86,
+    "text": "**Anna:** Wait, are you making fun of me?"
+  },
+  {
+    "start": 54.54,
+    "end": 56.46,
+    "text": "**Pete:** This time."
+  },
+  {
+    "start": 56.46,
+    "end": 63.42,
+    "text": "**Pete:** She's tall and has {curly|カール状の} hair, but even her face looks like yours."
+  },
+  {
+    "start": 63.42,
+    "end": 65.979,
+    "text": "**Pete:** I think she's a {career|キャリア/職業} consultant."
+  },
+  {
+    "start": 65.979,
+    "end": 69.18,
+    "text": "**Anna:** I bet she has a lot of great {advice|助言/提案}."
+  },
+  {
+    "start": 69.3,
+    "end": 71.14,
+    "text": "**Anna:** I can't wait to meet her."
+  },
+  {
+    "start": 71.14,
+    "end": 72.58,
+    "text": "**Pete:** Yes, you can."
+  },
+  {
+    "start": 72.58,
+    "end": 76.98,
+    "text": "**Pete:** I met her and she is very {difficult|難しい/厄介な}."
+  },
+  {
+    "start": 76.98,
+    "end": 79.14,
+    "text": "**Anna:** Pete, she's just new."
+  },
+  {
+    "start": 79.14,
+    "end": 80.66,
+    "text": "**Anna:** We have to give her a chance."
+  },
+  {
+    "start": 80.66,
+    "end": 81.94,
+    "text": "**Anna:** What's her name?"
+  },
+  {
+    "start": 81.94,
+    "end": 84.18,
+    "text": "**Pete:** Eva Lena or something like that?"
+  },
+  {
+    "start": 84.38,
+    "end": 85.82,
+    "text": "**Pete:** You can't miss her."
+  },
+  {
+    "start": 85.82,
+    "end": 88.46,
+    "text": "**Pete:** She always wears a hat."
+  },
+  {
+    "start": 88.46,
+    "end": 92.14,
+    "text": "**Penelope:** So Anna, have you met the new {consultant|コンサルタント} yet?"
+  },
+  {
+    "start": 92.14,
+    "end": 94.14,
+    "text": "**Anna:** No, but I've already {heard|聞いた/知っている}"
+  },
+  {
+    "start": 94.14,
+    "end": 95.82,
+    "text": "**Anna:** We {look alike|似ている|/lʊk əˈlaɪk/|We look alike in this photo.}, don't we?"
+  },
+  {
+    "start": 96.06,
+    "end": 98.46,
+    "text": "**Penelope:** Yeah, but you don't {act alike|同じように行動しない}"
+  },
+  {
+    "start": 98.46,
+    "end": 98.86,
+    "text": "**Penelope:** You're much"
+  },
+  {
+    "start": 99.46,
+    "end": 100.66,
+    "text": "**Penelope:** {Nicer|より親切|/ˈnaɪsər/|She is nicer than her sister.} than she is."
+  },
+  {
+    "start": 100.66,
+    "end": 103.06,
+    "text": "**Anna:** Maybe she gets {nervous|緊張する|/ˈnɜːrvəs/|I feel nervous before a test.} at new jobs."
+  },
+  {
+    "start": 103.06,
+    "end": 104.5,
+    "text": "**Anna:** Or maybe she's {shy|恥ずかしがり屋の|/ʃaɪ/|She is shy around strangers.}"
+  },
+  {
+    "start": 104.5,
+    "end": 106.82,
+    "text": "**Anna:** Let's not {judge|判断する/評価する}"
+  },
+  {
+    "start": 106.82,
+    "end": 109.38,
+    "text": "**Anna:** She's not nervous or shy."
+  },
+  {
+    "start": 109.38,
+    "end": 110.74,
+    "text": "**Penelope:** She's {mean|意地悪な|/miːn/|Don't be mean to others.}"
+  },
+  {
+    "start": 110.74,
+    "end": 113.46,
+    "text": "**Anna:** You know, we should {get to know|知り合いになる}"
+  },
+  {
+    "start": 113.46,
+    "end": 114.18,
+    "text": "**Anna:** Let's invite her."
+  },
+  {
+    "start": 114.7,
+    "end": 115.74,
+    "text": "**Anna:** To lunch."
+  },
+  {
+    "start": 115.74,
+    "end": 117.82,
+    "text": "**Penelope:** Sorry, but I'm busy that day."
+  },
+  {
+    "start": 117.82,
+    "end": 118.86,
+    "text": "**Anna:** Oh, that's too bad."
+  },
+  {
+    "start": 118.86,
+    "end": 122.7,
+    "text": "**Anna:** Hey Wait, I haven't {picked|選んだ} a day yet."
+  },
+  {
+    "start": 122.7,
+    "end": 125.34,
+    "text": "**Anna:** So, did you find anything?"
+  },
+  {
+    "start": 125.34,
+    "end": 128.06,
+    "text": "**Anna:** Here are a few things I found."
+  },
+  {
+    "start": 128.06,
+    "end": 129.26,
+    "text": "**Penelope:** Anna uses the word."
+  },
+  {
+    "start": 129.86,
+    "end": 133.38,
+    "text": "**Anna:** {look alike|似ている} to talk about the new consultant."
+  },
+  {
+    "start": 133.38,
+    "end": 136.42,
+    "text": "**Anna:** She says, we look alike, don't we?"
+  },
+  {
+    "start": 136.42,
+    "end": 138.26,
+    "text": "**Anna:** Penelope uses then"
+  },
+  {
+    "start": 138.94,
+    "end": 145.58,
+    "text": "**Anna:** And the {comparative|比較の} adjective {nicer|より親切} to compare Anna with the new consultant."
+  },
+  {
+    "start": 145.58,
+    "end": 148.78,
+    "text": "**Penelope:** She says, You're much nicer than she is."
+  },
+  {
+    "start": 148.78,
+    "end": 151.099,
+    "text": "**Pete:** Keep watching for more."
+  },
+  {
+    "start": 151.099,
+    "end": 153.66,
+    "text": "**Anna:** This is going to be so much fun."
+  },
+  {
+    "start": 153.62,
+    "end": 156.18,
+    "text": "**Anna:** Boy, I can't wait to {play|遊ぶ/プレイする} this game."
+  },
+  {
+    "start": 156.18,
+    "end": 158.74,
+    "text": "**Evilana:** How much longer are you going to be?"
+  },
+  {
+    "start": 158.74,
+    "end": 160.34,
+    "text": "**Anna:** We'll just be a minute"
+  },
+  {
+    "start": 161.82,
+    "end": 163.74,
+    "text": "**Anna:** You must be {Evolana|人名}"
+  },
+  {
+    "start": 163.74,
+    "end": 165.34,
+    "text": "**Pete:** I'm Anna."
+  },
+  {
+    "start": 165.34,
+    "end": 167.26,
+    "text": "**Anna:** We are {look-alikes|そっくりな人|/lʊk-əlaɪks/|We are look-alikes, but not twins}."
+  },
+  {
+    "start": 167.26,
+    "end": 169.02,
+    "text": "**Evilana:** No, we're not."
+  },
+  {
+    "start": 169.02,
+    "end": 172.62,
+    "text": "**Evilana:** And my name is {pronounced|発音される|/prəˈnaʊnst/|How is your name pronounced?} Evolana."
+  },
+  {
+    "start": 172.62,
+    "end": 172.94,
+    "text": "**Anna:** Oh"
+  },
+  {
+    "start": 173.82,
+    "end": 176.22,
+    "text": "**Anna:** This is going to be {fun|楽しい|/fʌn/|Let's have some fun today}."
+  },
+  {
+    "start": 176.22,
+    "end": 178.14,
+    "text": "**Evilana:** You had better {hurry up|急ぐ|/ˈhʌri ʌp/|Hurry up or we'll be late}."
+  },
+  {
+    "start": 178.14,
+    "end": 180.78,
+    "text": "**Evilana:** I need this room for a {lecture|講義|/ˈlɛktʃər/|The lecture starts at 2 PM}."
+  },
+  {
+    "start": 180.78,
+    "end": 186.06,
+    "text": "**Evilana:** It's called If You Want to Win, Others Must Lose."
+  },
+  {
+    "start": 186.06,
+    "end": 188.46,
+    "text": "**Evilana:** What is all this {stuff|もの|/stʌf/|What stuff do you have?} anyway?"
+  },
+  {
+    "start": 188.34,
+    "end": 189.22,
+    "text": "**Anna:** It's a game."
+  },
+  {
+    "start": 189.22,
+    "end": 191.22,
+    "text": "**Anna:** We're going to play at lunch."
+  },
+  {
+    "start": 191.54,
+    "end": 194.42,
+    "text": "**Evilana:** It's a {stupid|馬鹿な|/ˈstjuːpɪd/|That's a stupid idea}."
+  },
+  {
+    "start": 194.42,
+    "end": 195.22,
+    "text": "**Anna:** Ha ha."
+  },
+  {
+    "start": 195.22,
+    "end": 197.54,
+    "text": "**Anna:** It's a fun game."
+  },
+  {
+    "start": 197.52,
+    "end": 200.56,
+    "text": "**Anna:** But yes, it is for children."
+  },
+  {
+    "start": 200.56,
+    "end": 204.16,
+    "text": "**Evilana:** Well you may be {childish|子供っぽい|/ˈtʃaɪldɪʃ/|Stop being so childish}."
+  },
+  {
+    "start": 204.16,
+    "end": 206.959,
+    "text": "**Evilana:** And you look stupid with that thing on your head."
+  },
+  {
+    "start": 206.959,
+    "end": 207.84,
+    "text": "**Anna:** Oh yeah?"
+  },
+  {
+    "start": 207.84,
+    "end": 210.48,
+    "text": "**Anna:** Well you look serious with that"
+  },
+  {
+    "start": 210.74,
+    "end": 212.02,
+    "text": "**Anna:** Look on your face."
+  },
+  {
+    "start": 212.02,
+    "end": 213.14,
+    "text": "**Anna:** Come on, Pete."
+  },
+  {
+    "start": 213.14,
+    "end": 215.38,
+    "text": "**Anna:** Let's go play somewhere else."
+  },
+  {
+    "start": 215.38,
+    "end": 221.22,
+    "text": "**Pete:** Actually, I'm going to stay for Evilana's lecture."
+  },
+  {
+    "start": 221.22,
+    "end": 221.86,
+    "text": "**Anna:** Fine"
+  },
+  {
+    "start": 223.02,
+    "end": 226.78,
+    "text": "**Anna:** You can learn new ways to {beat|打ち負かす|/biːt/|Can you beat your opponent?} people."
+  },
+  {
+    "start": 229.02,
+    "end": 234.06,
+    "text": "**Evilana:** He will."
+  },
+  {
+    "start": 234.06,
+    "end": 236.7,
+    "text": "**Anna:** Okay, am I a food?"
+  },
+  {
+    "start": 236.72,
+    "end": 238.72,
+    "text": "**Penelope:** Nope."
+  },
+  {
+    "start": 238.72,
+    "end": 241.92,
+    "text": "**Pete:** Hey, do you guys have room for one more?"
+  },
+  {
+    "start": 241.92,
+    "end": 243.04,
+    "text": "**Penelope:** Sure Pete."
+  },
+  {
+    "start": 243.04,
+    "end": 244.079,
+    "text": "**Penelope:** Come on over"
+  },
+  {
+    "start": 245.6,
+    "end": 247.76,
+    "text": "**Penelope:** What happened to your {eye|目|/aɪ/|My eye hurts today.}?"
+  },
+  {
+    "start": 247.76,
+    "end": 252,
+    "text": "**Pete:** {Evil|悪い/意地悪な|/ˈiːvəl/|Evil people do bad things.} Anna accidentally hit me."
+  },
+  {
+    "start": 252.2,
+    "end": 255.08,
+    "text": "**Pete:** And she didn't even say {sorry|ごめんなさい|/ˈsɒri/|I am sorry for my mistake.}."
+  },
+  {
+    "start": 255.08,
+    "end": 257.4,
+    "text": "**Pete:** She's so {mean|意地悪な/冷酷な|/miːn/|Don't be mean to others.}."
+  },
+  {
+    "start": 257.639,
+    "end": 259.239,
+    "text": "**Penelope:** I told you so."
+  },
+  {
+    "start": 259.239,
+    "end": 260.28,
+    "text": "**Anna:** Here, Pete"
+  },
+  {
+    "start": 260.299,
+    "end": 262.139,
+    "text": "**Anna:** Put on this {headband|カチューシャ/髪飾り|/ˈhedˌbænd/|She wears a colorful headband.}."
+  },
+  {
+    "start": 262.139,
+    "end": 263.819,
+    "text": "**Anna:** You'll feel better."
+  },
+  {
+    "start": 264.06,
+    "end": 265.659,
+    "text": "**Anna:** Penelope, you're right."
+  },
+  {
+    "start": 265.659,
+    "end": 269.819,
+    "text": "**Anna:** {Evilana|固有名詞|/ˈiːvɪlɑːnə/|Evilana sounds like a nickname.} is an {awful|ひどい/最悪の|/ˈɔːfəl/|That was an awful mistake.} person."
+  },
+  {
+    "start": 269.74,
+    "end": 271.82,
+    "text": "**Penelope:** And {violent|暴力的な|/ˈvaɪələnt/|Violent behavior is dangerous.}."
+  },
+  {
+    "start": 271.82,
+    "end": 274.54,
+    "text": "**Penelope:** And now we have to work with her."
+  },
+  {
+    "start": 274.54,
+    "end": 276.06,
+    "text": "**Anna:** Haven't you {heard|聞いた/知っている|/hɜːrd/|Have you heard the news?}?"
+  },
+  {
+    "start": 276.06,
+    "end": 277.66,
+    "text": "**Pete:** She's gone."
+  },
+  {
+    "start": 277.66,
+    "end": 280.46,
+    "text": "**Anna:** She was given another {assignment|課題/仕事|/əˈsaɪnmənt/|My assignment is due tomorrow.}."
+  },
+  {
+    "start": 280.46,
+    "end": 281.74,
+    "text": "**Penelope:** What assignment?"
+  },
+  {
+    "start": 281.74,
+    "end": 283.1,
+    "text": "**Anna:** I don't know."
+  },
+  {
+    "start": 283.1,
+    "end": 284.06,
+    "text": "**Anna:** I think it has something"
+  },
+  {
+    "start": 284.82,
+    "end": 286.58,
+    "text": "**Anna:** to do with {outdoors|屋外/野外|/ˈaʊtdɔːrz/|We love playing outdoors.}."
+  },
+  {
+    "start": 286.58,
+    "end": 288.34,
+    "text": "**Anna:** Anyway, let's play."
+  },
+  {
+    "start": 288.34,
+    "end": 290.42,
+    "text": "**Anna:** Pete, it's your turn."
+  }
+]

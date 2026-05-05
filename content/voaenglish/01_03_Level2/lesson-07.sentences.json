@@ -1,0 +1,377 @@
+[
+  {
+    "start": 1.52,
+    "end": 2.8,
+    "text": "**Professor Bot:** {Welcome|ようこそ/歓迎} back!"
+  },
+  {
+    "start": 2.8,
+    "end": 7.28,
+    "text": "**Professor Bot:** Anna and Penelope are taking a {tour|ツアー/見学} with DC ducks."
+  },
+  {
+    "start": 7.28,
+    "end": 10.56,
+    "text": "**Professor Bot:** In this lesson, we are {looking|探している} for {prepositions|前置詞}."
+  },
+  {
+    "start": 10.56,
+    "end": 13.2,
+    "text": "**Professor Bot:** Listen for in, on, et"
+  },
+  {
+    "start": 13.82,
+    "end": 17.9,
+    "text": "**Professor Bot:** under and over some {important|重要な} {prepositions|前置詞} of place."
+  },
+  {
+    "start": 17.9,
+    "end": 22.619,
+    "text": "**Anna:** Penelope, the {Lincoln Memorial|リンカーン記念堂} is coming up on your left."
+  },
+  {
+    "start": 22.44,
+    "end": 26.44,
+    "text": "**Boy:** You're going to {love|大好きだ} my Lincoln Memorial fun {fact|事実/豆知識}."
+  },
+  {
+    "start": 26.44,
+    "end": 28.12,
+    "text": "**Anna:** Oh, please tell us."
+  },
+  {
+    "start": 28.12,
+    "end": 33.96,
+    "text": "**Boy:** On a wall inside the memorial, the word {future|未来} was {carved|彫られた} wrong."
+  },
+  {
+    "start": 33.92,
+    "end": 36.16,
+    "text": "**Anna:** They {carved|彫った} {eucher|誤った綴り}."
+  },
+  {
+    "start": 36.48,
+    "end": 39.519,
+    "text": "**Anna:** Well, we all make {mistakes|間違い}."
+  },
+  {
+    "start": 39.519,
+    "end": 43.68,
+    "text": "**Boy:** Yeah, but this {mistake|間違い} was carved in stone."
+  },
+  {
+    "start": 43.68,
+    "end": 44.879,
+    "text": "**Anna:** You're right."
+  },
+  {
+    "start": 44.879,
+    "end": 46.879,
+    "text": "**Anna:** That is pretty bad."
+  },
+  {
+    "start": 47.22,
+    "end": 50.34,
+    "text": "**Anna:** Here's another {dollar|ドル}."
+  },
+  {
+    "start": 50.34,
+    "end": 52.98,
+    "text": "**Penelope:** More fun facts, please."
+  },
+  {
+    "start": 52.98,
+    "end": 55.54,
+    "text": "**Anna:** I love {riding|乗ること} over {bridges|橋}."
+  },
+  {
+    "start": 55.54,
+    "end": 58.26,
+    "text": "**Anna:** The water looks so {pretty|美しい} from here."
+  },
+  {
+    "start": 58.08,
+    "end": 60.88,
+    "text": "**Anna:** Penelope, this is {amazing|驚くべき}."
+  },
+  {
+    "start": 60.88,
+    "end": 64.64,
+    "text": "**Anna:** A minute ago we were {riding|乗っていた} along the {river|川}."
+  },
+  {
+    "start": 64.64,
+    "end": 67.04,
+    "text": "**Anna:** And now we're riding in the river."
+  },
+  {
+    "start": 67.04,
+    "end": 68.08,
+    "text": "**Anna:** Awesome!"
+  },
+  {
+    "start": 68.24,
+    "end": 71.12,
+    "text": "**Penelope:** Hey, we're {passing|通過している} by the {Pentagon|ペンタゴン} on our right."
+  },
+  {
+    "start": 71.12,
+    "end": 79.28,
+    "text": "**Anna:** Penelope, you love riding over the water on a bridge, but I love riding under a bridge in a boat."
+  },
+  {
+    "start": 79.14,
+    "end": 80.26,
+    "text": "**Anna:** Ah no look!"
+  },
+  {
+    "start": 80.26,
+    "end": 83.06,
+    "text": "**Penelope:** An {airplane|飛行機} is flying right over our heads!"
+  },
+  {
+    "start": 83.06,
+    "end": 88.82,
+    "text": "**Anna:** Wow, this is the closest I've ever been to an airplane in {flight|飛行}."
+  },
+  {
+    "start": 88.72,
+    "end": 97.2,
+    "text": "**Anna:** Well, I-ff- I've been inside a flying airplane, but not outside of an airplane as it flies over my head."
+  },
+  {
+    "start": 97.06,
+    "end": 99.7,
+    "text": "**Penelope:** And now we're driving out of the water."
+  },
+  {
+    "start": 99.7,
+    "end": 103.06,
+    "text": "**Penelope:** I still can't believe this thing drives and {sails|航海する}."
+  },
+  {
+    "start": 103.06,
+    "end": 103.86,
+    "text": "**Anna:** I know."
+  },
+  {
+    "start": 103.86,
+    "end": 105.86,
+    "text": "**Anna:** It's {amazing|驚くべき/素晴らしい|/əˈmeɪzɪŋ/|This is an amazing view!}"
+  },
+  {
+    "start": 105.92,
+    "end": 112.64,
+    "text": "**Boy:** After we ride along these {railroad|鉄道|/ˈreɪlroʊd/|Trains run on railroad tracks.} tracks, you'll see my favorite part of the tour."
+  },
+  {
+    "start": 112.64,
+    "end": 115.759,
+    "text": "**Boy:** The US Treasury, where they make"
+  },
+  {
+    "start": 116.12,
+    "end": 117.24,
+    "text": "**Boy:** Money."
+  },
+  {
+    "start": 117.24,
+    "end": 120.36,
+    "text": "**Professor Bot:** That young man is making a lot of {money|お金|/ˈmʌni/|I need money to buy a gift.}"
+  },
+  {
+    "start": 120.36,
+    "end": 122.6,
+    "text": "**Professor Bot:** Did you hear these {prepositions|前置詞|/ˌprepəˈzɪʃənz/|In and on are common prepositions.}?"
+  },
+  {
+    "start": 122.6,
+    "end": 127.32,
+    "text": "**Professor Bot:** As you watch more, look for inside and outside."
+  },
+  {
+    "start": 127.439,
+    "end": 128.399,
+    "text": "**Anna:** Oh look!"
+  },
+  {
+    "start": 128.399,
+    "end": 130.56,
+    "text": "**Penelope:** The US {Capitol|国会議事堂|/ˈkæpɪtl/|The Capitol is in Washington, D.C.} is coming up!"
+  },
+  {
+    "start": 130.56,
+    "end": 134.8,
+    "text": "**Boy:** I have a great {fun|楽しい/面白い|/fʌn/|We had fun at the party.} fact about the US Capitol."
+  },
+  {
+    "start": 134.8,
+    "end": 136,
+    "text": "**Penelope:** What is it?"
+  },
+  {
+    "start": 136,
+    "end": 138.72,
+    "text": "**Anna:** There are {tunnels|地下通路|/ˈtʌnlz/|Trains pass through tunnels.} under the Capitol."
+  },
+  {
+    "start": 138.6,
+    "end": 143.32,
+    "text": "**Anna:** They connect the Capitol and Office Buildings of {lawmakers|国会議員|/ˈlɔːmeɪkərz/|Lawmakers create new laws.}."
+  },
+  {
+    "start": 143.32,
+    "end": 148.44,
+    "text": "**Anna:** I bet they built them years ago for {secret|秘密の|/ˈsiːkrət/|It's a secret between us.} reasons."
+  },
+  {
+    "start": 148.74,
+    "end": 149.7,
+    "text": "**Boy:** No."
+  },
+  {
+    "start": 149.7,
+    "end": 154.58,
+    "text": "**Boy:** The lawmakers did not want to walk around outside in {bad|悪い/よくない|/bæd/|Bad weather can ruin plans.} weather."
+  },
+  {
+    "start": 154.58,
+    "end": 154.98,
+    "text": "**Anna:** Oh."
+  },
+  {
+    "start": 155.3,
+    "end": 157.62,
+    "text": "**Penelope:** We're back at {Union|連合/統一|/ˈjuːniən/|The union of workers is strong.} Station."
+  },
+  {
+    "start": 157.46,
+    "end": 162.18,
+    "text": "**Boy:** Do you want to know a {creepy|不気味な/恐ろしい|/ˈkriːpi/|That old house looks creepy.} fun fact about Union Station?"
+  },
+  {
+    "start": 162.18,
+    "end": 164.9,
+    "text": "**Penelope:** The creepier, the better."
+  },
+  {
+    "start": 164.9,
+    "end": 168.5,
+    "text": "**Boy:** Many years ago, inside Union Station."
+  },
+  {
+    "start": 168.74,
+    "end": 171.38,
+    "text": "**Boy:** There was a {funeral|葬儀|/ˈfjuːnərəl/|A funeral is a ceremony for the dead.} home."
+  },
+  {
+    "start": 171.38,
+    "end": 173.54,
+    "text": "**Anna:** A funeral home?"
+  },
+  {
+    "start": 173.54,
+    "end": 175.94,
+    "text": "**Anna:** You mean for {dead|死んだ|/ded/|The plant is dead.} people?"
+  },
+  {
+    "start": 175.94,
+    "end": 179.54,
+    "text": "**Anna:** Do you know another kind of funeral home?"
+  },
+  {
+    "start": 180.04,
+    "end": 181.319,
+    "text": "**Boy:** No."
+  },
+  {
+    "start": 181.319,
+    "end": 183.64,
+    "text": "**Boy:** Well, I've gotta run."
+  },
+  {
+    "start": 183.64,
+    "end": 186.439,
+    "text": "**Anna:** Thanks for giving us a great {tour|ツアー/観光|/tʊr/|We took a tour of the city.}."
+  },
+  {
+    "start": 186.439,
+    "end": 188.439,
+    "text": "**Anna:** Captain, that was {awesome|素晴らしい/素晴らしい|/ˈɔːsəm/|That concert was awesome!}"
+  },
+  {
+    "start": 188.439,
+    "end": 191.079,
+    "text": "**Anna:** And your son is a {great|素晴らしい/優れた|/ɡreɪt/|He is a great student.} {tour|観光/ツアー|/tʊər/|We went on a city tour.} {guide|案内人/ガイド|/ɡaɪd/|The museum guide was helpful.}"
+  },
+  {
+    "start": 191.079,
+    "end": 192.2,
+    "text": "**Captain:** What son?"
+  },
+  {
+    "start": 192.2,
+    "end": 192.84,
+    "text": "**Anna:** Him"
+  },
+  {
+    "start": 192.9,
+    "end": 194.819,
+    "text": "**Captain:** I've never {seen|見た/目にした|/siːn/|I have seen that movie.} that boy in my life."
+  },
+  {
+    "start": 194.819,
+    "end": 195.86,
+    "text": "**Captain:** See ya ladies!"
+  },
+  {
+    "start": 195.86,
+    "end": 199.22,
+    "text": "**Professor Bot:** I {learned|学んだ/習得した|/lɜːrnd/|I learned a new skill.} many new fun {facts|事実/情報|/fæks/|These are interesting facts.} in this lesson."
+  },
+  {
+    "start": 199.22,
+    "end": 202.099,
+    "text": "**Professor Bot:** Did you learn about {prepositions|前置詞|/ˌprepəˈzɪʃənz/|Prepositions show relationships.}?"
+  },
+  {
+    "start": 201.6,
+    "end": 206.4,
+    "text": "**Professor Bot:** Here's a list of all the {prepositions|前置詞|/ˌprepəˈzɪʃənz/|Prepositions connect words.} used in this lesson."
+  },
+  {
+    "start": 206.4,
+    "end": 208,
+    "text": "**Anna:** Wow, that's a lot."
+  },
+  {
+    "start": 208,
+    "end": 209.76,
+    "text": "**Anna:** I know, let's not read them."
+  },
+  {
+    "start": 209.76,
+    "end": 210.8,
+    "text": "**Anna:** Let's {sing|歌う/唄う|/sɪŋ/|We like to sing together.} them."
+  },
+  {
+    "start": 210.8,
+    "end": 212,
+    "text": "**Anna:** Hit it, boys."
+  },
+  {
+    "start": 212,
+    "end": 213.92,
+    "text": "**Anna:** Take it {away|去れ/始めて|/əˈweɪ/|Take it away, musicians!} singers!"
+  },
+  {
+    "start": 214.02,
+    "end": 227.14,
+    "text": "**Anna:** Since about, across a head around, over at behind by four, from in like through"
+  },
+  {
+    "start": 227.94,
+    "end": 234.82,
+    "text": "**Anna:** Too near on to where"
+  }
+]

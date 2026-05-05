@@ -1,0 +1,427 @@
+[
+  {
+    "start": 0.001,
+    "end": 1.3599999999999999,
+    "text": "**Kelly:** Hi Anna."
+  },
+  {
+    "start": 1.3599999999999999,
+    "end": 4,
+    "text": "**Kelly:** Why do you have all this {weather|天気/気象} stuff?"
+  },
+  {
+    "start": 5.84,
+    "end": 8.4,
+    "text": "**Anna:** I love {weather|天気/気象}"
+  },
+  {
+    "start": 8.719,
+    "end": 10.559,
+    "text": "**Kelly:** Me too!"
+  },
+  {
+    "start": 10.559,
+    "end": 12.639,
+    "text": "**Kelly:** Weather is so {important|重要な}!"
+  },
+  {
+    "start": 12.639,
+    "end": 13.68,
+    "text": "**Anna:** It is!"
+  },
+  {
+    "start": 13.68,
+    "end": 15.92,
+    "text": "**Anna:** It {affects|影響を与える} people's lives"
+  },
+  {
+    "start": 16.52,
+    "end": 21.08,
+    "text": "**Anna:** Have you ever {reported|報告した} on a big weather event?"
+  },
+  {
+    "start": 21.08,
+    "end": 22.52,
+    "text": "**Anna:** I have."
+  },
+  {
+    "start": 22.52,
+    "end": 25.48,
+    "text": "**Anna:** I've {reported|報告した} on a {blizzard|吹雪/大雪}"
+  },
+  {
+    "start": 25.48,
+    "end": 27.64,
+    "text": "**Kelly:** Do you mean the one last weekend?"
+  },
+  {
+    "start": 27.64,
+    "end": 28.6,
+    "text": "**Anna:** Yes."
+  },
+  {
+    "start": 28.14,
+    "end": 31.9,
+    "text": "**Anna:** I had been {waiting|待っていた} for that {blizzard|吹雪/大雪} for years."
+  },
+  {
+    "start": 31.9,
+    "end": 34.86,
+    "text": "**Anna:** When it came, I was ready."
+  },
+  {
+    "start": 34.86,
+    "end": 38.14,
+    "text": "**Anna:** Welcome to our most {perfect|完璧な} lesson."
+  },
+  {
+    "start": 37.94,
+    "end": 39.78,
+    "text": "**Anna:** Why is it perfect?"
+  },
+  {
+    "start": 39.78,
+    "end": 45.94,
+    "text": "**Anna:** Today we are {reviewing|復習する} the present perfect and past perfect verb tenses"
+  },
+  {
+    "start": 46.02,
+    "end": 49.14,
+    "text": "**Anna:** These show that an action is {completed|完了した}"
+  },
+  {
+    "start": 49.14,
+    "end": 58.02,
+    "text": "**Anna:** Kelly uses the present perfect when she says, Have you ever {reported|報告した} on a big weather event?"
+  },
+  {
+    "start": 57.7,
+    "end": 62.02,
+    "text": "**Anna:** Anna uses the past perfect when she says."
+  },
+  {
+    "start": 62.02,
+    "end": 65.46,
+    "text": "**Anna:** I had been {waiting|待っていた} for that {blizzard|吹雪/大雪} for years"
+  },
+  {
+    "start": 65.46,
+    "end": 73.86,
+    "text": "**Anna:** Listen for have or had and the past participle to find more sentences with the perfect tense."
+  },
+  {
+    "start": 73.46,
+    "end": 76.26,
+    "text": "**Anna:** I'll color those words to help you."
+  },
+  {
+    "start": 76.26,
+    "end": 82.1,
+    "text": "**Anna:** Kelly, I have {wanted|望んでいた} to report on a big weather event my whole life."
+  },
+  {
+    "start": 82.1,
+    "end": 83.62,
+    "text": "**Kelly:** Who hasn't?"
+  },
+  {
+    "start": 83.5,
+    "end": 87.42,
+    "text": "**Kelly:** Did you report all weekend by yourself?"
+  },
+  {
+    "start": 87.42,
+    "end": 88.86,
+    "text": "**Anna:** No, no, no, no."
+  },
+  {
+    "start": 88.86,
+    "end": 91.5,
+    "text": "**Anna:** I {volunteered|志願した} Pete to help me"
+  },
+  {
+    "start": 91.72,
+    "end": 94.2,
+    "text": "**Pete:** Why am I here on a Saturday?"
+  },
+  {
+    "start": 94.2,
+    "end": 96.12,
+    "text": "**Pete:** Why are you {carrying|運んでいる} things?"
+  },
+  {
+    "start": 96.44,
+    "end": 97.48,
+    "text": "**Kelly:** Why?"
+  },
+  {
+    "start": 97.8,
+    "end": 100.36,
+    "text": "**Anna:** Pete, these are my {supplies|物資/備品|/səˈplaɪz/|Emergency supplies are important.}"
+  },
+  {
+    "start": 100.36,
+    "end": 103.96,
+    "text": "**Anna:** Food, a {blanket|毛布|/ˈblæŋkɪt/|A warm blanket keeps you cozy.}, warm clothing."
+  },
+  {
+    "start": 104.12,
+    "end": 106.2,
+    "text": "**Anna:** Where are your supplies?"
+  },
+  {
+    "start": 106.2,
+    "end": 108.92,
+    "text": "**Anna:** Pete, Pete, Pete, Pete."
+  },
+  {
+    "start": 108.92,
+    "end": 113.32,
+    "text": "**Anna:** This could be the {blizzard|吹雪/大雪|/ˈblɪzərd/|A blizzard is very dangerous.} of the century."
+  },
+  {
+    "start": 113.88,
+    "end": 115.96,
+    "text": "**Pete:** It'll be fine."
+  },
+  {
+    "start": 115.96,
+    "end": 118.2,
+    "text": "**Kelly:** How else have you {prepared|準備した|/prəˈpɛrd/|Are you prepared for the trip?}?"
+  },
+  {
+    "start": 118.2,
+    "end": 121.32,
+    "text": "**Anna:** Well, I had just bought the latest {weather|天気|/ˈwɛðər/|The weather is nice today.}"
+  },
+  {
+    "start": 121.74,
+    "end": 124.86,
+    "text": "**Anna:** {forecasting|予報|/ˈfɔːrkæstɪŋ/|Weather forecasting helps plan activities.} software so I brought it."
+  },
+  {
+    "start": 124.86,
+    "end": 129.58,
+    "text": "**Kelly:** Do you mean the Weather Genie Pro?"
+  },
+  {
+    "start": 129.82,
+    "end": 130.86,
+    "text": "**Anna:** You know it."
+  },
+  {
+    "start": 130.86,
+    "end": 133.74,
+    "text": "**Anna:** Pete thought it was pretty {great|素晴らしい|/greɪt/|That's a great idea!} too."
+  },
+  {
+    "start": 133.54,
+    "end": 136.34,
+    "text": "**Pete:** Do you have any games on that thing?"
+  },
+  {
+    "start": 136.34,
+    "end": 140.02,
+    "text": "**Anna:** Yes, I have the best weather {survival|生存/survival|/sərˈvaɪvəl/|Survival skills are important.} game."
+  },
+  {
+    "start": 140.02,
+    "end": 140.9,
+    "text": "**Anna:** Boom!"
+  },
+  {
+    "start": 141.44,
+    "end": 143.2,
+    "text": "**Pete:** Sounds fun."
+  },
+  {
+    "start": 143.2,
+    "end": 148.64,
+    "text": "**Anna:** It is, but right now, Pete, this computer is a work {tool|道具|/tuːl/|A hammer is a useful tool.}."
+  },
+  {
+    "start": 148.64,
+    "end": 154.48,
+    "text": "**Anna:** It will give us the {temperature|温度|/ˈtɛmprətʃər/|The temperature is very low today.}, wind speed, wind direction, and amount of snowfall"
+  },
+  {
+    "start": 154.64,
+    "end": 155.92,
+    "text": "**Anna:** In real time."
+  },
+  {
+    "start": 155.92,
+    "end": 157.76,
+    "text": "**Anna:** Boom boom."
+  },
+  {
+    "start": 157.76,
+    "end": 159.12,
+    "text": "**Pete:** I can't wait."
+  },
+  {
+    "start": 159.12,
+    "end": 160,
+    "text": "**Anna:** Pete."
+  },
+  {
+    "start": 160,
+    "end": 161.92,
+    "text": "**Anna:** We need a name for this blizzard."
+  },
+  {
+    "start": 161.92,
+    "end": 162.799,
+    "text": "**Pete:** No, we don't."
+  },
+  {
+    "start": 162.799,
+    "end": 165.04,
+    "text": "**Anna:** All the great storms have names."
+  },
+  {
+    "start": 165.04,
+    "end": 166.079,
+    "text": "**Pete:** No, they don't."
+  },
+  {
+    "start": 166.079,
+    "end": 166.879,
+    "text": "**Anna:** I know."
+  },
+  {
+    "start": 167.28,
+    "end": 170.32,
+    "text": "**Anna:** The big snow."
+  },
+  {
+    "start": 170.32,
+    "end": 172.96,
+    "text": "**Anna:** I am not saying the big snow."
+  },
+  {
+    "start": 172.96,
+    "end": 175.92,
+    "text": "**Pete:** {Welcome|ようこそ/歓迎|/ˈwelkəm/|Welcome to our party.} to the {big|大きな} snow."
+  },
+  {
+    "start": 176.88,
+    "end": 181.52,
+    "text": "**Kelly:** The big snow {broke|壊した/記録を破った} all kinds of {records|記録}, didn't it?"
+  },
+  {
+    "start": 181.52,
+    "end": 183.04,
+    "text": "**Anna:** Yes it did."
+  },
+  {
+    "start": 183.04,
+    "end": 187.92,
+    "text": "**Anna:** And every time a record was {broken|壊された/記録が破られた}, we {celebrated|祝った}."
+  },
+  {
+    "start": 187.92,
+    "end": 190.08,
+    "text": "**Anna:** So far in Washington, DC"
+  },
+  {
+    "start": 190.62,
+    "end": 194.78,
+    "text": "**Anna:** 29 inches of snow has {fallen|降った}."
+  },
+  {
+    "start": 194.78,
+    "end": 197.82,
+    "text": "**Anna:** That, my dear {listeners|聴衆}, is a record!"
+  },
+  {
+    "start": 200.78,
+    "end": 204.78,
+    "text": "**Anna:** We just broke the wind speed record!"
+  },
+  {
+    "start": 206.86,
+    "end": 210.78,
+    "text": "**Anna:** Snow has been {falling|降っている} for 30 hours {straight|まっすぐ/連続}."
+  },
+  {
+    "start": 210.78,
+    "end": 212.22,
+    "text": "**Anna:** That's another record."
+  },
+  {
+    "start": 219.78,
+    "end": 224.739,
+    "text": "**Kelly:** By Saturday night, stores and {restaurants|レストラン} had closed."
+  },
+  {
+    "start": 224.739,
+    "end": 225.78,
+    "text": "**Kelly:** Did you bring enough"
+  },
+  {
+    "start": 226.12,
+    "end": 226.84,
+    "text": "**Anna:** food."
+  },
+  {
+    "start": 226.84,
+    "end": 232.6,
+    "text": "**Anna:** I thought I had {brought|持ってきた} enough food, but I {ran out|なくなった}."
+  },
+  {
+    "start": 232.6,
+    "end": 235.88,
+    "text": "**Anna:** Hey Pete, where's my bag of {popcorn|ポップコーン}?"
+  },
+  {
+    "start": 235.88,
+    "end": 238.28,
+    "text": "**Pete:** Maybe you ate it already?"
+  },
+  {
+    "start": 238.28,
+    "end": 240.28,
+    "text": "**Anna:** No, I didn't"
+  },
+  {
+    "start": 240.02,
+    "end": 242.099,
+    "text": "**Pete:** I haven't seen it."
+  },
+  {
+    "start": 243.7,
+    "end": 249.06,
+    "text": "**Anna:** We had {reported|報告した} together for 48 hours {straight|連続}."
+  },
+  {
+    "start": 249.06,
+    "end": 250.42,
+    "text": "**Kelly:** Wow."
+  },
+  {
+    "start": 250.42,
+    "end": 254.66,
+    "text": "**Anna:** That must have been a great {team building|チームビルディング} exercise for."
+  },
+  {
+    "start": 254.94,
+    "end": 256.139,
+    "text": "**Anna:** you and Pete."
+  },
+  {
+    "start": 256.139,
+    "end": 258.859,
+    "text": "**Anna:** Yeah, you could say that."
+  },
+  {
+    "start": 258.859,
+    "end": 263.82,
+    "text": "**Anna:** I hope you found all the sentences with perfect tenses."
+  },
+  {
+    "start": 263.82,
+    "end": 266.7,
+    "text": "**Anna:** Learn more on our website."
+  }
+]

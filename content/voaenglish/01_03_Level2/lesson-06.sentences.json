@@ -1,0 +1,362 @@
+[
+  {
+    "start": 2.56,
+    "end": 6.88,
+    "text": "**Penelope:** Anna, thanks for taking me on a {tour|観光ツアー/案内} of DC today."
+  },
+  {
+    "start": 6.88,
+    "end": 8.72,
+    "text": "**Anna:** Sure thing, Penelope."
+  },
+  {
+    "start": 8.72,
+    "end": 14.8,
+    "text": "**Anna:** You are new to town and a {tour|観光/案内} is the best way to see more of the city."
+  },
+  {
+    "start": 14.82,
+    "end": 17.86,
+    "text": "**Penelope:** So, which {tour|ツアー/観光} are we taking?"
+  },
+  {
+    "start": 17.86,
+    "end": 25.38,
+    "text": "**Anna:** The one that goes through the city on a bus or the one that goes along the river in a {boat|ボート/船}?"
+  },
+  {
+    "start": 25.38,
+    "end": 26.5,
+    "text": "**Anna:** Both!"
+  },
+  {
+    "start": 26.84,
+    "end": 28.28,
+    "text": "**Penelope:** What?"
+  },
+  {
+    "start": 28.28,
+    "end": 33.48,
+    "text": "**Penelope:** Anna, this isn't going to be one of those {trips|旅行/遠出}, is it?"
+  },
+  {
+    "start": 33.48,
+    "end": 34.44,
+    "text": "**Anna:** No."
+  },
+  {
+    "start": 34.44,
+    "end": 35.56,
+    "text": "**Anna:** Follow me."
+  },
+  {
+    "start": 37.78,
+    "end": 42.74,
+    "text": "**Professor Bot:** In this lesson, you are going to hear lots of {prepositions|前置詞}."
+  },
+  {
+    "start": 42.74,
+    "end": 45.46,
+    "text": "**Professor Bot:** What's a preposition, you ask?"
+  },
+  {
+    "start": 45.7,
+    "end": 50.74,
+    "text": "**Professor Bot:** It's a word that shows {relationships|関係/つながり} between things."
+  },
+  {
+    "start": 51.239,
+    "end": 57.48,
+    "text": "**Anna:** Anna says they are going on a tour through the city and along the river."
+  },
+  {
+    "start": 57.48,
+    "end": 61.48,
+    "text": "**Anna:** Through and along are both prepositions."
+  },
+  {
+    "start": 61.579,
+    "end": 63.5,
+    "text": "**Anna:** Watch for more."
+  },
+  {
+    "start": 63.5,
+    "end": 66.78,
+    "text": "**Anna:** Well, Penelope, there's our {ride|乗り物/乗車}!"
+  },
+  {
+    "start": 68.54,
+    "end": 69.5,
+    "text": "**Penelope:** What?"
+  },
+  {
+    "start": 69.72,
+    "end": 70.44,
+    "text": "**Penelope:** Is it?"
+  },
+  {
+    "start": 70.68,
+    "end": 73.24,
+    "text": "**Anna:** It's the famous DC {Ducks|特殊な水陸両用車}!"
+  },
+  {
+    "start": 73.24,
+    "end": 75.08,
+    "text": "**Anna:** The boat with {wheels|車輪}."
+  },
+  {
+    "start": 75.08,
+    "end": 79.4,
+    "text": "**Anna:** We will ride on the road and then {sail|航行する/進む} on the water"
+  },
+  {
+    "start": 80.54,
+    "end": 82.94,
+    "text": "**Penelope:** Who thinks of these things?"
+  },
+  {
+    "start": 82.94,
+    "end": 85.42,
+    "text": "**Anna:** I don't know, but I'm glad they do."
+  },
+  {
+    "start": 85.42,
+    "end": 88.06,
+    "text": "**Anna:** Let's get {aboard|乗り込む}!"
+  },
+  {
+    "start": 88.84,
+    "end": 99.399,
+    "text": "**Anna:** Hey, did you know that this bus, um, boat, was {created|作られた/生み出された} during World War II to carry people and {supplies|物資/補給品}."
+  },
+  {
+    "start": 99.32,
+    "end": 107.32,
+    "text": "**Anna:** Wow, you know, a tour is so much more {interesting|興味深い} with fun facts like that one."
+  },
+  {
+    "start": 107.32,
+    "end": 108.6,
+    "text": "**Penelope:** I agree."
+  },
+  {
+    "start": 108.82,
+    "end": 110.58,
+    "text": "**Penelope:** I love fun facts."
+  },
+  {
+    "start": 110.58,
+    "end": 114.26,
+    "text": "**Boy:** Did I hear you say you love fun facts?"
+  },
+  {
+    "start": 114.26,
+    "end": 116.02,
+    "text": "**Anna:** Yeah."
+  },
+  {
+    "start": 116.02,
+    "end": 120.1,
+    "text": "**Boy:** Well, I have {tons|たくさん} of fun facts for this tour"
+  },
+  {
+    "start": 120.48,
+    "end": 121.36,
+    "text": "**Penelope:** Great!"
+  },
+  {
+    "start": 121.36,
+    "end": 124.64,
+    "text": "**Anna:** Penelope, where are his {parents|両親}?"
+  },
+  {
+    "start": 124.96,
+    "end": 126.64,
+    "text": "**Penelope:** Maybe."
+  },
+  {
+    "start": 126.64,
+    "end": 128.64,
+    "text": "**Anna:** Maybe he's the {captain's|船長の} son."
+  },
+  {
+    "start": 128.64,
+    "end": 130.8,
+    "text": "**Anna:** And he helps his dad on {tours|ツアー}."
+  },
+  {
+    "start": 130.8,
+    "end": 132.16,
+    "text": "**Anna:** Oh yeah."
+  },
+  {
+    "start": 132.52,
+    "end": 140.44,
+    "text": "**Anna:** It would be so {awesome|素晴らしい} to ride around the city in a boat all day with your dad."
+  },
+  {
+    "start": 140.82,
+    "end": 142.82,
+    "text": "**Penelope:** This is amazing, Anna."
+  },
+  {
+    "start": 142.82,
+    "end": 146.42,
+    "text": "**Penelope:** There are so many {beautiful|美しい} buildings along this road."
+  },
+  {
+    "start": 146.42,
+    "end": 149.46,
+    "text": "**Anna:** Hey, the Washington Monument is on the left!"
+  },
+  {
+    "start": 151.14,
+    "end": 153.46,
+    "text": "**Professor Bot:** I have a fun fact too."
+  },
+  {
+    "start": 153.46,
+    "end": 158.98,
+    "text": "**Professor Bot:** Did you know that the Washington Monument was {damaged|損傷した} in an earthquake?"
+  },
+  {
+    "start": 158.98,
+    "end": 161.3,
+    "text": "**Professor Bot:** Whoa, did you feel that?"
+  },
+  {
+    "start": 161.52,
+    "end": 171.36,
+    "text": "**Anna:** I heard around the city in a boat, along this road, on the left, and across from the White House"
+  },
+  {
+    "start": 171.42,
+    "end": 175.1,
+    "text": "**Anna:** All of these are {prepositions|前置詞} showing place."
+  },
+  {
+    "start": 175.1,
+    "end": 179.18,
+    "text": "**Anna:** Let's watch for more places and prepositions."
+  },
+  {
+    "start": 179.34,
+    "end": 182.38,
+    "text": "**Anna:** Look, Anna, we're across from the White House."
+  },
+  {
+    "start": 182.38,
+    "end": 192.46,
+    "text": "**Anna:** Penelope, the only thing between us and the president is the street and a park."
+  },
+  {
+    "start": 193.2,
+    "end": 199.84,
+    "text": "**Anna:** And a security gate, and police officers with guns."
+  },
+  {
+    "start": 199.84,
+    "end": 205.439,
+    "text": "**Boy:** Excuse me, do you want to know a fun fact about the White House"
+  },
+  {
+    "start": 205.72,
+    "end": 207.319,
+    "text": "**Anna:** Yes."
+  },
+  {
+    "start": 207.319,
+    "end": 216.519,
+    "text": "**Boy:** Inside the White House there is a swimming pool, a movie theater, and {thirty-two|32} bathrooms."
+  },
+  {
+    "start": 216.519,
+    "end": 218.2,
+    "text": "**Penelope:** Thirty-two bathrooms?"
+  },
+  {
+    "start": 218.2,
+    "end": 220.36,
+    "text": "**Penelope:** That's a lot of bathrooms."
+  },
+  {
+    "start": 220.32,
+    "end": 222.24,
+    "text": "**Boy:** I'd be happy with two."
+  },
+  {
+    "start": 222.24,
+    "end": 230.64,
+    "text": "**Boy:** I live in a house with my mom, four sisters, two aunts, and only one bathroom."
+  },
+  {
+    "start": 230.64,
+    "end": 231.44,
+    "text": "**Penelope:** Oh my."
+  },
+  {
+    "start": 232.04,
+    "end": 234.84,
+    "text": "**Penelope:** You know, Anna, we should give him a {tip|チップ/助言}."
+  },
+  {
+    "start": 235.08,
+    "end": 238.6,
+    "text": "**Anna:** Of course, it is {polite|丁寧な/礼儀正しい|/pəˈlaɪt/|It is polite to say thank you.} to {tip|チップを渡す/心付けをする|/tɪp/|We tip waiters in restaurants.} your tour guide."
+  },
+  {
+    "start": 238.6,
+    "end": 242.04,
+    "text": "**Anna:** Luckily, I have lots of {dollar|ドル/アメリカの通貨|/ˈdɑːlər/|One dollar is 100 cents.} bills."
+  },
+  {
+    "start": 242.12,
+    "end": 244.28,
+    "text": "**Penelope:** That was a great {fun|楽しい/面白い|/fʌn/|Fun games make children happy.} fact."
+  },
+  {
+    "start": 244.28,
+    "end": 245.4,
+    "text": "**Penelope:** Here you go."
+  },
+  {
+    "start": 245.4,
+    "end": 246.52,
+    "text": "**Boy:** Thank you."
+  },
+  {
+    "start": 246.52,
+    "end": 250.84,
+    "text": "**Boy:** I can tell you fun {facts|事実/情報|/fæks/|Fun facts are interesting.} all day."
+  },
+  {
+    "start": 251.02,
+    "end": 255.34,
+    "text": "**Professor Bot:** Did you hear any more {prepositions|前置詞|/ˌprepəˈzɪʃənz/|Prepositions show location.} of place?"
+  },
+  {
+    "start": 255.34,
+    "end": 265.66,
+    "text": "**Anna:** I heard between us and the president, {inside|内側に/中に|/ɪnˈsaɪd/|Inside the room is warm.} the White House, and in a house."
+  },
+  {
+    "start": 265.12,
+    "end": 269.68,
+    "text": "**Anna:** And did you hear that the {duck|アヒル/鴨|/dʌk/|A duck swims in water.} boat can go on the river?"
+  },
+  {
+    "start": 269.68,
+    "end": 271.36,
+    "text": "**Anna:** I don't {believe|信じる/思う|/bɪˈliːv/|I believe in you.} it."
+  },
+  {
+    "start": 271.36,
+    "end": 276.96,
+    "text": "**Anna:** Join us next time to find out which {preposition|前置詞|/ˌprepəˈzɪʃən/|A preposition shows relationship.} we will use."
+  },
+  {
+    "start": 276.84,
+    "end": 282.76,
+    "text": "**Anna:** The boat went on the river, or the boat went {into|〜の中へ/〜の内部に|/ˈɪntuː/|She walked into the room.} the river?"
+  }
+]

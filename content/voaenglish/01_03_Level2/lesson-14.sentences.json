@@ -1,0 +1,477 @@
+[
+  {
+    "start": 0.64,
+    "end": 3.44,
+    "text": "**Anna:** Hello, what are you guys {looking|見ている/注目している} at?"
+  },
+  {
+    "start": 3.44,
+    "end": 6.4,
+    "text": "**Pete:** I'm showing Ashley {pictures|写真} of my girlfriend."
+  },
+  {
+    "start": 6.4,
+    "end": 8.48,
+    "text": "**Anna:** We have so much in common."
+  },
+  {
+    "start": 8.48,
+    "end": 10.16,
+    "text": "**Anna:** Even small things."
+  },
+  {
+    "start": 10.16,
+    "end": 13.44,
+    "text": "**Ashley:** She can't {whistle|口笛を吹く} and I can't either."
+  },
+  {
+    "start": 13.4,
+    "end": 16.6,
+    "text": "**Anna:** And here's a picture of my boyfriend."
+  },
+  {
+    "start": 17.88,
+    "end": 21.32,
+    "text": "**Ashley:** My {family|家族} is big, and so is his."
+  },
+  {
+    "start": 21.32,
+    "end": 25.56,
+    "text": "**Ashley:** I don't like {ball sports|球技} and he doesn't either."
+  },
+  {
+    "start": 26.259,
+    "end": 28.58,
+    "text": "**Anna:** We are made for each other."
+  },
+  {
+    "start": 30.259,
+    "end": 31.699,
+    "text": "**Pete:** And so are we."
+  },
+  {
+    "start": 35.3,
+    "end": 35.62,
+    "text": "**Anna:** Um"
+  },
+  {
+    "start": 37.02,
+    "end": 41.5,
+    "text": "**Anna:** You have found {perfect|完璧な} partners."
+  },
+  {
+    "start": 41.5,
+    "end": 43.82,
+    "text": "**Ashley:** And uh so have I"
+  },
+  {
+    "start": 44.84,
+    "end": 48.519,
+    "text": "**Professor Bot:** Pete and Ashley are talking about people they love."
+  },
+  {
+    "start": 48.519,
+    "end": 52.92,
+    "text": "**Professor Bot:** They are putting two ideas together with {connectors|接続詞}."
+  },
+  {
+    "start": 52.92,
+    "end": 55.879,
+    "text": "**Anna:** Let's start with these two sentences."
+  },
+  {
+    "start": 55.92,
+    "end": 57.68,
+    "text": "**Anna:** She can't whistle."
+  },
+  {
+    "start": 57.68,
+    "end": 59.359,
+    "text": "**Anna:** Pete can't whistle."
+  },
+  {
+    "start": 59.359,
+    "end": 61.519,
+    "text": "**Anna:** How do you put them together?"
+  },
+  {
+    "start": 61.519,
+    "end": 66.08,
+    "text": "**Anna:** Pete says, She can't whistle, and I can't either."
+  },
+  {
+    "start": 66.24,
+    "end": 72.88,
+    "text": "**Anna:** You can see we just add the {conjunction|接続詞}, either, and take away the verb, whistle."
+  },
+  {
+    "start": 72.88,
+    "end": 74.56,
+    "text": "**Professor Bot:** And Ashley says"
+  },
+  {
+    "start": 75.02,
+    "end": 78.7,
+    "text": "**Ashley:** I don't like ball sports, and he doesn't either."
+  },
+  {
+    "start": 78.7,
+    "end": 81.34,
+    "text": "**Anna:** Keep looking for {connectors|接続詞}."
+  },
+  {
+    "start": 81.34,
+    "end": 83.42,
+    "text": "**Ashley:** You met someone, Anna?"
+  },
+  {
+    "start": 83.42,
+    "end": 85.42,
+    "text": "**Ashley:** That's great."
+  },
+  {
+    "start": 85.34,
+    "end": 87.1,
+    "text": "**Ashley:** What's his name?"
+  },
+  {
+    "start": 87.1,
+    "end": 88.22,
+    "text": "**Ashley:** His name?"
+  },
+  {
+    "start": 88.22,
+    "end": 91.82,
+    "text": "**Anna:** His name is uh Buster"
+  },
+  {
+    "start": 94.36,
+    "end": 96.76,
+    "text": "**Anna:** Carter."
+  },
+  {
+    "start": 96.76,
+    "end": 99.16,
+    "text": "**Anna:** Buster."
+  },
+  {
+    "start": 99.16,
+    "end": 100.6,
+    "text": "**Anna:** Carter?"
+  },
+  {
+    "start": 100.6,
+    "end": 102.44,
+    "text": "**Anna:** It's just {Buster Carter|人名|/ˈbʌstər ˈkɑːrtər/|Buster Carter is a common name.}, Ashley."
+  },
+  {
+    "start": 102.44,
+    "end": 103.88,
+    "text": "**Anna:** I like him and he likes me."
+  },
+  {
+    "start": 103.88,
+    "end": 106.04,
+    "text": "**Anna:** We're a great {couple|カップル/恋人たち|/ˈkʌpəl/|They are a lovely couple.}."
+  },
+  {
+    "start": 106.74,
+    "end": 110.34,
+    "text": "**Ashley:** Hey, let's let's all get {dinner|夕食|/ˈdɪnər/|We have dinner at 7 pm.} tonight."
+  },
+  {
+    "start": 110.34,
+    "end": 112.259,
+    "text": "**Professor Bot:** Together."
+  },
+  {
+    "start": 112.259,
+    "end": 114.18,
+    "text": "**Ashley:** You can bring Buster."
+  },
+  {
+    "start": 114.42,
+    "end": 117.54,
+    "text": "**Anna:** Yeah, I can't wait to {meet|会う/出会う|/miːt/|Let's meet at the cafe.} him."
+  },
+  {
+    "start": 117.06,
+    "end": 118.34,
+    "text": "**Anna:** Thanks Ashley."
+  },
+  {
+    "start": 118.34,
+    "end": 124.02,
+    "text": "**Anna:** But he's really {busy|忙しい|/ˈbɪzi/|She is busy with work.} tonight with his uh {squirrel|リス|/ˈskwɜːrəl/|A squirrel is eating nuts.} collection."
+  },
+  {
+    "start": 124.02,
+    "end": 124.9,
+    "text": "**Anna:** Bye guys."
+  },
+  {
+    "start": 124.9,
+    "end": 126.1,
+    "text": "**Anna:** Gotta go."
+  },
+  {
+    "start": 126.1,
+    "end": 128.02,
+    "text": "**Ashley:** Squirrel collection"
+  },
+  {
+    "start": 129.56,
+    "end": 131.8,
+    "text": "**Ashley:** You know she made all that up."
+  },
+  {
+    "start": 131.8,
+    "end": 134.84,
+    "text": "**Ashley:** That's so sad."
+  },
+  {
+    "start": 134.84,
+    "end": 137.88,
+    "text": "**Ashley:** She needs to meet someone."
+  },
+  {
+    "start": 137.88,
+    "end": 140.36,
+    "text": "**Ashley:** Hey, do you know anyone who she might meet?"
+  },
+  {
+    "start": 140.52,
+    "end": 141.32,
+    "text": "**Pete:** No."
+  },
+  {
+    "start": 143.5,
+    "end": 146.78,
+    "text": "**Ashley:** Anna, Anna, you lied."
+  },
+  {
+    "start": 146.78,
+    "end": 148.22,
+    "text": "**Anna:** You lied."
+  },
+  {
+    "start": 148.22,
+    "end": 153.019,
+    "text": "**Anna:** Now they think you have a boyfriend with a squirrel collection."
+  },
+  {
+    "start": 153.5,
+    "end": 154.86,
+    "text": "**Ashley:** Here squirrel."
+  },
+  {
+    "start": 156.46,
+    "end": 161.34,
+    "text": "**Anna:** Well, you need to tell them the truth."
+  },
+  {
+    "start": 161.34,
+    "end": 164.86,
+    "text": "**Anna:** You don't have a boyfriend."
+  },
+  {
+    "start": 164.86,
+    "end": 166.22,
+    "text": "**Man:** Excuse me."
+  },
+  {
+    "start": 166.22,
+    "end": 169.26,
+    "text": "**Man:** Is this seat {taken|占められた|/ˈteɪkən/|The seat is taken by my friend.}?"
+  },
+  {
+    "start": 170.6,
+    "end": 172.44,
+    "text": "**Pete:** Ashley."
+  },
+  {
+    "start": 172.44,
+    "end": 173.4,
+    "text": "**Professor Bot:** Pete."
+  },
+  {
+    "start": 174.28,
+    "end": 175.96,
+    "text": "**Anna:** I need to talk to you."
+  },
+  {
+    "start": 176.84,
+    "end": 178.92,
+    "text": "**Anna:** This morning."
+  },
+  {
+    "start": 178.92,
+    "end": 180.12,
+    "text": "**Anna:** I {lied|嘘をつく}."
+  },
+  {
+    "start": 180.76,
+    "end": 182.44,
+    "text": "**Pete:** Let me guess."
+  },
+  {
+    "start": 182.84,
+    "end": 186.28,
+    "text": "**Pete:** There's no {Buster Carter|人名}."
+  },
+  {
+    "start": 186.599,
+    "end": 188.44,
+    "text": "**Pete:** What a {surprise|驚き}."
+  },
+  {
+    "start": 188.44,
+    "end": 190.04,
+    "text": "**Anna:** I'm sorry."
+  },
+  {
+    "start": 190.04,
+    "end": 193.64,
+    "text": "**Anna:** But later, I really did meet someone."
+  },
+  {
+    "start": 193.64,
+    "end": 196.76,
+    "text": "**Anna:** And we have a lot in {common|共通点}."
+  },
+  {
+    "start": 196.76,
+    "end": 199.079,
+    "text": "**Anna:** He's good at {flying kites|凧揚げ}."
+  },
+  {
+    "start": 199.079,
+    "end": 200.84,
+    "text": "**Professor Bot:** And so am I."
+  },
+  {
+    "start": 200.84,
+    "end": 203.319,
+    "text": "**Anna:** He likes to read {comics|漫画}."
+  },
+  {
+    "start": 203,
+    "end": 205.08,
+    "text": "**Ashley:** And so do I."
+  },
+  {
+    "start": 205.08,
+    "end": 208.84,
+    "text": "**Professor Bot:** I can play the {ukulele|ウクレレ}, and so can he."
+  },
+  {
+    "start": 208.84,
+    "end": 211.72,
+    "text": "**Ashley:** He sounds {perfect|完璧な} for you, Anna."
+  },
+  {
+    "start": 211.72,
+    "end": 213.64,
+    "text": "**Ashley:** Can he come tonight?"
+  },
+  {
+    "start": 213.64,
+    "end": 215.799,
+    "text": "**Anna:** That's the sad part."
+  },
+  {
+    "start": 215.799,
+    "end": 221.159,
+    "text": "**Anna:** You see, he just got a job as a {spy|スパイ}."
+  },
+  {
+    "start": 221.159,
+    "end": 224.519,
+    "text": "**Anna:** And tonight he leaves on {assignment|任務}."
+  },
+  {
+    "start": 224.519,
+    "end": 226.36,
+    "text": "**Pete:** Of course he does."
+  },
+  {
+    "start": 226.04,
+    "end": 234.84,
+    "text": "**Anna:** But that's okay, because now I know that there is someone out there made for me."
+  },
+  {
+    "start": 234.92,
+    "end": 236.44,
+    "text": "**Anna:** Oh, it's late."
+  },
+  {
+    "start": 236.44,
+    "end": 239.4,
+    "text": "**Anna:** I have to see him off at the train station."
+  },
+  {
+    "start": 239.4,
+    "end": 240.76,
+    "text": "**Anna:** Bye, you guys."
+  },
+  {
+    "start": 240.76,
+    "end": 242.28,
+    "text": "**Ashley:** Bye, Anna."
+  },
+  {
+    "start": 242.6,
+    "end": 244.04,
+    "text": "**Ashley:** Oh dear."
+  },
+  {
+    "start": 243.94,
+    "end": 245.7,
+    "text": "**Ashley:** She's worse than we {thought|考えた}."
+  },
+  {
+    "start": 245.7,
+    "end": 247.22,
+    "text": "**Pete:** She's lost her mind."
+  },
+  {
+    "start": 247.22,
+    "end": 249.06,
+    "text": "**Ashley:** What should we do?"
+  },
+  {
+    "start": 249.06,
+    "end": 250.42,
+    "text": "**Anna:** Let's tell her."
+  },
+  {
+    "start": 250.42,
+    "end": 252.26,
+    "text": "**Ashley:** No, Pete."
+  },
+  {
+    "start": 252.26,
+    "end": 252.819,
+    "text": "**Anna:** Mr."
+  },
+  {
+    "start": 252.819,
+    "end": 258.66,
+    "text": "**Anna:** Wright may not be {real|本当の/実在の|/ˈriːəl/|Is this story real?}, but he makes her {really|本当に|/ˈriːəli/|I really like pizza.} happy."
+  },
+  {
+    "start": 259.4,
+    "end": 262.84,
+    "text": "**Professor Bot:** Did you find any other {connectors|接続詞/つなぎ言葉|/kəˈnektərz/|Connectors help join sentences.}?"
+  },
+  {
+    "start": 262.84,
+    "end": 268.36,
+    "text": "**Professor Bot:** Notice how the words are in a different {order|順序/並び|/ˈɔːrdər/|Put the books in order.} in the part after so."
+  },
+  {
+    "start": 268.539,
+    "end": 275.259,
+    "text": "**Professor Bot:** I am becomes am I, and he can becomes can he?"
+  }
+]

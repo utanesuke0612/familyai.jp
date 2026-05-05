@@ -1,0 +1,467 @@
+[
+  {
+    "start": 4.96,
+    "end": 5.76,
+    "text": "**Anna:** Uh huh."
+  },
+  {
+    "start": 5.76,
+    "end": 6.48,
+    "text": "**Anna:** Okay."
+  },
+  {
+    "start": 6.48,
+    "end": 7.76,
+    "text": "**Anna:** Uh okay."
+  },
+  {
+    "start": 7.76,
+    "end": 9.28,
+    "text": "**Anna:** Okay."
+  },
+  {
+    "start": 11.36,
+    "end": 13.92,
+    "text": "**Anna:** Do you need a {vacation|休暇/旅行|/ˈveɪkeɪʃən/|I need a vacation from work.}?"
+  },
+  {
+    "start": 18.28,
+    "end": 25.48,
+    "text": "**Anna:** Wow, that was the {best|最高の|/best/|This is the best day ever.} {vacation|休暇/旅行|/ˈveɪkeɪʃən/|I need a vacation from work.} I have ever had in my head."
+  },
+  {
+    "start": 26.039,
+    "end": 28.68,
+    "text": "**Professor Bot:** {beach|浜辺|/biːtʃ/|Let's go to the beach.} is much better than here."
+  },
+  {
+    "start": 28.919,
+    "end": 31.16,
+    "text": "**Anna:** I need a vacation."
+  },
+  {
+    "start": 32.36,
+    "end": 33.879,
+    "text": "**Professor Bot:** I hear Yana."
+  },
+  {
+    "start": 33.879,
+    "end": 35.879,
+    "text": "**Professor Bot:** I need a vacation too."
+  },
+  {
+    "start": 35.879,
+    "end": 37.8,
+    "text": "**Professor Bot:** But not at the {beach|浜辺|/biːtʃ/|Let's go to the beach.}"
+  },
+  {
+    "start": 37.84,
+    "end": 40.16,
+    "text": "**Professor Bot:** {Sand|砂|/sænd/|Sand is soft under my feet.} is not good for robots."
+  },
+  {
+    "start": 40.16,
+    "end": 44.879,
+    "text": "**Professor Bot:** When we {compare|比較する|/kəmˈpɛər/|Let's compare these two things.} things, we use special forms of {adjectives|形容詞|/ˈædʒɪktɪvz/|Adjectives describe nouns.}."
+  },
+  {
+    "start": 44.879,
+    "end": 48.559,
+    "text": "**Professor Bot:** {Better|より良い|/ˈbɛtər/|This option is better.} is a {comparative|比較の|/kəmˈpærətɪv/|Comparative forms show difference.} {adjective|形容詞|/ˈædʒɪktɪv/|An adjective describes a noun.} that is used"
+  },
+  {
+    "start": 48.92,
+    "end": 50.519,
+    "text": "**Professor Bot:** {compare|比較する|/kəmˈpɛər/|Let's compare these two things.} two things."
+  },
+  {
+    "start": 50.519,
+    "end": 53.32,
+    "text": "**Professor Bot:** {Best|最高の|/best/|This is the best solution.} is a {superlative|最上級の|/ˈsuːpərlətɪv/|Superlative forms show the highest degree.} {adjective|形容詞|/ˈædʒɪktɪv/|An adjective describes a noun.}"
+  },
+  {
+    "start": 53.32,
+    "end": 56.28,
+    "text": "**Professor Bot:** It shows that one thing has more of"
+  },
+  {
+    "start": 56.84,
+    "end": 59.32,
+    "text": "**Professor Bot:** something than all of the others."
+  },
+  {
+    "start": 59.32,
+    "end": 62.12,
+    "text": "**Professor Bot:** Try to find more of these {adjectives|形容詞|/ˈædʒɪktɪvz/|Adjectives describe nouns.}."
+  },
+  {
+    "start": 62.12,
+    "end": 66.6,
+    "text": "**Professor Bot:** Look for ER or EST at the end."
+  },
+  {
+    "start": 66.62,
+    "end": 68.86,
+    "text": "**Dan:** No, you can't get your money back."
+  },
+  {
+    "start": 68.86,
+    "end": 74.06,
+    "text": "**Dan:** I don't care that it was your {worst|最悪の|/wɜːrst/|This is the worst day ever.} {vacation|休暇/旅行|/ˈveɪkeɪʃən/|I need a vacation from work.} ever."
+  },
+  {
+    "start": 74.54,
+    "end": 75.5,
+    "text": "**Dan:** Hello!"
+  },
+  {
+    "start": 75.5,
+    "end": 76.94,
+    "text": "**Dan:** Have a seat!"
+  },
+  {
+    "start": 76.92,
+    "end": 82.04,
+    "text": "**Dan:** Welcome to the world's {best|最高の|/best/|This is the best day ever.} {travel|旅行|/ˈtrævəl/|I love to travel around the world.} {agency|旅行代理店|/ˈeɪdʒənsi/|This travel agency helps plan trips.}."
+  },
+  {
+    "start": 82.04,
+    "end": 83,
+    "text": "**Anna:** Thank you."
+  },
+  {
+    "start": 83,
+    "end": 84.92,
+    "text": "**Anna:** And {congratulations|おめでとう|/kənˌgrætʃəˈleɪʃənz/|Congratulations on your success!}."
+  },
+  {
+    "start": 84.92,
+    "end": 85.799,
+    "text": "**Dan:** For what?"
+  },
+  {
+    "start": 85.799,
+    "end": 88.84,
+    "text": "**Anna:** For being the world's {best|最高の|/best/|This is the best day ever.} {travel|旅行|/ˈtrævəl/|I love to travel around the world.} {agency|旅行代理店|/ˈeɪdʒənsi/|This travel agency helps plan trips.}."
+  },
+  {
+    "start": 88.84,
+    "end": 89.96,
+    "text": "**Dan:** Right."
+  },
+  {
+    "start": 89.96,
+    "end": 91.24,
+    "text": "**Dan:** Thanks."
+  },
+  {
+    "start": 91.76,
+    "end": 94.32,
+    "text": "**Dan:** Trudy, {hold|保留する/電話を取り次がない}/hoʊld/ my calls."
+  },
+  {
+    "start": 94.32,
+    "end": 97.68,
+    "text": "**Dan:** I'm going to {sell|売る/販売する} our most {expensive|高価な}/ɪkˈspensɪv/ vacation."
+  },
+  {
+    "start": 98.24,
+    "end": 100.32,
+    "text": "**Trudy:** Sure thing, boss."
+  },
+  {
+    "start": 100.52,
+    "end": 103.719,
+    "text": "**Professor Bot:** The mountain {getaway|休暇/逃避行} is good for you."
+  },
+  {
+    "start": 103.719,
+    "end": 110.52,
+    "text": "**Anna:** It's a little {pricey|高価な}/ˈpraɪsi/, but think of it, you on top of a mountain for seven days?"
+  },
+  {
+    "start": 110.6,
+    "end": 115.159,
+    "text": "**Anna:** I'm afraid of uh {high|高い}/haɪ/ places."
+  },
+  {
+    "start": 114.56,
+    "end": 115.68,
+    "text": "**Dan:** Of course you are."
+  },
+  {
+    "start": 115.68,
+    "end": 120.32,
+    "text": "**Professor Bot:** That's why our deep sea {adventure|冒険}/ədˈventʃər/ is better for you."
+  },
+  {
+    "start": 120.32,
+    "end": 123.92,
+    "text": "**Professor Bot:** It is {pricier|より高価な} than the mountain getaway."
+  },
+  {
+    "start": 124.18,
+    "end": 127.619,
+    "text": "**Professor Bot:** Just you and the {animals|動物}/ˈænɪməlz/ of the sea."
+  },
+  {
+    "start": 127.619,
+    "end": 130.34,
+    "text": "**Anna:** Shark!"
+  },
+  {
+    "start": 130.34,
+    "end": 134.019,
+    "text": "**Dan:** No, there are no sharks in your dream vacation."
+  },
+  {
+    "start": 134.22,
+    "end": 137.5,
+    "text": "**Dan:** You need the {Safari|サファリ}/səˈfɑːri/ campout."
+  },
+  {
+    "start": 137.5,
+    "end": 143.26,
+    "text": "**Professor Bot:** It is our {priciest|最も高価な} vacation, but I think it's the best one for you."
+  },
+  {
+    "start": 143.34,
+    "end": 149.66,
+    "text": "**Anna:** During the day, you'll see {elephants|象}/ˈeləfənts/, {giraffes|キリン}/dʒəˈræfs/, and lions."
+  },
+  {
+    "start": 149.66,
+    "end": 154.3,
+    "text": "**Anna:** At night, you'll sleep out under the stars."
+  },
+  {
+    "start": 155.66,
+    "end": 156.62,
+    "text": "**Professor Bot:** Look!"
+  },
+  {
+    "start": 157.02,
+    "end": 159.98,
+    "text": "**Anna:** I think this was a bad idea."
+  },
+  {
+    "start": 160.379,
+    "end": 167.739,
+    "text": "**Dan:** Sure, you can leave, but then you won't see the latest vacation {technology|技術}/tekˈnɑːlədʒi/."
+  },
+  {
+    "start": 168.12,
+    "end": 171.32,
+    "text": "**Professor Bot:** Did you find all of those {adjectives|形容詞}/ˈædʒɪktɪvz/?"
+  },
+  {
+    "start": 171.32,
+    "end": 181.08,
+    "text": "**Professor Bot:** Dan started with good, then he moved to better, and finally he said the safari campout was the best."
+  },
+  {
+    "start": 180.88,
+    "end": 182.8,
+    "text": "**Professor Bot:** It's vacation for Anna."
+  },
+  {
+    "start": 183.28,
+    "end": 188.08,
+    "text": "**Anna:** Exactly what is the latest vacation technology?"
+  },
+  {
+    "start": 188.08,
+    "end": 189.2,
+    "text": "**Anna:** Exactly."
+  },
+  {
+    "start": 189.2,
+    "end": 191.36,
+    "text": "**Dan:** I'm happy you asked."
+  },
+  {
+    "start": 191.36,
+    "end": 195.52,
+    "text": "**Dan:** Meet the Travelmax 2000."
+  },
+  {
+    "start": 195.8,
+    "end": 197.32,
+    "text": "**Anna:** Wow."
+  },
+  {
+    "start": 197.32,
+    "end": 199.64,
+    "text": "**Dan:** So tell me how you like to travel."
+  },
+  {
+    "start": 199.64,
+    "end": 206.04,
+    "text": "**Anna:** I like travel that is {cozy|居心地の良い}/ˈkoʊzi/ and romantic, but still {exciting|興奮させる}/ɪkˈsaɪtɪŋ/."
+  },
+  {
+    "start": 206.02,
+    "end": 208.099,
+    "text": "**Dan:** Great, tell me more."
+  },
+  {
+    "start": 208.26,
+    "end": 212.739,
+    "text": "**Anna:** I like {traveling|旅行する} in a plane, but not in a helicopter."
+  },
+  {
+    "start": 212.739,
+    "end": 215.14,
+    "text": "**Anna:** Planes are a little {scary|恐ろしい}."
+  },
+  {
+    "start": 214.8,
+    "end": 217.6,
+    "text": "**Anna:** But helicopters are {scarier|さらに恐ろしい}."
+  },
+  {
+    "start": 217.6,
+    "end": 220.96,
+    "text": "**Anna:** My favorite way of {traveling|移動} is by train."
+  },
+  {
+    "start": 220.96,
+    "end": 223.84,
+    "text": "**Anna:** Ships can be the {scariest|最も恐ろしい}."
+  },
+  {
+    "start": 223.74,
+    "end": 225.98,
+    "text": "**Anna:** Have you seen the movie {Titanic|タイタニック}?"
+  },
+  {
+    "start": 225.98,
+    "end": 227.66,
+    "text": "**Anna:** Oh, and no horses."
+  },
+  {
+    "start": 227.66,
+    "end": 229.42,
+    "text": "**Anna:** I will ride a {camel|ラクダ}."
+  },
+  {
+    "start": 229.42,
+    "end": 231.5,
+    "text": "**Anna:** Oh, and no bike tours."
+  },
+  {
+    "start": 231.5,
+    "end": 236.94,
+    "text": "**Anna:** {Biking|自転車に乗ること} is the {slowest|最も遅い} and least {romantic|ロマンチックな} way to travel."
+  },
+  {
+    "start": 237.82,
+    "end": 243.34,
+    "text": "**Anna:** Excuse me, but I think the Travel Max 2000 is on {fire|火事}."
+  },
+  {
+    "start": 243.34,
+    "end": 244.3,
+    "text": "**Dan:** Yes."
+  },
+  {
+    "start": 244.3,
+    "end": 245.66,
+    "text": "**Dan:** We're both on fire."
+  },
+  {
+    "start": 245.66,
+    "end": 250.38,
+    "text": "**Dan:** We really want to sell you the most exp I mean the best {vacation|休暇} ever"
+  },
+  {
+    "start": 250.72,
+    "end": 253.84,
+    "text": "**Anna:** No, I mean it's really on fire."
+  },
+  {
+    "start": 256.239,
+    "end": 257.28,
+    "text": "**Dan:** You {killed|殺した} it!"
+  },
+  {
+    "start": 257.359,
+    "end": 259.759,
+    "text": "**Dan:** You killed the TravelMax 2000!"
+  },
+  {
+    "start": 259.759,
+    "end": 261.28,
+    "text": "**Anna:** I am so sorry!"
+  },
+  {
+    "start": 261.28,
+    "end": 263.68,
+    "text": "**Anna:** Oh can I help you {fix|修理する} it?"
+  },
+  {
+    "start": 263.68,
+    "end": 265.12,
+    "text": "**Dan:** No!"
+  },
+  {
+    "start": 265.84,
+    "end": 267.52,
+    "text": "**Anna:** Don't cry."
+  },
+  {
+    "start": 267.52,
+    "end": 269.12,
+    "text": "**Anna:** I know what you need."
+  },
+  {
+    "start": 269.12,
+    "end": 269.52,
+    "text": "**Anna:** Oh."
+  },
+  {
+    "start": 269.76,
+    "end": 270.88,
+    "text": "**Anna:** A vacation."
+  },
+  {
+    "start": 270.88,
+    "end": 271.04,
+    "text": "**Anna:** Oh."
+  },
+  {
+    "start": 271.28,
+    "end": 273.76,
+    "text": "**Anna:** The {safari|サファリ} campout looks fun."
+  },
+  {
+    "start": 273.76,
+    "end": 275.92,
+    "text": "**Professor Bot:** It is the {priciest|最も高価な}."
+  },
+  {
+    "start": 275.82,
+    "end": 277.82,
+    "text": "**Professor Bot:** But I think you deserve it."
+  },
+  {
+    "start": 277.82,
+    "end": 280.38,
+    "text": "**Dan:** No, no."
+  },
+  {
+    "start": 280.38,
+    "end": 283.9,
+    "text": "**Professor Bot:** This is the {smokiest|最も煙の多い/最もスモーキーな|/ˈsmoʊkiəst/|The smokiest room I've ever seen.} lesson yet."
+  },
+  {
+    "start": 283.9,
+    "end": 285.58,
+    "text": "**Professor Bot:** I can't {breathe|呼吸する|/briːð/|I can't breathe in this smoke.}"
+  },
+  {
+    "start": 285.58,
+    "end": 287.9,
+    "text": "**Professor Bot:** Just go to the {website|ウェブサイト|/ˈwebsaɪt/|Check the website for more information.}"
+  }
+]
