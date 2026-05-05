@@ -63,8 +63,9 @@ export function DictationPanel({
       setIsSubmitting(true);
 
       // API/ローカルへ保存
-      const apiAction: 'attempt' | 'complete' =
-        action === 'perfect' ? 'complete' : 'attempt';
+      // Q1=A 修正: 🌟 完璧でも attempts +1 のみ（status='completed' は更新しない）
+      // → 全自己申告ボタンが等しく「1 回挑戦」としてカウントされる
+      const apiAction: 'attempt' | 'complete' = 'attempt';
 
       try {
         if (isLoggedIn) {

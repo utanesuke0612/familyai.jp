@@ -6,6 +6,8 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { SITE } from '@/shared';
+import { auth } from '@/lib/auth';
+import { listUserProgressByPrefix } from '@/lib/repositories/lessons-progress';
 
 export const metadata: Metadata = {
   title:       `Let's Learn English with Anna | VOA × AI ディクテーション教室 | ${SITE.name}`,
@@ -63,7 +65,18 @@ const ANNA_LESSONS: AnnaLesson[] = [
   { number: 40, title: "What Job Do You Want in the Future?", href: 'https://learningenglish.voanews.com/a/lesson-40-what-job-do-you-want-in-the-future-/7490992.html', thumbnail: 'https://gdb.voanews.com/01000000-0a00-0242-e750-08dc2f265e3e_w400_r1.png' },
 ];
 
-export default function AnnaTopPage() {
+export default async function AnnaTopPage() {
+  // ログイン中ならコース内の全 lesson の進捗（attempts）を一括取得
+  const session = await auth();
+  const isLoggedIn = !!session?.user?.id;
+  const progressMap: Record<string, number> = {};
+  if (isLoggedIn) {
+    const rows = await listUserProgressByPrefix(session!.user!.id, 'anna/');
+    for (const r of rows) {
+      progressMap[r.lessonKey] = r.attempts;
+    }
+  }
+
   return (
     <main style={{ background: 'var(--color-cream)' }}>
       <section
@@ -154,40 +167,85 @@ export default function AnnaTopPage() {
             </div>
           </div>
 
+          {/* 未ログイン誘導バナー */}
+          {!isLoggedIn && (
+            <div
+              className="rounded-2xl px-4 py-3 flex items-center gap-3 flex-wrap"
+              style={{
+                background: 'linear-gradient(135deg, #FFF7EB, #FDF6ED)',
+                border:     '1px solid #E8CFA8',
+              }}
+            >
+              <span className="text-xl">💡</span>
+              <p className="flex-1 text-sm" style={{ color: 'var(--color-brown)' }}>
+                ログインすると、各レッスンの<strong>挑戦回数</strong>を記録・表示できます。
+              </p>
+              <Link
+                href="/api/auth/signin"
+                className="rounded-full px-4 py-1.5 text-xs font-bold transition-opacity hover:opacity-80"
+                style={{
+                  background: 'var(--color-orange)',
+                  color:      '#fff',
+                  boxShadow:  '0 2px 6px rgba(255,140,66,0.3)',
+                }}
+              >
+                ログインする →
+              </Link>
+            </div>
+          )}
+
           <ul className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
-            {ANNA_LESSONS.map((lesson) => (
-              <li key={lesson.number}>
-                <Link
-                  href={`/tools/voaenglish/anna/lesson-${String(lesson.number).padStart(2, '0')}`}
-                  className="group block overflow-hidden rounded-2xl transition-[transform,box-shadow] duration-200 hover:-translate-y-1"
-                  style={{
-                    background: 'rgba(255,255,255,0.92)',
-                    boxShadow: 'var(--shadow-warm-sm)',
-                  }}
-                >
-                  <div
-                    className="relative w-full overflow-hidden"
-                    style={{ aspectRatio: '16 / 9', background: 'var(--color-beige)' }}
+            {ANNA_LESSONS.map((lesson) => {
+              const lessonKey = `anna/lesson-${String(lesson.number).padStart(2, '0')}`;
+              const attempts  = progressMap[lessonKey] ?? 0;
+              return (
+                <li key={lesson.number}>
+                  <Link
+                    href={`/tools/voaenglish/anna/lesson-${String(lesson.number).padStart(2, '0')}`}
+                    className="group block overflow-hidden rounded-2xl transition-[transform,box-shadow] duration-200 hover:-translate-y-1"
+                    style={{
+                      background: 'rgba(255,255,255,0.92)',
+                      boxShadow: 'var(--shadow-warm-sm)',
+                    }}
                   >
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
-                      src={lesson.thumbnail}
-                      alt={`Lesson ${lesson.number}: ${lesson.title}`}
-                      loading="lazy"
-                      className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
-                    />
-                  </div>
-                  <div className="flex flex-col gap-1 p-3">
-                    <span className="text-xs font-bold" style={{ color: 'var(--color-orange)' }}>
-                      Lesson {lesson.number}
-                    </span>
-                    <span className="text-sm font-semibold leading-snug" style={{ color: 'var(--color-brown)' }}>
-                      {lesson.title}
-                    </span>
-                  </div>
-                </Link>
-              </li>
-            ))}
+                    <div
+                      className="relative w-full overflow-hidden"
+                      style={{ aspectRatio: '16 / 9', background: 'var(--color-beige)' }}
+                    >
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img
+                        src={lesson.thumbnail}
+                        alt={`Lesson ${lesson.number}: ${lesson.title}`}
+                        loading="lazy"
+                        className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+                      />
+                      {/* 挑戦回数バッジ（0 回時は非表示・Q2=F+B） */}
+                      {attempts > 0 && (
+                        <span
+                          className="absolute top-2 right-2 inline-flex items-center gap-1 rounded-full px-2 py-1 text-[11px] font-bold"
+                          style={{
+                            background: 'rgba(255, 140, 66, 0.95)',
+                            color:      '#fff',
+                            boxShadow:  '0 2px 6px rgba(0,0,0,0.15)',
+                          }}
+                          title={`${attempts} 回挑戦しました`}
+                        >
+                          ✨ {attempts}
+                        </span>
+                      )}
+                    </div>
+                    <div className="flex flex-col gap-1 p-3">
+                      <span className="text-xs font-bold" style={{ color: 'var(--color-orange)' }}>
+                        Lesson {lesson.number}
+                      </span>
+                      <span className="text-sm font-semibold leading-snug" style={{ color: 'var(--color-brown)' }}>
+                        {lesson.title}
+                      </span>
+                    </div>
+                  </Link>
+                </li>
+              );
+            })}
           </ul>
 
           <div>

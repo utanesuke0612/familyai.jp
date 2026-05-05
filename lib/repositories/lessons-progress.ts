@@ -8,7 +8,7 @@
  *   - マイページでの進捗一覧取得
  */
 
-import { eq, and, desc, sql } from 'drizzle-orm';
+import { eq, and, desc, sql, like } from 'drizzle-orm';
 import { db } from '@/lib/db';
 import { lessonsProgress, type LessonProgressRow } from '@/lib/db/schema';
 
@@ -36,6 +36,26 @@ export async function listUserProgress(userId: string): Promise<LessonProgressRo
     .where(eq(lessonsProgress.userId, userId))
     .orderBy(desc(lessonsProgress.updatedAt))
     .limit(200);  // 上限（暴走防止）
+}
+
+/**
+ * 特定コース（lesson_key prefix）の全進捗を取得。
+ * 例: prefix='anna/' → "anna/lesson-01" "anna/lesson-02" 等を返す
+ *
+ * コース一覧ページで各 lesson の attempts カウントをまとめて表示する用途。
+ */
+export async function listUserProgressByPrefix(
+  userId: string,
+  prefix: string,
+): Promise<LessonProgressRow[]> {
+  return db
+    .select()
+    .from(lessonsProgress)
+    .where(and(
+      eq(lessonsProgress.userId, userId),
+      like(lessonsProgress.lessonKey, `${prefix}%`),
+    ))
+    .limit(200);
 }
 
 /**
