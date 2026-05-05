@@ -1,0 +1,432 @@
+[
+  {
+    "start": 0.32,
+    "end": 2.64,
+    "text": "**Anna:** Hi there {sports|スポーツ|/spɔːrts/|I love watching sports.} fans!"
+  },
+  {
+    "start": 2.64,
+    "end": 6.08,
+    "text": "**Anna:** {Baseball|野球|/ˈbeɪsbɔːl/|Baseball is popular in America.} is America's sport."
+  },
+  {
+    "start": 6.08,
+    "end": 9.6,
+    "text": "**Anna:** Today I am going to {Nationals|ナショナルズ/国民の|/ˈnæʃənəlz/|Nationals Park is in DC.} Park!"
+  },
+  {
+    "start": 9.44,
+    "end": 15.52,
+    "text": "**Anna:** It is home to Washington DC's baseball team, the Washington Nationals."
+  },
+  {
+    "start": 16.08,
+    "end": 17.439,
+    "text": "**Anna:** Hi, Jonathan."
+  },
+  {
+    "start": 17.439,
+    "end": 18.88,
+    "text": "**Anna:** Hi, Anna."
+  },
+  {
+    "start": 18.88,
+    "end": 20.4,
+    "text": "**Jonathan:** Where are you going?"
+  },
+  {
+    "start": 20.4,
+    "end": 24.16,
+    "text": "**Anna:** I am taking a {bus|バス|/bʌs/|The bus is coming soon.} to a nationals baseball game."
+  },
+  {
+    "start": 25.48,
+    "end": 27.32,
+    "text": "**Jonathan:** Don't take the bus."
+  },
+  {
+    "start": 27.32,
+    "end": 30.12,
+    "text": "**Ashley:** A {taxi|タクシー|/ˈtæksi/|I called a taxi.} is faster than a bus."
+  },
+  {
+    "start": 30.12,
+    "end": 32.44,
+    "text": "**Anna:** Oh, good idea."
+  },
+  {
+    "start": 32.44,
+    "end": 35.56,
+    "text": "**Anna:** You know, I {love|愛する/大好き|/lʌv/|I love baseball.} baseball."
+  },
+  {
+    "start": 35.56,
+    "end": 36.84,
+    "text": "**Jonathan:** That's great"
+  },
+  {
+    "start": 36.74,
+    "end": 37.86,
+    "text": "**Jonathan:** Have fun."
+  },
+  {
+    "start": 37.86,
+    "end": 42.58,
+    "text": "**Anna:** In fact, I wanted to be a baseball {player|選手|/ˈpleɪər/|He is a famous player.}"
+  },
+  {
+    "start": 42.58,
+    "end": 44.1,
+    "text": "**Jonathan:** Is this one of your memories?"
+  },
+  {
+    "start": 44.1,
+    "end": 45.38,
+    "text": "**Jonathan:** I'm really busy."
+  },
+  {
+    "start": 45.38,
+    "end": 47.06,
+    "text": "**Anna:** This won't take long."
+  },
+  {
+    "start": 47.06,
+    "end": 48.82,
+    "text": "**Anna:** I can see it now."
+  },
+  {
+    "start": 48.82,
+    "end": 50.58,
+    "text": "**Anna:** I am at {home plate|本塁|/hoʊm pleɪt/|He touched home plate.}"
+  },
+  {
+    "start": 50.58,
+    "end": 51.38,
+    "text": "**Anna:** I wait."
+  },
+  {
+    "start": 51.54,
+    "end": 52.579,
+    "text": "**Anna:** For the {pitch|投球|/pɪtʃ/|The pitch was fast.}"
+  },
+  {
+    "start": 52.579,
+    "end": 53.94,
+    "text": "**Anna:** The ball comes."
+  },
+  {
+    "start": 53.94,
+    "end": 55.059,
+    "text": "**Anna:** I swing."
+  },
+  {
+    "start": 55.059,
+    "end": 56.1,
+    "text": "**Anna:** It's a hit."
+  },
+  {
+    "start": 56.26,
+    "end": 62.739,
+    "text": "**Anna:** I run to first base, second base, third base, then home plate."
+  },
+  {
+    "start": 62.74,
+    "end": 64.26,
+    "text": "**Anna:** It's a {home run|本塁打|/hoʊm rʌn/|He hit a home run.}!"
+  },
+  {
+    "start": 64.42,
+    "end": 66.26,
+    "text": "**Anna:** The crowd {jeers|野次る/ヤジる|/dʒɪərz/|The crowd jeers the losing team.}!"
+  },
+  {
+    "start": 66.26,
+    "end": 67.3,
+    "text": "**Anna:** Woo!"
+  },
+  {
+    "start": 67.62,
+    "end": 69.46,
+    "text": "**Jonathan:** You really love baseball."
+  },
+  {
+    "start": 69.46,
+    "end": 71.06,
+    "text": "**Jonathan:** Have fun at the {game|試合/ゲーム} Anna."
+  },
+  {
+    "start": 71.06,
+    "end": 72.5,
+    "text": "**Anna:** Thanks, Jonathan"
+  },
+  {
+    "start": 72.72,
+    "end": 73.68,
+    "text": "**Anna:** Taxi!"
+  },
+  {
+    "start": 73.68,
+    "end": 74.72,
+    "text": "**Jonathan:** Hi Anna!"
+  },
+  {
+    "start": 74.72,
+    "end": 75.68,
+    "text": "**Anna:** Hi Ashley!"
+  },
+  {
+    "start": 75.68,
+    "end": 76.88,
+    "text": "**Jonathan:** Where are you going?"
+  },
+  {
+    "start": 76.88,
+    "end": 80.64,
+    "text": "**Anna:** I am going to see a {nationals|国民の/ナショナルズ} baseball game!"
+  },
+  {
+    "start": 80.1,
+    "end": 82.26,
+    "text": "**Ashley:** What time is the game?"
+  },
+  {
+    "start": 82.26,
+    "end": 83.46,
+    "text": "**Anna:** Seven o'clock."
+  },
+  {
+    "start": 83.46,
+    "end": 84.82,
+    "text": "**Ashley:** Do you have a {ticket|チケット} ?"
+  },
+  {
+    "start": 84.82,
+    "end": 86.02,
+    "text": "**Anna:** No, not yet."
+  },
+  {
+    "start": 86.02,
+    "end": 88.18,
+    "text": "**Ashley:** Anna, you should go {early|早く/前もって}."
+  },
+  {
+    "start": 88.34,
+    "end": 90.74,
+    "text": "**Anna:** Earlier than seven o'clock."
+  },
+  {
+    "start": 90.74,
+    "end": 93.06,
+    "text": "**Anna:** That is why I'm taking a {taxi|タクシー}."
+  },
+  {
+    "start": 93.06,
+    "end": 97.46,
+    "text": "**Ashley:** Taxi Anna, Anna, that is not a good idea"
+  },
+  {
+    "start": 97.62,
+    "end": 101.38,
+    "text": "**Ashley:** A {bicycle|自転車} is faster than a taxi."
+  },
+  {
+    "start": 101.38,
+    "end": 102.74,
+    "text": "**Anna:** Oh, Ashley."
+  },
+  {
+    "start": 102.98,
+    "end": 105.06,
+    "text": "**Anna:** Ashley, Ashley, Ashley."
+  },
+  {
+    "start": 105.06,
+    "end": 105.7,
+    "text": "**Anna:** A car"
+  },
+  {
+    "start": 106.34,
+    "end": 109.14,
+    "text": "**Anna:** It's faster than your bicycle."
+  },
+  {
+    "start": 109.14,
+    "end": 114.58,
+    "text": "**Anna:** In DC {traffic|交通/渋滞}, sometimes a bicycle is faster than a car."
+  },
+  {
+    "start": 114.58,
+    "end": 117.46,
+    "text": "**Anna:** And right now there is a lot of traffic."
+  },
+  {
+    "start": 117.46,
+    "end": 118.659,
+    "text": "**Anna:** Good point."
+  },
+  {
+    "start": 119.52,
+    "end": 122.479,
+    "text": "**Anna:** But I don't have a bicycle."
+  },
+  {
+    "start": 124.079,
+    "end": 127.52,
+    "text": "**Ashley:** Okay, Anna, you can use my bicycle."
+  },
+  {
+    "start": 127.52,
+    "end": 128.239,
+    "text": "**Anna:** Thanks"
+  },
+  {
+    "start": 129.02,
+    "end": 130.3,
+    "text": "**Anna:** Oh!"
+  },
+  {
+    "start": 130.3,
+    "end": 133.9,
+    "text": "**Anna:** I really want to {learn|学ぶ/習得する} how to ride one!"
+  },
+  {
+    "start": 133.9,
+    "end": 138.3,
+    "text": "**Anna:** Well, what do you mean {learn|学ぶ/習得する} how to ride a bike?"
+  },
+  {
+    "start": 137.76,
+    "end": 138.88,
+    "text": "**Jonathan:** Oh, Anna!"
+  },
+  {
+    "start": 138.88,
+    "end": 139.76,
+    "text": "**Jonathan:** Anna!"
+  },
+  {
+    "start": 140,
+    "end": 141.28,
+    "text": "**Anna:** Oh, oh!"
+  },
+  {
+    "start": 141.28,
+    "end": 147.68,
+    "text": "**Ashley:** You know, Anna, the metro is {faster|速い/早い|/ˈfeɪstər/|This car is faster than that one.} than a taxi and a bicycle."
+  },
+  {
+    "start": 147.52,
+    "end": 149.44,
+    "text": "**Ashley:** You {ought to|〜すべきだ/〜するはずだ|/ˈɔːt tə/|You ought to study harder.} take the metro."
+  },
+  {
+    "start": 149.44,
+    "end": 150.8,
+    "text": "**Ashley:** It's that way."
+  },
+  {
+    "start": 150.8,
+    "end": 152.16,
+    "text": "**Anna:** Good idea."
+  },
+  {
+    "start": 152.16,
+    "end": 152.8,
+    "text": "**Ashley:** Okay."
+  },
+  {
+    "start": 152.8,
+    "end": 153.92,
+    "text": "**Anna:** See you later."
+  },
+  {
+    "start": 153.92,
+    "end": 154.959,
+    "text": "**Ashley:** Bye Anna."
+  },
+  {
+    "start": 154.959,
+    "end": 155.84,
+    "text": "**Ashley:** Bye."
+  },
+  {
+    "start": 156.14,
+    "end": 161.26,
+    "text": "**Anna:** The metro was a lot {faster|速い/早い|/ˈfeɪstər/|This car is faster than that one.} than a bus, taxi, or bike."
+  },
+  {
+    "start": 161.26,
+    "end": 164.3,
+    "text": "**Anna:** And now I'm at {National Park|国立公園|/ˈnæʃənəl pɑːrk/|We visited National Park yesterday.}"
+  },
+  {
+    "start": 164.42,
+    "end": 166.74,
+    "text": "**Anna:** Look at all these {fans|ファン/応援者|/fænz/|Many fans waited for the singer.}"
+  },
+  {
+    "start": 166.74,
+    "end": 170.5,
+    "text": "**Anna:** So many people like to watch baseball."
+  },
+  {
+    "start": 170.5,
+    "end": 173.22,
+    "text": "**Anna:** There's the {ticket window|切符売り場|/ˈtɪkɪt ˈwɪndoʊ/|I bought tickets at the ticket window.}"
+  },
+  {
+    "start": 173.44,
+    "end": 174.8,
+    "text": "**Ashley:** What?"
+  },
+  {
+    "start": 174.8,
+    "end": 177.36,
+    "text": "**Anna:** The tickets are {sold out|売り切れ|/soʊld aʊt/|The concert was sold out quickly.}"
+  },
+  {
+    "start": 178.16,
+    "end": 184.52,
+    "text": "**Anna:** No"
+  },
+  {
+    "start": 184.76,
+    "end": 188.52,
+    "text": "**Anna:** But I really want to watch a baseball game"
+  },
+  {
+    "start": 188.5,
+    "end": 190.98,
+    "text": "**Anna:** Does anybody have an {extra|余分の/追加の|/ˈekstrə/|I have an extra pencil.} ticket?"
+  },
+  {
+    "start": 191.22,
+    "end": 194.5,
+    "text": "**Fan:** Next time, you should buy your ticket {online|オンラインで|/ˈɒnlaɪn/|I bought the tickets online.}"
+  },
+  {
+    "start": 194.66,
+    "end": 195.14,
+    "text": "**Anna:** Thanks!"
+  },
+  {
+    "start": 195.86,
+    "end": 196.66,
+    "text": "**Anna:** Thanks a lot."
+  },
+  {
+    "start": 197.94,
+    "end": 199.62,
+    "text": "**Ashley:** It is good advice."
+  },
+  {
+    "start": 199.62,
+    "end": 203.14,
+    "text": "**Anna:** Being early is better than being late."
+  },
+  {
+    "start": 204.88,
+    "end": 206.08,
+    "text": "**Fan:** Until next time"
+  }
+]

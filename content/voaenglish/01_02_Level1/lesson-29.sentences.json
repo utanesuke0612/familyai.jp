@@ -1,0 +1,372 @@
+[
+  {
+    "start": 0.8,
+    "end": 1.92,
+    "text": "**Anna:** Hello!"
+  },
+  {
+    "start": 1.92,
+    "end": 3.2800000000000002,
+    "text": "**Anna:** In Washington, D."
+  },
+  {
+    "start": 3.2800000000000002,
+    "end": 3.6,
+    "text": "**Anna:** C."
+  },
+  {
+    "start": 3.84,
+    "end": 11.76,
+    "text": "**Anna:** , there are many {places|場所/地点|/pleɪs/|These are nice places to visit.} that bring {history|歴史|/ˈhɪstəri/|History is important to learn.} to life, but people who live here often do not have time to see them."
+  },
+  {
+    "start": 11.46,
+    "end": 14.02,
+    "text": "**Anna:** They are too {busy|忙しい|/ˈbɪzi/|I am busy with work today.} with work."
+  },
+  {
+    "start": 14.02,
+    "end": 15.06,
+    "text": "**Anna:** Like me."
+  },
+  {
+    "start": 15.06,
+    "end": 16.42,
+    "text": "**Anna:** Hi Marsha."
+  },
+  {
+    "start": 16.42,
+    "end": 17.7,
+    "text": "**Marsha:** Hi, Anna."
+  },
+  {
+    "start": 17.7,
+    "end": 19.22,
+    "text": "**Marsha:** Have a seat."
+  },
+  {
+    "start": 19.22,
+    "end": 20.34,
+    "text": "**Anna:** Thanks."
+  },
+  {
+    "start": 20.32,
+    "end": 22.64,
+    "text": "**Anna:** This was a good idea."
+  },
+  {
+    "start": 22.64,
+    "end": 26,
+    "text": "**Anna:** {Working|働く|/ˈwɜːrkɪŋ/|I am working on a project.} outdoors is nice."
+  },
+  {
+    "start": 26,
+    "end": 27.119,
+    "text": "**Marsha:** Mm-hmm."
+  },
+  {
+    "start": 27.119,
+    "end": 28.4,
+    "text": "**Anna:** It is."
+  },
+  {
+    "start": 28.74,
+    "end": 30.66,
+    "text": "**Anna:** I am tired."
+  },
+  {
+    "start": 30.66,
+    "end": 35.7,
+    "text": "**Anna:** Today was a busy day at work and I still have work to do."
+  },
+  {
+    "start": 35.7,
+    "end": 36.66,
+    "text": "**Marsha:** Hmm."
+  },
+  {
+    "start": 36.66,
+    "end": 38.26,
+    "text": "**Marsha:** That's too bad."
+  },
+  {
+    "start": 38.26,
+    "end": 40.42,
+    "text": "**Anna:** How are you these days?"
+  },
+  {
+    "start": 39.9,
+    "end": 42.46,
+    "text": "**Marsha:** I'm really busy too, Anna."
+  },
+  {
+    "start": 42.46,
+    "end": 44.62,
+    "text": "**Marsha:** Let's get to work."
+  },
+  {
+    "start": 44.62,
+    "end": 45.98,
+    "text": "**Anna:** Marsha, look!"
+  },
+  {
+    "start": 46.22,
+    "end": 50.38,
+    "text": "**Anna:** That bus has a photo of {Abraham|アブラハム|/ˈeɪbrəhæm/|Abraham Lincoln was a president.} Lincoln."
+  },
+  {
+    "start": 50.42,
+    "end": 54.5,
+    "text": "**Anna:** That's an {advertisement|広告|/ˌædvərˈtaɪzmənt/|This is an advertisement for a movie.} for Force Theater."
+  },
+  {
+    "start": 54.5,
+    "end": 56.579,
+    "text": "**Anna:** They have a new show."
+  },
+  {
+    "start": 56.579,
+    "end": 60.5,
+    "text": "**Anna:** They have shows where Abraham Lincoln died?"
+  },
+  {
+    "start": 60.5,
+    "end": 63.86,
+    "text": "**Anna:** Yeah, it's a working theater."
+  },
+  {
+    "start": 63.52,
+    "end": 65.76,
+    "text": "**Anna:** And a museum."
+  },
+  {
+    "start": 65.76,
+    "end": 68.08,
+    "text": "**Anna:** I love Lincoln."
+  },
+  {
+    "start": 68.08,
+    "end": 72.56,
+    "text": "**Anna:** You know, Marsha, that {advertisement|広告} reminds me of something."
+  },
+  {
+    "start": 72.56,
+    "end": 73.68,
+    "text": "**Marsha:** Mm-hmm."
+  },
+  {
+    "start": 73.74,
+    "end": 74.78,
+    "text": "**Anna:** What's that?"
+  },
+  {
+    "start": 74.78,
+    "end": 82.86,
+    "text": "**Anna:** When I was a little girl when I was a little girl, I was not like other {children|子供たち}."
+  },
+  {
+    "start": 82.86,
+    "end": 83.66,
+    "text": "**Marsha:** Mm-hmm."
+  },
+  {
+    "start": 83.66,
+    "end": 85.26,
+    "text": "**Anna:** I can {believe|信じる} that."
+  },
+  {
+    "start": 85.26,
+    "end": 88.46,
+    "text": "**Anna:** I was a {tall|背が高い}, {serious|真面目な} child."
+  },
+  {
+    "start": 88.26,
+    "end": 92.42,
+    "text": "**Anna:** At the {playground|遊び場}, the other children played {silly|馬鹿げた} games."
+  },
+  {
+    "start": 92.42,
+    "end": 94.9,
+    "text": "**Anna:** They played with {dart|吹き矢} guns."
+  },
+  {
+    "start": 94.9,
+    "end": 99.299,
+    "text": "**Anna:** They played on the swings, the slide, and the {teeter-totter|シーソー}."
+  },
+  {
+    "start": 99.34,
+    "end": 101.1,
+    "text": "**Anna:** They played ball."
+  },
+  {
+    "start": 101.1,
+    "end": 102.38,
+    "text": "**Anna:** But not me."
+  },
+  {
+    "start": 102.619,
+    "end": 107.9,
+    "text": "**Anna:** I loved to read serious books about US {presidents|大統領}."
+  },
+  {
+    "start": 107.9,
+    "end": 112.619,
+    "text": "**Anna:** In fact, I wanted to be Don't Laugh"
+  },
+  {
+    "start": 113.34,
+    "end": 116.619,
+    "text": "**Anna:** President of the United States."
+  },
+  {
+    "start": 117.579,
+    "end": 119.1,
+    "text": "**Anna:** Stop!"
+  },
+  {
+    "start": 119.1,
+    "end": 122.38,
+    "text": "**Anna:** I know it's a silly childhood {dream|夢}."
+  },
+  {
+    "start": 122.38,
+    "end": 123.74,
+    "text": "**Marsha:** I'm sorry"
+  },
+  {
+    "start": 123.96,
+    "end": 125.48,
+    "text": "**Marsha:** It's not silly."
+  },
+  {
+    "start": 125.48,
+    "end": 127.8,
+    "text": "**Marsha:** Guess what I wanted to be?"
+  },
+  {
+    "start": 127.8,
+    "end": 128.68,
+    "text": "**Marsha:** What?"
+  },
+  {
+    "start": 128.68,
+    "end": 133.64,
+    "text": "**Anna:** When I was a kid, I studied the {stars|星} and {planets|惑星}."
+  },
+  {
+    "start": 133.64,
+    "end": 137.96,
+    "text": "**Anna:** I wanted to fly into {outer space|宇宙}."
+  },
+  {
+    "start": 137.78,
+    "end": 142.18,
+    "text": "**Anna:** You know, Marsha, childhood dreams are {important|重要}."
+  },
+  {
+    "start": 142.18,
+    "end": 143.3,
+    "text": "**Anna:** They are."
+  },
+  {
+    "start": 143.3,
+    "end": 145.78,
+    "text": "**Marsha:** And it's good to remember them"
+  },
+  {
+    "start": 146.12,
+    "end": 148.36,
+    "text": "**Anna:** Hey, I have an idea."
+  },
+  {
+    "start": 148.36,
+    "end": 149.32,
+    "text": "**Marsha:** Let's go."
+  },
+  {
+    "start": 149.32,
+    "end": 150.44,
+    "text": "**Marsha:** Go where?"
+  },
+  {
+    "start": 150.44,
+    "end": 151.56,
+    "text": "**Marsha:** Let's go."
+  },
+  {
+    "start": 151.56,
+    "end": 153.64,
+    "text": "**Anna:** Make our childhood dreams"
+  },
+  {
+    "start": 153.84,
+    "end": 154.96,
+    "text": "**Anna:** {come true|実現する/成就する}"
+  },
+  {
+    "start": 154.96,
+    "end": 157.92,
+    "text": "**Marsha:** We're going to the {Air Space|航空宇宙} Museum."
+  },
+  {
+    "start": 157.92,
+    "end": 158.64,
+    "text": "**Marsha:** Yes."
+  },
+  {
+    "start": 158.64,
+    "end": 159.28,
+    "text": "**Anna:** No."
+  },
+  {
+    "start": 159.28,
+    "end": 165.2,
+    "text": "**Anna:** We're going to see a show at {Ford's|フォード劇場} Theater, just like Abraham Lincoln did when he {died|死んだ}."
+  },
+  {
+    "start": 165.2,
+    "end": 166.88,
+    "text": "**Anna:** It's not far from here"
+  },
+  {
+    "start": 167.42,
+    "end": 169.1,
+    "text": "**Marsha:** Uh-huh."
+  },
+  {
+    "start": 169.1,
+    "end": 171.98,
+    "text": "**Anna:** That's your {childhood|子供時代の} dream."
+  },
+  {
+    "start": 171.98,
+    "end": 173.26,
+    "text": "**Anna:** Good point."
+  },
+  {
+    "start": 173.58,
+    "end": 177.82,
+    "text": "**Anna:** Okay, next week we'll come here and be {astronauts|宇宙飛行士}."
+  },
+  {
+    "start": 177.82,
+    "end": 180.3,
+    "text": "**Marsha:** Honestly, honestly."
+  },
+  {
+    "start": 181.44,
+    "end": 188.96,
+    "text": "**Anna:** Tonight we are seeing a show at Ford's Theater where a man {shot|撃った} President Abraham Lincoln."
+  },
+  {
+    "start": 188.96,
+    "end": 194.8,
+    "text": "**Anna:** This is {history|歴史} come to life and a childhood dream come true."
+  },
+  {
+    "start": 194.8,
+    "end": 195.76,
+    "text": "**Anna:** Until next time."
+  }
+]

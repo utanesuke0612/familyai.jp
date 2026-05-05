@@ -1,0 +1,437 @@
+[
+  {
+    "start": 1.8399999999999999,
+    "end": 3.04,
+    "text": "**Anna:** Hello!"
+  },
+  {
+    "start": 3.04,
+    "end": 6.4,
+    "text": "**Anna:** Washington DC has many {tourists|観光客|/ˈtʊərɪsts/|Many tourists visit Paris every year.}"
+  },
+  {
+    "start": 6.4,
+    "end": 8.88,
+    "text": "**Anna:** {People|人々} from different {countries|国} come here"
+  },
+  {
+    "start": 9.32,
+    "end": 12.92,
+    "text": "**Anna:** Today, my job is to {interview|インタビューする|/ˈɪntərvjuː/|I will interview the candidate.} tourists."
+  },
+  {
+    "start": 12.92,
+    "end": 16.92,
+    "text": "**Anna:** I have to learn why they come here."
+  },
+  {
+    "start": 16.92,
+    "end": 19.16,
+    "text": "**Sabrina:** This is very {exciting|わくわくする|/ɪkˈsaɪtɪŋ/|The game was very exciting.}"
+  },
+  {
+    "start": 19.4,
+    "end": 24.28,
+    "text": "**Anna:** Excuse me, I'm Anna Mateo from The News."
+  },
+  {
+    "start": 24.28,
+    "end": 26.44,
+    "text": "**Anna:** Do you have time for an {interview|インタビュー}?"
+  },
+  {
+    "start": 26.44,
+    "end": 28.119,
+    "text": "**Sabrina:** Sure, I have time."
+  },
+  {
+    "start": 28.4,
+    "end": 30.48,
+    "text": "**Anna:** What is your name?"
+  },
+  {
+    "start": 30.48,
+    "end": 32.64,
+    "text": "**Sabrina:** My name is Sabrina."
+  },
+  {
+    "start": 32.64,
+    "end": 34.88,
+    "text": "**Anna:** What {country|国} are you from?"
+  },
+  {
+    "start": 34.88,
+    "end": 36.64,
+    "text": "**Sabrina:** I'm from Bangladesh"
+  },
+  {
+    "start": 36.5,
+    "end": 39.06,
+    "text": "**Anna:** So you are {Bangladeshi|バングラデシュ人}?"
+  },
+  {
+    "start": 39.06,
+    "end": 40.1,
+    "text": "**Sabrina:** That's right."
+  },
+  {
+    "start": 40.1,
+    "end": 43.22,
+    "text": "**Sabrina:** My {nationality|国籍} is Bangladeshi."
+  },
+  {
+    "start": 43.22,
+    "end": 45.22,
+    "text": "**Anna:** Do you like Washington, D."
+  },
+  {
+    "start": 45.22,
+    "end": 45.54,
+    "text": "**Anna:** C."
+  },
+  {
+    "start": 45.54,
+    "end": 45.86,
+    "text": "**Anna:** ?"
+  },
+  {
+    "start": 45.86,
+    "end": 49.46,
+    "text": "**Sabrina:** Yes, the city is very {beautiful|美しい|/ˈbjuːtɪfəl/|The sunset was beautiful.}"
+  },
+  {
+    "start": 49.62,
+    "end": 53.379,
+    "text": "**Anna:** What do you like to do in Washington, DC?"
+  },
+  {
+    "start": 53.379,
+    "end": 54.899,
+    "text": "**Sabrina:** I like {history|歴史|/ˈhɪstəri/|I love studying world history.}"
+  },
+  {
+    "start": 54.899,
+    "end": 61.3,
+    "text": "**Anna:** So I like {walking|歩くこと|/ˈwɔːkɪŋ/|I walk to school every day.} around and looking at all the {monuments|記念碑} and {memorials|追悼碑}."
+  },
+  {
+    "start": 61.4,
+    "end": 65.32,
+    "text": "**Anna:** They make {history|歴史} come alive."
+  },
+  {
+    "start": 65.32,
+    "end": 69.32,
+    "text": "**Anna:** Washington has many {monuments|記念碑} and {memorials|追悼碑}."
+  },
+  {
+    "start": 69.32,
+    "end": 72.44,
+    "text": "**Anna:** The Washington Monument is behind us."
+  },
+  {
+    "start": 72.86,
+    "end": 75.42,
+    "text": "**Anna:** Which is your favorite?"
+  },
+  {
+    "start": 75.82,
+    "end": 78.62,
+    "text": "**Anna:** I really like Lincoln Memorial."
+  },
+  {
+    "start": 78.62,
+    "end": 80.54,
+    "text": "**Sabrina:** It is very beautiful."
+  },
+  {
+    "start": 80.54,
+    "end": 85.66,
+    "text": "**Anna:** And it feels like Abraham Lincoln is still alive."
+  },
+  {
+    "start": 85.62,
+    "end": 87.14,
+    "text": "**Anna:** {Awesome|素晴らしい/すごい|/ˈɔːsəm/|That's an awesome performance.}"
+  },
+  {
+    "start": 87.14,
+    "end": 89.54,
+    "text": "**Anna:** Thank you for your time, {Sabrina|女性の名前|/səˈbriːnə/}."
+  },
+  {
+    "start": 89.54,
+    "end": 91.06,
+    "text": "**Anna:** You are {welcome|どういたしまして|/ˈwelkəm/|You're welcome to join us.}"
+  },
+  {
+    "start": 91.06,
+    "end": 93.7,
+    "text": "**Anna:** Let's find another {tourist|観光客|/ˈtʊərɪst/|A tourist is taking photos.}"
+  },
+  {
+    "start": 94.08,
+    "end": 95.76,
+    "text": "**Anna:** Oh, {excuse|許してください|/ɪkˈskjuːz/|Excuse me for interrupting.}"
+  },
+  {
+    "start": 95.76,
+    "end": 99.2,
+    "text": "**Anna:** I am Anna Mateo from The {News|ニュース/報道|/njuːz/|Breaking news today.}"
+  },
+  {
+    "start": 99.2,
+    "end": 102.08,
+    "text": "**Anna:** Do you have time for a {couple|二組/二人|/ˈkʌpl/|A couple of friends arrived.}"
+  },
+  {
+    "start": 102.84,
+    "end": 104.2,
+    "text": "**Sabrina:** Sure."
+  },
+  {
+    "start": 104.2,
+    "end": 106.92,
+    "text": "**Anna:** Are you from {Washington|ワシントン|/ˈwɑːʃɪŋtən/|Washington is the capital.} DC?"
+  },
+  {
+    "start": 107,
+    "end": 108.439,
+    "text": "**Louis:** No, I'm not."
+  },
+  {
+    "start": 108.439,
+    "end": 111.24,
+    "text": "**Anna:** What is your name and where are you from?"
+  },
+  {
+    "start": 111.24,
+    "end": 114.28,
+    "text": "**Louis:** My name is {Lewis|男性の名前|/ˈluːɪs/|Lewis is a good friend.} and I'm from China."
+  },
+  {
+    "start": 114.28,
+    "end": 116.759,
+    "text": "**Anna:** What {languages|言語|/ˈlæŋɡwɪdʒɪz/|Languages are fascinating.} do you speak?"
+  },
+  {
+    "start": 116.439,
+    "end": 119,
+    "text": "**Anna:** I speak Chinese and English."
+  },
+  {
+    "start": 119,
+    "end": 121.88,
+    "text": "**Anna:** What do you like about Washington, D."
+  },
+  {
+    "start": 121.88,
+    "end": 122.2,
+    "text": "**Anna:** C."
+  },
+  {
+    "start": 122.2,
+    "end": 122.439,
+    "text": "**Anna:** ?"
+  },
+  {
+    "start": 122.439,
+    "end": 124.039,
+    "text": "**Louis:** I like the {museums|博物館|/mjuːˈziːəmz/|Museums are educational.}"
+  },
+  {
+    "start": 124.039,
+    "end": 126.36,
+    "text": "**Louis:** I really like the art {museums|博物館|/mjuːˈziːəmz/|Art museums showcase creativity.}"
+  },
+  {
+    "start": 126.36,
+    "end": 129.64,
+    "text": "**Anna:** Many of the museums are free."
+  },
+  {
+    "start": 129.54,
+    "end": 131.06,
+    "text": "**Louis:** I like that too."
+  },
+  {
+    "start": 131.06,
+    "end": 131.78,
+    "text": "**Anna:** {Awesome|素晴らしい/すごい|/ˈɔːsəm/|That's an awesome performance.}"
+  },
+  {
+    "start": 131.78,
+    "end": 133.38,
+    "text": "**Anna:** Thanks for your time, Lewis."
+  },
+  {
+    "start": 133.38,
+    "end": 134.42,
+    "text": "**Louis:** You're very {welcome|どういたしまして|/ˈwelkəm/|You're welcome to join us.}"
+  },
+  {
+    "start": 134.42,
+    "end": 134.82,
+    "text": "**Louis:** Bye."
+  },
+  {
+    "start": 136.42,
+    "end": 139.06,
+    "text": "**Anna:** Now let's find another {tourist|観光客|/ˈtʊərɪst/|A tourist is taking photos.}"
+  },
+  {
+    "start": 139.52,
+    "end": 143.52,
+    "text": "**Anna:** Hello, I am Anna Mateo from The {News|ニュース/報道|/njuːz/|Breaking news today.}"
+  },
+  {
+    "start": 143.52,
+    "end": 146.08,
+    "text": "**Anna:** Do you have time to answer a {couple|二組/二人|/ˈkʌpl/|A couple of friends arrived.} of questions?"
+  },
+  {
+    "start": 146.08,
+    "end": 146.879,
+    "text": "**Sabrina:** Sure."
+  },
+  {
+    "start": 146.879,
+    "end": 149.84,
+    "text": "**Anna:** What is your name and where are you from?"
+  },
+  {
+    "start": 149.76,
+    "end": 151.52,
+    "text": "**Sabrina:** My name is {Mirnoush|名前|/mɪrˈnuːʃ/|Mirnoush is a beautiful name}."
+  },
+  {
+    "start": 151.52,
+    "end": 152.72,
+    "text": "**Anna:** I am from {Iran|イラン|/ɪˈrɑːn/|Iran is a country in the Middle East}."
+  },
+  {
+    "start": 152.72,
+    "end": 154,
+    "text": "**Anna:** I'm {Iranian|イラン人|/aɪˈreɪniən/|Iranian people come from Iran}."
+  },
+  {
+    "start": 154,
+    "end": 156.32,
+    "text": "**Anna:** What language do they speak in Iran?"
+  },
+  {
+    "start": 156.32,
+    "end": 157.76,
+    "text": "**Anna:** Is it {Persian|ペルシャ語|/ˈpɜːrʒən/|Persian is the official language of Iran}?"
+  },
+  {
+    "start": 158.14,
+    "end": 159.819,
+    "text": "**Anna:** They speak {farsi|ペルシャ語|/ˈfɑːrsi/|Farsi is another name for Persian}."
+  },
+  {
+    "start": 159.819,
+    "end": 163.099,
+    "text": "**Anna:** What do you like to do in Washington, D."
+  },
+  {
+    "start": 163.099,
+    "end": 163.659,
+    "text": "**Anna:** C."
+  },
+  {
+    "start": 163.659,
+    "end": 163.9,
+    "text": "**Anna:** ?"
+  },
+  {
+    "start": 163.9,
+    "end": 168.7,
+    "text": "**Mehrnoush:** Well, I like learning about {government|政府|/ˈɡʌvərnmənt/|The government makes laws for a country} and {politics|政治|/ˈpɑːlətɪks/|Politics is about power and leadership}."
+  },
+  {
+    "start": 168.2,
+    "end": 171.08,
+    "text": "**Anna:** Washington has many {politicians|政治家|/ˈpɑːləˌtɪʃənz/|Politicians work in government}."
+  },
+  {
+    "start": 171.08,
+    "end": 172.04,
+    "text": "**Mehrnoush:** It does."
+  },
+  {
+    "start": 172.04,
+    "end": 173.319,
+    "text": "**Mehrnoush:** I want to see the U."
+  },
+  {
+    "start": 173.319,
+    "end": 173.56,
+    "text": "**Sabrina:** S."
+  },
+  {
+    "start": 173.56,
+    "end": 174.28,
+    "text": "**Anna:** {Capitol|国会議事堂|/ˈkæpətəl/|The Capitol is where lawmakers meet}."
+  },
+  {
+    "start": 174.28,
+    "end": 176.36,
+    "text": "**Anna:** Look, you are very {near|近い|/nɪr/|The store is near my house}."
+  },
+  {
+    "start": 176.36,
+    "end": 177,
+    "text": "**Anna:** I am."
+  },
+  {
+    "start": 177,
+    "end": 177.88,
+    "text": "**Anna:** Have fun."
+  },
+  {
+    "start": 177.88,
+    "end": 179,
+    "text": "**Anna:** Thanks."
+  },
+  {
+    "start": 179.34,
+    "end": 185.34,
+    "text": "**Anna:** There you have it, {tourists|観光客|/ˈtʊrɪsts/|Tourists visit new places} from all over the world come to Washington DC."
+  },
+  {
+    "start": 185.34,
+    "end": 190.22,
+    "text": "**Anna:** They all like doing and seeing different things in the city."
+  },
+  {
+    "start": 189.7,
+    "end": 193.94,
+    "text": "**Anna:** This is Anna Mateo {reporting|報告する|/rɪˈpɔːrtɪŋ/|Reporters tell news stories} for the news."
+  },
+  {
+    "start": 193.94,
+    "end": 195.94,
+    "text": "**Anna:** Until next time."
+  },
+  {
+    "start": 195.94,
+    "end": 197.54,
+    "text": "**Anna:** Is that okay?"
+  },
+  {
+    "start": 197.54,
+    "end": 198.58,
+    "text": "**Anna:** Awesome."
+  },
+  {
+    "start": 198.58,
+    "end": 202.18,
+    "text": "**Anna:** Now I want to do my favorite thing in the city."
+  },
+  {
+    "start": 202.22,
+    "end": 203.819,
+    "text": "**Anna:** {Ride|乗る/乗り物に乗る|/raɪd/|I like to ride my bicycle} the {carousel|メリーゴーラウンド|/ˈkærəˌsɛl/|A carousel is a spinning ride at a fair}"
+  }
+]

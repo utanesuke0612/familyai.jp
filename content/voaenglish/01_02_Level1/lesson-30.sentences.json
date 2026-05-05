@@ -1,0 +1,387 @@
+[
+  {
+    "start": 0.24,
+    "end": 0.88,
+    "text": "**Anna:** Hello!"
+  },
+  {
+    "start": 1.04,
+    "end": 4.8,
+    "text": "**Anna:** Washington DC {sits|位置する} on the {Potomac|ポトマック川} River."
+  },
+  {
+    "start": 4.8,
+    "end": 9.28,
+    "text": "**Anna:** This river is {important|重要な} to the history and culture of the city."
+  },
+  {
+    "start": 9.28,
+    "end": 14.88,
+    "text": "**Anna:** Today I am at an {outdoor|屋外の} {seafood|魚介類|/ˈsiːfuːd/|I love fresh seafood.} market near the Potomac River."
+  },
+  {
+    "start": 15.16,
+    "end": 21,
+    "text": "**Anna:** Some say it is the oldest {outdoor|屋外の} seafood market in the United States."
+  },
+  {
+    "start": 21.32,
+    "end": 23.96,
+    "text": "**Anna:** I am here to buy seafood."
+  },
+  {
+    "start": 23.96,
+    "end": 25.96,
+    "text": "**Anna:** Let's see what they have."
+  },
+  {
+    "start": 27.4,
+    "end": 29.8,
+    "text": "**Anna:** Excuse me, can you help me?"
+  },
+  {
+    "start": 30.08,
+    "end": 30.72,
+    "text": "**Pete:** Sure."
+  },
+  {
+    "start": 30.72,
+    "end": 31.76,
+    "text": "**Pete:** What do you need?"
+  },
+  {
+    "start": 31.76,
+    "end": 32.72,
+    "text": "**Anna:** Pete!"
+  },
+  {
+    "start": 32.72,
+    "end": 33.6,
+    "text": "**Pete:** Anna!"
+  },
+  {
+    "start": 33.6,
+    "end": 35.6,
+    "text": "**Anna:** What are you doing here?"
+  },
+  {
+    "start": 35.6,
+    "end": 37.52,
+    "text": "**Pete:** I work here."
+  },
+  {
+    "start": 37.52,
+    "end": 40.32,
+    "text": "**Pete:** You know, it's not easy to be a {writer|作家/著述家|/ˈraɪtər/|She is a famous writer.}."
+  },
+  {
+    "start": 40.32,
+    "end": 42.48,
+    "text": "**Anna:** Yeah, I heard that."
+  },
+  {
+    "start": 42.48,
+    "end": 43.36,
+    "text": "**Anna:** Sorry."
+  },
+  {
+    "start": 43.36,
+    "end": 44.88,
+    "text": "**Pete:** But this job is great."
+  },
+  {
+    "start": 45.32,
+    "end": 45.96,
+    "text": "**Pete:** great."
+  },
+  {
+    "start": 45.96,
+    "end": 52.84,
+    "text": "**Pete:** I work outside by the river and I can eat all the free seafood I want."
+  },
+  {
+    "start": 52.84,
+    "end": 54.76,
+    "text": "**Anna:** That is great, Pete."
+  },
+  {
+    "start": 54.76,
+    "end": 59.32,
+    "text": "**Anna:** In fact, I am here to buy some seafood for my {dinner|夕食} party."
+  },
+  {
+    "start": 59.32,
+    "end": 59.8,
+    "text": "**Anna:** You came here"
+  },
+  {
+    "start": 60.16,
+    "end": 61.28,
+    "text": "**Pete:** to the right place."
+  },
+  {
+    "start": 61.28,
+    "end": 64.16,
+    "text": "**Anna:** They have the {freshest|最も新鮮な} seafood in town."
+  },
+  {
+    "start": 64.16,
+    "end": 66,
+    "text": "**Anna:** How much money can you spend?"
+  },
+  {
+    "start": 66,
+    "end": 69.52,
+    "text": "**Anna:** I can only spend $50."
+  },
+  {
+    "start": 69.52,
+    "end": 70.32,
+    "text": "**Pete:** Okay."
+  },
+  {
+    "start": 70.32,
+    "end": 71.76,
+    "text": "**Pete:** What do you want?"
+  },
+  {
+    "start": 71.76,
+    "end": 74.96,
+    "text": "**Anna:** First I want to buy some {shrimp|エビ|/ʃrɪmp/|Shrimp is delicious grilled.}"
+  },
+  {
+    "start": 75.8,
+    "end": 77.96,
+    "text": "**Pete:** Sure thing, {follow|追従する/従う|/ˈfɑloʊ/|Please follow the instructions carefully.} me."
+  },
+  {
+    "start": 77.96,
+    "end": 80.28,
+    "text": "**Pete:** How much {shrimp|エビ|/ʃrɪmp/|I love grilled shrimp.} do you want?"
+  },
+  {
+    "start": 80.52,
+    "end": 84.6,
+    "text": "**Anna:** How much do I need for five people?"
+  },
+  {
+    "start": 84.84,
+    "end": 87.4,
+    "text": "**Anna:** Give her a {pound|ポンド（重量単位）|/paʊnd/|A pound of sugar is heavy.} of shrimp."
+  },
+  {
+    "start": 87.4,
+    "end": 92.52,
+    "text": "**Anna:** Okay, now I want to buy some {crabs|カニ|/kræbz/|Crabs live near the ocean.}"
+  },
+  {
+    "start": 92.52,
+    "end": 95.56,
+    "text": "**Pete:** The crabs here are {delicious|美味しい|/dɪˈlɪʃəs/|This cake is delicious.}"
+  },
+  {
+    "start": 95.56,
+    "end": 99,
+    "text": "**Anna:** They are the best because they come from the nearby"
+  },
+  {
+    "start": 99.36,
+    "end": 101.439,
+    "text": "**Anna:** {Chesapeake|チェサピーク（地名）} Bay."
+  },
+  {
+    "start": 101.439,
+    "end": 103.119,
+    "text": "**Anna:** Walk this way."
+  },
+  {
+    "start": 103.119,
+    "end": 105.439,
+    "text": "**Pete:** How many crabs do you want?"
+  },
+  {
+    "start": 105.92,
+    "end": 108.64,
+    "text": "**Anna:** I want a {dozen|12個|/ˈdʌzən/|A dozen eggs cost $3.}"
+  },
+  {
+    "start": 108.64,
+    "end": 111.119,
+    "text": "**Pete:** You should get the {larger|より大きい|/ˈlɑrdʒər/|Larger cars are more comfortable.} crabs."
+  },
+  {
+    "start": 111.119,
+    "end": 113.119,
+    "text": "**Pete:** They have the most {meat|肉|/miːt/|Meat is protein-rich.}"
+  },
+  {
+    "start": 113.119,
+    "end": 113.84,
+    "text": "**Anna:** Then I want"
+  },
+  {
+    "start": 114.52,
+    "end": 117.399,
+    "text": "**Anna:** a dozen large crabs."
+  },
+  {
+    "start": 117.399,
+    "end": 119.479,
+    "text": "**Anna:** Please."
+  },
+  {
+    "start": 119.479,
+    "end": 121.24,
+    "text": "**Pete:** Is that everything you need?"
+  },
+  {
+    "start": 121.24,
+    "end": 122.6,
+    "text": "**Anna:** Let's see."
+  },
+  {
+    "start": 122.6,
+    "end": 128.84,
+    "text": "**Anna:** I have shrimp and crabs and a friend is bringing a {salad|サラダ|/ˈsæləd/|I like green salad.} and many ears"
+  },
+  {
+    "start": 129.36,
+    "end": 130.879,
+    "text": "**Anna:** of {corn|トウモロコシ|/kɔːrn/|Corn is a popular vegetable.} on the cob."
+  },
+  {
+    "start": 131.36,
+    "end": 134.16,
+    "text": "**Pete:** Is that all the {seafood|海産物|/ˈsiːfuːd/|Seafood is delicious.} that you need?"
+  },
+  {
+    "start": 134.4,
+    "end": 135.36,
+    "text": "**Anna:** Yes."
+  },
+  {
+    "start": 135.36,
+    "end": 138.08,
+    "text": "**Pete:** That'll be $49."
+  },
+  {
+    "start": 138.239,
+    "end": 139.36,
+    "text": "**Pete:** 95."
+  },
+  {
+    "start": 139.36,
+    "end": 140.8,
+    "text": "**Pete:** Cash or credit?"
+  },
+  {
+    "start": 140.8,
+    "end": 142.56,
+    "text": "**Anna:** Credit, please."
+  },
+  {
+    "start": 143.18,
+    "end": 146.459,
+    "text": "**Pete:** Anna, you love to eat seafood."
+  },
+  {
+    "start": 146.459,
+    "end": 148.3,
+    "text": "**Pete:** Did you grow up on the water?"
+  },
+  {
+    "start": 148.3,
+    "end": 150.06,
+    "text": "**Anna:** No, I didn't."
+  },
+  {
+    "start": 150.06,
+    "end": 152.06,
+    "text": "**Anna:** But I love the water."
+  },
+  {
+    "start": 152.06,
+    "end": 154.94,
+    "text": "**Pete:** And I {love|愛する/好きである|/lʌv/|I love my family.} being on the {water|水/水面|/ˈwɔːtər/|We enjoy swimming in the water.}"
+  },
+  {
+    "start": 155.02,
+    "end": 156.94,
+    "text": "**Pete:** You know how to {sail|帆走する/航海する|/seɪl/|We sail across the ocean.}?"
+  },
+  {
+    "start": 156.94,
+    "end": 161.02,
+    "text": "**Anna:** Well, this afternoon I am going on a {boat|ボート/船|/boʊt/|Let's take a boat ride.}"
+  },
+  {
+    "start": 161.02,
+    "end": 164.7,
+    "text": "**Pete:** You are full of {surprises|驚き/意外なこと|/sərˈpraɪzɪz/|She always has surprises for her friends.}"
+  },
+  {
+    "start": 164.54,
+    "end": 165.9,
+    "text": "**Pete:** What kind of boat?"
+  },
+  {
+    "start": 165.9,
+    "end": 168.54,
+    "text": "**Pete:** Is it a motor boat or a {sailboat|帆船/セーリングボート|/ˈseɪlboʊt/|A sailboat uses wind power.}?"
+  },
+  {
+    "start": 168.54,
+    "end": 171.74,
+    "text": "**Anna:** It's a special boat, Pete."
+  },
+  {
+    "start": 171.74,
+    "end": 173.5,
+    "text": "**Anna:** Well, thanks for your help."
+  },
+  {
+    "start": 173.5,
+    "end": 174.62,
+    "text": "**Anna:** See you later."
+  },
+  {
+    "start": 174.62,
+    "end": 176.14,
+    "text": "**Pete:** See you, Anna."
+  },
+  {
+    "start": 176.62,
+    "end": 177.26,
+    "text": "**Pete:** Wow"
+  },
+  {
+    "start": 178.16,
+    "end": 180.32,
+    "text": "**Anna:** Hon as a sailor."
+  },
+  {
+    "start": 180.32,
+    "end": 182.08,
+    "text": "**Anna:** Who knew?"
+  },
+  {
+    "start": 182.08,
+    "end": 187.36,
+    "text": "**Anna:** Yes, {rivers|川/河川|/ˈrɪvərz/|Many rivers flow through cities.} are important to the history and culture of Washington, D."
+  },
+  {
+    "start": 187.36,
+    "end": 187.84,
+    "text": "**Anna:** C."
+  },
+  {
+    "start": 187.5,
+    "end": 194.78,
+    "text": "**Anna:** And now I am part of this city's interesting {waterfront|水辺/水際|/ˈwɔːtərfrʌnt/|The waterfront is beautiful at sunset.} culture."
+  },
+  {
+    "start": 194.78,
+    "end": 196.14,
+    "text": "**Anna:** Till next time"
+  }
+]

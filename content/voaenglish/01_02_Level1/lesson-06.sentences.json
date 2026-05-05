@@ -1,0 +1,212 @@
+[
+  {
+    "start": 1.92,
+    "end": 6.64,
+    "text": "**Anna:** Hi there, I'm Anna and I {live|住む|/lɪv/|I live in New York.} in {Washington DC|首都ワシントン|/ˈwɑːʃɪŋtən diˈsiː/|Washington DC is the capital of the USA.}"
+  },
+  {
+    "start": 6.64,
+    "end": 10.56,
+    "text": "**Anna:** Every day I {learn|学ぶ/習得する|/lɜːrn/|I learn English every day.} more about this {great|素晴らしい/素晴らしな|/greɪt/|What a great day!} city."
+  },
+  {
+    "start": 10.62,
+    "end": 14.3,
+    "text": "**Anna:** People in Washington like to {work out|運動する/トレーニングする|/wɜːrk aʊt/|I work out at the gym every morning.}"
+  },
+  {
+    "start": 14.3,
+    "end": 15.74,
+    "text": "**Anna:** Oh, hi Pete."
+  },
+  {
+    "start": 15.74,
+    "end": 17.18,
+    "text": "**Anna:** How's it going?"
+  },
+  {
+    "start": 17.5,
+    "end": 18.54,
+    "text": "**Anna:** Hi, Anna"
+  },
+  {
+    "start": 19.32,
+    "end": 21.08,
+    "text": "**Anna:** It's going great."
+  },
+  {
+    "start": 21.08,
+    "end": 23.24,
+    "text": "**Pete:** How's it going with you?"
+  },
+  {
+    "start": 23.24,
+    "end": 25.32,
+    "text": "**Anna:** Things are {awesome|素晴らしい/素晴らしな|/ˈɔːsəm/|That's an awesome idea!}"
+  },
+  {
+    "start": 25.32,
+    "end": 28.2,
+    "text": "**Anna:** Pete, I want to {work out|運動する/トレーニングする|/wɜːrk aʊt/|I work out at the gym every morning.}"
+  },
+  {
+    "start": 28.2,
+    "end": 29.96,
+    "text": "**Anna:** Where is the {gym|ジム/トレーニング施設|/dʒɪm/|I go to the gym three times a week.}?"
+  },
+  {
+    "start": 30.2,
+    "end": 33.8,
+    "text": "**Pete:** The gym is {across from|〜の向かい側に|/əˈkrɔːs frəm/|The bank is across from the post office.} the {lounge|ラウンジ/休憩室|/laʊndʒ/|We waited in the airport lounge.}"
+  },
+  {
+    "start": 33.72,
+    "end": 36.6,
+    "text": "**Pete:** It's next to the {mailroom|郵便室|/ˈmeɪlruːm/|The mailroom is on the first floor.}"
+  },
+  {
+    "start": 36.6,
+    "end": 38.12,
+    "text": "**Pete:** Go that way."
+  },
+  {
+    "start": 38.36,
+    "end": 39.72,
+    "text": "**Anna:** Thanks, Pete."
+  },
+  {
+    "start": 40.04,
+    "end": 43.24,
+    "text": "**Pete:** No, Anna, not that way."
+  },
+  {
+    "start": 43.24,
+    "end": 45,
+    "text": "**Pete:** Go that way."
+  },
+  {
+    "start": 45.46,
+    "end": 50.02,
+    "text": "**Anna:** Oh, Pete, this is not the {gym|ジム/トレーニング施設|/dʒɪm/|I go to the gym three times a week.}"
+  },
+  {
+    "start": 50.02,
+    "end": 51.86,
+    "text": "**Pete:** That's right, Anna."
+  },
+  {
+    "start": 51.86,
+    "end": 54.1,
+    "text": "**Pete:** This is the {mailroom|郵便室|/ˈmeɪlruːm/|The mailroom is on the first floor.}"
+  },
+  {
+    "start": 54.12,
+    "end": 57.96,
+    "text": "**Anna:** The gym is across from what?"
+  },
+  {
+    "start": 57.96,
+    "end": 61.8,
+    "text": "**Pete:** The gym is across from the {lounge|ラウンジ/休憩室|/laʊndʒ/|We waited in the airport lounge.}"
+  },
+  {
+    "start": 61.8,
+    "end": 63.879,
+    "text": "**Pete:** Across from the {lounge|ラウンジ/休憩室|/laʊndʒ/|We waited in the airport lounge.}"
+  },
+  {
+    "start": 63.879,
+    "end": 64.68,
+    "text": "**Pete:** Right."
+  },
+  {
+    "start": 64.68,
+    "end": 65.8,
+    "text": "**Anna:** Thanks."
+  },
+  {
+    "start": 66.64,
+    "end": 70.64,
+    "text": "**Anna:** Pete, this is not the {gym|ジム/トレーニング施設|/dʒɪm/|I go to the gym three times a week.}"
+  },
+  {
+    "start": 70.64,
+    "end": 73.92,
+    "text": "**Pete:** The gym is across from the {lounge|ラウンジ/休憩室|/laʊndʒ/|We waited in the airport lounge.}"
+  },
+  {
+    "start": 73.92,
+    "end": 76.24,
+    "text": "**Pete:** It is behind the {lobby|ロビー|/ˈlɑːbi/|Meet me in the hotel lobby.}"
+  },
+  {
+    "start": 76.24,
+    "end": 77.6,
+    "text": "**Pete:** Right, right."
+  },
+  {
+    "start": 77.6,
+    "end": 78.72,
+    "text": "**Anna:** See you."
+  },
+  {
+    "start": 78.72,
+    "end": 80.96,
+    "text": "**Pete:** See you, Anna."
+  },
+  {
+    "start": 80.52,
+    "end": 82.119,
+    "text": "**Anna:** See you."
+  },
+  {
+    "start": 82.119,
+    "end": 84.119,
+    "text": "**Pete:** See you, Anna."
+  },
+  {
+    "start": 84.439,
+    "end": 87.079,
+    "text": "**Anna:** This is not the {gym|体育館/トレーニング施設|/dʒɪm/|I go to the gym every week}."
+  },
+  {
+    "start": 87.079,
+    "end": 90.36,
+    "text": "**Anna:** This is a {parking|駐車場|/ˈpɑːrkɪŋ/|Parking is free here.} {garage|車庫/駐車場|/ˈɡærɪdʒ/|My car is in the garage.}"
+  },
+  {
+    "start": 90.36,
+    "end": 92.679,
+    "text": "**Anna:** Hello, Pete?"
+  },
+  {
+    "start": 94.26,
+    "end": 96.98,
+    "text": "**Anna:** This is not a gym."
+  },
+  {
+    "start": 96.98,
+    "end": 99.78,
+    "text": "**Anna:** This is a {rooftop|屋上|/ˈruːftɑːp/|We had a party on the rooftop.}"
+  },
+  {
+    "start": 99.78,
+    "end": 102.02,
+    "text": "**Anna:** Pete."
+  },
+  {
+    "start": 102.34,
+    "end": 104.9,
+    "text": "**Pete:** I want to {work out|運動する/トレーニングする|/wɜːrk aʊt/|I work out three times a week.} too."
+  },
+  {
+    "start": 104.9,
+    "end": 106.26,
+    "text": "**Pete:** Join me."
+  },
+  {
+    "start": 106.26,
+    "end": 107.54,
+    "text": "**Anna:** I'm good."
+  }
+]

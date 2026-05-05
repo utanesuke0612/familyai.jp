@@ -1,0 +1,327 @@
+[
+  {
+    "start": 0.48,
+    "end": 1.52,
+    "text": "**Anna:** Hello!"
+  },
+  {
+    "start": 1.8399999999999999,
+    "end": 6.8,
+    "text": "**Anna:** Washington DC has many {beautiful|美しい/見事な} parks."
+  },
+  {
+    "start": 6.8,
+    "end": 13.12,
+    "text": "**Anna:** In fact, this {park|公園} reminds me of my home very far away"
+  },
+  {
+    "start": 14.04,
+    "end": 16.92,
+    "text": "**Marsha:** Anna, here's your coffee."
+  },
+  {
+    "start": 16.92,
+    "end": 18.279,
+    "text": "**Anna:** Thanks, Marcia."
+  },
+  {
+    "start": 18.279,
+    "end": 19.88,
+    "text": "**Marsha:** What's wrong?"
+  },
+  {
+    "start": 19.88,
+    "end": 22.599,
+    "text": "**Anna:** I'm thinking about my family."
+  },
+  {
+    "start": 22.72,
+    "end": 25.6,
+    "text": "**Anna:** I am feeling {homesick|郷愁を感じる/家が恋しい}"
+  },
+  {
+    "start": 25.6,
+    "end": 27.52,
+    "text": "**Marsha:** You want to talk about it?"
+  },
+  {
+    "start": 27.84,
+    "end": 29.279,
+    "text": "**Anna:** Sure."
+  },
+  {
+    "start": 29.279,
+    "end": 31.36,
+    "text": "**Anna:** I have some {photos|写真}."
+  },
+  {
+    "start": 31.68,
+    "end": 34.32,
+    "text": "**Marsha:** Yes, yes you do."
+  },
+  {
+    "start": 34.32,
+    "end": 36.8,
+    "text": "**Anna:** Photos really help."
+  },
+  {
+    "start": 37.559,
+    "end": 41.48,
+    "text": "**Anna:** This is my mother and this is my father."
+  },
+  {
+    "start": 41.48,
+    "end": 44.12,
+    "text": "**Marsha:** They are {rodeo|ロデオ/牛馬競技} clowns."
+  },
+  {
+    "start": 44.12,
+    "end": 47.64,
+    "text": "**Marsha:** What do rodeo clowns do?"
+  },
+  {
+    "start": 47.74,
+    "end": 50.46,
+    "text": "**Anna:** They make {jokes|冗談/笑い話} at a rodeo."
+  },
+  {
+    "start": 50.46,
+    "end": 51.66,
+    "text": "**Anna:** People laugh."
+  },
+  {
+    "start": 51.66,
+    "end": 54.3,
+    "text": "**Marsha:** That that's very different."
+  },
+  {
+    "start": 54.3,
+    "end": 56.86,
+    "text": "**Marsha:** Who is that woman in the picture?"
+  },
+  {
+    "start": 56.72,
+    "end": 59.36,
+    "text": "**Anna:** That is my Aunt Lavender."
+  },
+  {
+    "start": 59.36,
+    "end": 61.68,
+    "text": "**Anna:** She is my mom's sister."
+  },
+  {
+    "start": 61.68,
+    "end": 65.28,
+    "text": "**Marsha:** She loves {gardening|園芸} and makes spoons."
+  },
+  {
+    "start": 65.38,
+    "end": 67.7,
+    "text": "**Marsha:** She makes spoons?"
+  },
+  {
+    "start": 67.7,
+    "end": 69.46,
+    "text": "**Anna:** Of course."
+  },
+  {
+    "start": 69.46,
+    "end": 73.46,
+    "text": "**Marsha:** That, too, is very different."
+  },
+  {
+    "start": 73.46,
+    "end": 75.94,
+    "text": "**Anna:** Oh, this is my Uncle John."
+  },
+  {
+    "start": 75.94,
+    "end": 78.58,
+    "text": "**Anna:** He is my father's brother."
+  },
+  {
+    "start": 78.86,
+    "end": 81.58,
+    "text": "**Marsha:** What does Uncle John do?"
+  },
+  {
+    "start": 81.58,
+    "end": 85.02,
+    "text": "**Anna:** He's a {chicken|鶏/ニワトリ} farmer and makes guitars."
+  },
+  {
+    "start": 85.66,
+    "end": 87.18,
+    "text": "**Anna:** He's {awesome|素晴らしい/すごい|/ˈɔːsəm/|He is an awesome player.}"
+  },
+  {
+    "start": 87.18,
+    "end": 89.9,
+    "text": "**Anna:** And I'm his favorite {niece|甥/姪|/niːs/|My niece is very smart.}"
+  },
+  {
+    "start": 89.64,
+    "end": 91.08,
+    "text": "**Marsha:** Who are they?"
+  },
+  {
+    "start": 91.08,
+    "end": 93.08,
+    "text": "**Anna:** They are my {cousins|いとこ|/ˈkʌzn/|My cousins live in Tokyo.}"
+  },
+  {
+    "start": 93.08,
+    "end": 96.68,
+    "text": "**Anna:** They are my Uncle John's {daughter|娘|/ˈdɔːtər/|My daughter is five years old.} and son."
+  },
+  {
+    "start": 96.68,
+    "end": 98.2,
+    "text": "**Marsha:** What do they do?"
+  },
+  {
+    "start": 98.2,
+    "end": 101.32,
+    "text": "**Anna:** They {raise|育てる/飼育する|/reɪz/|We raise chickens on our farm.} {sheep|羊|/ʃiːp/|Sheep live on the farm.} and make {sweaters|セーター|/ˈswetərz/|She wears warm sweaters in winter.}"
+  },
+  {
+    "start": 101.32,
+    "end": 104.36,
+    "text": "**Marsha:** Yeah, that's not a {surprise|驚き/意外|/sərˈpraɪz/|It was a big surprise.}"
+  },
+  {
+    "start": 104.64,
+    "end": 107.84,
+    "text": "**Marsha:** Thanks for showing me your family photos."
+  },
+  {
+    "start": 107.84,
+    "end": 111.12,
+    "text": "**Marsha:** Your family is very {different|異なる/違う|/ˈdɪfərənt/|They have different ideas.}"
+  },
+  {
+    "start": 111.12,
+    "end": 112.72,
+    "text": "**Anna:** I do feel {better|より良い|/ˈbetər/|I feel better today.}"
+  },
+  {
+    "start": 112.72,
+    "end": 114.64,
+    "text": "**Anna:** Thanks for listening."
+  },
+  {
+    "start": 114.439,
+    "end": 116.84,
+    "text": "**Anna:** I have many more photos."
+  },
+  {
+    "start": 116.84,
+    "end": 117.88,
+    "text": "**Marsha:** Yeah?"
+  },
+  {
+    "start": 117.88,
+    "end": 119.719,
+    "text": "**Marsha:** Yeah, you do."
+  },
+  {
+    "start": 119.719,
+    "end": 120.92,
+    "text": "**Anna:** Washington, D."
+  },
+  {
+    "start": 120.92,
+    "end": 121.159,
+    "text": "**Anna:** C."
+  },
+  {
+    "start": 121.24,
+    "end": 125.72,
+    "text": "**Anna:** is my new {home|家/故郷|/hoʊm/|Home is where family is.}, but I like {remembering|思い出す|/rɪˈmembərɪŋ/|I'm remembering my childhood.} my old home too."
+  },
+  {
+    "start": 126.74,
+    "end": 129.94,
+    "text": "**Anna:** This is a family tree."
+  },
+  {
+    "start": 129.94,
+    "end": 133.7,
+    "text": "**Anna:** Anna tells Marcia about her parents."
+  },
+  {
+    "start": 133.7,
+    "end": 137.86,
+    "text": "**Anna:** Her mother and father are {rodeo|ロデオ|/ˈroʊdioʊ/|Rodeo is a cowboy sport.} {clowns|道化師|/klaʊnz/|Clowns make people laugh.}"
+  },
+  {
+    "start": 138.12,
+    "end": 142.2,
+    "text": "**Anna:** Her father's parents are from Italy."
+  },
+  {
+    "start": 142.2,
+    "end": 145.96,
+    "text": "**Anna:** These grandparents speak {Italian|イタリア語|/ɪˈtæliən/|Italian food is delicious.}"
+  },
+  {
+    "start": 146.12,
+    "end": 149.64,
+    "text": "**Anna:** Anna's mother's parents live in California"
+  },
+  {
+    "start": 150.86,
+    "end": 155.26,
+    "text": "**Anna:** These grandparents have a farm and {raise|育てる/飼育する|/reɪz/|We raise chickens on our farm.} horses."
+  },
+  {
+    "start": 156.38,
+    "end": 160.62,
+    "text": "**Anna:** Anna's mother's sister is Aunt Lavender."
+  },
+  {
+    "start": 160.62,
+    "end": 162.78,
+    "text": "**Anna:** She loves {gardening|園芸|/ˈɡɑːrdənɪŋ/|Gardening is her hobby.}"
+  },
+  {
+    "start": 163.12,
+    "end": 165.92,
+    "text": "**Anna:** And his father has a brother."
+  },
+  {
+    "start": 165.92,
+    "end": 168.4,
+    "text": "**Anna:** His name is John."
+  },
+  {
+    "start": 168.4,
+    "end": 171.12,
+    "text": "**Marsha:** Uncle John makes {guitars|ギター|/ɡɪˈtɑːrz/|He plays guitars in a band.}"
+  },
+  {
+    "start": 171.42,
+    "end": 174.86,
+    "text": "**Anna:** Uncle John has a {daughter|娘|/ˈdɔːtər/|My daughter is very smart.} and a {son|息子|/sʌn/|My son plays soccer.}"
+  },
+  {
+    "start": 174.86,
+    "end": 177.5,
+    "text": "**Marsha:** They are Anna's {cousins|いとこ|/ˈkʌzənz/|My cousins live in Tokyo.}"
+  },
+  {
+    "start": 177.5,
+    "end": 179.1,
+    "text": "**Anna:** They {raise|育てる/飼育する|/reɪz/|We raise chickens on our farm.} {sheep|羊|/ʃiːp/|Sheep live in the countryside.}"
+  },
+  {
+    "start": 179.62,
+    "end": 182.9,
+    "text": "**Anna:** Anna's brother has two {children|子供たち|/ˈtʃɪldrən/|Children love to play.}"
+  },
+  {
+    "start": 182.9,
+    "end": 186.42,
+    "text": "**Anna:** They are Anna's {niece|姪|/niːs/|My niece is very kind.} and {nephew|甥|/ˈnɛfjuː/|My nephew is a student.}"
+  }
+]

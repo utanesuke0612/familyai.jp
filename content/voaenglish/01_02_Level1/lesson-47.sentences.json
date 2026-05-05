@@ -1,0 +1,357 @@
+[
+  {
+    "start": 1.6800000000000002,
+    "end": 4.24,
+    "text": "**Anna:** Hi Pete, what are you {doing|している|/ˈduːɪŋ/|What are you doing today?}?"
+  },
+  {
+    "start": 4.24,
+    "end": 6.64,
+    "text": "**Pete:** Oh, hi Anna."
+  },
+  {
+    "start": 6.64,
+    "end": 10.8,
+    "text": "**Pete:** Right now, I am {fixing|修理している|/ˈfɪksɪŋ/|I am fixing my bicycle.} my car."
+  },
+  {
+    "start": 10.8,
+    "end": 12.64,
+    "text": "**Anna:** How's it going?"
+  },
+  {
+    "start": 12.92,
+    "end": 16.28,
+    "text": "**Pete:** It's going not so {good|うまく|/ɡʊd/|Everything is good today.}"
+  },
+  {
+    "start": 16.28,
+    "end": 17.64,
+    "text": "**Anna:** How can I help?"
+  },
+  {
+    "start": 17.64,
+    "end": 22.04,
+    "text": "**Anna:** I was {planning|計画している|/ˈplænɪŋ/|I am planning a trip.} to visit some friends, but if you need help, I can help."
+  },
+  {
+    "start": 22.04,
+    "end": 23.08,
+    "text": "**Anna:** I like {helping|助けること|/ˈhɛlpɪŋ/|I like helping my friends.}"
+  },
+  {
+    "start": 23.08,
+    "end": 25.72,
+    "text": "**Pete:** Anna, I can fix it {myself|自分で|/maɪˈsɛlf/|I can do it myself.}"
+  },
+  {
+    "start": 25.72,
+    "end": 27.56,
+    "text": "**Pete:** But thanks."
+  },
+  {
+    "start": 27.119,
+    "end": 31.039,
+    "text": "**Anna:** Pete, I think I found your {problem|問題|/ˈprɒbləm/|We have a big problem.}"
+  },
+  {
+    "start": 31.039,
+    "end": 33.28,
+    "text": "**Anna:** These are {spark plugs|点火プラグ|/spɑːrk plʌɡz/|Spark plugs are in cars.}"
+  },
+  {
+    "start": 33.28,
+    "end": 35.36,
+    "text": "**Anna:** They start the {engine|エンジン|/ˈɛndʒɪn/|The car engine is running.}"
+  },
+  {
+    "start": 35.36,
+    "end": 40.32,
+    "text": "**Pete:** I know that, Anna, but there were too many {spark plugs|点火プラグ|/spɑːrk plʌɡz/|Spark plugs are important.}"
+  },
+  {
+    "start": 40.8,
+    "end": 41.84,
+    "text": "**Pete:** in there."
+  },
+  {
+    "start": 41.84,
+    "end": 44,
+    "text": "**Pete:** So I took out the extra ones."
+  },
+  {
+    "start": 44,
+    "end": 46.24,
+    "text": "**Anna:** There are no extras, Pete."
+  },
+  {
+    "start": 46.24,
+    "end": 48.08,
+    "text": "**Anna:** You need all of them."
+  },
+  {
+    "start": 48.08,
+    "end": 51.6,
+    "text": "**Dan:** Pete, can you {fix|修理する|/fɪks/|Can you fix my bike?} a car yourself?"
+  },
+  {
+    "start": 51.62,
+    "end": 59.62,
+    "text": "**Pete:** Well, Anna, last night I was watching the online {video course|ビデオコース|/ˈvɪdioʊ kɔːrs/|I watched an online course.}, You Can Fix a Car Yourself."
+  },
+  {
+    "start": 59.62,
+    "end": 63.62,
+    "text": "**Dan:** Yes, you can fix your car yourself"
+  },
+  {
+    "start": 64.32,
+    "end": 69.52,
+    "text": "**Pete:** And I watched the first ten {lessons|レッスン|/ˈlɛsənz/|I have three lessons today.}, so I think I know what I'm doing."
+  },
+  {
+    "start": 69.52,
+    "end": 71.76,
+    "text": "**Anna:** How many lessons are there?"
+  },
+  {
+    "start": 72.14,
+    "end": 75.42,
+    "text": "**Anna:** 450?"
+  },
+  {
+    "start": 75.58,
+    "end": 77.5,
+    "text": "**Anna:** That'll take too {long|長い時間|/lɔːŋ/|This will take a long time.}"
+  },
+  {
+    "start": 77.5,
+    "end": 82.46,
+    "text": "**Anna:** If I fix your car, I'll have it {running|走っている|/ˈrʌnɪŋ/|The car is running smoothly.} in 10 to 15 minutes."
+  },
+  {
+    "start": 82.24,
+    "end": 84.24,
+    "text": "**Anna:** Where are your {tools|工具|/tuːlz/|I need some tools.}?"
+  },
+  {
+    "start": 84.24,
+    "end": 87.44,
+    "text": "**Pete:** I have this."
+  },
+  {
+    "start": 87.44,
+    "end": 89.44,
+    "text": "**Pete:** And this."
+  },
+  {
+    "start": 89.44,
+    "end": 90.64,
+    "text": "**Anna:** Great."
+  },
+  {
+    "start": 90.62,
+    "end": 93.18,
+    "text": "**Anna:** Um, I'll get my {tools|道具/工具|/tuːlz/|These are my favorite tools.}"
+  },
+  {
+    "start": 93.18,
+    "end": 95.18,
+    "text": "**Anna:** I'll be back in a {flash|瞬く間に|/flæʃ/|I'll be back in a flash.}"
+  },
+  {
+    "start": 95.18,
+    "end": 98.14,
+    "text": "**Pete:** But Anna, I don't need your help"
+  },
+  {
+    "start": 98.34,
+    "end": 103.38,
+    "text": "**Anna:** Pete, when I was a {teenager|十代の人|/ˈtiːneɪdʒər/|I was a teenager in the 90s.}, I was {fixing|修理する|/ˈfɪksɪŋ/|I'm fixing my bicycle.} cars myself."
+  },
+  {
+    "start": 103.38,
+    "end": 105.86,
+    "text": "**Anna:** I learned from a {master|名人/達人|/ˈmæstər/|He is a master of chess.}"
+  },
+  {
+    "start": 105.86,
+    "end": 107.299,
+    "text": "**Anna:** You can trust me."
+  },
+  {
+    "start": 107.299,
+    "end": 108.18,
+    "text": "**Pete:** Okay."
+  },
+  {
+    "start": 108.18,
+    "end": 111.22,
+    "text": "**Anna:** Great, but we need {teamwork|チームワーク|/ˈtiːmwɜːrk/|Teamwork is important in sports.}"
+  },
+  {
+    "start": 111.42,
+    "end": 112.78,
+    "text": "**Anna:** You sit in the car."
+  },
+  {
+    "start": 112.78,
+    "end": 115.82,
+    "text": "**Anna:** When I say go, you start the {engine|エンジン|/ˈendʒɪn/|The car engine is running.}"
+  },
+  {
+    "start": 115.82,
+    "end": 118.299,
+    "text": "**Anna:** Okay, go."
+  },
+  {
+    "start": 118.299,
+    "end": 121.1,
+    "text": "**Anna:** Stop."
+  },
+  {
+    "start": 121.88,
+    "end": 123.8,
+    "text": "**Anna:** Okay, go."
+  },
+  {
+    "start": 123.8,
+    "end": 125.4,
+    "text": "**Anna:** Huh."
+  },
+  {
+    "start": 125.4,
+    "end": 128.759,
+    "text": "**Pete:** It's not starting."
+  },
+  {
+    "start": 128.759,
+    "end": 130.2,
+    "text": "**Anna:** What's wrong?"
+  },
+  {
+    "start": 130.2,
+    "end": 132.68,
+    "text": "**Pete:** This car is {stupid|馬鹿な/愚かな|/ˈstuːpɪd/|That was a stupid mistake.}"
+  },
+  {
+    "start": 132.82,
+    "end": 134.74,
+    "text": "**Anna:** Stupid, stupid!"
+  },
+  {
+    "start": 134.74,
+    "end": 137.78,
+    "text": "**Anna:** Pete, {kicking|蹴る|/ˈkɪkɪŋ/|Stop kicking the ball.} the tires will not help."
+  },
+  {
+    "start": 137.78,
+    "end": 140.34,
+    "text": "**Pete:** Well, you did not help, Anna."
+  },
+  {
+    "start": 140.34,
+    "end": 141.86,
+    "text": "**Pete:** You did not help!"
+  },
+  {
+    "start": 141.86,
+    "end": 144.98,
+    "text": "**Anna:** Pete, Pete, pull yourself {together|まとまる/落ち着く|/təˈgɛðər/|Pull yourself together and focus.}, man!"
+  },
+  {
+    "start": 144.98,
+    "end": 147.46,
+    "text": "**Anna:** Give me the keys."
+  },
+  {
+    "start": 146.92,
+    "end": 152.68,
+    "text": "**Anna:** I must feel the key in the {ignition|イグニッション|/ɪɡˈnɪʃən/|Turn the key in the ignition.} and turn it myself."
+  },
+  {
+    "start": 152.68,
+    "end": 155.8,
+    "text": "**Master:** Use the key, Anna."
+  },
+  {
+    "start": 155.8,
+    "end": 158.76,
+    "text": "**Master:** Turn the key, Anna."
+  },
+  {
+    "start": 158.82,
+    "end": 162.66,
+    "text": "**Master:** What are you {forgetting|忘れる|/fərˈgɛtɪŋ/|I'm forgetting my keys again.}, Anna?"
+  },
+  {
+    "start": 162.66,
+    "end": 165.06,
+    "text": "**Anna:** Pete!"
+  },
+  {
+    "start": 165.38,
+    "end": 166.18,
+    "text": "**Anna:** What?"
+  },
+  {
+    "start": 166.5,
+    "end": 168.74,
+    "text": "**Anna:** You are out of {gas|ガソリン|/ɡæs/|The car is out of gas.}"
+  },
+  {
+    "start": 169.58,
+    "end": 172.94,
+    "text": "**Anna:** I can't be {out of|～がない/不足している|/aʊt əv/|I'm out of milk.} gas."
+  },
+  {
+    "start": 172.94,
+    "end": 174.94,
+    "text": "**Anna:** I'm {out of|～がない/不足している|/aʊt əv/|I'm out of money.} gas."
+  },
+  {
+    "start": 174.94,
+    "end": 176.46,
+    "text": "**Anna:** Sorry, Anna."
+  },
+  {
+    "start": 176.46,
+    "end": 177.9,
+    "text": "**Anna:** I'll go {get|取りに行く/入手する|/get/|I'll get some water.} some."
+  },
+  {
+    "start": 177.9,
+    "end": 178.86,
+    "text": "**Anna:** Pete."
+  },
+  {
+    "start": 179.02,
+    "end": 180.94,
+    "text": "**Anna:** You {relax|リラックスする/くつろぐ|/rɪˈlæks/|Please relax and enjoy.}"
+  },
+  {
+    "start": 180.94,
+    "end": 183.02,
+    "text": "**Anna:** {Clean|きれいにする/洗う|/kliːn/|Clean your room now.} your face."
+  },
+  {
+    "start": 183.02,
+    "end": 186.54,
+    "text": "**Anna:** You can watch the rest of your {online|オンラインの|/ˈɒnlaɪn/|Online classes are popular.} video course."
+  },
+  {
+    "start": 186.54,
+    "end": 188.7,
+    "text": "**Anna:** It'll be {faster|より速い|/ˈfæstər/|Bike is faster than walking.} if I go."
+  },
+  {
+    "start": 188.7,
+    "end": 190.06,
+    "text": "**Anna:** In a {flash|瞬間/一瞬|/flæʃ/|I'll be back in a flash.}"
+  },
+  {
+    "start": 190.06,
+    "end": 191.34,
+    "text": "**Anna:** Till next time"
+  }
+]

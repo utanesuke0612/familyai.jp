@@ -1,0 +1,197 @@
+[
+  {
+    "start": 7.84,
+    "end": 11.04,
+    "text": "**Anna:** I am in my {new|新しい} {apartment|アパート/マンション|/əˈpɑːrtmənt/|I live in a small apartment.}"
+  },
+  {
+    "start": 11.04,
+    "end": 11.68,
+    "text": "**Anna:** Great"
+  },
+  {
+    "start": 11.96,
+    "end": 13.8,
+    "text": "**Anna:** I live with {Marcia|人名}"
+  },
+  {
+    "start": 13.8,
+    "end": 16.6,
+    "text": "**Anna:** We're {roommates|同居人}"
+  },
+  {
+    "start": 16.6,
+    "end": 20.119,
+    "text": "**Anna:** I want to {cook|料理する} dinner."
+  },
+  {
+    "start": 26.22,
+    "end": 30.22,
+    "text": "**Anna:** Is there a {supermarket|スーパーマーケット/食料品店|/ˈsuːpərˌmɑːrkɪt/|I buy groceries at the supermarket.} near here?"
+  },
+  {
+    "start": 30.22,
+    "end": 31.74,
+    "text": "**Anna:** Marcia knows"
+  },
+  {
+    "start": 33.879,
+    "end": 40.6,
+    "text": "**Anna:** Marsha's work number is five five five eight nine eight six."
+  },
+  {
+    "start": 43.2,
+    "end": 44.32,
+    "text": "**Man:** Hello."
+  },
+  {
+    "start": 44.32,
+    "end": 46.079,
+    "text": "**Anna:** Uh is this Marcia?"
+  },
+  {
+    "start": 46.079,
+    "end": 47.28,
+    "text": "**Anna:** It is Anna."
+  },
+  {
+    "start": 47.28,
+    "end": 48.16,
+    "text": "**Man:** I'm sorry."
+  },
+  {
+    "start": 48.16,
+    "end": 50.16,
+    "text": "**Man:** You have the wrong number."
+  },
+  {
+    "start": 50.16,
+    "end": 54.48,
+    "text": "**Anna:** Is this 555-8986?"
+  },
+  {
+    "start": 54.579,
+    "end": 59.94,
+    "text": "**Man:** No, this is 555-8689."
+  },
+  {
+    "start": 59.94,
+    "end": 61.62,
+    "text": "**Anna:** Oh, {excuse|謝る/許す} me."
+  },
+  {
+    "start": 61.62,
+    "end": 63.219,
+    "text": "**Man:** Okay, bye."
+  },
+  {
+    "start": 64.1,
+    "end": 66.02,
+    "text": "**Anna:** One more time."
+  },
+  {
+    "start": 66.12,
+    "end": 70.92,
+    "text": "**Anna:** Five five five eight nine eight six."
+  },
+  {
+    "start": 70.92,
+    "end": 72.44,
+    "text": "**Anna:** Please be Marsha"
+  },
+  {
+    "start": 75.46,
+    "end": 77.62,
+    "text": "**Anna:** Hello, this is Marsha."
+  },
+  {
+    "start": 77.62,
+    "end": 80.66,
+    "text": "**Anna:** Yes, Marsha, I want to cook dinner."
+  },
+  {
+    "start": 80.66,
+    "end": 81.86,
+    "text": "**Anna:** Excuse me?"
+  },
+  {
+    "start": 81.86,
+    "end": 83.54,
+    "text": "**Marsha:** Anna, is that you?"
+  },
+  {
+    "start": 83.54,
+    "end": 85.38,
+    "text": "**Anna:** Oh yes, I am here."
+  },
+  {
+    "start": 85.38,
+    "end": 86.18,
+    "text": "**Marsha:** Good."
+  },
+  {
+    "start": 86.18,
+    "end": 87.46,
+    "text": "**Marsha:** You are there."
+  },
+  {
+    "start": 87.46,
+    "end": 88.26,
+    "text": "**Anna:** I want to"
+  },
+  {
+    "start": 88.7,
+    "end": 90.46,
+    "text": "**Anna:** {find|見つける} a supermarket."
+  },
+  {
+    "start": 90.46,
+    "end": 91.98,
+    "text": "**Marsha:** Oh, okay."
+  },
+  {
+    "start": 91.98,
+    "end": 97.1,
+    "text": "**Marsha:** The {supermarket|食料品店|/ˈsuːpərˌmɑːrkɪt/|I buy groceries at the supermarket.} is at 1500 Irving Street."
+  },
+  {
+    "start": 96.84,
+    "end": 98.76,
+    "text": "**Marsha:** It is near the {apartment|アパート|/əˈpɑːrtmənt/|I live in a small apartment.}"
+  },
+  {
+    "start": 98.76,
+    "end": 99.479,
+    "text": "**Anna:** Great."
+  },
+  {
+    "start": 99.479,
+    "end": 100.52,
+    "text": "**Anna:** Goodbye."
+  },
+  {
+    "start": 100.52,
+    "end": 102.6,
+    "text": "**Marsha:** Goodbye, Anna."
+  },
+  {
+    "start": 104.2,
+    "end": 108.52,
+    "text": "**Anna:** There is a big {supermarket|食料品店|/ˈsuːpərˌmɑːrkɪt/|We need to visit the supermarket.} on our street"
+  },
+  {
+    "start": 108.3,
+    "end": 113.02,
+    "text": "**Anna:** And Marcia says, I am a good {cook|料理人/料理をする|/kʊk/|I cook dinner every night.}"
+  },
+  {
+    "start": 113.02,
+    "end": 114.7,
+    "text": "**Anna:** Until next time."
+  },
+  {
+    "start": 114.7,
+    "end": 116.94,
+    "text": "**Anna:** Bye."
+  }
+]

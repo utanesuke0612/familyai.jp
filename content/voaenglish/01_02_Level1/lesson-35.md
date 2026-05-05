@@ -8,4 +8,13 @@ title: "Let’s Make Dinner!"
 thumbnail: https://gdb.voanews.com/b50f4543-a480-4d3a-a600-0759323cb59c_w400_r1.jpg
 voaUrl: https://learningenglish.voanews.com/a/lets-learn-english-lesson-35-lets-make-dinner/3571922.html
 published: true
+# ── R3-機能3（AIctation センテンスプレイヤー骨格）で追加 ──
+# ① レッスン概要（日本語）— ① 概要セクションで表示される
+description: |
+  友人のために夕食を準備するAnnaとMarsha。**買い物リスト**（shopping list）をめぐるコミカルな失敗から、コミュニケーションの大切さを学びます。
+# ② で使う動画 iframe URL（VOA 公式 embed）
+videoUrl: https://learningenglish.voanews.com/embed/player/0/5780912.html?type=video
+# ② / ③ で使う MP3 ファイルのパス（Vercel Blob 上の相対パス）
+# フル URL は env NEXT_PUBLIC_VOA_BLOB_BASE をプレフィックスして合成される
+audioPath: voaenglish/01_02_Level1/lesson-35.mp3
 ---

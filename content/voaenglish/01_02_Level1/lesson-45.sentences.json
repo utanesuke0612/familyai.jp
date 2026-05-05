@@ -1,0 +1,402 @@
+[
+  {
+    "start": 2.24,
+    "end": 4.96,
+    "text": "**Anna:** You know I {love|愛する/好きである|/lʌv/|I love my family.} Washington, D."
+  },
+  {
+    "start": 4.96,
+    "end": 5.44,
+    "text": "**Anna:** C."
+  },
+  {
+    "start": 5.76,
+    "end": 10,
+    "text": "**Anna:** , but I want to see more of the {United States|アメリカ合衆国|/juˈnaɪtɪd steɪts/|United States is a big country.}"
+  },
+  {
+    "start": 10.12,
+    "end": 15.56,
+    "text": "**Anna:** My {roommate|同居人|/ˈruːmmeɪt/|My roommate is friendly.} Marcia and I will be on {vacation|休暇|/vəˈkeɪʃən/|We are on vacation this week.} at the same time."
+  },
+  {
+    "start": 15.56,
+    "end": 19.8,
+    "text": "**Anna:** So we are going on a {road trip|車での旅行|/roʊd trɪp/|We enjoy road trips together.} together."
+  },
+  {
+    "start": 19.76,
+    "end": 21.04,
+    "text": "**Anna:** Hi Marsha."
+  },
+  {
+    "start": 21.04,
+    "end": 21.92,
+    "text": "**Marsha:** Hi!"
+  },
+  {
+    "start": 21.92,
+    "end": 25.12,
+    "text": "**Anna:** I {packed|荷造りした|/pækt/|I packed my suitcase.} my bags and I am ready to go."
+  },
+  {
+    "start": 25.12,
+    "end": 29.04,
+    "text": "**Marsha:** Did you make a list of all the places you want to see?"
+  },
+  {
+    "start": 29.04,
+    "end": 29.68,
+    "text": "**Anna:** I did"
+  },
+  {
+    "start": 29.86,
+    "end": 35.14,
+    "text": "**Anna:** I want to see New York City and the {Statue of Liberty|自由の女神像|/ˈstætʃuː əv ˈlɪbərti/|Statue of Liberty is famous.}"
+  },
+  {
+    "start": 35.14,
+    "end": 38.1,
+    "text": "**Marsha:** And I want to see {Mount Rushmore|ラシュモア山|/maʊnt ˈrʌʃmɔːr/|Mount Rushmore has presidents' faces.}"
+  },
+  {
+    "start": 38.1,
+    "end": 39.62,
+    "text": "**Marsha:** Mount Rushmore."
+  },
+  {
+    "start": 39.62,
+    "end": 40.9,
+    "text": "**Marsha:** And don't forget"
+  },
+  {
+    "start": 41.22,
+    "end": 43.46,
+    "text": "**Anna:** The {Grand Canyon|グランドキャニオン|/grænd ˈkænjən/|Grand Canyon is very deep.}"
+  },
+  {
+    "start": 43.46,
+    "end": 47.54,
+    "text": "**Anna:** Let's not forget California's {Redwood|レッドウッド|/ˈredwʊd/|Redwood trees are very tall.} Forest."
+  },
+  {
+    "start": 47.54,
+    "end": 50.82,
+    "text": "**Anna:** There are so many places to see."
+  },
+  {
+    "start": 50.82,
+    "end": 53.3,
+    "text": "**Marsha:** We will be driving for a long time"
+  },
+  {
+    "start": 53.3,
+    "end": 55.46,
+    "text": "**Marsha:** So we might get {bored|退屈する|/bɔːrd/|Kids get bored quickly.}"
+  },
+  {
+    "start": 55.46,
+    "end": 56.42,
+    "text": "**Marsha:** Bored?"
+  },
+  {
+    "start": 56.42,
+    "end": 57.62,
+    "text": "**Anna:** No way!"
+  },
+  {
+    "start": 57.62,
+    "end": 60.26,
+    "text": "**Anna:** We can talk or not talk."
+  },
+  {
+    "start": 60.26,
+    "end": 62.34,
+    "text": "**Anna:** We can play word games."
+  },
+  {
+    "start": 62.34,
+    "end": 63.3,
+    "text": "**Anna:** We can sing"
+  },
+  {
+    "start": 63.86,
+    "end": 78.5,
+    "text": "**Anna:** You know Marcia, our trip is like that famous American song, This land is your land, this land is my land, from California to New York Allen."
+  },
+  {
+    "start": 78.4,
+    "end": 86.96,
+    "text": "**BOTH:** From the Redwood Forest to the Gulf Stream Waters, this land was made for you and me."
+  },
+  {
+    "start": 86.96,
+    "end": 88.08,
+    "text": "**Anna:** Woo-hoo!"
+  },
+  {
+    "start": 89.12,
+    "end": 91.6,
+    "text": "**Marsha:** Will we be {stopping|止まる|/ˈstɒpɪŋ/|We are stopping for lunch.} soon?"
+  },
+  {
+    "start": 91.6,
+    "end": 94.48,
+    "text": "**Marsha:** We won't be stopping soon."
+  },
+  {
+    "start": 94.48,
+    "end": 96.08,
+    "text": "**Marsha:** I'm hungry."
+  },
+  {
+    "start": 96.08,
+    "end": 99.6,
+    "text": "**Anna:** {Marsha|マーシャ（人名）}, we just left DC."
+  },
+  {
+    "start": 99.56,
+    "end": 102.92,
+    "text": "**Anna:** We'll be eating {lunch|昼食|/lʌntʃ/|Let's have lunch together.} in about two {hours|時間|/ˈaʊərz/|We waited for two hours.}"
+  },
+  {
+    "start": 102.92,
+    "end": 104.28,
+    "text": "**Anna:** Can you wait?"
+  },
+  {
+    "start": 104.28,
+    "end": 105.64,
+    "text": "**Marsha:** I guess."
+  },
+  {
+    "start": 105.64,
+    "end": 107.48,
+    "text": "**Anna:** Here, have an {apple|りんご|/ˈæpəl/|I like red apples.}"
+  },
+  {
+    "start": 108.12,
+    "end": 110.2,
+    "text": "**Anna:** It's {organic|有機の|/ɔːrˈɡænɪk/|Organic food is healthy.}"
+  },
+  {
+    "start": 110.2,
+    "end": 111.72,
+    "text": "**Marsha:** Thanks."
+  },
+  {
+    "start": 111.72,
+    "end": 117.48,
+    "text": "**Marsha:** Okay, we will be {arriving|到着する|/əˈraɪvɪŋ/|We are arriving soon.} in New York City very soon."
+  },
+  {
+    "start": 117.48,
+    "end": 121.16,
+    "text": "**Anna:** I can't wait to see the {big apple|ニューヨーク市|/bɪɡ ˈæpəl/|New York is the big apple.}!"
+  },
+  {
+    "start": 121.24,
+    "end": 123,
+    "text": "**Anna:** Marcia, look!"
+  },
+  {
+    "start": 123,
+    "end": 124.52,
+    "text": "**Anna:** There she is!"
+  },
+  {
+    "start": 124.52,
+    "end": 127.08,
+    "text": "**Anna:** The Statue of {Liberty|自由の女神|/ˈlɪbərti/|Liberty means freedom.}"
+  },
+  {
+    "start": 127.08,
+    "end": 129.399,
+    "text": "**Anna:** She is {awesome|素晴らしい|/ˈɔːsəm/|That concert was awesome.}!"
+  },
+  {
+    "start": 129.399,
+    "end": 134.28,
+    "text": "**Anna:** Marsha, in ten minutes, guess what we'll be seeing?"
+  },
+  {
+    "start": 134.28,
+    "end": 135.16,
+    "text": "**Anna:** What?"
+  },
+  {
+    "start": 135.22,
+    "end": 139.06,
+    "text": "**Anna:** The largest {rocking|揺れる|/ˈrɒkɪŋ/|The chair is rocking.} chair in the world!"
+  },
+  {
+    "start": 139.06,
+    "end": 141.54,
+    "text": "**Marsha:** No, we won't be seeing that."
+  },
+  {
+    "start": 141.54,
+    "end": 145.86,
+    "text": "**Anna:** It's on my other {list|リスト/目録|/lɪst/|I made a shopping list.}, Best Roadside Sites."
+  },
+  {
+    "start": 146.2,
+    "end": 150.519,
+    "text": "**Anna:** Oh no, we {littered|ごみを捨てた|/ˈlɪtər/|Don't litter in parks.} and my list is gone."
+  },
+  {
+    "start": 150.519,
+    "end": 151.799,
+    "text": "**Anna:** Don't worry."
+  },
+  {
+    "start": 151.799,
+    "end": 154.04,
+    "text": "**Anna:** I brought the book."
+  },
+  {
+    "start": 154.04,
+    "end": 158.439,
+    "text": "**Anna:** And that is why I am so afraid of {sheep|羊|/ʃiːp/|Sheep are white and fluffy.}"
+  },
+  {
+    "start": 159.5,
+    "end": 162.3,
+    "text": "**Anna:** Wow, I feel better."
+  },
+  {
+    "start": 162.3,
+    "end": 165.74,
+    "text": "**Anna:** Marcia, you are a great {listener|聞き手|/ˈlɪsənər/|She is a good listener.}"
+  },
+  {
+    "start": 166.7,
+    "end": 168.3,
+    "text": "**Marsha:** Where are we?"
+  },
+  {
+    "start": 168.3,
+    "end": 172.3,
+    "text": "**Anna:** We will be {entering|入る|/ˈentərɪŋ/|We are entering the room.} North Dakota any minute now."
+  },
+  {
+    "start": 173.28,
+    "end": 178.959,
+    "text": "**Marsha:** North Dakota, we are going in the wrong {direction|方向|/dəˈrekʃən/|Turn left in this direction.}"
+  },
+  {
+    "start": 178.959,
+    "end": 182.239,
+    "text": "**Anna:** We want to go to South Dakota."
+  },
+  {
+    "start": 182.56,
+    "end": 184.48,
+    "text": "**Anna:** No problem."
+  },
+  {
+    "start": 184.48,
+    "end": 188.32,
+    "text": "**Anna:** I will just {exit|出口/出る|/ˈeɡzɪt/|Exit the highway here.} the highway."
+  },
+  {
+    "start": 188.32,
+    "end": 191.76,
+    "text": "**Anna:** We will be {going|行く/進む|/ˈɡoʊɪŋ/|We are going to the park.} south in just a minute."
+  },
+  {
+    "start": 191.76,
+    "end": 192.64,
+    "text": "**Anna:** There."
+  },
+  {
+    "start": 192.64,
+    "end": 193.36,
+    "text": "**Anna:** Done."
+  },
+  {
+    "start": 193.36,
+    "end": 195.2,
+    "text": "**Anna:** We're going south."
+  },
+  {
+    "start": 195.12,
+    "end": 201.44,
+    "text": "**Anna:** Okay, we will be {stopping|止まる/休憩する|/ˈstɑːpɪŋ/|We are stopping for lunch.} for gas and a {bathroom|トイレ/洗面所|/ˈbæθruːm/|The bathroom is clean.} break in about an hour."
+  },
+  {
+    "start": 201.44,
+    "end": 202.8,
+    "text": "**Marsha:** Then we will be"
+  },
+  {
+    "start": 203.22,
+    "end": 205.939,
+    "text": "**Marsha:** very near to {Mount|山/山岳|/maʊnt/|Mount Everest is tall.} Rushmore."
+  },
+  {
+    "start": 205.939,
+    "end": 206.739,
+    "text": "**Anna:** Yay!"
+  },
+  {
+    "start": 206.739,
+    "end": 210.099,
+    "text": "**Anna:** {Dead|死んだ/亡き|/ded/|The dead leaves fell.} {president's|大統領の|/ˈprezɪdənts/|The president's speech.} heads on the side of a mountain."
+  },
+  {
+    "start": 210.099,
+    "end": 211.14,
+    "text": "**Anna:** Woohoo!"
+  },
+  {
+    "start": 211.44,
+    "end": 213.12,
+    "text": "**Anna:** We did it Marcia!"
+  },
+  {
+    "start": 213.12,
+    "end": 215.68,
+    "text": "**Anna:** We made it to {California|カリフォルニア州|/ˌkælɪˈfɔːrniə/|California has sunny weather.}!"
+  },
+  {
+    "start": 215.68,
+    "end": 217.92,
+    "text": "**Anna:** It's beautiful!"
+  },
+  {
+    "start": 217.92,
+    "end": 221.44,
+    "text": "**Marsha:** And we saw everything on the list."
+  },
+  {
+    "start": 221.44,
+    "end": 225.84,
+    "text": "**Anna:** Well, we saw everything on page one of the list."
+  },
+  {
+    "start": 226.06,
+    "end": 229.18,
+    "text": "**Marsha:** What do you mean, page one?"
+  },
+  {
+    "start": 229.18,
+    "end": 233.58,
+    "text": "**Anna:** Oh, here are pages two, three, and four."
+  },
+  {
+    "start": 233.58,
+    "end": 236.94,
+    "text": "**Anna:** We'll be very busy {driving|運転する|/ˈdraɪvɪŋ/|I am driving to work.} back to {Washington|ワシントン|/ˈwɑːʃɪŋtən/|Washington is the capital.}, D."
+  },
+  {
+    "start": 236.94,
+    "end": 237.58,
+    "text": "**Anna:** C."
+  },
+  {
+    "start": 238.22,
+    "end": 239.98,
+    "text": "**Anna:** Till next time."
+  }
+]

@@ -1,0 +1,442 @@
+[
+  {
+    "start": 4.72,
+    "end": 5.92,
+    "text": "**Anna:** Hi there!"
+  },
+  {
+    "start": 5.92,
+    "end": 6.96,
+    "text": "**Anna:** {Washington|首都/アメリカの都市}, D."
+  },
+  {
+    "start": 6.96,
+    "end": 7.2,
+    "text": "**Anna:** C."
+  },
+  {
+    "start": 7.28,
+    "end": 9.2,
+    "text": "**Anna:** is a {great|素晴らしい/素晴らしな} place to work."
+  },
+  {
+    "start": 9.2,
+    "end": 11.92,
+    "text": "**Anna:** Many people here work in {government|政府}."
+  },
+  {
+    "start": 11.74,
+    "end": 15.18,
+    "text": "**Anna:** and {politics|政治}, but there are many other jobs."
+  },
+  {
+    "start": 15.18,
+    "end": 22.46,
+    "text": "**Anna:** You can work at a {hospital|病院}, a {university|大学}, you can work in a coffee shop."
+  },
+  {
+    "start": 23.2,
+    "end": 24.88,
+    "text": "**Anna:** Wait a minute."
+  },
+  {
+    "start": 24.88,
+    "end": 27.28,
+    "text": "**Anna:** I think I see a {friend|友達} of mine."
+  },
+  {
+    "start": 27.92,
+    "end": 30.4,
+    "text": "**Anna:** Pete, is that you?"
+  },
+  {
+    "start": 30.72,
+    "end": 32.4,
+    "text": "**Pete:** Hi Anna."
+  },
+  {
+    "start": 32.56,
+    "end": 34.32,
+    "text": "**Anna:** You look {different|違う/異なる}."
+  },
+  {
+    "start": 34.32,
+    "end": 38.4,
+    "text": "**Anna:** Your {beard|ひげ} is really big."
+  },
+  {
+    "start": 38.4,
+    "end": 40.64,
+    "text": "**Pete:** You don't like it, do you?"
+  },
+  {
+    "start": 40.64,
+    "end": 41.92,
+    "text": "**Anna:** No, no."
+  },
+  {
+    "start": 41.92,
+    "end": 44,
+    "text": "**Anna:** You just look different."
+  },
+  {
+    "start": 44,
+    "end": 46,
+    "text": "**Anna:** So what's {wrong|悪い/問題がある}?"
+  },
+  {
+    "start": 45.3,
+    "end": 47.3,
+    "text": "**Anna:** You look sad."
+  },
+  {
+    "start": 47.3,
+    "end": 49.059,
+    "text": "**Pete:** I don't have a job."
+  },
+  {
+    "start": 49.059,
+    "end": 51.22,
+    "text": "**Anna:** Sorry, I can't hear you."
+  },
+  {
+    "start": 51.22,
+    "end": 54.1,
+    "text": "**Pete:** I do not have a job."
+  },
+  {
+    "start": 54.1,
+    "end": 57.14,
+    "text": "**Anna:** Oh, I'm sorry to hear that, Pete."
+  },
+  {
+    "start": 57.24,
+    "end": 59.16,
+    "text": "**Pete:** I don't have a {skill|技術/能力}."
+  },
+  {
+    "start": 59.16,
+    "end": 61.48,
+    "text": "**Anna:** Everyone has a skill."
+  },
+  {
+    "start": 61.48,
+    "end": 63.96,
+    "text": "**Anna:** You need to find yours."
+  },
+  {
+    "start": 63.96,
+    "end": 65.4,
+    "text": "**Pete:** I don't know, Anna."
+  },
+  {
+    "start": 65.4,
+    "end": 68.52,
+    "text": "**Anna:** Pete, I am good at asking {questions|質問}."
+  },
+  {
+    "start": 68.52,
+    "end": 70.12,
+    "text": "**Anna:** Let me ask you some"
+  },
+  {
+    "start": 70.72,
+    "end": 72.24,
+    "text": "**Pete:** Really, Anna?"
+  },
+  {
+    "start": 72.24,
+    "end": 73.84,
+    "text": "**Pete:** Can you help me?"
+  },
+  {
+    "start": 73.84,
+    "end": 75.28,
+    "text": "**Anna:** Yes, I can."
+  },
+  {
+    "start": 75.28,
+    "end": 76.8,
+    "text": "**Anna:** Let me {help|助ける|/help/|I help my friends.}"
+  },
+  {
+    "start": 76.8,
+    "end": 78.08,
+    "text": "**Pete:** Sure, Anna."
+  },
+  {
+    "start": 78.08,
+    "end": 80,
+    "text": "**Pete:** Maybe you can {help|助ける|/help/|I help my friends.} me"
+  },
+  {
+    "start": 80.22,
+    "end": 82.46,
+    "text": "**Anna:** Can you write {code|プログラミング|/koʊd/|I write code for websites.}?"
+  },
+  {
+    "start": 82.62,
+    "end": 83.74,
+    "text": "**Pete:** Sure."
+  },
+  {
+    "start": 83.74,
+    "end": 87.18,
+    "text": "**Pete:** C, O, L, D."
+  },
+  {
+    "start": 87.18,
+    "end": 89.34,
+    "text": "**Pete:** How is this going to {help|助ける|/help/|I help my friends.}?"
+  },
+  {
+    "start": 89.32,
+    "end": 92.52,
+    "text": "**Anna:** No, not {cold|寒い/冷たい|/koʊld/|The weather is cold today.} code."
+  },
+  {
+    "start": 92.52,
+    "end": 100.12,
+    "text": "**Anna:** You know, for making phone {apps|アプリ|/æps/|I use many apps on my phone.} or websites, you can make {tons|大量/たくさん|/tʌnz/|I have tons of books.} of money writing {code|プログラミング|/koʊd/|I write code for websites.}."
+  },
+  {
+    "start": 100.22,
+    "end": 104.46,
+    "text": "**Pete:** {Tons|大量/たくさん|/tʌnz/|I have tons of books.} of money, but I can't {code|プログラミング|/koʊd/|I write code for websites.}."
+  },
+  {
+    "start": 104.46,
+    "end": 105.98,
+    "text": "**Anna:** Next question."
+  },
+  {
+    "start": 105.98,
+    "end": 107.66,
+    "text": "**Anna:** Can you {drive|運転する|/draɪv/|I drive to work every day.}?"
+  },
+  {
+    "start": 107.98,
+    "end": 110.7,
+    "text": "**Pete:** Do you mean {drive|運転する|/draɪv/|I drive to work every day.} a race car?"
+  },
+  {
+    "start": 110.62,
+    "end": 113.42,
+    "text": "**Anna:** It's really hard to be a race car {driver|運転手/ドライバー|/ˈdraɪvər/|Race car drivers are brave.}."
+  },
+  {
+    "start": 113.42,
+    "end": 114.94,
+    "text": "**Pete:** First you need a race car."
+  },
+  {
+    "start": 114.94,
+    "end": 119.18,
+    "text": "**Anna:** No, I mean {drive|運転する|/draɪv/|I drive to work every day.} a taxi or {drive|運転する|/draɪv/|I drive to work every day.} a bus."
+  },
+  {
+    "start": 119.36,
+    "end": 122.64,
+    "text": "**Pete:** No, I always {fall|落ちる/眠る|/fɔːl/|Leaves fall in autumn.} asleep when I {drive|運転する|/draɪv/|I drive to work every day.}."
+  },
+  {
+    "start": 122.64,
+    "end": 124.72,
+    "text": "**Anna:** Oh, that's not good."
+  },
+  {
+    "start": 124.72,
+    "end": 126.48,
+    "text": "**Anna:** Next question."
+  },
+  {
+    "start": 126.48,
+    "end": 128.32,
+    "text": "**Anna:** Can you {teach|教える|/tiːtʃ/|Teachers teach students.}?"
+  },
+  {
+    "start": 128.32,
+    "end": 131.12,
+    "text": "**Anna:** You can be a {teacher|教師|/ˈtiːtʃər/|Teachers work in schools.} in a school"
+  },
+  {
+    "start": 131.66,
+    "end": 133.98,
+    "text": "**Pete:** No, I cannot {teach|教える|/tiːtʃ/|Teachers teach students.}."
+  },
+  {
+    "start": 133.98,
+    "end": 135.42,
+    "text": "**Anna:** Can you {cook|料理する|/kʊk/|I cook dinner every night.}?"
+  },
+  {
+    "start": 135.42,
+    "end": 138.06,
+    "text": "**Anna:** You can be a {chef|シェフ/料理人|/ʃef/|Chefs work in restaurants.} in a restaurant."
+  },
+  {
+    "start": 138.06,
+    "end": 140.22,
+    "text": "**Pete:** No, I can't {code|プログラミング|/koʊd/|I write code for websites.}."
+  },
+  {
+    "start": 140.22,
+    "end": 141.58,
+    "text": "**Pete:** I can't {teach|教える|/tiːtʃ/|Teachers teach students.}."
+  },
+  {
+    "start": 141.58,
+    "end": 142.94,
+    "text": "**Pete:** I can't {cook|料理する|/kʊk/|I cook dinner every night.}."
+  },
+  {
+    "start": 142.94,
+    "end": 145.66,
+    "text": "**Pete:** Anna, I can't do anything."
+  },
+  {
+    "start": 145.959,
+    "end": 148.28,
+    "text": "**Pete:** This is sad."
+  },
+  {
+    "start": 148.28,
+    "end": 151.4,
+    "text": "**Pete:** I'm gonna write about my {feelings|感情/気持ち} in my {blog|ブログ/日記}."
+  },
+  {
+    "start": 151.4,
+    "end": 153.319,
+    "text": "**Anna:** You write a blog?"
+  },
+  {
+    "start": 153.319,
+    "end": 155.079,
+    "text": "**Pete:** Yeah, I write a blog."
+  },
+  {
+    "start": 155.079,
+    "end": 157.799,
+    "text": "**Anna:** How many {followers|フォロワー/支持者} do you have?"
+  },
+  {
+    "start": 157.799,
+    "end": 159,
+    "text": "**Pete:** I don't know"
+  },
+  {
+    "start": 159.62,
+    "end": 162.18,
+    "text": "**Pete:** 59,538?"
+  },
+  {
+    "start": 162.18,
+    "end": 164.98,
+    "text": "**Anna:** Pete, that's a lot of {followers|フォロワー/支持者}."
+  },
+  {
+    "start": 164.98,
+    "end": 168.42,
+    "text": "**Anna:** You can make money {writing|書くこと}."
+  },
+  {
+    "start": 168.5,
+    "end": 170.66,
+    "text": "**Pete:** {Writing|書くこと} is easy."
+  },
+  {
+    "start": 170.66,
+    "end": 171.94,
+    "text": "**Anna:** Everyone can write."
+  },
+  {
+    "start": 171.94,
+    "end": 174.66,
+    "text": "**Anna:** Not everyone can write well."
+  },
+  {
+    "start": 174.66,
+    "end": 177.38,
+    "text": "**Anna:** You can be a {writer|作家}."
+  },
+  {
+    "start": 177.44,
+    "end": 183.2,
+    "text": "**Pete:** I can be a {writer|作家}?"
+  },
+  {
+    "start": 183.2,
+    "end": 184.879,
+    "text": "**Pete:** Thanks, Anna."
+  },
+  {
+    "start": 184.879,
+    "end": 186,
+    "text": "**Marsha:** Hi, Pete."
+  },
+  {
+    "start": 186,
+    "end": 187.519,
+    "text": "**Pete:** Hi, Anna."
+  },
+  {
+    "start": 187.3,
+    "end": 189.14,
+    "text": "**Pete:** Hi Marsha."
+  },
+  {
+    "start": 189.14,
+    "end": 190.58,
+    "text": "**Pete:** Excuse me."
+  },
+  {
+    "start": 190.58,
+    "end": 192.1,
+    "text": "**Pete:** I have to go."
+  },
+  {
+    "start": 192.1,
+    "end": 193.62,
+    "text": "**Marsha:** Where are you going?"
+  },
+  {
+    "start": 193.94,
+    "end": 198.02,
+    "text": "**Pete:** I'm going to be a {writer|作家}."
+  },
+  {
+    "start": 198.22,
+    "end": 199.739,
+    "text": "**Anna:** Good luck, Pete!"
+  },
+  {
+    "start": 200.06,
+    "end": 204.939,
+    "text": "**Anna:** He does know that it's not easy to be a {writer|作家}, doesn't he?"
+  },
+  {
+    "start": 205.18,
+    "end": 209.5,
+    "text": "**Anna:** There are many different {jobs|仕事} you can have in {Washington, DC|首都ワシントン}."
+  },
+  {
+    "start": 210.24,
+    "end": 212.72,
+    "text": "**Anna:** Pete wants to be a {writer|作家}."
+  },
+  {
+    "start": 212.72,
+    "end": 214.56,
+    "text": "**Anna:** I wish him luck."
+  },
+  {
+    "start": 214.56,
+    "end": 216.24,
+    "text": "**Anna:** Lots of luck."
+  },
+  {
+    "start": 216.24,
+    "end": 218,
+    "text": "**Anna:** Until next time."
+  }
+]

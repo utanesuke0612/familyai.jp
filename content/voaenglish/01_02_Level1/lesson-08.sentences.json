@@ -1,0 +1,272 @@
+[
+  {
+    "start": 1.92,
+    "end": 3.44,
+    "text": "**Anna:** Hello everyone!"
+  },
+  {
+    "start": 3.44,
+    "end": 6.16,
+    "text": "**Anna:** Here I am at my {new|新しい} job."
+  },
+  {
+    "start": 6.16,
+    "end": 9.04,
+    "text": "**Anna:** {Yesterday|昨日}，at my first day of work."
+  },
+  {
+    "start": 9.04,
+    "end": 11.04,
+    "text": "**Anna:** Let's not talk about yesterday."
+  },
+  {
+    "start": 11.04,
+    "end": 13.04,
+    "text": "**Anna:** Today is a new day"
+  },
+  {
+    "start": 12.8,
+    "end": 18.64,
+    "text": "**Anna:** Today, I want to {apologize|謝罪する} to my coworkers."
+  },
+  {
+    "start": 18.64,
+    "end": 19.92,
+    "text": "**Anna:** Hi Anne."
+  },
+  {
+    "start": 19.92,
+    "end": 20.96,
+    "text": "**Anna:** Are you {busy|忙しい}?"
+  },
+  {
+    "start": 20.96,
+    "end": 22.24,
+    "text": "**Anne:** Hi Anna."
+  },
+  {
+    "start": 22.24,
+    "end": 23.92,
+    "text": "**Anne:** Yes, at 10 a."
+  },
+  {
+    "start": 23.92,
+    "end": 24.24,
+    "text": "**Anne:** m."
+  },
+  {
+    "start": 24.48,
+    "end": 26.32,
+    "text": "**Anne:** , I am writing."
+  },
+  {
+    "start": 26.119,
+    "end": 29.64,
+    "text": "**Anne:** Every day I do my {morning|朝の} show."
+  },
+  {
+    "start": 29.64,
+    "end": 30.68,
+    "text": "**Anna:** Sorry."
+  },
+  {
+    "start": 31,
+    "end": 32.2,
+    "text": "**Anna:** Okay."
+  },
+  {
+    "start": 32.2,
+    "end": 33.72,
+    "text": "**Anne:** See you later."
+  },
+  {
+    "start": 34.22,
+    "end": 38.22,
+    "text": "**Anne:** Maybe maybe I'll see you later."
+  },
+  {
+    "start": 38.22,
+    "end": 40.78,
+    "text": "**Anna:** Hi Jonathan, are you {busy|忙しい}?"
+  },
+  {
+    "start": 40.78,
+    "end": 42.3,
+    "text": "**Jonathan:** Yes, I'm busy."
+  },
+  {
+    "start": 42.3,
+    "end": 44.22,
+    "text": "**Anna:** When the {studio|スタジオ} light is on"
+  },
+  {
+    "start": 44.54,
+    "end": 46.86,
+    "text": "**Anna:** I am recording my {evening|夕方の} show."
+  },
+  {
+    "start": 46.86,
+    "end": 47.579,
+    "text": "**Anna:** Right."
+  },
+  {
+    "start": 47.579,
+    "end": 49.42,
+    "text": "**Anna:** Sorry about yesterday."
+  },
+  {
+    "start": 49.42,
+    "end": 50.54,
+    "text": "**Jonathan:** No worries."
+  },
+  {
+    "start": 50.54,
+    "end": 51.98,
+    "text": "**Anna:** May I see the studio?"
+  },
+  {
+    "start": 51.98,
+    "end": 53.5,
+    "text": "**Jonathan:** Um, maybe another time?"
+  },
+  {
+    "start": 53.5,
+    "end": 55.66,
+    "text": "**Anna:** Right now, I am busy"
+  },
+  {
+    "start": 55.92,
+    "end": 57.039,
+    "text": "**Anna:** Sure."
+  },
+  {
+    "start": 57.039,
+    "end": 58.079,
+    "text": "**Anna:** Okay."
+  },
+  {
+    "start": 58.079,
+    "end": 59.519,
+    "text": "**Anna:** Bye."
+  },
+  {
+    "start": 59.519,
+    "end": 61.039,
+    "text": "**Anna:** Hi, Amelia."
+  },
+  {
+    "start": 61.039,
+    "end": 62.16,
+    "text": "**Anna:** Are you {busy|忙しい}?"
+  },
+  {
+    "start": 62.16,
+    "end": 63.519,
+    "text": "**Amelia:** I'm a little {busy|忙しい}."
+  },
+  {
+    "start": 63.519,
+    "end": 66.64,
+    "text": "**Anna:** I want to say I'm {sorry|ごめんなさい}."
+  },
+  {
+    "start": 66.6,
+    "end": 67.799,
+    "text": "**Anna:** For yesterday."
+  },
+  {
+    "start": 67.799,
+    "end": 69.32,
+    "text": "**Amelia:** It's okay, Anna."
+  },
+  {
+    "start": 69.32,
+    "end": 70.92,
+    "text": "**Anna:** Well, I am {sorry|ごめんなさい}."
+  },
+  {
+    "start": 70.92,
+    "end": 72.119,
+    "text": "**Amelia:** It's okay, Anna."
+  },
+  {
+    "start": 72.119,
+    "end": 74.2,
+    "text": "**Amelia:** Come by this {afternoon|午後}."
+  },
+  {
+    "start": 74.2,
+    "end": 74.52,
+    "text": "**Anna:** Okay"
+  },
+  {
+    "start": 75.78,
+    "end": 77.14,
+    "text": "**Anne:** Anna."
+  },
+  {
+    "start": 77.14,
+    "end": 78.74,
+    "text": "**Anna:** Yes, Miss Weaver."
+  },
+  {
+    "start": 78.74,
+    "end": 79.54,
+    "text": "**Anna:** Are you busy?"
+  },
+  {
+    "start": 79.54,
+    "end": 80.66,
+    "text": "**Anna:** Yes, Miss Weaver."
+  },
+  {
+    "start": 80.66,
+    "end": 82.02,
+    "text": "**Anna:** I I am busy."
+  },
+  {
+    "start": 82.02,
+    "end": 83.7,
+    "text": "**Caty:** My office, five {p.m.|午後/夕方}."
+  },
+  {
+    "start": 83.7,
+    "end": 83.94,
+    "text": "**Anne:** m."
+  },
+  {
+    "start": 86.28,
+    "end": 97.16,
+    "text": "**Anna:** I am in the {middle|真ん中/中心} of the city."
+  },
+  {
+    "start": 99.48,
+    "end": 101.48,
+    "text": "**Anna:** {Surprise|驚き}!"
+  },
+  {
+    "start": 102.12,
+    "end": 103.48,
+    "text": "**Anna:** A {party|パーティー}!"
+  },
+  {
+    "start": 103.48,
+    "end": 105.16,
+    "text": "**Anna:** {Awesome|素晴らしい/すごい}!"
+  },
+  {
+    "start": 105.16,
+    "end": 107.72,
+    "text": "**Anna:** And I still have my job"
+  },
+  {
+    "start": 108.5,
+    "end": 110.259,
+    "text": "**Anna:** Until next time."
+  },
+  {
+    "start": 113.38,
+    "end": 115.299,
+    "text": "**Anna:** That's {punching|パンチする/叩く} too."
+  }
+]

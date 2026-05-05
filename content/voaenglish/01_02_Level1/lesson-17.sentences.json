@@ -1,0 +1,322 @@
+[
+  {
+    "start": 0.64,
+    "end": 1.6,
+    "text": "**Anna:** Hi there!"
+  },
+  {
+    "start": 1.8399999999999999,
+    "end": 5.12,
+    "text": "**Anna:** {Things|物事/状況} are going really well in Washington DC."
+  },
+  {
+    "start": 5.12,
+    "end": 7.52,
+    "text": "**Anna:** The city is very {interesting|興味深い}."
+  },
+  {
+    "start": 7.52,
+    "end": 11.6,
+    "text": "**Anna:** I really {like|好む/気に入る} my job and I have some good friends."
+  },
+  {
+    "start": 11.36,
+    "end": 14.08,
+    "text": "**Anna:** Speaking of {friends|友人}, I see one now."
+  },
+  {
+    "start": 14.08,
+    "end": 14.96,
+    "text": "**Anna:** Marsha!"
+  },
+  {
+    "start": 14.96,
+    "end": 15.44,
+    "text": "**Anna:** Hi!"
+  },
+  {
+    "start": 15.68,
+    "end": 16.8,
+    "text": "**Marsha:** Hi Anna!"
+  },
+  {
+    "start": 16.8,
+    "end": 18,
+    "text": "**Marsha:** What's going on?"
+  },
+  {
+    "start": 18,
+    "end": 18.96,
+    "text": "**Anna:** Not much."
+  },
+  {
+    "start": 18.96,
+    "end": 20,
+    "text": "**Anna:** How about you?"
+  },
+  {
+    "start": 20,
+    "end": 21.36,
+    "text": "**Marsha:** {Busy|忙しい} as usual"
+  },
+  {
+    "start": 21.74,
+    "end": 24.619,
+    "text": "**Marsha:** Hey, do you want to see a {movie|映画} with me?"
+  },
+  {
+    "start": 24.619,
+    "end": 25.66,
+    "text": "**Anna:** Sure."
+  },
+  {
+    "start": 25.66,
+    "end": 28.619,
+    "text": "**Anna:** I never have time to see a movie."
+  },
+  {
+    "start": 28.619,
+    "end": 29.66,
+    "text": "**Marsha:** When?"
+  },
+  {
+    "start": 29.66,
+    "end": 32.3,
+    "text": "**Marsha:** Are you busy this Thursday at 6 p."
+  },
+  {
+    "start": 32.3,
+    "end": 32.7,
+    "text": "**Anna:** m."
+  },
+  {
+    "start": 32.7,
+    "end": 32.78,
+    "text": "**Anna:** ?"
+  },
+  {
+    "start": 33.1,
+    "end": 34.22,
+    "text": "**Anna:** Let's see."
+  },
+  {
+    "start": 34.22,
+    "end": 35.42,
+    "text": "**Marsha:** I'm busy"
+  },
+  {
+    "start": 35.72,
+    "end": 39.64,
+    "text": "**Anna:** I am going to {tap dance|タップダンス} with my friends Thursday night."
+  },
+  {
+    "start": 39.64,
+    "end": 40.84,
+    "text": "**Marsha:** Tap dancing!"
+  },
+  {
+    "start": 40.84,
+    "end": 42.2,
+    "text": "**Marsha:** That sounds {fun|楽しい}."
+  },
+  {
+    "start": 42.2,
+    "end": 45.16,
+    "text": "**Anna:** I'm still {learning|学ぶ}, but it is fun."
+  },
+  {
+    "start": 45.22,
+    "end": 47.86,
+    "text": "**Anna:** Are you busy on Friday nights?"
+  },
+  {
+    "start": 47.86,
+    "end": 48.66,
+    "text": "**Marsha:** Yes."
+  },
+  {
+    "start": 48.66,
+    "end": 51.78,
+    "text": "**Marsha:** Friday nights are when I {visit|訪問する} my parents."
+  },
+  {
+    "start": 51.78,
+    "end": 54.34,
+    "text": "**Anna:** What do you and your family do together?"
+  },
+  {
+    "start": 54.34,
+    "end": 59.78,
+    "text": "**Anna:** We always eat dinner together and sometimes we play {board games|ボードゲーム}."
+  },
+  {
+    "start": 59.52,
+    "end": 61.76,
+    "text": "**Anna:** Playing {board games|ボードゲーム} is fun too."
+  },
+  {
+    "start": 61.76,
+    "end": 65.12,
+    "text": "**Anna:** The word game {Scrabble|単語ゲーム} is my favorite."
+  },
+  {
+    "start": 65.12,
+    "end": 66.72,
+    "text": "**Anna:** I like Connect 4"
+  },
+  {
+    "start": 67.439,
+    "end": 70.64,
+    "text": "**Anna:** I'm not busy on Monday night, are you?"
+  },
+  {
+    "start": 70.96,
+    "end": 73.039,
+    "text": "**Marsha:** I am busy on Monday night."
+  },
+  {
+    "start": 73.039,
+    "end": 76.64,
+    "text": "**Anna:** I'm going to {jog|ジョギングする} in the park with my friend."
+  },
+  {
+    "start": 76.62,
+    "end": 78.06,
+    "text": "**Marsha:** Do you jog?"
+  },
+  {
+    "start": 78.06,
+    "end": 80.54,
+    "text": "**Marsha:** Oh, I always jog."
+  },
+  {
+    "start": 80.54,
+    "end": 82.94,
+    "text": "**Marsha:** Well, sometimes I jog."
+  },
+  {
+    "start": 82.94,
+    "end": 84.54,
+    "text": "**Marsha:** Okay, I never jog."
+  },
+  {
+    "start": 84.54,
+    "end": 88.3,
+    "text": "**Anna:** But but I will try because it is {good for you|健康に良い}."
+  },
+  {
+    "start": 88.16,
+    "end": 91.92,
+    "text": "**Marsha:** I always feel great after I talk."
+  },
+  {
+    "start": 91.92,
+    "end": 94.08,
+    "text": "**Marsha:** How about on Wednesday night?"
+  },
+  {
+    "start": 94.08,
+    "end": 96.4,
+    "text": "**Anna:** Wednesday night I am not busy."
+  },
+  {
+    "start": 96.4,
+    "end": 98.16,
+    "text": "**Anna:** Oh no, wait."
+  },
+  {
+    "start": 98.16,
+    "end": 101.2,
+    "text": "**Anna:** This Wednesday night I will be busy."
+  },
+  {
+    "start": 101.04,
+    "end": 102.48,
+    "text": "**Marsha:** What are you doing?"
+  },
+  {
+    "start": 102.48,
+    "end": 106.72,
+    "text": "**Anna:** I'm going to teach children how to play the {ukulele|ウクレレ}."
+  },
+  {
+    "start": 106.72,
+    "end": 109.52,
+    "text": "**Anna:** Now children, play C."
+  },
+  {
+    "start": 109.52,
+    "end": 111.6,
+    "text": "**Anna:** Oh."
+  },
+  {
+    "start": 111.6,
+    "end": 112.56,
+    "text": "**Anna:** Good!"
+  },
+  {
+    "start": 114.48,
+    "end": 115.6,
+    "text": "**Anna:** I like your C"
+  },
+  {
+    "start": 116.76,
+    "end": 120.2,
+    "text": "**Anna:** The world does need more ukulele players."
+  },
+  {
+    "start": 120.2,
+    "end": 125.24,
+    "text": "**Anna:** Marsha, it looks like we'll never have time to see a movie."
+  },
+  {
+    "start": 125.48,
+    "end": 126.92,
+    "text": "**Anna:** Wait a minute."
+  },
+  {
+    "start": 126.92,
+    "end": 128.759,
+    "text": "**Anna:** Are you busy now?"
+  },
+  {
+    "start": 129,
+    "end": 131.32,
+    "text": "**Anna:** It's Saturday afternoon."
+  },
+  {
+    "start": 131.32,
+    "end": 134.2,
+    "text": "**Anna:** This is always when I do my {errands|日常の用事}."
+  },
+  {
+    "start": 134.2,
+    "end": 135.4,
+    "text": "**Anna:** Okay."
+  },
+  {
+    "start": 135.4,
+    "end": 139.96,
+    "text": "**Anna:** But the new Star Wars movie's gonna start in {thirty|30/三十} {minutes|分}."
+  },
+  {
+    "start": 140.099,
+    "end": 142.42,
+    "text": "**Marsha:** I'll do my {errands|用事/買い物|/ˈerəndz/|I have some errands to run today.} on Sunday."
+  },
+  {
+    "start": 142.42,
+    "end": 143.7,
+    "text": "**Anna:** Let's go."
+  },
+  {
+    "start": 143.7,
+    "end": 150.98,
+    "text": "**Anna:** Most {days|日/曜日|/deɪz/|Some days are sunny.} of the week, people are really {busy|忙しい/活動的|/ˈbɪzi/|She is busy with work.}, but it's important to find {time|時間|/taɪm/|I have free time today.} to be with your friends."
+  },
+  {
+    "start": 150.98,
+    "end": 152.58,
+    "text": "**Anna:** Until next time."
+  }
+]

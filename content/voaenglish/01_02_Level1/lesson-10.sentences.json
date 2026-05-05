@@ -1,0 +1,167 @@
+[
+  {
+    "start": 1.2,
+    "end": 5.36,
+    "text": "**Anna:** Hi, today my {friend|友人/仲間|/frɛnd/|My friend is very kind.} Ashley is coming over."
+  },
+  {
+    "start": 5.36,
+    "end": 9.12,
+    "text": "**Anna:** I am showing her my new {apartment|アパート/マンション|/əˈpɑːrtmənt/|My apartment is small but cozy.}"
+  },
+  {
+    "start": 9.92,
+    "end": 12,
+    "text": "**Anna:** That's Ashley {calling|呼んでいる/電話している|/ˈkɔːlɪŋ/|She is calling my name.}"
+  },
+  {
+    "start": 12.84,
+    "end": 14.12,
+    "text": "**Anna:** Hi Ashley."
+  },
+  {
+    "start": 14.12,
+    "end": 15.08,
+    "text": "**Ashley:** Hi Anna."
+  },
+  {
+    "start": 15.08,
+    "end": 17.24,
+    "text": "**Ashley:** I'm coming to your apartment."
+  },
+  {
+    "start": 17.24,
+    "end": 19,
+    "text": "**Ashley:** Where is your apartment?"
+  },
+  {
+    "start": 19,
+    "end": 23.24,
+    "text": "**Anna:** My apartment is near the Columbia Heights {Metro|地下鉄/メトロ|/ˈmetrəʊ/|The metro is very convenient.}"
+  },
+  {
+    "start": 23.039,
+    "end": 25.759,
+    "text": "**Ashley:** It is near the Columbia Heights Metro?"
+  },
+  {
+    "start": 25.759,
+    "end": 26.4,
+    "text": "**Anna:** Yes."
+  },
+  {
+    "start": 26.4,
+    "end": 28.72,
+    "text": "**Ashley:** {Exit|出口/出る|/ˈɛɡzɪt/|Exit the building quickly.} the metro and turn right."
+  },
+  {
+    "start": 28.72,
+    "end": 31.599,
+    "text": "**Anna:** Then at the bus station, turn left."
+  },
+  {
+    "start": 31.599,
+    "end": 33.6,
+    "text": "**Ashley:** Then walk straight ahead."
+  },
+  {
+    "start": 33.64,
+    "end": 40.2,
+    "text": "**Ashley:** Okay, exit metro, turn right, turn left, then go straight ahead."
+  },
+  {
+    "start": 40.2,
+    "end": 43.88,
+    "text": "**Anna:** Yes, my apartment is near a {coffee shop|喫茶店|/ˈkɔːfi ʃɒp/|Let's meet at the coffee shop.}"
+  },
+  {
+    "start": 43.88,
+    "end": 46.04,
+    "text": "**Ashley:** Okay, see you soon."
+  },
+  {
+    "start": 48.72,
+    "end": 49.92,
+    "text": "**Anna:** Hi Ashley."
+  },
+  {
+    "start": 49.92,
+    "end": 50.88,
+    "text": "**Ashley:** Hello, Anna."
+  },
+  {
+    "start": 50.88,
+    "end": 52.24,
+    "text": "**Ashley:** Which coffee shop?"
+  },
+  {
+    "start": 52.24,
+    "end": 54.48,
+    "text": "**Ashley:** There are three coffee shops"
+  },
+  {
+    "start": 54.7,
+    "end": 59.5,
+    "text": "**Anna:** Okay, my apartment is {across from|向かいに|/əˈkrɔːs frəm/|My house is across from the park.} a big {department store|デパート|/dɪˈpɑːrtmənt stɔːr/|I bought a gift at the department store.}"
+  },
+  {
+    "start": 59.5,
+    "end": 61.5,
+    "text": "**Ashley:** A big department store?"
+  },
+  {
+    "start": 61.5,
+    "end": 63.18,
+    "text": "**Ashley:** Ah, I see it."
+  },
+  {
+    "start": 63.18,
+    "end": 64.54,
+    "text": "**Anna:** Okay, bye Ashley."
+  },
+  {
+    "start": 64.54,
+    "end": 65.9,
+    "text": "**Ashley:** See you soon."
+  },
+  {
+    "start": 65.9,
+    "end": 67.9,
+    "text": "**Ashley:** Okay, see you soon."
+  },
+  {
+    "start": 74.1,
+    "end": 77.78,
+    "text": "**Anna:** Ashley!"
+  },
+  {
+    "start": 77.78,
+    "end": 79.06,
+    "text": "**Anna:** Over here!"
+  },
+  {
+    "start": 79.06,
+    "end": 81.54,
+    "text": "**Anna:** Donna!"
+  },
+  {
+    "start": 82.58,
+    "end": 83.22,
+    "text": "**Anna:** Oh!"
+  },
+  {
+    "start": 85.92,
+    "end": 88.88,
+    "text": "**Anna:** I love {having|もつ/開催する|/ˈhævɪŋ/|I am having a party.} my {friends|友人|/frendz/|My friends are nice.} over."
+  },
+  {
+    "start": 88.96,
+    "end": 89.68,
+    "text": "**Anna:** Come on."
+  },
+  {
+    "start": 89.68,
+    "end": 90.719,
+    "text": "**Anna:** Hey."
+  }
+]

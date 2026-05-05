@@ -1,0 +1,152 @@
+[
+  {
+    "start": 1.12,
+    "end": 5.28,
+    "text": "**Anna:** Pete, hi, hi, we are {here|ここ}."
+  },
+  {
+    "start": 5.28,
+    "end": 8.16,
+    "text": "**Pete:** Hi Anna, hi Marsha."
+  },
+  {
+    "start": 8.16,
+    "end": 8.48,
+    "text": "**Anna:** Hi"
+  },
+  {
+    "start": 9.719,
+    "end": 11.719,
+    "text": "**Pete:** How are you {two|二人}?"
+  },
+  {
+    "start": 11.719,
+    "end": 13.719,
+    "text": "**Marsha:** I am {great|素晴らしい}."
+  },
+  {
+    "start": 13.719,
+    "end": 17.16,
+    "text": "**Anna:** You know, Pete, I am new to {DC|首都ワシントン}."
+  },
+  {
+    "start": 17.16,
+    "end": 19.4,
+    "text": "**Anna:** The city is {big|大きい/広い}."
+  },
+  {
+    "start": 19.88,
+    "end": 23.16,
+    "text": "**Pete:** Yeah, but you {learn|学ぶ/習得する|/lɜːrn/|I learn English every day.}"
+  },
+  {
+    "start": 23.16,
+    "end": 25.4,
+    "text": "**Pete:** How's the new {apartment|アパート/住居}."
+  },
+  {
+    "start": 25.64,
+    "end": 28.599,
+    "text": "**Anna:** The new apartment is great."
+  },
+  {
+    "start": 28.599,
+    "end": 30.68,
+    "text": "**Anna:** Let's get {coffee|コーヒー}."
+  },
+  {
+    "start": 30.68,
+    "end": 33.32,
+    "text": "**Marsha:** Anna, do you have a {pen|ペン}."
+  },
+  {
+    "start": 33.62,
+    "end": 36.899,
+    "text": "**Anna:** Yes, I have a pen in my {bag|バッグ/かばん}."
+  },
+  {
+    "start": 36.899,
+    "end": 41.54,
+    "text": "**Anna:** I have a it is not a pen."
+  },
+  {
+    "start": 41.54,
+    "end": 43.3,
+    "text": "**Pete:** It is a {book|本}."
+  },
+  {
+    "start": 43.3,
+    "end": 45.54,
+    "text": "**Pete:** It is a big book."
+  },
+  {
+    "start": 45.86,
+    "end": 48.579,
+    "text": "**Anna:** Yes, yes it is, Pete."
+  },
+  {
+    "start": 48.579,
+    "end": 51.86,
+    "text": "**Anna:** I know I have a pen, {though|しかし/それでも}."
+  },
+  {
+    "start": 51.86,
+    "end": 53.059,
+    "text": "**Anna:** I have a"
+  },
+  {
+    "start": 54.739,
+    "end": 57.46,
+    "text": "**Marsha:** It is not a pen, Anna."
+  },
+  {
+    "start": 57.46,
+    "end": 59.3,
+    "text": "**Marsha:** A {toy|おもちゃ}."
+  },
+  {
+    "start": 59.3,
+    "end": 64.9,
+    "text": "**Anna:** I have a And it is a {pillow|枕}."
+  },
+  {
+    "start": 64.92,
+    "end": 69.96,
+    "text": "**Anna:** Pete, Marcia, I know I have a pen."
+  },
+  {
+    "start": 69.96,
+    "end": 72.52,
+    "text": "**Marsha:** Anna, it is a {map|地図}."
+  },
+  {
+    "start": 72.84,
+    "end": 75.88,
+    "text": "**Pete:** Why do you have a map of the {world|世界}."
+  },
+  {
+    "start": 75.939,
+    "end": 80.42,
+    "text": "**Anna:** Pete, Marcia, now I know I have a pen."
+  },
+  {
+    "start": 80.74,
+    "end": 83.219,
+    "text": "**Pete:** And now you have a {lamp|ランプ/照明器具}."
+  },
+  {
+    "start": 83.539,
+    "end": 84.82,
+    "text": "**Pete:** Anna."
+  },
+  {
+    "start": 85.14,
+    "end": 86.82,
+    "text": "**Anna:** I have a pen."
+  },
+  {
+    "start": 86.82,
+    "end": 88.74,
+    "text": "**Anna:** Let's get coffee."
+  }
+]

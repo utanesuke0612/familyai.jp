@@ -1,0 +1,82 @@
+[
+  {
+    "start": 0.64,
+    "end": 2.64,
+    "text": "**Pete:** Hi, are you {Anna|人名|/ˈænə/}?"
+  },
+  {
+    "start": 2.64,
+    "end": 3.12,
+    "text": "**Anna:** Yes."
+  },
+  {
+    "start": 3.12,
+    "end": 3.68,
+    "text": "**Anna:** Hi there."
+  },
+  {
+    "start": 3.68,
+    "end": 4.64,
+    "text": "**Anna:** Are you Pete?"
+  },
+  {
+    "start": 4.64,
+    "end": 5.68,
+    "text": "**Pete:** I am Pete."
+  },
+  {
+    "start": 5.68,
+    "end": 7.04,
+    "text": "**Anna:** {Nice|素敵な/よろしい|/naɪs/|Nice to meet you.} to meet you."
+  },
+  {
+    "start": 7.04,
+    "end": 8.56,
+    "text": "**Anna:** Oh, oh."
+  },
+  {
+    "start": 8.56,
+    "end": 10.8,
+    "text": "**Anna:** Let's {try|試みる/挑戦する|/traɪ/|Try this new food.} that again."
+  },
+  {
+    "start": 10.74,
+    "end": 11.86,
+    "text": "**Anna:** I'm Anna."
+  },
+  {
+    "start": 11.86,
+    "end": 13.14,
+    "text": "**Anna:** Nice to meet you."
+  },
+  {
+    "start": 13.14,
+    "end": 14.5,
+    "text": "**Pete:** I'm Pete."
+  },
+  {
+    "start": 14.5,
+    "end": 17.38,
+    "text": "**Pete:** Anna, is that A-N-A?"
+  },
+  {
+    "start": 17.38,
+    "end": 19.939,
+    "text": "**Anna:** No, A-N-N-A."
+  },
+  {
+    "start": 20.14,
+    "end": 22.539,
+    "text": "**Pete:** Well, Anna with two {ends|端/終わり|/endz/|The story has two ends.}."
+  },
+  {
+    "start": 22.539,
+    "end": 27.099,
+    "text": "**Pete:** {Welcome|ようこそ|/ˈwelkəm/|Welcome to my home.} to 1400 {Irving|地名|/ˈɜːrvɪŋ/|Irving Street is long.} Street."
+  },
+  {
+    "start": 27.099,
+    "end": 29.259,
+    "text": "**Anna:** My new {apartment|アパート|/əˈpɑːrtmənt/|My apartment is small.}."
+  }
+]

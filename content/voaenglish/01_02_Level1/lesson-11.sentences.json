@@ -1,0 +1,207 @@
+[
+  {
+    "start": 0.001,
+    "end": 1.28,
+    "text": "**Anna:** Hello!"
+  },
+  {
+    "start": 1.28,
+    "end": 4.32,
+    "text": "**Anna:** DC is a {city|都市/街|/ˈsɪti/|New York is a big city.} for {walking|歩くこと|/ˈwɔːkɪŋ/|Walking is good exercise.}"
+  },
+  {
+    "start": 4.32,
+    "end": 8,
+    "text": "**Anna:** In our {neighborhood|近所/地域|/ˈneɪbərˌhʊd/|Our neighborhood is very friendly.}, I can do all my {errands|用事/買い物|/ˈerəndz/|I do my errands on Saturday.}"
+  },
+  {
+    "start": 8.22,
+    "end": 14.3,
+    "text": "**Anna:** Marcia, before we get {ice cream|アイスクリーム|/ˈaɪs kriːm/|I love chocolate ice cream.}, I need to return three {books|本|/bʊks/|I read many books.} to the {library|図書館|/ˈlaɪbreri/|The library is quiet.}"
+  },
+  {
+    "start": 14.3,
+    "end": 16.379,
+    "text": "**Anna:** Where is the library?"
+  },
+  {
+    "start": 16.379,
+    "end": 19.1,
+    "text": "**Marsha:** It is on this street."
+  },
+  {
+    "start": 18.72,
+    "end": 19.84,
+    "text": "**Marsha:** On the corner!"
+  },
+  {
+    "start": 19.84,
+    "end": 20.56,
+    "text": "**Anna:** Awesome!"
+  },
+  {
+    "start": 20.56,
+    "end": 21.84,
+    "text": "**Marsha:** Let's go!"
+  },
+  {
+    "start": 23.76,
+    "end": 26.72,
+    "text": "**Anna:** Marsha, I can return the books here"
+  },
+  {
+    "start": 29.28,
+    "end": 32.96,
+    "text": "**Marsha:** Anna, what are those in the book?"
+  },
+  {
+    "start": 33.6,
+    "end": 37.76,
+    "text": "**Anna:** Marsha, these are {letters|手紙/文字|/ˈletərz/|I write letters to my friends.}"
+  },
+  {
+    "start": 37.34,
+    "end": 39.579,
+    "text": "**Anna:** to my family and friends back home."
+  },
+  {
+    "start": 39.579,
+    "end": 41.019,
+    "text": "**Anna:** Four letters."
+  },
+  {
+    "start": 41.019,
+    "end": 44.14,
+    "text": "**Anna:** Is there a {post office|郵便局|/poʊst ˈɔfɪs/|I go to the post office often.} near here?"
+  },
+  {
+    "start": 44.14,
+    "end": 45.579,
+    "text": "**Marsha:** Um no."
+  },
+  {
+    "start": 45.579,
+    "end": 48.219,
+    "text": "**Marsha:** The post office is far from here."
+  },
+  {
+    "start": 48.04,
+    "end": 51.079,
+    "text": "**Marsha:** But there is a {mailbox|郵便ポスト|/ˈmeɪlbɑːks/|I put letters in the mailbox.} across from the store."
+  },
+  {
+    "start": 51.079,
+    "end": 52.68,
+    "text": "**Marsha:** Awesome, let's go."
+  },
+  {
+    "start": 54.44,
+    "end": 57.16,
+    "text": "**Anna:** Marsha, now I need to buy {stamps|切手|/stæmps/|I buy stamps at the post office.}"
+  },
+  {
+    "start": 57.16,
+    "end": 58.76,
+    "text": "**Marsha:** Do you have {cash|現金|/kæʃ/|I pay with cash.}?"
+  },
+  {
+    "start": 58.76,
+    "end": 59.079,
+    "text": "**Marsha:** No"
+  },
+  {
+    "start": 59.5,
+    "end": 61.66,
+    "text": "**Anna:** Is there a {bank|銀行|/bæŋk/|The bank is closed now.} near here?"
+  },
+  {
+    "start": 61.66,
+    "end": 63.98,
+    "text": "**Marsha:** There is a bank behind you."
+  },
+  {
+    "start": 63.98,
+    "end": 65.339,
+    "text": "**Anna:** Thanks, Marsha."
+  },
+  {
+    "start": 65.339,
+    "end": 68.38,
+    "text": "**Anna:** You know our neighborhood so well."
+  },
+  {
+    "start": 68.38,
+    "end": 69.979,
+    "text": "**Anna:** Now I have cash."
+  },
+  {
+    "start": 69.979,
+    "end": 71.979,
+    "text": "**Anna:** I can buy stamps."
+  },
+  {
+    "start": 71.82,
+    "end": 74.54,
+    "text": "**Marsha:** That store sells stamps."
+  },
+  {
+    "start": 74.54,
+    "end": 77.18,
+    "text": "**Anna:** Wait here."
+  },
+  {
+    "start": 77.18,
+    "end": 78.7,
+    "text": "**Anna:** I have {stamps|切手|/stæmps/|I collect stamps from different countries.}"
+  },
+  {
+    "start": 78.7,
+    "end": 80.86,
+    "text": "**Anna:** Wow, you're {fast|速い/素早い|/fæst/|He is a fast runner.}"
+  },
+  {
+    "start": 81.18,
+    "end": 82.299,
+    "text": "**Anna:** Thank you."
+  },
+  {
+    "start": 82.299,
+    "end": 90.14,
+    "text": "**Anna:** Thank you, {letters|手紙|/ˈletərz/|I write letters to my friends.}, for sending my words, my love, to my family and friends."
+  },
+  {
+    "start": 90.14,
+    "end": 92.299,
+    "text": "**Marsha:** Do you have more {cash|現金|/kæʃ/|I need cash to buy groceries.}?"
+  },
+  {
+    "start": 92.299,
+    "end": 93.42,
+    "text": "**Anna:** I do."
+  },
+  {
+    "start": 94.479,
+    "end": 98.4,
+    "text": "**Anna:** {Ice cream|アイスクリーム|/ˈaɪs kriːm/|I love chocolate ice cream.}!"
+  },
+  {
+    "start": 98.4,
+    "end": 100.72,
+    "text": "**Anna:** I love my new {neighborhood|近所/地域|/ˈneɪbərhʊd/|My neighborhood is very friendly.}"
+  },
+  {
+    "start": 100.72,
+    "end": 103.44,
+    "text": "**Anna:** Everything is near our {apartment|アパート|/əˈpɑːrtmənt/|We live in a small apartment.}"
+  },
+  {
+    "start": 103.44,
+    "end": 107.36,
+    "text": "**Anna:** Even {hair salons|美容院|/hɛr ˈsæləns/|Hair salons are busy on weekends.} and ice cream."
+  },
+  {
+    "start": 107.36,
+    "end": 108.56,
+    "text": "**Anna:** Until next time."
+  }
+]

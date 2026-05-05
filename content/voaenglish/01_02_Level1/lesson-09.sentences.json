@@ -1,0 +1,232 @@
+[
+  {
+    "start": 1.6,
+    "end": 4.16,
+    "text": "**Anna:** Oh hi everyone!"
+  },
+  {
+    "start": 4.16,
+    "end": 9.04,
+    "text": "**Anna:** Here in {Washington|首都/米国の首都|/ˈwɑːʃɪŋtən/|Washington is the capital of the USA.}, DC, the {weather|天気/気象} changes often."
+  },
+  {
+    "start": 9.04,
+    "end": 11.92,
+    "text": "**Anna:** One day is {cold|寒い} and {windy|風の強い}."
+  },
+  {
+    "start": 11.92,
+    "end": 16.64,
+    "text": "**Anna:** But the next day is warm and {sunny|晴れた}."
+  },
+  {
+    "start": 16.64,
+    "end": 20.32,
+    "text": "**Anna:** So every day I {check|確認する/調べる} the {forecast|天気予報}."
+  },
+  {
+    "start": 21.359,
+    "end": 22.96,
+    "text": "**Anna:** Hello phone."
+  },
+  {
+    "start": 22.96,
+    "end": 24.88,
+    "text": "**Anna:** What is today's {temperature|気温}?"
+  },
+  {
+    "start": 24.88,
+    "end": 27.76,
+    "text": "**Phone:** Today it is 18 degrees."
+  },
+  {
+    "start": 27.76,
+    "end": 29.2,
+    "text": "**Phone:** 18 degrees?"
+  },
+  {
+    "start": 29.2,
+    "end": 30.48,
+    "text": "**Anna:** That is cold."
+  },
+  {
+    "start": 30.48,
+    "end": 33.28,
+    "text": "**Phone:** 18 degrees {Celsius|摂氏}."
+  },
+  {
+    "start": 33.04,
+    "end": 34.879,
+    "text": "**Anna:** Oh, Celsius!"
+  },
+  {
+    "start": 34.879,
+    "end": 37.92,
+    "text": "**Anna:** That is 65 degrees {Fahrenheit|華氏}."
+  },
+  {
+    "start": 37.92,
+    "end": 39.12,
+    "text": "**Phone:** That's warm."
+  },
+  {
+    "start": 39.12,
+    "end": 41.36,
+    "text": "**Phone:** Yes, Anna, it is warm."
+  },
+  {
+    "start": 41.16,
+    "end": 41.88,
+    "text": "**Phone:** Warm."
+  },
+  {
+    "start": 41.88,
+    "end": 43.56,
+    "text": "**Anna:** {Excuse|許してください/すみません} me, phone."
+  },
+  {
+    "start": 43.56,
+    "end": 45.56,
+    "text": "**Anna:** Is it windy today?"
+  },
+  {
+    "start": 45.88,
+    "end": 49.16,
+    "text": "**Phone:** No, it is not windy today."
+  },
+  {
+    "start": 49.48,
+    "end": 51.88,
+    "text": "**Anna:** Is it sunny today?"
+  },
+  {
+    "start": 51.88,
+    "end": 53.4,
+    "text": "**Phone:** Yes, Anna."
+  },
+  {
+    "start": 53.4,
+    "end": 55.32,
+    "text": "**Anna:** It is sunny."
+  },
+  {
+    "start": 55.14,
+    "end": 56.9,
+    "text": "**Anna:** Excuse me, phone."
+  },
+  {
+    "start": 56.9,
+    "end": 58.58,
+    "text": "**Phone:** Yes, Anna."
+  },
+  {
+    "start": 58.58,
+    "end": 60.98,
+    "text": "**Anna:** Is it {snowy|雪の多い} today?"
+  },
+  {
+    "start": 60.98,
+    "end": 64.66,
+    "text": "**Phone:** No, Anna, it is not snowy."
+  },
+  {
+    "start": 64.82,
+    "end": 66.74,
+    "text": "**Anna:** Thank you, Phone."
+  },
+  {
+    "start": 66.74,
+    "end": 70.26,
+    "text": "**Anna:** Today the weather is warm and {sunny|晴れた}."
+  },
+  {
+    "start": 70.26,
+    "end": 72.58,
+    "text": "**Anna:** Great for seeing {Washington|首都/米国の首都|/ˈwɑːʃɪŋtən/|Washington is the capital of the USA.}, D."
+  },
+  {
+    "start": 72.58,
+    "end": 73.06,
+    "text": "**Anna:** C."
+  },
+  {
+    "start": 75.08,
+    "end": 78.68,
+    "text": "**Anna:** {Phone|電話|/foʊn/|My phone is ringing.}, it is not warm and {sunny|晴れた|/ˈsʌni/|Today is a sunny day}."
+  },
+  {
+    "start": 78.68,
+    "end": 81.72,
+    "text": "**Anna:** It is {cold|寒い|/koʊld/|Winter is very cold.} and {windy|風の強い|/ˈwɪndi/|It's windy today.}."
+  },
+  {
+    "start": 81.62,
+    "end": 83.06,
+    "text": "**Anna:** And {snowy|雪の|/ˈsnoʊi/|The mountain is snowy.}!"
+  },
+  {
+    "start": 83.06,
+    "end": 87.94,
+    "text": "**Phone:** Anna, it is not cold, windy, or snowy."
+  },
+  {
+    "start": 87.94,
+    "end": 94.82,
+    "text": "**Phone:** It is warm and sunny in {Mexico City|メキシコシティ|/ˈmɛksɪkoʊ ˈsɪti/|Mexico City is beautiful.}, Mexico."
+  },
+  {
+    "start": 94.82,
+    "end": 96.26,
+    "text": "**Anna:** Oh."
+  },
+  {
+    "start": 95.92,
+    "end": 100.24,
+    "text": "**Anna:** I see Mexico."
+  },
+  {
+    "start": 100.24,
+    "end": 103.36,
+    "text": "**Anna:** {Washington|ワシントン|/ˈwɑʃɪŋtən/|Washington is a state.} {weather|天気|/ˈwɛðər/|Today's weather is nice.} changes often."
+  },
+  {
+    "start": 103.36,
+    "end": 106.32,
+    "text": "**Anna:** {Remember|覚えておく|/rɪˈmɛmbər/|Remember to call me.} to check the {forecast|天気予報|/ˈfɔːrkæst/|Check the weather forecast.}."
+  },
+  {
+    "start": 106.18,
+    "end": 108.02,
+    "text": "**Anna:** The right forecast."
+  },
+  {
+    "start": 108.02,
+    "end": 109.539,
+    "text": "**Phone:** Yes, Anna."
+  },
+  {
+    "start": 109.539,
+    "end": 111.939,
+    "text": "**Phone:** Next time, remember to check out the."
+  },
+  {
+    "start": 112.1,
+    "end": 113.78,
+    "text": "**Anna:** Okay, thank you, {Fan|ファン|/fæn/|I am a big fan.}."
+  },
+  {
+    "start": 113.78,
+    "end": 115.619,
+    "text": "**Anna:** Goodbye, phone."
+  },
+  {
+    "start": 115.82,
+    "end": 118.3,
+    "text": "**Anna:** Until {next|次の|/nɛkst/|Next week is holiday.} time."
+  },
+  {
+    "start": 118.3,
+    "end": 120.54,
+    "text": "**Phone:** Yes, until next time"
+  }
+]

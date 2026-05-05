@@ -1,0 +1,367 @@
+[
+  {
+    "start": 0.96,
+    "end": 2.24,
+    "text": "**Anna:** Hello!"
+  },
+  {
+    "start": 2.24,
+    "end": 4.16,
+    "text": "**Anna:** Guess what this is?"
+  },
+  {
+    "start": 4.48,
+    "end": 6.96,
+    "text": "**Anna:** This is my {driver's license|運転免許証|/ˈdraɪvərz ˈlaɪsəns/|I need my driver's license to drive.}!"
+  },
+  {
+    "start": 6.96,
+    "end": 9.12,
+    "text": "**Anna:** I passed my {driving test|運転試験|/ˈdraɪvɪŋ test/|I studied hard for my driving test.}"
+  },
+  {
+    "start": 9.12,
+    "end": 14.72,
+    "text": "**Anna:** Today I {rented|借りた|/rent/|I rented a bike for the day.} a car so I can drive around {Washington DC|アメリカの首都|/ˈwɑʃɪŋtən diˈsi/|Washington DC is the capital of the USA.}"
+  },
+  {
+    "start": 14.519,
+    "end": 17.88,
+    "text": "**Anna:** You can see more of the city this way."
+  },
+  {
+    "start": 17.88,
+    "end": 19.48,
+    "text": "**Anna:** Marsha!"
+  },
+  {
+    "start": 19.48,
+    "end": 20.2,
+    "text": "**Marsha:** Anna!"
+  },
+  {
+    "start": 20.439,
+    "end": 23.16,
+    "text": "**Marsha:** Did you get your driver's license?"
+  },
+  {
+    "start": 23.02,
+    "end": 27.9,
+    "text": "**Anna:** I did but it was not {easy|簡単/容易|/ˈizi/|Math is not easy for me.}"
+  },
+  {
+    "start": 27.9,
+    "end": 28.78,
+    "text": "**Marsha:** Why?"
+  },
+  {
+    "start": 28.78,
+    "end": 30.3,
+    "text": "**Marsha:** What happened"
+  },
+  {
+    "start": 30.44,
+    "end": 35.16,
+    "text": "**Anna:** Well, you know, I can drive {farm equipment|農業機械|/fɑːrm ɪˈkwɪpmənt/|Farm equipment helps farmers work faster.} really well."
+  },
+  {
+    "start": 38.76,
+    "end": 39.08,
+    "text": "**Anna:** But"
+  },
+  {
+    "start": 39.36,
+    "end": 43.84,
+    "text": "**Anna:** I was really {nervous|緊張した/不安な|/ˈnɜːrvəs/|I feel nervous before a test.} driving in Washington DC {traffic|交通/交通量|/ˈtræfɪk/|Traffic is heavy during rush hour.}"
+  },
+  {
+    "start": 43.84,
+    "end": 47.36,
+    "text": "**Marsha:** Did you pass the test the first time?"
+  },
+  {
+    "start": 47.36,
+    "end": 49.92,
+    "text": "**Anna:** Well, no"
+  },
+  {
+    "start": 50.94,
+    "end": 53.74,
+    "text": "**Anna:** But I did pass the second time."
+  },
+  {
+    "start": 53.74,
+    "end": 56.94,
+    "text": "**Marsha:** What happened during the first test?"
+  },
+  {
+    "start": 57.26,
+    "end": 59.74,
+    "text": "**Anna:** It started fine."
+  },
+  {
+    "start": 63.24,
+    "end": 68.36,
+    "text": "**John:** Okay, Anna, is your {seatbelt|シートベルト|/ˈsiːtbelt/|Always wear your seatbelt.} {buckled|締められた|/ˈbʌkld/|My seatbelt is buckled.}?"
+  },
+  {
+    "start": 68.36,
+    "end": 70.44,
+    "text": "**Anna:** Yes, sir."
+  },
+  {
+    "start": 71.82,
+    "end": 73.02,
+    "text": "**John:** Great."
+  },
+  {
+    "start": 73.02,
+    "end": 75.42,
+    "text": "**John:** Please start the car."
+  },
+  {
+    "start": 75.42,
+    "end": 78.539,
+    "text": "**Anna:** Okay, Anna, start the car."
+  },
+  {
+    "start": 80.24,
+    "end": 82.159,
+    "text": "**Anna:** I started the car."
+  },
+  {
+    "start": 82.159,
+    "end": 83.84,
+    "text": "**Anna:** Good job, Anna."
+  },
+  {
+    "start": 83.84,
+    "end": 86.479,
+    "text": "**John:** Why are you talking to yourself?"
+  },
+  {
+    "start": 86.479,
+    "end": 88.32,
+    "text": "**Anna:** I am a little {nervous|緊張した/不安な|/ˈnɜːrvəs/|I feel nervous before a test.}"
+  },
+  {
+    "start": 88.32,
+    "end": 91.44,
+    "text": "**Anna:** When I'm nervous, I talk to myself."
+  },
+  {
+    "start": 91.44,
+    "end": 95.12,
+    "text": "**John:** You don't need to be {nervous|緊張する/不安な|/ˈnɜːrvəs/|I feel nervous before exams.}"
+  },
+  {
+    "start": 95.92,
+    "end": 97.68,
+    "text": "**Anna:** Listen to that {engine|エンジン/機関|/ˈendʒɪn/|The car engine is loud.}"
+  },
+  {
+    "start": 102,
+    "end": 105.44,
+    "text": "**Anna:** Please, stop {pushing|押す/踏む|/ˈpʊʃɪŋ/|Stop pushing the button.} the {gas pedal|アクセル|/ɡæs ˈpɛdl/|Press the gas pedal slowly.}"
+  },
+  {
+    "start": 105.84,
+    "end": 109.84,
+    "text": "**Anna:** Sorry."
+  },
+  {
+    "start": 109.84,
+    "end": 112.24,
+    "text": "**John:** Okay, when you are ready, {turn|曲がる/方向転換する|/tɜːrn/|Turn left at the corner.}"
+  },
+  {
+    "start": 112.24,
+    "end": 112.799,
+    "text": "**John:** Great!"
+  },
+  {
+    "start": 112.96,
+    "end": 113.759,
+    "text": "**John:** Not now."
+  },
+  {
+    "start": 113.759,
+    "end": 115.439,
+    "text": "**Anna:** You almost {hit|当たる/衝突する|/hɪt/|Be careful not to hit the wall.} that car."
+  },
+  {
+    "start": 115.439,
+    "end": 116.96,
+    "text": "**Anna:** You said turn."
+  },
+  {
+    "start": 116.96,
+    "end": 117.84,
+    "text": "**John:** Look first."
+  },
+  {
+    "start": 117.84,
+    "end": 119.52,
+    "text": "**John:** There were cars in the {street|通り/道路|/striːt/|Walk on the left side of the street.}"
+  },
+  {
+    "start": 119.52,
+    "end": 120.079,
+    "text": "**John:** Please?"
+  },
+  {
+    "start": 120.439,
+    "end": 122.52,
+    "text": "**Anna:** Don't {yell|叫ぶ/大声で言う|/jɛl/|Don't yell at me.} at me."
+  },
+  {
+    "start": 122.52,
+    "end": 123.56,
+    "text": "**Anna:** I'm sorry."
+  },
+  {
+    "start": 123.56,
+    "end": 124.759,
+    "text": "**Anna:** I was {afraid|恐れている/怖い|/əˈfreɪd/|I am afraid of dogs.}"
+  },
+  {
+    "start": 124.759,
+    "end": 126.36,
+    "text": "**John:** You were yelling."
+  },
+  {
+    "start": 126.36,
+    "end": 127.479,
+    "text": "**John:** Look out for that car."
+  },
+  {
+    "start": 127.479,
+    "end": 128.36,
+    "text": "**Anna:** {Break|ブレーキ/止める|/breɪk/|Break the car quickly.}, break."
+  },
+  {
+    "start": 131.54,
+    "end": 134.02,
+    "text": "**Anna:** Why is everyone {honking|クラクションを鳴らす|/ˈhɒŋkɪŋ/|Stop honking at me.} at us?"
+  },
+  {
+    "start": 134.02,
+    "end": 136.02,
+    "text": "**John:** You are driving too {slow|遅い/ゆっくり|/sloʊ/|Drive slow in the school zone.}"
+  },
+  {
+    "start": 136.02,
+    "end": 138.66,
+    "text": "**John:** Anna, stay on the street."
+  },
+  {
+    "start": 138.54,
+    "end": 140.94,
+    "text": "**John:** Hands on the {wheel|ハンドル/方向盤|/wiːl/|Keep your hands on the wheel.}, Anna."
+  },
+  {
+    "start": 140.94,
+    "end": 142.94,
+    "text": "**Anna:** What's that sound?"
+  },
+  {
+    "start": 144.78,
+    "end": 147.66,
+    "text": "**Anna:** That on a the police."
+  },
+  {
+    "start": 152.14,
+    "end": 152.38,
+    "text": "**Anna:** That"
+  },
+  {
+    "start": 152.94,
+    "end": 154.379,
+    "text": "**Marsha:** Sounds awful."
+  },
+  {
+    "start": 154.379,
+    "end": 157.099,
+    "text": "**Anna:** Yes, it did not go well."
+  },
+  {
+    "start": 157.099,
+    "end": 160.94,
+    "text": "**Anna:** But I {practiced|練習した|/ˈpræktɪst/|I practiced piano every day.} and passed the second time."
+  },
+  {
+    "start": 161.12,
+    "end": 167.36,
+    "text": "**Marsha:** Do you know where you want to take your first {drive|運転/ドライブ|/draɪv/|Let's go for a drive.} in Washington DC?"
+  },
+  {
+    "start": 167.36,
+    "end": 168.16,
+    "text": "**Anna:** Yes."
+  },
+  {
+    "start": 168.16,
+    "end": 169.12,
+    "text": "**Anna:** Let's go!"
+  },
+  {
+    "start": 170.8,
+    "end": 172.32,
+    "text": "**Anna:** There it is!"
+  },
+  {
+    "start": 172.32,
+    "end": 174.88,
+    "text": "**Anna:** The {White House|大統領官邸|/waɪt haʊs/|The White House is in Washington, D.C.}!"
+  },
+  {
+    "start": 174.88,
+    "end": 175.76,
+    "text": "**Marsha:** Anna!"
+  },
+  {
+    "start": 176.12,
+    "end": 182.04,
+    "text": "**Marsha:** You do know you can't {drive up|近づく|/draɪv ʌp/|We can't drive up to the building.} to the White House, don't you?"
+  },
+  {
+    "start": 182.04,
+    "end": 183.56,
+    "text": "**Anna:** Yes."
+  },
+  {
+    "start": 183.56,
+    "end": 185.64,
+    "text": "**Anna:** No, I didn't know."
+  },
+  {
+    "start": 185.64,
+    "end": 187.96,
+    "text": "**Anna:** I {guess|思う/推測する|/ɡes/|I guess it will rain today.} we walk from here."
+  },
+  {
+    "start": 187.96,
+    "end": 190.52,
+    "text": "**Anna:** Sometimes you can see more of {Washington|ワシントン|/ˈwɑːʃɪŋtən/|Washington is the capital of the U.S.} D."
+  },
+  {
+    "start": 190.52,
+    "end": 190.68,
+    "text": "**Marsha:** C."
+  },
+  {
+    "start": 191.2,
+    "end": 192,
+    "text": "**Anna:** in a car."
+  },
+  {
+    "start": 192,
+    "end": 195.84,
+    "text": "**Anna:** If you want to see the White House, you need to {walk|歩く/散歩する|/wɔːk/|Let's walk in the park.}"
+  },
+  {
+    "start": 195.84,
+    "end": 197.2,
+    "text": "**Anna:** Until next time"
+  }
+]

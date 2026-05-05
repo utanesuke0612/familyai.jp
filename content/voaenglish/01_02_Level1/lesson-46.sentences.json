@@ -1,0 +1,342 @@
+[
+  {
+    "start": 0.64,
+    "end": 3.04,
+    "text": "**Anna:** Have a nice {day|日|/deɪ/|Have a nice day at work.} at work, Marcia."
+  },
+  {
+    "start": 3.04,
+    "end": 4.48,
+    "text": "**Marsha:** You too, Anna."
+  },
+  {
+    "start": 4.48,
+    "end": 8.08,
+    "text": "**Marsha:** Oh wait, do you have {pen|ペン|/pen/|I need a pen to write.} and {paper|紙|/ˈpeɪpər/|Write on this paper.} I can borrow?"
+  },
+  {
+    "start": 8.08,
+    "end": 9.36,
+    "text": "**Anna:** Of course."
+  },
+  {
+    "start": 9.44,
+    "end": 12.32,
+    "text": "**Marsha:** We are {meeting|会う/集まる|/ˈmiːtɪŋ/|Let's meet at the cafe.} at this restaurant tonight."
+  },
+  {
+    "start": 12.32,
+    "end": 14,
+    "text": "**Anna:** What is happening tonight?"
+  },
+  {
+    "start": 14,
+    "end": 15.6,
+    "text": "**Marsha:** Today is my {birthday|誕生日|/ˈbɜːrθdeɪ/|Happy birthday to me!}"
+  },
+  {
+    "start": 15.6,
+    "end": 18.4,
+    "text": "**Marsha:** We are celebrating at 7 p."
+  },
+  {
+    "start": 18.4,
+    "end": 18.72,
+    "text": "**Anna:** m."
+  },
+  {
+    "start": 18.72,
+    "end": 19.599,
+    "text": "**Marsha:** tonight."
+  },
+  {
+    "start": 19.599,
+    "end": 21.04,
+    "text": "**Anna:** Did you forget"
+  },
+  {
+    "start": 21.36,
+    "end": 22.72,
+    "text": "**Anna:** Sorry, Marsha."
+  },
+  {
+    "start": 22.72,
+    "end": 23.84,
+    "text": "**Anna:** I {gotta|〜しなければならない|/ˈɡɑːtə/|I gotta go now.} go."
+  },
+  {
+    "start": 23.84,
+    "end": 25.76,
+    "text": "**Anna:** See you later."
+  },
+  {
+    "start": 25.76,
+    "end": 27.44,
+    "text": "**Marsha:** Don't forget!"
+  },
+  {
+    "start": 27.44,
+    "end": 29.44,
+    "text": "**Anna:** Tonight, 7 p."
+  },
+  {
+    "start": 29.44,
+    "end": 29.84,
+    "text": "**Anna:** m."
+  },
+  {
+    "start": 31.52,
+    "end": 37.12,
+    "text": "**Anna:** I {forgot|忘れた|/fərˈɡɑːt/|I forgot my keys.} Marcia's birthday and I don't get my {paycheck|給料|/ˈpeɪtʃek/|Receive monthly paycheck.} until next week."
+  },
+  {
+    "start": 37.12,
+    "end": 38.24,
+    "text": "**Anna:** I know."
+  },
+  {
+    "start": 38.24,
+    "end": 40.32,
+    "text": "**Anna:** I'll make her a {gift|贈り物|/ɡɪft/|Give a gift to friend.}"
+  },
+  {
+    "start": 40.32,
+    "end": 43.52,
+    "text": "**Anna:** I'll just have to borrow a couple of things."
+  },
+  {
+    "start": 43.52,
+    "end": 48,
+    "text": "**Anna:** Amelia, may I borrow your {stapler|ホチキス|/ˈsteɪplər/|Use stapler to attach papers.}?"
+  },
+  {
+    "start": 48,
+    "end": 49.44,
+    "text": "**Amelia:** Sure."
+  },
+  {
+    "start": 49.44,
+    "end": 52.32,
+    "text": "**Anna:** I can lend you my stapler, Anna"
+  },
+  {
+    "start": 53.02,
+    "end": 55.26,
+    "text": "**Jonathan:** But please {return|返す|/rɪˈtɜːrn/|Return the book to library.} it."
+  },
+  {
+    "start": 55.26,
+    "end": 58.22,
+    "text": "**Anna:** It's my favorite stapler."
+  },
+  {
+    "start": 58.22,
+    "end": 60.62,
+    "text": "**Anna:** You can {trust|信頼する|/trʌst/|I trust my friend.} me."
+  },
+  {
+    "start": 60.62,
+    "end": 62.54,
+    "text": "**Anna:** I understand."
+  },
+  {
+    "start": 62.62,
+    "end": 67.5,
+    "text": "**Anna:** One time I {loaned|貸した|/loʊnd/|Loaned my book to friend.} my stapler to the wrong person."
+  },
+  {
+    "start": 67.5,
+    "end": 69.26,
+    "text": "**Anna:** Thanks, Amelia."
+  },
+  {
+    "start": 69.58,
+    "end": 71.5,
+    "text": "**Anna:** Don't mention it."
+  },
+  {
+    "start": 71.5,
+    "end": 73.26,
+    "text": "**Anna:** Bye, {stapler|ホチキス/文房具|/ˈsteɪplər/|I need a new stapler.}"
+  },
+  {
+    "start": 73.52,
+    "end": 77.84,
+    "text": "**Anna:** Jonathan, can I borrow your {scissors|はさみ|/ˈsɪzərz/|Please pass the scissors.}?"
+  },
+  {
+    "start": 78.159,
+    "end": 79.039,
+    "text": "**Marsha:** Oh."
+  },
+  {
+    "start": 79.039,
+    "end": 80.719,
+    "text": "**Jonathan:** Hi Anna."
+  },
+  {
+    "start": 80.719,
+    "end": 82.079,
+    "text": "**Jonathan:** What are you doing?"
+  },
+  {
+    "start": 82.399,
+    "end": 84.799,
+    "text": "**Anna:** Can I borrow your scissors?"
+  },
+  {
+    "start": 84.799,
+    "end": 86.64,
+    "text": "**Anna:** Sorry to {bother|邪魔する/迷惑をかける|/ˈbɑːðər/|I don't want to bother you.} you."
+  },
+  {
+    "start": 86.68,
+    "end": 93.96,
+    "text": "**Jonathan:** Ah yes, I can {lend|貸す|/lend/|Can I lend you my book?} them to you, but you must return them."
+  },
+  {
+    "start": 93.96,
+    "end": 99.079,
+    "text": "**Jonathan:** These {scissors|はさみ|/ˈsɪzərz/|These scissors are sharp.}, they are the {sharpest|最も鋭い|/ʃɑːrpəst/|This knife is the sharpest.} scissors in the office."
+  },
+  {
+    "start": 99.079,
+    "end": 99.799,
+    "text": "**Anna:** Watch"
+  },
+  {
+    "start": 99.84,
+    "end": 101.84,
+    "text": "**Anna:** Wow, those are {sharp|鋭い/するどい|/ʃɑːrp/|This knife is very sharp.}."
+  },
+  {
+    "start": 101.84,
+    "end": 103.36,
+    "text": "**Anna:** I will be very careful."
+  },
+  {
+    "start": 103.36,
+    "end": 103.92,
+    "text": "**Jonathan:** Okay."
+  },
+  {
+    "start": 103.92,
+    "end": 106.72,
+    "text": "**Anna:** And I'll bring them back tomorrow."
+  },
+  {
+    "start": 106.72,
+    "end": 107.36,
+    "text": "**Jonathan:** Good."
+  },
+  {
+    "start": 107.36,
+    "end": 108.32,
+    "text": "**Anna:** Thank you."
+  },
+  {
+    "start": 108.4,
+    "end": 110,
+    "text": "**Jonathan:** You're welcome."
+  },
+  {
+    "start": 110.159,
+    "end": 112.64,
+    "text": "**Anna:** Happy birthday, Marsha!"
+  },
+  {
+    "start": 112.64,
+    "end": 114,
+    "text": "**Marsha:** Thanks, Anna."
+  },
+  {
+    "start": 114,
+    "end": 116.64,
+    "text": "**Marsha:** I love {birthday|誕生日|/ˈbɜːrθdeɪ/|My birthday is in June.} gifts."
+  },
+  {
+    "start": 116.64,
+    "end": 119.119,
+    "text": "**Marsha:** Anna, it is"
+  },
+  {
+    "start": 120.44,
+    "end": 122.84,
+    "text": "**Marsha:** {Interesting|興味深い|/ˈɪntrəstɪŋ/|This book is very interesting.}"
+  },
+  {
+    "start": 122.84,
+    "end": 124.6,
+    "text": "**Marsha:** What is it?"
+  },
+  {
+    "start": 124.6,
+    "end": 130.6,
+    "text": "**Anna:** Well, I know you love {hats|帽子|/hæts/|I have three hats.} and you need office supplies."
+  },
+  {
+    "start": 130.52,
+    "end": 136.04,
+    "text": "**Anna:** So this is your own office supply hat."
+  },
+  {
+    "start": 136.04,
+    "end": 139.4,
+    "text": "**Marsha:** Wow, that is a lot of office supply"
+  },
+  {
+    "start": 139.92,
+    "end": 144.56,
+    "text": "**Anna:** Many people {loaned|貸した|/loʊnd/|He loaned me his car.} or shared their supplies with me."
+  },
+  {
+    "start": 144.56,
+    "end": 148.64,
+    "text": "**Anna:** Some people really love their office supplies."
+  },
+  {
+    "start": 148.64,
+    "end": 152.32,
+    "text": "**Anna:** It has {paper|紙|/ˈpeɪpər/|I wrote on a piece of paper.} pens."
+  },
+  {
+    "start": 152.02,
+    "end": 160.58,
+    "text": "**Anna:** {tape|テープ/粘着テープ|/teɪp/|I need tape to fix this paper.}, {erasers|消しゴム|/ˈɪrəsərz/|I use erasers to remove pencil marks.}, {rubber bands|輪ゴム|/ˈrʌbər bændz/|Rubber bands hold papers together.}, binder clips, paper clips, and a {light|明かり/ライト|/laɪt/|Turn on the light, please.}"
+  },
+  {
+    "start": 160.82,
+    "end": 162.98,
+    "text": "**Marsha:** What is the {balloon|風船/バルーン|/bəˈluːn/|The balloon is red and big.} for?"
+  },
+  {
+    "start": 162.98,
+    "end": 166.98,
+    "text": "**Anna:** The balloon will help your friends find you."
+  },
+  {
+    "start": 166.98,
+    "end": 168.18,
+    "text": "**Anna:** Let's try it."
+  },
+  {
+    "start": 168.18,
+    "end": 170.5,
+    "text": "**Anna:** You get a {seat|席/座席|/siːt/|Take a seat near the window.} in the restaurant."
+  },
+  {
+    "start": 170.5,
+    "end": 172.74,
+    "text": "**Anna:** I will find you."
+  },
+  {
+    "start": 172.7,
+    "end": 177.9,
+    "text": "**Anna:** Sometimes all the {money|お金/通貨|/ˈmʌni/|I need money to buy a gift.} in the world can't buy the perfect {gift|贈り物/プレゼント|/ɡɪft/|This is a gift for you.}"
+  },
+  {
+    "start": 177.9,
+    "end": 179.1,
+    "text": "**Anna:** Till next time"
+  }
+]

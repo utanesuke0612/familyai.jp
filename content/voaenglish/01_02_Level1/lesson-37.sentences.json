@@ -1,0 +1,397 @@
+[
+  {
+    "start": 1.92,
+    "end": 8.32,
+    "text": "**Anna:** You know, I am from the {country|田舎/農村|/ˈkʌntri/|I live in the country.} and sometimes I {miss|恋しく思う/懐かしむ|/mɪs/|I miss my hometown.} it."
+  },
+  {
+    "start": 8.32,
+    "end": 12.4,
+    "text": "**Anna:** But I really like life in the {city|都市/街|/ˈsɪti/|I love living in the city.}!"
+  },
+  {
+    "start": 12.4,
+    "end": 14.96,
+    "text": "**Anna:** I love the city."
+  },
+  {
+    "start": 14.94,
+    "end": 16.219,
+    "text": "**Anna:** Oh look!"
+  },
+  {
+    "start": 16.219,
+    "end": 18.3,
+    "text": "**Anna:** Someone lost a {bag|かばん/バッグ|/bæɡ/|I found a bag on the street.}"
+  },
+  {
+    "start": 18.3,
+    "end": 20.06,
+    "text": "**Anna:** Maybe it's theirs."
+  },
+  {
+    "start": 20.06,
+    "end": 21.26,
+    "text": "**Anna:** Excuse me."
+  },
+  {
+    "start": 21.26,
+    "end": 23.1,
+    "text": "**Anna:** Is this bag yours?"
+  },
+  {
+    "start": 23.1,
+    "end": 24.7,
+    "text": "**Sarah:** No, it's not mine."
+  },
+  {
+    "start": 24.7,
+    "end": 26.22,
+    "text": "**Sarah:** It might be hers."
+  },
+  {
+    "start": 26.54,
+    "end": 27.5,
+    "text": "**Anna:** Thank you"
+  },
+  {
+    "start": 28.119,
+    "end": 31.8,
+    "text": "**Anna:** Excuse me, is this bag yours?"
+  },
+  {
+    "start": 31.8,
+    "end": 34.2,
+    "text": "**Sarah:** No, it's not mine."
+  },
+  {
+    "start": 34.2,
+    "end": 35.72,
+    "text": "**Sarah:** It might be his."
+  },
+  {
+    "start": 35.72,
+    "end": 37.32,
+    "text": "**Anna:** Thank you."
+  },
+  {
+    "start": 37.22,
+    "end": 38.5,
+    "text": "**Anna:** Hello!"
+  },
+  {
+    "start": 38.5,
+    "end": 40.34,
+    "text": "**Anna:** Is this bag yours?"
+  },
+  {
+    "start": 40.34,
+    "end": 42.74,
+    "text": "**Phil:** Yes, that's mine."
+  },
+  {
+    "start": 42.74,
+    "end": 45.7,
+    "text": "**Anna:** These are all my {travel|旅行の/移動の|/ˈtrævəl/|I love to travel around the world.} things."
+  },
+  {
+    "start": 46.02,
+    "end": 49.12,
+    "text": "**Anna:** Thank you."
+  },
+  {
+    "start": 49.92,
+    "end": 51.6,
+    "text": "**Anna:** Are you okay?"
+  },
+  {
+    "start": 51.6,
+    "end": 54.72,
+    "text": "**Anna:** You seem {nervous|緊張した/不安な|/ˈnɜːrvəs/|He looks nervous before the test.}"
+  },
+  {
+    "start": 54.72,
+    "end": 58.64,
+    "text": "**Phil:** Well, this is my first {visit|訪問/来訪|/ˈvɪzɪt/|We will visit the museum.} to Washington DC."
+  },
+  {
+    "start": 58.64,
+    "end": 61.6,
+    "text": "**Phil:** I'm from a small town in the country."
+  },
+  {
+    "start": 62.28,
+    "end": 64.04,
+    "text": "**Phil:** Feel a little {lost|迷った/道に迷った|/lɔːst/|I am lost in this big city.}"
+  },
+  {
+    "start": 64.04,
+    "end": 66.6,
+    "text": "**Phil:** I'm from the country too."
+  },
+  {
+    "start": 66.6,
+    "end": 68.68,
+    "text": "**Anna:** And I understand."
+  },
+  {
+    "start": 68.68,
+    "end": 73.08,
+    "text": "**Anna:** When I first came here, I felt lost."
+  },
+  {
+    "start": 73.04,
+    "end": 74.88,
+    "text": "**Anna:** All the time."
+  },
+  {
+    "start": 74.88,
+    "end": 79.6,
+    "text": "**Phil:** So do you like living in the country or in the city?"
+  },
+  {
+    "start": 79.6,
+    "end": 82.8,
+    "text": "**Anna:** I like to live in the {city|都市/街|/ˈsɪti/|I live in a big city}."
+  },
+  {
+    "start": 82.82,
+    "end": 84.02,
+    "text": "**Phil:** Why?"
+  },
+  {
+    "start": 84.02,
+    "end": 86.26,
+    "text": "**Anna:** The city is {exciting|わくわくする/刺激的な|/ɪkˈstaɪdɪŋ/|An exciting movie is fun}."
+  },
+  {
+    "start": 86.26,
+    "end": 89.22,
+    "text": "**Anna:** It has more {culture|文化|/ˈkʌltʃər/|Japanese culture is interesting} than the country."
+  },
+  {
+    "start": 89.22,
+    "end": 92.58,
+    "text": "**Anna:** There are many {museums|博物館|/mjuˈziəmz/|Museums show history} and {restaurants|レストラン|/ˈrestrɒnts/|Restaurants serve good food}."
+  },
+  {
+    "start": 92.58,
+    "end": 95.86,
+    "text": "**Anna:** Every night there's {theater|劇場|/ˈθɪətər/|Theater shows are exciting} and music"
+  },
+  {
+    "start": 96.659,
+    "end": 99.54,
+    "text": "**Anna:** And there are more {jobs|仕事|/dʒɒbz/|Good jobs pay well}."
+  },
+  {
+    "start": 99.54,
+    "end": 102.58,
+    "text": "**Anna:** That is why I'm here."
+  },
+  {
+    "start": 102.58,
+    "end": 105.38,
+    "text": "**Anna:** Well, I agree."
+  },
+  {
+    "start": 105.52,
+    "end": 113.759,
+    "text": "**Anna:** There is more culture in the city and there might be more jobs, but the country has more {nature|自然|/ˈneɪtʃər/|Nature is beautiful}."
+  },
+  {
+    "start": 113.759,
+    "end": 117.119,
+    "text": "**Anna:** It's {peaceful|平和な/静かな|/ˈpiːsfəl/|A peaceful place is calm} and beautiful."
+  },
+  {
+    "start": 117.14,
+    "end": 120.9,
+    "text": "**Anna:** There are trees and {mountains|山|/ˈmaʊntənz/|Mountains are tall}."
+  },
+  {
+    "start": 120.9,
+    "end": 122.82,
+    "text": "**Phil:** The air is clean."
+  },
+  {
+    "start": 122.82,
+    "end": 126.02,
+    "text": "**Anna:** You can go {hiking|ハイキング|/ˈhaɪkɪŋ/|Hiking is good exercise} and {camping|キャンプ|/ˈkæmpɪŋ/|Camping is fun}."
+  },
+  {
+    "start": 126.02,
+    "end": 129.06,
+    "text": "**Anna:** The city is not beautiful."
+  },
+  {
+    "start": 129.06,
+    "end": 132.26,
+    "text": "**Anna:** It's {noisy|うるさい/騒々しい|/ˈnɔɪzi/|A noisy room is loud} and dirty."
+  },
+  {
+    "start": 132.26,
+    "end": 133.94,
+    "text": "**Anna:** I disagree."
+  },
+  {
+    "start": 133.94,
+    "end": 138.66,
+    "text": "**Anna:** I think all the different {buildings|建物|/ˈbɪldɪŋz/|Buildings are tall} are beautiful."
+  },
+  {
+    "start": 138.22,
+    "end": 141.579,
+    "text": "**Anna:** And I like to watch all the different people."
+  },
+  {
+    "start": 141.579,
+    "end": 144.14,
+    "text": "**Phil:** That's another thing that is different."
+  },
+  {
+    "start": 144.14,
+    "end": 147.5,
+    "text": "**Phil:** People in the country are {friendly|フレンドリーな/親切な|/ˈfrendli/|Friendly people are kind}."
+  },
+  {
+    "start": 147.62,
+    "end": 150.1,
+    "text": "**Anna:** They always say hello."
+  },
+  {
+    "start": 150.1,
+    "end": 153.06,
+    "text": "**Anna:** Here, no one says hello."
+  },
+  {
+    "start": 153.06,
+    "end": 154.98,
+    "text": "**Anna:** I think city people are"
+  },
+  {
+    "start": 155.34,
+    "end": 156.3,
+    "text": "**Anna:** {Rude|無礼な/失礼な|/ruːd/|Rude people are not polite}."
+  },
+  {
+    "start": 156.3,
+    "end": 157.98,
+    "text": "**Anna:** Well I agree."
+  },
+  {
+    "start": 157.98,
+    "end": 160.3,
+    "text": "**Anna:** Country people friendly."
+  },
+  {
+    "start": 160.3,
+    "end": 163.58,
+    "text": "**Anna:** But I don't think city people are rude."
+  },
+  {
+    "start": 163.58,
+    "end": 166.06,
+    "text": "**Anna:** I think they're just {busy|忙しい|/ˈbɪzi/|Busy people work a lot}."
+  },
+  {
+    "start": 165.74,
+    "end": 167.5,
+    "text": "**Phil:** That's a good point."
+  },
+  {
+    "start": 167.5,
+    "end": 168.7,
+    "text": "**Anna:** Look at me."
+  },
+  {
+    "start": 168.7,
+    "end": 172.14,
+    "text": "**Anna:** I {live|住む} in the {city|都市/街} and I said hello to you."
+  },
+  {
+    "start": 172.14,
+    "end": 174.78,
+    "text": "**Anna:** But you are from the {country|田舎/農村}."
+  },
+  {
+    "start": 174.78,
+    "end": 176.94,
+    "text": "**Anna:** I have an {idea|アイデア/考え}."
+  },
+  {
+    "start": 176.54,
+    "end": 180.14,
+    "text": "**Anna:** Let's say {hello|挨拶する} to people."
+  },
+  {
+    "start": 180.14,
+    "end": 182.14,
+    "text": "**Anna:** To many people."
+  },
+  {
+    "start": 182.14,
+    "end": 182.94,
+    "text": "**Phil:** What?"
+  },
+  {
+    "start": 182.94,
+    "end": 183.82,
+    "text": "**Phil:** Why?"
+  },
+  {
+    "start": 183.82,
+    "end": 189.18,
+    "text": "**Anna:** Well, if we say hello, then they will say hello to other people."
+  },
+  {
+    "start": 188.96,
+    "end": 190.16,
+    "text": "**Anna:** Hello?"
+  },
+  {
+    "start": 190.16,
+    "end": 193.52,
+    "text": "**Phil:** And they will say hello to more people."
+  },
+  {
+    "start": 193.52,
+    "end": 195.76,
+    "text": "**Phil:** That's a great {idea|素晴らしいアイデア}."
+  },
+  {
+    "start": 195.76,
+    "end": 198.16,
+    "text": "**Anna:** I'm glad you {found|見つけた/発見した} my bag."
+  },
+  {
+    "start": 198.16,
+    "end": 201.52,
+    "text": "**Anna:** Come on, let's go say hello to people"
+  },
+  {
+    "start": 202.42,
+    "end": 205.3,
+    "text": "**Anna:** We don't have to {agree|同意する} with people."
+  },
+  {
+    "start": 205.3,
+    "end": 209.22,
+    "text": "**Anna:** They have their {opinions|意見/考え}, we have ours."
+  },
+  {
+    "start": 209.22,
+    "end": 214.34,
+    "text": "**Anna:** And as we like to say, you can always {agree|同意する} to {disagree|意見が合わない}."
+  },
+  {
+    "start": 214.34,
+    "end": 216.42,
+    "text": "**Anna:** Until next time."
+  },
+  {
+    "start": 216.299,
+    "end": 216.939,
+    "text": "**Anna:** Hello"
+  }
+]

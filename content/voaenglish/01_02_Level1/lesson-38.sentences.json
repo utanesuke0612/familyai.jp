@@ -1,0 +1,317 @@
+[
+  {
+    "start": 0.24,
+    "end": 1.2,
+    "text": "**Anna:** Hello!"
+  },
+  {
+    "start": 1.2,
+    "end": 3.04,
+    "text": "**Anna:** I have {great|素晴らしい/すごい|/ɡreɪt/|Great job today!} news."
+  },
+  {
+    "start": 3.04,
+    "end": 9.04,
+    "text": "**Anna:** My best friend from my {hometown|地元の町|/ˈhoʊmtaʊn/|I miss my hometown.} is coming here to Washington DC!"
+  },
+  {
+    "start": 9.04,
+    "end": 12.16,
+    "text": "**Anna:** I can't wait to {catch up|再会する/近況を聞く|/kætʃ ʌp/|Let's catch up over coffee.} with her!"
+  },
+  {
+    "start": 12.019,
+    "end": 13.86,
+    "text": "**Anna:** Oh, I {gotta|〜しなければならない（口語）|/ˈɡɑːtə/|I gotta go now.} go."
+  },
+  {
+    "start": 13.86,
+    "end": 17.06,
+    "text": "**Anna:** Her train {arrives|到着する|/əˈraɪvz/|The train arrives at 3 PM.} in ten minutes."
+  },
+  {
+    "start": 17.06,
+    "end": 19.779,
+    "text": "**Anna:** Penelope!"
+  },
+  {
+    "start": 19.779,
+    "end": 20.18,
+    "text": "**Anna:** Holla"
+  },
+  {
+    "start": 21.34,
+    "end": 23.82,
+    "text": "**Penelope:** I am really {happy|幸せな/うれしい|/ˈhæpi/|I am happy to see you.} to see you."
+  },
+  {
+    "start": 23.82,
+    "end": 24.78,
+    "text": "**Anna:** Me too."
+  },
+  {
+    "start": 24.78,
+    "end": 26.14,
+    "text": "**Anna:** How was your {trip|旅行/旅|/trɪp/|It was a nice trip.}?"
+  },
+  {
+    "start": 26.14,
+    "end": 27.26,
+    "text": "**Penelope:** I was fine."
+  },
+  {
+    "start": 27.26,
+    "end": 29.74,
+    "text": "**Anna:** Let me help you with your {bags|バッグ/荷物|/bæɡz/|Can you carry these bags?}."
+  },
+  {
+    "start": 29.72,
+    "end": 33.64,
+    "text": "**Penelope:** I'm really {excited|興奮している/わくわくしている|/ɪkˈsaɪtɪd/|I am excited about the concert.} to be in Washington, DC!"
+  },
+  {
+    "start": 33.64,
+    "end": 37.4,
+    "text": "**Penelope:** I can't wait to hear about {everything|すべて/全て|/ˈevriθɪŋ/|Tell me everything about your day.}."
+  },
+  {
+    "start": 37.4,
+    "end": 41,
+    "text": "**Anna:** Penelope, I have so much to tell you!"
+  },
+  {
+    "start": 40.66,
+    "end": 42.34,
+    "text": "**Anna:** Let's go to my {apartment|アパート/マンション|/əˈpɑːrtmənt/|My apartment is small but cozy.}."
+  },
+  {
+    "start": 42.34,
+    "end": 45.86,
+    "text": "**Anna:** We can talk over a hot cup of tea."
+  },
+  {
+    "start": 45.86,
+    "end": 49.94,
+    "text": "**Penelope:** I love your apartment building, Anna."
+  },
+  {
+    "start": 50.02,
+    "end": 51.86,
+    "text": "**Penelope:** Is your {rent|家賃/賃料|/rent/|The rent is high in this area.} expensive?"
+  },
+  {
+    "start": 51.86,
+    "end": 54.1,
+    "text": "**Anna:** Well, I have a {roommate|同居人/ルームメイト|/ˈruːmmeɪt/|My roommate is very friendly.}."
+  },
+  {
+    "start": 54.1,
+    "end": 56.5,
+    "text": "**Anna:** So we split the rent."
+  },
+  {
+    "start": 56.5,
+    "end": 57.62,
+    "text": "**Penelope:** Oh that's right"
+  },
+  {
+    "start": 57.4,
+    "end": 59.16,
+    "text": "**Penelope:** Is your roommate nice?"
+  },
+  {
+    "start": 59.16,
+    "end": 63.96,
+    "text": "**Anna:** Marcia is the {nicest|最も親切な|/ˈnaɪsɪst/|She is the nicest person I know.} person I know in this city."
+  },
+  {
+    "start": 63.96,
+    "end": 67.24,
+    "text": "**Anna:** Sometimes she {worries|心配する/悩む|/ˈwʌriz/|I worry about my exams.} too much."
+  },
+  {
+    "start": 67.42,
+    "end": 72.06,
+    "text": "**Anna:** And she says I'm the {messiest|最もちらかした/最も散らかりやすい|/ˈmesɪst/|My room is the messiest.} cook she knows."
+  },
+  {
+    "start": 72.06,
+    "end": 75.18,
+    "text": "**Anna:** But we are great roommates."
+  },
+  {
+    "start": 75.42,
+    "end": 79.42,
+    "text": "**Penelope:** So Anna, is it hard to make {friends|友達/仲間|/frendz/|I made new friends at school.} in DC?"
+  },
+  {
+    "start": 79.42,
+    "end": 85.02,
+    "text": "**Anna:** At first, it was hard, but now Marsha is a good friend."
+  },
+  {
+    "start": 85.02,
+    "end": 87.5,
+    "text": "**Anna:** And there's {Pete|人名}."
+  },
+  {
+    "start": 87.5,
+    "end": 93.1,
+    "text": "**Anna:** Of all the people I know in DC, Pete is the most {serious|真面目な/深刻な}"
+  },
+  {
+    "start": 93.62,
+    "end": 96.5,
+    "text": "**Anna:** And also the {silliest|馬鹿げた/おかしな}"
+  },
+  {
+    "start": 96.5,
+    "end": 99.38,
+    "text": "**Penelope:** He sounds {interesting|興味深い/面白い}"
+  },
+  {
+    "start": 100.42,
+    "end": 105.62,
+    "text": "**Anna:** Jonathan and Ashley are two other good {friends|友人/仲間|/ˈfrendz/|My friends help me a lot.}"
+  },
+  {
+    "start": 105.14,
+    "end": 109.06,
+    "text": "**Anna:** In the city, they are the {friendliest|最も親切な} people I know."
+  },
+  {
+    "start": 109.06,
+    "end": 111.7,
+    "text": "**Anna:** They always help me when I need it."
+  },
+  {
+    "start": 111.7,
+    "end": 113.7,
+    "text": "**Penelope:** Your friends sound great"
+  },
+  {
+    "start": 114.02,
+    "end": 116.34,
+    "text": "**Penelope:** So, tell me about your {job|仕事/職業|/dʒɑːb/|I love my job very much.}"
+  },
+  {
+    "start": 116.34,
+    "end": 118.74,
+    "text": "**Anna:** I love my work."
+  },
+  {
+    "start": 118.74,
+    "end": 124.899,
+    "text": "**Anna:** I make a children's show called The {Time Traveling|タイムトラベル} Tree House."
+  },
+  {
+    "start": 124.439,
+    "end": 128.44,
+    "text": "**Penelope:** Anna, that is the best job for you."
+  },
+  {
+    "start": 128.44,
+    "end": 130.92,
+    "text": "**Penelope:** Do you remember when we were little?"
+  },
+  {
+    "start": 130.92,
+    "end": 137.4,
+    "text": "**Penelope:** We played in that old {tree house|ツリーハウス} behind my family's house for hours"
+  },
+  {
+    "start": 138.42,
+    "end": 141.46,
+    "text": "**Anna:** It is really good to talk to you."
+  },
+  {
+    "start": 141.46,
+    "end": 146.66,
+    "text": "**Anna:** New friends are good, but old friends are the best."
+  },
+  {
+    "start": 146.66,
+    "end": 148.26,
+    "text": "**Anna:** I know."
+  },
+  {
+    "start": 148.62,
+    "end": 152.86,
+    "text": "**Penelope:** Our {hometown|故郷} isn't the same now."
+  },
+  {
+    "start": 152.86,
+    "end": 154.78,
+    "text": "**Penelope:** You are not there."
+  },
+  {
+    "start": 155.34,
+    "end": 158.78,
+    "text": "**Anna:** No crying."
+  },
+  {
+    "start": 159.24,
+    "end": 165.48,
+    "text": "**Anna:** Penelope, why don't you move here and live with me and Marcia?"
+  },
+  {
+    "start": 165.48,
+    "end": 169.08,
+    "text": "**Penelope:** Anna, I can't leave our hometown."
+  },
+  {
+    "start": 169.08,
+    "end": 170.04,
+    "text": "**Penelope:** You forget"
+  },
+  {
+    "start": 170.52,
+    "end": 173.959,
+    "text": "**Penelope:** I love my job too."
+  },
+  {
+    "start": 173.959,
+    "end": 175.64,
+    "text": "**Penelope:** I didn't forget."
+  },
+  {
+    "start": 175.64,
+    "end": 179.4,
+    "text": "**Penelope:** You are the most famous {turkey|七面鳥/七面鳥肉|/ˈtɜːrki/|We eat turkey on Thanksgiving.}"
+  },
+  {
+    "start": 179.4,
+    "end": 181.16,
+    "text": "**Penelope:** Thanks, Anna."
+  },
+  {
+    "start": 181.14,
+    "end": 187.78,
+    "text": "**Anna:** Come on, let's go eat dinner at one of DC's most famous {restaurants|レストラン/食堂|/ˈrestrɑːnts/|We love eating at nice restaurants.}"
+  },
+  {
+    "start": 187.78,
+    "end": 189.06,
+    "text": "**Penelope:** Awesome!"
+  },
+  {
+    "start": 189.72,
+    "end": 192.12,
+    "text": "**Anna:** I have a great {apartment|アパート/マンション|/əˈpɑːrtmənt/|My apartment is very cozy.}"
+  },
+  {
+    "start": 192.12,
+    "end": 195.48,
+    "text": "**Anna:** I {love|愛する/好きである|/lʌv/|I love my family.} my work and I have {awesome|素晴らしい/素晴らしい|/ˈɔːsəm/|What an awesome day!} friends."
+  },
+  {
+    "start": 195.48,
+    "end": 198.599,
+    "text": "**Anna:** I am the {luckiest|最も幸運な|/ˈlʌkiəst/|Today is my luckiest day.} woman in Washington, DC"
+  },
+  {
+    "start": 202.319,
+    "end": 204.159,
+    "text": "**Anna:** Until next time"
+  }
+]

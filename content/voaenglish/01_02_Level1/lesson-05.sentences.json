@@ -1,0 +1,102 @@
+[
+  {
+    "start": 1.6,
+    "end": 3.2,
+    "text": "**Anna:** Hello everyone!"
+  },
+  {
+    "start": 3.2,
+    "end": 7.76,
+    "text": "**Anna:** Today my {friend|友人/仲間|/frend/|My friend is kind.} Marcia is at her friend's house."
+  },
+  {
+    "start": 7.76,
+    "end": 10.64,
+    "text": "**Anna:** She says it is {beautiful|美しい|/ˈbjuːtɪfəl/|The sunset is beautiful.}"
+  },
+  {
+    "start": 10.64,
+    "end": 13.52,
+    "text": "**Anna:** I want to see this house."
+  },
+  {
+    "start": 13.719,
+    "end": 15.559,
+    "text": "**Anna:** Here we are."
+  },
+  {
+    "start": 15.559,
+    "end": 18.68,
+    "text": "**Anna:** Marsha, I am in the {kitchen|台所|/ˈkɪtʃən/|I cook in the kitchen.}"
+  },
+  {
+    "start": 18.68,
+    "end": 22.119,
+    "text": "**Anna:** It is a beautiful kitchen."
+  },
+  {
+    "start": 22.119,
+    "end": 24.439,
+    "text": "**Anna:** It is beautiful."
+  },
+  {
+    "start": 24.619,
+    "end": 27.58,
+    "text": "**Anna:** We {cook|料理する|/kʊk/|I cook dinner every day.} in the kitchen."
+  },
+  {
+    "start": 27.58,
+    "end": 30.699,
+    "text": "**Anna:** I {eat|食べる|/iːt/|I eat breakfast at home.} in the kitchen."
+  },
+  {
+    "start": 30.699,
+    "end": 34.3,
+    "text": "**Marsha:** We {relax|くつろぐ/リラックスする|/rɪˈlæks/|We relax after work.} in the living room."
+  },
+  {
+    "start": 34.94,
+    "end": 37.98,
+    "text": "**Anna:** I relax in the living room."
+  },
+  {
+    "start": 37.98,
+    "end": 41.579,
+    "text": "**Anna:** Marcia, let's go {upstairs|階上に|/ˈʌpsteərz/|We went upstairs to the bedroom.}"
+  },
+  {
+    "start": 41.579,
+    "end": 43.02,
+    "text": "**Marsha:** Anna?"
+  },
+  {
+    "start": 43.02,
+    "end": 44.62,
+    "text": "**Marsha:** Where are you?"
+  },
+  {
+    "start": 45.739,
+    "end": 48.539,
+    "text": "**Anna:** Marsha, I am in the {bathroom|浴室/トイレ|/ˈbæθruːm/|I take a shower in the bathroom.}"
+  },
+  {
+    "start": 48.539,
+    "end": 51.579,
+    "text": "**Anna:** I {wash|洗う|/wɒʃ/|I wash my hands before eating.} in the bathroom."
+  },
+  {
+    "start": 51.579,
+    "end": 53.899,
+    "text": "**Marsha:** I am in the {bedroom|寝室|/ˈbedruːm/|My bedroom is blue.}"
+  },
+  {
+    "start": 53.899,
+    "end": 56.699,
+    "text": "**Marsha:** We {sleep|眠る|/sliːp/|I sleep eight hours every night.} in the bedroom."
+  },
+  {
+    "start": 56.699,
+    "end": 59.339,
+    "text": "**Marsha:** I sleep in the bedroom."
+  }
+]

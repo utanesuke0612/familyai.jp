@@ -1,0 +1,327 @@
+[
+  {
+    "start": 0.8,
+    "end": 6.24,
+    "text": "**Guy:** Hello, I'm {Guy Newsman|記者|/njuːzˈmæn/|Guy is a famous news reporter.} with News Channel XYZ."
+  },
+  {
+    "start": 6.24,
+    "end": 9.04,
+    "text": "**Guy:** I'm here in {Washington DC|首都|/ˈwɑːʃɪŋtən diˈsiː/|Washington DC is the capital of the USA.}"
+  },
+  {
+    "start": 8.86,
+    "end": 10.78,
+    "text": "**Guy:** at the scene of a {crime|犯罪|/kraɪm/|A crime happened in the street.}"
+  },
+  {
+    "start": 10.78,
+    "end": 12.78,
+    "text": "**Guy:** We are talking with this woman."
+  },
+  {
+    "start": 12.78,
+    "end": 15.26,
+    "text": "**Guy:** She saw the crime during her {lunch break|昼休み|/lʌntʃ breɪk/|Workers often eat lunch during break time.}"
+  },
+  {
+    "start": 15.26,
+    "end": 20.38,
+    "text": "**Guy:** It looks like she {hurt|傷つけた|/hɜːrt/|He hurt his leg while playing soccer.} herself while she was trying to stop the crime."
+  },
+  {
+    "start": 20.38,
+    "end": 21.74,
+    "text": "**Guy:** Tell us your name"
+  },
+  {
+    "start": 21.4,
+    "end": 24.76,
+    "text": "**Anna:** Hi Guy, I'm Anna."
+  },
+  {
+    "start": 24.76,
+    "end": 28.92,
+    "text": "**Guy:** Anna, what did you see and what happened to your {arm|腕|/ɑːrm/|My arm hurts after exercise.}?"
+  },
+  {
+    "start": 28.92,
+    "end": 32.84,
+    "text": "**Anna:** Guy, I was {minding|気にしていた|/maɪnd/|She was minding her own business.} my own business."
+  },
+  {
+    "start": 32.54,
+    "end": 34.379,
+    "text": "**Anna:** See, I work over there."
+  },
+  {
+    "start": 35.18,
+    "end": 38.059,
+    "text": "**Anna:** I left work to get some {lunch|昼食|/lʌntʃ/|Let's have lunch together.}"
+  },
+  {
+    "start": 38.059,
+    "end": 41.739,
+    "text": "**Anna:** Then suddenly I heard a woman {yelling|叫んでいる|/ˈjelɪŋ/|The child was yelling for help.}"
+  },
+  {
+    "start": 41.2,
+    "end": 44,
+    "text": "**Anna:** She was yelling like this, help!"
+  },
+  {
+    "start": 44,
+    "end": 44.88,
+    "text": "**Anna:** Help!"
+  },
+  {
+    "start": 45.28,
+    "end": 47.84,
+    "text": "**Anna:** Two {robbers|強盗|/ˈrɑːbərz/|Robbers stole money from the bank.} were grabbing her bag."
+  },
+  {
+    "start": 47.84,
+    "end": 50.4,
+    "text": "**Anna:** She was hitting them with her {umbrella|傘|/ʌmˈbrelə/|She opened her umbrella in the rain.}"
+  },
+  {
+    "start": 50.4,
+    "end": 53.12,
+    "text": "**Guy:** Is that when you hurt your arm?"
+  },
+  {
+    "start": 52.82,
+    "end": 57.62,
+    "text": "**Anna:** No, at that time I was not fighting the robbers."
+  },
+  {
+    "start": 57.94,
+    "end": 62.9,
+    "text": "**Anna:** See, I was too far away and I didn't have my own umbrella"
+  },
+  {
+    "start": 63.3,
+    "end": 64.98,
+    "text": "**Guy:** So what happened next?"
+  },
+  {
+    "start": 64.98,
+    "end": 67.94,
+    "text": "**Anna:** They grabbed her bag and ran away."
+  },
+  {
+    "start": 68.02,
+    "end": 72.26,
+    "text": "**Anna:** So I grabbed her umbrella and ran after the robbers."
+  },
+  {
+    "start": 72.26,
+    "end": 74.9,
+    "text": "**Guy:** Then that is the time that you hurt your arm?"
+  },
+  {
+    "start": 74.9,
+    "end": 75.22,
+    "text": "**Anna:** No"
+  },
+  {
+    "start": 75.76,
+    "end": 78.96,
+    "text": "**Anna:** I was yelling, stop robbers, stop!"
+  },
+  {
+    "start": 79.2,
+    "end": 82.799,
+    "text": "**Anna:** She was yelling, hey, come back with my umbrella."
+  },
+  {
+    "start": 82.799,
+    "end": 84.24,
+    "text": "**Guy:** What are you {afraid|恐れている|/əˈfreɪd/|Are you afraid of the dark?}?"
+  },
+  {
+    "start": 84.24,
+    "end": 87.6,
+    "text": "**Anna:** I had no time to be afraid, guy."
+  },
+  {
+    "start": 87.439,
+    "end": 91.68,
+    "text": "**Anna:** Well, I had time while I was {resting|休んでいる|/ˈrestɪŋ/|He was resting after a long walk.} on a bench."
+  },
+  {
+    "start": 91.68,
+    "end": 93.52,
+    "text": "**Anna:** I had a lot of {time|時間/余裕}"
+  },
+  {
+    "start": 93.52,
+    "end": 94.88,
+    "text": "**Guy:** Then what happened?"
+  },
+  {
+    "start": 94.88,
+    "end": 97.2,
+    "text": "**Anna:** The {robbers|強盗} got on a bus."
+  },
+  {
+    "start": 97.2,
+    "end": 99.2,
+    "text": "**Anna:** So I {ran|走った/疾走した} after the {bus|バス/乗り物}"
+  },
+  {
+    "start": 99.439,
+    "end": 102.799,
+    "text": "**Anna:** While I was {running|走っている}, I {tripped|つまずいた/転んだ} and fell."
+  },
+  {
+    "start": 102.799,
+    "end": 105.36,
+    "text": "**Guy:** And that is the time that you hurt your arm?"
+  },
+  {
+    "start": 105.84,
+    "end": 106.88,
+    "text": "**Anna:** No."
+  },
+  {
+    "start": 106.88,
+    "end": 110.399,
+    "text": "**Anna:** While I was {lying|横たわっている/寝ている} on the ground, someone said"
+  },
+  {
+    "start": 110.54,
+    "end": 112.3,
+    "text": "**Anna:** {Stepped|踏んだ/踏み付けた} on my arm."
+  },
+  {
+    "start": 112.3,
+    "end": 114.7,
+    "text": "**Guy:** Ouch, that's too bad."
+  },
+  {
+    "start": 114.7,
+    "end": 115.66,
+    "text": "**Anna:** Yeah."
+  },
+  {
+    "start": 115.66,
+    "end": 118.22,
+    "text": "**Anna:** And they didn't {apologize|謝罪する/詫びる}"
+  },
+  {
+    "start": 118.52,
+    "end": 123.24,
+    "text": "**Anna:** Well, then the {robbers|強盗} got themselves {kicked|蹴られた} off the bus."
+  },
+  {
+    "start": 123.24,
+    "end": 123.96,
+    "text": "**Guy:** Why?"
+  },
+  {
+    "start": 123.96,
+    "end": 125.719,
+    "text": "**Anna:** They didn't pay."
+  },
+  {
+    "start": 125.719,
+    "end": 129,
+    "text": "**Anna:** You've gotta pay when you get on a bus."
+  },
+  {
+    "start": 128.36,
+    "end": 131.4,
+    "text": "**Anna:** The {police|警察} came and took them away."
+  },
+  {
+    "start": 131.4,
+    "end": 133.319,
+    "text": "**Guy:** And that's when you hurt your arm?"
+  },
+  {
+    "start": 133.319,
+    "end": 133.72,
+    "text": "**Anna:** No."
+  },
+  {
+    "start": 133.959,
+    "end": 136.04,
+    "text": "**Guy:** Then when did you hurt yourself?"
+  },
+  {
+    "start": 136.04,
+    "end": 137.48,
+    "text": "**Anna:** Well, guy."
+  },
+  {
+    "start": 137.2,
+    "end": 141.04,
+    "text": "**Anna:** By this time, I was feeling very {hungry|空腹の/飢えた}."
+  },
+  {
+    "start": 141.04,
+    "end": 144.64,
+    "text": "**Anna:** So I went to my {office|事務所/職場} to get a {snack|軽食/おやつ}."
+  },
+  {
+    "start": 144.64,
+    "end": 148.8,
+    "text": "**Anna:** Anna, I'm calling for help right now."
+  },
+  {
+    "start": 148.82,
+    "end": 149.78,
+    "text": "**Guy:** Hello."
+  },
+  {
+    "start": 149.78,
+    "end": 152.74,
+    "text": "**Anna:** Yes, please come right away."
+  },
+  {
+    "start": 152.74,
+    "end": 156.98,
+    "text": "**Anna:** My {co-worker|同僚/同僚の人} is stuck in a {vending machine|自動販売機}."
+  },
+  {
+    "start": 157.02,
+    "end": 162.78,
+    "text": "**Guy:** You hurt your arm in a vending machine buying a bag of chips?"
+  },
+  {
+    "start": 162.78,
+    "end": 166.78,
+    "text": "**Anna:** I was really hungry and the bag was stuck."
+  },
+  {
+    "start": 166.86,
+    "end": 167.66,
+    "text": "**Anna:** I had to"
+  },
+  {
+    "start": 168.599,
+    "end": 171.72,
+    "text": "**Guy:** That's all from news channel {XYZ|ニュースチャンネル名}."
+  },
+  {
+    "start": 171.72,
+    "end": 175.239,
+    "text": "**Guy:** This is Guy Newsman saying {goodbye|さようなら}."
+  },
+  {
+    "start": 175.239,
+    "end": 178.519,
+    "text": "**Guy:** Okay, we have to {find|見つける/探す} ourselves another {story|ニュース/物語} {guys|仲間/みんな}."
+  },
+  {
+    "start": 178.519,
+    "end": 179.48,
+    "text": "**Anna:** Until next time."
+  },
+  {
+    "start": 179.48,
+    "end": 180.12,
+    "text": "**Anna:** Bye mom"
+  }
+]

@@ -1,0 +1,322 @@
+[
+  {
+    "start": 1.12,
+    "end": 2.32,
+    "text": "**Anna:** Hi there!"
+  },
+  {
+    "start": 2.32,
+    "end": 7.2,
+    "text": "**Anna:** {Summer|夏/季節} in Washington DC is {hot|暑い/高温} and {sunny|晴れた/日差しのある}."
+  },
+  {
+    "start": 7.2,
+    "end": 9.84,
+    "text": "**Anna:** I always {ride|乗る/利用する} the {metro|地下鉄} to work."
+  },
+  {
+    "start": 9.84,
+    "end": 13.92,
+    "text": "**Anna:** Riding the metro is {cool|涼しい/格好いい} and fast."
+  },
+  {
+    "start": 13.639,
+    "end": 16.6,
+    "text": "**Anna:** But today it's closed."
+  },
+  {
+    "start": 16.6,
+    "end": 19.32,
+    "text": "**Anna:** So I am {walking|歩く} to work."
+  },
+  {
+    "start": 19.32,
+    "end": 19.8,
+    "text": "**Anna:** Ms."
+  },
+  {
+    "start": 19.8,
+    "end": 22.2,
+    "text": "**Anna:** Weaver, I am late this morning."
+  },
+  {
+    "start": 22.2,
+    "end": 24.279,
+    "text": "**Anna:** The metro is closed."
+  },
+  {
+    "start": 24.279,
+    "end": 26.279,
+    "text": "**Anna:** So I am walking to work."
+  },
+  {
+    "start": 26.279,
+    "end": 28.119,
+    "text": "**Caty:** That's too bad."
+  },
+  {
+    "start": 27.74,
+    "end": 29.9,
+    "text": "**Caty:** It's really {hot|暑い/熱い}."
+  },
+  {
+    "start": 29.9,
+    "end": 31.34,
+    "text": "**Anna:** Yes, it is."
+  },
+  {
+    "start": 31.34,
+    "end": 34.62,
+    "text": "**Anna:** When you {arrive|到着する/着く}, please come to my office."
+  },
+  {
+    "start": 34.62,
+    "end": 37.26,
+    "text": "**Caty:** I have {important|重要な/大切な} news to tell you."
+  },
+  {
+    "start": 37.26,
+    "end": 38.22,
+    "text": "**Anna:** Of course."
+  },
+  {
+    "start": 38.22,
+    "end": 39.66,
+    "text": "**Anna:** Goodbye."
+  },
+  {
+    "start": 39.62,
+    "end": 42.1,
+    "text": "**Anna:** My boss has news for me."
+  },
+  {
+    "start": 42.1,
+    "end": 47.46,
+    "text": "**Anna:** The {question|質問/疑問} is, is it good news or bad news?"
+  },
+  {
+    "start": 47.36,
+    "end": 48.16,
+    "text": "**Anna:** Hello, Ms."
+  },
+  {
+    "start": 48.16,
+    "end": 49.04,
+    "text": "**Anna:** Weaver."
+  },
+  {
+    "start": 49.04,
+    "end": 53.36,
+    "text": "**Caty:** Anna, I have good news and I have bad news."
+  },
+  {
+    "start": 53.36,
+    "end": 55.6,
+    "text": "**Caty:** Which do you want to hear first?"
+  },
+  {
+    "start": 55.52,
+    "end": 56.64,
+    "text": "**Anna:** The good news."
+  },
+  {
+    "start": 56.64,
+    "end": 59.44,
+    "text": "**Anna:** No Okay, the bad news."
+  },
+  {
+    "start": 59.6,
+    "end": 64.64,
+    "text": "**Caty:** The bad news is you are not good at {reading|読む} the news."
+  },
+  {
+    "start": 64.64,
+    "end": 68.32,
+    "text": "**Anna:** Oh, I am very sorry to hear that."
+  },
+  {
+    "start": 68.84,
+    "end": 74.36,
+    "text": "**Anna:** So, starting next month, you will not read the news."
+  },
+  {
+    "start": 74.36,
+    "end": 76.2,
+    "text": "**Anna:** Next month is July"
+  },
+  {
+    "start": 76.42,
+    "end": 79.299,
+    "text": "**Caty:** You are {firing|解雇する/首にする} me in July."
+  },
+  {
+    "start": 79.46,
+    "end": 82.18,
+    "text": "**Caty:** No, I am not {firing|解雇する/首にする|/ˈfaɪərɪŋ/|He was firing workers last month.} you in July."
+  },
+  {
+    "start": 82.18,
+    "end": 84.659,
+    "text": "**Caty:** Or in August or in September."
+  },
+  {
+    "start": 84.659,
+    "end": 86.259,
+    "text": "**Anna:** That is the good news."
+  },
+  {
+    "start": 86.58,
+    "end": 87.54,
+    "text": "**Anna:** Okay."
+  },
+  {
+    "start": 87.54,
+    "end": 89.46,
+    "text": "**Anna:** You are not {firing|解雇する/首にする} me"
+  },
+  {
+    "start": 90.12,
+    "end": 92.84,
+    "text": "**Anna:** I am not reading the news."
+  },
+  {
+    "start": 92.84,
+    "end": 94.76,
+    "text": "**Anna:** What will I be doing?"
+  },
+  {
+    "start": 94.76,
+    "end": 98.44,
+    "text": "**Caty:** Well, you are good at {asking|尋ねる/質問する|/ˈæskɪŋ/|She is asking a question.} questions."
+  },
+  {
+    "start": 98.44,
+    "end": 100.92,
+    "text": "**Caty:** You are good at {talking|話す/語る|/ˈtɔːkɪŋ/|They are talking about work.} to people."
+  },
+  {
+    "start": 101.32,
+    "end": 105.8,
+    "text": "**Caty:** You are good at {showing|示す/見せる|/ˈʃoʊɪŋ/|He is showing his passport.} your feelings."
+  },
+  {
+    "start": 105.8,
+    "end": 109.08,
+    "text": "**Caty:** And you are great at being {silly|馬鹿げた/おかしな|/ˈsɪli/|Don't be silly!}."
+  },
+  {
+    "start": 109.42,
+    "end": 110.299,
+    "text": "**Anna:** Thank you, Ms."
+  },
+  {
+    "start": 110.46,
+    "end": 111.34,
+    "text": "**Anna:** Weaver."
+  },
+  {
+    "start": 111.34,
+    "end": 113.9,
+    "text": "**Anna:** But what does all that mean?"
+  },
+  {
+    "start": 113.9,
+    "end": 117.18,
+    "text": "**Caty:** I have a new {assignment|課題/仕事|/əˈsaɪnmənt/|She received a new assignment.} for you."
+  },
+  {
+    "start": 117.18,
+    "end": 121.74,
+    "text": "**Anna:** Your skills are {perfect|完璧な/完全な|/ˈpɜːrfɪkt/|That is a perfect solution.} for a new show."
+  },
+  {
+    "start": 122.159,
+    "end": 128.64,
+    "text": "**Anna:** A {children's|子供の} show."
+  },
+  {
+    "start": 128.64,
+    "end": 132.24,
+    "text": "**Anna:** That is awesome."
+  },
+  {
+    "start": 132.24,
+    "end": 133.92,
+    "text": "**Anna:** When do I start?"
+  },
+  {
+    "start": 133.92,
+    "end": 136.56,
+    "text": "**Caty:** You start next month."
+  },
+  {
+    "start": 136.12,
+    "end": 139.48,
+    "text": "**Anna:** Start {thinking|考える/思考する|/ˈθɪŋkɪŋ/|Start thinking about your future.} of ideas for the show."
+  },
+  {
+    "start": 139.56,
+    "end": 141.4,
+    "text": "**Anna:** I have {tons|たくさん/大量|/tʌnz/|I have tons of homework.} of ideas."
+  },
+  {
+    "start": 141.4,
+    "end": 145.08,
+    "text": "**Anna:** I can show children what it's like in {outer|外側の/外部の|/ˈaʊtər/|Outer space is vast.} space"
+  },
+  {
+    "start": 145.44,
+    "end": 148.959,
+    "text": "**Anna:** Or great in the deep dark {ocean|海/大洋|/ˈoʊʃən/|The ocean is very deep.}."
+  },
+  {
+    "start": 148.959,
+    "end": 151.36,
+    "text": "**Caty:** Those are great ideas, Anna."
+  },
+  {
+    "start": 151.36,
+    "end": 153.36,
+    "text": "**Caty:** Please go think of more."
+  },
+  {
+    "start": 153.36,
+    "end": 154.88,
+    "text": "**Caty:** At your desk."
+  },
+  {
+    "start": 154.88,
+    "end": 155.84,
+    "text": "**Anna:** Yes."
+  },
+  {
+    "start": 156.18,
+    "end": 158.819,
+    "text": "**Anna:** What other things can I show them?"
+  },
+  {
+    "start": 158.819,
+    "end": 160.9,
+    "text": "**Anna:** {Mount|山/山岳|/maʊnt/|Mount Everest is very high.} Everest."
+  },
+  {
+    "start": 160.9,
+    "end": 163.22,
+    "text": "**Anna:** Everyone has {different|異なる/違う|/ˈdɪfərənt/|We have different colors.} skills."
+  },
+  {
+    "start": 163.22,
+    "end": 165.62,
+    "text": "**Caty:** You have skills, I have skills."
+  },
+  {
+    "start": 165.62,
+    "end": 169.06,
+    "text": "**Caty:** The {important|重要な|/ɪmˈpɔːrtənt/|This is an important decision.} thing is to know what you are good at."
+  },
+  {
+    "start": 169.06,
+    "end": 170.66,
+    "text": "**Anna:** Until next time."
+  }
+]

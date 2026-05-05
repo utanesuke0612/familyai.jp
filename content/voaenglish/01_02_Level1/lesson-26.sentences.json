@@ -1,0 +1,237 @@
+[
+  {
+    "start": 0.001,
+    "end": 2.48,
+    "text": "**Anna:** This is the {Roosevelt|ルーズベルト家の|/ˈroʊzəvɛlt/} Memorial."
+  },
+  {
+    "start": 2.48,
+    "end": 4.4,
+    "text": "**Anna:** Where is the {symbol|象徴/記号|/ˈsɪmbəl/}?"
+  },
+  {
+    "start": 5.2,
+    "end": 7.84,
+    "text": "**Anna:** This game is really {fun|楽しい|/fʌn/|This game is fun for everyone.}"
+  },
+  {
+    "start": 7.84,
+    "end": 9.68,
+    "text": "**Anna:** You have to {find|見つける|/faɪnd/|Can you find the key?} things that"
+  },
+  {
+    "start": 9.94,
+    "end": 11.54,
+    "text": "**Anna:** Aren't really there."
+  },
+  {
+    "start": 11.54,
+    "end": 20.66,
+    "text": "**Anna:** When you find an American {symbol|象徴/記号|/ˈsɪmbəl/}, you win points and a fun fact about a US president."
+  },
+  {
+    "start": 20.66,
+    "end": 21.46,
+    "text": "**Anna:** Yay!"
+  },
+  {
+    "start": 21.46,
+    "end": 23.22,
+    "text": "**Anna:** I found {Uncle Sam|アメリカの擬人化キャラクター|/ˈʌŋkəl sæm/}"
+  },
+  {
+    "start": 23.64,
+    "end": 26.36,
+    "text": "**Anna:** And I won 40 points."
+  },
+  {
+    "start": 26.36,
+    "end": 28.279,
+    "text": "**Anna:** What is the fun fact?"
+  },
+  {
+    "start": 28.279,
+    "end": 33.239,
+    "text": "**Voice:** Franklin Roosevelt was the first to {fly|飛ぶ|/flaɪ/|Birds fly in the sky.} in a plane as president."
+  },
+  {
+    "start": 33.64,
+    "end": 35.48,
+    "text": "**Anna:** I didn't know that."
+  },
+  {
+    "start": 36.239,
+    "end": 40.16,
+    "text": "**Anna:** This is a really {beautiful|美しい|/ˈbjutəfəl/|What a beautiful day!} memorial."
+  },
+  {
+    "start": 40.16,
+    "end": 42.8,
+    "text": "**Anna:** This is the Lincoln Memorial."
+  },
+  {
+    "start": 42.8,
+    "end": 46.559,
+    "text": "**Anna:** Where is the symbol?"
+  },
+  {
+    "start": 46.559,
+    "end": 47.839,
+    "text": "**Anna:** I found it!"
+  },
+  {
+    "start": 47.839,
+    "end": 50.559,
+    "text": "**Anna:** The {Statue|像/彫像|/ˈstætʃu/} of Liberty."
+  },
+  {
+    "start": 50.22,
+    "end": 52.78,
+    "text": "**Anna:** Please give me my fun fact."
+  },
+  {
+    "start": 53.02,
+    "end": 55.5,
+    "text": "**Voice:** Abraham Lincoln was a great {wrestler|レスラー|/ˈrɛsləʳ/|Wrestlers are strong athletes.}"
+  },
+  {
+    "start": 55.5,
+    "end": 56.7,
+    "text": "**Anna:** I didn't know that."
+  },
+  {
+    "start": 56.94,
+    "end": 60.3,
+    "text": "**Anna:** Lincoln wanted {freedom|自由|/ˈfriːdəm/|Freedom is important for everyone.} for all people."
+  },
+  {
+    "start": 60.3,
+    "end": 63.82,
+    "text": "**Anna:** So the Statue of Liberty works well."
+  },
+  {
+    "start": 63.68,
+    "end": 66.64,
+    "text": "**Anna:** And I won 20 points."
+  },
+  {
+    "start": 66.64,
+    "end": 69.12,
+    "text": "**Anna:** Time to find the next symbol."
+  },
+  {
+    "start": 69.76,
+    "end": 70.96,
+    "text": "**Anna:** Oh!"
+  },
+  {
+    "start": 71.2,
+    "end": 72.72,
+    "text": "**Dan:** Hey, look out!"
+  },
+  {
+    "start": 72.74,
+    "end": 73.62,
+    "text": "**Anna:** Sorry."
+  },
+  {
+    "start": 73.62,
+    "end": 75.22,
+    "text": "**Anna:** Hey, it's you!"
+  },
+  {
+    "start": 75.22,
+    "end": 77.3,
+    "text": "**Anna:** Now I should be more {careful|注意深い|/ˈkɛrfəl/|Be careful when crossing the street.}"
+  },
+  {
+    "start": 77.3,
+    "end": 78.42,
+    "text": "**Dan:** That's okay."
+  },
+  {
+    "start": 78.42,
+    "end": 80.9,
+    "text": "**Anna:** This game is a {lot|たくさん/多い} of fun."
+  },
+  {
+    "start": 80.9,
+    "end": 82.34,
+    "text": "**Anna:** What's your name?"
+  },
+  {
+    "start": 82.34,
+    "end": 83.06,
+    "text": "**Dan:** Dan."
+  },
+  {
+    "start": 83.06,
+    "end": 84.26,
+    "text": "**Dan:** What's yours?"
+  },
+  {
+    "start": 84.26,
+    "end": 84.82,
+    "text": "**Anna:** Anna"
+  },
+  {
+    "start": 85.14,
+    "end": 87.06,
+    "text": "**Dan:** Like {Americana|アメリカ文化|/ˌæmərɪˈkɑːnə/}?"
+  },
+  {
+    "start": 87.06,
+    "end": 88.9,
+    "text": "**Anna:** Yeah, I guess so."
+  },
+  {
+    "start": 88.9,
+    "end": 90.74,
+    "text": "**Dan:** Did you find any {symbols|記号/シンボル}?"
+  },
+  {
+    "start": 90.74,
+    "end": 97.3,
+    "text": "**Anna:** Yes, I found three and I won {120|百二十} {points|ポイント}"
+  },
+  {
+    "start": 97.76,
+    "end": 102.4,
+    "text": "**Dan:** Me too, but did you find the {bald eagle|はげワシ}?"
+  },
+  {
+    "start": 102.4,
+    "end": 104.16,
+    "text": "**Anna:** No."
+  },
+  {
+    "start": 104.16,
+    "end": 105.12,
+    "text": "**Dan:** Did you"
+  },
+  {
+    "start": 106.04,
+    "end": 107.24,
+    "text": "**Anna:** No."
+  },
+  {
+    "start": 107.24,
+    "end": 109.64,
+    "text": "**Anna:** First one to find it wins!"
+  },
+  {
+    "start": 111.08,
+    "end": 114.44,
+    "text": "**Dan:** Hey Anna, look out for that {tree|木}!"
+  },
+  {
+    "start": 115.74,
+    "end": 120.46,
+    "text": "**Anna:** I learned a {lot|多くのこと} about {presidents|大統領} with this game, but I {ought to|〜すべきだ} be more {careful|注意深い/慎重な}."
+  },
+  {
+    "start": 120.46,
+    "end": 121.58,
+    "text": "**Anna:** Till next time"
+  }
+]

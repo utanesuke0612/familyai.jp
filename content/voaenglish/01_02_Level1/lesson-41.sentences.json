@@ -1,0 +1,377 @@
+[
+  {
+    "start": 1.6,
+    "end": 5.28,
+    "text": "**Anna:** Hi, I am {walking|歩いている} to work."
+  },
+  {
+    "start": 5.28,
+    "end": 10.08,
+    "text": "**Anna:** Today my {boss|上司/経営者} will {tell|伝える/告げる} me what she thinks of my work."
+  },
+  {
+    "start": 10.08,
+    "end": 11.68,
+    "text": "**Anna:** Is it good?"
+  },
+  {
+    "start": 12.019,
+    "end": 14.34,
+    "text": "**Anna:** Or is it bad?"
+  },
+  {
+    "start": 14.34,
+    "end": 20.18,
+    "text": "**Anna:** Okay, time for work."
+  },
+  {
+    "start": 20.18,
+    "end": 22.18,
+    "text": "**Anna:** I'm going right now"
+  },
+  {
+    "start": 23.88,
+    "end": 27.24,
+    "text": "**Anna:** Okay, okay, I I'm going."
+  },
+  {
+    "start": 29.48,
+    "end": 31.08,
+    "text": "**Anna:** Anna, hello."
+  },
+  {
+    "start": 31.08,
+    "end": 31.8,
+    "text": "**Anna:** Hello."
+  },
+  {
+    "start": 31.8,
+    "end": 33.56,
+    "text": "**Anna:** Sit down."
+  },
+  {
+    "start": 33.84,
+    "end": 40.24,
+    "text": "**Anna:** As you know, at the {start|開始/始まり} of a new year, we have a {work|仕事} review."
+  },
+  {
+    "start": 40.24,
+    "end": 43.6,
+    "text": "**Anna:** Yes, it's time for mine."
+  },
+  {
+    "start": 43.6,
+    "end": 44.56,
+    "text": "**Anna:** Yes."
+  },
+  {
+    "start": 45.14,
+    "end": 52.1,
+    "text": "**Anna:** Anna, this {chart|図表/グラフ} shows the {audience|視聴者/観客} of the time-traveling treehouse."
+  },
+  {
+    "start": 52.1,
+    "end": 56.82,
+    "text": "**Anna:** If you look at it, you will see something bad."
+  },
+  {
+    "start": 57.02,
+    "end": 62.62,
+    "text": "**Anna:** Your audience is going down, down, down."
+  },
+  {
+    "start": 62.62,
+    "end": 63.02,
+    "text": "**Anna:** Ms."
+  },
+  {
+    "start": 63.02,
+    "end": 68.22,
+    "text": "**Anna:** Weaver, I think the chart is {upside down|逆さま}."
+  },
+  {
+    "start": 68.32,
+    "end": 72.08,
+    "text": "**Anna:** Here, let's {flip|裏返す/ひっくり返す} that around."
+  },
+  {
+    "start": 72.08,
+    "end": 74.64,
+    "text": "**Anna:** Now it's {right side up|正しい向き}."
+  },
+  {
+    "start": 74.64,
+    "end": 76.88,
+    "text": "**Anna:** If you look at this chart"
+  },
+  {
+    "start": 77.12,
+    "end": 79.28,
+    "text": "**Anna:** You will see something good."
+  },
+  {
+    "start": 79.28,
+    "end": 81.44,
+    "text": "**Anna:** Your audience is big."
+  },
+  {
+    "start": 81.44,
+    "end": 82.08,
+    "text": "**Anna:** Good."
+  },
+  {
+    "start": 82.08,
+    "end": 83.36,
+    "text": "**Anna:** But not big enough."
+  },
+  {
+    "start": 83.36,
+    "end": 84.24,
+    "text": "**Anna:** Not good."
+  },
+  {
+    "start": 84.24,
+    "end": 89.6,
+    "text": "**Anna:** I want to see these numbers go up and up and up"
+  },
+  {
+    "start": 90.64,
+    "end": 91.76,
+    "text": "**Anna:** How, Ms."
+  },
+  {
+    "start": 91.76,
+    "end": 92.88,
+    "text": "**Anna:** Weaver?"
+  },
+  {
+    "start": 92.88,
+    "end": 94.96,
+    "text": "**Anna:** I have something."
+  },
+  {
+    "start": 94.96,
+    "end": 98.56,
+    "text": "**Anna:** {Idea|アイデア/考え} posters."
+  },
+  {
+    "start": 99.28,
+    "end": 102.96,
+    "text": "**Anna:** you really {ought|すべき/〜するはずだ} to think seriously about them."
+  },
+  {
+    "start": 103.2,
+    "end": 104.88,
+    "text": "**Anna:** I like this one."
+  },
+  {
+    "start": 104.96,
+    "end": 106.32,
+    "text": "**Anna:** Read it, please."
+  },
+  {
+    "start": 106.32,
+    "end": 112,
+    "text": "**Anna:** If at first you {succeed|成功する|/səkˈsiːd/|I hope to succeed in my exam.}, you will be a success."
+  },
+  {
+    "start": 112,
+    "end": 112.64,
+    "text": "**Anna:** Well"
+  },
+  {
+    "start": 113.24,
+    "end": 115.4,
+    "text": "**Anna:** It's a {cute|かわいい} cat."
+  },
+  {
+    "start": 115.4,
+    "end": 117.24,
+    "text": "**Anna:** Here's another one."
+  },
+  {
+    "start": 117.24,
+    "end": 119.64,
+    "text": "**Anna:** I like it."
+  },
+  {
+    "start": 119.64,
+    "end": 120.76,
+    "text": "**Anna:** {Working|働いている/作業中}"
+  },
+  {
+    "start": 121.22,
+    "end": 126.58,
+    "text": "**Anna:** {Hard|難しい/一生懸命} looks hard because it really is hard."
+  },
+  {
+    "start": 126.58,
+    "end": 128.18,
+    "text": "**Anna:** I see."
+  },
+  {
+    "start": 128.18,
+    "end": 130.02,
+    "text": "**Anna:** It's another {cute|かわいい} cat"
+  },
+  {
+    "start": 131.44,
+    "end": 133.84,
+    "text": "**Anna:** This is my favorite."
+  },
+  {
+    "start": 133.84,
+    "end": 139.44,
+    "text": "**Anna:** Oh {teamwork|チームワーク} works best with a team."
+  },
+  {
+    "start": 139.44,
+    "end": 141.04,
+    "text": "**Anna:** A team of cats?"
+  },
+  {
+    "start": 141.04,
+    "end": 143.04,
+    "text": "**Anna:** Look at all those cats!"
+  },
+  {
+    "start": 143.04,
+    "end": 144,
+    "text": "**MINDY:** So Anna"
+  },
+  {
+    "start": 144.92,
+    "end": 148.68,
+    "text": "**Anna:** Do you understand what I want?"
+  },
+  {
+    "start": 148.68,
+    "end": 149.48,
+    "text": "**Anna:** Yes, Ms."
+  },
+  {
+    "start": 149.48,
+    "end": 150.84,
+    "text": "**Anna:** Weaver."
+  },
+  {
+    "start": 150.84,
+    "end": 153,
+    "text": "**Anna:** I understand."
+  },
+  {
+    "start": 153,
+    "end": 154.6,
+    "text": "**Anna:** Okay, team"
+  },
+  {
+    "start": 155.86,
+    "end": 158.58,
+    "text": "**Anna:** There's a {problem|問題} in the treehouse."
+  },
+  {
+    "start": 158.58,
+    "end": 159.54,
+    "text": "**Anna:** Problem?"
+  },
+  {
+    "start": 159.78,
+    "end": 161.94,
+    "text": "**Amelia:** What's the problem?"
+  },
+  {
+    "start": 161.94,
+    "end": 163.14,
+    "text": "**Anna:** Our {audience|観客/聴衆}"
+  },
+  {
+    "start": 163.7,
+    "end": 164.98,
+    "text": "**Anna:** is big."
+  },
+  {
+    "start": 164.98,
+    "end": 166.9,
+    "text": "**Bryan:** But that's a good thing."
+  },
+  {
+    "start": 166.9,
+    "end": 170.9,
+    "text": "**Anna:** No, it is not big enough."
+  },
+  {
+    "start": 170.9,
+    "end": 172.74,
+    "text": "**Anna:** Please don't {worry|心配する/気にする}."
+  },
+  {
+    "start": 172.74,
+    "end": 175.22,
+    "text": "**Anna:** I know what Miss {Weaver|名字（姓）} wants."
+  },
+  {
+    "start": 175.22,
+    "end": 178.02,
+    "text": "**Anna:** Here's the {plan|計画/方針}."
+  },
+  {
+    "start": 177.46,
+    "end": 177.86,
+    "text": "**Anna:** Yes."
+  },
+  {
+    "start": 179.38,
+    "end": 182.26,
+    "text": "**Bryan:** Is that what she wants?"
+  },
+  {
+    "start": 182.26,
+    "end": 184.34,
+    "text": "**Amelia:** Are you sure?"
+  },
+  {
+    "start": 184.34,
+    "end": 185.62,
+    "text": "**Anna:** Yes."
+  },
+  {
+    "start": 185.72,
+    "end": 187.799,
+    "text": "**Anna:** Let's get to {work|仕事/作業}."
+  },
+  {
+    "start": 187.799,
+    "end": 193.079,
+    "text": "**Anna:** Our team made exactly what Miss {Weaver|名字（姓）} wants."
+  },
+  {
+    "start": 193.079,
+    "end": 197.319,
+    "text": "**Anna:** {Welcome|ようこそ/歓迎する} to the Time Traveling Tree House."
+  },
+  {
+    "start": 197.32,
+    "end": 202.44,
+    "text": "**Anna:** Today, you will learn about a very {popular|人気の/有名な} {pet|ペット/飼育動物}."
+  },
+  {
+    "start": 202.44,
+    "end": 203.24,
+    "text": "**Anna:** Cats."
+  },
+  {
+    "start": 203.24,
+    "end": 206.12,
+    "text": "**MINDY:** Anna, did I give you {enough|十分な/たくさんの} cats?"
+  },
+  {
+    "start": 206.12,
+    "end": 207.96,
+    "text": "**Anna:** I don't know, Mindy."
+  },
+  {
+    "start": 207.96,
+    "end": 211.96,
+    "text": "**Anna:** I think we need more cats."
+  }
+]

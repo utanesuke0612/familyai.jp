@@ -1,0 +1,382 @@
+[
+  {
+    "start": 1.92,
+    "end": 4.72,
+    "text": "**Anna:** Hello from Washington, DC."
+  },
+  {
+    "start": 4.72,
+    "end": 9.28,
+    "text": "**Anna:** Today at work, I am reading the {news|ニュース/報道|/njuːz/|Breaking news today.} for the first time."
+  },
+  {
+    "start": 9.34,
+    "end": 11.26,
+    "text": "**Anna:** I am really {nervous|緊張している/不安|/ˈnɜːrvəs/|I feel nervous before a test.}"
+  },
+  {
+    "start": 11.26,
+    "end": 15.9,
+    "text": "**Anna:** But my {boss|上司|/bɒs/|My boss is very kind.}, Miss Weaver, is here to help me."
+  },
+  {
+    "start": 15.9,
+    "end": 23.9,
+    "text": "**Caty:** Now, Anna, remember when we read the news, we are always reading {facts|事実|/fæks/|These are scientific facts.}"
+  },
+  {
+    "start": 24.039,
+    "end": 27.72,
+    "text": "**Anna:** We never show our feelings."
+  },
+  {
+    "start": 27.72,
+    "end": 29.96,
+    "text": "**Anna:** Sure thing, Miss Weaver."
+  },
+  {
+    "start": 29.96,
+    "end": 30.76,
+    "text": "**Caty:** Great."
+  },
+  {
+    "start": 30.76,
+    "end": 32.119,
+    "text": "**Caty:** Are you ready?"
+  },
+  {
+    "start": 32.119,
+    "end": 33.4,
+    "text": "**Anna:** Yes."
+  },
+  {
+    "start": 33.4,
+    "end": 36.04,
+    "text": "**Caty:** Okay, let's try the first story"
+  },
+  {
+    "start": 36.72,
+    "end": 40.72,
+    "text": "**Anna:** Hello and welcome to The News."
+  },
+  {
+    "start": 40.72,
+    "end": 45.52,
+    "text": "**Anna:** A new book is very {popular|人気のある|/ˈpɒpjələr/|This song is very popular.} with children and families."
+  },
+  {
+    "start": 45.52,
+    "end": 46.64,
+    "text": "**Anna:** This is it."
+  },
+  {
+    "start": 47.12,
+    "end": 50.399,
+    "text": "**Anna:** It is about a lost {duckling|子アヒル|/ˈdʌklɪŋ/|The cute duckling swam.}"
+  },
+  {
+    "start": 50.399,
+    "end": 53.92,
+    "text": "**Anna:** The duck's mother cannot find him."
+  },
+  {
+    "start": 53.92,
+    "end": 54.879,
+    "text": "**Caty:** Stop!"
+  },
+  {
+    "start": 55.38,
+    "end": 62.74,
+    "text": "**Caty:** Anna, when you say the words duck and duckling, you look really {sad|悲しい|/sæd/|I feel sad today.}"
+  },
+  {
+    "start": 62.74,
+    "end": 64.98,
+    "text": "**Anna:** I do, yes."
+  },
+  {
+    "start": 65.18,
+    "end": 67.659,
+    "text": "**Caty:** Sad is a feeling."
+  },
+  {
+    "start": 67.659,
+    "end": 70.14,
+    "text": "**Anna:** Sad is not a fact."
+  },
+  {
+    "start": 70.14,
+    "end": 70.939,
+    "text": "**Anna:** Sorry."
+  },
+  {
+    "start": 70.939,
+    "end": 72.939,
+    "text": "**Anna:** Let me try again."
+  },
+  {
+    "start": 72.939,
+    "end": 75.259,
+    "text": "**Caty:** Okay, she's trying again."
+  },
+  {
+    "start": 75.259,
+    "end": 76.46,
+    "text": "**Caty:** And go."
+  },
+  {
+    "start": 77.159,
+    "end": 80.68,
+    "text": "**Anna:** Hello and welcome to The News."
+  },
+  {
+    "start": 80.68,
+    "end": 85.56,
+    "text": "**Anna:** A new book is very popular with children and families"
+  },
+  {
+    "start": 85.82,
+    "end": 87.58,
+    "text": "**Anna:** This is it."
+  },
+  {
+    "start": 87.58,
+    "end": 90.78,
+    "text": "**Anna:** It is about a lost duckling."
+  },
+  {
+    "start": 90.78,
+    "end": 95.82,
+    "text": "**Anna:** The duck's mother cannot find him, but a family gives him a {home|家/住み家|/hoʊm/|Welcome to our home.}"
+  },
+  {
+    "start": 95.82,
+    "end": 96.78,
+    "text": "**Caty:** Stop!"
+  },
+  {
+    "start": 96.92,
+    "end": 99.96,
+    "text": "**Caty:** Anna, you are doing it {again|再び}!"
+  },
+  {
+    "start": 99.96,
+    "end": 102.68,
+    "text": "**Anna:** The story is very {sad|悲しい}."
+  },
+  {
+    "start": 102.68,
+    "end": 104.28,
+    "text": "**Caty:** I have an {idea|アイデア/考え}."
+  },
+  {
+    "start": 104.28,
+    "end": 107.159,
+    "text": "**Caty:** Let's read the second story."
+  },
+  {
+    "start": 107.159,
+    "end": 111.479,
+    "text": "**Caty:** She's reading the second story and {go|進む/行く}."
+  },
+  {
+    "start": 110.82,
+    "end": 114.5,
+    "text": "**Anna:** Hello and {welcome|歓迎する/ようこそ|/ˈwelkəm/|Welcome to our show.}"
+  },
+  {
+    "start": 114.5,
+    "end": 122.66,
+    "text": "**Anna:** In Indiana, a {grandmother|祖母} is the first 80-year-old woman to win the {Race|競争/レース} Car 500."
+  },
+  {
+    "start": 122.82,
+    "end": 124.74,
+    "text": "**Anna:** That is {awesome|素晴らしい/驚くべき}."
+  },
+  {
+    "start": 124.74,
+    "end": 127.94,
+    "text": "**Caty:** Stop, stop, Anna."
+  },
+  {
+    "start": 127.94,
+    "end": 130.5,
+    "text": "**Caty:** Please, no feelings."
+  },
+  {
+    "start": 130.5,
+    "end": 131.06,
+    "text": "**Anna:** Right"
+  },
+  {
+    "start": 131.52,
+    "end": 137.28,
+    "text": "**Anna:** But it is {awesome|素晴らしい/驚くべき} that an eighty-year-old grandmother wins a car race."
+  },
+  {
+    "start": 137.28,
+    "end": 139.76,
+    "text": "**Caty:** Just the facts, Anna."
+  },
+  {
+    "start": 139.76,
+    "end": 140.72,
+    "text": "**Anna:** Right."
+  },
+  {
+    "start": 140.72,
+    "end": 144.159,
+    "text": "**Anna:** Hello and welcome to the news."
+  },
+  {
+    "start": 144.159,
+    "end": 152.079,
+    "text": "**Anna:** In Indiana, a grandmother is the first 80-year-old woman to win the Race Car 500."
+  },
+  {
+    "start": 152.14,
+    "end": 159.659,
+    "text": "**Anna:** She {rarely|めったに〜ない} talks to {reporters|記者}, but when she does, she often says, Nothing can stop me now."
+  },
+  {
+    "start": 159.659,
+    "end": 161.659,
+    "text": "**Anna:** I am very happy for her."
+  },
+  {
+    "start": 161.659,
+    "end": 163.98,
+    "text": "**Caty:** Stop!"
+  },
+  {
+    "start": 164.12,
+    "end": 168.44,
+    "text": "**Caty:** Anna, you cannot say you are happy."
+  },
+  {
+    "start": 168.44,
+    "end": 169.96,
+    "text": "**Anna:** But I am happy."
+  },
+  {
+    "start": 169.96,
+    "end": 171.8,
+    "text": "**Caty:** But you can't say it"
+  },
+  {
+    "start": 172.76,
+    "end": 174.36,
+    "text": "**Anna:** Why?"
+  },
+  {
+    "start": 174.36,
+    "end": 176.84,
+    "text": "**Caty:** This is the news."
+  },
+  {
+    "start": 176.84,
+    "end": 180.28,
+    "text": "**Caty:** {Happy|幸せな} and {sad|悲しい} are feelings."
+  },
+  {
+    "start": 180.28,
+    "end": 183.72,
+    "text": "**Caty:** You can't have them in the news."
+  },
+  {
+    "start": 184.6,
+    "end": 187.24,
+    "text": "**Anna:** Okay, I got it."
+  },
+  {
+    "start": 187.24,
+    "end": 190.52,
+    "text": "**Caty:** Okay, let's try the third story."
+  },
+  {
+    "start": 190.52,
+    "end": 192.76,
+    "text": "**Caty:** She's reading the third story"
+  },
+  {
+    "start": 193.94,
+    "end": 198.02,
+    "text": "**Anna:** Hello and {welcome|ようこそ/歓迎|/ˈwelkəm/|Welcome to our show.} to the news."
+  },
+  {
+    "start": 198.02,
+    "end": 205.86,
+    "text": "**Anna:** City {politicians|政治家|/pəˈlɪtɪʃənz/|Politicians make important decisions.} in Big Town are using city money to have a big {party|パーティー/祝宴|/ˈpɑːrti/|Let's have a party tonight.} on a cruise ship"
+  },
+  {
+    "start": 205.84,
+    "end": 210.64,
+    "text": "**Anna:** They are taking the money for the party from the children's {library|図書館|/ˈlaɪbreri/|I love reading books in the library.}"
+  },
+  {
+    "start": 210.64,
+    "end": 211.36,
+    "text": "**Anna:** What?"
+  },
+  {
+    "start": 211.36,
+    "end": 213.04,
+    "text": "**Anna:** That makes me very {angry|怒った/激怒|/ˈæŋɡri/|He was angry about the mistake.}"
+  },
+  {
+    "start": 213.04,
+    "end": 214.96,
+    "text": "**Caty:** No, no, no."
+  },
+  {
+    "start": 214.94,
+    "end": 218.94,
+    "text": "**Caty:** Anna, you cannot say you are angry."
+  },
+  {
+    "start": 218.94,
+    "end": 220.94,
+    "text": "**Caty:** This is the news."
+  },
+  {
+    "start": 220.94,
+    "end": 223.18,
+    "text": "**Anna:** What can I do, Miss Weaver?"
+  },
+  {
+    "start": 223.18,
+    "end": 227.42,
+    "text": "**Anna:** Take out my {feelings|感情/気持ち|/ˈfiːlɪŋz/|My feelings are complicated.} and put them here on the news desk?"
+  },
+  {
+    "start": 227.66,
+    "end": 229.76,
+    "text": "**Anna:** Yes"
+  },
+  {
+    "start": 229.76,
+    "end": 231.12,
+    "text": "**Anna:** That's right!"
+  },
+  {
+    "start": 231.12,
+    "end": 233.439,
+    "text": "**Caty:** Now you've got it."
+  },
+  {
+    "start": 233.439,
+    "end": 236.319,
+    "text": "**Anna:** Let's repeat the first story."
+  },
+  {
+    "start": 236.319,
+    "end": 240,
+    "text": "**Anna:** This is going to be a very {long|長い/長期の|/lɔːŋ/|We had a long conversation.} day."
+  },
+  {
+    "start": 240,
+    "end": 241.84,
+    "text": "**Anna:** Until next time."
+  }
+]

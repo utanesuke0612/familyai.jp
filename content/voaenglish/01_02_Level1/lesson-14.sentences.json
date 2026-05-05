@@ -1,0 +1,322 @@
+[
+  {
+    "start": 0.64,
+    "end": 1.6800000000000002,
+    "text": "**Anna:** Hi there!"
+  },
+  {
+    "start": 1.6800000000000002,
+    "end": 6.24,
+    "text": "**Anna:** In Washington, DC, people do many things in the {evening|夕方/夜|/ˈiːvnɪŋ/|We enjoy evening walks.}"
+  },
+  {
+    "start": 6.24,
+    "end": 8.32,
+    "text": "**Anna:** They go listen to {music|音楽|/ˈmjuːzɪk/|I love classical music.}"
+  },
+  {
+    "start": 8.32,
+    "end": 10.56,
+    "text": "**Anna:** They eat at a {restaurant|レストラン|/ˈrestrɒnt/|We dined at a nice restaurant.}"
+  },
+  {
+    "start": 10.56,
+    "end": 12.48,
+    "text": "**Anna:** They go to the {theater|劇場/映画館|/ˈθɪətər/|We watched a play at the theater.}"
+  },
+  {
+    "start": 12.28,
+    "end": 16.279,
+    "text": "**Anna:** Tonight, I am going to the theater with my friends."
+  },
+  {
+    "start": 16.279,
+    "end": 18.92,
+    "text": "**Anna:** But I don't know what {clothes|衣服|/kloʊðz/|These clothes are stylish.} to wear."
+  },
+  {
+    "start": 18.92,
+    "end": 21.4,
+    "text": "**Anna:** Maybe this {magazine|雑誌|/ˈmæɡəziːn/|I read a fashion magazine.} can help."
+  },
+  {
+    "start": 21.42,
+    "end": 23.82,
+    "text": "**Anna:** Her clothes are {beautiful|美しい|/ˈbjuːtɪfəl/|She wore a beautiful dress.}"
+  },
+  {
+    "start": 23.82,
+    "end": 29.02,
+    "text": "**Anna:** I really want a friend like her to help me."
+  },
+  {
+    "start": 29.02,
+    "end": 30.7,
+    "text": "**Anna:** Who are you?"
+  },
+  {
+    "start": 31.02,
+    "end": 33.42,
+    "text": "**Anna:** I am Jeannie."
+  },
+  {
+    "start": 34.04,
+    "end": 35.72,
+    "text": "**Genie:** You want help?"
+  },
+  {
+    "start": 35.72,
+    "end": 40.44,
+    "text": "**Genie:** I am here to help you find the right {clothes|衣服|/kloʊðz/|Choose the right clothes.}"
+  },
+  {
+    "start": 40.44,
+    "end": 41.72,
+    "text": "**Anna:** Awesome!"
+  },
+  {
+    "start": 41.72,
+    "end": 44.44,
+    "text": "**Anna:** How about {jeans|ジーンズ|/dʒiːnz/|I wear blue jeans.} and a t-shirt?"
+  },
+  {
+    "start": 44.56,
+    "end": 45.44,
+    "text": "**Genie:** No!"
+  },
+  {
+    "start": 45.76,
+    "end": 49.44,
+    "text": "**Genie:** Jeans and a t-shirt are too {casual|カジュアルな|/ˈkæʒuəl/|Casual clothes are comfortable.}"
+  },
+  {
+    "start": 49.44,
+    "end": 52.56,
+    "text": "**Anna:** How about something more {formal|フォーマルな|/ˈfɔːrməl/|Wear formal attire.}?"
+  },
+  {
+    "start": 52.56,
+    "end": 53.52,
+    "text": "**Anna:** Sure."
+  },
+  {
+    "start": 57,
+    "end": 63.8,
+    "text": "**Anna:** Wow, Jeannie, this {dress|ドレス|/dres/|She bought a new dress.} is beautiful, but it's not the right size."
+  },
+  {
+    "start": 63.8,
+    "end": 65.72,
+    "text": "**Anna:** It's too small."
+  },
+  {
+    "start": 65.82,
+    "end": 69.1,
+    "text": "**Anna:** Yes, it is too small."
+  },
+  {
+    "start": 69.1,
+    "end": 72.54,
+    "text": "**Genie:** But {green|緑色の|/ɡriːn/|Green is my favorite color.} looks great on you."
+  },
+  {
+    "start": 72.54,
+    "end": 73.58,
+    "text": "**Anna:** Thanks."
+  },
+  {
+    "start": 73.58,
+    "end": 75.82,
+    "text": "**Genie:** Take off the green dress"
+  },
+  {
+    "start": 76.02,
+    "end": 81.939,
+    "text": "**Genie:** Let's try a green shirt and a {skirt|スカート|/skɜːrt/|She wore a long skirt.}"
+  },
+  {
+    "start": 82.899,
+    "end": 88.179,
+    "text": "**Anna:** Oh, Jeannie, this green shirt is too large"
+  },
+  {
+    "start": 88.72,
+    "end": 93.2,
+    "text": "**Anna:** And this {orange|オレンジ色の|/ˈɔːrɪndʒ/|Orange is a bright color.} skirt is too orange."
+  },
+  {
+    "start": 93.2,
+    "end": 98.08,
+    "text": "**Anna:** Yes, the right size for you is {medium|中間の|/ˈmiːdiəm/|Medium size fits perfectly.}"
+  },
+  {
+    "start": 98.08,
+    "end": 103.36,
+    "text": "**Anna:** Let's try {again|もう一度|/əˈɡeɪn/|Let's try again tomorrow.}"
+  },
+  {
+    "start": 103.979,
+    "end": 108.14,
+    "text": "**Anna:** Oh uh uh I don't like this {outfit|服装/装い|/ˈaʊtfɪt/|This outfit is too formal.}"
+  },
+  {
+    "start": 108.14,
+    "end": 112.06,
+    "text": "**Genie:** No, that does not match {nothing|何も|/ˈnʌθɪŋ/|I found nothing in the box.}"
+  },
+  {
+    "start": 116.18,
+    "end": 122.02,
+    "text": "**Anna:** These clothes are {formal|正式な/フォーマルな|/ˈfɔːrməl/|Formal attire is required.}, a {suit|スーツ|/suːt/|He wore a black suit.} jacket, a {dress|ドレス|/dres/|She wore a beautiful dress.} shirt, and a tie."
+  },
+  {
+    "start": 122.02,
+    "end": 123.7,
+    "text": "**Anna:** They look {great|素晴らしい|/ɡreɪt/|That's a great idea!}"
+  },
+  {
+    "start": 123.72,
+    "end": 126.12,
+    "text": "**Genie:** Those clothes look great."
+  },
+  {
+    "start": 126.12,
+    "end": 130.92,
+    "text": "**Anna:** For a man, something is {wrong|間違っている|/rɔːŋ/|Something is wrong with the car.}"
+  },
+  {
+    "start": 130.92,
+    "end": 132.68,
+    "text": "**Anna:** Let me see."
+  },
+  {
+    "start": 134.42,
+    "end": 136.98,
+    "text": "**Anna:** There, now try."
+  },
+  {
+    "start": 138.1,
+    "end": 140.1,
+    "text": "**Genie:** Oh thanks."
+  },
+  {
+    "start": 140.1,
+    "end": 143.3,
+    "text": "**Genie:** Now these clothes look great on you."
+  },
+  {
+    "start": 143.3,
+    "end": 144.1,
+    "text": "**Anna:** They do"
+  },
+  {
+    "start": 144.72,
+    "end": 149.68,
+    "text": "**Anna:** Um, Jeannie, can you put on a {gold|金の|/ɡoʊld/|A gold ring sparkled.} belt?"
+  },
+  {
+    "start": 149.68,
+    "end": 151.04,
+    "text": "**Anna:** Sure."
+  },
+  {
+    "start": 152.959,
+    "end": 154.959,
+    "text": "**Genie:** That looks great."
+  },
+  {
+    "start": 154.959,
+    "end": 157.84,
+    "text": "**Anna:** Can you put on a jacket?"
+  },
+  {
+    "start": 157.82,
+    "end": 159.66,
+    "text": "**Genie:** Why not?"
+  },
+  {
+    "start": 160.62,
+    "end": 163.1,
+    "text": "**Anna:** I love the jacket."
+  },
+  {
+    "start": 163.1,
+    "end": 165.42,
+    "text": "**Anna:** How about a hat?"
+  },
+  {
+    "start": 165.42,
+    "end": 167.26,
+    "text": "**Genie:** Why not?"
+  },
+  {
+    "start": 170.04,
+    "end": 172.84,
+    "text": "**Genie:** Mmm, take off the hat."
+  },
+  {
+    "start": 172.84,
+    "end": 174.36,
+    "text": "**Genie:** That's better."
+  },
+  {
+    "start": 174.36,
+    "end": 177.64,
+    "text": "**Anna:** Jeannie, these clothes look and feel {great|素晴らしい|/ɡreɪt/|That's a great performance!}"
+  },
+  {
+    "start": 177.64,
+    "end": 179.4,
+    "text": "**Anna:** Let's go to the {theater|劇場|/ˈθɪətər/|We went to the theater last night.}"
+  },
+  {
+    "start": 179.4,
+    "end": 180.92,
+    "text": "**Genie:** Sorry, Anna."
+  },
+  {
+    "start": 180.92,
+    "end": 184.04,
+    "text": "**Genie:** I have to help other friends."
+  },
+  {
+    "start": 183.64,
+    "end": 186.92,
+    "text": "**Genie:** Go to the {magazine|雑誌|/ˈmæɡəziːn/|I read a fashion magazine.} if you want me to help again."
+  },
+  {
+    "start": 186.92,
+    "end": 188.28,
+    "text": "**Anna:** Thanks, Jeannie."
+  },
+  {
+    "start": 188.28,
+    "end": 189.159,
+    "text": "**Anna:** Sure thing."
+  },
+  {
+    "start": 189.159,
+    "end": 191.48,
+    "text": "**Anna:** Goodbye."
+  },
+  {
+    "start": 193.78,
+    "end": 199.14,
+    "text": "**Anna:** There are many {places|場所/スポット|/ˈpleɪsɪz/|We visited many beautiful places.} in {DC|首都ワシントン|/diː.siː/|DC is the capital of the United States.} to go for a {great|素晴らしい/素晴らしな|/ɡreɪt/|It was a great day.} evening out."
+  },
+  {
+    "start": 199.14,
+    "end": 203.54,
+    "text": "**Anna:** And it's nice to have a {friend|友人/友達|/frend/|My friend helped me today.} to help me look my {best|最高の/最良の|/best/|You look your best today.}"
+  },
+  {
+    "start": 203.54,
+    "end": 204.9,
+    "text": "**Anna:** Until next time."
+  },
+  {
+    "start": 204.9,
+    "end": 205.86,
+    "text": "**Anna:** Bye!"
+  }
+]

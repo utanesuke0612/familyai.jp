@@ -1,0 +1,132 @@
+[
+  {
+    "start": 1.12,
+    "end": 2.56,
+    "text": "**Jonathan:** Hey Pete."
+  },
+  {
+    "start": 2.56,
+    "end": 3.92,
+    "text": "**Jonathan:** Who's your {friend|友達}?"
+  },
+  {
+    "start": 3.92,
+    "end": 5.12,
+    "text": "**Pete:** She is Anna."
+  },
+  {
+    "start": 5.12,
+    "end": 6.8,
+    "text": "**Pete:** She is {new|新しい} to DC."
+  },
+  {
+    "start": 6.8,
+    "end": 8.08,
+    "text": "**Jonathan:** Where are you from?"
+  },
+  {
+    "start": 8.08,
+    "end": 10.64,
+    "text": "**Anna:** I am from a {small|小さい} town."
+  },
+  {
+    "start": 10.799,
+    "end": 12.32,
+    "text": "**Jonathan:** {Welcome|ようこそ} to DC."
+  },
+  {
+    "start": 12.32,
+    "end": 13.04,
+    "text": "**Anna:** Thank you."
+  },
+  {
+    "start": 13.04,
+    "end": 14.32,
+    "text": "**Jonathan:** I'm Jonathan."
+  },
+  {
+    "start": 14.32,
+    "end": 16.56,
+    "text": "**Jonathan:** I'm in {apartment|アパート} B4."
+  },
+  {
+    "start": 16.56,
+    "end": 19.04,
+    "text": "**Anna:** I am in apartment C2."
+  },
+  {
+    "start": 19.04,
+    "end": 21.52,
+    "text": "**Anna:** {Marsha|人名} is my {roommate|同居人}."
+  },
+  {
+    "start": 21.52,
+    "end": 23.2,
+    "text": "**Jonathan:** I know Marcia."
+  },
+  {
+    "start": 23.2,
+    "end": 24.88,
+    "text": "**Jonathan:** She is {nice|良い/親切な}."
+  },
+  {
+    "start": 24.92,
+    "end": 28.68,
+    "text": "**Pete:** And I am in apartment D7."
+  },
+  {
+    "start": 28.68,
+    "end": 30.52,
+    "text": "**Pete:** I {have to|〜しなければならない} go now."
+  },
+  {
+    "start": 30.52,
+    "end": 31.56,
+    "text": "**Anna:** Oh."
+  },
+  {
+    "start": 31.56,
+    "end": 34.04,
+    "text": "**Pete:** {Remember|覚えておく} to call Marcia at work."
+  },
+  {
+    "start": 33.84,
+    "end": 35.039,
+    "text": "**Pete:** Tell her you're here."
+  },
+  {
+    "start": 35.039,
+    "end": 35.6,
+    "text": "**Anna:** Right."
+  },
+  {
+    "start": 35.6,
+    "end": 36.879,
+    "text": "**Anna:** Thanks, Pete."
+  },
+  {
+    "start": 36.879,
+    "end": 38.079,
+    "text": "**Anna:** {Nice to meet you|初めまして}."
+  },
+  {
+    "start": 38.079,
+    "end": 38.879,
+    "text": "**Jonathan:** You too."
+  },
+  {
+    "start": 38.879,
+    "end": 39.6,
+    "text": "**Jonathan:** Bye."
+  },
+  {
+    "start": 42,
+    "end": 43.76,
+    "text": "**Anna:** Apartment C2."
+  },
+  {
+    "start": 43.76,
+    "end": 46,
+    "text": "**Anna:** Here I come."
+  }
+]

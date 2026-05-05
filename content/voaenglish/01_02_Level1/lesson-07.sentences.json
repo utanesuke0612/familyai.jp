@@ -1,0 +1,357 @@
+[
+  {
+    "start": 0.96,
+    "end": 4.8,
+    "text": "**Caty:** Come in."
+  },
+  {
+    "start": 4.8,
+    "end": 8.24,
+    "text": "**Caty:** Well, Anna, {welcome|ようこそ/歓迎|/ˈwelkəm/}."
+  },
+  {
+    "start": 8.24,
+    "end": 9.76,
+    "text": "**Anna:** Thank you."
+  },
+  {
+    "start": 9.62,
+    "end": 12.9,
+    "text": "**Caty:** I am your {boss|上司/指導者}, Katie Weaver."
+  },
+  {
+    "start": 12.9,
+    "end": 15.06,
+    "text": "**Caty:** But please call me Katie."
+  },
+  {
+    "start": 15.06,
+    "end": 15.7,
+    "text": "**Anna:** Thank you, Ms."
+  },
+  {
+    "start": 15.78,
+    "end": 17.14,
+    "text": "**Caty:** Weaver."
+  },
+  {
+    "start": 17.14,
+    "end": 18.9,
+    "text": "**Caty:** Just Katie."
+  },
+  {
+    "start": 18.699,
+    "end": 19.98,
+    "text": "**Anna:** Sure thing, Ms."
+  },
+  {
+    "start": 19.98,
+    "end": 21.019,
+    "text": "**Caty:** Weaver."
+  },
+  {
+    "start": 21.419,
+    "end": 22.699,
+    "text": "**Caty:** Okay then."
+  },
+  {
+    "start": 22.699,
+    "end": 24.3,
+    "text": "**Caty:** Are you {excited|興奮している/わくわくしている}?"
+  },
+  {
+    "start": 24.3,
+    "end": 26.619,
+    "text": "**Anna:** Yes, I am excited"
+  },
+  {
+    "start": 27.279,
+    "end": 30.48,
+    "text": "**Caty:** So {sorry|申し訳ない}, but I am busy."
+  },
+  {
+    "start": 30.48,
+    "end": 32.96,
+    "text": "**Caty:** Please {meet|会う/出会う} your {coworkers|同僚}."
+  },
+  {
+    "start": 32.96,
+    "end": 36.8,
+    "text": "**Caty:** But remember, they are busy {working|働いている}."
+  },
+  {
+    "start": 36.72,
+    "end": 37.52,
+    "text": "**Anna:** Sure."
+  },
+  {
+    "start": 37.52,
+    "end": 38.32,
+    "text": "**Anna:** Thanks, Ms."
+  },
+  {
+    "start": 38.32,
+    "end": 39.2,
+    "text": "**Caty:** Weaver."
+  },
+  {
+    "start": 39.2,
+    "end": 40.16,
+    "text": "**Anna:** Hi there."
+  },
+  {
+    "start": 40.16,
+    "end": 41.52,
+    "text": "**Caty:** I'm Anna."
+  },
+  {
+    "start": 41.52,
+    "end": 42.48,
+    "text": "**Anna:** Hi Anna."
+  },
+  {
+    "start": 42.48,
+    "end": 43.6,
+    "text": "**Anne:** I'm Anne."
+  },
+  {
+    "start": 43.6,
+    "end": 44.72,
+    "text": "**Anna:** {Nice|素敵な/良い} to meet you."
+  },
+  {
+    "start": 44.72,
+    "end": 45.76,
+    "text": "**Anna:** What are you doing?"
+  },
+  {
+    "start": 45.76,
+    "end": 47.44,
+    "text": "**Anne:** Um, I'm {writing|書いている}."
+  },
+  {
+    "start": 47.44,
+    "end": 48.96,
+    "text": "**Caty:** You are writing"
+  },
+  {
+    "start": 49.04,
+    "end": 50.719,
+    "text": "**Anna:** You are writing a lot."
+  },
+  {
+    "start": 50.719,
+    "end": 52.079,
+    "text": "**Anna:** Oh dear."
+  },
+  {
+    "start": 52.32,
+    "end": 54.16,
+    "text": "**Anne:** No, no, that that's okay."
+  },
+  {
+    "start": 54.16,
+    "end": 54.64,
+    "text": "**Anne:** That's okay."
+  },
+  {
+    "start": 54.8,
+    "end": 55.68,
+    "text": "**Anne:** Okay, really."
+  },
+  {
+    "start": 55.92,
+    "end": 59.6,
+    "text": "**Anne:** Please, please, please {stop|止める/やめる|/stɒp/|Stop talking right now.}"
+  },
+  {
+    "start": 59.6,
+    "end": 61.04,
+    "text": "**Caty:** Please."
+  },
+  {
+    "start": 61.04,
+    "end": 62.48,
+    "text": "**Caty:** Sorry."
+  },
+  {
+    "start": 65.58,
+    "end": 72.06,
+    "text": "**Jonathan:** And people all around the world are {waiting|待っている|/ˈweɪtɪŋ/|We are waiting for the bus.} to hear news about the next {president|大統領|/ˈprezɪdənt/|The president gave a speech.}"
+  },
+  {
+    "start": 72.38,
+    "end": 73.42,
+    "text": "**Anna:** Jonathan, hi!"
+  },
+  {
+    "start": 73.42,
+    "end": 74.38,
+    "text": "**Anna:** Remember me?"
+  },
+  {
+    "start": 74.38,
+    "end": 76.3,
+    "text": "**Anna:** Uh I {live|住んでいる|/lɪv/|I live in New York.} in your building"
+  },
+  {
+    "start": 76.48,
+    "end": 78.48,
+    "text": "**Jonathan:** Oh, uh, hi Anna."
+  },
+  {
+    "start": 78.48,
+    "end": 80.08,
+    "text": "**Anna:** What are you doing?"
+  },
+  {
+    "start": 80.08,
+    "end": 82.72,
+    "text": "**Jonathan:** I am doing my {show|番組/公演|/ʃoʊ/|The show was amazing.}"
+  },
+  {
+    "start": 82.72,
+    "end": 84.16,
+    "text": "**Anna:** Oh, sorry."
+  },
+  {
+    "start": 84.16,
+    "end": 85.92,
+    "text": "**Anna:** Are you {recording|録音している|/rɪˈkɔːrdɪŋ/|We are recording a podcast.}?"
+  },
+  {
+    "start": 85.92,
+    "end": 90,
+    "text": "**Jonathan:** Yes, and now I have to record again."
+  },
+  {
+    "start": 89.54,
+    "end": 90.5,
+    "text": "**Caty:** Sorry."
+  },
+  {
+    "start": 90.5,
+    "end": 92.42,
+    "text": "**Anna:** Have a good {show|番組/公演|/ʃoʊ/|The show was amazing.}"
+  },
+  {
+    "start": 92.42,
+    "end": 93.7,
+    "text": "**Anna:** Thank you."
+  },
+  {
+    "start": 93.7,
+    "end": 94.9,
+    "text": "**Caty:** Sorry."
+  },
+  {
+    "start": 94.9,
+    "end": 97.54,
+    "text": "**Amelia:** The word of the day is {social|社会的な/交流の|/ˈsoʊʃl/|Social media connects people.}"
+  },
+  {
+    "start": 97.54,
+    "end": 100.18,
+    "text": "**Amelia:** Social {adjective|形容詞|/ˈædʒɪktɪv/|An adjective describes a noun.}"
+  },
+  {
+    "start": 100.18,
+    "end": 101.78,
+    "text": "**Caty:** I'm Anna."
+  },
+  {
+    "start": 101.66,
+    "end": 103.1,
+    "text": "**Amelia:** Hi, I'm Amelia."
+  },
+  {
+    "start": 103.1,
+    "end": 104.7,
+    "text": "**Anna:** Nice to meet you."
+  },
+  {
+    "start": 104.7,
+    "end": 106.54,
+    "text": "**Anna:** What are you doing?"
+  },
+  {
+    "start": 106.54,
+    "end": 108.38,
+    "text": "**Amelia:** I'm reading."
+  },
+  {
+    "start": 108.38,
+    "end": 110.14,
+    "text": "**Anna:** Are you reading the news?"
+  },
+  {
+    "start": 110.14,
+    "end": 111.02,
+    "text": "**Anna:** Hi."
+  },
+  {
+    "start": 111.02,
+    "end": 114.22,
+    "text": "**Amelia:** No, I'm reading for my {show|番組/公演|/ʃoʊ/|The show was amazing.}"
+  },
+  {
+    "start": 116.6,
+    "end": 119,
+    "text": "**Amelia:** Can I read again?"
+  },
+  {
+    "start": 119,
+    "end": 124.44,
+    "text": "**Anna:** {Sorry|ごめんなさい|/ˈsɒri/|Sorry for being late.}, this {day|日|/deɪ/|Today is a good day.} is not going well."
+  },
+  {
+    "start": 126.28,
+    "end": 127.64,
+    "text": "**Anna:** Hannah!"
+  },
+  {
+    "start": 127.96,
+    "end": 128.759,
+    "text": "**Anna:** Hi!"
+  },
+  {
+    "start": 129.08,
+    "end": 130.759,
+    "text": "**Anna:** What are you {doing|している|/ˈduːɪŋ/|What are you doing now?}?"
+  },
+  {
+    "start": 131,
+    "end": 133,
+    "text": "**Anna:** I am {bothering|邪魔をする/迷惑をかける|/ˈbʌðərɪŋ/|Sorry for bothering you.} people, Ms."
+  },
+  {
+    "start": 133,
+    "end": 134.52,
+    "text": "**Caty:** Weaver."
+  },
+  {
+    "start": 135.08,
+    "end": 138.2,
+    "text": "**Caty:** Let's go to my {office|事務所/職場|/ˈɒfɪs/|My office is on the second floor.} and talk."
+  },
+  {
+    "start": 138.48,
+    "end": 141.44,
+    "text": "**Anna:** I like to {talk|話す|/tɔːk/|Let's talk about it.} with you, Miss Weaver."
+  },
+  {
+    "start": 141.44,
+    "end": 143.04,
+    "text": "**Anna:** It's Katie."
+  },
+  {
+    "start": 143.04,
+    "end": 144,
+    "text": "**Anna:** Right."
+  },
+  {
+    "start": 144,
+    "end": 146.8,
+    "text": "**Anna:** Thanks, Miss Weaver."
+  }
+]

@@ -1,0 +1,357 @@
+[
+  {
+    "start": 0.48,
+    "end": 1.52,
+    "text": "**Anna:** Hello."
+  },
+  {
+    "start": 1.52,
+    "end": 9.44,
+    "text": "**Anna:** I have {lived|住んでいる} in Washington DC for a {long|長い} time now, and I have done a lot."
+  },
+  {
+    "start": 9.44,
+    "end": 13.36,
+    "text": "**Anna:** I feel that I know this city {pretty|とても/かなり} well."
+  },
+  {
+    "start": 13.7,
+    "end": 15.38,
+    "text": "**Anna:** Wait, that's the wrong way."
+  },
+  {
+    "start": 15.38,
+    "end": 17.14,
+    "text": "**Anna:** Where is it again?"
+  },
+  {
+    "start": 17.94,
+    "end": 20.98,
+    "text": "**Anna:** Excuse me, can I help you?"
+  },
+  {
+    "start": 20.98,
+    "end": 23.86,
+    "text": "**Anna:** Uh have we met before?"
+  },
+  {
+    "start": 23.82,
+    "end": 25.58,
+    "text": "**Jean:** I don't think so."
+  },
+  {
+    "start": 25.58,
+    "end": 27.58,
+    "text": "**Jean:** I've just {flown|飛んでくる} in from Boston."
+  },
+  {
+    "start": 27.58,
+    "end": 28.86,
+    "text": "**Jean:** My name is Jean."
+  },
+  {
+    "start": 28.86,
+    "end": 29.98,
+    "text": "**Anna:** Hi, Jean."
+  },
+  {
+    "start": 29.98,
+    "end": 31.26,
+    "text": "**Anna:** I'm Anna."
+  },
+  {
+    "start": 31.74,
+    "end": 34.7,
+    "text": "**Anna:** I really feel like we've met before."
+  },
+  {
+    "start": 34.7,
+    "end": 35.58,
+    "text": "**Anna:** Anyway"
+  },
+  {
+    "start": 35.84,
+    "end": 37.359,
+    "text": "**Anna:** How can I help?"
+  },
+  {
+    "start": 37.359,
+    "end": 42.64,
+    "text": "**Jean:** I want to see an {interesting|興味深い} museum, but I don't know which one."
+  },
+  {
+    "start": 42.64,
+    "end": 44.559,
+    "text": "**Anna:** I can help with that."
+  },
+  {
+    "start": 44.44,
+    "end": 46.28,
+    "text": "**Anna:** I've {lived|住んでいる} in Washington, D."
+  },
+  {
+    "start": 46.28,
+    "end": 46.44,
+    "text": "**Anna:** C."
+  },
+  {
+    "start": 46.52,
+    "end": 47.8,
+    "text": "**Anna:** a long time."
+  },
+  {
+    "start": 47.8,
+    "end": 51.4,
+    "text": "**Anna:** I think I've seen all the museums."
+  },
+  {
+    "start": 51.4,
+    "end": 53.32,
+    "text": "**Jean:** Wow, thanks."
+  },
+  {
+    "start": 53.06,
+    "end": 55.7,
+    "text": "**Jean:** So tell me, which museums are good?"
+  },
+  {
+    "start": 55.7,
+    "end": 60.42,
+    "text": "**Anna:** Well, they are all good, but they're all different."
+  },
+  {
+    "start": 60.42,
+    "end": 67.86,
+    "text": "**Anna:** There are science museums and history museums and art and {culture|文化} museums."
+  },
+  {
+    "start": 68.24,
+    "end": 72.159,
+    "text": "**Jean:** I want to see an {unusual|珍しい} museum."
+  },
+  {
+    "start": 72.159,
+    "end": 74.88,
+    "text": "**Anna:** I like the {sculpture|彫刻} garden."
+  },
+  {
+    "start": 74.88,
+    "end": 79.6,
+    "text": "**Jean:** Have you ever seen sculptures in a garden?"
+  },
+  {
+    "start": 79.6,
+    "end": 80.56,
+    "text": "**Anna:** It is really"
+  },
+  {
+    "start": 82.579,
+    "end": 83.939,
+    "text": "**Anna:** {Artistic|芸術的な}"
+  },
+  {
+    "start": 83.939,
+    "end": 87.38,
+    "text": "**Jean:** I have never seen a {garden|庭/植物園|/ˈɡɑːrdən/|My garden has many flowers.} of {sculptures|彫刻/立体芸術|/ˈskʌlptʃərz/|These sculptures are beautiful.}"
+  },
+  {
+    "start": 87.38,
+    "end": 89.219,
+    "text": "**Jean:** I'll write that on my list"
+  },
+  {
+    "start": 89.56,
+    "end": 94.44,
+    "text": "**Anna:** Have you been to the Museum of the {American Indian|アメリカ先住民|/əˈmerɪkən ˈɪndiən/|American Indian culture is rich.}?"
+  },
+  {
+    "start": 94.44,
+    "end": 97.64,
+    "text": "**Anna:** I've visited that museum many times."
+  },
+  {
+    "start": 97.64,
+    "end": 100.84,
+    "text": "**Anna:** It is very {peaceful|平和な/静かな|/ˈpiːsfəl/|The garden is peaceful today.}"
+  },
+  {
+    "start": 100.92,
+    "end": 104.439,
+    "text": "**Jean:** I have always liked American Indian {culture|文化|/ˈkʌltʃər/|Japanese culture is unique.}"
+  },
+  {
+    "start": 104.439,
+    "end": 106.84,
+    "text": "**Jean:** I'll put that on my list."
+  },
+  {
+    "start": 106.84,
+    "end": 109.4,
+    "text": "**Anna:** Do you have any other {suggestions|提案/助言|/səɡˈdʒestʃənz/|I have some good suggestions.}?"
+  },
+  {
+    "start": 109.42,
+    "end": 113.659,
+    "text": "**Anna:** Well, if you like {plants|植物|/plænts/|Plants need water and sunlight.}, you can visit the U."
+  },
+  {
+    "start": 113.659,
+    "end": 113.9,
+    "text": "**Jean:** S."
+  },
+  {
+    "start": 113.9,
+    "end": 116.06,
+    "text": "**Anna:** Botanic {Gardens|庭園|/ˈɡɑːrdənz/|Botanical gardens are beautiful.}"
+  },
+  {
+    "start": 116.06,
+    "end": 117.02,
+    "text": "**Anna:** It's very"
+  },
+  {
+    "start": 118.159,
+    "end": 119.68,
+    "text": "**Anna:** {organic|有機の/自然の|/ɔːrˈɡænɪk/|Organic food is healthy.}"
+  },
+  {
+    "start": 119.68,
+    "end": 122.24,
+    "text": "**Jean:** I have always loved {plants|植物|/plænts/|Some plants grow quickly.}"
+  },
+  {
+    "start": 122.24,
+    "end": 124.88,
+    "text": "**Jean:** I'll write that on my list too."
+  },
+  {
+    "start": 124.88,
+    "end": 129.52,
+    "text": "**Jean:** Wow, you know so much about DC's {museums|博物館|/mjuˈziːəmz/|Museums have many exhibits.}"
+  },
+  {
+    "start": 129.52,
+    "end": 133.599,
+    "text": "**Anna:** Well, I have lived here for over a year."
+  },
+  {
+    "start": 133.599,
+    "end": 141.92,
+    "text": "**Jean:** You're so lucky to live in such a {beautiful|美しい|/ˈbjuːtɪfəl/|The sunset is beautiful.} city filled with so many museums and a {zoo|動物園|/zuː/|The zoo has many animals.}"
+  },
+  {
+    "start": 141.82,
+    "end": 143.1,
+    "text": "**Anna:** What?"
+  },
+  {
+    "start": 143.1,
+    "end": 145.02,
+    "text": "**Anna:** DC has a zoo?"
+  },
+  {
+    "start": 145.02,
+    "end": 147.98,
+    "text": "**Jean:** Yes, and it's beautiful."
+  },
+  {
+    "start": 147.98,
+    "end": 153.26,
+    "text": "**Jean:** You've lived here for so long and you haven't been to the zoo"
+  },
+  {
+    "start": 153.64,
+    "end": 156.28,
+    "text": "**Anna:** I've never been to DC's zoo."
+  },
+  {
+    "start": 156.28,
+    "end": 158.92,
+    "text": "**Anna:** I've never been to any zoos."
+  },
+  {
+    "start": 158.92,
+    "end": 161.879,
+    "text": "**Jean:** You have never seen zoo {animals|動物|/ˈænɪməlz/|Zoo animals are fascinating.}?"
+  },
+  {
+    "start": 161.879,
+    "end": 164.439,
+    "text": "**Anna:** I grew up on a {farm|農場|/fɑːrm/|My family owns a farm.}, Jean."
+  },
+  {
+    "start": 164.439,
+    "end": 167.48,
+    "text": "**Anna:** I've known farm {animals|動物|/ˈænɪməlz/|Farm animals live outdoors.} my whole life"
+  },
+  {
+    "start": 167.44,
+    "end": 175.599,
+    "text": "**Jean:** But the zoo has {lions|ライオン|/ˈlaɪənz/|Lions are big cats.} and {elephants|ゾウ|/ˈeləfənts/|Elephants have long trunks.} and {zebras|シマウマ|/ˈziːbrəz/|Zebras have black and white stripes.}"
+  },
+  {
+    "start": 177.06,
+    "end": 182.42,
+    "text": "**Anna:** If you have never seen a real live {elephant|ゾウ|/ˈeləfənt/|An elephant is very large.}, you must."
+  },
+  {
+    "start": 182.42,
+    "end": 184.9,
+    "text": "**Jean:** They are so {majestic|壮大な/威厳のある|/ˈmædʒɪstɪk/|The mountain looks majestic.}"
+  },
+  {
+    "start": 185.12,
+    "end": 187.76,
+    "text": "**Anna:** I will."
+  },
+  {
+    "start": 187.76,
+    "end": 188.64,
+    "text": "**Anna:** There."
+  },
+  {
+    "start": 188.64,
+    "end": 192.64,
+    "text": "**Anna:** I've written my own {must-see|必見の/見逃せない|/ˈmʌstˈsiː/|This is a must-see movie.} zoo animal list."
+  },
+  {
+    "start": 192.64,
+    "end": 195.6,
+    "text": "**Jean:** Have fun at the zoo and thanks, Anna."
+  },
+  {
+    "start": 195.6,
+    "end": 197.84,
+    "text": "**Anna:** Have fun at the {museums|博物館/美術館|/ˈmjuːziəmz/|We visited many museums.}, Jean."
+  },
+  {
+    "start": 197.84,
+    "end": 199.36,
+    "text": "**Anna:** And thank you."
+  },
+  {
+    "start": 199.42,
+    "end": 202.22,
+    "text": "**Anna:** This has been {awesome|素晴らしい/素晴らしく楽しい|/ˈɔːsəm/|What an awesome day!}"
+  },
+  {
+    "start": 202.22,
+    "end": 206.46,
+    "text": "**Anna:** And I have seen every {animal|動物|/ˈænɪməl/|I love animals.} on my list."
+  },
+  {
+    "start": 206.46,
+    "end": 211.1,
+    "text": "**Anna:** Jean, the {tourist|観光客|/ˈtʊərɪst/|Tourists visit many places.}, helped me see more of my city."
+  },
+  {
+    "start": 211.1,
+    "end": 213.98,
+    "text": "**Anna:** But where have I seen her before?"
+  },
+  {
+    "start": 214.02,
+    "end": 216.099,
+    "text": "**Anna:** Oh well until next time"
+  }
+]

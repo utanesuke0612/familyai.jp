@@ -1,0 +1,367 @@
+[
+  {
+    "start": 0.96,
+    "end": 2.56,
+    "text": "**Anna:** Hello!"
+  },
+  {
+    "start": 2.56,
+    "end": 6.24,
+    "text": "**Anna:** {People|人々|/ˈpiːpəl/|Many people visit our city.} from all over the world come to Washington, D."
+  },
+  {
+    "start": 6.24,
+    "end": 6.64,
+    "text": "**Anna:** C."
+  },
+  {
+    "start": 6.88,
+    "end": 11.04,
+    "text": "**Anna:** When I'm at work, I love {eating|食べる|/ˈiːtɪŋ/|I am eating lunch now.} lunch outside."
+  },
+  {
+    "start": 10.94,
+    "end": 13.74,
+    "text": "**Anna:** I like to watch people {walking|歩く|/ˈwɔːkɪŋ/|People are walking in the park.} by."
+  },
+  {
+    "start": 13.74,
+    "end": 15.74,
+    "text": "**Anna:** They all look very {different|異なる|/ˈdɪfərənt/|We have different opinions.}."
+  },
+  {
+    "start": 15.74,
+    "end": 19.42,
+    "text": "**Anna:** Today my friend Ashley is eating lunch with me."
+  },
+  {
+    "start": 19.42,
+    "end": 23.26,
+    "text": "**Anna:** Ashley, today the weather is {beautiful|美しい|/ˈbjuːtɪfəl/|What a beautiful day!}, isn't it?"
+  },
+  {
+    "start": 23.26,
+    "end": 25.26,
+    "text": "**Ashley:** Yes, it is."
+  },
+  {
+    "start": 27.02,
+    "end": 30.62,
+    "text": "**Ashley:** Ooh, we have to {return|戻る/帰る|/rɪˈtɜːrn/|Let's return home.} to work."
+  },
+  {
+    "start": 30.62,
+    "end": 32.38,
+    "text": "**Anna:** No, we have time."
+  },
+  {
+    "start": 32.38,
+    "end": 35.34,
+    "text": "**Anna:** Let's people watch a little more."
+  },
+  {
+    "start": 35.34,
+    "end": 37.26,
+    "text": "**Ashley:** Okay."
+  },
+  {
+    "start": 39.1,
+    "end": 40.62,
+    "text": "**Anna:** Oh, I know her."
+  },
+  {
+    "start": 40.62,
+    "end": 42.14,
+    "text": "**Anna:** She works in my office."
+  },
+  {
+    "start": 42.14,
+    "end": 43.5,
+    "text": "**Anna:** Kiana, hi."
+  },
+  {
+    "start": 43.5,
+    "end": 44.86,
+    "text": "**Anna:** Come and {join|参加する|/dʒɔɪn/|Please join our team.} us."
+  },
+  {
+    "start": 44.86,
+    "end": 46.379,
+    "text": "**Keyana:** Hi Anna, how are you?"
+  },
+  {
+    "start": 46.379,
+    "end": 47.5,
+    "text": "**Anna:** I'm doing great."
+  },
+  {
+    "start": 47.5,
+    "end": 49.66,
+    "text": "**Anna:** Kiana, this is my friend Ashley."
+  },
+  {
+    "start": 49.66,
+    "end": 51.42,
+    "text": "**Keyana:** Hi Ashley."
+  },
+  {
+    "start": 51.12,
+    "end": 57.12,
+    "text": "**Anna:** We need to return to work, but the weather is beautiful and {people watching|人間観察|/ˈpiːpəl wɒtʃɪŋ/|People watching is an interesting hobby.} is fun."
+  },
+  {
+    "start": 57.12,
+    "end": 59.12,
+    "text": "**Keyana:** I love people watching too."
+  },
+  {
+    "start": 59.12,
+    "end": 61.68,
+    "text": "**Anna:** Well, have a seat."
+  },
+  {
+    "start": 62.36,
+    "end": 67.479,
+    "text": "**Anna:** It is fun to see how people are {different|異なる} or the same."
+  },
+  {
+    "start": 67.479,
+    "end": 68.28,
+    "text": "**Anna:** It is."
+  },
+  {
+    "start": 68.28,
+    "end": 73.72,
+    "text": "**Keyana:** For example, Anna, you are {tall|背が高い|/tɔːl/|He is tall and strong.}, but Ashley and I are short."
+  },
+  {
+    "start": 73.62,
+    "end": 77.46,
+    "text": "**Anna:** And Kiana, you and Ashley have brown eyes."
+  },
+  {
+    "start": 77.46,
+    "end": 79.38,
+    "text": "**Anna:** I have blue eyes."
+  },
+  {
+    "start": 79.38,
+    "end": 83.06,
+    "text": "**Keyana:** You two have {light|明るい/軽い|/laɪt/|The room is light and airy.} skin and I have dark skin."
+  },
+  {
+    "start": 83.58,
+    "end": 85.82,
+    "text": "**Anna:** Ashley, you have {straight|まっすぐな/直線的な|/streɪt/|The road is straight.} hair."
+  },
+  {
+    "start": 85.82,
+    "end": 88.54,
+    "text": "**Anna:** Kiana and I have {curly|カール状の/縮れた|/ˈkɜːrli/|She has curly hair.} hair."
+  },
+  {
+    "start": 88.54,
+    "end": 90.94,
+    "text": "**Ashley:** You have very {curly|カール状の/縮れた|/ˈkɜːrli/|Her curly hair is beautiful.} hair, Anna."
+  },
+  {
+    "start": 90.94,
+    "end": 93.02,
+    "text": "**Keyana:** I need to {return|戻る/返却する|/rɪˈtɜːrn/|I will return home soon.} to work."
+  },
+  {
+    "start": 92.84,
+    "end": 93.96,
+    "text": "**Keyana:** See you Anna."
+  },
+  {
+    "start": 93.96,
+    "end": 95.479,
+    "text": "**Keyana:** Nice to meet you, Ashley."
+  },
+  {
+    "start": 95.479,
+    "end": 96.92,
+    "text": "**Ashley:** Bye, Kiana."
+  },
+  {
+    "start": 96.92,
+    "end": 99.24,
+    "text": "**Ashley:** Anna, I have to go too."
+  },
+  {
+    "start": 99.24,
+    "end": 101,
+    "text": "**Ashley:** Are you {returning|戻る/帰る|/rɪˈtɜːrnɪŋ/|I am returning from work.} to work?"
+  },
+  {
+    "start": 101,
+    "end": 105.32,
+    "text": "**Anna:** I still have time and the sun feels so {good|良い/素晴らしい|/ɡʊd/|This food tastes good.}"
+  },
+  {
+    "start": 105.32,
+    "end": 106.52,
+    "text": "**Ashley:** Um Anna"
+  },
+  {
+    "start": 107.04,
+    "end": 109.2,
+    "text": "**Ashley:** What does your {boss|上司/経営者|/bɒs/|My boss is kind.} look like?"
+  },
+  {
+    "start": 109.2,
+    "end": 111.04,
+    "text": "**Anna:** She is {short|低い/背が低い|/ʃɔːrt/|He is short compared to me.}"
+  },
+  {
+    "start": 111.04,
+    "end": 113.36,
+    "text": "**Anna:** She has straight {light|明るい/軽い|/laɪt/|The room is light and airy.} hair."
+  },
+  {
+    "start": 113.36,
+    "end": 115.2,
+    "text": "**Ashley:** Does she wear {glasses|眼鏡/めがね|/ˈɡlæsɪz/|She wears glasses every day.}?"
+  },
+  {
+    "start": 115.2,
+    "end": 115.84,
+    "text": "**Ashley:** Yes."
+  },
+  {
+    "start": 115.84,
+    "end": 116.96,
+    "text": "**Anna:** Yes she does."
+  },
+  {
+    "start": 116.96,
+    "end": 119.76,
+    "text": "**Ashley:** Is she wearing a blue {sweater|セーター/セーター|/ˈswetər/|I like this warm sweater.} today?"
+  },
+  {
+    "start": 119.76,
+    "end": 121.44,
+    "text": "**Anna:** How do you know that?"
+  },
+  {
+    "start": 121.439,
+    "end": 123.439,
+    "text": "**Ashley:** She's coming this way."
+  },
+  {
+    "start": 123.439,
+    "end": 125.36,
+    "text": "**Anna:** Oh no, {hide|隠れる/隠す|/haɪd/|Hide behind the door.} me!"
+  },
+  {
+    "start": 125.36,
+    "end": 127.52,
+    "text": "**Ashley:** Um bye Anna."
+  },
+  {
+    "start": 127.52,
+    "end": 128.56,
+    "text": "**Ashley:** Call me later."
+  },
+  {
+    "start": 128.56,
+    "end": 129.519,
+    "text": "**Anna:** Bye Ashley."
+  },
+  {
+    "start": 129.519,
+    "end": 130.8,
+    "text": "**Anna:** Talk to you later"
+  },
+  {
+    "start": 130.74,
+    "end": 132.58,
+    "text": "**Caty:** Anna, is that you?"
+  },
+  {
+    "start": 132.58,
+    "end": 132.98,
+    "text": "**Anna:** Ms."
+  },
+  {
+    "start": 132.98,
+    "end": 134.9,
+    "text": "**Anna:** Weaver, hi."
+  },
+  {
+    "start": 134.9,
+    "end": 137.46,
+    "text": "**Caty:** What are you doing behind that {bench|ベンチ/長椅子|/bentʃ/|Sit on the bench and rest.}?"
+  },
+  {
+    "start": 137.7,
+    "end": 140.9,
+    "text": "**Anna:** I am looking for my my stick."
+  },
+  {
+    "start": 141.22,
+    "end": 142.34,
+    "text": "**Anna:** Here it is"
+  },
+  {
+    "start": 142.64,
+    "end": 144.72,
+    "text": "**Anna:** I am {people watching|人々を観察する}."
+  },
+  {
+    "start": 144.72,
+    "end": 147.92,
+    "text": "**Anna:** Uh-oh, but it's time to {return|戻る/帰る} to work."
+  },
+  {
+    "start": 147.92,
+    "end": 149.68,
+    "text": "**Caty:** No need to {hurry|急ぐ/急ぐ必要はない}."
+  },
+  {
+    "start": 149.68,
+    "end": 151.76,
+    "text": "**Keyana:** I {love|愛する/大好き} people watching too."
+  },
+  {
+    "start": 151.76,
+    "end": 153.04,
+    "text": "**Caty:** Let's sit."
+  },
+  {
+    "start": 153.04,
+    "end": 154.079,
+    "text": "**Anna:** Sure."
+  },
+  {
+    "start": 155.12,
+    "end": 157.92,
+    "text": "**Caty:** It's a {beautiful|美しい} day, isn't it?"
+  },
+  {
+    "start": 157.92,
+    "end": 158.64,
+    "text": "**Ashley:** Yes."
+  },
+  {
+    "start": 158.64,
+    "end": 160.56,
+    "text": "**Anna:** Yes it is Miss Weaver."
+  },
+  {
+    "start": 160.56,
+    "end": 163.36,
+    "text": "**Anna:** People watching in DC is {fun|楽しい/面白い}."
+  },
+  {
+    "start": 163.36,
+    "end": 165.6,
+    "text": "**Anna:** It makes me {forget|忘れる} the time."
+  },
+  {
+    "start": 165.6,
+    "end": 167.6,
+    "text": "**Anna:** Until next time."
+  }
+]

@@ -1,0 +1,262 @@
+[
+  {
+    "start": 1.6,
+    "end": 3.84,
+    "text": "**Anna:** Hello from Washington, D."
+  },
+  {
+    "start": 3.84,
+    "end": 4.24,
+    "text": "**Anna:** C."
+  },
+  {
+    "start": 4.5600000000000005,
+    "end": 8.8,
+    "text": "**Anna:** This city has many {monuments|記念碑/記念建造物|/ˈmɑːnjəmənts/|Many monuments honor great leaders.} and {memorials|追悼碑/記念碑|/məˈmɔːriəlz/|War memorials remember soldiers.}"
+  },
+  {
+    "start": 8.54,
+    "end": 16.86,
+    "text": "**Anna:** Today, I am visiting the ones built in memory of our {presidents|大統領|/ˈprezɪdənts/|US presidents lead the country.}, Washington, Jefferson, Lincoln, and Roosevelt."
+  },
+  {
+    "start": 16.86,
+    "end": 19.9,
+    "text": "**Anna:** I want to learn more about them."
+  },
+  {
+    "start": 20.039,
+    "end": 21.32,
+    "text": "**Anna:** Hey!"
+  },
+  {
+    "start": 21.32,
+    "end": 22.6,
+    "text": "**Anna:** Watch out!"
+  },
+  {
+    "start": 22.6,
+    "end": 24.92,
+    "text": "**Dan:** Sorry, I did not see you."
+  },
+  {
+    "start": 24.92,
+    "end": 26.68,
+    "text": "**Anna:** You were not looking."
+  },
+  {
+    "start": 26.68,
+    "end": 28.759,
+    "text": "**Dan:** You should be more careful."
+  },
+  {
+    "start": 28.3,
+    "end": 33.34,
+    "text": "**Dan:** I know I should be more careful, but this game is really {fun|楽しい/面白い|/fʌn/|This game looks fun to play.}"
+  },
+  {
+    "start": 33.34,
+    "end": 35.26,
+    "text": "**Anna:** What kind of game?"
+  },
+  {
+    "start": 35.26,
+    "end": 39.26,
+    "text": "**Anna:** You have to find things that aren't really there."
+  },
+  {
+    "start": 39.16,
+    "end": 42.6,
+    "text": "**Anna:** How can you find things that aren't really there?"
+  },
+  {
+    "start": 42.6,
+    "end": 44.68,
+    "text": "**Dan:** They're in your phone, see?"
+  },
+  {
+    "start": 44.92,
+    "end": 46.04,
+    "text": "**Dan:** I see."
+  },
+  {
+    "start": 46.04,
+    "end": 49.239,
+    "text": "**Anna:** It's like a {scavenger|探索/探し物|/ˈskævəndʒər/|Scavenger hunt is an exciting game.} hunt."
+  },
+  {
+    "start": 48.94,
+    "end": 49.98,
+    "text": "**Dan:** That's right."
+  },
+  {
+    "start": 49.98,
+    "end": 52.22,
+    "text": "**Anna:** I don't have time for games."
+  },
+  {
+    "start": 52.22,
+    "end": 55.58,
+    "text": "**Anna:** I want to learn about US presidents."
+  },
+  {
+    "start": 55.58,
+    "end": 57.9,
+    "text": "**Dan:** Then you should play this game."
+  },
+  {
+    "start": 57.9,
+    "end": 62.22,
+    "text": "**Anna:** When you find an American {symbol|象徴/記号|/ˈsɪmbəl/|The eagle is a symbol of freedom.}, you win points"
+  },
+  {
+    "start": 61.94,
+    "end": 65.94,
+    "text": "**Anna:** and a fun fact about a US president."
+  },
+  {
+    "start": 65.94,
+    "end": 68.42,
+    "text": "**Anna:** I have time for this game."
+  },
+  {
+    "start": 68.42,
+    "end": 71.54,
+    "text": "**Dan:** Here are the symbols that I caught."
+  },
+  {
+    "start": 71.54,
+    "end": 75.06,
+    "text": "**Anna:** The Statue of Liberty for 20 points"
+  },
+  {
+    "start": 75.38,
+    "end": 83.06,
+    "text": "**Anna:** Uncle Sam for 40 points and the American flag for 60 points"
+  },
+  {
+    "start": 82.6,
+    "end": 85,
+    "text": "**Anna:** What symbol are you looking for now?"
+  },
+  {
+    "start": 85,
+    "end": 87.56,
+    "text": "**Dan:** I am looking for the {bald|はげの/白頭の|/bɔːld/|Bald eagles have white heads.} {eagle|ワシ/鷲|/ˈiːɡəl/|Eagles fly high in the sky.}"
+  },
+  {
+    "start": 87.56,
+    "end": 90.52,
+    "text": "**Anna:** That is 100 points."
+  },
+  {
+    "start": 90.52,
+    "end": 93.72,
+    "text": "**Anna:** It should be near the {Washington Monument|ワシントン記念碑|/ˈwɒʃɪŋtən ˈmɒnjəmənt/|A famous landmark in Washington D.C.}."
+  },
+  {
+    "start": 93.72,
+    "end": 96.2,
+    "text": "**Anna:** This game is {awesome|素晴らしい|/ˈɔːsəm/|This game is awesome today.}"
+  },
+  {
+    "start": 96.02,
+    "end": 98.979,
+    "text": "**Dan:** You ought to {buy|買う|/baɪ/|I want to buy a new book.} the app right now."
+  },
+  {
+    "start": 98.979,
+    "end": 101.86,
+    "text": "**Anna:** It's called Catch {Americana|アメリカ文化|/əˈmerɪkənə/|Americana represents U.S. culture.}"
+  },
+  {
+    "start": 101.86,
+    "end": 102.74,
+    "text": "**Anna:** Got it."
+  },
+  {
+    "start": 102.74,
+    "end": 104.979,
+    "text": "**Anna:** Catch Americana."
+  },
+  {
+    "start": 104.979,
+    "end": 105.939,
+    "text": "**Anna:** Thanks."
+  },
+  {
+    "start": 105.939,
+    "end": 107.38,
+    "text": "**Anna:** Good luck."
+  },
+  {
+    "start": 106.96,
+    "end": 108.8,
+    "text": "**Dan:** Good luck to you too."
+  },
+  {
+    "start": 111.04,
+    "end": 113.68,
+    "text": "**Anna:** This is the {Jefferson Memorial|ジェファーソン記念館|/ˈdʒɛfərsən məˈmɔːriəl/|A monument honoring Thomas Jefferson.}"
+  },
+  {
+    "start": 113.68,
+    "end": 118.24,
+    "text": "**Anna:** I know that Thomas Jefferson {signed|署名した|/saɪnd/|He signed the important document.} the Declaration of Independence"
+  },
+  {
+    "start": 118.24,
+    "end": 120.4,
+    "text": "**Anna:** Now where is that {symbol|シンボル|/ˈsɪmbəl/|This logo is our company symbol.}?"
+  },
+  {
+    "start": 120.48,
+    "end": 122.96,
+    "text": "**Anna:** Here it is, my first one."
+  },
+  {
+    "start": 122.96,
+    "end": 125.2,
+    "text": "**Anna:** It's an {American flag|アメリカ国旗|/əˈmerɪkən flæɡ/|The American flag has 50 stars.}"
+  },
+  {
+    "start": 125.2,
+    "end": 127.44,
+    "text": "**Anna:** I won 60 points."
+  },
+  {
+    "start": 127.44,
+    "end": 131.44,
+    "text": "**Anna:** An American flag works well for Thomas Jefferson."
+  },
+  {
+    "start": 131.04,
+    "end": 135.36,
+    "text": "**Anna:** I see lots of American flags on {Independence Day|独立記念日|/ˌɪndɪˈpɛndəns deɪ/|We celebrate Independence Day on July 4th.}"
+  },
+  {
+    "start": 135.36,
+    "end": 137.2,
+    "text": "**Anna:** Where is my Jefferson?"
+  },
+  {
+    "start": 137.2,
+    "end": 138.16,
+    "text": "**Anna:** Fun fact."
+  },
+  {
+    "start": 138.32,
+    "end": 142.96,
+    "text": "**Voice:** In his lifetime, Thomas Jefferson wrote about 19,000 {letters|手紙|/ˈlɛtərz/|I write letters to my friends.}"
+  },
+  {
+    "start": 142.96,
+    "end": 145.12,
+    "text": "**Anna:** I did not know that."
+  },
+  {
+    "start": 144.82,
+    "end": 148.58,
+    "text": "**Anna:** Where is the next {symbol|シンボル|/ˈsɪmbəl/|This logo is our company symbol.}?"
+  }
+]

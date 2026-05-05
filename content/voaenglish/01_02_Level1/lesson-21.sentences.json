@@ -1,0 +1,302 @@
+[
+  {
+    "start": 0.24,
+    "end": 1.28,
+    "text": "**Anna:** Hi there!"
+  },
+  {
+    "start": 1.28,
+    "end": 2.4,
+    "text": "**Anna:** {Washington|首都/都市|/ˈwɑːʃɪŋtən/|Washington is the capital of the USA.}, D."
+  },
+  {
+    "start": 2.4,
+    "end": 2.7199999999999998,
+    "text": "**Anna:** C."
+  },
+  {
+    "start": 2.8,
+    "end": 5.12,
+    "text": "**Anna:** has some great {coffee shops|喫茶店|/ˈkɔːfi ʃɑːps/|I love coffee shops near my home.}."
+  },
+  {
+    "start": 5.12,
+    "end": 9.6,
+    "text": "**Anna:** My {favorite|お気に入り|/ˈfeɪvərɪt/|This is my favorite book.} is this one, Busboys and Poets."
+  },
+  {
+    "start": 9.719,
+    "end": 12.92,
+    "text": "**Anna:** Actually, it's more than a coffee shop."
+  },
+  {
+    "start": 12.92,
+    "end": 18.04,
+    "text": "**Anna:** It's also a {bookstore|本屋|/ˈbʊkstɔːr/|I bought a book at the bookstore.}, a {restaurant|レストラン|/ˈrestərɑːnt/|We ate dinner at a nice restaurant.}, and a {theater|劇場|/ˈθɪətər/|We watched a play at the theater.}."
+  },
+  {
+    "start": 18.04,
+    "end": 21,
+    "text": "**Anna:** Marsha and I love coming here."
+  },
+  {
+    "start": 21.42,
+    "end": 26.06,
+    "text": "**Marsha:** Hey Anna, my {is having|開催する|/hæv/|We are having a party tonight.} a party on Saturday."
+  },
+  {
+    "start": 26.06,
+    "end": 27.74,
+    "text": "**Marsha:** Can you come with me?"
+  },
+  {
+    "start": 28.06,
+    "end": 30.54,
+    "text": "**Anna:** Sorry, I can't come with you."
+  },
+  {
+    "start": 30.54,
+    "end": 33.82,
+    "text": "**Anna:** I have to get my {driver's license|運転免許証|/ˈdraɪvərz ˈlaɪsəns/|I got my driver's license last year.}."
+  },
+  {
+    "start": 33.84,
+    "end": 36.64,
+    "text": "**Marsha:** Will you be busy all day?"
+  },
+  {
+    "start": 36.64,
+    "end": 38.239,
+    "text": "**Anna:** I don't know."
+  },
+  {
+    "start": 38.239,
+    "end": 41.92,
+    "text": "**Anna:** First, I have to take a {test|試験|/test/|I will take a test tomorrow.} on the computer."
+  },
+  {
+    "start": 41.92,
+    "end": 44.96,
+    "text": "**Anna:** Then I have to take a test in the car"
+  },
+  {
+    "start": 45.98,
+    "end": 51.02,
+    "text": "**Marsha:** You have to take the test during the day, don't you?"
+  },
+  {
+    "start": 51.34,
+    "end": 52.46,
+    "text": "**Anna:** Yes."
+  },
+  {
+    "start": 52.46,
+    "end": 54.62,
+    "text": "**Marsha:** The party is at night"
+  },
+  {
+    "start": 55.02,
+    "end": 60.06,
+    "text": "**Anna:** Oh, then I can come with you to the party on Saturday night."
+  },
+  {
+    "start": 60.06,
+    "end": 61.1,
+    "text": "**Anna:** Great!"
+  },
+  {
+    "start": 61.1,
+    "end": 64.22,
+    "text": "**Marsha:** I have to help my {friend|友人|/frend/|My friend is coming to visit.} with the party."
+  },
+  {
+    "start": 64.22,
+    "end": 65.82,
+    "text": "**Marsha:** Can you help me?"
+  },
+  {
+    "start": 65.82,
+    "end": 66.54,
+    "text": "**Anna:** Sure."
+  },
+  {
+    "start": 66.54,
+    "end": 68.54,
+    "text": "**Anna:** That sounds like fun."
+  },
+  {
+    "start": 68.72,
+    "end": 73.52,
+    "text": "**Marsha:** Everyone has to bring something or do something."
+  },
+  {
+    "start": 73.52,
+    "end": 77.6,
+    "text": "**Marsha:** You can bring food or you can {perform|演じる/演奏する|/pərˈfɔːrm/|The musicians will perform tonight.}"
+  },
+  {
+    "start": 78.38,
+    "end": 79.18,
+    "text": "**Anna:** Really?"
+  },
+  {
+    "start": 79.18,
+    "end": 80.94,
+    "text": "**Anna:** I can perform?"
+  },
+  {
+    "start": 80.94,
+    "end": 82.46,
+    "text": "**Marsha:** You can."
+  },
+  {
+    "start": 82.46,
+    "end": 83.42,
+    "text": "**Marsha:** Can you?"
+  },
+  {
+    "start": 83.74,
+    "end": 87.98,
+    "text": "**Anna:** Yes, I can {recite|暗唱する/朗読する|/rɪˈsaɪt/|She can recite Shakespeare.} poetry."
+  },
+  {
+    "start": 87.98,
+    "end": 89.42,
+    "text": "**Anna:** A poem."
+  },
+  {
+    "start": 89.42,
+    "end": 94.14,
+    "text": "**Anna:** Light, dark"
+  },
+  {
+    "start": 94.14,
+    "end": 97.1,
+    "text": "**Anna:** Darkness dark."
+  },
+  {
+    "start": 97.1,
+    "end": 102.94,
+    "text": "**Marsha:** In this country, nobody {recites|暗唱する/朗読する} poetry at parties."
+  },
+  {
+    "start": 103.36,
+    "end": 108.32,
+    "text": "**Marsha:** Hmm, can you do anything else?"
+  },
+  {
+    "start": 108.32,
+    "end": 112.96,
+    "text": "**Anna:** Hmm, yes, I can do a {card|カード/トランプ} trick."
+  },
+  {
+    "start": 113.36,
+    "end": 118.8,
+    "text": "**Anna:** Your card is the Ten of Diamonds."
+  },
+  {
+    "start": 118.8,
+    "end": 119.44,
+    "text": "**Anna:** No?"
+  },
+  {
+    "start": 119.68,
+    "end": 121.68,
+    "text": "**Anna:** Pick a card, any card."
+  },
+  {
+    "start": 121.68,
+    "end": 122.64,
+    "text": "**Anna:** Great."
+  },
+  {
+    "start": 122.62,
+    "end": 126.54,
+    "text": "**Marsha:** Anna, maybe you can just bring food."
+  },
+  {
+    "start": 126.54,
+    "end": 131.42,
+    "text": "**Anna:** No, I can't {cook|料理する/調理する|/kʊk/|I can cook pasta.}, and I really want to {perform|演じる/実演する|/pərˈfɔːrm/|He will perform on stage.}."
+  },
+  {
+    "start": 131.52,
+    "end": 135.84,
+    "text": "**Anna:** You know there is one thing I can do."
+  },
+  {
+    "start": 135.84,
+    "end": 138.4,
+    "text": "**Anna:** Trouble in mind."
+  },
+  {
+    "start": 138.4,
+    "end": 143.76,
+    "text": "**Anna:** I'm blue, but I won't be blue always"
+  },
+  {
+    "start": 144.879,
+    "end": 151.599,
+    "text": "**Anna:** The sun's gonna shine in my back door someday."
+  },
+  {
+    "start": 151.599,
+    "end": 153.12,
+    "text": "**Anna:** That's it."
+  },
+  {
+    "start": 153.12,
+    "end": 155.92,
+    "text": "**Marsha:** You can sing at the party."
+  },
+  {
+    "start": 155.92,
+    "end": 159.84,
+    "text": "**Marsha:** Now I have to go {shopping|買い物する|/ˈʃɑːpɪŋ/|I go shopping every weekend.} for food."
+  },
+  {
+    "start": 159.84,
+    "end": 160.96,
+    "text": "**Marsha:** Can I help?"
+  },
+  {
+    "start": 160.96,
+    "end": 162.96,
+    "text": "**Anna:** I'm not busy right now."
+  },
+  {
+    "start": 162.96,
+    "end": 163.76,
+    "text": "**Anna:** Sure."
+  },
+  {
+    "start": 163.76,
+    "end": 165.04,
+    "text": "**Marsha:** Let's go."
+  },
+  {
+    "start": 165.74,
+    "end": 167.02,
+    "text": "**Anna:** We have to go."
+  },
+  {
+    "start": 167.02,
+    "end": 169.26,
+    "text": "**Anna:** I have to help Marsha {shop|買い物する|/ʃɑːp/|I shop at the local market.}"
+  },
+  {
+    "start": 169.26,
+    "end": 171.82,
+    "text": "**Anna:** And I have to practice my song."
+  },
+  {
+    "start": 171.82,
+    "end": 174.62,
+    "text": "**Anna:** Trouble in mind, I'm blue."
+  },
+  {
+    "start": 174.62,
+    "end": 176.14,
+    "text": "**Anna:** Till next time."
+  }
+]

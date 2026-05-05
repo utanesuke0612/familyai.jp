@@ -1,0 +1,362 @@
+[
+  {
+    "start": 0.96,
+    "end": 7.28,
+    "text": "**Anna:** Winter {weather|天候/気象} in Washington DC can be really {windy|風の強い|/ˈwɪndi/|It is windy today}."
+  },
+  {
+    "start": 7.28,
+    "end": 10.72,
+    "text": "**Anna:** And {wind|風} messes up my hair."
+  },
+  {
+    "start": 12.28,
+    "end": 15.56,
+    "text": "**Anna:** It is really {windy|風の強い} today."
+  },
+  {
+    "start": 15.56,
+    "end": 18.76,
+    "text": "**Anna:** Oh, look at my hair."
+  },
+  {
+    "start": 19.279,
+    "end": 21.68,
+    "text": "**Anna:** Will it be {windy|風の強い} this weekend?"
+  },
+  {
+    "start": 21.68,
+    "end": 23.599,
+    "text": "**Anna:** I'll {listen|聞く/傾聴する} to the news."
+  },
+  {
+    "start": 27.119,
+    "end": 30.64,
+    "text": "**Anna:** I am tired of my {untidy|乱れた/整っていない} hair."
+  },
+  {
+    "start": 30.64,
+    "end": 33.84,
+    "text": "**Pete:** Are you tired of your {untidy|乱れた} hair?"
+  },
+  {
+    "start": 33.84,
+    "end": 35.52,
+    "text": "**Anna:** Yes, yes I am."
+  },
+  {
+    "start": 35.84,
+    "end": 38.56,
+    "text": "**Anna:** And it's {uncomfortable|不快な/心地悪い}."
+  },
+  {
+    "start": 38.56,
+    "end": 41.12,
+    "text": "**Pete:** Is it {uncomfortable|不快な}?"
+  },
+  {
+    "start": 41.12,
+    "end": 41.76,
+    "text": "**Anna:** Yes."
+  },
+  {
+    "start": 41.76,
+    "end": 43.68,
+    "text": "**Anna:** Yes it is."
+  },
+  {
+    "start": 43.68,
+    "end": 47.36,
+    "text": "**Anna:** Hey, is that Pete?"
+  },
+  {
+    "start": 48,
+    "end": 50.08,
+    "text": "**Pete:** Hi, I'm Pete."
+  },
+  {
+    "start": 50.04,
+    "end": 53.8,
+    "text": "**Pete:** And I have the {perfect|完璧な/理想的な} product for you."
+  },
+  {
+    "start": 53.8,
+    "end": 55.32,
+    "text": "**Anna:** Hair be good!"
+  },
+  {
+    "start": 56.04,
+    "end": 59.64,
+    "text": "**Pete:** Just spray Hair Be Good on your hair."
+  },
+  {
+    "start": 59.64,
+    "end": 60.199,
+    "text": "**Anna:** Wrap"
+  },
+  {
+    "start": 60.46,
+    "end": 63.34,
+    "text": "**Anna:** in a towel and you are done."
+  },
+  {
+    "start": 63.34,
+    "end": 67.74,
+    "text": "**Anna:** Hair be good works and it's {inexpensive|安価な}."
+  },
+  {
+    "start": 67.74,
+    "end": 71.42,
+    "text": "**Anna:** One can costs only $10."
+  },
+  {
+    "start": 71.56,
+    "end": 76.76,
+    "text": "**Anna:** So go online and {order|注文する} your Hair Be Good today."
+  },
+  {
+    "start": 77.56,
+    "end": 80.2,
+    "text": "**Anna:** Hair Be Good sounds {perfect|完璧な}."
+  },
+  {
+    "start": 80.2,
+    "end": 82.52,
+    "text": "**Anna:** And I can {trust|信頼する} Pete."
+  },
+  {
+    "start": 82.52,
+    "end": 86.2,
+    "text": "**Anna:** I am buying some right now."
+  },
+  {
+    "start": 86.2,
+    "end": 92.6,
+    "text": "**Anna:** Okay, I will order one can of Hair Be Good for $10."
+  },
+  {
+    "start": 92.92,
+    "end": 96.2,
+    "text": "**Anna:** I'll pay with a {credit card|クレジットカード}."
+  },
+  {
+    "start": 96.2,
+    "end": 99.799,
+    "text": "**Anna:** My {delivery|配達} will arrive in two days."
+  },
+  {
+    "start": 99.799,
+    "end": 101.159,
+    "text": "**Anna:** Awesome!"
+  },
+  {
+    "start": 101.96,
+    "end": 104.12,
+    "text": "**Anna:** It {arrived|到着した}."
+  },
+  {
+    "start": 104.12,
+    "end": 107.96,
+    "text": "**Anna:** I'll use it before I go to {work|仕事|/wɜːrk/|I go to work every day.}."
+  },
+  {
+    "start": 107.96,
+    "end": 113.16,
+    "text": "**Anna:** Okay, hair be good, make my {untidy|乱れた/整理されていない|/ʌnˈtaɪdi/|My room is very untidy.} hair {tidy|きちんとした/整頓された|/ˈtaɪdi/|Please keep your desk tidy.}."
+  },
+  {
+    "start": 113.16,
+    "end": 116.36,
+    "text": "**Anna:** No, make it {fabulous|素晴らしい/素晴ら|/ˈfæbjələs/|She looks fabulous tonight.}."
+  },
+  {
+    "start": 118.3,
+    "end": 119.58,
+    "text": "**Amelia:** Hi Anna."
+  },
+  {
+    "start": 119.58,
+    "end": 121.1,
+    "text": "**Anna:** Hello, Amelia."
+  },
+  {
+    "start": 121.1,
+    "end": 124.22,
+    "text": "**Amelia:** Anna, you look {different|違う/異なる|/ˈdɪfərənt/|You look different today.}."
+  },
+  {
+    "start": 124.22,
+    "end": 125.02,
+    "text": "**Anna:** Thanks."
+  },
+  {
+    "start": 125.02,
+    "end": 128.54,
+    "text": "**Anna:** I used a new {product|製品/商品|/ˈprɒdʌkt/|This is a new product.}."
+  },
+  {
+    "start": 129.179,
+    "end": 131.02,
+    "text": "**Amelia:** Well, it's not."
+  },
+  {
+    "start": 131.02,
+    "end": 132.22,
+    "text": "**Anna:** It's not what?"
+  },
+  {
+    "start": 132.22,
+    "end": 133.18,
+    "text": "**Anna:** Good."
+  },
+  {
+    "start": 133.18,
+    "end": 136.22,
+    "text": "**Amelia:** Your hair does not look good."
+  },
+  {
+    "start": 137.42,
+    "end": 138.38,
+    "text": "**Anna:** Oh no"
+  },
+  {
+    "start": 139.14,
+    "end": 140.739,
+    "text": "**Anna:** This is not good."
+  },
+  {
+    "start": 140.739,
+    "end": 144.739,
+    "text": "**Amelia:** Why don't you go home and take care of this?"
+  },
+  {
+    "start": 144.739,
+    "end": 146.5,
+    "text": "**Anna:** Good idea."
+  },
+  {
+    "start": 146.5,
+    "end": 147.86,
+    "text": "**Amelia:** Hi, Anna."
+  },
+  {
+    "start": 147.86,
+    "end": 150.019,
+    "text": "**Anna:** Hello, Pete."
+  },
+  {
+    "start": 150.019,
+    "end": 152.42,
+    "text": "**Pete:** Is something {wrong|悪い/間違っている|/rɔːŋ/|Something is wrong with my computer.}?"
+  },
+  {
+    "start": 152.32,
+    "end": 153.92,
+    "text": "**Anna:** This is wrong!"
+  },
+  {
+    "start": 153.92,
+    "end": 156.08,
+    "text": "**Pete:** What did you do to your hair?"
+  },
+  {
+    "start": 156.08,
+    "end": 158.8,
+    "text": "**Anna:** Hair be good did this to my hair."
+  },
+  {
+    "start": 158.8,
+    "end": 160.56,
+    "text": "**Pete:** Oh, you bought it!"
+  },
+  {
+    "start": 160.36,
+    "end": 161.8,
+    "text": "**Anna:** Yes, I bought it."
+  },
+  {
+    "start": 161.8,
+    "end": 165.64,
+    "text": "**Anna:** You said in your ad it was a {perfect|完璧な/完全な|/ˈpɜːrfɪkt/|This is a perfect solution.} product."
+  },
+  {
+    "start": 165.64,
+    "end": 168.12,
+    "text": "**Anna:** This is not perfect."
+  },
+  {
+    "start": 168.12,
+    "end": 169.88,
+    "text": "**Anna:** This is {imperfect|不完全な/欠陥のある|/ɪmˈpɜːrfɪkt/|The product is imperfect.}"
+  },
+  {
+    "start": 170.22,
+    "end": 172.7,
+    "text": "**Anna:** It's {unbelievable|信じられない|/ˌʌnbɪˈliːvəbl/|This story is unbelievable.}."
+  },
+  {
+    "start": 172.7,
+    "end": 175.579,
+    "text": "**Anna:** I believed your ad, Pete."
+  },
+  {
+    "start": 175.9,
+    "end": 178.14,
+    "text": "**Anna:** It was {dishonest|正直でない/不誠実|/dɪsˈɒnɪst/|He was dishonest with his friends}."
+  },
+  {
+    "start": 178.14,
+    "end": 183.099,
+    "text": "**Pete:** Anna, you don't believe everything you see in {abs|腹筋/腹部|/æbz/|He works out to get six-pack abs}, do you?"
+  },
+  {
+    "start": 183.099,
+    "end": 184.22,
+    "text": "**Anna:** No, Pete."
+  },
+  {
+    "start": 184.26,
+    "end": 186.5,
+    "text": "**Anna:** Just the ones with my friends."
+  },
+  {
+    "start": 186.5,
+    "end": 188.58,
+    "text": "**Pete:** Your hair will be okay."
+  },
+  {
+    "start": 188.58,
+    "end": 192.26,
+    "text": "**Pete:** Just wash it a {couple|2つの/いくつかの|/ˈkʌpəl/|A couple of days ago.}"
+  },
+  {
+    "start": 192.379,
+    "end": 193.18,
+    "text": "**Anna:** Thanks."
+  },
+  {
+    "start": 193.18,
+    "end": 195.26,
+    "text": "**Anna:** Thanks a lot, Pete."
+  },
+  {
+    "start": 195.26,
+    "end": 197.9,
+    "text": "**Anna:** Here, here's your {product|製品/商品|/ˈprɒdʌkt/|This is a new product.}"
+  },
+  {
+    "start": 197.9,
+    "end": 202.299,
+    "text": "**Anna:** You should call it {hair|髪の毛|/heə(r)/|My hair is long.} be really really bad."
+  },
+  {
+    "start": 202.299,
+    "end": 204.22,
+    "text": "**Anna:** Until next time, Pete"
+  },
+  {
+    "start": 205.98,
+    "end": 207.34,
+    "text": "**Anna:** Till next time"
+  }
+]
