@@ -5,11 +5,11 @@
  * 状態管理（form / message / 保存処理）と、サブコンポーネントの
  * コンポジションを担当する薄いコンテナ。
  *
- * 構成（H4・Rev30 でファイル分割）:
+ * 構成（Rev30 H4 で分割・Rev31 H7 で SettingsTable に刷新）:
  *   - parts.tsx          : 共通 UI 部品（Section/Field/Hint/Stat/etc）+ styles
- *   - PresetSwitcher.tsx : 🎁 プリセット切替
- *   - StageFields.tsx    : 🧠 Stage1 / 🎬 Stage2 / 💬 Chat フィールド
- *   - CostEstimator.tsx  : 💰 コスト試算
+ *   - PresetSwitcher.tsx : 🎁 プリセット比較カード（旧 pill 並びを刷新）
+ *   - SettingsTable.tsx  : 🛠️ Stage1 / Stage2 / Chat を行に持つ設定 Table
+ *   - CostEstimator.tsx  : 💰 月間コスト試算（コンパクトバー）
  *   - HistoryList.tsx    : 📜 変更履歴
  */
 
@@ -23,7 +23,7 @@ import { useConfirm } from '@/components/ui/ConfirmDialog';
 
 import { Section, Field, btnPrimary, btnSecondary, inputStyle } from './parts';
 import { PresetSwitcher } from './PresetSwitcher';
-import { StageFields }    from './StageFields';
+import { SettingsTable }  from './SettingsTable';
 import { CostEstimator }  from './CostEstimator';
 import { HistoryList, type HistoryItem } from './HistoryList';
 
@@ -137,13 +137,13 @@ export function AiConfigForm({ effective, dbPartial, history }: AiConfigFormProp
         </div>
       )}
 
-      {/* プリセット切替 */}
-      <PresetSwitcher onApply={applyPreset} disabled={isSaving} />
+      {/* プリセット切替（比較カード） */}
+      <PresetSwitcher current={form} onApply={applyPreset} disabled={isSaving} />
 
-      {/* Stage1 / Stage2 / Chat フィールド */}
-      <StageFields form={form} onChange={setForm} disabled={isSaving} />
+      {/* Stage1 / Stage2 / Chat 設定 Table（行=段階・列=パラメータ） */}
+      <SettingsTable form={form} onChange={setForm} disabled={isSaving} />
 
-      {/* コスト試算 */}
+      {/* 月間コスト試算（コンパクトバー） */}
       <CostEstimator form={form} />
 
       {/* 変更メモ + 保存ボタン */}
