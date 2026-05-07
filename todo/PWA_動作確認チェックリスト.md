@@ -48,22 +48,22 @@ pnpm build && pnpm start
 
 **場所**: DevTools → Application → 左メニュー **「Manifest」**
 
-| # | 項目 | 期待値 | 確認 |
-|---|------|--------|:---:|
-| 1.1 | Name | `familyai.jp — AI活用事例とAIツール` | ⬜ |
-| 1.2 | Short name | `familyai` | ⬜ |
-| 1.3 | Description | 「仕事・学習・日常に役立つ AI 活用事例…」 | ⬜ |
-| 1.4 | Start URL | `/` | ⬜ |
-| 1.5 | Display | `standalone` | ⬜ |
-| 1.6 | Background color | `#FDF6ED`（クリーム色見本表示）| ⬜ |
-| 1.7 | **Theme color** | **`#FF8C42`（オレンジ色見本表示）** | ⬜ |
-| 1.8 | Lang | `ja` | ⬜ |
-| 1.9 | Orientation | `portrait` | ⬜ |
-| 1.10 | Icons (192×192) | 💞 絵文字アイコン表示 | ⬜ |
-| 1.11 | Icons (180×180 apple-icon) | 💞 絵文字アイコン表示 | ⬜ |
-| 1.12 | Shortcuts 1 | 「記事を読む」`/learn` | ⬜ |
-| 1.13 | Shortcuts 2 | 「VOA × AI ディクテーション教室」`/tools/voaenglish` | ⬜ |
-| 1.14 | Shortcuts 3 | 「うごくAI教室」`/tools/ai-kyoshitsu` | ⬜ |
+| #    | 項目                         | 期待値                                      | 確認  |
+| ---- | -------------------------- | ---------------------------------------- | :-: |
+| 1.1  | Name                       | `familyai.jp — AI活用事例とAIツール`             |  ⬜  |
+| 1.2  | Short name                 | `familyai`                               |  ⬜  |
+| 1.3  | Description                | 「仕事・学習・日常に役立つ AI 活用事例…」                  |  ⬜  |
+| 1.4  | Start URL                  | `/`                                      |  ⬜  |
+| 1.5  | Display                    | `standalone`                             |  ⬜  |
+| 1.6  | Background color           | `#FDF6ED`（クリーム色見本表示）                     |  ⬜  |
+| 1.7  | **Theme color**            | **`#FF8C42`（オレンジ色見本表示）**                 |  ⬜  |
+| 1.8  | Lang                       | `ja`                                     |  ⬜  |
+| 1.9  | Orientation                | `portrait`                               |  ⬜  |
+| 1.10 | Icons (192×192)            | 💞 絵文字アイコン表示                             |  ⬜  |
+| 1.11 | Icons (180×180 apple-icon) | 💞 絵文字アイコン表示                             |  ⬜  |
+| 1.12 | Shortcuts 1                | 「記事を読む」`/learn`                          |  ⬜  |
+| 1.13 | Shortcuts 2                | 「VOA × AI ディクテーション教室」`/tools/voaenglish` |  ⬜  |
+| 1.14 | Shortcuts 3                | 「うごくAI教室」`/tools/ai-kyoshitsu`           |  ⬜  |
 
 **❌ NG 時の対処**
 - 何も表示されない → ハードリロード（`⌘+Shift+R` / `Ctrl+Shift+F5`）
