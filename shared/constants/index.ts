@@ -159,4 +159,4 @@ export {
   AI_CONFIG_RANGES,
   findAiModel,
 } from './ai-models';
-export type { AiModelOption, AiConfigPreset } from './ai-models';
+export type { AiModelOption, AiConfigPreset, AiProvider } from './ai-models';

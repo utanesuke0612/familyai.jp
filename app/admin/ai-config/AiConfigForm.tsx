@@ -5,10 +5,11 @@
  * 状態管理（form / message / 保存処理）と、サブコンポーネントの
  * コンポジションを担当する薄いコンテナ。
  *
- * 構成（Rev30 H4 で分割・Rev31 H7 で SettingsTable に刷新）:
+ * 構成（Rev30 H4 分割 → Rev31 H7 で table 化 → Rev32 で Section 縦並びに復帰）:
  *   - parts.tsx          : 共通 UI 部品（Section/Field/Hint/Stat/etc）+ styles
- *   - PresetSwitcher.tsx : 🎁 プリセット比較カード（旧 pill 並びを刷新）
- *   - SettingsTable.tsx  : 🛠️ Stage1 / Stage2 / Chat を行に持つ設定 Table
+ *   - PresetSwitcher.tsx : 🎁 プリセット比較カード（Rev31 で刷新）
+ *   - StageFields.tsx    : 💬 AIチャット → 🧠 Stage1 → 🎬 Stage2 の Section 縦並び
+ *                          （Rev32 で順序変更：利用頻度の高い AIチャットを先頭に）
  *   - CostEstimator.tsx  : 💰 月間コスト試算（コンパクトバー）
  *   - HistoryList.tsx    : 📜 変更履歴
  */
@@ -23,7 +24,7 @@ import { useConfirm } from '@/components/ui/ConfirmDialog';
 
 import { Section, Field, btnPrimary, btnSecondary, inputStyle } from './parts';
 import { PresetSwitcher } from './PresetSwitcher';
-import { SettingsTable }  from './SettingsTable';
+import { StageFields }    from './StageFields';
 import { CostEstimator }  from './CostEstimator';
 import { HistoryList, type HistoryItem } from './HistoryList';
 
@@ -140,8 +141,8 @@ export function AiConfigForm({ effective, dbPartial, history }: AiConfigFormProp
       {/* プリセット切替（比較カード） */}
       <PresetSwitcher current={form} onApply={applyPreset} disabled={isSaving} />
 
-      {/* Stage1 / Stage2 / Chat 設定 Table（行=段階・列=パラメータ） */}
-      <SettingsTable form={form} onChange={setForm} disabled={isSaving} />
+      {/* AIチャット → Stage1 → Stage2 の順で Section 縦並び表示 */}
+      <StageFields form={form} onChange={setForm} disabled={isSaving} />
 
       {/* 月間コスト試算（コンパクトバー） */}
       <CostEstimator form={form} />
