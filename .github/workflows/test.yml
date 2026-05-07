@@ -37,9 +37,40 @@ jobs:
         run: pnpm test
 
   # ──────────────────────────────────────────────────────────
+  # Build check — production build must succeed on every PR.
+  # Catches dependency/lockfile drift, Next.js config errors,
+  # missing modules early. Uses dummy env vars so build passes
+  # without secrets (DB / auth runtime check is skipped because
+  # `lib/db/index.ts` is lazy-initialized).
+  # ──────────────────────────────────────────────────────────
+  build:
+    name: Production build
+    runs-on: ubuntu-latest
+    needs: static-and-unit
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - name: Next.js build
+        run: pnpm build
+        env:
+          # Dummy values — lib/db/index.ts is lazy-initialized, so
+          # build doesn't actually connect. Real secrets are needed
+          # only at runtime (Vercel) and for the smoke job below.
+          DATABASE_URL:    'postgres://dummy:dummy@localhost:5432/dummy'
+          NEXTAUTH_SECRET: 'dummy-secret-for-build-only-not-used-at-runtime'
+          NEXTAUTH_URL:    'http://localhost:3000'
+
+  # ──────────────────────────────────────────────────────────
   # Smoke test (Phase T1) — builds app and runs curl-based smoke
-  # Commented out by default because production build requires
-  # runtime env vars (DATABASE_URL, NEXTAUTH_SECRET, etc.).
+  # Commented out by default because production smoke requires
+  # real runtime env vars (DATABASE_URL, NEXTAUTH_SECRET, etc.).
   # Enable by adding encrypted secrets and uncommenting below.
   # ──────────────────────────────────────────────────────────
   # smoke:
