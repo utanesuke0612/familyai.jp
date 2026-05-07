@@ -7,8 +7,19 @@ import { ServiceWorkerRegister }  from '@/components/pwa/ServiceWorkerRegister';
 import './globals.css';
 
 // ── フォント定義 ──────────────────────────────────────────────
+//
+// ⚠️ Rev31 Phase 2 メモ（フォント DL 不安定環境向け）:
+//   `next/font/google` は build 時に `fonts.gstatic.com` から
+//   weight × subset の woff2 を多数 DL する（日本語フォントは ~100 ファイル/weight）。
+//   不安定な回線では一部 DL が失敗し全体が落ちることがある。
+//   発生時の回避策:
+//     1) `scripts/build-retry.sh` で再試行（成功した shard はキャッシュ済み）
+//     2) `pnpm add @fontsource/zen-kaku-gothic-new @fontsource/shippori-mincho`
+//        で npm 経由 DL に切替え、`globals.css` で `@import` する（恒久対応）
+//
+// weight は実コードで使用しているもののみ（`grep -r font-weight` で確認済み）。
 const zenKakuGothic = Zen_Kaku_Gothic_New({
-  weight:   ['400', '500', '700', '900'],
+  weight:   ['400', '500', '700'],   // 900 は未使用 → 削除（DL ファイル数削減）
   subsets:  ['latin'],
   variable: '--font-body',
   display:  'swap',
