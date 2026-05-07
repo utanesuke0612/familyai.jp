@@ -82,7 +82,8 @@ export function useAiMemoList(): {
       return;
     }
     setLoading(true);
-    fetch('/api/user/ai-memos')
+    // CX-4: pagination 化に伴い最大件数 (200) を明示
+    fetch('/api/user/ai-memos?pageSize=200')
       .then((r) => {
         if (!r.ok) throw new Error(`HTTP ${r.status}`);
         return r.json();
@@ -115,7 +116,8 @@ export function useAiMemoList(): {
     const ok = await apiDelete(id);
     if (!ok) {
       // 失敗時は再フェッチして正しい状態に戻す
-      fetch('/api/user/ai-memos')
+      // CX-4: pagination 化に伴い最大件数 (200) を明示
+    fetch('/api/user/ai-memos?pageSize=200')
         .then((r) => r.json())
         .then((json: unknown) => {
           if (

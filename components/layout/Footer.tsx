@@ -11,16 +11,17 @@ import Link from 'next/link';
 import { ROUTES } from '@/shared';
 
 const NAV_LINKS = [
-  { href: ROUTES.home, label: '🏠 ホーム' },
-  { href: ROUTES.articles, label: '📝 AI活用事例' },
-  { href: '/tools', label: '🧰 AIツール' },
+  // CX-12: 装飾絵文字は icon フィールドで分離・aria-hidden で SR から非表示
+  { href: ROUTES.home,     icon: '🏠', label: 'ホーム' },
+  { href: ROUTES.articles, icon: '📝', label: 'AI活用事例' },
+  { href: '/tools',        icon: '🧰', label: 'AIツール' },
 ];
 
 const CATEGORY_LINKS = [
-  { href: '/learn?cat=education', label: '📚 学習・教育' },
-  { href: '/learn?cat=lifestyle', label: '🏠 家事・暮らし' },
-  { href: '/learn?cat=work',      label: '💼 仕事・効率化' },
-  { href: '/learn?cat=creative',  label: '🎨 創作・表現' },
+  { href: '/learn?cat=education', icon: '📚', label: '学習・教育' },
+  { href: '/learn?cat=lifestyle', icon: '🏠', label: '家事・暮らし' },
+  { href: '/learn?cat=work',      icon: '💼', label: '仕事・効率化' },
+  { href: '/learn?cat=creative',  icon: '🎨', label: '創作・表現' },
 ];
 
 const SITE_LINKS = [
@@ -91,7 +92,8 @@ export function Footer() {
                   href={link.href}
                   className="inline-flex items-center gap-2 text-sm text-white/70 hover:text-white transition-colors min-h-[44px]"
                 >
-                  {link.label}
+                  <span aria-hidden="true">{link.icon}</span>
+                  {' '}{link.label}
                 </Link>
               </li>
             ))}
@@ -110,7 +112,8 @@ export function Footer() {
                   href={link.href}
                   className="text-sm text-white/70 hover:text-white transition-colors min-h-[44px] inline-flex items-center"
                 >
-                  {link.label}
+                  <span aria-hidden="true">{link.icon}</span>
+                  {' '}{link.label}
                 </Link>
               </li>
             ))}

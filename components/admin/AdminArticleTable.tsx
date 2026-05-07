@@ -16,6 +16,7 @@ import { useState, useEffect, useRef, useTransition } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import type { Article } from '@/lib/db/schema';
+import { useConfirm } from '@/components/ui/ConfirmDialog';
 
 type SortKey = 'latest' | 'oldest' | 'popular' | 'title';
 
@@ -29,6 +30,7 @@ interface Props {
 
 export function AdminArticleTable({ initialArticles, initialTotal }: Props) {
   const router = useRouter();
+  const confirm = useConfirm();
   const [articles, setArticles]   = useState<Article[]>(initialArticles);
   const [search,   setSearch]     = useState('');
   const [sort,     setSort]       = useState<SortKey>('latest');
@@ -140,7 +142,15 @@ export function AdminArticleTable({ initialArticles, initialTotal }: Props) {
   // ── 削除 ──────────────────────────────────────────────────────
   async function handleDelete(slug: string, title: string) {
     if (isRowPending(slug)) return;     // 二重クリック防止
-    if (!confirm(`「${title}」を削除しますか？\nこの操作は元に戻せません。`)) return;
+    // CX-3: window.confirm → 共通 ConfirmDialog
+    const ok = await confirm({
+      title:        `「${title}」を削除しますか？`,
+      description:  'この操作は元に戻せません。記事および関連メタデータが完全に削除されます。',
+      confirmLabel: '削除する',
+      cancelLabel:  'キャンセル',
+      destructive:  true,
+    });
+    if (!ok) return;
     markPending(slug, true);
     try {
       const res = await fetch(`/api/admin/articles/${slug}`, { method: 'DELETE' });
@@ -284,6 +294,12 @@ export function AdminArticleTable({ initialArticles, initialTotal }: Props) {
                     onClick={() => handleToggle(article.slug)}
                     disabled={isRowPending(article.slug)}
                     title={article.published ? '非公開にする' : '公開にする'}
+                    aria-label={
+                      article.published
+                        ? `公開状態を切り替え（現在: 公開中・クリックで非公開）— ${article.title}`
+                        : `公開状態を切り替え（現在: 非公開・クリックで公開）— ${article.title}`
+                    }
+                    aria-pressed={article.published}
                     style={{
                       padding:      '4px 10px',
                       borderRadius: '999px',

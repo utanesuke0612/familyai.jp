@@ -19,6 +19,7 @@ import { useState, useTransition } from 'react';
 import { useRouter } from 'next/navigation';
 import { AI_CONFIG_PRESETS, AI_KYOSHITSU_DEFAULTS } from '@/shared';
 import type { AiKyoshitsuConfig } from '@/shared/types';
+import { useConfirm } from '@/components/ui/ConfirmDialog';
 
 import { Section, Field, btnPrimary, btnSecondary, inputStyle } from './parts';
 import { PresetSwitcher } from './PresetSwitcher';
@@ -34,6 +35,7 @@ interface AiConfigFormProps {
 
 export function AiConfigForm({ effective, dbPartial, history }: AiConfigFormProps) {
   const router = useRouter();
+  const confirm = useConfirm();
   const [isPending, startTransition] = useTransition();
   const [isSaving, setIsSaving] = useState(false);
   const [message, setMessage]   =
@@ -88,7 +90,15 @@ export function AiConfigForm({ effective, dbPartial, history }: AiConfigFormProp
 
   // ── リセット（DELETE） ───────────────────────────────────────
   async function handleReset() {
-    if (!confirm('DBの設定を削除して、コードのDEFAULTS値に戻します。よろしいですか？')) return;
+    // CX-3: window.confirm → 共通 ConfirmDialog
+    const ok = await confirm({
+      title:        'AI 設定を初期値に戻しますか？',
+      description:  'DB の設定を削除し、コードの DEFAULTS 値に戻ります。現在の設定変更は破棄されます。',
+      confirmLabel: 'リセット',
+      cancelLabel:  'キャンセル',
+      destructive:  true,
+    });
+    if (!ok) return;
     setIsSaving(true);
     setMessage(null);
     try {

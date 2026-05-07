@@ -8,6 +8,7 @@
 
 import { useRef, useState, useEffect } from 'react';
 import type { AnimationSummary } from '@/shared/types';
+import { useConfirm } from '@/components/ui/ConfirmDialog';
 
 /**
  * 旧 `AnimationItem` ローカル型は `shared/types` の `AnimationSummary` に統合済み。
@@ -492,6 +493,7 @@ function AnimationCard({
 
 // ── メインのClient Component ──────────────────────────────────────
 export default function AnimationList({ initialItems }: { initialItems: AnimationItem[] }) {
+  const confirm = useConfirm();
   const [items,        setItems]        = useState<AnimationItem[]>(initialItems);
   const [previewItem,  setPreviewItem]  = useState<AnimationItem | null>(null);
   const [deleteTarget, setDeleteTarget] = useState<AnimationItem | null>(null);
@@ -500,6 +502,8 @@ export default function AnimationList({ initialItems }: { initialItems: Animatio
   const [editTarget,   setEditTarget]   = useState<AnimationItem | null>(null);
   const [isSavingEdit, setIsSavingEdit] = useState(false);
   const [favPending,   setFavPending]   = useState<Set<string>>(new Set());
+  // CX-3: alert() 置換用エラーバナー（aria-live）
+  const [errorBanner,  setErrorBanner]  = useState<string | null>(null);
 
   async function handleDelete() {
     if (!deleteTarget) return;
@@ -515,10 +519,10 @@ export default function AnimationList({ initialItems }: { initialItems: Animatio
         setItems(prev => prev.filter(i => i.id !== deleteTarget.id));
         setDeleteTarget(null);
       } else {
-        alert(json.error ?? '削除に失敗しました。');
+        setErrorBanner(json.error ?? '削除に失敗しました。');
       }
     } catch {
-      alert('削除に失敗しました。');
+      setErrorBanner('削除に失敗しました。');
     } finally {
       setIsDeleting(false);
     }
@@ -541,11 +545,11 @@ export default function AnimationList({ initialItems }: { initialItems: Animatio
       if (!json.ok) {
         // rollback
         setItems((prev) => prev.map((i) => i.id === item.id ? { ...i, isFavorite: !next } : i));
-        alert(json.error ?? 'お気に入りの更新に失敗しました。');
+        setErrorBanner(json.error ?? 'お気に入りの更新に失敗しました。');
       }
     } catch {
       setItems((prev) => prev.map((i) => i.id === item.id ? { ...i, isFavorite: !next } : i));
-      alert('通信エラーが発生しました。');
+      setErrorBanner('通信エラーが発生しました。');
     } finally {
       setFavPending((p) => { const s = new Set(p); s.delete(item.id); return s; });
     }
@@ -557,14 +561,18 @@ export default function AnimationList({ initialItems }: { initialItems: Animatio
     const next      = !wasPublic;
 
     // 「公開 → 非公開」は意外と気づきにくいので確認ダイアログ
+    // CX-3: window.confirm → 共通 ConfirmDialog
     if (wasPublic) {
-      const ok = window.confirm(
-        '🔒 このアニメを「非公開」にします。\n\n' +
-        '・あなただけが閲覧できるようになります\n' +
-        '・既存のシェア URL を貼った人には 404 が返ります\n' +
-        '・SNS にシェア済みの場合は表示されなくなります\n\n' +
-        'よろしいですか？',
-      );
+      const ok = await confirm({
+        title:        'アニメを「非公開」にしますか？',
+        description:
+          '・あなただけが閲覧できるようになります\n' +
+          '・既存のシェア URL を貼った人には 404 が返ります\n' +
+          '・SNS にシェア済みの場合は表示されなくなります',
+        confirmLabel: '非公開にする',
+        cancelLabel:  'キャンセル',
+        destructive:  true,
+      });
       if (!ok) return;
     }
 
@@ -579,11 +587,11 @@ export default function AnimationList({ initialItems }: { initialItems: Animatio
       const json = await res.json() as { ok: boolean; error?: string };
       if (!json.ok) {
         setItems((prev) => prev.map((i) => i.id === item.id ? { ...i, isPublic: wasPublic } : i));
-        alert(json.error ?? '公開設定の更新に失敗しました。');
+        setErrorBanner(json.error ?? '公開設定の更新に失敗しました。');
       }
     } catch {
       setItems((prev) => prev.map((i) => i.id === item.id ? { ...i, isPublic: wasPublic } : i));
-      alert('通信エラーが発生しました。');
+      setErrorBanner('通信エラーが発生しました。');
     }
   }
 
@@ -604,10 +612,10 @@ export default function AnimationList({ initialItems }: { initialItems: Animatio
         ));
         setEditTarget(null);
       } else {
-        alert(json.error ?? 'タイトルの更新に失敗しました。');
+        setErrorBanner(json.error ?? 'タイトルの更新に失敗しました。');
       }
     } catch {
-      alert('通信エラーが発生しました。');
+      setErrorBanner('通信エラーが発生しました。');
     } finally {
       setIsSavingEdit(false);
     }
@@ -633,6 +641,43 @@ export default function AnimationList({ initialItems }: { initialItems: Animatio
 
   return (
     <>
+      {/* CX-3: alert() 置換のエラーバナー（aria-live で SR 通知） */}
+      {errorBanner && (
+        <div
+          role="alert"
+          aria-live="assertive"
+          style={{
+            margin:       '0 0 16px',
+            padding:      '12px 14px',
+            borderRadius: '12px',
+            background:   '#FEE2E2',
+            color:        '#991B1B',
+            border:       '1px solid #FCA5A5',
+            display:      'flex',
+            alignItems:   'center',
+            justifyContent: 'space-between',
+            gap:          '8px',
+          }}
+        >
+          <span style={{ flex: 1, fontSize: '14px' }}>{errorBanner}</span>
+          <button
+            type="button"
+            onClick={() => setErrorBanner(null)}
+            aria-label="エラーメッセージを閉じる"
+            style={{
+              background: 'transparent',
+              border:     'none',
+              color:      '#991B1B',
+              fontSize:   '18px',
+              cursor:     'pointer',
+              padding:    '4px 8px',
+            }}
+          >
+            ✕
+          </button>
+        </div>
+      )}
+
       <p className="mb-5 text-sm" style={{ color: 'var(--color-brown-light)' }}>
         {items.length}件の生成履歴
       </p>

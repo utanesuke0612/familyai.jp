@@ -110,7 +110,8 @@ export function ArticleCard({ article, featured = false }: ArticleCardProps) {
                 color:      'var(--color-brown-light)',
               }}
             >
-              {CATEGORY_EMOJI[cat as ContentCategory]}
+              {/* CX-12: 装飾絵文字を screen reader から非表示 */}
+              <span aria-hidden="true">{CATEGORY_EMOJI[cat as ContentCategory]}</span>
               {CATEGORY_LABEL[cat as ContentCategory] ?? cat}
             </span>
           ))}

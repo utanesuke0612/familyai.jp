@@ -14,10 +14,11 @@
 import { Suspense } from 'react';
 import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
+import { ConfirmProvider } from '@/components/ui/ConfirmDialog';
 
 export default function SiteLayout({ children }: { children: React.ReactNode }) {
   return (
-    <>
+    <ConfirmProvider>
       <Suspense fallback={<div style={{ height: 'var(--header-height)' }} />}>
         <Header />
       </Suspense>
@@ -27,6 +28,6 @@ export default function SiteLayout({ children }: { children: React.ReactNode }) 
         </Suspense>
       </main>
       <Footer />
-    </>
+    </ConfirmProvider>
   );
 }

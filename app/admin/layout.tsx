@@ -7,9 +7,10 @@
  * - サイトの Header/Footer は表示しない（管理専用 UI）
  */
 
-import { redirect }  from 'next/navigation';
-import { auth }      from '@/lib/auth';
-import { AdminNav }  from '@/components/admin/AdminNav';
+import { redirect }       from 'next/navigation';
+import { auth }           from '@/lib/auth';
+import { AdminNav }       from '@/components/admin/AdminNav';
+import { ConfirmProvider } from '@/components/ui/ConfirmDialog';
 
 export const metadata = { title: '管理画面 | familyai.jp' };
 
@@ -27,11 +28,13 @@ export default async function AdminLayout({
   }
 
   return (
-    <div style={{ minHeight: '100vh', background: '#F8F9FA', display: 'flex', flexDirection: 'column' }}>
-      <AdminNav email={session.user.email} />
-      <main id="main-content" style={{ flex: 1, padding: '2rem 1.5rem', maxWidth: '1200px', margin: '0 auto', width: '100%' }}>
-        {children}
-      </main>
-    </div>
+    <ConfirmProvider>
+      <div style={{ minHeight: '100vh', background: '#F8F9FA', display: 'flex', flexDirection: 'column' }}>
+        <AdminNav email={session.user.email} />
+        <main id="main-content" style={{ flex: 1, padding: '2rem 1.5rem', maxWidth: '1200px', margin: '0 auto', width: '100%' }}>
+          {children}
+        </main>
+      </div>
+    </ConfirmProvider>
   );
 }

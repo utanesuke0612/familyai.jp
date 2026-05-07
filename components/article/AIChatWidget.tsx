@@ -455,10 +455,39 @@ export function AIChatWidget({
       if (!res.body) throw new Error(`HTTP ${res.status}`);
 
       // SSE ストリームを読み込んでリアルタイム更新
+      // CX-2: setMessages を delta 毎ではなく 60ms throttle でまとめる
+      //       （長文回答時の React 再レンダリング暴発・モバイル jank 抑制）
       const reader  = res.body.getReader();
       const decoder = new TextDecoder();
       let buf = '';
       let accumulated = '';
+      let lastFlushAt = 0;
+      let flushTimer: ReturnType<typeof setTimeout> | null = null;
+      const FLUSH_INTERVAL_MS = 60;
+
+      const flushNow = () => {
+        lastFlushAt = Date.now();
+        if (flushTimer) {
+          clearTimeout(flushTimer);
+          flushTimer = null;
+        }
+        setMessages((prev) =>
+          prev.map((m) =>
+            m.id === assistantId
+              ? { ...m, content: accumulated, streaming: true }
+              : m,
+          ),
+        );
+      };
+
+      const scheduleFlush = () => {
+        const elapsed = Date.now() - lastFlushAt;
+        if (elapsed >= FLUSH_INTERVAL_MS) {
+          flushNow();
+        } else if (!flushTimer) {
+          flushTimer = setTimeout(flushNow, FLUSH_INTERVAL_MS - elapsed);
+        }
+      };
 
       while (true) {
         const { done, value } = await reader.read();
@@ -478,6 +507,7 @@ export function AIChatWidget({
 
             if (json.error) {
               // API がエラーをストリームで返してきた場合
+              if (flushTimer) clearTimeout(flushTimer);
               setMessages((prev) =>
                 prev.map((m) =>
                   m.id === assistantId
@@ -491,19 +521,21 @@ export function AIChatWidget({
 
             if (json.delta) {
               accumulated += json.delta;
-              setMessages((prev) =>
-                prev.map((m) =>
-                  m.id === assistantId
-                    ? { ...m, content: accumulated, streaming: true }
-                    : m,
-                ),
-              );
+              scheduleFlush();
             }
           } catch {
             // 不正な JSON はスキップ
           }
         }
       }
+
+      // ループ終了時に未 flush の差分があれば反映
+      if (flushTimer) {
+        clearTimeout(flushTimer);
+        flushTimer = null;
+      }
+      // ストリーム完了直前に最終内容を確実に反映
+      flushNow();
 
       // ストリーム完了 → streaming フラグを解除
       setMessages((prev) =>

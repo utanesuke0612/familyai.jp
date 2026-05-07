@@ -157,11 +157,12 @@ export function AdminUserTable({ initialUsers, initialTotal, initialSummary }: P
         </div>
       )}
 
-      {/* ── フィルターバー ── */}
+      {/* ── フィルターバー ── (CX-11/Codex a11y: aria-label + role=radiogroup) */}
       <div style={{ display: 'flex', gap: '10px', marginBottom: '16px', flexWrap: 'wrap', alignItems: 'center' }}>
         <input
           type="search"
           placeholder="メール / 名前で検索…"
+          aria-label="会員をメールアドレスまたは名前で検索"
           value={search}
           onChange={(e) => setSearch(e.target.value)}
           style={{
@@ -175,10 +176,17 @@ export function AdminUserTable({ initialUsers, initialTotal, initialSummary }: P
         />
 
         {/* プランフィルター */}
-        <div style={{ display: 'flex', borderRadius: '8px', border: '1px solid #E5E7EB', overflow: 'hidden' }}>
+        <div
+          role="radiogroup"
+          aria-label="プランで絞り込み"
+          style={{ display: 'flex', borderRadius: '8px', border: '1px solid #E5E7EB', overflow: 'hidden' }}
+        >
           {(['all', 'free', 'premium'] as PlanFilter[]).map((p) => (
             <button
               key={p}
+              role="radio"
+              aria-checked={plan === p}
+              aria-label={`プラン: ${p === 'all' ? '全員' : p === 'free' ? '無料' : '有料'}`}
               onClick={() => { setPlan(p); setPage(1); }}
               style={{
                 padding:    '8px 14px',
@@ -198,6 +206,7 @@ export function AdminUserTable({ initialUsers, initialTotal, initialSummary }: P
         {/* ソート */}
         <select
           value={sort}
+          aria-label="ソート順"
           onChange={(e) => { setSort(e.target.value as SortKey); setPage(1); }}
           style={{
             padding:      '8px 12px',
