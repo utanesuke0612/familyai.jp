@@ -38,7 +38,7 @@ import { Ratelimit }                  from '@upstash/ratelimit';
 import { Redis }                      from '@upstash/redis';
 import { auth }                       from '@/lib/auth';
 import { verifyCsrf }                 from '@/lib/csrf';
-import { completeOpenRouter, completeOpenRouterWithUsage } from '@/lib/ai/providers/openrouter';
+import { completeByModelId, completeByModelIdWithUsage } from '@/lib/ai/router';
 import { MAX_GENERATED_HTML_BYTES, MAX_ANIMATION_PROMPT } from '@/shared';
 import { createAnimation }            from '@/lib/repositories/animations';
 import { getAiConfig }                from '@/lib/config/ai-config';
@@ -264,7 +264,7 @@ async function callStage1Api(
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), timeoutMs);
   try {
-    return await completeOpenRouter(
+    return await completeByModelId(
       model,
       messages,
       // temperature 0 で決定論的に。creative deviations を最小化し、
@@ -382,7 +382,7 @@ async function runStage2Structured(
   let result;
   try {
     // プロンプトキャッシュは Anthropic 用。Gemini では無視されるが互換性のため形式維持
-    result = await completeOpenRouterWithUsage(
+    result = await completeByModelIdWithUsage(
       cfg.stage2Model,
       [
         {
@@ -445,7 +445,7 @@ async function runStage2Legacy(
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), cfg.stage2TimeoutMs);
   try {
-    return await completeOpenRouter(
+    return await completeByModelId(
       cfg.stage2Model,
       [{ role: 'user', content: systemPrompt }],
       { maxTokens: cfg.stage2MaxTokens, temperature: cfg.stage2Temperature, signal: controller.signal },

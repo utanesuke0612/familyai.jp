@@ -98,11 +98,24 @@ export function ModelSelect({
       disabled={disabled}
       style={{ ...inputStyle, width: '100%' }}
     >
-      {AI_MODEL_OPTIONS.map((m) => (
-        <option key={m.id} value={m.id}>
-          {m.label}（{m.note}・速度{m.speed}）
-        </option>
-      ))}
+      {/* Rev32: provider 別に optgroup 化（OpenRouter / DeepSeek / Qwen） */}
+      {(['openrouter', 'deepseek', 'qwen'] as const).map((prov) => {
+        const items = AI_MODEL_OPTIONS.filter((m) => m.provider === prov);
+        if (items.length === 0) return null;
+        const groupLabel =
+          prov === 'openrouter' ? 'OpenRouter（既存・統一エントリ）'
+          : prov === 'deepseek' ? 'DeepSeek 公式 API（要 DEEPSEEK_API_KEY）'
+          :                       'Qwen / Alibaba DashScope（要 DASHSCOPE_API_KEY）';
+        return (
+          <optgroup key={prov} label={groupLabel}>
+            {items.map((m) => (
+              <option key={m.id} value={m.id}>
+                {m.label}（{m.note}・速度{m.speed}）
+              </option>
+            ))}
+          </optgroup>
+        );
+      })}
     </select>
   );
 }

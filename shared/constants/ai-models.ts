@@ -6,9 +6,16 @@
  * 価格は OpenRouter 経由の概算値（USD ベースで 1USD=150円換算）。
  */
 
+/** AI 呼び出し経路（プロバイダー）。Rev32 で導入。 */
+export type AiProvider = 'openrouter' | 'deepseek' | 'qwen';
+
 /** AI教室パイプラインで利用可能なモデル ID（管理画面のドロップダウン選択肢） */
 export interface AiModelOption {
-  /** OpenRouter のモデル ID */
+  /**
+   * 内部 ID（ユニーク・DB に保存される）。
+   * - OpenRouter 経由: `<vendor>/<model>` 形式（例: `google/gemini-2.0-flash-001`）
+   * - 直 API: `<provider>:<model>` 形式（例: `deepseek:deepseek-chat`）
+   */
   id:           string;
   /** UI に表示する名前 */
   label:        string;
@@ -20,9 +27,23 @@ export interface AiModelOption {
   inputPriceJpy:  number;
   /** 1Mトークンあたりの出力コスト（円） */
   outputPriceJpy: number;
+  /**
+   * Rev32: モデルを呼び出すプロバイダー。
+   * `openrouter` 以外を選ぶと、各プロバイダーの公式 API を直接叩く。
+   */
+  provider:     AiProvider;
+  /**
+   * Rev32: プロバイダー直 API に渡すモデル名。
+   * 省略時は `id` がそのまま使われる（OpenRouter は `vendor/model` を渡す前提なので省略可能）。
+   * 例: `provider='deepseek'`、`id='deepseek:deepseek-chat'`、`nativeId='deepseek-chat'`
+   */
+  nativeId?:    string;
 }
 
 export const AI_MODEL_OPTIONS: readonly AiModelOption[] = [
+  // ════════════════════════════════════════════════════════════
+  // OpenRouter 経由（既存・5モデル）
+  // ════════════════════════════════════════════════════════════
   // ── Google Gemini ─────────────────────────────────────────
   {
     id:             'google/gemini-2.0-flash-001',
@@ -31,6 +52,7 @@ export const AI_MODEL_OPTIONS: readonly AiModelOption[] = [
     speed:          '◎',
     inputPriceJpy:  15,
     outputPriceJpy: 60,
+    provider:       'openrouter',
   },
   {
     id:             'google/gemini-2.5-flash',
@@ -39,6 +61,7 @@ export const AI_MODEL_OPTIONS: readonly AiModelOption[] = [
     speed:          '○',
     inputPriceJpy:  45,
     outputPriceJpy: 375,
+    provider:       'openrouter',
   },
   // ── Anthropic Claude ──────────────────────────────────────
   {
@@ -48,6 +71,7 @@ export const AI_MODEL_OPTIONS: readonly AiModelOption[] = [
     speed:          '○',
     inputPriceJpy:  120,
     outputPriceJpy: 600,
+    provider:       'openrouter',
   },
   {
     id:             'anthropic/claude-sonnet-4',
@@ -56,15 +80,81 @@ export const AI_MODEL_OPTIONS: readonly AiModelOption[] = [
     speed:          '△',
     inputPriceJpy:  450,
     outputPriceJpy: 2250,
+    provider:       'openrouter',
   },
-  // ── Qwen / その他 ─────────────────────────────────────────
+  // ── Qwen（OpenRouter 経由） ─────────────────────────────
   {
     id:             'qwen/qwen3-14b',
-    label:          'Qwen3 14B',
-    note:           'チャット用途・低コスト',
+    label:          'Qwen3 14B (OpenRouter)',
+    note:           'チャット用途・低コスト・OpenRouter 経由',
     speed:          '○',
     inputPriceJpy:  11,
     outputPriceJpy: 30,
+    provider:       'openrouter',
+  },
+
+  // ════════════════════════════════════════════════════════════
+  // Rev32: DeepSeek 公式 API 直接呼び出し（要 DEEPSEEK_API_KEY）
+  // 価格: USD ベース、1USD≒150円換算（2026/05 時点・料金改定で変動あり）
+  // ════════════════════════════════════════════════════════════
+  {
+    id:             'deepseek:deepseek-chat',
+    label:          'DeepSeek-V3 Chat (公式)',
+    note:           '公式直 API・OpenRouter マージン無し・コスト最安級',
+    speed:          '○',
+    // V3: $0.27/M (input) → ¥40.5、$1.10/M (output) → ¥165
+    inputPriceJpy:  41,
+    outputPriceJpy: 165,
+    provider:       'deepseek',
+    nativeId:       'deepseek-chat',
+  },
+  {
+    id:             'deepseek:deepseek-reasoner',
+    label:          'DeepSeek-R1 Reasoner (公式)',
+    note:           '推論特化・Stage1 のような構造化 JSON 設計に強い・遅い',
+    speed:          '△',
+    // R1: $0.55/M (input) → ¥83、$2.19/M (output) → ¥329
+    inputPriceJpy:  83,
+    outputPriceJpy: 329,
+    provider:       'deepseek',
+    nativeId:       'deepseek-reasoner',
+  },
+
+  // ════════════════════════════════════════════════════════════
+  // Rev32: Qwen (Alibaba DashScope) 公式 API 直接呼び出し
+  // 要 DASHSCOPE_API_KEY。OpenAI 互換モード（compatible-mode/v1）使用。
+  // 国際版 endpoint: dashscope-intl.aliyuncs.com（DASHSCOPE_BASE_URL で上書き可）
+  // ════════════════════════════════════════════════════════════
+  {
+    id:             'qwen:qwen-turbo',
+    label:          'Qwen-Turbo (公式)',
+    note:           'Alibaba 公式・最速・最安。チャット・短文向け',
+    speed:          '◎',
+    // qwen-turbo: input ¥0.3/M、output ¥0.6/M (DashScope 公式・人民元換算)
+    inputPriceJpy:  6,
+    outputPriceJpy: 12,
+    provider:       'qwen',
+    nativeId:       'qwen-turbo',
+  },
+  {
+    id:             'qwen:qwen-plus',
+    label:          'Qwen-Plus (公式)',
+    note:           'Alibaba 公式・バランス型・コスパ良好。Stage2 推奨',
+    speed:          '○',
+    inputPriceJpy:  17,
+    outputPriceJpy: 50,
+    provider:       'qwen',
+    nativeId:       'qwen-plus',
+  },
+  {
+    id:             'qwen:qwen-max',
+    label:          'Qwen-Max (公式)',
+    note:           'Alibaba 公式・最高品質・コスト高',
+    speed:          '△',
+    inputPriceJpy:  240,
+    outputPriceJpy: 960,
+    provider:       'qwen',
+    nativeId:       'qwen-max',
   },
 ];
 

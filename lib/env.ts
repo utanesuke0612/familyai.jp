@@ -39,7 +39,7 @@ const serverEnvSchema = z.object({
   AUTH_SECRET: z.string().min(16).optional(),
   NEXTAUTH_URL: z.string().url().optional(),
 
-  // ── AI ルーター（OpenRouter 経由 — 必須）
+  // ── AI ルーター（OpenRouter 経由 — 既定の経路）
   OPENROUTER_API_KEY: z
     .string()
     .min(1, 'OPENROUTER_API_KEY is required for AI features')
@@ -48,6 +48,16 @@ const serverEnvSchema = z.object({
   OPENROUTER_APP_NAME: z.string().optional(),
   OPENROUTER_APP_URL:  z.string().url().optional(),
   CHAT_DEFAULT_MODEL:  z.string().optional(),
+
+  // ── Rev32: 直 API（任意・モデル選択時のみ必要）
+  /** DeepSeek 公式 API キー。`provider='deepseek'` のモデル選択時に必須。 */
+  DEEPSEEK_API_KEY: z.string().optional(),
+  /** DeepSeek baseUrl 上書き（既定 https://api.deepseek.com/v1） */
+  DEEPSEEK_BASE_URL: z.string().url().optional(),
+  /** Qwen (Alibaba DashScope) API キー。`provider='qwen'` のモデル選択時に必須。 */
+  DASHSCOPE_API_KEY: z.string().optional(),
+  /** DashScope baseUrl 上書き（既定 dashscope-intl.aliyuncs.com の OpenAI 互換 endpoint） */
+  DASHSCOPE_BASE_URL: z.string().url().optional(),
 
   // ── Upstash Redis（レート制限・任意・未設定なら no-op rate limiter）
   UPSTASH_REDIS_REST_URL:   z.string().url().optional(),

@@ -13,13 +13,82 @@
  *   text-quality が要求されても月間コストが上限に近い場合 → text-simple に降格
  */
 
-import { MODEL_ROUTER, type ModelRouterType, AI_KYOSHITSU_DEFAULTS } from '@/shared';
+import { MODEL_ROUTER, type ModelRouterType, AI_KYOSHITSU_DEFAULTS, findAiModel } from '@/shared';
 import { getAiConfig } from '@/lib/config/ai-config';
-import { streamOpenRouter, type OpenRouterMessage, type StreamOptions } from './providers/openrouter';
+import {
+  streamOpenRouter,
+  completeOpenRouter,
+  completeOpenRouterWithUsage,
+  type OpenRouterMessage,
+  type StreamOptions,
+  type CompleteOptions,
+  type UsageStats,
+} from './providers/openrouter';
+import { streamOpenAICompat, completeOpenAICompat } from './providers/openai-compatible';
 
 export interface RouteAIOptions extends StreamOptions {
   /** 月額コスト上限（USD）を超えた場合に text-quality → text-simple にダウングレードする */
   allowDowngrade?: boolean;
+}
+
+/**
+ * モデル ID から適切なプロバイダーへストリーム生成リクエストを発行する。
+ * Rev32: provider フィールドで分岐（openrouter / deepseek / qwen）。
+ */
+export function streamByModelId(
+  modelId:  string,
+  messages: OpenRouterMessage[],
+  options:  StreamOptions = {},
+): Promise<ReadableStream<Uint8Array>> {
+  const meta = findAiModel(modelId);
+
+  // 未登録モデルは OpenRouter にフォールバック（後方互換）
+  if (!meta || meta.provider === 'openrouter') {
+    return streamOpenRouter(modelId, messages, options);
+  }
+
+  // 直 API: nativeId があればそれを、無ければ id をそのまま渡す
+  return streamOpenAICompat(meta.provider, meta.nativeId ?? meta.id, messages, options);
+}
+
+/**
+ * モデル ID から適切なプロバイダーへ非ストリーム完了リクエストを発行する。
+ * AI教室 Stage1/Stage2 のように全文応答を待つ用途で使う。
+ */
+export async function completeByModelId(
+  modelId:  string,
+  messages: OpenRouterMessage[],
+  options:  CompleteOptions = {},
+): Promise<string> {
+  const meta = findAiModel(modelId);
+  if (!meta || meta.provider === 'openrouter') {
+    return completeOpenRouter(modelId, messages, options);
+  }
+  const { content } = await completeOpenAICompat(
+    meta.provider,
+    meta.nativeId ?? meta.id,
+    messages,
+    options,
+  );
+  return content;
+}
+
+/**
+ * 非ストリーム + 使用統計（cache hit ratio 計測用）。
+ * OpenRouter のキャッシュ統計（cache_read_input_tokens 等）を使うため、
+ * Anthropic キャッシュを期待する Stage2 では必ず OpenRouter 経由を選ぶ運用が望ましい。
+ * 直 API（DeepSeek / Qwen）でもこの関数は動くが、cache 統計は返らない。
+ */
+export async function completeByModelIdWithUsage(
+  modelId:  string,
+  messages: OpenRouterMessage[],
+  options:  CompleteOptions = {},
+): Promise<{ content: string; usage?: UsageStats }> {
+  const meta = findAiModel(modelId);
+  if (!meta || meta.provider === 'openrouter') {
+    return completeOpenRouterWithUsage(modelId, messages, options);
+  }
+  return completeOpenAICompat(meta.provider, meta.nativeId ?? meta.id, messages, options);
 }
 
 /**
@@ -44,12 +113,12 @@ export async function routeAI(
       ? cfg.chatModel
       : null;
 
-  const model =
+  const modelId =
     adminOverride
     ?? MODEL_ROUTER[effectiveType]
     ?? MODEL_ROUTER.fallback;
 
-  return streamOpenRouter(model, messages, {
+  return streamByModelId(modelId, messages, {
     maxTokens:   options.maxTokens,
     temperature: options.temperature,
     signal:      options.signal,

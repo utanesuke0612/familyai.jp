@@ -190,8 +190,9 @@ export function SettingsTable({ form, onChange, disabled }: SettingsTableProps) 
                         disabled={disabled}
                       />
                       {modelInfo && (
-                        <div style={{ marginTop: 4, fontSize: 11, color: '#6B7280' }}>
-                          速度 {modelInfo.speed}・入力¥{modelInfo.inputPriceJpy}/M・出力¥{modelInfo.outputPriceJpy}/M
+                        <div style={{ marginTop: 4, fontSize: 11, color: '#6B7280', display: 'flex', alignItems: 'center', gap: 6, flexWrap: 'wrap' }}>
+                          <ProviderBadge provider={modelInfo.provider} />
+                          <span>速度 {modelInfo.speed}・入力¥{modelInfo.inputPriceJpy}/M・出力¥{modelInfo.outputPriceJpy}/M</span>
                         </div>
                       )}
                     </div>
@@ -332,5 +333,30 @@ function td(extra: React.CSSProperties = {}): React.CSSProperties {
 function Em({ children, title }: { children: React.ReactNode; title?: string }) {
   return (
     <span title={title} style={{ color: '#9CA3AF', fontStyle: 'italic' }}>{children}</span>
+  );
+}
+
+// プロバイダー別バッジ（OpenRouter / DeepSeek / Qwen）
+function ProviderBadge({ provider }: { provider: 'openrouter' | 'deepseek' | 'qwen' }) {
+  const styles = {
+    openrouter: { bg: '#EEF2FF', fg: '#3730A3', label: 'OpenRouter' },
+    deepseek:   { bg: '#ECFDF5', fg: '#065F46', label: 'DeepSeek 公式' },
+    qwen:       { bg: '#FEF3C7', fg: '#92400E', label: 'Qwen 公式' },
+  } as const;
+  const s = styles[provider];
+  return (
+    <span
+      style={{
+        background:   s.bg,
+        color:        s.fg,
+        fontSize:     10,
+        fontWeight:   700,
+        padding:      '2px 6px',
+        borderRadius: 999,
+        whiteSpace:   'nowrap',
+      }}
+    >
+      {s.label}
+    </span>
   );
 }
