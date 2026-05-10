@@ -12,9 +12,10 @@ import { ROUTES } from '@/shared';
 
 const NAV_LINKS = [
   // CX-12: 装飾絵文字は icon フィールドで分離・aria-hidden で SR から非表示
+  // Rev33: 「AIツール」を「AI活用事例」より前に出す（Hero CTA / Header / MobileNav と整合）
   { href: ROUTES.home,     icon: '🏠', label: 'ホーム' },
-  { href: ROUTES.articles, icon: '📝', label: 'AI活用事例' },
   { href: '/tools',        icon: '🧰', label: 'AIツール' },
+  { href: ROUTES.articles, icon: '📝', label: 'AI活用事例' },
 ];
 
 const CATEGORY_LINKS = [

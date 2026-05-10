@@ -16,9 +16,10 @@ import { Menu, X } from 'lucide-react';
 import { useSession, signOut } from 'next-auth/react';
 
 const NAV_LINKS = [
+  // Rev33: 「AIツール」を「AI活用事例」より前に出す（Hero CTA と整合）
   { href: '/', label: 'ホーム', emoji: '🏠' },
-  { href: '/learn', label: 'AI活用事例', emoji: '📝' },
   { href: '/tools', label: 'AIツール', emoji: '🧰' },
+  { href: '/learn', label: 'AI活用事例', emoji: '📝' },
   { href: '/mypage', label: 'マイページ', emoji: '👤' },
 ];
 
