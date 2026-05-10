@@ -235,7 +235,7 @@ export function AnnotatedWord({ word, meaning, pron, example }: AnnotatedWordPro
                 <button
                   type="button"
                   onClick={handleBookmark}
-                  aria-label={bookmarked ? 'ブックマーク解除' : '単語帳に追加'}
+                  aria-label={bookmarked ? 'ブックマーク解除' : 'ブックマークに追加'}
                   aria-pressed={bookmarked}
                   className="inline-flex items-center justify-center rounded-full"
                   style={{
@@ -255,8 +255,8 @@ export function AnnotatedWord({ word, meaning, pron, example }: AnnotatedWordPro
                 <a
                   href="/auth/signin"
                   onClick={(e) => e.stopPropagation()}
-                  aria-label="ログインして単語帳に追加"
-                  title="ログインすると単語帳に保存できます"
+                  aria-label="ログインしてブックマークに追加"
+                  title="ログインするとブックマークをクラウドに保存できます"
                   className="inline-flex items-center justify-center rounded-full"
                   style={{
                     width:          '28px',

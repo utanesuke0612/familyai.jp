@@ -167,7 +167,7 @@ export default async function VoaLessonPage({
               CEFR {cefr}
             </span>
             <Link
-              href="/mypage/vocab"
+              href="/mypage/bookmarks"
               className="inline-flex items-center rounded-full px-4"
               style={{
                 minHeight: '44px',
@@ -176,7 +176,7 @@ export default async function VoaLessonPage({
                 boxShadow: 'var(--shadow-warm-sm)',
               }}
             >
-              ⭐ 単語帳
+              🔖 ブックマーク
             </Link>
           </nav>
 

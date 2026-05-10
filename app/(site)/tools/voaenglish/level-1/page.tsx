@@ -108,11 +108,11 @@ export default async function Level1TopPage() {
             </div>
             <div className="flex flex-wrap items-center gap-4">
               <Link
-                href="/mypage/vocab"
+                href="/mypage/bookmarks"
                 className="text-sm font-semibold"
                 style={{ color: 'var(--color-orange)' }}
               >
-                ⭐ わたしの単語帳を開く →
+                🔖 マイブックマークを開く →
               </Link>
               <a
                 href="https://learningenglish.voanews.com/p/5644.html"
