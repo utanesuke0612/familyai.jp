@@ -31,6 +31,13 @@ interface SentencePlayerProps {
   sentences:     readonly Sentence[];
   /** 全再生終了時のコールバック（Phase 6 で自己申告ダイアログ表示用・Q5=C）*/
   onAllPlayed?:  () => void;
+  /** Rev34: SentenceList の 🔖 ブックマーク用文脈。省略時は 🔖 を表示しない */
+  bookmarkContext?: {
+    course:       string;
+    lesson:       string;
+    lessonTitle?: string;
+    audioUrl?:    string;
+  };
 }
 
 /**
@@ -52,7 +59,7 @@ function formatTime(sec: number): string {
 }
 
 export const SentencePlayer = forwardRef<SentencePlayerHandle, SentencePlayerProps>(
-  function SentencePlayer({ audioUrl, sentences, onAllPlayed }, ref) {
+  function SentencePlayer({ audioUrl, sentences, onAllPlayed, bookmarkContext }, ref) {
   const [state, actions] = useSentencePlayer({
     audioUrl,
     sentences,
@@ -285,6 +292,7 @@ export const SentencePlayer = forwardRef<SentencePlayerHandle, SentencePlayerPro
         currentIndex={state.currentIndex}
         isPlaying={state.isPlaying}
         onJump={(idx) => void actions.jumpToSentence(idx, true)}
+        bookmarkContext={bookmarkContext}
       />
     </div>
   );

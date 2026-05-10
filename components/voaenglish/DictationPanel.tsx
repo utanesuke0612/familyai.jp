@@ -135,6 +135,13 @@ export function DictationPanel({
     [isLoggedIn, isSubmitting, lessonKey],
   );
 
+  // Rev34: lessonKey は `${course}/${lesson}` 形式なので分解して 🔖 ブックマークの
+  // bookmarkContext を組み立てる。
+  const [bmCourse, bmLesson] = lessonKey.split('/');
+  const bookmarkContext = bmCourse && bmLesson
+    ? { course: bmCourse, lesson: bmLesson, lessonTitle, audioUrl }
+    : undefined;
+
   return (
     <>
       <HandwritingNote />
@@ -143,6 +150,7 @@ export function DictationPanel({
         audioUrl={audioUrl}
         sentences={sentences}
         onAllPlayed={handleAllPlayed}
+        bookmarkContext={bookmarkContext}
       />
 
       {/* 自己申告ダイアログ */}

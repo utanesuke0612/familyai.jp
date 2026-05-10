@@ -18,7 +18,7 @@ import { SITE } from '@/shared';
 
 export const metadata: Metadata = {
   title:       `MyPage | ${SITE.name}`,
-  description: 'あなたの学習記録、単語帳、プラン情報をまとめて確認できるマイページです。',
+  description: 'あなたの学習記録、マイブックマーク（単語・センテンス）、プラン情報をまとめて確認できるマイページです。',
   alternates:  { canonical: `${SITE.url}/mypage` },
 };
 
@@ -192,7 +192,7 @@ export default async function MyPage() {
             <ul className="flex flex-col gap-3">
               <li>
                 <Link
-                  href="/mypage/vocab"
+                  href="/mypage/bookmarks"
                   className="flex items-center justify-between rounded-2xl p-3"
                   style={{
                     background: 'var(--color-cream)',
@@ -201,8 +201,11 @@ export default async function MyPage() {
                   }}
                 >
                   <span className="flex items-center gap-2">
-                    <span className="text-xl" aria-hidden="true">⭐</span>
-                    <span className="font-semibold">単語帳</span>
+                    <span className="text-xl" aria-hidden="true">🔖</span>
+                    <span className="font-semibold">マイブックマーク</span>
+                    <span className="text-xs" style={{ color: 'var(--color-brown-light)' }}>
+                      （単語・センテンス）
+                    </span>
                   </span>
                   <span style={{ color: 'var(--color-orange)' }}>→</span>
                 </Link>
@@ -366,11 +369,11 @@ const FEATURES: readonly FeatureItem[] = [
     premium: '無制限',
   },
   {
-    feature: '📚 単語ブックマーク',
-    desc:    'VOA英語の単語を記録',
-    anon:    '利用不可',
-    free:    '無制限',
-    premium: '無制限',
+    feature: '🔖 マイブックマーク',
+    desc:    'VOA 英語の単語・センテンスを保存',
+    anon:    'センテンスのみ可（端末内）',
+    free:    '無制限（クラウド同期）',
+    premium: '無制限（クラウド同期）',
   },
 ];
 

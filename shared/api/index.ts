@@ -13,6 +13,7 @@ import type {
   AnimationSummary,
   AiMemoItem,
   VocabItem,
+  SentenceBookmarkItem,
   PaginatedResult,
   ContentCategory,
   DifficultyLevel,
@@ -251,6 +252,20 @@ export async function fetchUserVocabBookmarks(
   baseUrl: string,
 ): Promise<ApiResponse<VocabItem[]>> {
   return apiFetch<VocabItem[]>(`${baseUrl}/api/user/vocab-bookmarks`);
+}
+
+/**
+ * GET /api/user/sentence-bookmarks
+ * Rev34: ログイン会員のディクテーション センテンスブックマーク一覧を取得する。
+ *
+ * @note Web 版は `lib/voaenglish/sentence-bookmark-store.ts` の hook 経由で
+ *       fetch するため、このエンドポイントは主に iOS/Android モバイル・
+ *       外部クライアント用。
+ */
+export async function fetchUserSentenceBookmarks(
+  baseUrl: string,
+): Promise<ApiResponse<SentenceBookmarkItem[]>> {
+  return apiFetch<SentenceBookmarkItem[]>(`${baseUrl}/api/user/sentence-bookmarks`);
 }
 
 // ─── チャット API ──────────────────────────────────────────────

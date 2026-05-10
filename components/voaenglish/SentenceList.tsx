@@ -23,12 +23,27 @@
 import { useEffect, useRef, useState } from 'react';
 import type { Sentence } from '@/shared/types';
 import { AnnotatedSentence } from './AnnotatedSentence';
+import {
+  buildSentenceId,
+  plainifySentence,
+  useSentenceBookmark,
+} from '@/lib/voaenglish/sentence-bookmark-store';
 
 interface SentenceListProps {
   sentences:    readonly Sentence[];
   currentIndex: number;
   isPlaying:    boolean;
   onJump:       (index: number) => void;
+  /**
+   * Rev34: ブックマーク 🔖 ボタンを表示するための文脈情報。
+   * 省略すると 🔖 は出さない（後方互換）。
+   */
+  bookmarkContext?: {
+    course:       string;
+    lesson:       string;
+    lessonTitle?: string;
+    audioUrl?:    string;
+  };
 }
 
 /**
@@ -58,7 +73,13 @@ function formatTime(sec: number): string {
   return `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
 }
 
-export function SentenceList({ sentences, currentIndex, isPlaying, onJump }: SentenceListProps) {
+export function SentenceList({
+  sentences,
+  currentIndex,
+  isPlaying,
+  onJump,
+  bookmarkContext,
+}: SentenceListProps) {
   const [open, setOpen] = useState(false);
   const containerRef    = useRef<HTMLDivElement>(null);
   const itemRefs        = useRef<Array<HTMLButtonElement | null>>([]);
@@ -112,48 +133,118 @@ export function SentenceList({ sentences, currentIndex, isPlaying, onJump }: Sen
               const { speaker, text } = splitSpeaker(s.text);
               const isCurrent = idx === currentIndex;
               return (
-                <li key={idx}>
-                  <button
-                    ref={(el) => { itemRefs.current[idx] = el; }}
-                    type="button"
-                    onClick={() => onJump(idx)}
-                    className="w-full text-left px-3 py-2 transition-colors hover:bg-[var(--color-cream)]"
-                    style={{
-                      background: isCurrent ? '#E6F2FB' : 'transparent',
-                      borderLeft: isCurrent ? '3px solid #2D78C8' : '3px solid transparent',
-                      color:      'var(--color-brown)',
-                    }}
-                    aria-current={isCurrent ? 'true' : undefined}
-                  >
-                    <div className="flex items-baseline gap-2 text-xs">
-                      <span style={{ color: 'var(--color-brown-light)', minWidth: '3em' }}>
-                        [{formatTime(s.start)}]
-                      </span>
-                      {speaker && (
-                        <span
-                          className="font-bold"
-                          style={{ color: '#2D78C8', minWidth: '4em' }}
-                        >
-                          {speaker}
-                        </span>
-                      )}
-                    </div>
-                    <p
-                      className="text-sm leading-relaxed mt-0.5"
-                      style={{
-                        fontWeight: isCurrent ? 700 : 400,
-                        color:      'var(--color-brown)',
-                      }}
-                    >
-                      <AnnotatedSentence text={text} />
-                    </p>
-                  </button>
-                </li>
+                <SentenceRow
+                  key={idx}
+                  idx={idx}
+                  sentence={s}
+                  speaker={speaker}
+                  text={text}
+                  isCurrent={isCurrent}
+                  onJump={onJump}
+                  registerRef={(el) => { itemRefs.current[idx] = el; }}
+                  bookmarkContext={bookmarkContext}
+                />
               );
             })}
           </ul>
         </div>
       )}
     </div>
+  );
+}
+
+// ─── 1 センテンス分の行コンポーネント（Rev34）─────────────────
+// 再生用 button と 🔖 ブックマーク用 button を flex 並列で配置。
+// HTML の入れ子 button 違反を避け、🔖 タップで onJump が走らないように
+// stopPropagation する。
+interface SentenceRowProps {
+  idx:         number;
+  sentence:    Sentence;
+  speaker:     string | null;
+  text:        string;
+  isCurrent:   boolean;
+  onJump:      (index: number) => void;
+  registerRef: (el: HTMLButtonElement | null) => void;
+  bookmarkContext?: SentenceListProps['bookmarkContext'];
+}
+
+function SentenceRow({
+  idx, sentence, speaker, text, isCurrent, onJump, registerRef, bookmarkContext,
+}: SentenceRowProps) {
+  const ctxId = bookmarkContext
+    ? buildSentenceId(bookmarkContext.course, bookmarkContext.lesson, idx)
+    : '';
+  const { bookmarked, toggle } = useSentenceBookmark(ctxId);
+
+  const handleBookmarkClick = (e: React.MouseEvent) => {
+    e.stopPropagation();   // 親の onJump を発火させない
+    if (!bookmarkContext) return;
+    toggle({
+      id:          ctxId,
+      text:        sentence.text,                  // 注釈付き本文を保存
+      textPlain:   plainifySentence(sentence.text),
+      startSec:    sentence.start,
+      endSec:      sentence.end,
+      speaker:     speaker ?? undefined,
+      course:      bookmarkContext.course,
+      lesson:      bookmarkContext.lesson,
+      lessonTitle: bookmarkContext.lessonTitle,
+      audioUrl:    bookmarkContext.audioUrl,
+    });
+  };
+
+  return (
+    <li className="flex items-stretch" style={{ background: isCurrent ? '#E6F2FB' : 'transparent' }}>
+      <button
+        ref={registerRef}
+        type="button"
+        onClick={() => onJump(idx)}
+        className="flex-1 min-w-0 text-left px-3 py-2 transition-colors hover:bg-[var(--color-cream)]"
+        style={{
+          borderLeft: isCurrent ? '3px solid #2D78C8' : '3px solid transparent',
+          color:      'var(--color-brown)',
+        }}
+        aria-current={isCurrent ? 'true' : undefined}
+      >
+        <div className="flex items-baseline gap-2 text-xs">
+          <span style={{ color: 'var(--color-brown-light)', minWidth: '3em' }}>
+            [{formatTime(sentence.start)}]
+          </span>
+          {speaker && (
+            <span className="font-bold" style={{ color: '#2D78C8', minWidth: '4em' }}>
+              {speaker}
+            </span>
+          )}
+        </div>
+        <p
+          className="text-sm leading-relaxed mt-0.5"
+          style={{ fontWeight: isCurrent ? 700 : 400, color: 'var(--color-brown)' }}
+        >
+          <AnnotatedSentence text={text} />
+        </p>
+      </button>
+
+      {/* 🔖 ブックマークボタン（bookmarkContext がある時のみ） */}
+      {bookmarkContext && (
+        <button
+          type="button"
+          onClick={handleBookmarkClick}
+          className="shrink-0 flex items-center justify-center transition-opacity hover:opacity-80"
+          style={{
+            width:    44,
+            minWidth: 44,
+            color:    bookmarked ? 'var(--color-orange)' : 'var(--color-brown-light)',
+            fontSize: 18,
+            background: 'transparent',
+            border:   'none',
+          }}
+          aria-label={bookmarked ? 'ブックマークを解除' : 'ブックマークに保存'}
+          aria-pressed={bookmarked}
+          title={bookmarked ? 'ブックマーク済み（解除する）' : '🔖 マイブックマークに保存'}
+        >
+          {bookmarked ? '🔖' : '🏷️'}
+        </button>
+      )}
+    </li>
   );
 }

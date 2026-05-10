@@ -14,6 +14,7 @@ import {
   boolean,
   integer,
   bigint,
+  real,
   timestamp,
   index,
   uniqueIndex,
@@ -125,6 +126,43 @@ export const userVocabBookmarks = pgTable(
   },
   (t) => ({
     uniqUserVocab: uniqueIndex('user_vocab_bookmarks_user_id_vocab_id_idx').on(t.userId, t.vocabId),
+  }),
+);
+
+// ─── user_sentence_bookmarks ──────────────────────────────────
+/**
+ * Rev34: VOA ディクテーション「📜 スクリプト」内のセンテンスを保存するテーブル。
+ *
+ * 単語帳（user_vocab_bookmarks）とは別物として扱う:
+ *   - 単語: 1単語の意味暗記（フラッシュカード型）
+ *   - センテンス: フレーズ記憶・シャドーイング・リスニング再復習
+ *
+ * 文の本文は注釈付き（`{word|reading}` / `**Speaker:**` 等）のまま保存し、
+ * 検索用に注釈を剥がした text_plain も併せて保持する。
+ * sentence_id は course/lesson/sentenceIndex の複合キー文字列。
+ */
+export const userSentenceBookmarks = pgTable(
+  'user_sentence_bookmarks',
+  {
+    id:          uuid('id').defaultRandom().primaryKey(),
+    userId:      uuid('user_id').notNull().references(() => users.id, { onDelete: 'cascade' }),
+    sentenceId:  text('sentence_id').notNull(),       // "course/lesson/idx"
+    text:        text('text').notNull(),              // 注釈付き本文
+    textPlain:   text('text_plain').notNull(),        // 検索用平文
+    startSec:    real('start_sec').notNull().default(0),
+    endSec:      real('end_sec').notNull().default(0),
+    speaker:     text('speaker'),                     // "Anna" / "Pete" 等（あれば）
+    course:      text('course').notNull(),
+    lesson:      text('lesson').notNull(),
+    lessonTitle: text('lesson_title'),
+    audioUrl:    text('audio_url'),                   // 区間再生・将来用
+    note:        text('note'),                        // ユーザー任意メモ
+    addedAt:     bigint('added_at', { mode: 'number' }).notNull(),
+    createdAt:   timestamp('created_at').defaultNow().notNull(),
+  },
+  (t) => ({
+    uniqUserSentence: uniqueIndex('user_sentence_bookmarks_user_id_sentence_id_idx').on(t.userId, t.sentenceId),
+    addedAtIdx:       index('user_sentence_bookmarks_user_id_added_at_idx').on(t.userId, t.addedAt),
   }),
 );
 
@@ -265,6 +303,8 @@ export type UserAiMemo           = typeof userAiMemos.$inferSelect;
 export type NewUserAiMemo        = typeof userAiMemos.$inferInsert;
 export type UserVocabBookmark    = typeof userVocabBookmarks.$inferSelect;
 export type NewUserVocabBookmark = typeof userVocabBookmarks.$inferInsert;
+export type UserSentenceBookmark    = typeof userSentenceBookmarks.$inferSelect;
+export type NewUserSentenceBookmark = typeof userSentenceBookmarks.$inferInsert;
 export type UserAnimation        = typeof userAnimations.$inferSelect;
 export type NewUserAnimation     = typeof userAnimations.$inferInsert;
 export type AiConfigRow          = typeof aiConfig.$inferSelect;

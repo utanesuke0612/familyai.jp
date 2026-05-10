@@ -204,6 +204,42 @@ export interface VocabItem {
   addedAt:      number;
 }
 
+// ─── センテンスブックマーク関連 ────────────────────────────────
+/**
+ * Rev34: VOA ディクテーション「📜 スクリプト」内のセンテンス保存。
+ *
+ * API `/api/user/sentence-bookmarks` の data[] と 1:1 対応。
+ * DB スキーマ（lib/db/schema.ts:userSentenceBookmarks）から
+ * `lib/mappers/sentence-bookmarks.ts` の `toSentenceBookmarkItem()` で変換される。
+ *
+ * 単語帳（VocabItem）とは別物：
+ *   - VocabItem: 1単語の意味暗記用
+ *   - SentenceBookmarkItem: フレーズ記憶・シャドーイング・リスニング再復習用
+ */
+export interface SentenceBookmarkItem {
+  /** course/lesson/sentenceIndex をスラッシュで繋いだ一意キー */
+  id:           string;
+  /** 注釈付き本文（`{word|reading}` / `**Speaker:**` 等そのまま） */
+  text:         string;
+  /** 検索用平文（注釈剥離済み） */
+  textPlain:    string;
+  /** 音声開始秒 */
+  startSec:     number;
+  /** 音声終了秒 */
+  endSec:       number;
+  /** 話者（"Anna" / "Pete" 等・あれば） */
+  speaker?:     string;
+  course:       string;
+  lesson:       string;
+  lessonTitle?: string;
+  /** レッスン音声 URL（区間再生・将来用） */
+  audioUrl?:    string;
+  /** ユーザー任意メモ */
+  note?:        string;
+  /** 追加時刻 unix ms */
+  addedAt:      number;
+}
+
 // ─── ユーザー関連 ──────────────────────────────────────────────
 /** 認証済みユーザーのプロファイル */
 export interface UserProfile {
