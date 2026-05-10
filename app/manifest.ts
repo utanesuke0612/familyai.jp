@@ -26,13 +26,8 @@ export default function manifest(): MetadataRoute.Manifest {
       { src: '/apple-icon', sizes: '180x180', type: 'image/png', purpose: 'any' },
     ],
     // ホーム画面アイコン長押しで表示されるショートカット（Android Chrome 等で対応）
+    // Rev33: ナビ順序統一に合わせて AIツール 系を先頭に並べ替え
     shortcuts: [
-      {
-        name:        '記事を読む',
-        short_name:  '記事',
-        url:         '/learn',
-        icons:       [{ src: '/icon', sizes: '192x192', type: 'image/png' }],
-      },
       {
         name:        'VOA × AI ディクテーション教室',
         short_name:  'VOA',
@@ -40,9 +35,9 @@ export default function manifest(): MetadataRoute.Manifest {
         icons:       [{ src: '/icon', sizes: '192x192', type: 'image/png' }],
       },
       {
-        name:        'うごくAI教室',
-        short_name:  'AI教室',
-        url:         '/tools/ai-kyoshitsu',
+        name:        '記事を読む',
+        short_name:  '記事',
+        url:         '/learn',
         icons:       [{ src: '/icon', sizes: '192x192', type: 'image/png' }],
       },
     ],

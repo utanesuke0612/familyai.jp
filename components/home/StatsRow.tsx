@@ -7,9 +7,10 @@
 
 import { useScrollReveal } from '@/hooks/useScrollReveal';
 
+// Rev33: ナビ順序統一に合わせて 🧰 AIツール を先頭側に
 const STATS = [
-  { emoji: '📚', value: '100+',   label: 'AI活用事例' },
   { emoji: '🧰', value: '2',       label: 'AIツール' },
+  { emoji: '📚', value: '100+',   label: 'AI活用事例' },
   { emoji: '🆓', value: '無料',   label: '基本機能すべて' },
   { emoji: '🔄', value: '毎週',   label: '新着コンテンツ更新' },
 ] as const;

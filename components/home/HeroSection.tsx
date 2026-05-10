@@ -273,8 +273,9 @@ export function HeroSection() {
 }
 
 // ── 統計データ ─────────────────────────────────────────────────
+// Rev33: ナビ順序統一に合わせて AIツール を先頭側に
 const STATS = [
-  { value: '100+',  label: 'AI活用事例' },
   { value: '2',     label: 'AIツール' },
+  { value: '100+',  label: 'AI活用事例' },
   { value: '¥0',   label: '基本機能すべて' },
 ] as const;
