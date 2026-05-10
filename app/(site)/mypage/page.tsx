@@ -13,6 +13,7 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { auth } from '@/lib/auth';
+import { isAdmin } from '@/lib/admin-auth';
 import { SITE } from '@/shared';
 
 export const metadata: Metadata = {
@@ -55,6 +56,10 @@ export default async function MyPage() {
 
   const config = STATE_CONFIG[plan];
   const quota  = AI_QUOTA[plan];
+
+  // Rev33: 課金フローが未確定の間、プレミアム関連 UI を管理者のみに見せる。
+  // ADMIN_EMAIL（lijun.kawasaki@gmail.com）のセッションでのみ true。
+  const showPremium = await isAdmin();
 
   return (
     <main style={{ background: 'var(--color-cream)' }}>
@@ -278,7 +283,7 @@ export default async function MyPage() {
             </p>
 
             {/* レスポンシブ比較: モバイルはスタックカード、sm以上はテーブル */}
-            <FeatureComparison plan={plan} />
+            <FeatureComparison plan={plan} showPremium={showPremium} />
 
             {/* CTA */}
             {plan === 'anon' && (
@@ -375,13 +380,13 @@ const PLAN_META: Record<PlanKey, { emoji: string; title: string }> = {
   premium: { emoji: '👑', title: 'プレミアム' },
 };
 
-function FeatureComparison({ plan }: { plan: PlanKey }) {
+function FeatureComparison({ plan, showPremium }: { plan: PlanKey; showPremium: boolean }) {
   return (
     <>
       {/* ── モバイル（< sm）: スタックカード ── */}
       <div className="flex flex-col gap-3 sm:hidden">
         {FEATURES.map((f) => (
-          <FeatureMobileCard key={f.feature} item={f} plan={plan} />
+          <FeatureMobileCard key={f.feature} item={f} plan={plan} showPremium={showPremium} />
         ))}
       </div>
 
@@ -396,14 +401,16 @@ function FeatureComparison({ plan }: { plan: PlanKey }) {
               >
                 機能
               </th>
-              <PlanHeader title={PLAN_META.anon.title}    emoji={PLAN_META.anon.emoji}    current={plan === 'anon'} />
-              <PlanHeader title={PLAN_META.free.title}    emoji={PLAN_META.free.emoji}    current={plan === 'free'} />
-              <PlanHeader title={PLAN_META.premium.title} emoji={PLAN_META.premium.emoji} current={plan === 'premium'} />
+              <PlanHeader title={PLAN_META.anon.title} emoji={PLAN_META.anon.emoji} current={plan === 'anon'} />
+              <PlanHeader title={PLAN_META.free.title} emoji={PLAN_META.free.emoji} current={plan === 'free'} />
+              {showPremium && (
+                <PlanHeader title={PLAN_META.premium.title} emoji={PLAN_META.premium.emoji} current={plan === 'premium'} />
+              )}
             </tr>
           </thead>
           <tbody>
             {FEATURES.map((f) => (
-              <FeatureRow key={f.feature} {...f} plan={plan} />
+              <FeatureRow key={f.feature} {...f} plan={plan} showPremium={showPremium} />
             ))}
           </tbody>
         </table>
@@ -413,7 +420,15 @@ function FeatureComparison({ plan }: { plan: PlanKey }) {
 }
 
 /** モバイル用: 機能1つを1カードで表示。各プランの値を縦に並べる */
-function FeatureMobileCard({ item, plan }: { item: FeatureItem; plan: PlanKey }) {
+function FeatureMobileCard({
+  item,
+  plan,
+  showPremium,
+}: {
+  item: FeatureItem;
+  plan: PlanKey;
+  showPremium: boolean;
+}) {
   return (
     <div
       className="rounded-2xl p-4 flex flex-col gap-3"
@@ -432,9 +447,11 @@ function FeatureMobileCard({ item, plan }: { item: FeatureItem; plan: PlanKey })
       </div>
 
       <div className="flex flex-col gap-1.5">
-        <PlanValueRow planKey="anon"    value={item.anon}    plan={plan} />
-        <PlanValueRow planKey="free"    value={item.free}    plan={plan} />
-        <PlanValueRow planKey="premium" value={item.premium} plan={plan} />
+        <PlanValueRow planKey="anon" value={item.anon} plan={plan} />
+        <PlanValueRow planKey="free" value={item.free} plan={plan} />
+        {showPremium && (
+          <PlanValueRow planKey="premium" value={item.premium} plan={plan} />
+        )}
       </div>
     </div>
   );
@@ -505,14 +522,15 @@ function PlanHeader({ title, emoji, current }: { title: string; emoji: string; c
 }
 
 function FeatureRow({
-  feature, desc, anon, free, premium, plan,
+  feature, desc, anon, free, premium, plan, showPremium,
 }: {
-  feature: string;
-  desc:    string;
-  anon:    string;
-  free:    string;
-  premium: string;
-  plan:    PlanKey;
+  feature:     string;
+  desc:        string;
+  anon:        string;
+  free:        string;
+  premium:     string;
+  plan:        PlanKey;
+  showPremium: boolean;
 }) {
   return (
     <tr style={{ borderBottom: '1px solid var(--color-beige)' }}>
@@ -524,9 +542,9 @@ function FeatureRow({
           {desc}
         </div>
       </td>
-      <CellValue value={anon}    isCurrent={plan === 'anon'} />
-      <CellValue value={free}    isCurrent={plan === 'free'} />
-      <CellValue value={premium} isCurrent={plan === 'premium'} />
+      <CellValue value={anon} isCurrent={plan === 'anon'} />
+      <CellValue value={free} isCurrent={plan === 'free'} />
+      {showPremium && <CellValue value={premium} isCurrent={plan === 'premium'} />}
     </tr>
   );
 }

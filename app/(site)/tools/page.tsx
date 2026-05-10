@@ -7,6 +7,7 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { CATEGORY_EMOJI, CATEGORY_LABEL, SITE } from '@/shared';
 import type { ContentCategory } from '@/shared';
+import { isAdmin } from '@/lib/admin-auth';
 
 export const metadata: Metadata = {
   title:       `AIツール | ${SITE.name}`,
@@ -21,6 +22,11 @@ type ToolItem = {
   status: string;
   cta: string;
   accent: string;
+  /**
+   * Rev33: true ならログイン中の管理者（ADMIN_EMAIL 一致）にのみ表示する。
+   * 当面は機能の出来栄えや収益化が固まっていないツールを段階公開するため。
+   */
+  adminOnly?: boolean;
 };
 
 const TOOLS_BY_CATEGORY: Array<{
@@ -47,6 +53,7 @@ const TOOLS_BY_CATEGORY: Array<{
         status: '公開中',
         cta: '使ってみる',
         accent: 'var(--color-mint)',
+        adminOnly: true,    // Rev33: 管理者のみ表示（一般公開前の調整中）
       },
     ],
   },
@@ -65,14 +72,23 @@ type ToolsPageProps = {
   };
 };
 
-export default function ToolsPage({ searchParams }: ToolsPageProps) {
+export default async function ToolsPage({ searchParams }: ToolsPageProps) {
   const selectedCategory = TOOLS_BY_CATEGORY.some(({ category }) => category === searchParams?.cat)
     ? (searchParams?.cat as ContentCategory)
     : null;
 
-  const visibleSections = selectedCategory
+  // Rev33: adminOnly のツールは管理者のみに表示
+  const showAdminOnly = await isAdmin();
+  const visibleSectionsRaw = selectedCategory
     ? TOOLS_BY_CATEGORY.filter(({ category }) => category === selectedCategory)
     : TOOLS_BY_CATEGORY;
+  const visibleSections = visibleSectionsRaw
+    .map(({ category, lead, tools }) => ({
+      category,
+      lead,
+      tools: tools.filter((t) => showAdminOnly || !t.adminOnly),
+    }))
+    .filter(({ tools }) => tools.length > 0);
 
   return (
     <main style={{ background: 'var(--color-cream)' }}>

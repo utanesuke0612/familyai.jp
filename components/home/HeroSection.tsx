@@ -163,13 +163,15 @@ export function HeroSection() {
             今日から使えるAI活用法をお届けします。
           </p>
 
-          {/* CTA ボタン */}
+          {/* CTA ボタン
+              Rev33: 主従入替え — Phase 2 で Webアプリ群に注力するため
+              「AIツールを見る」を primary・「まず読んでみる」を secondary に降格 */}
           <div className="flex flex-wrap gap-4 animate-fade-in-up delay-300">
-            <Link href="/learn" className="btn-primary animate-pulse-glow text-base px-7 py-3.5">
-              🚀 まず読んでみる
-            </Link>
-            <Link href="/tools" className="btn-secondary text-base px-7 py-3.5">
+            <Link href="/tools" className="btn-primary animate-pulse-glow text-base px-7 py-3.5">
               🧰 AIツールを見る
+            </Link>
+            <Link href="/learn" className="btn-secondary text-base px-7 py-3.5">
+              🚀 まず読んでみる
             </Link>
           </div>
 
