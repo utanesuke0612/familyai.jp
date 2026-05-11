@@ -1,0 +1,69 @@
+/**
+ * lib/schemas/3d-models.ts
+ * familyai.jp / うごくAI教室 3D 図鑑（Rev34 Phase 1）
+ *
+ * zod スキーマ集約：DB 入出力 / API バリデーション / shared 型のソース・オブ・トゥルース。
+ */
+
+import { z } from 'zod';
+
+// ── 教科サブカテゴリ・学年 ──────────────────────────────────
+export const TUTOR3D_SUBJECT_VALUES = ['biology', 'chemistry', 'earth-space', 'physics'] as const;
+export const TUTOR3D_GRADE_VALUES   = ['elem-low', 'elem-high', 'middle']                 as const;
+
+export const tutor3dSubjectSchema = z.enum(TUTOR3D_SUBJECT_VALUES);
+export const tutor3dGradeSchema   = z.enum(TUTOR3D_GRADE_VALUES);
+
+// ── Hotspot ──────────────────────────────────────────────
+const positionSchema = z.tuple([
+  z.number().finite(),
+  z.number().finite(),
+  z.number().finite(),
+]);
+
+export const hotspotSchema = z.object({
+  id:                 z.string().min(1).max(40),
+  partName:           z.string().min(1).max(80),
+  position:           positionSchema,
+  normal:             positionSchema.optional(),
+  defaultExplanation: z.string().max(400).default(''),
+  promptHint:         z.string().max(800).default(''),
+});
+
+export const hotspotArraySchema = z.array(hotspotSchema).max(30);
+
+export type HotspotInput = z.input<typeof hotspotSchema>;
+export type HotspotData  = z.output<typeof hotspotSchema>;
+
+// ── 一覧クエリ（GET /api/3d-models 等の将来用）──────────────
+export const tutor3dQuerySchema = z.object({
+  subject: tutor3dSubjectSchema.optional(),
+  grade:   tutor3dGradeSchema.optional(),
+  featured: z.coerce.boolean().optional(),
+  limit:   z.coerce.number().int().min(1).max(50).default(20),
+});
+
+// ── 管理者: 作成 / 更新 ──────────────────────────────────
+export const createTutor3dModelSchema = z.object({
+  slug:         z.string().trim().min(1).max(120).regex(/^[a-z0-9-]+$/, {
+    message: 'slug は小文字英数字とハイフンのみ',
+  }),
+  title:        z.string().trim().min(1).max(200),
+  description:  z.string().max(2000).default(''),
+  subject:      tutor3dSubjectSchema,
+  grade:        tutor3dGradeSchema,
+  glbUrl:       z.string().url().or(z.string().regex(/^\//, { message: '相対 URL は / で始まること' })),
+  usdzUrl:      z.string().url().or(z.string().regex(/^\//)).nullable().optional(),
+  thumbnailUrl: z.string().url().or(z.string().regex(/^\//)).nullable().optional(),
+  hotspots:     hotspotArraySchema.default([]),
+  attribution:  z.string().max(800).default(''),
+  license:      z.string().max(80).default(''),
+  sourceUrl:    z.string().url().nullable().optional(),
+  published:    z.boolean().default(false),
+  isFeatured:   z.boolean().default(false),
+});
+
+export const updateTutor3dModelSchema = createTutor3dModelSchema.partial();
+
+export type CreateTutor3dModelInput = z.input<typeof createTutor3dModelSchema>;
+export type UpdateTutor3dModelInput = z.input<typeof updateTutor3dModelSchema>;

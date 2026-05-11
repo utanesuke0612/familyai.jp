@@ -152,6 +152,47 @@ export const ROUTES = {
   },
 } as const;
 
+// ─── 3D 図鑑（Rev34 Phase 1）─────────────────────────────────
+import type { Tutor3dSubject, Tutor3dGrade } from '../types';
+
+/** 3D 教科サブカテゴリのラベル */
+export const TUTOR3D_SUBJECT_LABEL: Record<Tutor3dSubject, string> = {
+  biology:       '🧬 生物',
+  chemistry:     '⚗️ 化学',
+  'earth-space': '🪐 地学・宇宙',
+  physics:       '⚡ 物理',
+} as const;
+
+/** 3D 教科サブカテゴリのアクセントカラー（既存 design tokens） */
+export const TUTOR3D_SUBJECT_COLOR: Record<Tutor3dSubject, string> = {
+  biology:       'var(--color-mint)',
+  chemistry:     'var(--color-peach-light)',
+  'earth-space': 'var(--color-sky)',
+  physics:       'var(--color-yellow)',
+} as const;
+
+/** 3D 学年区分のラベル（既存 GRADE_LABEL とは別管理） */
+export const TUTOR3D_GRADE_LABEL: Record<Tutor3dGrade, string> = {
+  'elem-low':  '小学校 低学年',
+  'elem-high': '小学校 高学年',
+  'middle':    '中学校',
+} as const;
+
+/** 3D サブカテゴリの並び順（UI 表示順） */
+export const TUTOR3D_SUBJECTS: readonly Tutor3dSubject[] = [
+  'biology',
+  'chemistry',
+  'earth-space',
+  'physics',
+] as const;
+
+/** 3D 学年区分の並び順 */
+export const TUTOR3D_GRADES: readonly Tutor3dGrade[] = [
+  'elem-low',
+  'elem-high',
+  'middle',
+] as const;
+
 // ─── AI教室パイプラインのモデル一覧・プリセット・範囲制限（再エクスポート） ──
 export {
   AI_MODEL_OPTIONS,

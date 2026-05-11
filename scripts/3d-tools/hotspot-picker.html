@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hotspot 座標採取 — うごくAI教室 (familyai.jp)</title>
+  <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/4.0.0/model-viewer.min.js"></script>
+  <style>
+    :root {
+      --color-cream: #FDF6ED;
+      --color-peach: #FFDDC1;
+      --color-peach-light: #FFEBD8;
+      --color-orange: #F39C5F;
+      --color-beige-dark: #D9C7A8;
+      --color-brown: #6B4F3A;
+      --color-brown-muted: #A48B72;
+      --color-success: #28A745;
+      --color-danger: #DC3545;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: -apple-system, 'Hiragino Sans', sans-serif;
+      background: linear-gradient(160deg, var(--color-cream) 0%, var(--color-peach-light) 100%);
+      color: var(--color-brown);
+      min-height: 100vh;
+      padding: 16px;
+    }
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 380px;
+      gap: 16px;
+    }
+    @media (max-width: 900px) {
+      .container { grid-template-columns: 1fr; }
+    }
+    h1 { font-size: 22px; margin: 0 0 4px; }
+    .subtitle { color: var(--color-brown-muted); font-size: 13px; margin: 0 0 16px; }
+
+    /* Viewer panel */
+    .viewer-panel {
+      background: white;
+      border-radius: 20px;
+      padding: 20px;
+      box-shadow: 0 4px 20px rgba(107, 79, 58, 0.08);
+    }
+    .file-input {
+      display: block;
+      padding: 12px 16px;
+      background: var(--color-peach-light);
+      border-radius: 12px;
+      cursor: pointer;
+      text-align: center;
+      font-weight: 600;
+      margin-bottom: 12px;
+      border: 2px dashed var(--color-beige-dark);
+    }
+    .file-input:hover { border-color: var(--color-orange); }
+    .file-input input { display: none; }
+
+    model-viewer {
+      width: 100%;
+      height: 60vh;
+      min-height: 400px;
+      background: radial-gradient(ellipse at center, var(--color-peach-light) 0%, var(--color-cream) 80%);
+      border-radius: 12px;
+    }
+
+    .instruction {
+      margin-top: 12px;
+      padding: 12px;
+      background: #FFF3CD;
+      border-left: 4px solid var(--color-orange);
+      border-radius: 8px;
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    /* Side panel */
+    .side-panel {
+      background: white;
+      border-radius: 20px;
+      padding: 20px;
+      box-shadow: 0 4px 20px rgba(107, 79, 58, 0.08);
+      display: flex;
+      flex-direction: column;
+      max-height: 85vh;
+    }
+
+    .panel-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+    .panel-title { font-weight: 700; font-size: 16px; }
+    .panel-count {
+      background: var(--color-orange);
+      color: white;
+      padding: 2px 10px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .meta-input {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      padding-bottom: 12px;
+      margin-bottom: 12px;
+      border-bottom: 1px solid var(--color-beige-dark);
+    }
+    .meta-input input,
+    .meta-input select,
+    .meta-input textarea {
+      width: 100%;
+      padding: 8px 12px;
+      border: 2px solid var(--color-beige-dark);
+      border-radius: 8px;
+      font-size: 13px;
+      background: var(--color-cream);
+    }
+    .meta-input label {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--color-brown-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    /* Hotspot list */
+    .hotspot-list {
+      flex: 1;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+    .hotspot-item {
+      background: var(--color-peach-light);
+      padding: 12px;
+      border-radius: 10px;
+      border: 2px solid transparent;
+    }
+    .hotspot-item.editing { border-color: var(--color-orange); }
+    .hotspot-row {
+      display: grid;
+      grid-template-columns: 24px 1fr 28px;
+      gap: 8px;
+      align-items: center;
+      margin-bottom: 6px;
+    }
+    .hotspot-num {
+      background: var(--color-orange);
+      color: white;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 700;
+    }
+    .hotspot-name {
+      padding: 6px 10px;
+      border: 1px solid var(--color-beige-dark);
+      border-radius: 6px;
+      font-size: 13px;
+      width: 100%;
+    }
+    .hotspot-delete {
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      color: var(--color-danger);
+      font-size: 18px;
+      opacity: 0.6;
+    }
+    .hotspot-delete:hover { opacity: 1; }
+    .hotspot-coords {
+      font-family: ui-monospace, monospace;
+      font-size: 11px;
+      color: var(--color-brown-muted);
+      padding: 4px 8px;
+      background: white;
+      border-radius: 4px;
+    }
+    .hotspot-textarea {
+      width: 100%;
+      padding: 6px 10px;
+      border: 1px solid var(--color-beige-dark);
+      border-radius: 6px;
+      font-size: 12px;
+      margin-top: 6px;
+      resize: vertical;
+      min-height: 50px;
+      font-family: inherit;
+    }
+
+    .empty {
+      text-align: center;
+      padding: 32px 16px;
+      color: var(--color-brown-muted);
+      font-size: 13px;
+    }
+
+    .actions {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .btn {
+      flex: 1;
+      padding: 10px 16px;
+      border-radius: 999px;
+      border: 2px solid var(--color-beige-dark);
+      background: white;
+      color: var(--color-brown);
+      font-weight: 600;
+      font-size: 13px;
+      cursor: pointer;
+      min-height: 40px;
+    }
+    .btn:hover { border-color: var(--color-orange); }
+    .btn.primary {
+      background: var(--color-orange);
+      border-color: var(--color-orange);
+      color: white;
+    }
+
+    /* Visible hotspot dots on model */
+    [slot^="hotspot-"] {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: var(--color-orange);
+      border: 3px solid white;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+      cursor: pointer;
+      animation: pulse 1.5s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.2); }
+    }
+
+    .toast {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--color-success);
+      color: white;
+      padding: 10px 20px;
+      border-radius: 999px;
+      font-size: 13px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      opacity: 0;
+      transition: opacity 0.3s;
+      pointer-events: none;
+      z-index: 1000;
+    }
+    .toast.show { opacity: 1; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Viewer panel -->
+    <div class="viewer-panel">
+      <h1>🎯 Hotspot 座標採取ツール</h1>
+      <p class="subtitle">3D モデルをクリック → JSON に hotspot 座標を追加</p>
+
+      <label class="file-input">
+        📂 GLB ファイルを選択
+        <input type="file" id="file-input" accept=".glb,.gltf" />
+      </label>
+
+      <model-viewer
+        id="viewer"
+        camera-controls
+        shadow-intensity="0.6"
+        environment-image="neutral"
+        exposure="1"
+      ></model-viewer>
+
+      <div class="instruction">
+        💡 <strong>使い方</strong>:<br>
+        1. 上のボタンで GLB ファイルを開く<br>
+        2. <strong>3D モデルの注釈したい場所をクリック</strong> → hotspot が追加される<br>
+        3. 右パネルで パーツ名・既定説明・AI ヒント を入力<br>
+        4. 「JSON ダウンロード」ボタンで <code>topic.json</code> を保存
+      </div>
+    </div>
+
+    <!-- Side panel -->
+    <div class="side-panel">
+      <div class="panel-header">
+        <span class="panel-title">📍 Hotspot 一覧</span>
+        <span class="panel-count" id="count">0</span>
+      </div>
+
+      <div class="meta-input">
+        <label>モデル slug</label>
+        <input type="text" id="meta-slug" placeholder="例: tyrannosaurus / solar-system" />
+
+        <label>タイトル</label>
+        <input type="text" id="meta-title" placeholder="例: ティラノサウルス" />
+
+        <label>サブカテゴリ</label>
+        <select id="meta-subject">
+          <option value="biology">🧬 生物</option>
+          <option value="chemistry">⚗️ 化学</option>
+          <option value="earth-space">🪐 地学・宇宙</option>
+          <option value="physics">⚡ 物理</option>
+        </select>
+
+        <label>学年</label>
+        <select id="meta-grade">
+          <option value="elem-low">小学校 低学年</option>
+          <option value="elem-high">小学校 高学年</option>
+          <option value="middle">中学校</option>
+        </select>
+      </div>
+
+      <div class="hotspot-list" id="hotspot-list">
+        <div class="empty" id="empty-state">
+          まだ hotspot がありません<br>
+          モデルをクリックして追加
+        </div>
+      </div>
+
+      <div class="actions">
+        <button class="btn" id="btn-clear">🗑 全削除</button>
+        <button class="btn primary" id="btn-download">⬇ JSON ダウンロード</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast">コピーしました</div>
+
+  <script>
+    const viewer = document.getElementById('viewer');
+    const fileInput = document.getElementById('file-input');
+    const hotspotList = document.getElementById('hotspot-list');
+    const emptyState = document.getElementById('empty-state');
+    const countEl = document.getElementById('count');
+    const toast = document.getElementById('toast');
+
+    let hotspots = [];
+    let nextId = 1;
+
+    fileInput.addEventListener('change', e => {
+      const file = e.target.files[0];
+      if (!file) return;
+      viewer.src = URL.createObjectURL(file);
+      // モデル名から slug 推測
+      const baseName = file.name.replace(/\.(glb|gltf)$/i, '');
+      document.getElementById('meta-slug').value = baseName.toLowerCase().replace(/[^a-z0-9-]/g, '-');
+      hotspots = [];
+      nextId = 1;
+      render();
+    });
+
+    // クリックで hotspot 追加
+    viewer.addEventListener('click', event => {
+      if (!viewer.src) return;
+      const rect = viewer.getBoundingClientRect();
+      const x = event.clientX - rect.left;
+      const y = event.clientY - rect.top;
+      const hit = viewer.positionAndNormalFromPoint(x, y);
+      if (!hit) {
+        showToast('⚠️ 何もない場所です', '#DC3545');
+        return;
+      }
+      const id = `h${nextId++}`;
+      hotspots.push({
+        id,
+        partName: '',
+        position: [
+          parseFloat(hit.position.x.toFixed(4)),
+          parseFloat(hit.position.y.toFixed(4)),
+          parseFloat(hit.position.z.toFixed(4)),
+        ],
+        normal: hit.normal ? [
+          parseFloat(hit.normal.x.toFixed(3)),
+          parseFloat(hit.normal.y.toFixed(3)),
+          parseFloat(hit.normal.z.toFixed(3)),
+        ] : null,
+        defaultExplanation: '',
+        promptHint: '',
+      });
+      render();
+      showToast('✅ Hotspot を追加');
+    });
+
+    function render() {
+      countEl.textContent = hotspots.length;
+
+      // model-viewer の hotspot 描画
+      // 既存の hotspot DOM 削除
+      [...viewer.querySelectorAll('[slot^="hotspot-"]')].forEach(el => el.remove());
+      hotspots.forEach(h => {
+        const dot = document.createElement('div');
+        dot.setAttribute('slot', `hotspot-${h.id}`);
+        dot.setAttribute('data-position', h.position.join(' '));
+        if (h.normal) dot.setAttribute('data-normal', h.normal.join(' '));
+        dot.title = h.partName || h.id;
+        viewer.appendChild(dot);
+      });
+
+      // List rendering
+      if (hotspots.length === 0) {
+        hotspotList.innerHTML = '';
+        hotspotList.appendChild(emptyState);
+        emptyState.style.display = 'block';
+        return;
+      }
+      emptyState.style.display = 'none';
+      hotspotList.innerHTML = '';
+      hotspots.forEach((h, i) => {
+        const item = document.createElement('div');
+        item.className = 'hotspot-item';
+        item.innerHTML = `
+          <div class="hotspot-row">
+            <div class="hotspot-num">${i + 1}</div>
+            <input class="hotspot-name" type="text"
+                   value="${escape(h.partName)}"
+                   placeholder="パーツ名 例: 歯 / 心臓"
+                   data-idx="${i}" data-field="partName" />
+            <button class="hotspot-delete" data-idx="${i}" title="削除">✕</button>
+          </div>
+          <div class="hotspot-coords">
+            [${h.position.map(n => n.toFixed(3)).join(', ')}]
+          </div>
+          <textarea class="hotspot-textarea"
+                    placeholder="既定説明（タップで子どもに見せる短い説明・1〜2文）"
+                    data-idx="${i}" data-field="defaultExplanation">${escape(h.defaultExplanation)}</textarea>
+          <textarea class="hotspot-textarea"
+                    placeholder="AI ヒント（AI が深掘り会話する時の参考情報・自由）"
+                    data-idx="${i}" data-field="promptHint">${escape(h.promptHint)}</textarea>
+        `;
+        hotspotList.appendChild(item);
+      });
+
+      // Bind input handlers
+      hotspotList.querySelectorAll('[data-field]').forEach(el => {
+        el.addEventListener('input', e => {
+          const idx = +e.target.dataset.idx;
+          hotspots[idx][e.target.dataset.field] = e.target.value;
+        });
+      });
+      hotspotList.querySelectorAll('.hotspot-delete').forEach(el => {
+        el.addEventListener('click', e => {
+          const idx = +e.target.dataset.idx;
+          hotspots.splice(idx, 1);
+          render();
+        });
+      });
+    }
+
+    function escape(s) {
+      return (s || '').replace(/[<>"']/g, c => ({
+        '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+      })[c]);
+    }
+
+    function showToast(msg, color = '#28A745') {
+      toast.textContent = msg;
+      toast.style.background = color;
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 1500);
+    }
+
+    document.getElementById('btn-clear').addEventListener('click', () => {
+      if (hotspots.length === 0) return;
+      if (confirm('全 hotspot を削除しますか？')) {
+        hotspots = [];
+        nextId = 1;
+        render();
+      }
+    });
+
+    document.getElementById('btn-download').addEventListener('click', () => {
+      const slug = document.getElementById('meta-slug').value.trim() || 'untitled';
+      const data = {
+        slug,
+        title: document.getElementById('meta-title').value.trim(),
+        subject: document.getElementById('meta-subject').value,
+        grade: document.getElementById('meta-grade').value,
+        hotspots: hotspots.map(({ id, partName, position, normal, defaultExplanation, promptHint }) => ({
+          id,
+          partName: partName || `(unnamed-${id})`,
+          position,
+          ...(normal ? { normal } : {}),
+          defaultExplanation,
+          promptHint,
+        })),
+      };
+      const json = JSON.stringify(data, null, 2);
+      const blob = new Blob([json], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `${slug}.json`;
+      a.click();
+      URL.revokeObjectURL(url);
+      showToast(`✅ ${slug}.json を保存`);
+    });
+
+    // 初期描画
+    render();
+  </script>
+</body>
+</html>

@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>3D モデル プレビュー — うごくAI教室 (familyai.jp)</title>
+
+  <!-- Google model-viewer Web Component (CDN) -->
+  <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/4.0.0/model-viewer.min.js"></script>
+
+  <style>
+    :root {
+      --color-cream: #FDF6ED;
+      --color-peach: #FFDDC1;
+      --color-peach-light: #FFEBD8;
+      --color-orange: #F39C5F;
+      --color-beige-dark: #D9C7A8;
+      --color-brown: #6B4F3A;
+      --color-brown-muted: #A48B72;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, 'Hiragino Sans', sans-serif;
+      background: linear-gradient(160deg, var(--color-cream) 0%, var(--color-peach-light) 100%);
+      color: var(--color-brown);
+      min-height: 100vh;
+      padding: 24px;
+    }
+
+    h1 {
+      font-size: clamp(20px, 3vw, 28px);
+      margin: 0 0 8px;
+    }
+
+    .subtitle {
+      color: var(--color-brown-muted);
+      margin: 0 0 24px;
+      font-size: 14px;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    /* Drop zone */
+    .dropzone {
+      border: 3px dashed var(--color-beige-dark);
+      border-radius: 24px;
+      padding: 48px 24px;
+      text-align: center;
+      background: rgba(255, 255, 255, 0.5);
+      transition: all 0.2s;
+      cursor: pointer;
+      margin-bottom: 16px;
+    }
+
+    .dropzone.drag-over {
+      border-color: var(--color-orange);
+      background: var(--color-peach-light);
+      transform: scale(1.01);
+    }
+
+    .dropzone-icon {
+      font-size: 48px;
+      margin-bottom: 12px;
+    }
+
+    .dropzone-text {
+      font-size: 18px;
+      font-weight: 600;
+    }
+
+    .dropzone-hint {
+      color: var(--color-brown-muted);
+      font-size: 13px;
+      margin-top: 8px;
+    }
+
+    .controls {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 16px;
+    }
+
+    .btn {
+      background: white;
+      border: 2px solid var(--color-beige-dark);
+      border-radius: 999px;
+      padding: 10px 20px;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--color-brown);
+      cursor: pointer;
+      transition: all 0.15s;
+      min-height: 44px;
+    }
+
+    .btn:hover {
+      border-color: var(--color-orange);
+      background: var(--color-peach-light);
+    }
+
+    .btn.active {
+      background: var(--color-orange);
+      color: white;
+      border-color: var(--color-orange);
+    }
+
+    /* Viewer area */
+    .viewer-wrap {
+      background: white;
+      border-radius: 24px;
+      padding: 24px;
+      box-shadow: 0 4px 20px rgba(107, 79, 58, 0.08);
+      min-height: 500px;
+      position: relative;
+    }
+
+    model-viewer {
+      width: 100%;
+      height: 60vh;
+      min-height: 400px;
+      background: radial-gradient(ellipse at center, var(--color-peach-light) 0%, var(--color-cream) 80%);
+      border-radius: 16px;
+      --poster-color: transparent;
+    }
+
+    .empty-state {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 400px;
+      color: var(--color-brown-muted);
+    }
+
+    /* Info panel */
+    .info-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 12px;
+      margin-top: 16px;
+      padding: 16px;
+      background: var(--color-peach-light);
+      border-radius: 12px;
+      font-size: 13px;
+    }
+
+    .info-item {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .info-label {
+      font-size: 11px;
+      color: var(--color-brown-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .info-value {
+      font-weight: 600;
+      font-family: ui-monospace, 'SF Mono', monospace;
+    }
+
+    /* Size warning */
+    .warn {
+      background: #FFF3CD;
+      border-left: 4px solid #F39C5F;
+      padding: 12px 16px;
+      border-radius: 8px;
+      margin-top: 12px;
+      font-size: 13px;
+    }
+
+    .warn.bad {
+      background: #FCE4E4;
+      border-left-color: #DC3545;
+    }
+
+    .warn.good {
+      background: #D4EDDA;
+      border-left-color: #28A745;
+    }
+
+    /* Tools section */
+    .toolbar {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 8px;
+      flex-wrap: wrap;
+    }
+
+    .hint {
+      font-size: 12px;
+      color: var(--color-brown-muted);
+      padding: 8px 12px;
+      background: rgba(255,255,255,0.6);
+      border-radius: 8px;
+      margin-top: 8px;
+    }
+
+    @media (max-width: 600px) {
+      body { padding: 12px; }
+      .dropzone { padding: 32px 16px; }
+      model-viewer { height: 50vh; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🪐 3D モデル プレビュー</h1>
+    <p class="subtitle">
+      familyai.jp / うごくAI教室 — ローカル GLB/GLTF ファイルを `&lt;model-viewer&gt;` で確認するツール
+    </p>
+
+    <!-- Drop zone -->
+    <label class="dropzone" id="dropzone" for="file-input">
+      <div class="dropzone-icon">📦</div>
+      <div class="dropzone-text">ここに GLB / GLTF / USDZ をドロップ</div>
+      <div class="dropzone-hint">または クリックして選択 ・ サンプル: scripts/3d-tools/output/*.glb</div>
+      <input type="file" id="file-input" accept=".glb,.gltf,.usdz" style="display:none" />
+    </label>
+
+    <!-- Controls -->
+    <div class="controls" id="controls" style="display:none">
+      <button class="btn active" data-action="auto-rotate" id="btn-rotate">🔄 自動回転 ON</button>
+      <button class="btn" data-action="reset-camera" id="btn-reset">↺ 視点リセット</button>
+      <button class="btn" data-action="ar" id="btn-ar">🌐 AR モード</button>
+      <button class="btn" data-action="wireframe" id="btn-wire">🕸 ワイヤーフレーム</button>
+      <button class="btn" data-action="bg-toggle" id="btn-bg">🎨 背景切替</button>
+    </div>
+
+    <!-- Viewer -->
+    <div class="viewer-wrap">
+      <div id="empty-state" class="empty-state">
+        <div style="font-size: 64px; opacity: 0.3;">🦖</div>
+        <div style="margin-top: 12px;">ファイルを選択するとここに表示されます</div>
+      </div>
+      <model-viewer
+        id="viewer"
+        camera-controls
+        auto-rotate
+        shadow-intensity="0.8"
+        environment-image="neutral"
+        exposure="1"
+        style="display:none"
+      ></model-viewer>
+
+      <!-- Info panel -->
+      <div class="info-grid" id="info-grid" style="display:none">
+        <div class="info-item">
+          <span class="info-label">ファイル名</span>
+          <span class="info-value" id="info-filename">-</span>
+        </div>
+        <div class="info-item">
+          <span class="info-label">サイズ</span>
+          <span class="info-value" id="info-size">-</span>
+        </div>
+        <div class="info-item">
+          <span class="info-label">形式</span>
+          <span class="info-value" id="info-format">-</span>
+        </div>
+        <div class="info-item">
+          <span class="info-label">推奨判定</span>
+          <span class="info-value" id="info-verdict">-</span>
+        </div>
+      </div>
+
+      <div id="size-warn"></div>
+
+      <p class="hint">
+        💡 familyai.jp 推奨: GLB ファイルは <strong>1〜2MB</strong>（最大 5MB）／三角面数 50,000 以下／
+        AR 用 USDZ は別途 Mac の Reality Converter で生成してください。
+      </p>
+    </div>
+  </div>
+
+  <script>
+    const dropzone = document.getElementById('dropzone');
+    const fileInput = document.getElementById('file-input');
+    const viewer = document.getElementById('viewer');
+    const emptyState = document.getElementById('empty-state');
+    const infoGrid = document.getElementById('info-grid');
+    const controls = document.getElementById('controls');
+    const sizeWarn = document.getElementById('size-warn');
+
+    // Drag & drop
+    ['dragenter', 'dragover'].forEach(ev => {
+      dropzone.addEventListener(ev, e => {
+        e.preventDefault();
+        dropzone.classList.add('drag-over');
+      });
+    });
+    ['dragleave', 'drop'].forEach(ev => {
+      dropzone.addEventListener(ev, e => {
+        e.preventDefault();
+        dropzone.classList.remove('drag-over');
+      });
+    });
+    dropzone.addEventListener('drop', e => {
+      e.preventDefault();
+      const file = e.dataTransfer.files[0];
+      if (file) loadFile(file);
+    });
+    fileInput.addEventListener('change', e => {
+      const file = e.target.files[0];
+      if (file) loadFile(file);
+    });
+
+    function loadFile(file) {
+      const url = URL.createObjectURL(file);
+      const ext = file.name.split('.').pop().toLowerCase();
+
+      if (ext === 'usdz') {
+        viewer.setAttribute('ios-src', url);
+        // USDZ alone doesn't render in browser; warn user
+        sizeWarn.innerHTML = `<div class="warn">⚠️ USDZ は iOS の AR モード専用です。ブラウザでは表示できません。GLB を別途用意してください。</div>`;
+      } else {
+        viewer.src = url;
+        viewer.removeAttribute('ios-src');
+      }
+
+      // Update UI
+      emptyState.style.display = 'none';
+      viewer.style.display = 'block';
+      infoGrid.style.display = 'grid';
+      controls.style.display = 'flex';
+
+      // Info
+      document.getElementById('info-filename').textContent = file.name;
+      const sizeMB = (file.size / 1024 / 1024).toFixed(2);
+      document.getElementById('info-size').textContent = `${sizeMB} MB`;
+      document.getElementById('info-format').textContent = ext.toUpperCase();
+
+      // Verdict
+      const verdict = document.getElementById('info-verdict');
+      if (file.size < 2 * 1024 * 1024) {
+        verdict.textContent = '🟢 最適';
+        sizeWarn.innerHTML = `<div class="warn good">✅ ファイルサイズ良好。本番配信に最適です。</div>`;
+      } else if (file.size < 5 * 1024 * 1024) {
+        verdict.textContent = '🟡 やや大きい';
+        sizeWarn.innerHTML = `<div class="warn">⚠️ ${sizeMB}MB はモバイル配信には少し大きめ。compress.sh で Draco 圧縮を試してください。</div>`;
+      } else {
+        verdict.textContent = '🔴 大きすぎ';
+        sizeWarn.innerHTML = `<div class="warn bad">❌ ${sizeMB}MB は本番配信には大きすぎます。Blender で減面 → compress.sh で Draco 圧縮 を実施してください。</div>`;
+      }
+    }
+
+    // Controls
+    document.getElementById('btn-rotate').addEventListener('click', e => {
+      const on = viewer.hasAttribute('auto-rotate');
+      if (on) {
+        viewer.removeAttribute('auto-rotate');
+        e.target.classList.remove('active');
+        e.target.textContent = '🔄 自動回転 OFF';
+      } else {
+        viewer.setAttribute('auto-rotate', '');
+        e.target.classList.add('active');
+        e.target.textContent = '🔄 自動回転 ON';
+      }
+    });
+
+    document.getElementById('btn-reset').addEventListener('click', () => {
+      viewer.resetTurntableRotation();
+      viewer.cameraOrbit = 'auto auto auto';
+    });
+
+    document.getElementById('btn-ar').addEventListener('click', () => {
+      if (viewer.canActivateAR) {
+        viewer.activateAR();
+      } else {
+        alert('この端末では AR を利用できません。\niPhone (Safari) / Android (Chrome) でお試しください。');
+      }
+    });
+
+    let bgIndex = 0;
+    const backgrounds = [
+      'radial-gradient(ellipse at center, #FFEBD8 0%, #FDF6ED 80%)',  // cream-peach
+      'radial-gradient(ellipse at center, #1a1a2e 0%, #16213e 80%)',  // starry night
+      'radial-gradient(ellipse at center, #FFFFFF 0%, #F0F0F0 80%)',  // neutral
+      'transparent',
+    ];
+    document.getElementById('btn-bg').addEventListener('click', () => {
+      bgIndex = (bgIndex + 1) % backgrounds.length;
+      viewer.style.background = backgrounds[bgIndex];
+    });
+
+    document.getElementById('btn-wire').addEventListener('click', () => {
+      alert('ワイヤーフレーム表示は <model-viewer> の標準機能では未対応です。\nBlender で確認してください。');
+    });
+
+    // AR availability check
+    viewer.addEventListener('load', () => {
+      const arBtn = document.getElementById('btn-ar');
+      if (viewer.canActivateAR) {
+        arBtn.textContent = '🌐 AR モード (利用可)';
+        arBtn.style.background = 'var(--color-orange)';
+        arBtn.style.color = 'white';
+      } else {
+        arBtn.textContent = '🌐 AR モード (この端末不可)';
+        arBtn.disabled = true;
+        arBtn.style.opacity = '0.5';
+      }
+    });
+  </script>
+</body>
+</html>

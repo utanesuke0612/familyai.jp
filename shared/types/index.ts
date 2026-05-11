@@ -105,6 +105,61 @@ export interface Animation extends AnimationSummary {
   userId:      string;
 }
 
+// ─── 3D 図鑑（Rev34 Phase 1）─────────────────────────────────
+/**
+ * 3D モデルの教科サブカテゴリ。理科のみ・4 区分。
+ * Phase 1 では算数・社会は対象外（将来別ツールで対応する余地あり）。
+ */
+export type Tutor3dSubject = 'biology' | 'chemistry' | 'earth-space' | 'physics';
+
+/**
+ * 学年区分（AnimationGrade と互換だが、3D 専用に独立型で扱う）。
+ */
+export type Tutor3dGrade = 'elem-low' | 'elem-high' | 'middle';
+
+/**
+ * 3D モデルのホットスポット（タップで AI が解説する点）。
+ * - position: ローカル座標系の 3D 座標 [x, y, z]
+ * - normal:   法線（任意・吹き出し向き等に使用）
+ * - defaultExplanation: タップ即時に表示する短文（音声読み上げ素地）
+ * - promptHint: AI 深掘り会話の参考情報（システムプロンプトに埋め込む）
+ */
+export interface Tutor3dHotspot {
+  id:                  string;
+  partName:            string;
+  position:            [number, number, number];
+  normal?:             [number, number, number];
+  defaultExplanation:  string;
+  promptHint:          string;
+}
+
+/**
+ * 3D モデルのサマリ（カタログ一覧用・hotspots は含めない）。
+ */
+export interface Tutor3dModelSummary {
+  id:           string;
+  slug:         string;
+  title:        string;
+  description:  string;
+  subject:      Tutor3dSubject;
+  grade:        Tutor3dGrade;
+  thumbnailUrl: string | null;
+  isFeatured:   boolean;
+  viewCount:    number;
+}
+
+/**
+ * 3D モデルの詳細（個別ページで使用・hotspots / GLB URL を含む）。
+ */
+export interface Tutor3dModel extends Tutor3dModelSummary {
+  glbUrl:       string;
+  usdzUrl:      string | null;
+  hotspots:     Tutor3dHotspot[];
+  attribution:  string;
+  license:      string;
+  sourceUrl:    string | null;
+}
+
 // ─── VOA / AIctation センテンスプレイヤー（R3-機能3）──────────
 
 /**

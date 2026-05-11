@@ -308,6 +308,63 @@ export const aiEchoEntries = pgTable(
   }),
 );
 
+// ─── tutor3d_models（Rev34 Phase 1: 3D 図鑑・migration 0018）──
+/**
+ * うごくAI教室 — 管理者がキュレーションする 3D モデル（理科のみ・4 サブカテゴリ）。
+ * Phase 1 では admin 手動投入のみ。Phase 2 で AI 生成版（user_animations 派生）が並ぶ予定。
+ *
+ * - subject: 'biology' | 'chemistry' | 'earth-space' | 'physics'
+ * - grade  : 'elem-low' | 'elem-high' | 'middle'
+ * - hotspots: HotspotData[]（lib/schemas/3d-models.ts の zod スキーマと一致）
+ */
+export const tutor3dModels = pgTable(
+  'tutor3d_models',
+  {
+    id:           uuid('id').defaultRandom().primaryKey(),
+    slug:         varchar('slug', { length: 120 }).notNull().unique(),
+    title:        varchar('title', { length: 200 }).notNull(),
+    description:  text('description').notNull().default(''),
+    subject:      varchar('subject', { length: 20 }).notNull(),
+    grade:        varchar('grade',   { length: 20 }).notNull(),
+    glbUrl:       text('glb_url').notNull(),
+    usdzUrl:      text('usdz_url'),
+    thumbnailUrl: text('thumbnail_url'),
+    hotspots:     jsonb('hotspots').notNull().default([]),
+    attribution:  text('attribution').notNull().default(''),
+    license:      varchar('license', { length: 80 }).notNull().default(''),
+    sourceUrl:    text('source_url'),
+    published:    boolean('published').notNull().default(false),
+    isFeatured:   boolean('is_featured').notNull().default(false),
+    viewCount:    integer('view_count').notNull().default(0),
+    createdAt:    timestamp('created_at').defaultNow().notNull(),
+    updatedAt:    timestamp('updated_at').defaultNow().notNull(),
+  },
+  (t) => ({
+    idxSubject:           index('tutor3d_models_subject_idx').on(t.subject),
+    idxGrade:             index('tutor3d_models_grade_idx').on(t.grade),
+    idxPublishedFeatured: index('tutor3d_models_published_featured_idx').on(t.published, t.isFeatured),
+  }),
+);
+
+// ─── user_3d_bookmarks（Rev34 Phase 1・migration 0018）────────
+/**
+ * 3D 図鑑のお気に入り。ログインユーザー専用。
+ * (user_id, model_id) 複合 unique で重複登録を防止。
+ */
+export const user3dBookmarks = pgTable(
+  'user_3d_bookmarks',
+  {
+    id:        uuid('id').defaultRandom().primaryKey(),
+    userId:    uuid('user_id').notNull().references(() => users.id, { onDelete: 'cascade' }),
+    modelId:   uuid('model_id').notNull().references(() => tutor3dModels.id, { onDelete: 'cascade' }),
+    createdAt: timestamp('created_at').defaultNow().notNull(),
+  },
+  (t) => ({
+    uniqUserModel:    uniqueIndex('user_3d_bookmarks_user_model_unique').on(t.userId, t.modelId),
+    idxUserCreatedAt: index('user_3d_bookmarks_user_id_created_at_idx').on(t.userId, t.createdAt),
+  }),
+);
+
 // ─── 型エクスポート（Drizzle の推論型） ───────────────────────
 export type Article              = typeof articles.$inferSelect;
 export type NewArticle           = typeof articles.$inferInsert;
@@ -317,6 +374,10 @@ export type UserAiMemo           = typeof userAiMemos.$inferSelect;
 export type NewUserAiMemo        = typeof userAiMemos.$inferInsert;
 export type UserVocabBookmark    = typeof userVocabBookmarks.$inferSelect;
 export type NewUserVocabBookmark = typeof userVocabBookmarks.$inferInsert;
+export type Tutor3dModel         = typeof tutor3dModels.$inferSelect;
+export type NewTutor3dModel      = typeof tutor3dModels.$inferInsert;
+export type User3dBookmark       = typeof user3dBookmarks.$inferSelect;
+export type NewUser3dBookmark    = typeof user3dBookmarks.$inferInsert;
 export type UserSentenceBookmark    = typeof userSentenceBookmarks.$inferSelect;
 export type NewUserSentenceBookmark = typeof userSentenceBookmarks.$inferInsert;
 export type UserAnimation        = typeof userAnimations.$inferSelect;

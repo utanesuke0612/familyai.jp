@@ -46,3 +46,4 @@ next-env.d.ts
 # ローカルでは引き続き存在 OK・pnpm db:convert-srt で再変換可能。
 content/voaenglish/**/*.srt
 content/voaenglish/**/*.vtt
+scripts/3d-tools/output/
