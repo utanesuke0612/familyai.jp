@@ -47,13 +47,15 @@ const TOOLS_BY_CATEGORY: Array<{
         accent: 'var(--color-mint)',
       },
       {
-        name: 'うごくAI教室',
-        summary: 'テーマを入力するとAIが教育用アニメーションを生成。小学生・中学生の学習や親子での調べものに活用できます。',
+        // Rev36: AI生成アニメから 3D 図鑑へ全面リプレイス。
+        // URL `/tools/ai-kyoshitsu` を維持しブランド「うごくAI教室」継続。
+        name: 'うごくAI教室・3D 図鑑',
+        summary: '太陽系・DNA・振り子など、理科の 3D モデルを回しながら観察。気になる場所をタップすると AI が詳しく教えてくれます。AR にも対応。',
         href: '/tools/ai-kyoshitsu',
         status: '公開中',
-        cta: '使ってみる',
+        cta: '見てみる',
         accent: 'var(--color-mint)',
-        adminOnly: true,    // Rev33: 管理者のみ表示（一般公開前の調整中）
+        adminOnly: true,    // Rev36: 段階公開（旧 Rev33 の admin gate を継続）
       },
     ],
   },

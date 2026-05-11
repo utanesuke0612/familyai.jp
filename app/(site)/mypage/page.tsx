@@ -210,23 +210,7 @@ export default async function MyPage() {
                   <span style={{ color: 'var(--color-orange)' }}>→</span>
                 </Link>
               </li>
-              <li>
-                <Link
-                  href="/mypage/ai-kyoshitsu"
-                  className="flex items-center justify-between rounded-2xl p-3"
-                  style={{
-                    background: 'var(--color-cream)',
-                    border: '1px solid var(--color-beige-dark)',
-                    color: 'var(--color-brown)',
-                  }}
-                >
-                  <span className="flex items-center gap-2">
-                    <span className="text-xl" aria-hidden="true">🎬</span>
-                    <span className="font-semibold">AI教室履歴</span>
-                  </span>
-                  <span style={{ color: 'var(--color-orange)' }}>→</span>
-                </Link>
-              </li>
+              {/* Rev36: AI教室（アニメ生成）は 3D 図鑑に置換済み・履歴ページは Phase 2 で再設計予定 */}
               <li>
                 <Link
                   href="/mypage/aimemo"

@@ -10,7 +10,6 @@ import type {
   ApiResponse,
   ArticleSummary,
   Article,
-  AnimationSummary,
   AiMemoItem,
   VocabItem,
   SentenceBookmarkItem,
@@ -209,22 +208,9 @@ export async function fetchRelated(
   );
 }
 
-// ─── うごくAI教室 API ─────────────────────────────────────────
-
-/**
- * GET /api/user/animations
- * ユーザーの生成履歴一覧（最大50件・新しい順）を取得する。
- * 認証必須。サーバは htmlContent 抜きで返却するので AnimationSummary[] になる。
- *
- * @note Web 版の Server Component は `lib/repositories/animations.ts` の
- *       `listUserAnimations()` を直呼びするため、このエンドポイントは主に
- *       iOS/Android モバイル・外部クライアント用。
- */
-export async function fetchUserAnimations(
-  baseUrl: string,
-): Promise<ApiResponse<AnimationSummary[]>> {
-  return apiFetch<AnimationSummary[]>(`${baseUrl}/api/user/animations`);
-}
+// ─── うごくAI教室 API（Rev36 で 3D 図鑑に置換・生成 API は削除）──
+// 旧 `fetchUserAnimations` は削除済み。Phase 2 で 3D ブックマーク取得
+// （`fetchUser3dBookmarks` 相当）を新設予定。
 
 // ─── ユーザー会員データ API ───────────────────────────────────
 

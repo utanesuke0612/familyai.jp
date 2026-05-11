@@ -4,80 +4,15 @@
  *
  * R1-T4（Rev30 候補）: shared/types 契約と mappers の整合を保証する。
  * 対象:
- *   - lib/mappers/animations.ts      : toAnimationSummary / toAnimationDetail
  *   - lib/mappers/ai-memos.ts        : toAiMemoItem
  *   - lib/mappers/vocab-bookmarks.ts : toVocabItem
+ *
+ * Rev36: lib/mappers/animations.ts は 3D 図鑑リプレイスに伴い削除済み。
  */
 
 import { describe, it, expect } from 'vitest';
-import {
-  toAnimationSummary,
-  toAnimationDetail,
-  type AnimationRow,
-} from '@/lib/mappers/animations';
 import { toAiMemoItem, type AiMemoRow } from '@/lib/mappers/ai-memos';
 import { toVocabItem, type VocabBookmarkRow } from '@/lib/mappers/vocab-bookmarks';
-
-// ─── Animations ─────────────────────────────────────────────────
-describe('toAnimationSummary / toAnimationDetail', () => {
-  const row: AnimationRow = {
-    id:          'anim-1',
-    userId:      'u1',
-    theme:       '磁石の力',
-    grade:       'elem-low',
-    subject:     'science',
-    prompt:      '磁石',
-    htmlContent: '<!DOCTYPE html><html></html>',
-    createdAt:   new Date('2026-04-28T10:00:00Z'),
-  };
-
-  it('Summary: htmlContent / userId が含まれない', () => {
-    const s = toAnimationSummary(row);
-    expect(s).toEqual({
-      id:        'anim-1',
-      theme:     '磁石の力',
-      grade:     'elem-low',
-      subject:   'science',
-      prompt:    '磁石',
-      createdAt: '2026-04-28T10:00:00.000Z',
-    });
-    // private 列は外に出ないこと
-    expect(s).not.toHaveProperty('htmlContent');
-    expect(s).not.toHaveProperty('userId');
-  });
-
-  it('Detail: htmlContent / userId が含まれる', () => {
-    const d = toAnimationDetail(row);
-    expect(d.htmlContent).toBe('<!DOCTYPE html><html></html>');
-    expect(d.userId).toBe('u1');
-    expect(d.id).toBe('anim-1');
-  });
-
-  it('createdAt が string でも ISO に正規化される', () => {
-    const s = toAnimationSummary({ ...row, createdAt: '2026-04-28T10:00:00Z' });
-    expect(s.createdAt).toBe('2026-04-28T10:00:00.000Z');
-  });
-
-  it('未知の grade は "elem-low" にフォールバック', () => {
-    const s = toAnimationSummary({ ...row, grade: 'unknown-grade' });
-    expect(s.grade).toBe('elem-low');
-  });
-
-  it('未知の subject は "science" にフォールバック', () => {
-    const s = toAnimationSummary({ ...row, subject: 'invalid' });
-    expect(s.subject).toBe('science');
-  });
-
-  it('全 grade enum がそのまま通る', () => {
-    expect(toAnimationSummary({ ...row, grade: 'elem-high' }).grade).toBe('elem-high');
-    expect(toAnimationSummary({ ...row, grade: 'middle'    }).grade).toBe('middle');
-  });
-
-  it('全 subject enum がそのまま通る', () => {
-    expect(toAnimationSummary({ ...row, subject: 'math'   }).subject).toBe('math');
-    expect(toAnimationSummary({ ...row, subject: 'social' }).subject).toBe('social');
-  });
-});
 
 // ─── AI Memo ────────────────────────────────────────────────────
 describe('toAiMemoItem', () => {
