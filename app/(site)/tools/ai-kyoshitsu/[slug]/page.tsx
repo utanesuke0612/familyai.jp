@@ -141,9 +141,9 @@ export default async function ModelDetailPage({ params }: PageProps) {
         </div>
       </section>
 
-      {/* 3D ビューア */}
+      {/* 3D ビューア + AI チャットサイドバー（Lesson と同じ 2 カラム）*/}
       <section className="px-4 sm:px-6 py-4">
-        <div className="mx-auto max-w-5xl">
+        <div className="mx-auto max-w-6xl">
           <ModelDetailClient model={model} />
         </div>
       </section>

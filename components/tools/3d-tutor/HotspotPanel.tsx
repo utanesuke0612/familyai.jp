@@ -205,52 +205,83 @@ export function HotspotPanel({ model, hotspot, onClose }: HotspotPanelProps) {
     }
   }
 
-  if (!hotspot) return null;
+  // hotspot 未選択時のガイダンス表示（サイドバー常駐型のため null を返さない）
+  if (!hotspot) {
+    return (
+      <div
+        className="rounded-2xl overflow-hidden"
+        style={{
+          background: 'white',
+          boxShadow:  'var(--shadow-warm-sm, 0 2px 10px rgba(107, 79, 58, 0.08))',
+          border:     '1px solid var(--color-beige)',
+        }}
+      >
+        <div
+          className="flex items-center gap-3 p-4"
+          style={{ background: 'linear-gradient(135deg, var(--color-orange) 0%, var(--color-peach) 100%)' }}
+        >
+          <span className="text-2xl" aria-hidden="true">💞</span>
+          <div>
+            <p className="font-bold text-sm text-white">AI に質問する</p>
+            <p className="text-xs text-white/80 truncate">
+              3D「{model.title}」を一緒に観察
+            </p>
+          </div>
+        </div>
+        <div className="p-4 flex flex-col gap-3 text-center">
+          <span className="text-3xl" aria-hidden="true">👆</span>
+          <p className="text-sm" style={{ color: 'var(--color-brown-light)', lineHeight: 1.7 }}>
+            左の 3D モデルの<br />
+            <strong style={{ color: 'var(--color-orange)' }}>オレンジの光っている点</strong>をタップしてみよう。<br />
+            あいちゃんが、その部分について<br />
+            やさしく教えてくれるよ！
+          </p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div
       role="dialog"
-      aria-modal="false"
       aria-labelledby="hotspot-panel-title"
-      className="fixed inset-x-0 bottom-0 z-50 px-2 sm:px-4 pb-2 sm:pb-4 pointer-events-none"
-      style={{ animation: 'fadeUp 0.25s ease-out' }}
+      className="rounded-2xl overflow-hidden flex flex-col"
+      style={{
+        background: 'white',
+        boxShadow:  'var(--shadow-warm-sm, 0 2px 10px rgba(107, 79, 58, 0.08))',
+        border:     '1px solid var(--color-beige)',
+        height:     'min(70vh, 560px)',
+        animation:  'fadeUp 0.2s ease-out',
+      }}
     >
+      {/* ── ヘッダー（AIChatWidget 同等のグラデ） ─────────────── */}
       <div
-        className="mx-auto max-w-3xl rounded-2xl overflow-hidden flex flex-col pointer-events-auto"
-        style={{
-          background: 'white',
-          boxShadow:  '0 -8px 32px rgba(107, 79, 58, 0.18)',
-          border:     '1px solid var(--color-beige)',
-          height:     'min(70vh, 560px)',
-        }}
+        className="flex items-center justify-between gap-3 px-4 py-3 shrink-0"
+        style={{ background: 'linear-gradient(135deg, var(--color-orange) 0%, var(--color-peach) 100%)' }}
       >
-        {/* ── ヘッダー（AIChatWidget 同等のグラデ） ─────────────── */}
-        <div
-          className="flex items-center justify-between gap-3 px-4 py-3 shrink-0"
-          style={{ background: 'linear-gradient(135deg, var(--color-orange) 0%, var(--color-peach) 100%)' }}
-        >
-          <div className="flex items-center gap-2 min-w-0">
-            <span className="text-lg shrink-0" aria-hidden="true">💞</span>
-            <div className="flex flex-col min-w-0">
-              <p
-                id="hotspot-panel-title"
-                className="font-bold text-sm text-white truncate"
-              >
-                {hotspot.partName} について AI に質問する
-              </p>
-              <p className="text-[11px] text-white/85 truncate">
-                3D「{model.title}」
-              </p>
-            </div>
+        <div className="flex items-center gap-2 min-w-0">
+          <span className="text-lg shrink-0" aria-hidden="true">💞</span>
+          <div className="flex flex-col min-w-0">
+            <p
+              id="hotspot-panel-title"
+              className="font-bold text-sm text-white truncate"
+            >
+              {hotspot.partName} について
+            </p>
+            <p className="text-[11px] text-white/85 truncate">
+              3D「{model.title}」
+            </p>
           </div>
-          <button
-            onClick={() => { abortRef.current?.abort(); onClose(); }}
-            className="text-white/80 hover:text-white transition-colors text-lg leading-none min-h-[36px] min-w-[36px] flex items-center justify-center shrink-0"
-            aria-label="パネルを閉じる"
-          >
-            ✕
-          </button>
         </div>
+        <button
+          onClick={() => { abortRef.current?.abort(); onClose(); }}
+          className="text-white/80 hover:text-white transition-colors text-lg leading-none min-h-[36px] min-w-[36px] flex items-center justify-center shrink-0"
+          aria-label="ホットスポット選択を解除"
+          title="別の場所を選ぶ"
+        >
+          ✕
+        </button>
+      </div>
 
         {/* ── メッセージ一覧 ─────────────────────────────────── */}
         <div
@@ -333,7 +364,6 @@ export function HotspotPanel({ model, hotspot, onClose }: HotspotPanelProps) {
             ➤
           </button>
         </form>
-      </div>
     </div>
   );
 }

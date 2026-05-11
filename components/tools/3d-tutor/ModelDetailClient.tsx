@@ -21,20 +21,21 @@ export function ModelDetailClient({ model }: ModelDetailClientProps) {
   const [activeHotspot, setActiveHotspot] = useState<Tutor3dHotspot | null>(null);
 
   return (
-    <>
-      <ModelViewer
-        src={model.glbUrl}
-        iosSrc={model.usdzUrl}
-        poster={model.thumbnailUrl}
-        alt={model.title}
-        hotspots={model.hotspots}
-        onHotspotClick={setActiveHotspot}
-        autoRotate
-        heightCss="min(70vh, 640px)"
-      />
+    <div className="grid grid-cols-1 lg:grid-cols-[1fr_340px] gap-6 items-start">
+      {/* ── 左：3D ビューア + ガイド ── */}
+      <div className="min-w-0">
+        <ModelViewer
+          src={model.glbUrl}
+          iosSrc={model.usdzUrl}
+          poster={model.thumbnailUrl}
+          alt={model.title}
+          hotspots={model.hotspots}
+          onHotspotClick={setActiveHotspot}
+          autoRotate
+          heightCss="min(60vh, 560px)"
+        />
 
-      {/* ホットスポットの説明: hotspot が無いモデルでもガイドだけ表示 */}
-      {model.hotspots.length === 0 ? (
+        {/* 操作ガイド */}
         <p
           style={{
             margin: '16px 0 0',
@@ -46,31 +47,20 @@ export function ModelDetailClient({ model }: ModelDetailClientProps) {
             lineHeight: 1.6,
           }}
         >
-          💡 このモデルにはまだホットスポットが設定されていません。
-          指でぐるぐる回したり、ピンチで拡大／縮小できます。
+          {model.hotspots.length === 0
+            ? '💡 このモデルにはまだホットスポットが設定されていません。指でぐるぐる回したり、ピンチで拡大／縮小できます。'
+            : '💡 オレンジの光っている点をタップすると、右側の AI チャットで詳しく教えてくれるよ！'}
         </p>
-      ) : (
-        <p
-          style={{
-            margin: '16px 0 0',
-            padding: '12px 14px',
-            background: 'var(--color-peach-light)',
-            borderRadius: 12,
-            fontSize: 13,
-            color: 'var(--color-brown)',
-            lineHeight: 1.6,
-          }}
-        >
-          💡 オレンジの光っている点をタップすると、あいちゃんが詳しく教えてくれるよ！
-        </p>
-      )}
+      </div>
 
-      {/* ホットスポットパネル（タップで現れる） */}
-      <HotspotPanel
-        model={model}
-        hotspot={activeHotspot}
-        onClose={() => setActiveHotspot(null)}
-      />
-    </>
+      {/* ── 右：AI チャットサイドバー（Lesson と同じ sticky パターン） ── */}
+      <aside className="lg:sticky lg:top-[calc(var(--header-height,72px)+24px)]">
+        <HotspotPanel
+          model={model}
+          hotspot={activeHotspot}
+          onClose={() => setActiveHotspot(null)}
+        />
+      </aside>
+    </div>
   );
 }
