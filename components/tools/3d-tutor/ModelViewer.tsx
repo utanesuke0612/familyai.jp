@@ -142,18 +142,31 @@ export function ModelViewer({
             data-visibility-attribute="visible"
             onClick={(e) => {
               e.preventDefault();
+              e.stopPropagation();
               onHotspotClick?.(h);
+            }}
+            onPointerDown={(e) => {
+              // pointer down が model-viewer の camera-controls に吸われると
+              // click 自体が発火しないことがあるため、ここで明示停止する。
+              e.stopPropagation();
             }}
             aria-label={`${h.partName} について解説を見る`}
             style={{
-              all: 'unset',
-              width: 22,
-              height: 22,
+              // 注意: `all: 'unset'` は使わない（pointer-events 等が想定外に上書きされるため）。
+              // 明示的なプロパティで指定する。
+              width: 32,
+              height: 32,
               borderRadius: '50%',
+              border: 'none',
+              padding: 0,
+              margin: 0,
               background: 'var(--color-orange, #F39C5F)',
-              boxShadow: '0 2px 8px rgba(0,0,0,0.3), 0 0 0 3px rgba(255,255,255,0.9)',
+              boxShadow: '0 2px 8px rgba(0,0,0,0.4), 0 0 0 3px rgba(255,255,255,0.95)',
               cursor: 'pointer',
+              pointerEvents: 'auto',
               animation: 'pulse-soft 1.6s ease-in-out infinite',
+              zIndex: 10,
+              touchAction: 'manipulation',
             }}
             title={h.partName}
           />
