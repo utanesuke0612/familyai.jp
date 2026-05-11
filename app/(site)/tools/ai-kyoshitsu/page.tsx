@@ -16,11 +16,9 @@ import Link              from 'next/link';
 import { SITE }          from '@/shared';
 import {
   TUTOR3D_SUBJECT_LABEL,
-  TUTOR3D_GRADE_LABEL,
   TUTOR3D_SUBJECTS,
-  TUTOR3D_GRADES,
 } from '@/shared';
-import type { Tutor3dSubject, Tutor3dGrade } from '@/shared';
+import type { Tutor3dSubject } from '@/shared';
 import { listPublishedModels } from '@/lib/repositories/3d-models';
 import { ModelGallery }        from '@/components/tools/3d-tutor/ModelGallery';
 
@@ -36,7 +34,6 @@ export const revalidate = 300;
 type PageProps = {
   searchParams?: {
     subject?: string;
-    grade?:   string;
   };
 };
 
@@ -46,15 +43,11 @@ export default async function AiKyoshitsu3DPage({ searchParams }: PageProps) {
     TUTOR3D_SUBJECTS.includes(searchParams?.subject as Tutor3dSubject)
       ? (searchParams!.subject as Tutor3dSubject)
       : undefined;
-  const grade =
-    TUTOR3D_GRADES.includes(searchParams?.grade as Tutor3dGrade)
-      ? (searchParams!.grade as Tutor3dGrade)
-      : undefined;
 
   // 2. DB 取得（公開済み・featured 優先）
   let models: Awaited<ReturnType<typeof listPublishedModels>> = [];
   try {
-    models = await listPublishedModels({ subject, grade, limit: 50 });
+    models = await listPublishedModels({ subject, limit: 50 });
   } catch (err) {
     console.error('[ai-kyoshitsu page] DB エラー:',
       err instanceof Error ? err.message : String(err));
@@ -62,12 +55,9 @@ export default async function AiKyoshitsu3DPage({ searchParams }: PageProps) {
   }
 
   // 3. クエリ文字列ヘルパー
-  const buildQuery = (overrides: Partial<{ subject?: string; grade?: string }>): string => {
+  const buildQuery = (next: { subject?: string }): string => {
     const params = new URLSearchParams();
-    const s = 'subject' in overrides ? overrides.subject : subject;
-    const g = 'grade'   in overrides ? overrides.grade   : grade;
-    if (s) params.set('subject', s);
-    if (g) params.set('grade',   g);
+    if (next.subject) params.set('subject', next.subject);
     const qs = params.toString();
     return qs ? `?${qs}` : '';
   };
@@ -101,37 +91,19 @@ export default async function AiKyoshitsu3DPage({ searchParams }: PageProps) {
         </div>
       </section>
 
-      {/* ── 絞り込み ── */}
+      {/* ── 絞り込み（サブカテゴリのみ・学年は Phase 2 で再検討） ── */}
       <section className="px-6 py-6">
         <div className="mx-auto max-w-6xl">
-          {/* サブカテゴリ */}
-          <div style={{ marginBottom: 14 }}>
-            <h2 style={filterLabelStyle}>🧪 ジャンルでえらぶ</h2>
-            <div style={chipRowStyle}>
-              <Link href={`/tools/ai-kyoshitsu${buildQuery({ subject: undefined })}`} style={chipStyle(!subject)}>
-                すべて
+          <h2 style={filterLabelStyle}>🧪 ジャンルでえらぶ</h2>
+          <div style={chipRowStyle}>
+            <Link href={`/tools/ai-kyoshitsu${buildQuery({ subject: undefined })}`} style={chipStyle(!subject)}>
+              すべて
+            </Link>
+            {TUTOR3D_SUBJECTS.map((s) => (
+              <Link key={s} href={`/tools/ai-kyoshitsu${buildQuery({ subject: s })}`} style={chipStyle(subject === s)}>
+                {TUTOR3D_SUBJECT_LABEL[s]}
               </Link>
-              {TUTOR3D_SUBJECTS.map((s) => (
-                <Link key={s} href={`/tools/ai-kyoshitsu${buildQuery({ subject: s })}`} style={chipStyle(subject === s)}>
-                  {TUTOR3D_SUBJECT_LABEL[s]}
-                </Link>
-              ))}
-            </div>
-          </div>
-
-          {/* 学年 */}
-          <div>
-            <h2 style={filterLabelStyle}>📚 学年でえらぶ</h2>
-            <div style={chipRowStyle}>
-              <Link href={`/tools/ai-kyoshitsu${buildQuery({ grade: undefined })}`} style={chipStyle(!grade)}>
-                すべて
-              </Link>
-              {TUTOR3D_GRADES.map((g) => (
-                <Link key={g} href={`/tools/ai-kyoshitsu${buildQuery({ grade: g })}`} style={chipStyle(grade === g)}>
-                  {TUTOR3D_GRADE_LABEL[g]}
-                </Link>
-              ))}
-            </div>
+            ))}
           </div>
         </div>
       </section>
