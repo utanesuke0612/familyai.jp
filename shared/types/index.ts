@@ -123,6 +123,10 @@ export type Tutor3dGrade = 'elem-low' | 'elem-high' | 'middle';
  * - normal:   法線（任意・吹き出し向き等に使用）
  * - defaultExplanation: タップ即時に表示する短文（音声読み上げ素地）
  * - promptHint: AI 深掘り会話の参考情報（システムプロンプトに埋め込む）
+ * - meshName:  Phase 2 で案 ③（メッシュ名識別）に移行する際に使用。
+ *              GLB の glTF Node 名と一致させると、クリック時に位置近似ではなく
+ *              実際のメッシュ命中で正確に判定可能。
+ *              Phase 1 は座標近似のため optional。
  */
 export interface Tutor3dHotspot {
   id:                  string;
@@ -131,6 +135,8 @@ export interface Tutor3dHotspot {
   normal?:             [number, number, number];
   defaultExplanation:  string;
   promptHint:          string;
+  /** Phase 2 移行用: GLB 内のメッシュ/Node 名。未指定なら位置近似のみで判定。 */
+  meshName?:           string;
 }
 
 /**

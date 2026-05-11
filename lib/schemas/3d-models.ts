@@ -28,6 +28,9 @@ export const hotspotSchema = z.object({
   normal:             positionSchema.optional(),
   defaultExplanation: z.string().max(400).default(''),
   promptHint:         z.string().max(800).default(''),
+  // Phase 2 移行用: GLB の glTF Node 名（メッシュ名）。指定時はクリック検出で
+  // 位置近似より先にメッシュ名一致を試みる。未指定なら位置近似のみで判定。
+  meshName:           z.string().max(80).optional(),
 });
 
 export const hotspotArraySchema = z.array(hotspotSchema).max(30);

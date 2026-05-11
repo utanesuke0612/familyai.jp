@@ -231,8 +231,9 @@ export function HotspotPanel({ model, hotspot, onClose }: HotspotPanelProps) {
         <div className="p-4 flex flex-col gap-3 text-center">
           <span className="text-3xl" aria-hidden="true">👆</span>
           <p className="text-sm" style={{ color: 'var(--color-brown-light)', lineHeight: 1.7 }}>
-            左の 3D モデルの<br />
-            <strong style={{ color: 'var(--color-orange)' }}>オレンジの光っている点</strong>をタップしてみよう。<br />
+            左の 3D モデルを<br />
+            ぐるぐる回したり、<br />
+            <strong style={{ color: 'var(--color-orange)' }}>気になる部分をタップ</strong>してみよう。<br />
             あいちゃんが、その部分について<br />
             やさしく教えてくれるよ！
           </p>
