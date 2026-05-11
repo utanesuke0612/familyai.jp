@@ -1,8 +1,10 @@
 /**
  * scripts/seed-3d-models.ts
- * familyai.jp / うごくAI教室 3D 図鑑 (Rev34 Phase 1)
+ * familyai.jp / うごくAI教室 3D 図鑑 (Rev34 Phase 1 / Rev36)
  *
- * 厳選 3 モデルを `tutor3d_models` テーブルに upsert する。
+ * `tutor3d_models` テーブルを MODELS 配列と「完全同期」する。
+ *   - 配列に存在する slug: INSERT or UPDATE（upsert）
+ *   - 配列に存在しないが DB に残っている slug: DELETE（クリーンアップ）
  *
  * 実行:
  *   pnpm tsx scripts/seed-3d-models.ts
@@ -10,8 +12,6 @@
  * 前提:
  *   - drizzle/0018_tutor3d_models.sql 適用済み（pnpm db:push 等で反映）
  *   - public/3d-models/ に GLB ファイル配置済み
- *     （solar-system.glb は scripts/3d-tools/output/ から既にコピー済）
- *     （dna-helix.glb / pendulum.glb は junli さんが追加生成後にコピー）
  */
 
 import { config } from 'dotenv';
@@ -20,7 +20,7 @@ config({ path: '.env.local' });
 
 import { db } from '../lib/db';
 import { tutor3dModels } from '../lib/db/schema';
-import { eq } from 'drizzle-orm';
+import { eq, notInArray } from 'drizzle-orm';
 import type { Tutor3dHotspot } from '../shared';
 
 interface SeedModel {
@@ -134,73 +134,15 @@ const MODELS: SeedModel[] = [
     published:   true,
     isFeatured:  true,
   },
-  {
-    slug:        'dna-helix',
-    title:       'DNA 二重らせん',
-    description: '生き物の体を作る設計図、DNA。2 本のらせんが向かい合って巻きついている、ふしぎな構造を観察してみよう。',
-    subject:     'chemistry',
-    grade:       'middle',
-    glbUrl:      '/3d-models/dna-helix.glb',
-    usdzUrl:     null,
-    thumbnailUrl: null,
-    hotspots: [
-      {
-        id:                 'backbone',
-        partName:           '糖リン酸骨格',
-        position:           [0.6, 0, 0],
-        defaultExplanation: 'らせんの「うで」の部分。糖（とう）とリンが交互につながってできているよ。',
-        promptHint:         '糖リン酸骨格はデオキシリボース（5炭糖）とリン酸基がホスホジエステル結合で交互に連結した構造。塩基はここから内側に向いて結合。',
-      },
-      {
-        id:                 'base-pair',
-        partName:           '塩基対',
-        position:           [0, 0, 0],
-        defaultExplanation: '色のついたつなぎ目！A-T と G-C のペアで、生き物のせっけい図を書いているよ。',
-        promptHint:         'A-T / G-C の相補的塩基対。それぞれ2本・3本の水素結合で結合。塩基配列が遺伝情報をコードする。',
-      },
-    ],
-    attribution: 'AI Coding Agent 生成（Blender Python・generate-dna-helix.py）',
-    license:     'CC0 (familyai.jp 専用・完全オリジナル)',
-    sourceUrl:   null,
-    published:   true,
-    isFeatured:  false,
-  },
-  {
-    slug:        'pendulum',
-    title:       '振り子の運動',
-    description: 'おもりが前後にゆれる、シンプルな仕組み。なぜ同じリズムでゆれ続けるんだろう？',
-    subject:     'physics',
-    grade:       'elem-high',
-    glbUrl:      '/3d-models/pendulum.glb',
-    usdzUrl:     null,
-    thumbnailUrl: null,
-    hotspots: [
-      {
-        id:                 'bob',
-        partName:           'おもり',
-        position:           [0, -2, 0],
-        defaultExplanation: '一番下のだいだい色の球。重さがあるから、重力でゆれるんだよ。',
-        promptHint:         '振り子の質量を集中させた点（重心）。位置エネルギー ↔ 運動エネルギーが交互に変換される。',
-      },
-      {
-        id:                 'pivot',
-        partName:           '支点',
-        position:           [0, 1.2, 0],
-        defaultExplanation: '上の方の小さなくろい点。ここを中心にゆれるよ。',
-        promptHint:         'ピボット。摩擦が少ないほど振り子はより長く揺れ続ける。理想的な単振り子では支点での損失ゼロを仮定。',
-      },
-    ],
-    attribution: 'AI Coding Agent 生成（Blender Python・generate-pendulum.py）',
-    license:     'CC0 (familyai.jp 専用・完全オリジナル)',
-    sourceUrl:   null,
-    published:   true,
-    isFeatured:  false,
-  },
+  // Rev36: dna-helix / pendulum は本セッションで削除（運用しないモデル）。
+  //        将来追加するモデルはここに append（自動同期されるので削除も同じファイルで管理）。
 ];
 
 async function main() {
-  console.log(`🌐 3D モデル ${MODELS.length} 件を upsert します...`);
+  console.log(`🌐 tutor3d_models を MODELS 配列（${MODELS.length} 件）と同期します...`);
 
+  // 1. 配列にあるものを upsert
+  const keepSlugs = MODELS.map((m) => m.slug);
   for (const m of MODELS) {
     const existing = await db
       .select({ id: tutor3dModels.id })
@@ -217,6 +159,20 @@ async function main() {
     } else {
       await db.insert(tutor3dModels).values({ ...m });
       console.log(`  ✅ INSERT: ${m.slug}`);
+    }
+  }
+
+  // 2. 配列に存在しないが DB に残っている slug は DELETE
+  //    （user_3d_bookmarks は FK CASCADE で自動削除される）
+  const stale = await db
+    .select({ slug: tutor3dModels.slug })
+    .from(tutor3dModels)
+    .where(keepSlugs.length > 0 ? notInArray(tutor3dModels.slug, keepSlugs) : undefined);
+
+  if (stale.length > 0) {
+    for (const row of stale) {
+      await db.delete(tutor3dModels).where(eq(tutor3dModels.slug, row.slug));
+      console.log(`  🗑️  DELETE: ${row.slug}`);
     }
   }
 
