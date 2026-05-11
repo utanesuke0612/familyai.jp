@@ -176,7 +176,10 @@ export default async function ShareAnimationPage(
               height={800}
               style={{ display: 'block', border: 'none' }}
               title={animation.theme}
-              sandbox="allow-scripts allow-same-origin"
+              // Rev35 #security: allow-same-origin を外して opaque origin に隔離。
+              // AI 生成 HTML が親オリジンの Cookie/localStorage/API にアクセスできない状態にする。
+              // 二重防御として /api/animations/:id 側にも CSP sandbox ヘッダーを設定済み。
+              sandbox="allow-scripts"
               loading="lazy"
             />
           </div>

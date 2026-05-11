@@ -18,7 +18,7 @@ import bcrypt           from 'bcryptjs';
 import { eq }           from 'drizzle-orm';
 import { db, users }    from '@/lib/db';
 import { verifyCsrf }   from '@/lib/csrf';
-import { getRateLimiter, getClientIp, rateLimitedResponse } from '@/lib/ratelimit';
+import { getRateLimiter, getClientIp, isRateLimitFailClosed, rateLimitedResponse } from '@/lib/ratelimit';
 
 // ── バリデーション ─────────────────────────────────────────────
 const registerSchema = z.object({
@@ -51,6 +51,9 @@ export async function POST(req: NextRequest) {
     if (!success) {
       return rateLimitedResponse('登録の試行が多すぎます。しばらくしてからお試しください。');
     }
+  } else if (isRateLimitFailClosed()) {
+    // Rev35 #security: production で Redis 未設定なら 429 で塞ぐ（ブルートフォース防御）。
+    return rateLimitedResponse('登録は一時的に利用できません。');
   }
 
   let rawBody: unknown;

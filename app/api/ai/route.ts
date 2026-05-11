@@ -31,6 +31,7 @@ import { routeAI, buildArticleSystemPrompt } from '@/lib/ai/router';
 import { buildAiEchoSystemPrompt }  from '@/lib/ai/ai-echo-prompt';
 import { verifyCsrf }     from '@/lib/csrf';
 import { auth }           from '@/lib/auth';
+import { isRateLimitFailClosed } from '@/lib/ratelimit';
 
 export const runtime = 'nodejs';
 
@@ -187,6 +188,15 @@ export async function POST(req: NextRequest) {
         { status: 429, headers: { 'Content-Type': 'application/json' } },
       );
     }
+  } else if (isRateLimitFailClosed()) {
+    // Rev35 #security: production で Redis 未設定なら AI コスト爆発を防ぐため fail closed。
+    return new Response(
+      JSON.stringify({
+        ok: false,
+        error: { code: 'RATE_LIMIT_EXCEEDED', message: 'AI は一時的に利用できません。' },
+      }),
+      { status: 429, headers: { 'Content-Type': 'application/json' } },
+    );
   }
 
   // 4. システムプロンプト構築

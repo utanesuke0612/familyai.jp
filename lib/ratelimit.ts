@@ -1,9 +1,15 @@
 /**
  * lib/ratelimit.ts
- * familyai.jp — Upstash Ratelimit 共通ヘルパー（Rev23 #5）
+ * familyai.jp — Upstash Ratelimit 共通ヘルパー（Rev23 #5 / Rev35 #security）
  *
  * 複数 API で共通利用するためのレート制限ユーティリティ。
- * Upstash 環境変数が未設定の場合は null を返し、呼び出し側はスキップする。
+ *
+ * 環境別ポリシー（Rev35 #security）:
+ *   - production: Redis 未設定は fail closed（429 を返す）。
+ *     これにより env 漏れで AI/TTS/管理 API が無制限になる事故を防ぐ。
+ *     env 検証も lib/env.ts の superRefine で production 必須に格上げ済み。
+ *   - development / test: Redis 未設定なら null を返し呼び出し側はスキップ。
+ *     ローカル開発で Upstash 設定不要にしておく利便性を維持。
  *
  * 用途:
  *   - admin API（POST/PUT/DELETE/PATCH）: 10req/min per (userId + IP)
@@ -30,6 +36,14 @@ function getRedis(): Redis | null {
   return _redis;
 }
 
+/**
+ * Rev35 #security: production で Redis 未設定なら true を返す（fail closed 判定用）。
+ * 呼び出し側はこれを見て 429 を返す or 別フォールバックに切替える。
+ */
+export function isRateLimitFailClosed(): boolean {
+  return process.env.NODE_ENV === 'production' && getRedis() === null;
+}
+
 // ── Ratelimit キャッシュ（prefix ごとに1つ） ─────────────────
 const _limiters = new Map<string, Ratelimit>();
 
@@ -43,7 +57,11 @@ export function getRateLimiter(
   window:  `${number} ${'s' | 'm' | 'h' | 'd'}`,
 ): Ratelimit | null {
   const redis = getRedis();
-  if (!redis) return null;
+  if (!redis) {
+    // Rev35 #security: production で Redis 未設定は fail closed の合図。
+    // ここでは null を返し、呼び出し側が isRateLimitFailClosed() を見て 429 を返す。
+    return null;
+  }
 
   const cacheKey = `${prefix}:${tokens}:${window}`;
   if (_limiters.has(cacheKey)) return _limiters.get(cacheKey)!;
@@ -88,7 +106,16 @@ export async function enforceAdminRateLimit(
   identity: string,
 ): Promise<NextResponse | null> {
   const rl = getRateLimiter('ratelimit:admin', 10, '1 m');
-  if (!rl) return null;  // Redis 未設定時はスキップ
+  if (!rl) {
+    // Rev35 #security: production で Redis 未設定なら fail closed（管理 API を 429 で守る）。
+    // development / test では従来通り null を返してスキップ。
+    if (isRateLimitFailClosed()) {
+      return rateLimitedResponse(
+        '一時的にレート制限が機能していません。管理者に連絡してください。',
+      );
+    }
+    return null;
+  }
 
   const ip  = getClientIp(req);
   const key = `${identity}:${ip}`;

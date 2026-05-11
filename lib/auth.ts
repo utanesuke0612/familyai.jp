@@ -58,43 +58,54 @@ async function getUserByEmail(email: string) {
 }
 
 // ── NextAuth 設定 ──────────────────────────────────────────────
+// Rev35 #security: Google provider は両 env が揃った時のみ登録。
+// 片方欠落だと NextAuth runtime で「invalid_client」になりログイン全体が壊れる。
+// env 検証は lib/env.ts でも refine しているが、ここでも防御的にチェックする。
+const googleId     = process.env.GOOGLE_CLIENT_ID;
+const googleSecret = process.env.GOOGLE_CLIENT_SECRET;
+const googleEnabled = !!googleId && !!googleSecret;
+
+const credentialsProvider = Credentials({
+  credentials: {
+    email:    { label: 'メールアドレス', type: 'email' },
+    password: { label: 'パスワード',     type: 'password' },
+  },
+  async authorize(credentials) {
+    if (!credentials?.email || !credentials?.password) return null;
+
+    const user = await getUserByEmail(credentials.email as string);
+    if (!user || !user.passwordHash) return null;
+
+    const isValid = await bcrypt.compare(
+      credentials.password as string,
+      user.passwordHash,
+    );
+    if (!isValid) return null;
+
+    return {
+      id:    user.id,
+      email: user.email,
+      name:  user.name ?? null,
+      image: user.image ?? null,
+    };
+  },
+});
+
 export const { handlers, signIn, signOut, auth } = NextAuth({
   // NEXTAUTH_SECRET / AUTH_SECRET どちらも対応
   secret: process.env.NEXTAUTH_SECRET ?? process.env.AUTH_SECRET,
 
   providers: [
-    // ── Google ログイン ──────────────────────────────────────
-    Google({
-      clientId:     process.env.GOOGLE_CLIENT_ID!,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
-    }),
+    // ── Google ログイン（env が揃っている時のみ登録）──────────
+    ...(googleEnabled
+      ? [Google({
+          clientId:     googleId!,
+          clientSecret: googleSecret!,
+        })]
+      : []),
 
     // ── ローカルアカウント（メール＋パスワード）─────────────
-    Credentials({
-      credentials: {
-        email:    { label: 'メールアドレス', type: 'email' },
-        password: { label: 'パスワード',     type: 'password' },
-      },
-      async authorize(credentials) {
-        if (!credentials?.email || !credentials?.password) return null;
-
-        const user = await getUserByEmail(credentials.email as string);
-        if (!user || !user.passwordHash) return null;
-
-        const isValid = await bcrypt.compare(
-          credentials.password as string,
-          user.passwordHash,
-        );
-        if (!isValid) return null;
-
-        return {
-          id:    user.id,
-          email: user.email,
-          name:  user.name ?? null,
-          image: user.image ?? null,
-        };
-      },
-    }),
+    credentialsProvider,
 
     // TODO: Phase4 - Apple ID Provider を追加予定
     // Apple({

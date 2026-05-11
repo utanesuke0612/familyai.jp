@@ -9,7 +9,7 @@ import { NextRequest } from 'next/server';
 import { z } from 'zod';
 import { MODEL_ROUTER, RATE_LIMIT } from '@/shared';
 import { verifyCsrf } from '@/lib/csrf';
-import { getClientIp, getRateLimiter, rateLimitedResponse } from '@/lib/ratelimit';
+import { getClientIp, getRateLimiter, isRateLimitFailClosed, rateLimitedResponse } from '@/lib/ratelimit';
 import {
   generateOpenRouterTts,
   type OpenRouterTtsVoice,
@@ -58,6 +58,9 @@ export async function POST(req: NextRequest) {
     if (!success) {
       return rateLimitedResponse('音声生成のリクエストが多すぎます。少し待ってから再試行してください。');
     }
+  } else if (isRateLimitFailClosed()) {
+    // Rev35 #security: production で Redis 未設定なら TTS を 429 で塞ぐ（コスト爆発防止）。
+    return rateLimitedResponse('音声生成は一時的に利用できません。');
   }
 
   let rawBody: unknown;

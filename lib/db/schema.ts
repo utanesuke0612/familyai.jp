@@ -57,26 +57,35 @@ export const articles = pgTable(
 );
 
 // ─── users ────────────────────────────────────────────────────
-export const users = pgTable('users', {
-  id:               uuid('id').defaultRandom().primaryKey(),
-  email:            varchar('email', { length: 255 }).notNull().unique(),
-  name:             varchar('name', { length: 255 }),
-  image:            text('image'),
+export const users = pgTable(
+  'users',
+  {
+    id:               uuid('id').defaultRandom().primaryKey(),
+    email:            varchar('email', { length: 255 }).notNull().unique(),
+    name:             varchar('name', { length: 255 }),
+    image:            text('image'),
 
-  // 認証プロバイダー: 'google' | 'local' | 'apple'（将来追加）
-  authProvider:     varchar('auth_provider', { length: 20 }).notNull().default('local'),
+    // 認証プロバイダー: 'google' | 'local' | 'apple'（将来追加）
+    authProvider:     varchar('auth_provider', { length: 20 }).notNull().default('local'),
 
-  // ローカルアカウント用（Google/Apple ログイン時は null）
-  // パスワードポリシー: 8文字以上・bcrypt saltRounds:12 でハッシュ化
-  passwordHash:     text('password_hash'),
+    // ローカルアカウント用（Google/Apple ログイン時は null）
+    // パスワードポリシー: 8文字以上・bcrypt saltRounds:12 でハッシュ化
+    passwordHash:     text('password_hash'),
 
-  // プラン: 'free' | 'premium'
-  plan:             varchar('plan', { length: 20 }).notNull().default('free'),
-  stripeCustomerId: text('stripe_customer_id'),
+    // プラン: 'free' | 'premium'
+    plan:             varchar('plan', { length: 20 }).notNull().default('free'),
+    stripeCustomerId: text('stripe_customer_id'),
 
-  createdAt:        timestamp('created_at').defaultNow().notNull(),
-  updatedAt:        timestamp('updated_at').defaultNow().notNull(),
-});
+    createdAt:        timestamp('created_at').defaultNow().notNull(),
+    updatedAt:        timestamp('updated_at').defaultNow().notNull(),
+  },
+  // Rev35 #perf: 管理者ユーザー一覧の sort / プラン絞り込みでフルスキャンを避ける。
+  // email の trigram 検索 index は pg_trgm 拡張が必要なので別 PR で追加する。
+  (t) => ({
+    createdAtIdx: index('users_created_at_idx').on(t.createdAt),
+    planIdx:      index('users_plan_idx').on(t.plan),
+  }),
+);
 
 
 
@@ -100,6 +109,9 @@ export const userAiMemos = pgTable(
   },
   (t) => ({
     uniqUserMemo: uniqueIndex('user_ai_memos_user_id_memo_id_idx').on(t.userId, t.memoId),
+    // Rev35 #perf: マイページ「AIメモ」一覧の (userId 絞り込み + savedAt 並び替え) を index で覆う。
+    // B-tree は両方向スキャン可能なので DESC 表記は不要。
+    savedAtIdx:   index('user_ai_memos_user_id_saved_at_idx').on(t.userId, t.savedAt),
   }),
 );
 
@@ -126,6 +138,8 @@ export const userVocabBookmarks = pgTable(
   },
   (t) => ({
     uniqUserVocab: uniqueIndex('user_vocab_bookmarks_user_id_vocab_id_idx').on(t.userId, t.vocabId),
+    // Rev35 #perf: マイページ「単語帳」一覧の (userId 絞り込み + addedAt 並び替え) を index で覆う。
+    addedAtIdx:    index('user_vocab_bookmarks_user_id_added_at_idx').on(t.userId, t.addedAt),
   }),
 );
 

@@ -67,6 +67,23 @@ export async function GET(
       'Content-Type':    'text/html; charset=utf-8',
       // Next.js デフォルトの DENY を SAMEORIGIN に上書きしてiframe表示を許可
       'X-Frame-Options': 'SAMEORIGIN',
+      // Rev35 #security: iframe 属性が外されても CSP で同等の隔離を強制する二重防御。
+      // - sandbox allow-scripts: 親オリジンと別の opaque origin として実行（Cookie / storage 隔離）
+      // - default-src 'none' + 明示許可: AI生成HTMLは self/inline のみ。外部 fetch / form 送信 / top navigation を遮断
+      // - connect-src 'none': AI生成スクリプトから fetch/XHR/WebSocket 全面禁止（プロンプトインジェクション対策）
+      // - frame-ancestors 'self': 自サイト以外からの埋め込み禁止（X-Frame-Options の補完）
+      'Content-Security-Policy': [
+        "sandbox allow-scripts",
+        "default-src 'none'",
+        "script-src 'unsafe-inline'",
+        "style-src 'unsafe-inline' https://fonts.googleapis.com",
+        "font-src https://fonts.gstatic.com",
+        "img-src data: https:",
+        "connect-src 'none'",
+        "form-action 'none'",
+        "base-uri 'none'",
+        "frame-ancestors 'self'",
+      ].join('; '),
       'Cache-Control':   cacheHeader,
     },
   });

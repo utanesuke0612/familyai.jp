@@ -38,6 +38,7 @@ import { Ratelimit }                  from '@upstash/ratelimit';
 import { Redis }                      from '@upstash/redis';
 import { auth }                       from '@/lib/auth';
 import { verifyCsrf }                 from '@/lib/csrf';
+import { isRateLimitFailClosed }      from '@/lib/ratelimit';
 import { completeByModelId, completeByModelIdWithUsage } from '@/lib/ai/router';
 import { MAX_GENERATED_HTML_BYTES, MAX_ANIMATION_PROMPT } from '@/shared';
 import { createAnimation }            from '@/lib/repositories/animations';
@@ -551,6 +552,18 @@ export async function POST(req: NextRequest) {
           { status: 429 },
         );
       }
+    } else if (isRateLimitFailClosed()) {
+      // Rev35 #security: production で Redis 未設定なら AI コスト爆発を防ぐため fail closed。
+      return NextResponse.json(
+        {
+          ok: false,
+          error: {
+            code: 'RATE_LIMIT_EXCEEDED',
+            message: 'アニメーション生成は一時的に利用できません。',
+          },
+        },
+        { status: 429 },
+      );
     }
   }
 

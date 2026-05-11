@@ -228,7 +228,8 @@ function PreviewModal({ item, onClose }: { item: AnimationItem; onClose: () => v
               ...(isFullscreen ? { height: '100vh', width: '100%' } : {}),
             }}
             title={item.theme}
-            sandbox="allow-scripts allow-same-origin"
+            // Rev35 #security: allow-same-origin 除去で opaque origin に隔離（postMessage は引き続き機能）。
+            sandbox="allow-scripts"
           />
         </div>
       </div>

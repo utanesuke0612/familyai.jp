@@ -710,7 +710,9 @@ function PreviewPanel({
               ...(isFs ? { height: '100vh', width: '100%' } : {}),
             }}
             title={theme.name}
-            sandbox="allow-scripts allow-same-origin"
+            // Rev35 #security: allow-same-origin 除去で AI 生成 HTML を opaque origin に隔離。
+            // postMessage は opaque origin でも親に届くため iframeHeight 通知は引き続き機能。
+            sandbox="allow-scripts"
             loading="lazy"
           />
         ) : (
@@ -1043,7 +1045,8 @@ function ResultPanel({
             ...(isFs ? { height: '100vh', width: '100%' } : {}),
           }}
           title={themeLabel}
-          sandbox="allow-scripts allow-same-origin"
+          // Rev35 #security: allow-same-origin 除去で opaque origin に隔離（postMessage は引き続き機能）。
+          sandbox="allow-scripts"
         />
       </div>
 

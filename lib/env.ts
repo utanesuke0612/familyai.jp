@@ -31,7 +31,7 @@ const serverEnvSchema = z.object({
     .string()
     .min(1, 'DATABASE_URL is required (Neon / Postgres connection string)'),
 
-  // ── NextAuth（必須・lazy 検証）
+  // ── NextAuth（必須・lazy 検証 — どちらか1つ必須・refine で検証）
   NEXTAUTH_SECRET: z
     .string()
     .min(16, 'NEXTAUTH_SECRET must be at least 16 chars (use `openssl rand -base64 32`)')
@@ -76,7 +76,49 @@ const serverEnvSchema = z.object({
 
   // ── VOA assets（クライアント公開・ビルド時に解決）
   NEXT_PUBLIC_VOA_BLOB_BASE: z.string().url().optional(),
-});
+})
+  // Rev35 #security: NEXTAUTH_SECRET か AUTH_SECRET のどちらかは必須。
+  // どちらも欠けていると NextAuth が安全でないデフォルトで起動する。
+  .superRefine((env, ctx) => {
+    if (!env.NEXTAUTH_SECRET && !env.AUTH_SECRET) {
+      ctx.addIssue({
+        code: 'custom',
+        path: ['NEXTAUTH_SECRET'],
+        message:
+          'NEXTAUTH_SECRET or AUTH_SECRET is required (at least 16 chars). ' +
+          'Generate with `openssl rand -base64 32` and set it in environment variables.',
+      });
+    }
+  })
+  // Google OAuth は ID と Secret を「両方 set or 両方 unset」のみ許可。
+  // 片方だけセットされていると provider 登録時に runtime クラッシュする。
+  .superRefine((env, ctx) => {
+    const id     = env.GOOGLE_CLIENT_ID;
+    const secret = env.GOOGLE_CLIENT_SECRET;
+    if ((id && !secret) || (!id && secret)) {
+      ctx.addIssue({
+        code: 'custom',
+        path: ['GOOGLE_CLIENT_ID'],
+        message:
+          'GOOGLE_CLIENT_ID and GOOGLE_CLIENT_SECRET must both be set or both unset. ' +
+          'Setting only one breaks the Google OAuth provider at runtime.',
+      });
+    }
+  })
+  // production では Upstash Redis を必須化（fail closed）。
+  // Redis 未設定だと rate limiter が no-op になり、AI/TTS/管理API が無制限になる。
+  .superRefine((env, ctx) => {
+    if (env.NODE_ENV !== 'production') return;
+    if (!env.UPSTASH_REDIS_REST_URL || !env.UPSTASH_REDIS_REST_TOKEN) {
+      ctx.addIssue({
+        code: 'custom',
+        path: ['UPSTASH_REDIS_REST_URL'],
+        message:
+          'UPSTASH_REDIS_REST_URL and UPSTASH_REDIS_REST_TOKEN are required in production ' +
+          '(rate limiter would otherwise become no-op and expose AI/TTS/admin APIs to abuse).',
+      });
+    }
+  });
 
 export type ServerEnv = z.infer<typeof serverEnvSchema>;
 
