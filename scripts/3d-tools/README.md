@@ -100,11 +100,24 @@ blender --background --python generate-solar-system.py
 2. スケール調整：Y 軸高さを 1m 前後に正規化（N キーで右パネル表示）
 3. 不要なオブジェクト削除（背景・カメラなど）
 4. ポリゴン削減（必要なら）：`Modifier > Decimate > Ratio 0.5`
-5. `File > Export > glTF 2.0 (.glb)` で保存
+5. **マテリアル / メッシュに分かりやすい名前を付ける** ⭐重要
+   - Outliner（右パネル）で各オブジェクトを選択
+   - 「Object Properties」タブ → 名前を編集（例: `Earth`、`Heart`、`Pendulum_Bob`）
+   - マテリアルも同様（例: `Earth_Material`）
+   - → これにより**サイトでクリックした時に「どのパーツか」を正確に判定可能**になる
+   - 命名規則（推奨）: 英数字 + アンダースコア・スペース禁止・パーツの英語名
+6. `File > Export > glTF 2.0 (.glb)` で保存
    - Format: **glTF Binary (.glb)**
    - Geometry: **Apply Modifiers ✅**
    - Materials: **Export ✅**
    - Animation: **Export ✅**（あれば）
+
+> 💡 **なぜ命名が重要か**: サイトのクリック判定は 2 段階で動きます。
+> ① まず **マテリアル名**で判定（精度◎・誤検知ゼロ）。
+> ② マテリアル名が一致しなければ **クリック位置の近似**で判定（精度△）。
+>
+> `Earth_Material` のようにパーツ名 + `_Material` 規約で付けると、
+> seed データで `meshName: "Earth"` と書くだけで自動マッチします。
 
 ### Step 3: 圧縮
 

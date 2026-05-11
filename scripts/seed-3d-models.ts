@@ -51,26 +51,54 @@ const MODELS: SeedModel[] = [
     usdzUrl:     null,
     thumbnailUrl: null,
     hotspots: [
-      // 座標は generate-solar-system.py の配置（教育的圧縮スケール）に対応。
-      // 惑星は X 軸（右方向）に並んでいるので position[0] に距離を入れる。
-      // 後で hotspot-picker.html で正確に取り直しできる。
+      // meshName: generate-solar-system.py のマテリアル名「<Planet>_Material」と一致。
+      // クリック時は ModelViewer の案 ③ ロジックが優先的にこれで判定する。
+      // 位置近似フォールバックも残すため position は引き続き保持。
+      // 全 9 天体登録（太陽 + 水星〜海王星）：マテリアル名識別なら誤検知ゼロ。
       {
         id:                 'sun',
         partName:           '太陽',
+        meshName:           'Sun',
         position:           [0, 0, 0],
         defaultExplanation: 'たいようは、太陽系の中心で自分で光をだしているよ。地球より100倍以上も大きいんだ。',
         promptHint:         '太陽は太陽系の質量の99.8%を占める恒星。水素の核融合反応で光と熱を発する。表面温度約6,000℃、中心温度約1,500万℃。',
       },
       {
+        id:                 'mercury',
+        partName:           '水星',
+        meshName:           'Mercury',
+        position:           [1.8, 0, 0],
+        defaultExplanation: '太陽に一番近い惑星。とっても小さくて、月よりちょっと大きいくらいだよ。',
+        promptHint:         '太陽系最内側の惑星。直径約4,879km（地球の38%）。大気がほぼ無く、昼夜の温度差は約600℃。公転周期88日。',
+      },
+      {
+        id:                 'venus',
+        partName:           '金星',
+        meshName:           'Venus',
+        position:           [2.4, 0, 0],
+        defaultExplanation: '地球の「お姉さん星」と呼ばれる金星。雲がぶ厚くて、表面はとっても熱いんだ。',
+        promptHint:         '太陽系第2惑星。サイズと質量は地球に近い「双子の惑星」。CO2 主体の温室効果で表面温度は約 460℃。自転は地球と逆向き。',
+      },
+      {
         id:                 'earth',
         partName:           '地球',
+        meshName:           'Earth',
         position:           [3.0, 0, 0],
         defaultExplanation: 'わたしたちが住んでいる星！太陽の周りを365日かけて1まわりするよ。',
         promptHint:         '太陽系の第3惑星。生命が確認されている唯一の天体。公転周期約365.25日、自転周期約24時間。月という衛星を1つ持つ。',
       },
       {
+        id:                 'mars',
+        partName:           '火星',
+        meshName:           'Mars',
+        position:           [3.6, 0, 0],
+        defaultExplanation: '赤く見える「赤い惑星」。火星にも水の跡があって、地球の次に住めるかもと言われているんだ。',
+        promptHint:         '太陽系第4惑星。表面の酸化鉄により赤く見える。自転周期24時間37分（地球とほぼ同じ）。極冠に氷あり。火星探査ローバーが多数着陸済み。',
+      },
+      {
         id:                 'jupiter',
         partName:           '木星',
+        meshName:           'Jupiter',
         position:           [4.8, 0, 0],
         defaultExplanation: '太陽系で一番大きい惑星！しま模様と「大赤斑」という大きな台風が見えるんだ。',
         promptHint:         '太陽系最大の惑星。質量は地球の約318倍、直径は約11倍。ガス状惑星で岩石の表面はない。大赤斑は数百年続く巨大な嵐。',
@@ -78,9 +106,26 @@ const MODELS: SeedModel[] = [
       {
         id:                 'saturn',
         partName:           '土星',
+        meshName:           'Saturn',
         position:           [6.0, 0, 0],
         defaultExplanation: 'きれいな輪っかが特徴の惑星！その輪は氷や岩のかたまりでできているよ。',
         promptHint:         '太陽系第6惑星。明るく見える環は氷と岩の粒で構成。密度が水より低く、もし巨大なプールに入れたら浮く（理論上）。',
+      },
+      {
+        id:                 'uranus',
+        partName:           '天王星',
+        meshName:           'Uranus',
+        position:           [7.0, 0, 0],
+        defaultExplanation: '横向きにごろんと転がって自転するちょっと変わった惑星。きれいな水色なんだ。',
+        promptHint:         '太陽系第7惑星。自転軸が公転面に対し約98°傾いた特異な天体。大気中のメタンが赤い光を吸収し青緑色に見える。輪も持つが薄い。',
+      },
+      {
+        id:                 'neptune',
+        partName:           '海王星',
+        meshName:           'Neptune',
+        position:           [7.8, 0, 0],
+        defaultExplanation: '太陽系で一番遠い惑星！深い青色で、強い風が吹きあれているんだよ。',
+        promptHint:         '太陽系最外側の主要惑星。表面風速は秒速 600m に達する。直径は地球の約4倍。1846 年に数学的予測で発見された初の惑星。',
       },
     ],
     attribution: 'AI Coding Agent 生成（Blender Python・generate-solar-system.py）',

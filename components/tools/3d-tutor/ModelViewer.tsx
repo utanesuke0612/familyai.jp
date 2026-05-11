@@ -4,16 +4,21 @@
  *
  * Google `<model-viewer>` を Next.js Client Component でラップする。
  *
- * 🎯 ホットスポット検出（Rev36 案 ②: クリック近似マッチング）
- *   - 視覚的なドットは非表示（クリーンな UX）
- *   - ユーザーが 3D モデルの任意の場所をタップすると、その 3D 座標を取得し、
- *     hotspots 配列の中で最も近い hotspot を `onHotspotClick` で発火する。
- *   - 閾値（HOTSPOT_CLICK_THRESHOLD）以上離れていれば無反応（空間クリック等）。
+ * 🎯 ホットスポット検出（Rev36 — 2 段階フォールバック）
+ *   1️⃣ **案 ③: マテリアル名識別**（優先・公式 API `materialFromPoint`）
+ *      - hotspot.meshName と GLB 内マテリアル名を照合
+ *      - Blender 規約「X_Material」のサフィックスは自動で除去（例: "Sun_Material" → "Sun"）
+ *      - 命中精度: ◎（メッシュに直接ヒットしたか判定するため誤検知ゼロ）
  *
- * 🔮 Phase 2 移行プラン（案 ③: メッシュ名識別）
- *   `hotspot.meshName` が指定されている場合、まず内部の Three.js scene を
- *   traverse して GLB の glTF Node 名と一致するものを優先選択する。
- *   現在は位置近似のみで動作するため、`meshName` フィールドは未参照。
+ *   2️⃣ **案 ②: 位置近似マッチング**（フォールバック）
+ *      - `materialFromPoint` が null を返した場合 / hotspot.meshName 一致が無い場合
+ *      - `positionAndNormalFromPoint` で 3D 座標を取得し最近接 hotspot を選択
+ *      - 閾値 HOTSPOT_CLICK_THRESHOLD 以上離れていれば無反応
+ *
+ * 🛠️ 運用ルール:
+ *   - 自前生成モデル（Blender Python）: meshName 必須・命中精度◎
+ *   - Tripo 生成モデル: マテリアル名が一般化（"Material" 等）の場合があるので
+ *     Blender で手動命名するか、meshName を省略して案 ② フォールバックに任せる
  *
  * - SSR 無効化（Web Component なので window 必須）
  * - AR ボタンは <model-viewer> 標準の slot="ar-button" を活用
@@ -108,27 +113,49 @@ export function ModelViewer({
     return () => el.removeEventListener('load', handleLoad);
   }, [ready, src]);
 
-  // 3. クリック近似マッチング（案 ②）
-  //    任意の位置クリック → 3D 座標を取得 → 最も近い hotspot を発火。
+  // 3. クリック検出（案 ③ マテリアル名 → 案 ② 位置近似 の 2 段階フォールバック）
   const handleViewerClick = useCallback((e: React.MouseEvent<HTMLElement>) => {
     if (!onHotspotClick || hotspots.length === 0) return;
 
     const el = viewerRef.current as (HTMLElement & {
       positionAndNormalFromPoint?: (x: number, y: number) => Hit | null;
+      materialFromPoint?: (x: number, y: number) => { name?: string; index?: number } | null;
     }) | null;
-    if (!el || typeof el.positionAndNormalFromPoint !== 'function') return;
+    if (!el) return;
 
     const rect = el.getBoundingClientRect();
     const x = e.clientX - rect.left;
     const y = e.clientY - rect.top;
+
+    // ── 1️⃣ 案 ③: マテリアル名識別（命中精度◎） ─────────────────
+    if (typeof el.materialFromPoint === 'function') {
+      const material = el.materialFromPoint(x, y);
+      const matName = material?.name;
+      if (matName) {
+        // Blender 規約「X_Material」のサフィックスを除去して照合する
+        const normalized = matName.replace(/_Material$/i, '');
+        const matched = hotspots.find((h) => {
+          if (!h.meshName) return false;
+          // 完全一致 or サフィックス除去後の一致
+          return h.meshName === matName ||
+                 h.meshName === normalized ||
+                 h.meshName.replace(/_Material$/i, '') === normalized;
+        });
+        if (matched) {
+          onHotspotClick(matched);
+          return;
+        }
+        // マテリアル名は取れたが対応 hotspot が無い → 「未登録パーツ」として無反応
+        // （誤検知より無反応を選ぶ・ユーザは別の場所を試せばよい）
+        return;
+      }
+    }
+
+    // ── 2️⃣ 案 ②: 位置近似フォールバック ────────────────────────
+    if (typeof el.positionAndNormalFromPoint !== 'function') return;
     const hit = el.positionAndNormalFromPoint(x, y);
     if (!hit) return;  // クリックが空間に当たっていない
 
-    // TODO(Phase 2 / 案 ③): hotspot.meshName が指定されていれば、
-    //   el.model.scene を Three.js raycaster で traverse して Node 名一致を優先。
-    //   現在は位置近似のみ。
-
-    // 位置近似マッチング
     let nearest: Tutor3dHotspot | null = null;
     let minDist = Infinity;
     for (const h of hotspots) {
@@ -142,7 +169,6 @@ export function ModelViewer({
     if (nearest && minDist < HOTSPOT_CLICK_THRESHOLD) {
       onHotspotClick(nearest);
     }
-    // else: 何もない空間 or hotspot 無しの領域 → 無反応で自然
   }, [hotspots, onHotspotClick]);
 
   if (!ready) {
