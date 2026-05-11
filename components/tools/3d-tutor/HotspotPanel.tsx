@@ -51,19 +51,24 @@ export function HotspotPanel({ model, hotspot, onClose }: HotspotPanelProps) {
     setLoading(true);
     setStreaming('');
 
-    // 既存 /api/ai の messages 形式
-    const systemPrompt = [
-      `あなたは familyai.jp の AI チューター「あいちゃん」です。`,
-      `子ども向け教育サイトで、3D の「${model.title}」を一緒に観察しています。`,
-      `モデルの説明: ${model.description || '（説明なし）'}`,
-      `今ユーザーがタップしたパーツ: ${hotspot.partName}`,
+    // /api/ai 仕様: messages は user/assistant のみ。system 相当の情報は
+    // articleTitle / articleExcerpt 経由で渡し、サーバ側で system prompt を構築する。
+    // Rev36: 3D モデル + ホットスポット情報を artifact-shaped にして既存 builder に渡す。
+    const articleTitle  = `${model.title} — ${hotspot.partName}`;
+    const articleExcerpt = [
+      `3D モデル「${model.title}」を観察中。`,
+      model.description ? `モデル概要: ${model.description}` : '',
+      `タップされたパーツ: ${hotspot.partName}`,
+      hotspot.defaultExplanation ? `既定説明: ${hotspot.defaultExplanation}` : '',
       hotspot.promptHint ? `背景情報: ${hotspot.promptHint}` : '',
       mode === 'kid'
-        ? '5〜10歳の子どもに話すように、やさしい言葉で 2〜3 文で答えてください。怖い表現は避けてください。'
-        : '大人向けに正確な学術用語を使い、4〜6 文で答えてください。',
-    ].filter(Boolean).join('\n');
+        ? '回答は 5〜10 歳の子ども向けに、やさしい言葉で 2〜3 文で。'
+        : '回答は大人・教育者向けに、正確な学術用語を使い 4〜6 文で。',
+    ].filter(Boolean).join(' / ').slice(0, 500);
 
-    const userPrompt = `「${hotspot.partName}」について、もう少しくわしく教えて。`;
+    const userPrompt = mode === 'kid'
+      ? `「${hotspot.partName}」って何？ やさしく教えて。`
+      : `「${hotspot.partName}」について、教育的な背景含めて詳しく教えてください。`;
 
     const controller = new AbortController();
     abortRef.current = controller;
@@ -75,9 +80,10 @@ export function HotspotPanel({ model, hotspot, onClose }: HotspotPanelProps) {
         body: JSON.stringify({
           type: 'text-simple',
           messages: [
-            { role: 'system',    content: systemPrompt },
-            { role: 'user',      content: userPrompt },
+            { role: 'user', content: userPrompt },
           ],
+          articleTitle,
+          articleExcerpt,
         }),
         signal: controller.signal,
       });
