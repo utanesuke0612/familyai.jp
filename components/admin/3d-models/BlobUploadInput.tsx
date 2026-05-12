@@ -143,6 +143,11 @@ export function BlobUploadInput({
         access: 'public',
         handleUploadUrl: '/api/admin/3d-models/upload-token',
         contentType,
+        // multipart=false で 単一 PUT 強制（30MB までなら十分）。
+        // multipart upload は onUploadCompleted (callbackUrl) を要求するが、
+        // localhost 開発では Vercel Blob からの callback が届かないため
+        // multipart=true だと PUT が 400 で失敗する。
+        multipart: false,
         onUploadProgress: (e) => {
           const pct = Math.round(e.percentage);
           setProgress(pct);
