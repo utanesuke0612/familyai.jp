@@ -145,9 +145,10 @@ export function ModelViewer({
           onHotspotClick(matched);
           return;
         }
-        // マテリアル名は取れたが対応 hotspot が無い → 「未登録パーツ」として無反応
-        // （誤検知より無反応を選ぶ・ユーザは別の場所を試せばよい）
-        return;
+        // マテリアル名は取れたが対応 hotspot が無い → 位置近似フォールバックへ進む。
+        // 旧実装は ここで return していたが、Tripo 等の汎用マテリアル名
+        // （"Material" / "Material.001" 等）モデルで無反応になる Codex 指摘
+        // (Q1-1 / Q2-2 / P1) に対応し、座標近似を試す方針に変更。
       }
     }
 
