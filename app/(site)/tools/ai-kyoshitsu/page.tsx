@@ -13,14 +13,12 @@
 
 import type { Metadata } from 'next';
 import Link              from 'next/link';
-import { notFound }      from 'next/navigation';
 import { SITE }          from '@/shared';
 import {
   TUTOR3D_SUBJECT_LABEL,
   TUTOR3D_SUBJECTS,
 } from '@/shared';
 import type { Tutor3dSubject } from '@/shared';
-import { isAdmin }             from '@/lib/admin-auth';
 import { listPublishedModels } from '@/lib/repositories/3d-models';
 import { ModelGallery }        from '@/components/tools/3d-tutor/ModelGallery';
 
@@ -40,11 +38,8 @@ type PageProps = {
 };
 
 export default async function AiKyoshitsu3DPage({ searchParams }: PageProps) {
-  // 0. Admin gate（Codex Q1-2 / Q2-1 対応）:
-  //    `/tools/page.tsx` で adminOnly: true としているが、本ページ直接 URL には
-  //    ガードが無く管理者以外もアクセスできていた。404 で隠す方針に統一。
-  //    一般公開時は本ブロックを削除（同時に /tools/page.tsx の adminOnly も外す）。
-  if (!(await isAdmin())) notFound();
+  // Rev36 + Rev37: 一般公開（未ログイン可・admin gate 削除）。
+  // 公開モデルのみカタログに表示・非公開モデルは listPublishedModels で除外される。
 
   // 1. クエリのバリデーション（不正値は無視・デフォルト = 絞り込みなし）
   const subject =
