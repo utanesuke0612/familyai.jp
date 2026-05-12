@@ -85,6 +85,16 @@ export async function POST(req: NextRequest) {
     if (rl) return rl;
   }
 
+  // デバッグログ（問題切り分け中）
+  console.log('[upload-token] body.type =', body.type);
+  if (!process.env.BLOB_READ_WRITE_TOKEN) {
+    console.error('[upload-token] ⚠️ BLOB_READ_WRITE_TOKEN 環境変数が未設定です');
+    return NextResponse.json(
+      { ok: false, error: { code: 'NO_BLOB_TOKEN', message: 'サーバ側 BLOB_READ_WRITE_TOKEN が未設定です。Vercel の Storage で Blob を作成し、.env.local に追加してください。' } },
+      { status: 500 },
+    );
+  }
+
   try {
     const jsonResponse = await handleUpload({
       body,
@@ -94,6 +104,7 @@ export async function POST(req: NextRequest) {
         if (!c) {
           throw new Error(`許可されていない拡張子です: ${pathname}`);
         }
+        console.log('[upload-token] generating token for', pathname, `(max ${c.max} bytes)`);
         return {
           allowedContentTypes:    c.types,
           maximumSizeInBytes:     c.max,
@@ -103,16 +114,16 @@ export async function POST(req: NextRequest) {
           addRandomSuffix:        false,
         };
       },
-      onUploadCompleted: async () => {
-        // 本 endpoint は token 発行のみで完了通知は不要（DB 登録は別 API）。
-        // ここで何かしたい場合は webhook 的に使えるが、現状は no-op。
+      onUploadCompleted: async ({ blob }) => {
+        console.log('[upload-token] upload completed:', blob.pathname, blob.url);
       },
     });
 
+    console.log('[upload-token] OK', body.type);
     return NextResponse.json(jsonResponse);
   } catch (err) {
     const msg = err instanceof Error ? err.message : 'Upload token generation failed';
-    console.error('[POST /api/admin/3d-models/upload-token]', msg);
+    console.error('[upload-token] ❌', msg, err);
     return NextResponse.json(
       { ok: false, error: { code: 'UPLOAD_TOKEN_ERROR', message: msg } },
       { status: 400 },

@@ -25,19 +25,29 @@ import { upload } from '@vercel/blob/client';
 
 type UploadKind = 'glb' | 'usdz' | 'thumbnail';
 
-const KIND_CONFIG: Record<UploadKind, {
+interface KindConfig {
   label:    string;
   emoji:    string;
   accept:   string;
   ext:      string;
   maxBytes: number;
-}> = {
+  /**
+   * upload() の contentType に強制セットする MIME。
+   * .glb / .usdz はブラウザによっては file.type が空文字や
+   * application/octet-stream になり、Vercel Blob の
+   * allowedContentTypes と不一致で 400 を返すため、正準 MIME を渡す。
+   */
+  forceContentType?: string;
+}
+
+const KIND_CONFIG: Record<UploadKind, KindConfig> = {
   glb: {
     label:    'GLB（3D モデル本体）',
     emoji:    '📦',
     accept:   '.glb,model/gltf-binary',
     ext:      'glb',
     maxBytes: 30 * 1024 * 1024,
+    forceContentType: 'model/gltf-binary',
   },
   usdz: {
     label:    'USDZ（iOS AR・任意）',
@@ -45,6 +55,7 @@ const KIND_CONFIG: Record<UploadKind, {
     accept:   '.usdz,model/vnd.usdz+zip',
     ext:      'usdz',
     maxBytes: 30 * 1024 * 1024,
+    forceContentType: 'model/vnd.usdz+zip',
   },
   thumbnail: {
     label:    'サムネ画像（任意）',
@@ -52,6 +63,7 @@ const KIND_CONFIG: Record<UploadKind, {
     accept:   '.webp,.png,.jpg,.jpeg,image/webp,image/png,image/jpeg',
     ext:      'auto',
     maxBytes:  2 * 1024 * 1024,
+    // 画像系は file.type が信頼できるのでそれを使う
   },
 };
 
@@ -121,19 +133,35 @@ export function BlobUploadInput({
       const hash      = await shortHash(file);
       const ext       = cfg.ext === 'auto' ? extOf(file) : cfg.ext;
       const pathname  = `tutor3d/${slug}-${hash}.${ext}`;
+      // .glb / .usdz は file.type を信用せず強制値・thumbnail は file.type を優先
+      const contentType = cfg.forceContentType ?? (file.type || 'application/octet-stream');
+
+      // デバッグ用ログ（問題切り分け中・本番では削除）
+      console.log('[BlobUpload] start', { pathname, size: file.size, fileType: file.type, contentType });
 
       const blob = await upload(pathname, file, {
         access: 'public',
         handleUploadUrl: '/api/admin/3d-models/upload-token',
-        contentType: file.type || undefined,
-        onUploadProgress: (e) => setProgress(Math.round(e.percentage)),
+        contentType,
+        onUploadProgress: (e) => {
+          const pct = Math.round(e.percentage);
+          setProgress(pct);
+          if (pct % 20 === 0 || pct === 100) {
+            console.log('[BlobUpload] progress', pct, '%');
+          }
+        },
       });
 
+      console.log('[BlobUpload] success', blob.url);
       onChange(blob.url);
       setProgress(100);
       setTimeout(() => setProgress(null), 800);
     } catch (err) {
-      const msg = err instanceof Error ? err.message : 'アップロードに失敗しました';
+      // 詳細なエラー情報を Console とユーザー UI 両方に出す
+      console.error('[BlobUpload] failed:', err);
+      const msg = err instanceof Error
+        ? `${err.name}: ${err.message}`
+        : `アップロードに失敗しました: ${JSON.stringify(err)}`;
       setError(msg);
       setProgress(null);
     }
