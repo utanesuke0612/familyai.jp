@@ -18,7 +18,7 @@
  *   モバイル App 着手前（Phase 2-4 想定）に追加する。
  *   現状は Web 側が Server Component で直 repository を叩くため不要。
  * - GLB ファイル名のバージョニング（cache-busting）は admin 機能着手時に対応。
- *   ファイル命名: tutor3d/{slug}-{contentHash}.glb の形式を採用予定。
+ *   ファイル命名: 3d-models/{slug}-{contentHash}.glb の形式を採用予定。
  */
 
 import { NextRequest, NextResponse } from 'next/server';

@@ -7,7 +7,7 @@
  * - ドラッグ&ドロップ または クリックでファイル選択
  * - クライアント直接アップロード（@vercel/blob/client の `upload()`）
  * - 進捗バー表示
- * - パス命名規則: tutor3d/{slug}-{hash8}.{ext}
+ * - パス命名規則: 3d-models/{slug}-{hash8}.{ext}
  *   - 同一ファイル内容なら同じ hash → cache 効率◎
  *   - 内容変更時は別 hash → cache-busting（Codex Q1-8 対応）
  *
@@ -132,7 +132,7 @@ export function BlobUploadInput({
     try {
       const hash      = await shortHash(file);
       const ext       = cfg.ext === 'auto' ? extOf(file) : cfg.ext;
-      const pathname  = `tutor3d/${slug}-${hash}.${ext}`;
+      const pathname  = `3d-models/${slug}-${hash}.${ext}`;
       // .glb / .usdz は file.type を信用せず強制値・thumbnail は file.type を優先
       const contentType = cfg.forceContentType ?? (file.type || 'application/octet-stream');
 
@@ -140,7 +140,7 @@ export function BlobUploadInput({
       console.log('[BlobUpload] start', { pathname, size: file.size, fileType: file.type, contentType });
 
       const blob = await upload(pathname, file, {
-        access: 'public',
+        access: 'private',
         handleUploadUrl: '/api/admin/3d-models/upload-token',
         contentType,
         // multipart=false で 単一 PUT 強制（30MB までなら十分）。
@@ -157,8 +157,9 @@ export function BlobUploadInput({
         },
       });
 
-      console.log('[BlobUpload] success', blob.url);
-      onChange(blob.url);
+      const assetUrl = `/api/3d-models/assets/${blob.pathname}`;
+      console.log('[BlobUpload] success', { blobUrl: blob.url, assetUrl });
+      onChange(assetUrl);
       setProgress(100);
       setTimeout(() => setProgress(null), 800);
     } catch (err) {
@@ -192,7 +193,10 @@ export function BlobUploadInput({
       {value && progress === null && (
         <div style={currentUrlStyle}>
           <span style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', flex: 1 }}>
-            ✅ {value.replace(/^.*\/tutor3d\//, 'tutor3d/')}
+            ✅ {value
+              .replace(/^.*\/3d-models\//, '3d-models/')
+              .replace(/^.*\/tutor3d\//, 'tutor3d/')
+              .replace(/^\/api\/3d-models\/assets\//, '')}
           </span>
           <button
             type="button"

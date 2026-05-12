@@ -20,7 +20,7 @@
  *   - allowed MIME / max size を pathname 別に制限
  *
  * 命名規則:
- *   tutor3d/{slug}-{hash8}.{ext}   ← cache-busting 用ハッシュ付与
+ *   3d-models/{slug}-{hash8}.{ext}   ← cache-busting 用ハッシュ付与
  *   （Codex Q1-8 対応・GLB / USDZ / Thumbnail それぞれ独立）
  */
 
@@ -110,7 +110,7 @@ export async function POST(req: NextRequest) {
           maximumSizeInBytes:     c.max,
           // クライアントが Blob に到達するまでの token 有効期限（秒）
           validUntil:             Date.now() + 60 * 1000,  // 1 分
-          // ファイル名はクライアント側から `tutor3d/{slug}-{hash8}.glb` の形で来る前提
+          // ファイル名はクライアント側から `3d-models/{slug}-{hash8}.glb` の形で来る前提
           addRandomSuffix:        false,
         };
       },

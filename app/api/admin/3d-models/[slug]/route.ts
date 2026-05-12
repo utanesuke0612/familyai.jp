@@ -8,6 +8,7 @@
  */
 
 import { NextRequest, NextResponse } from 'next/server';
+import { del }                       from '@vercel/blob';
 import { requireAdmin }              from '@/lib/admin-auth';
 import { verifyCsrf }                from '@/lib/csrf';
 import { enforceAdminRateLimit }     from '@/lib/ratelimit';
@@ -19,6 +20,40 @@ import {
 import { updateTutor3dModelSchema } from '@/lib/schemas/3d-models';
 
 interface Ctx { params: { slug: string }; }
+
+function assetUrlToBlobPathname(url: string | null | undefined): string | null {
+  if (!url) return null;
+
+  const apiPrefix = '/api/3d-models/assets/';
+  if (url.startsWith(apiPrefix)) {
+    const pathname = url.slice(apiPrefix.length);
+    return pathname.startsWith('3d-models/') ? pathname : null;
+  }
+
+  try {
+    const parsed = new URL(url);
+    if (!parsed.hostname.endsWith('.blob.vercel-storage.com')) return null;
+    const pathname = decodeURIComponent(parsed.pathname.replace(/^\/+/, ''));
+    return pathname.startsWith('3d-models/') ? pathname : null;
+  } catch {
+    return null;
+  }
+}
+
+async function deleteModelBlobs(model: {
+  glbUrl: string;
+  usdzUrl: string | null;
+  thumbnailUrl: string | null;
+}): Promise<void> {
+  const pathnames = Array.from(new Set([
+    assetUrlToBlobPathname(model.glbUrl),
+    assetUrlToBlobPathname(model.usdzUrl),
+    assetUrlToBlobPathname(model.thumbnailUrl),
+  ].filter((v): v is string => Boolean(v))));
+
+  if (pathnames.length === 0) return;
+  await del(pathnames);
+}
 
 // ─── GET: 1 件取得 ─────────────────────────────────────────
 export async function GET(_req: NextRequest, { params }: Ctx) {
@@ -103,8 +138,16 @@ export async function DELETE(req: NextRequest, { params }: Ctx) {
   if (rl) return rl;
 
   try {
-    // 注意: Vercel Blob 上の GLB / USDZ / Thumbnail ファイルは現状残置。
-    // 段階 F で「DB 削除と同時に紐づく Blob ファイルを del() する」処理を追加予定。
+    const model = await getModelBySlugForAdmin(params.slug);
+    if (!model) {
+      return NextResponse.json(
+        { ok: false, error: { code: 'NOT_FOUND', message: 'モデルが見つかりません' } },
+        { status: 404 },
+      );
+    }
+
+    await deleteModelBlobs(model);
+
     const deleted = await deleteModel(params.slug);
     if (!deleted) {
       return NextResponse.json(

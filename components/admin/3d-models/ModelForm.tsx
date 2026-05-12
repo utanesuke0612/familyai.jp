@@ -252,7 +252,7 @@ export function ModelForm({ mode, initial, originalSlug }: ModelFormProps) {
         />
         <p style={{ fontSize: 11, color: '#9CA3AF', marginTop: 12 }}>
           💡 slug を先に入力するとアップロードが有効になります。
-          ファイル名は <code>tutor3d/&#123;slug&#125;-&#123;hash&#125;.glb</code> 形式で
+          ファイル名は <code>3d-models/&#123;slug&#125;-&#123;hash&#125;.glb</code> 形式で
           自動命名され、cache-busting されます。
         </p>
       </Section>
