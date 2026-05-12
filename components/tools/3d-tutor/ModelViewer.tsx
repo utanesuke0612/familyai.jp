@@ -90,8 +90,10 @@ export function ModelViewer({
   heightCss,
 }: ModelViewerProps) {
   const viewerRef = useRef<HTMLElement | null>(null);
-  const [ready,   setReady] = useState(false);
-  const [arAvail, setArAvail] = useState(false);
+  const [ready,    setReady]    = useState(false);
+  const [arAvail,  setArAvail]  = useState(false);
+  const [loadError, setLoadError] = useState<string | null>(null);
+  const [retryKey, setRetryKey] = useState(0);  // src 再読み込みトリガー
 
   // 1. Web Component を遅延ロード
   useEffect(() => {
@@ -102,16 +104,28 @@ export function ModelViewer({
     return () => { active = false; };
   }, []);
 
-  // 2. AR 利用可否を監視（load 後に canActivateAR を見る）
+  // 2. AR 利用可否 + ロードエラー監視
+  //    Codex Q1-9 対応: GLB 取得失敗時の UI を追加
   useEffect(() => {
     if (!ready) return;
     const el = viewerRef.current as (HTMLElement & { canActivateAR?: boolean }) | null;
     if (!el) return;
 
-    const handleLoad = () => setArAvail(Boolean(el.canActivateAR));
+    const handleLoad = () => {
+      setLoadError(null);
+      setArAvail(Boolean(el.canActivateAR));
+    };
+    const handleError = (e: Event) => {
+      const detail = (e as CustomEvent<{ sourceError?: { message?: string } }>).detail;
+      setLoadError(detail?.sourceError?.message ?? 'モデルの読み込みに失敗しました。');
+    };
     el.addEventListener('load', handleLoad);
-    return () => el.removeEventListener('load', handleLoad);
-  }, [ready, src]);
+    el.addEventListener('error', handleError);
+    return () => {
+      el.removeEventListener('load', handleLoad);
+      el.removeEventListener('error', handleError);
+    };
+  }, [ready, src, retryKey]);
 
   // 3. クリック検出（案 ③ マテリアル名 → 案 ② 位置近似 の 2 段階フォールバック）
   const handleViewerClick = useCallback((e: React.MouseEvent<HTMLElement>) => {
@@ -207,10 +221,64 @@ export function ModelViewer({
         overflow: 'hidden',
         background: 'radial-gradient(ellipse at center, var(--color-peach-light) 0%, var(--color-cream) 80%)',
         boxShadow: 'inset 0 0 0 1px rgba(0,0,0,0.04)',
-        cursor: hotspots.length > 0 ? 'pointer' : 'default',
+        cursor: hotspots.length > 0 && !loadError ? 'pointer' : 'default',
       }}
     >
+      {/* ── 読み込みエラー UI（Codex Q1-9 対応）── */}
+      {loadError && (
+        <div
+          role="alert"
+          style={{
+            position: 'absolute',
+            inset: 0,
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
+            gap: 12,
+            padding: 16,
+            background: 'rgba(253, 246, 237, 0.94)',
+            zIndex: 5,
+            textAlign: 'center',
+          }}
+        >
+          <span style={{ fontSize: 48 }} aria-hidden>⚠️</span>
+          <p style={{
+            margin: 0, fontSize: 14, fontWeight: 600,
+            color: 'var(--color-brown, #6B4F3A)',
+          }}>
+            3D モデルの読み込みに失敗しました
+          </p>
+          <p style={{
+            margin: 0, fontSize: 12, lineHeight: 1.6,
+            color: 'var(--color-brown-muted, #A48B72)',
+            maxWidth: 360,
+          }}>
+            通信状況やファイル URL を確認してください。<br />
+            {loadError}
+          </p>
+          <button
+            type="button"
+            onClick={() => { setLoadError(null); setRetryKey((k) => k + 1); }}
+            style={{
+              marginTop: 8,
+              padding: '10px 18px',
+              border: 'none',
+              borderRadius: 999,
+              background: 'var(--color-orange, #F39C5F)',
+              color: '#fff',
+              fontWeight: 700,
+              fontSize: 13,
+              cursor: 'pointer',
+              minHeight: 44,
+            }}
+          >
+            🔁 もう一度読み込む
+          </button>
+        </div>
+      )}
       <model-viewer
+        key={retryKey}
         ref={(el: HTMLElement | null) => { viewerRef.current = el; }}
         src={src}
         ios-src={iosSrc ?? undefined}

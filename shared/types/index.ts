@@ -68,42 +68,17 @@ export {
   isChatStreamError,
 } from './ai-stream';
 
-// ─── うごくAI教室 関連 ─────────────────────────────────────────
-/** アニメーション学年 */
-export type AnimationGrade   = 'elem-low' | 'elem-high' | 'middle';
-
-/** アニメーション教科 */
-export type AnimationSubject = 'science' | 'math' | 'social';
-
-/**
- * アニメーションサマリ（一覧表示用・htmlContent を含まない）
- *
- * API `/api/user/animations` の items[] と 1:1 対応。
- * DB スキーマ（lib/db/schema.ts:userAnimations）から
- * `lib/mappers/animations.ts` の `toAnimationSummary()` で変換される。
- */
-export interface AnimationSummary {
-  id:        string;
-  theme:     string;
-  grade:     AnimationGrade;
-  subject:   AnimationSubject;
-  prompt:    string;
-  createdAt: string;  // ISO 8601
-  // R3-U1（migration 0011）でユーザーが操作するメタ情報。
-  // 既存サーバー / クライアントとの互換のため optional。
-  /** お気に入りマーク（⭐）。デフォルト false */
-  isFavorite?:  boolean;
-  /** ユーザーが付け直したタイトル。空 / undefined なら theme を表示 */
-  customTitle?: string;
-  /** 公開フラグ。デフォルト true（既存互換）。false なら所有者しか閲覧不可 */
-  isPublic?:    boolean;
-}
-
-/** アニメーション詳細（本文 HTML を含む・所有者のみ取得想定） */
-export interface Animation extends AnimationSummary {
-  htmlContent: string;
-  userId:      string;
-}
+// ─── 旧うごくAI教室（AI 生成アニメ）の型は Rev36 で削除 ──────────
+//
+// Codex Q2-4 対応: AI 生成アニメ機能は 3D 図鑑へ全面リプレイス済み
+// （commit 88362a4 / 9bf6957）。
+// 旧型 (AnimationGrade / AnimationSubject / AnimationSummary / Animation) と
+// 旧定数 (MAX_GENERATED_HTML_BYTES / MAX_ANIMATION_PROMPT) は未参照のため削除した。
+//
+// DB の `user_animations` テーブルは Phase 2 で AI 3D 生成版として再利用
+// する想定で残置（lib/db/schema.ts のコメント参照）。
+// AI 教室パイプライン関連の `AiKyoshitsuConfig` 型と `AI_KYOSHITSU_DEFAULTS`
+// 定数は /admin/ai-config が chatModel 設定で使用継続中のため残置。
 
 // ─── 3D 図鑑（Rev34 Phase 1）─────────────────────────────────
 /**

@@ -16,12 +16,9 @@ export const SITE = {
 
 // ─── カテゴリ設定 ──────────────────────────────────────────────
 // ─── うごくAI教室 関連 ────────────────────────────────────────
-/** 生成 HTML の最大サイズ（バイト・約1MB）
- *  これを超えた生成結果は 413 を返して DB 保存しない（コスト・容量保護）。 */
-export const MAX_GENERATED_HTML_BYTES = 1_048_576;
-
-/** ユーザー入力テーマの最大文字数（zodスキーマと共通使用）。 */
-export const MAX_ANIMATION_PROMPT = 500;
+// Codex Q2-4 対応 (Rev36): 旧 AI 生成アニメ用の MAX_GENERATED_HTML_BYTES /
+// MAX_ANIMATION_PROMPT は本機能の 3D 図鑑化により未参照となったため削除済。
+// AI_KYOSHITSU_DEFAULTS は /admin/ai-config の chatModel 設定で使用継続。
 
 /**
  * うごくAI教室パイプラインのデフォルト設定（フォールバック値）。

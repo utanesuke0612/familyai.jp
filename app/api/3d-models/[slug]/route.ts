@@ -12,6 +12,13 @@
  *   - 公開フラグ false のものは 404。
  *
  * レスポンス: { ok: true, data: Tutor3dModel } | { ok: false, error: ... }
+ *
+ * 【未実装メモ・Codex Q1-6 / Q1-8】
+ * - 一覧 API `GET /api/3d-models?subject=&grade=` は未実装。
+ *   モバイル App 着手前（Phase 2-4 想定）に追加する。
+ *   現状は Web 側が Server Component で直 repository を叩くため不要。
+ * - GLB ファイル名のバージョニング（cache-busting）は admin 機能着手時に対応。
+ *   ファイル命名: tutor3d/{slug}-{contentHash}.glb の形式を採用予定。
  */
 
 import { NextRequest, NextResponse } from 'next/server';

@@ -46,6 +46,28 @@ export const tutor3dQuerySchema = z.object({
   limit:   z.coerce.number().int().min(1).max(50).default(20),
 });
 
+/**
+ * Codex Q1-7 対応: GLB / USDZ / Thumbnail の URL を許可ドメインに制限する。
+ * 任意 URL を許してしまうと、admin 権限が漏洩した場合に外部の悪意ある
+ * 3D ファイルを参照させられる恐れがあるため、配信元を限定する。
+ *
+ * 許可パターン:
+ *   - /3d-models/...                  ← public/3d-models/ 配下（ローカル）
+ *   - /api/...                          ← 将来の署名 URL API（Vercel Blob 経由）
+ *   - https://*.public.blob.vercel-storage.com/...  ← Vercel Blob 直リンク
+ *   - https://blob.vercel-storage.com/...           ← Vercel Blob（短縮）
+ */
+const ASSET_URL_PATTERNS = [
+  /^\/3d-models\//,
+  /^\/api\//,
+  /^https:\/\/[a-z0-9-]+\.public\.blob\.vercel-storage\.com\//,
+  /^https:\/\/blob\.vercel-storage\.com\//,
+];
+const assetUrlSchema = z.string().refine(
+  (v) => ASSET_URL_PATTERNS.some((re) => re.test(v)),
+  { message: 'URL は public/3d-models/ 配下または Vercel Blob のみ許可' },
+);
+
 // ── 管理者: 作成 / 更新 ──────────────────────────────────
 export const createTutor3dModelSchema = z.object({
   slug:         z.string().trim().min(1).max(120).regex(/^[a-z0-9-]+$/, {
@@ -55,9 +77,9 @@ export const createTutor3dModelSchema = z.object({
   description:  z.string().max(2000).default(''),
   subject:      tutor3dSubjectSchema,
   grade:        tutor3dGradeSchema,
-  glbUrl:       z.string().url().or(z.string().regex(/^\//, { message: '相対 URL は / で始まること' })),
-  usdzUrl:      z.string().url().or(z.string().regex(/^\//)).nullable().optional(),
-  thumbnailUrl: z.string().url().or(z.string().regex(/^\//)).nullable().optional(),
+  glbUrl:       assetUrlSchema,
+  usdzUrl:      assetUrlSchema.nullable().optional(),
+  thumbnailUrl: assetUrlSchema.nullable().optional(),
   hotspots:     hotspotArraySchema.default([]),
   attribution:  z.string().max(800).default(''),
   license:      z.string().max(80).default(''),

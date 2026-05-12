@@ -182,8 +182,20 @@ export const userSentenceBookmarks = pgTable(
 
 // ─── user_animations ──────────────────────────────────────────
 /**
- * うごくAI教室 — AIが生成した教育アニメーションHTMLを保存するテーブル。
- * ログイン会員専用。生成したHTMLはDBに全文保存し、iframeで表示する。
+ * 【Phase 2 用に残置 — 現状未使用】
+ *
+ * 旧: AI 生成アニメーション（HTML）を保存するテーブル。
+ * Rev36 で機能を 3D 図鑑にリプレイス (commit 88362a4) し、関連 API・mapper・
+ * repository は全削除済み。Codex Q2-4 / Q1-5 の指摘どおり「未接続の残骸」だが、
+ * Phase 2 で AI 3D 生成版（Tripo 連携）として GLB URL を保存するテーブルとして
+ * 再利用する予定のため、テーブル定義のみ残置している。
+ *
+ * Phase 2 移行時の改修案:
+ *   - html_content を NULL 許可 → 任意項目化（または別カラムにリネーム）
+ *   - glb_url / usdz_url / thumbnail_url / hotspots(jsonb) を追加
+ *   - 旧 stage1Json は AI 生成 3D の構造化メタとして再利用
+ *
+ * Phase 2 着手時に「再利用 or 完全削除（破棄して新テーブル）」を再評価する。
  */
 export const userAnimations = pgTable(
   'user_animations',
@@ -350,6 +362,16 @@ export const tutor3dModels = pgTable(
 /**
  * 3D 図鑑のお気に入り。ログインユーザー専用。
  * (user_id, model_id) 複合 unique で重複登録を防止。
+ *
+ * 【現状: 接続未完了】Codex Q1-5 / Q2-6 指摘事項。
+ * - DB テーブル ✅ migration 0018 で投入済み
+ * - lib/repositories/3d-models.ts: addBookmark / removeBookmark / isBookmarked /
+ *   listBookmarkedModels  ✅ 実装済み
+ * - /api/user/3d-bookmarks CRUD ❌ 未実装
+ * - mypage / 詳細ページの ⭐ ボタン UI ❌ 未実装
+ *
+ * 次の Admin 機能着手時にまとめて UI / API を追加する。
+ * Admin が不要と判断した場合は本テーブル + repository も削除する。
  */
 export const user3dBookmarks = pgTable(
   'user_3d_bookmarks',
