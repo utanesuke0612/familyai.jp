@@ -26,7 +26,7 @@ import { ModelGallery }        from '@/components/tools/3d-tutor/ModelGallery';
 
 export const metadata: Metadata = {
   title:       `🌐 うごくAI教室・3D図鑑 | ${SITE.name}`,
-  description: '理科を 3D で学べる図鑑。太陽系・DNA・振り子など、回して観察しながら AI と一緒に学べます。',
+  description: '理科を 3D で学べる図鑑。太陽系を回して観察しながら、気になるパーツを AI と一緒に学べます。',
   alternates:  { canonical: `${SITE.url}/tools/ai-kyoshitsu` },
 };
 

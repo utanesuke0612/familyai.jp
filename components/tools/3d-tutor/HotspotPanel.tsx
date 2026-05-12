@@ -154,10 +154,35 @@ export function HotspotPanel({ model, hotspot, onClose }: HotspotPanelProps) {
         return;
       }
 
+      // SSE ストリームを読み込んでリアルタイム更新
+      // Codex Q1-3 / Q2-5 対応: delta 毎の setMessages を 60ms throttle にまとめる。
+      // 既存 AIChatWidget (Rev31 CX-2) と同じパターン。長文回答時の React 再レンダリング暴発を抑制。
       const reader  = res.body.getReader();
       const decoder = new TextDecoder();
       let buffer = '';
       let acc    = '';
+      let lastFlushAt = 0;
+      let flushTimer: ReturnType<typeof setTimeout> | null = null;
+      const FLUSH_INTERVAL_MS = 60;
+
+      const flushNow = () => {
+        lastFlushAt = Date.now();
+        if (flushTimer) {
+          clearTimeout(flushTimer);
+          flushTimer = null;
+        }
+        setMessages((prev) => prev.map((m) =>
+          m.id === assistantId ? { ...m, content: acc } : m,
+        ));
+      };
+      const scheduleFlush = () => {
+        const elapsed = Date.now() - lastFlushAt;
+        if (elapsed >= FLUSH_INTERVAL_MS) {
+          flushNow();
+        } else if (!flushTimer) {
+          flushTimer = setTimeout(flushNow, FLUSH_INTERVAL_MS - elapsed);
+        }
+      };
 
       while (true) {
         const { done, value } = await reader.read();
@@ -175,17 +200,16 @@ export function HotspotPanel({ model, hotspot, onClose }: HotspotPanelProps) {
             const obj = JSON.parse(payload) as { delta?: string };
             if (obj.delta) {
               acc += obj.delta;
-              setMessages((prev) => prev.map((m) =>
-                m.id === assistantId ? { ...m, content: acc } : m,
-              ));
+              scheduleFlush();
             }
           } catch { /* ignore malformed SSE lines */ }
         }
       }
 
-      // 完了 → streaming フラグ解除
+      // ループ終了時に未 flush の差分を反映 + streaming フラグ解除
+      if (flushTimer) clearTimeout(flushTimer);
       setMessages((prev) => prev.map((m) =>
-        m.id === assistantId ? { ...m, streaming: false } : m,
+        m.id === assistantId ? { ...m, content: acc, streaming: false } : m,
       ));
     } catch (err) {
       if ((err as Error).name === 'AbortError') return;
