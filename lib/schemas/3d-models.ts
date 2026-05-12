@@ -46,6 +46,21 @@ export const tutor3dQuerySchema = z.object({
   limit:   z.coerce.number().int().min(1).max(50).default(20),
 });
 
+// ── 管理者一覧（GET /api/admin/3d-models）──────────────────
+export const ADMIN_MODEL_SORTS = ['latest', 'oldest', 'popular', 'title'] as const;
+
+export const adminTutor3dQuerySchema = z.object({
+  search:    z.string().trim().min(1).max(100).optional(),
+  subject:   tutor3dSubjectSchema.optional(),
+  grade:     tutor3dGradeSchema.optional(),
+  published: z.union([z.literal('true'), z.literal('false'), z.literal('all')])
+              .default('all')
+              .transform((v) => (v === 'all' ? undefined : v === 'true')),
+  sort:      z.enum(ADMIN_MODEL_SORTS).default('latest'),
+  page:      z.coerce.number().int().min(1).max(1000).default(1),
+  pageSize:  z.coerce.number().int().min(1).max(200).default(50),
+});
+
 /**
  * Codex Q1-7 対応: GLB / USDZ / Thumbnail の URL を許可ドメインに制限する。
  * 任意 URL を許してしまうと、admin 権限が漏洩した場合に外部の悪意ある

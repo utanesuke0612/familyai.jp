@@ -7,7 +7,7 @@
  */
 
 import { cache }                          from 'react';
-import { eq, and, desc, sql }              from 'drizzle-orm';
+import { eq, and, asc, desc, ilike, sql, count } from 'drizzle-orm';
 import { db }                              from '@/lib/db';
 import { tutor3dModels, user3dBookmarks }  from '@/lib/db/schema';
 import type {
@@ -79,15 +79,111 @@ export async function incrementViewCount(slug: string): Promise<void> {
   }
 }
 
-// ── 管理者用 CRUD（Phase 1 はシード経由で投入・Phase 2 で管理画面 UI）─
+// ── 管理者用 CRUD（Admin 画面用）──────────────────────────────
 
-/** 全件取得（admin/3d-models 一覧用・非公開含む） */
-export async function listAllModelsForAdmin(): Promise<Tutor3dModel[]> {
-  const rows = await db
-    .select()
+/** admin/3d-models 一覧画面のソート種類 */
+export type AdminModelSort = 'latest' | 'oldest' | 'popular' | 'title';
+
+export interface ListAdminModelsOptions {
+  search?:    string;
+  subject?:   Tutor3dSubject;
+  grade?:     Tutor3dGrade;
+  published?: boolean;
+  sort?:      AdminModelSort;
+  page?:      number;
+  pageSize?:  number;
+}
+
+export interface ListAdminModelsResult {
+  items:      Tutor3dModel[];
+  total:      number;
+  totalPages: number;
+  page:       number;
+  pageSize:   number;
+}
+
+/**
+ * 管理画面用：公開・非公開を含む全モデルを取得（既存 listAllArticles と同パターン）。
+ *
+ * - `page` / `pageSize` 未指定時は 1ページ目・pageSize=50
+ * - `pageSize` は 1〜200 に clamp
+ * - search はタイトル ILIKE（%escapeLike%）
+ */
+export async function listAllModelsForAdmin(
+  opts: ListAdminModelsOptions = {},
+): Promise<ListAdminModelsResult> {
+  const { search, subject, grade, published, sort = 'latest' } = opts;
+  const page     = Math.max(1, Math.floor(opts.page ?? 1));
+  const pageSize = Math.min(200, Math.max(1, Math.floor(opts.pageSize ?? 50)));
+  const offset   = (page - 1) * pageSize;
+
+  try {
+    const conditions = [];
+    if (search) {
+      // title に ILIKE（% を含む可能性も考慮し escapeLike 相当でエスケープ）
+      const escaped = search.replace(/[\\%_]/g, (c) => `\\${c}`);
+      conditions.push(ilike(tutor3dModels.title, `%${escaped}%`));
+    }
+    if (subject)               conditions.push(eq(tutor3dModels.subject, subject));
+    if (grade)                 conditions.push(eq(tutor3dModels.grade, grade));
+    if (typeof published === 'boolean') {
+      conditions.push(eq(tutor3dModels.published, published));
+    }
+
+    const whereClause = conditions.length > 0 ? and(...conditions) : undefined;
+    const orderByClause = {
+      latest:  desc(tutor3dModels.createdAt),
+      oldest:  asc(tutor3dModels.createdAt),
+      popular: desc(tutor3dModels.viewCount),
+      title:   asc(tutor3dModels.title),
+    }[sort];
+
+    const [rows, countRows] = await Promise.all([
+      db
+        .select()
+        .from(tutor3dModels)
+        .where(whereClause)
+        .orderBy(orderByClause)
+        .limit(pageSize)
+        .offset(offset),
+      db
+        .select({ total: count() })
+        .from(tutor3dModels)
+        .where(whereClause),
+    ]);
+
+    const total      = Number(countRows[0]?.total ?? 0);
+    const totalPages = Math.max(1, Math.ceil(total / pageSize));
+
+    return {
+      items: rows.map(toTutor3dModelDetail),
+      total,
+      totalPages,
+      page,
+      pageSize,
+    };
+  } catch (err) {
+    console.error('[3d-models.listAllModelsForAdmin] DB query failed:',
+      err instanceof Error ? err.message : String(err));
+    return { items: [], total: 0, totalPages: 1, page, pageSize };
+  }
+}
+
+/** 公開フラグをトグル（既存値を反転）。戻り値は更新後の published 値。 */
+export async function togglePublishedBySlug(slug: string): Promise<boolean | null> {
+  const [current] = await db
+    .select({ published: tutor3dModels.published })
     .from(tutor3dModels)
-    .orderBy(desc(tutor3dModels.createdAt));
-  return rows.map(toTutor3dModelDetail);
+    .where(eq(tutor3dModels.slug, slug))
+    .limit(1);
+  if (!current) return null;
+
+  const nextPublished = !current.published;
+  await db
+    .update(tutor3dModels)
+    .set({ published: nextPublished, updatedAt: new Date() })
+    .where(eq(tutor3dModels.slug, slug));
+  return nextPublished;
 }
 
 export async function getModelBySlugForAdmin(slug: string): Promise<Tutor3dModel | null> {
