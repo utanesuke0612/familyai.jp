@@ -114,9 +114,15 @@ export async function POST(req: NextRequest) {
           addRandomSuffix:        false,
         };
       },
-      onUploadCompleted: async ({ blob }) => {
-        console.log('[upload-token] upload completed:', blob.pathname, blob.url);
-      },
+      // 注意: onUploadCompleted は **意図的に未指定**。
+      //   - 完了通知 = Vercel Blob のサーバ → 自分のサーバへの POST
+      //   - localhost 開発時は Vercel Blob からローカルに到達できないため、
+      //     onUploadCompleted を指定すると callbackUrl 解決失敗で
+      //     token が不完全になり PUT が 400 になる現象が出る。
+      //   - 我々は GLB URL を別途 `/api/admin/3d-models` (POST/PUT) で
+      //     DB に保存しているので、完了通知は不要。
+      //   - もし将来的に完了時の自動 DB 登録や統計が必要になったら、
+      //     本番では VERCEL_BLOB_CALLBACK_URL を設定して有効化する。
     });
 
     console.log('[upload-token] OK', body.type);
