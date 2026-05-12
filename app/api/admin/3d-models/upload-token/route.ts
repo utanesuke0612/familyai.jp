@@ -51,19 +51,14 @@ function constraintsFor(pathname: string): { types: string[]; max: number } | nu
 }
 
 export async function POST(req: NextRequest) {
-  if (!verifyCsrf(req)) {
-    return NextResponse.json(
-      { ok: false, error: { code: 'CSRF', message: 'CSRF check failed' } },
-      { status: 403 },
-    );
-  }
-
-  const check = await requireAdmin();
-  if (!check.ok) return check.response;
-
-  const rl = await enforceAdminRateLimit(req, 'admin');
-  if (rl) return rl;
-
+  // 重要: 本 endpoint は 2 段階で呼ばれる
+  //   ① ブラウザ → サーバ: `type: 'blob.generate-client-token'`（token 取得）
+  //   ② Vercel Blob → サーバ: `type: 'blob.upload-completed'`（完了通知・署名付き）
+  // ① はブラウザからの呼び出しなので Cookie/Origin が揃う → CSRF/admin/rate-limit を適用。
+  // ② は Vercel の edge からの呼び出しなので Cookie/Origin が無い。代わりに
+  //    `handleUpload` 内部で `BLOB_READ_WRITE_TOKEN` による署名検証が走るため
+  //    本側の追加チェックは不要（むしろ通すと 403 で完了通知が失敗し、
+  //    ブラウザの `upload()` が永久に pending になる事故が発生する）。
   let body: HandleUploadBody;
   try {
     body = (await req.json()) as HandleUploadBody;
@@ -72,6 +67,22 @@ export async function POST(req: NextRequest) {
       { ok: false, error: { code: 'INVALID_JSON', message: 'Invalid JSON' } },
       { status: 400 },
     );
+  }
+
+  // ① の token 生成時のみブラウザ起源チェック
+  if (body.type === 'blob.generate-client-token') {
+    if (!verifyCsrf(req)) {
+      return NextResponse.json(
+        { ok: false, error: { code: 'CSRF', message: 'CSRF check failed' } },
+        { status: 403 },
+      );
+    }
+
+    const check = await requireAdmin();
+    if (!check.ok) return check.response;
+
+    const rl = await enforceAdminRateLimit(req, 'admin');
+    if (rl) return rl;
   }
 
   try {
