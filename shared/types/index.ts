@@ -130,7 +130,11 @@ export interface Tutor3dModelSummary {
 }
 
 /**
- * 3D モデルの詳細（個別ページで使用・hotspots / GLB URL を含む）。
+ * 3D モデルの詳細（個別ページ + 管理画面で使用・hotspots / GLB URL を含む）。
+ *
+ * `published` フィールドは公開ページの絞り込みでは「常に true」となるが、
+ * 管理画面（/admin/3d-models）では非公開状態を直接編集する必要があるため、
+ * DTO 側に含める。
  */
 export interface Tutor3dModel extends Tutor3dModelSummary {
   glbUrl:       string;
@@ -139,6 +143,7 @@ export interface Tutor3dModel extends Tutor3dModelSummary {
   attribution:  string;
   license:      string;
   sourceUrl:    string | null;
+  published:    boolean;
 }
 
 // ─── VOA / AIctation センテンスプレイヤー（R3-機能3）──────────

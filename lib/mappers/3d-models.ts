@@ -45,5 +45,6 @@ export function toTutor3dModelDetail(row: Tutor3dModelRow): Tutor3dModelDto {
     attribution: row.attribution,
     license:     row.license,
     sourceUrl:   row.sourceUrl ?? null,
+    published:   row.published,
   };
 }
