@@ -301,29 +301,24 @@ export default async function LearnPage({ searchParams }: LearnPageProps) {
         }}
       >
         <div
-          className="max-w-container mx-auto flex flex-col gap-4"
+          className="max-w-container mx-auto flex flex-col sm:flex-row sm:flex-wrap sm:items-center gap-4 sm:gap-6"
           style={{ paddingInline: 'var(--container-px)' }}
         >
           {/* 検索バー（Rev26 #2）*/}
-          <Suspense fallback={<div className="h-14 rounded-full skeleton" />}>
+          <Suspense fallback={<div className="h-9 skeleton" style={{ width: '320px', borderRadius: '4px' }} />}>
             <LearnSearchBar />
           </Suspense>
 
-          {/* ソート・難易度バー */}
-          <div
-            className="pt-2 border-t"
-            style={{ borderColor: 'var(--color-beige)' }}
-          >
-            <Suspense fallback={
-              <div className="flex gap-2">
-                {Array.from({ length: 4 }).map((_, i) => (
-                  <div key={i} className="skeleton h-9 w-20 rounded-full" />
-                ))}
-              </div>
-            }>
-              <SortLevelBar />
-            </Suspense>
-          </div>
+          {/* ソート・難易度バー（同じ行に並ぶ） */}
+          <Suspense fallback={
+            <div className="flex gap-2">
+              {Array.from({ length: 4 }).map((_, i) => (
+                <div key={i} className="skeleton h-9 w-20" style={{ borderRadius: '4px' }} />
+              ))}
+            </div>
+          }>
+            <SortLevelBar />
+          </Suspense>
         </div>
       </section>
 
