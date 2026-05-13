@@ -357,6 +357,8 @@ export const tutor3dModels = pgTable(
     idxSubject:           index('tutor3d_models_subject_idx').on(t.subject),
     idxGrade:             index('tutor3d_models_grade_idx').on(t.grade),
     idxPublishedFeatured: index('tutor3d_models_published_featured_idx').on(t.published, t.isFeatured),
+    // Rev38 #H2: getPublishedModelBySlug の WHERE published=true AND slug=? 用
+    idxPublishedSlug:     index('tutor3d_models_published_slug_idx').on(t.published, t.slug),
   }),
 );
 

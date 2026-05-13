@@ -137,7 +137,15 @@ export async function DELETE(req: NextRequest, { params }: Ctx) {
   const rl = await enforceAdminRateLimit(req, 'admin');
   if (rl) return rl;
 
+  // Rev38 #H4: 旧実装は getModel → blob.del → deleteModel の 3 段階だったため、
+  // 並行 DELETE で「両方が getModel 成功 → 片方は blob.del が 404 で fail」する race があった。
+  // また Vercel Blob は外部 API のため DB transaction には含められない。
+  // → DB 削除を先行・blob.del を best-effort（warn のみ）にすることで:
+  //   1. 並行 DELETE は returning() の競合で確定的に処理される（後勝ち分は 404）
+  //   2. blob.del の一時失敗で DB と CDN が不整合になる可能性は残るが、
+  //      orphan blob のクリーンナップは別ジョブで対処可能（DB 行が無いと参照不能）。
   try {
+    // 1. blob URL 取得のため、まずモデルを読む
     const model = await getModelBySlugForAdmin(params.slug);
     if (!model) {
       return NextResponse.json(
@@ -146,8 +154,7 @@ export async function DELETE(req: NextRequest, { params }: Ctx) {
       );
     }
 
-    await deleteModelBlobs(model);
-
+    // 2. DB を先に削除（returning が空なら並行 DELETE に負けた = 既に削除済み）
     const deleted = await deleteModel(params.slug);
     if (!deleted) {
       return NextResponse.json(
@@ -155,6 +162,15 @@ export async function DELETE(req: NextRequest, { params }: Ctx) {
         { status: 404 },
       );
     }
+
+    // 3. blob 削除は best-effort（失敗しても 200 を返す・orphan は手動 or 別ジョブで掃除）
+    try {
+      await deleteModelBlobs(model);
+    } catch (err) {
+      console.warn('[DELETE /api/admin/3d-models/:slug] blob.delete_failed',
+        { slug: params.slug, error: err instanceof Error ? err.message : String(err) });
+    }
+
     return NextResponse.json({ ok: true, data: { slug: params.slug } });
   } catch (err) {
     console.error('[DELETE /api/admin/3d-models/:slug]',

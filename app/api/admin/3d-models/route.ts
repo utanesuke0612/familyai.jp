@@ -38,19 +38,29 @@ export async function GET(req: NextRequest) {
     );
   }
 
-  const result = await listAllModelsForAdmin(parsedQuery.data);
-  return NextResponse.json({
-    ok:   true,
-    data: {
-      items: result.items,
-      meta:  {
-        page:       result.page,
-        perPage:    result.pageSize,
-        total:      result.total,
-        totalPages: result.totalPages,
+  // Rev38 #H6: repository から catch を剥がしたので route 側で 500 を返す責務を持つ
+  try {
+    const result = await listAllModelsForAdmin(parsedQuery.data);
+    return NextResponse.json({
+      ok:   true,
+      data: {
+        items: result.items,
+        meta:  {
+          page:       result.page,
+          perPage:    result.pageSize,
+          total:      result.total,
+          totalPages: result.totalPages,
+        },
       },
-    },
-  });
+    });
+  } catch (err) {
+    console.error('[GET /api/admin/3d-models]',
+      err instanceof Error ? err.message : String(err));
+    return NextResponse.json(
+      { ok: false, error: { code: 'INTERNAL', message: 'サーバーエラーが発生しました' } },
+      { status: 500 },
+    );
+  }
 }
 
 // ─── POST: モデル新規作成 ───────────────────────────────────

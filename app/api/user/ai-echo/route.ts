@@ -79,7 +79,8 @@ export async function POST(req: NextRequest) {
       userInput:   parsed.data.userInput,
       aiFeedback:  parsed.data.aiFeedback,
     });
-    return NextResponse.json({ ok: true, id });
+    // Rev38 #H1: apiFetch 契約準拠（{ ok, data }）— 旧 { ok, id } は破壊的に廃止
+    return NextResponse.json({ ok: true, data: { id } });
   } catch (err) {
     console.error('[POST /api/user/ai-echo] DB エラー:', err instanceof Error ? err.message : err);
     return NextResponse.json(
@@ -101,10 +102,11 @@ export async function GET() {
 
   try {
     const entries = await listAiEchoEntries(session.user.id);
+    // Rev38 #H1: apiFetch 契約準拠（{ ok, data }）— 旧 { ok, entries } は破壊的に廃止
     // フロント側で扱いやすい形に整形（DB 行をそのまま返さない）
     return NextResponse.json({
       ok: true,
-      entries: entries.map((e) => ({
+      data: entries.map((e) => ({
         id:          e.id,
         lessonKey:   e.lessonKey,
         lessonTitle: e.lessonTitle,

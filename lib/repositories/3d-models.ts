@@ -117,73 +117,73 @@ export async function listAllModelsForAdmin(
   const pageSize = Math.min(200, Math.max(1, Math.floor(opts.pageSize ?? 50)));
   const offset   = (page - 1) * pageSize;
 
-  try {
-    const conditions = [];
-    if (search) {
-      // title に ILIKE（% を含む可能性も考慮し escapeLike 相当でエスケープ）
-      const escaped = search.replace(/[\\%_]/g, (c) => `\\${c}`);
-      conditions.push(ilike(tutor3dModels.title, `%${escaped}%`));
-    }
-    if (subject)               conditions.push(eq(tutor3dModels.subject, subject));
-    if (grade)                 conditions.push(eq(tutor3dModels.grade, grade));
-    if (typeof published === 'boolean') {
-      conditions.push(eq(tutor3dModels.published, published));
-    }
-
-    const whereClause = conditions.length > 0 ? and(...conditions) : undefined;
-    const orderByClause = {
-      latest:  desc(tutor3dModels.createdAt),
-      oldest:  asc(tutor3dModels.createdAt),
-      popular: desc(tutor3dModels.viewCount),
-      title:   asc(tutor3dModels.title),
-    }[sort];
-
-    const [rows, countRows] = await Promise.all([
-      db
-        .select()
-        .from(tutor3dModels)
-        .where(whereClause)
-        .orderBy(orderByClause)
-        .limit(pageSize)
-        .offset(offset),
-      db
-        .select({ total: count() })
-        .from(tutor3dModels)
-        .where(whereClause),
-    ]);
-
-    const total      = Number(countRows[0]?.total ?? 0);
-    const totalPages = Math.max(1, Math.ceil(total / pageSize));
-
-    return {
-      items: rows.map(toTutor3dModelDetail),
-      total,
-      totalPages,
-      page,
-      pageSize,
-    };
-  } catch (err) {
-    console.error('[3d-models.listAllModelsForAdmin] DB query failed:',
-      err instanceof Error ? err.message : String(err));
-    return { items: [], total: 0, totalPages: 1, page, pageSize };
+  // Rev38 #H6: 旧実装は DB エラーを catch して空配列で握りつぶしていたため
+  // 「データ無し」と「DB 障害」が画面で区別できなかった。
+  // 例外は呼出側（route handler）まで伝播させ、500 を返す責務を上位に委譲する。
+  const conditions = [];
+  if (search) {
+    // title に ILIKE（% を含む可能性も考慮し escapeLike 相当でエスケープ）
+    const escaped = search.replace(/[\\%_]/g, (c) => `\\${c}`);
+    conditions.push(ilike(tutor3dModels.title, `%${escaped}%`));
   }
+  if (subject)               conditions.push(eq(tutor3dModels.subject, subject));
+  if (grade)                 conditions.push(eq(tutor3dModels.grade, grade));
+  if (typeof published === 'boolean') {
+    conditions.push(eq(tutor3dModels.published, published));
+  }
+
+  const whereClause = conditions.length > 0 ? and(...conditions) : undefined;
+  const orderByClause = {
+    latest:  desc(tutor3dModels.createdAt),
+    oldest:  asc(tutor3dModels.createdAt),
+    popular: desc(tutor3dModels.viewCount),
+    title:   asc(tutor3dModels.title),
+  }[sort];
+
+  const [rows, countRows] = await Promise.all([
+    db
+      .select()
+      .from(tutor3dModels)
+      .where(whereClause)
+      .orderBy(orderByClause)
+      .limit(pageSize)
+      .offset(offset),
+    db
+      .select({ total: count() })
+      .from(tutor3dModels)
+      .where(whereClause),
+  ]);
+
+  const total      = Number(countRows[0]?.total ?? 0);
+  const totalPages = Math.max(1, Math.ceil(total / pageSize));
+
+  return {
+    items: rows.map(toTutor3dModelDetail),
+    total,
+    totalPages,
+    page,
+    pageSize,
+  };
 }
 
-/** 公開フラグをトグル（既存値を反転）。戻り値は更新後の published 値。 */
+/**
+ * 公開フラグをトグル（既存値を反転）。戻り値は更新後の published 値。
+ *
+ * Rev38 #H3: 旧実装は SELECT → アプリ層反転 → UPDATE の 2 段階だったため、
+ * 並行 PATCH で「両方が同じ current を読む → 互いに上書き」する race condition があった。
+ * `SET published = NOT published` で DB 側に判定させて 1 文に統合し、
+ * RETURNING で更新後の値を取得することで atomic 化する。
+ */
 export async function togglePublishedBySlug(slug: string): Promise<boolean | null> {
-  const [current] = await db
-    .select({ published: tutor3dModels.published })
-    .from(tutor3dModels)
-    .where(eq(tutor3dModels.slug, slug))
-    .limit(1);
-  if (!current) return null;
-
-  const nextPublished = !current.published;
-  await db
+  const [row] = await db
     .update(tutor3dModels)
-    .set({ published: nextPublished, updatedAt: new Date() })
-    .where(eq(tutor3dModels.slug, slug));
-  return nextPublished;
+    .set({
+      published: sql`NOT ${tutor3dModels.published}`,
+      updatedAt: new Date(),
+    })
+    .where(eq(tutor3dModels.slug, slug))
+    .returning({ published: tutor3dModels.published });
+  return row ? row.published : null;
 }
 
 export async function getModelBySlugForAdmin(slug: string): Promise<Tutor3dModel | null> {
