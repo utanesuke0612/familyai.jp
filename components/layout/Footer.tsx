@@ -61,7 +61,7 @@ export function Footer() {
             </span>
             <span className="font-mincho text-xl leading-none tracking-wide">
               <span style={{ color: 'var(--washi)' }}>family</span>
-              <span style={{ color: 'var(--shu-soft)' }}>ai</span>
+              <span style={{ color: 'var(--shu)' }}>ai</span>
               <span style={{ color: 'var(--washi)' }}>.jp</span>
             </span>
           </Link>
@@ -155,16 +155,19 @@ export function Footer() {
 
       {/* ── ボトムバー ── */}
       <div
-        className="border-t max-w-container mx-auto flex flex-col sm:flex-row items-center justify-between gap-2 py-6 font-mincho text-sm"
+        className="border-t max-w-container mx-auto flex items-center justify-center py-6 font-mincho text-sm"
         style={{
           paddingInline: 'var(--container-px)',
           borderColor:   'rgba(245,237,222,0.16)',
           color:         'rgba(245,237,222,0.5)',
         }}
       >
-        <p>© 2026 familyai.jp ― AI＝愛</p>
-        <p className="text-xs tracking-wider">
-          Powered by Next.js · Hosted on Vercel
+        <p>
+          © 2026{' '}
+          <span style={{ color: 'rgba(245,237,222,0.85)' }}>family</span>
+          <span style={{ color: 'var(--shu)' }}>ai</span>
+          <span style={{ color: 'rgba(245,237,222,0.85)' }}>.jp</span>
+          {' ― AI＝愛'}
         </p>
       </div>
 

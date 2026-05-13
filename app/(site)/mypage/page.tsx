@@ -202,10 +202,7 @@ export default async function MyPage() {
                 >
                   <span className="flex items-center gap-2">
                     <span className="text-xl" aria-hidden="true">🔖</span>
-                    <span className="font-semibold">マイブックマーク</span>
-                    <span className="text-xs" style={{ color: 'var(--color-brown-light)' }}>
-                      （単語・センテンス）
-                    </span>
+                    <span className="font-semibold">単語・センテンス</span>
                   </span>
                   <span style={{ color: 'var(--color-orange)' }}>→</span>
                 </Link>

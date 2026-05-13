@@ -185,9 +185,11 @@ export function Header() {
         >
           <span
             className="font-mincho text-xl"
-            style={{ color: 'var(--sumi)', fontWeight: 500 }}
+            style={{ fontWeight: 500 }}
           >
-            familyai<span style={{ color: 'var(--shu)' }}>.</span>jp
+            <span style={{ color: 'var(--sumi)' }}>family</span>
+            <span style={{ color: 'var(--shu)' }}>ai</span>
+            <span style={{ color: 'var(--sumi)' }}>.jp</span>
           </span>
           <span
             className="hidden sm:inline serial"

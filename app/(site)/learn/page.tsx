@@ -245,73 +245,53 @@ export default async function LearnPage({ searchParams }: LearnPageProps) {
     <>
       {/* ── ページヘッダー ── */}
       <section
-        className="relative overflow-hidden"
-        style={{
-          background:   'var(--color-cream)',
-          paddingBlock: 'clamp(7px, 1vw, 12px)',
-        }}
+        className="px-6 py-8 sm:py-10"
+        style={{ background: 'linear-gradient(160deg, var(--color-beige) 0%, var(--color-cream) 100%)' }}
       >
-        {/* blob 装飾 */}
-        <div
-          className="blob blob-md"
-          style={{
-            background: 'radial-gradient(circle, var(--color-peach-light) 0%, transparent 70%)',
-            top: '-60px', right: '-80px',
-            opacity: 0.6,
-            pointerEvents: 'none',
-          }}
-          aria-hidden="true"
-        />
+        <div className="max-w-5xl mx-auto">
+          <div className="grid gap-6 lg:grid-cols-[minmax(0,1.4fr)_minmax(280px,0.8fr)] lg:items-start">
 
-        <div
-          className="max-w-container mx-auto"
-          style={{ paddingInline: 'var(--container-px)' }}
-        >
-          {/* パンくずリスト */}
-          <nav className="flex items-center gap-2 text-xs mb-3" aria-label="パンくずリスト">
-            <a
-              href="/"
-              className="inline-flex items-center hover:opacity-70 transition-opacity"
-              style={{ color: 'var(--color-brown-light)' }}
-            >
-              ホーム
-            </a>
-            <span style={{ color: 'var(--color-brown-light)' }} aria-hidden="true">/</span>
-            <span style={{ color: 'var(--color-orange)' }} aria-current="page">記事一覧</span>
-          </nav>
-
-          {/* ページタイトル */}
-          <div className="flex flex-col sm:flex-row sm:items-end gap-3 sm:gap-6">
-            <div>
-              <p
-                className="text-sm font-medium mb-2"
-                style={{ color: 'var(--color-orange)' }}
-              >
-                AI活用事例
-              </p>
+            {/* 左カラム: タイトル + 説明 */}
+            <div className="flex flex-col gap-3">
               <h1
                 className="font-display font-bold leading-tight"
-                style={{
-                  fontSize: 'clamp(22px, 4vw, 40px)',
-                  color:    'var(--color-brown)',
-                }}
+                style={{ fontSize: 'clamp(30px, 5vw, 54px)', color: 'var(--color-brown)' }}
               >
-                みんなの<span style={{ color: 'var(--color-orange)' }}>AI</span>活用術
+                みんなの<span style={{ color: 'var(--shu)' }}>AI</span>活用術
               </h1>
               <p
-                className="mt-2 text-sm leading-relaxed max-w-lg"
+                className="max-w-2xl text-base leading-relaxed sm:text-lg"
                 style={{ color: 'var(--color-brown-light)' }}
               >
                 仕事・学習・日常ですぐ使えるAI活用事例を厳選。
-                <br className="hidden sm:inline" />
                 初心者でも安心、今日から実践できる記事だけをお届けします。
               </p>
             </div>
+
+            {/* 右カラム: カテゴリピッカー（/tools と同じ位置・統一レイアウト） */}
+            <div
+              className="rounded-[28px] p-5 sm:p-6"
+              style={{
+                background: 'rgba(255,255,255,0.82)',
+                boxShadow:  'var(--shadow-warm)',
+              }}
+            >
+              <Suspense fallback={
+                <div className="grid grid-cols-2 gap-3">
+                  {Array.from({ length: 4 }).map((_, i) => (
+                    <div key={i} className="skeleton" style={{ height: '90px', borderRadius: '4px' }} />
+                  ))}
+                </div>
+              }>
+                <CategoryFilter />
+              </Suspense>
+            </div>
+
           </div>
         </div>
       </section>
 
-      {/* ── フィルターエリア ── */}
+      {/* ── フィルターエリア（検索 + ソート/難易度のみ） ── */}
       <section
         style={{
           background:   'white',
@@ -320,23 +300,12 @@ export default async function LearnPage({ searchParams }: LearnPageProps) {
         }}
       >
         <div
-          className="max-w-container mx-auto flex flex-col gap-6"
+          className="max-w-container mx-auto flex flex-col gap-4"
           style={{ paddingInline: 'var(--container-px)' }}
         >
           {/* 検索バー（Rev26 #2）*/}
           <Suspense fallback={<div className="h-14 rounded-full skeleton" />}>
             <LearnSearchBar />
-          </Suspense>
-
-          {/* カテゴリフィルター */}
-          <Suspense fallback={
-            <div className="flex gap-2 flex-wrap">
-              {Array.from({ length: 6 }).map((_, i) => (
-                <div key={i} className="skeleton h-10 w-24 rounded-full" />
-              ))}
-            </div>
-          }>
-            <CategoryFilter />
           </Suspense>
 
           {/* ソート・難易度バー */}
@@ -372,6 +341,7 @@ export default async function LearnPage({ searchParams }: LearnPageProps) {
           <ActiveFilterBanner total={totalCount} isFiltered={isFiltered} />
 
           {/* グリッド */}
+          {/* Rev40: 図録的な均一感のため firstFeatured を撤廃。全カード同サイズ。 */}
           <ArticleGrid
             articles={articleRows.map((a) => ({
               slug:         a.slug,
@@ -384,7 +354,6 @@ export default async function LearnPage({ searchParams }: LearnPageProps) {
               viewCount:    a.viewCount,
               body:         a.body,
             }))}
-            firstFeatured={!isFiltered && page === 1}
           />
 
           {/* ページネーション */}

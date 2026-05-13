@@ -2,17 +2,17 @@
 
 /**
  * components/home/CategoryFilter.tsx
- * familyai.jp — カテゴリフィルターUI
+ * familyai.jp — カテゴリフィルターUI（Rev40 Phase H: /tools と同じカード式）
  *
- * - チップ形式（pill shape）・複数選択対応
- * - 選択状態で URL クエリパラメータ `cat` を更新
- * - 現在の絞り込み条件を保ったまま `cat` を更新
+ * - 2x2 / 1x4 のカード式（絵文字 + ラベル）
+ * - 複数選択対応・URL クエリ `cat` をカンマ区切りで更新
+ * - 選択中: 朱色枠 + 朱色テキスト
+ * - 未選択（他が選択中）: opacity 0.55 で淡く
  */
 
 import { useRouter, useSearchParams } from 'next/navigation';
-import { CATEGORY_LABEL } from '@/shared';
+import { CATEGORY_LABEL, CATEGORY_EMOJI } from '@/shared';
 import type { ContentCategory } from '@/shared';
-// NOTE: CATEGORY_EMOJI を撤廃（民藝化のため絵文字を削除）
 
 // ── カテゴリ定義（表示順） ─────────────────────────────────────
 const CATEGORIES: ContentCategory[] = [
@@ -67,6 +67,8 @@ export function CategoryFilter({
     router.push(`?${params.toString()}`, { scroll: false });
   }
 
+  const hasSelection = selected.length > 0;
+
   return (
     <div className={`flex flex-col gap-4 ${className}`}>
       {/* ラベル + クリアボタン */}
@@ -79,7 +81,7 @@ export function CategoryFilter({
           <span className="mx-2">分類で絞り込む</span>
           <span className="ornament" aria-hidden="true">⁂</span>
         </p>
-        {selected.length > 0 && (
+        {hasSelection && (
           <button
             onClick={clearAll}
             className="font-mincho text-xs underline underline-offset-2 hover:opacity-70 transition-opacity min-h-[44px] px-2"
@@ -90,12 +92,11 @@ export function CategoryFilter({
         )}
       </div>
 
-      {/* チップ一覧 */}
+      {/* カード一覧（2x2 固定・/tools ヘッダーの右カラムにも収まる） */}
       <div
-        className="flex gap-2 overflow-x-auto whitespace-nowrap pb-2 -mx-1 px-1"
+        className="grid grid-cols-2 gap-3"
         role="group"
         aria-label="カテゴリフィルター"
-        style={{ WebkitOverflowScrolling: 'touch', scrollbarWidth: 'thin' }}
       >
         {categories.map((cat) => {
           const isActive = selected.includes(cat);
@@ -103,24 +104,33 @@ export function CategoryFilter({
             <button
               key={cat}
               onClick={() => toggle(cat)}
-              className="inline-flex shrink-0 items-center gap-1.5 px-4 py-2 text-sm font-mincho border transition-[border-color,background-color,color] duration-200 min-h-[44px]"
+              className="px-4 py-4 text-center transition-[transform,opacity,border-color,color] duration-200 hover:-translate-y-0.5 min-h-[44px]"
               style={{
-                background:   isActive ? 'var(--shu)'   : 'var(--washi)',
-                borderColor:  isActive ? 'var(--shu)'   : 'var(--line)',
-                color:        isActive ? 'var(--washi)' : 'var(--sumi-light)',
+                background:   'var(--washi-deep)',
+                border:       `1px solid ${isActive ? 'var(--shu)' : 'var(--line)'}`,
                 borderRadius: '4px',
+                opacity:      hasSelection && !isActive ? 0.55 : 1,
               }}
               aria-pressed={isActive}
               aria-label={`${CATEGORY_LABEL[cat]}フィルター`}
             >
-              <span>{CATEGORY_LABEL[cat]}</span>
+              <div className="text-3xl" aria-hidden="true">{CATEGORY_EMOJI[cat]}</div>
+              <div
+                className="mt-2 font-mincho text-sm"
+                style={{
+                  color:      isActive ? 'var(--shu)' : 'var(--sumi)',
+                  fontWeight: 500,
+                }}
+              >
+                {CATEGORY_LABEL[cat]}
+              </div>
             </button>
           );
         })}
       </div>
 
       {/* 選択中のサマリー */}
-      {selected.length > 0 && (
+      {hasSelection && (
         <p
           className="font-mincho text-xs animate-fade-in-up"
           style={{ color: 'var(--sumi-light)' }}

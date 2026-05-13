@@ -61,11 +61,12 @@ const TOOLS_BY_CATEGORY: Array<{
   },
 ];
 
+// Rev40: カテゴリピッカーの背景色を washi-deep で統一（多色を撤廃）
 const CATEGORY_BG: Record<ContentCategory, string> = {
-  education: 'var(--color-mint)',
-  lifestyle: 'var(--color-peach-light)',
-  work: 'var(--color-sky)',
-  creative: 'var(--color-yellow)',
+  education: 'var(--washi-deep)',
+  lifestyle: 'var(--washi-deep)',
+  work:      'var(--washi-deep)',
+  creative:  'var(--washi-deep)',
 };
 
 type ToolsPageProps = {
@@ -98,19 +99,8 @@ export default async function ToolsPage({ searchParams }: ToolsPageProps) {
         className="px-6 py-8 sm:py-10"
         style={{ background: 'linear-gradient(160deg, var(--color-beige) 0%, var(--color-cream) 100%)' }}
       >
-        <div className="max-w-5xl mx-auto flex flex-col gap-4">
-          <span
-            className="inline-flex items-center gap-2 self-start rounded-full px-4 py-2 text-sm font-semibold"
-            style={{
-              background: 'rgba(255,255,255,0.78)',
-              color: 'var(--color-brown)',
-              boxShadow: 'var(--shadow-warm-sm)',
-            }}
-          >
-            🧰 カテゴリー別ツール一覧
-          </span>
-
-          <div className="grid gap-6 lg:grid-cols-[minmax(0,1.4fr)_minmax(280px,0.8fr)] lg:items-end">
+        <div className="max-w-5xl mx-auto">
+          <div className="grid gap-6 lg:grid-cols-[minmax(0,1.4fr)_minmax(280px,0.8fr)] lg:items-start">
             <div className="flex flex-col gap-3">
               <h1
                 className="font-display font-bold leading-tight"
@@ -118,7 +108,7 @@ export default async function ToolsPage({ searchParams }: ToolsPageProps) {
               >
                 家族の学びと暮らしを
                 <br />
-                AI で応援
+                <span style={{ color: 'var(--shu)' }}>AI</span> で応援
               </h1>
               <p
                 className="max-w-2xl text-base leading-relaxed sm:text-lg"
@@ -130,31 +120,53 @@ export default async function ToolsPage({ searchParams }: ToolsPageProps) {
             </div>
 
             <div
-              className="rounded-[28px] p-5 sm:p-6"
+              className="rounded-[28px] p-5 sm:p-6 flex flex-col gap-4"
               style={{
                 background: 'rgba(255,255,255,0.82)',
                 boxShadow: 'var(--shadow-warm)',
               }}
             >
+              {/* Rev40 Phase H: /learn の CategoryFilter と同じ「⁂ 分類で絞り込む ⁂」ラベル（左寄せ）*/}
+              <p
+                className="font-mincho text-sm tracking-wide"
+                style={{ color: 'var(--sumi)' }}
+              >
+                <span className="ornament" aria-hidden="true">⁂</span>
+                <span className="mx-2">分類で絞り込む</span>
+                <span className="ornament" aria-hidden="true">⁂</span>
+              </p>
+
+              {/* /learn の CategoryFilter と同じカード形状（4px 角丸 + 罫線・選択時は朱色枠） */}
               <div className="grid grid-cols-2 gap-3">
-                {(Object.keys(CATEGORY_BG) as ContentCategory[]).map((category) => (
-                  <Link
-                    key={category}
-                    href={selectedCategory === category ? '/tools' : `/tools?cat=${category}`}
-                    className="rounded-2xl px-4 py-4 text-center transition-[transform,box-shadow,opacity] duration-200 hover:-translate-y-1"
-                    style={{
-                      background: CATEGORY_BG[category],
-                      boxShadow: selectedCategory === category ? 'var(--shadow-warm)' : 'none',
-                      opacity: selectedCategory && selectedCategory !== category ? 0.55 : 1,
-                    }}
-                    aria-pressed={selectedCategory === category}
-                  >
-                    <div className="text-3xl">{CATEGORY_EMOJI[category]}</div>
-                    <div className="mt-2 text-sm font-bold" style={{ color: 'var(--color-brown)' }}>
-                      {CATEGORY_LABEL[category]}
-                    </div>
-                  </Link>
-                ))}
+                {(Object.keys(CATEGORY_BG) as ContentCategory[]).map((category) => {
+                  const isActive = selectedCategory === category;
+                  const hasSelection = !!selectedCategory;
+                  return (
+                    <Link
+                      key={category}
+                      href={isActive ? '/tools' : `/tools?cat=${category}`}
+                      className="px-4 py-4 text-center transition-[transform,opacity,border-color,color] duration-200 hover:-translate-y-0.5"
+                      style={{
+                        background:   CATEGORY_BG[category],
+                        border:       `1px solid ${isActive ? 'var(--shu)' : 'var(--line)'}`,
+                        borderRadius: '4px',
+                        opacity:      hasSelection && !isActive ? 0.55 : 1,
+                      }}
+                      aria-pressed={isActive}
+                    >
+                      <div className="text-3xl" aria-hidden="true">{CATEGORY_EMOJI[category]}</div>
+                      <div
+                        className="mt-2 font-mincho text-sm"
+                        style={{
+                          color:      isActive ? 'var(--shu)' : 'var(--color-brown)',
+                          fontWeight: 500,
+                        }}
+                      >
+                        {CATEGORY_LABEL[category]}
+                      </div>
+                    </Link>
+                  );
+                })}
               </div>
             </div>
           </div>

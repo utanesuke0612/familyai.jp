@@ -87,9 +87,11 @@ export function MobileNav({ onClose }: MobileNavProps) {
         >
           <span
             className="font-mincho text-lg"
-            style={{ color: 'var(--sumi)', fontWeight: 500 }}
+            style={{ fontWeight: 500 }}
           >
-            familyai<span style={{ color: 'var(--shu)' }}>.</span>jp
+            <span style={{ color: 'var(--sumi)' }}>family</span>
+            <span style={{ color: 'var(--shu)' }}>ai</span>
+            <span style={{ color: 'var(--sumi)' }}>.jp</span>
           </span>
           <button
             onClick={handleClose}
