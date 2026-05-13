@@ -23,6 +23,7 @@ import Link from 'next/link';
 import type { Tutor3dSubject, Tutor3dGrade, Tutor3dHotspot } from '@/shared';
 import { TUTOR3D_SUBJECT_LABEL, TUTOR3D_SUBJECTS, TUTOR3D_GRADE_LABEL, TUTOR3D_GRADES } from '@/shared';
 import { BlobUploadInput } from './BlobUploadInput';
+import { HotspotEditor }   from './HotspotEditor';
 
 export type ModelFormMode = 'create' | 'edit';
 
@@ -86,8 +87,8 @@ export function ModelForm({ mode, initial, originalSlug }: ModelFormProps) {
   const [published,    setPublished]    = useState(base.published);
   const [isFeatured,   setIsFeatured]   = useState(base.isFeatured);
 
-  // hotspots は段階 D で本格編集 UI を載せる。現状はそのまま PUT で保持。
-  const [hotspots] = useState<Tutor3dHotspot[]>(base.hotspots);
+  // hotspots: HotspotEditor で 3D 上クリック採取・リスト編集可
+  const [hotspots, setHotspots] = useState<Tutor3dHotspot[]>(base.hotspots);
 
   const [saving, setSaving] = useState(false);
   const [error,  setError]  = useState<string | null>(null);
@@ -257,15 +258,13 @@ export function ModelForm({ mode, initial, originalSlug }: ModelFormProps) {
         </p>
       </Section>
 
-      {/* ── ホットスポット（段階 D で UI 追加・現状は件数のみ表示） ── */}
-      <Section title="🎯 ホットスポット">
-        <p style={{ fontSize: 13, color: '#6B7280', margin: 0 }}>
-          現在 <strong>{hotspots.length}</strong> 件登録されています。
-          <br />
-          <span style={{ fontSize: 11, color: '#9CA3AF' }}>
-            🚧 編集 UI は段階 D で実装予定。現状は既存の値が保持されます。
-          </span>
-        </p>
+      {/* ── ホットスポット（段階 D-1: 3D 上クリック採取 UI） ── */}
+      <Section title={`🎯 ホットスポット（${hotspots.length} 件）`}>
+        <HotspotEditor
+          glbUrl={glbUrl || undefined}
+          hotspots={hotspots}
+          onChange={setHotspots}
+        />
       </Section>
 
       {/* ── 出典・ライセンス ────────────────────────────────── */}

@@ -49,13 +49,13 @@ const TOOLS_BY_CATEGORY: Array<{
       {
         // Rev36: AI生成アニメから 3D 図鑑へ全面リプレイス。
         // URL `/tools/ai-kyoshitsu` を維持しブランド「うごくAI教室」継続。
+        // Rev37: 一般公開（adminOnly 削除）— 未ログインユーザーも利用可。
         name: 'うごくAI教室・3D 図鑑',
         summary: '理科の 3D モデル（現在は太陽系）を回しながら観察。気になる場所をタップすると AI が詳しく教えてくれます。AR にも対応。',
         href: '/tools/ai-kyoshitsu',
         status: '公開中',
         cta: '見てみる',
         accent: 'var(--color-mint)',
-        adminOnly: true,    // Rev36: 段階公開（旧 Rev33 の admin gate を継続）
       },
     ],
   },

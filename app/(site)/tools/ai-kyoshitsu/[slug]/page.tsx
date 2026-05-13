@@ -19,7 +19,6 @@ import {
   TUTOR3D_SUBJECT_LABEL,
   TUTOR3D_GRADE_LABEL,
 } from '@/shared';
-import { isAdmin }            from '@/lib/admin-auth';
 import {
   getPublishedModelBySlugCached,
   incrementViewCount,
@@ -74,10 +73,9 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 }
 
 export default async function ModelDetailPage({ params }: PageProps) {
-  // 0. Admin gate（Codex Q1-2 / Q2-1 対応）:
-  //    カタログページと同じく、直 URL でも管理者以外は 404 で隠す。
-  //    一般公開時は本ブロック削除。
-  if (!(await isAdmin())) notFound();
+  // Rev36 + Rev37: 一般公開（admin gate 削除）。
+  // getPublishedModelBySlugCached は published=true 限定で取得するため、
+  // 非公開モデルへの直 URL アクセスは下の notFound() で 404 になる。
 
   // 1. DB 取得
   const model = await getPublishedModelBySlugCached(params.slug);
