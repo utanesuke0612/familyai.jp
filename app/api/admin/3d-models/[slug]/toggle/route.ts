@@ -10,10 +10,12 @@ import { requireAdmin }              from '@/lib/admin-auth';
 import { verifyCsrf }                from '@/lib/csrf';
 import { enforceAdminRateLimit }     from '@/lib/ratelimit';
 import { togglePublishedBySlug }     from '@/lib/repositories/3d-models';
+import { withRequest }                from '@/lib/log';
 
 interface Ctx { params: { slug: string }; }
 
 export async function PATCH(req: NextRequest, { params }: Ctx) {
+  const log = withRequest(req, '/api/admin/3d-models/:slug/toggle');
   if (!verifyCsrf(req)) {
     return NextResponse.json(
       { ok: false, error: { code: 'CSRF', message: 'CSRF check failed' } },
@@ -37,8 +39,7 @@ export async function PATCH(req: NextRequest, { params }: Ctx) {
     }
     return NextResponse.json({ ok: true, data: { slug: params.slug, published: next } });
   } catch (err) {
-    console.error('[PATCH /api/admin/3d-models/:slug/toggle]',
-      err instanceof Error ? err.message : String(err));
+    log.error('admin.3d-models.toggle', { slug: params.slug, error: err instanceof Error ? err.message : String(err) });
     return NextResponse.json(
       { ok: false, error: { code: 'INTERNAL', message: 'サーバーエラーが発生しました' } },
       { status: 500 },

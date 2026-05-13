@@ -15,9 +15,11 @@ import { verifyCsrf }                from '@/lib/csrf';
 import { enforceAdminRateLimit }     from '@/lib/ratelimit';
 import { listAllModelsForAdmin, upsertModel } from '@/lib/repositories/3d-models';
 import { adminTutor3dQuerySchema, createTutor3dModelSchema } from '@/lib/schemas/3d-models';
+import { withRequest } from '@/lib/log';
 
 // ─── GET: 全モデル一覧 ───────────────────────────────────────
 export async function GET(req: NextRequest) {
+  const log = withRequest(req, '/api/admin/3d-models');
   const check = await requireAdmin();
   if (!check.ok) return check.response;
 
@@ -54,8 +56,7 @@ export async function GET(req: NextRequest) {
       },
     });
   } catch (err) {
-    console.error('[GET /api/admin/3d-models]',
-      err instanceof Error ? err.message : String(err));
+    log.error('admin.3d-models.list', { error: err instanceof Error ? err.message : String(err) });
     return NextResponse.json(
       { ok: false, error: { code: 'INTERNAL', message: 'サーバーエラーが発生しました' } },
       { status: 500 },
@@ -65,6 +66,7 @@ export async function GET(req: NextRequest) {
 
 // ─── POST: モデル新規作成 ───────────────────────────────────
 export async function POST(req: NextRequest) {
+  const log = withRequest(req, '/api/admin/3d-models');
   if (!verifyCsrf(req)) {
     return NextResponse.json(
       { ok: false, error: { code: 'CSRF', message: 'CSRF check failed' } },
@@ -110,7 +112,7 @@ export async function POST(req: NextRequest) {
         { status: 409 },
       );
     }
-    console.error('[POST /api/admin/3d-models]', msg);
+    log.error('admin.3d-models.post', { error: msg });
     return NextResponse.json(
       { ok: false, error: { code: 'INTERNAL', message: 'サーバーエラーが発生しました' } },
       { status: 500 },

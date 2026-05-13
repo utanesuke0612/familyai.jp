@@ -14,6 +14,7 @@
 import { and, ne, or, asc, desc, eq, sql, count, ilike } from 'drizzle-orm';
 import { db, articles } from '@/lib/db';
 import type { Article, NewArticle } from '@/lib/db/schema';
+import { logger } from '@/lib/log';
 
 // ─── 共通型 ───────────────────────────────────────────────────
 
@@ -81,7 +82,7 @@ export async function getArticleForAdmin(slug: string): Promise<ArticleRow | nul
       .limit(1);
     return rows[0] ?? null;
   } catch (err) {
-    console.error('[articles.getArticleForAdmin] DB query failed:', err);
+    logger.error('articles.getArticleForAdmin', { error: err instanceof Error ? err.message : String(err) });
     return null;
   }
 }
@@ -194,7 +195,7 @@ export async function getArticleList(
 
     return { items, total, totalPages };
   } catch (err) {
-    console.error('[articles.getArticleList] DB query failed:', err);
+    logger.error('articles.getArticleList', { error: err instanceof Error ? err.message : String(err) });
     return { items: [], total: 0, totalPages: 1 };
   }
 }
@@ -221,7 +222,7 @@ export async function getLatestArticles(limit = 6): Promise<
       description: row.description ?? '',
     }));
   } catch (err) {
-    console.error('[articles.getLatestArticles] DB query failed:', err);
+    logger.error('articles.getLatestArticles', { error: err instanceof Error ? err.message : String(err) });
     return [];
   }
 }
@@ -288,7 +289,7 @@ export async function listAllArticles(opts: {
 
     return { items, total, totalPages, page, pageSize };
   } catch (err) {
-    console.error('[articles.listAllArticles] DB query failed:', err);
+    logger.error('articles.listAllArticles', { error: err instanceof Error ? err.message : String(err) });
     return { items: [], total: 0, totalPages: 1, page, pageSize };
   }
 }
@@ -335,7 +336,7 @@ export async function updateArticle(
       .returning();
     return rows[0] ?? null;
   } catch (err) {
-    console.error('[articles.updateArticle] DB query failed:', err);
+    logger.error('articles.updateArticle', { error: err instanceof Error ? err.message : String(err) });
     return null;
   }
 }
@@ -353,7 +354,7 @@ export async function deleteArticle(slug: string): Promise<boolean> {
       .returning({ slug: articles.slug });
     return rows.length > 0;
   } catch (err) {
-    console.error('[articles.deleteArticle] DB query failed:', err);
+    logger.error('articles.deleteArticle', { error: err instanceof Error ? err.message : String(err) });
     return false;
   }
 }
@@ -392,7 +393,7 @@ export async function togglePublished(
 
     return rows[0] ?? null;
   } catch (err) {
-    console.error('[articles.togglePublished] DB query failed:', err);
+    logger.error('articles.togglePublished', { error: err instanceof Error ? err.message : String(err) });
     return null;
   }
 }

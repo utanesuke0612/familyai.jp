@@ -17,6 +17,7 @@ import { auth }                        from '@/lib/auth';
 import { db, userAiMemos }             from '@/lib/db';
 import { verifyCsrf }                  from '@/lib/csrf';
 import { toAiMemoItem }                from '@/lib/mappers/ai-memos';
+import { withRequest }                  from '@/lib/log';
 
 // ── バリデーション ──────────────────────────────────────────────
 const memoItemSchema = z.object({
@@ -34,6 +35,7 @@ const memoItemSchema = z.object({
 //   - レスポンス: `{ ok, data: items, meta: { total, page, perPage } }`
 //   - 後方互換: `data` 配列形は維持（既存 Web クライアントは meta を無視可能）
 export async function GET(req: NextRequest) {
+  const log = withRequest(req, '/api/user/ai-memos');
   const session = await auth();
   if (!session?.user?.id) {
     return NextResponse.json({ ok: false, error: 'Unauthorized' }, { status: 401 });
@@ -82,13 +84,14 @@ export async function GET(req: NextRequest) {
       meta: { total, page, perPage: pageSize },
     });
   } catch (err) {
-    console.error('[GET /api/user/ai-memos]', err);
+    log.error('ai-memos.get', { error: err instanceof Error ? err.message : String(err) });
     return NextResponse.json({ ok: false, error: 'サーバーエラーが発生しました' }, { status: 500 });
   }
 }
 
 // ── POST: メモ保存（bulk 対応・upsert） ─────────────────────────
 export async function POST(req: NextRequest) {
+  const log = withRequest(req, '/api/user/ai-memos');
   if (!verifyCsrf(req)) {
     return NextResponse.json({ ok: false, error: 'CSRF check failed' }, { status: 403 });
   }
@@ -131,7 +134,7 @@ export async function POST(req: NextRequest) {
       )
       .onConflictDoNothing(); // user_id + memo_id が重複の場合はスキップ
   } catch (err) {
-    console.error('[POST /api/user/ai-memos]', err);
+    log.error('ai-memos.post', { error: err instanceof Error ? err.message : String(err) });
     return NextResponse.json({ ok: false, error: 'サーバーエラーが発生しました' }, { status: 500 });
   }
 
@@ -140,6 +143,7 @@ export async function POST(req: NextRequest) {
 
 // ── DELETE: メモ削除 ────────────────────────────────────────────
 export async function DELETE(req: NextRequest) {
+  const log = withRequest(req, '/api/user/ai-memos');
   if (!verifyCsrf(req)) {
     return NextResponse.json({ ok: false, error: 'CSRF check failed' }, { status: 403 });
   }
@@ -164,7 +168,7 @@ export async function DELETE(req: NextRequest) {
         ),
       );
   } catch (err) {
-    console.error('[DELETE /api/user/ai-memos]', err);
+    log.error('ai-memos.delete', { error: err instanceof Error ? err.message : String(err) });
     return NextResponse.json({ ok: false, error: 'サーバーエラーが発生しました' }, { status: 500 });
   }
 

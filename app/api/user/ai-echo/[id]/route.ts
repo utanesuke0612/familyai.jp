@@ -11,6 +11,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { auth } from '@/lib/auth';
 import { verifyCsrf } from '@/lib/csrf';
 import { deleteAiEchoEntry } from '@/lib/repositories/ai-echo';
+import { withRequest } from '@/lib/log';
 
 export const runtime = 'nodejs';
 
@@ -18,6 +19,7 @@ export async function DELETE(
   req:        NextRequest,
   { params }: { params: { id: string } },
 ) {
+  const log = withRequest(req, '/api/user/ai-echo/:id');
   // CSRF
   if (!verifyCsrf(req)) {
     return NextResponse.json(
@@ -53,7 +55,7 @@ export async function DELETE(
     }
     return NextResponse.json({ ok: true });
   } catch (err) {
-    console.error('[DELETE /api/user/ai-echo/:id] DB エラー:', err instanceof Error ? err.message : err);
+    log.error('ai-echo.delete', { id, error: err instanceof Error ? err.message : String(err) });
     return NextResponse.json(
       { ok: false, error: { code: 'SERVER_ERROR', message: 'サーバーエラーが発生しました。' } },
       { status: 500 },

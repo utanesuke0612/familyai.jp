@@ -14,6 +14,7 @@ import {
   generateOpenRouterTts,
   type OpenRouterTtsVoice,
 } from '@/lib/ai/providers/openrouter-tts';
+import { withRequest } from '@/lib/log';
 
 export const runtime = 'nodejs';
 
@@ -48,6 +49,7 @@ function errorResponse(code: string, message: string, status: number): Response 
 }
 
 export async function POST(req: NextRequest) {
+  const log = withRequest(req, '/api/tts');
   if (!verifyCsrf(req)) {
     return errorResponse('FORBIDDEN', '不正なリクエストです。', 403);
   }
@@ -95,7 +97,7 @@ export async function POST(req: NextRequest) {
     });
   } catch (err) {
     const msg = err instanceof Error ? err.message : '不明なエラー';
-    console.error('[POST /api/tts] TTS エラー:', msg);
+    log.error('tts.post', { error: msg });
 
     if (msg.includes('OPENROUTER_API_KEY')) {
       return errorResponse(

@@ -35,6 +35,7 @@ import { z }                         from 'zod';
 import { db, articles }              from '@/lib/db';
 import { toArticleSummary }          from '@/lib/mappers/articles';
 import { escapeLike }                from '@/lib/repositories/articles';
+import { withRequest }               from '@/lib/log';
 
 export const runtime = 'nodejs';
 
@@ -94,6 +95,7 @@ const SELECT_FIELDS = {
 
 // ── GET /api/articles ──────────────────────────────────────────
 export async function GET(req: NextRequest) {
+  const log = withRequest(req, '/api/articles');
   // 1. クエリパラメータのバリデーション
   const { searchParams } = new URL(req.url);
   const catParams = searchParams.getAll('cat');
@@ -203,7 +205,7 @@ export async function GET(req: NextRequest) {
 
     return res;
   } catch (err) {
-    console.error('[GET /api/articles] DB エラー:', err);
+    log.error('articles.list', { error: err instanceof Error ? err.message : String(err) });
     return NextResponse.json(
       {
         ok:    false,

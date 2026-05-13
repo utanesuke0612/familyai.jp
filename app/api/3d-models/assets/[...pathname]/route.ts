@@ -12,6 +12,7 @@ import { and, eq, or }               from 'drizzle-orm';
 import { isAdmin }                   from '@/lib/admin-auth';
 import { db }                        from '@/lib/db';
 import { tutor3dModels }             from '@/lib/db/schema';
+import { withRequest }               from '@/lib/log';
 
 export const runtime = 'nodejs';
 
@@ -55,6 +56,7 @@ async function handleAssetRequest(
   { params }: { params: { pathname: string[] } },
   method: 'GET' | 'HEAD',
 ) {
+  const log = withRequest(req, '/api/3d-models/assets/:pathname');
   const pathname = safeAssetPath(params.pathname);
   if (!pathname) {
     return NextResponse.json(
@@ -105,7 +107,7 @@ async function handleAssetRequest(
     );
   }
   if (!upstream.ok && upstream.status !== 304) {
-    console.error('[3d-assets] private blob fetch failed', upstream.status, upstream.statusText);
+    log.error('3d-assets.blob_fetch_failed', { status: upstream.status, statusText: upstream.statusText });
     return NextResponse.json(
       { ok: false, error: { code: 'BLOB_FETCH_FAILED', message: 'failed to fetch blob' } },
       { status: 502 },

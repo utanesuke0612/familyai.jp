@@ -8,6 +8,7 @@
 import { NextResponse } from 'next/server';
 import { isAdmin } from '@/lib/admin-auth';
 import { getAiConfigHistory } from '@/lib/repositories/ai-config';
+import { logger } from '@/lib/log';
 
 export const runtime = 'nodejs';
 
@@ -30,7 +31,7 @@ export async function GET() {
     }));
     return NextResponse.json({ ok: true, data });
   } catch (err) {
-    console.error('[GET /api/admin/ai-config/history] エラー:', err);
+    logger.error('admin.ai-config.history.get', { route: '/api/admin/ai-config/history', error: err instanceof Error ? err.message : String(err) });
     return NextResponse.json(
       { ok: false, error: 'サーバーエラーが発生しました。' },
       { status: 500 },

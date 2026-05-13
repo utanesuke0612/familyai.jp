@@ -18,6 +18,7 @@ import {
   deleteModel,
 } from '@/lib/repositories/3d-models';
 import { updateTutor3dModelSchema } from '@/lib/schemas/3d-models';
+import { withRequest } from '@/lib/log';
 
 interface Ctx { params: { slug: string }; }
 
@@ -72,6 +73,7 @@ export async function GET(_req: NextRequest, { params }: Ctx) {
 
 // ─── PUT: 更新 ───────────────────────────────────────────
 export async function PUT(req: NextRequest, { params }: Ctx) {
+  const log = withRequest(req, '/api/admin/3d-models/:slug');
   if (!verifyCsrf(req)) {
     return NextResponse.json(
       { ok: false, error: { code: 'CSRF', message: 'CSRF check failed' } },
@@ -113,8 +115,7 @@ export async function PUT(req: NextRequest, { params }: Ctx) {
     }
     return NextResponse.json({ ok: true, data: { slug: params.slug } });
   } catch (err) {
-    console.error('[PUT /api/admin/3d-models/:slug]',
-      err instanceof Error ? err.message : String(err));
+    log.error('admin.3d-models.put', { slug: params.slug, error: err instanceof Error ? err.message : String(err) });
     return NextResponse.json(
       { ok: false, error: { code: 'INTERNAL', message: 'サーバーエラーが発生しました' } },
       { status: 500 },
@@ -124,6 +125,7 @@ export async function PUT(req: NextRequest, { params }: Ctx) {
 
 // ─── DELETE: 削除 ────────────────────────────────────────
 export async function DELETE(req: NextRequest, { params }: Ctx) {
+  const log = withRequest(req, '/api/admin/3d-models/:slug');
   if (!verifyCsrf(req)) {
     return NextResponse.json(
       { ok: false, error: { code: 'CSRF', message: 'CSRF check failed' } },
@@ -167,14 +169,13 @@ export async function DELETE(req: NextRequest, { params }: Ctx) {
     try {
       await deleteModelBlobs(model);
     } catch (err) {
-      console.warn('[DELETE /api/admin/3d-models/:slug] blob.delete_failed',
+      log.warn('admin.3d-models.delete.blob_failed',
         { slug: params.slug, error: err instanceof Error ? err.message : String(err) });
     }
 
     return NextResponse.json({ ok: true, data: { slug: params.slug } });
   } catch (err) {
-    console.error('[DELETE /api/admin/3d-models/:slug]',
-      err instanceof Error ? err.message : String(err));
+    log.error('admin.3d-models.delete', { slug: params.slug, error: err instanceof Error ? err.message : String(err) });
     return NextResponse.json(
       { ok: false, error: { code: 'INTERNAL', message: 'サーバーエラーが発生しました' } },
       { status: 500 },

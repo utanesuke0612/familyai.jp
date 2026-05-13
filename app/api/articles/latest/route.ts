@@ -20,6 +20,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { z }                         from 'zod';
 import { getLatestArticles }         from '@/lib/repositories/articles';
 import { toArticleSummary }          from '@/lib/mappers/articles';
+import { withRequest }               from '@/lib/log';
 
 export const runtime = 'nodejs';
 // ISR/CDN キャッシュ（`/api/articles/[slug]` と揃える）
@@ -30,6 +31,7 @@ const querySchema = z.object({
 });
 
 export async function GET(req: NextRequest) {
+  const log = withRequest(req, '/api/articles/latest');
   try {
     const parsed = querySchema.safeParse({
       limit: req.nextUrl.searchParams.get('limit') ?? undefined,
@@ -59,7 +61,7 @@ export async function GET(req: NextRequest) {
     );
     return res;
   } catch (err) {
-    console.error('[GET /api/articles/latest] DB エラー:', err);
+    log.error('articles.latest', { error: err instanceof Error ? err.message : String(err) });
     return NextResponse.json(
       {
         ok:    false,

@@ -76,6 +76,14 @@ const serverEnvSchema = z.object({
 
   // ── VOA assets（クライアント公開・ビルド時に解決）
   NEXT_PUBLIC_VOA_BLOB_BASE: z.string().url().optional(),
+
+  // ── Vercel Cron（Rev39・夜間 cleanup ジョブ用・本番のみ必須）
+  // `openssl rand -hex 32` で 32 文字以上のランダム値を Vercel 環境変数にセット。
+  // ローカル dev では未設定でも起動可能（cron route は 500/401 を返すのみ）。
+  CRON_SECRET: z
+    .string()
+    .min(32, 'CRON_SECRET must be at least 32 chars (use `openssl rand -hex 32`)')
+    .optional(),
 })
   // Rev35 #security: NEXTAUTH_SECRET か AUTH_SECRET のどちらかは必須。
   // どちらも欠けていると NextAuth が安全でないデフォルトで起動する。

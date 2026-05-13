@@ -19,6 +19,7 @@ import {
 } from '@/lib/repositories/ai-config';
 import { invalidateAiConfigCache, getAiConfig } from '@/lib/config/ai-config';
 import { AI_MODEL_OPTIONS, AI_CONFIG_RANGES } from '@/shared';
+import { logger, withRequest } from '@/lib/log';
 
 export const runtime = 'nodejs';
 
@@ -64,7 +65,7 @@ export async function GET() {
     ]);
     return NextResponse.json({ ok: true, data: { effective, dbPartial } });
   } catch (err) {
-    console.error('[GET /api/admin/ai-config] エラー:', err);
+    logger.error('admin.ai-config.get', { route: '/api/admin/ai-config', error: err instanceof Error ? err.message : String(err) });
     return NextResponse.json(
       { ok: false, error: 'サーバーエラーが発生しました。' },
       { status: 500 },
@@ -74,6 +75,7 @@ export async function GET() {
 
 // ── PUT: 設定を保存 ───────────────────────────────────────────
 export async function PUT(req: NextRequest) {
+  const log = withRequest(req, '/api/admin/ai-config');
   if (!verifyCsrf(req)) {
     return NextResponse.json({ ok: false, error: '不正なリクエストです。' }, { status: 403 });
   }
@@ -102,7 +104,7 @@ export async function PUT(req: NextRequest) {
     invalidateAiConfigCache();
     return NextResponse.json({ ok: true });
   } catch (err) {
-    console.error('[PUT /api/admin/ai-config] エラー:', err);
+    log.error('admin.ai-config.put', { error: err instanceof Error ? err.message : String(err) });
     return NextResponse.json(
       { ok: false, error: 'サーバーエラーが発生しました。' },
       { status: 500 },
@@ -112,6 +114,7 @@ export async function PUT(req: NextRequest) {
 
 // ── DELETE: 設定をリセット ────────────────────────────────────
 export async function DELETE(req: NextRequest) {
+  const log = withRequest(req, '/api/admin/ai-config');
   if (!verifyCsrf(req)) {
     return NextResponse.json({ ok: false, error: '不正なリクエストです。' }, { status: 403 });
   }
@@ -127,7 +130,7 @@ export async function DELETE(req: NextRequest) {
     invalidateAiConfigCache();
     return NextResponse.json({ ok: true });
   } catch (err) {
-    console.error('[DELETE /api/admin/ai-config] エラー:', err);
+    log.error('admin.ai-config.delete', { error: err instanceof Error ? err.message : String(err) });
     return NextResponse.json(
       { ok: false, error: 'サーバーエラーが発生しました。' },
       { status: 500 },

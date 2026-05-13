@@ -29,6 +29,7 @@ import {
 } from '@/lib/repositories/lessons-progress';
 import type { LessonProgress } from '@/shared/types';
 import type { LessonProgressRow } from '@/lib/db/schema';
+import { logger, withRequest } from '@/lib/log';
 
 export const runtime = 'nodejs';
 
@@ -63,7 +64,7 @@ export async function GET() {
       data: rows.map(toLessonProgress),
     });
   } catch (err) {
-    console.error('[GET /api/user/lessons-progress] DB エラー:', err);
+    logger.error('lessons-progress.get', { route: '/api/user/lessons-progress', error: err instanceof Error ? err.message : String(err) });
     return NextResponse.json(
       { ok: false, error: 'サーバーエラーが発生しました。' },
       { status: 500 },
@@ -82,6 +83,7 @@ const postSchema = z.object({
 });
 
 export async function POST(req: NextRequest) {
+  const log = withRequest(req, '/api/user/lessons-progress');
   // CSRF
   if (!verifyCsrf(req)) {
     return NextResponse.json(
@@ -129,7 +131,7 @@ export async function POST(req: NextRequest) {
       data: toLessonProgress(row),
     });
   } catch (err) {
-    console.error('[POST /api/user/lessons-progress] DB エラー:', err);
+    log.error('lessons-progress.post', { error: err instanceof Error ? err.message : String(err) });
     return NextResponse.json(
       { ok: false, error: 'サーバーエラーが発生しました。' },
       { status: 500 },

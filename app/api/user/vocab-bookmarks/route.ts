@@ -17,6 +17,7 @@ import { auth }                        from '@/lib/auth';
 import { db, userVocabBookmarks }      from '@/lib/db';
 import { verifyCsrf }                  from '@/lib/csrf';
 import { toVocabItem }                 from '@/lib/mappers/vocab-bookmarks';
+import { withRequest }                  from '@/lib/log';
 
 // ── バリデーション ──────────────────────────────────────────────
 const vocabItemSchema = z.object({
@@ -37,6 +38,7 @@ const vocabItemSchema = z.object({
 //   - レスポンス: `{ ok, data: items, meta: { total, page, perPage } }`
 //   - 後方互換: `data` 配列形は維持
 export async function GET(req: NextRequest) {
+  const log = withRequest(req, '/api/user/vocab-bookmarks');
   const session = await auth();
   if (!session?.user?.id) {
     return NextResponse.json({ ok: false, error: 'Unauthorized' }, { status: 401 });
@@ -84,13 +86,14 @@ export async function GET(req: NextRequest) {
       meta: { total, page, perPage: pageSize },
     });
   } catch (err) {
-    console.error('[GET /api/user/vocab-bookmarks]', err);
+    log.error('vocab-bookmarks.get', { error: err instanceof Error ? err.message : String(err) });
     return NextResponse.json({ ok: false, error: 'サーバーエラーが発生しました' }, { status: 500 });
   }
 }
 
 // ── POST: ブックマーク保存（bulk 対応・upsert） ─────────────────
 export async function POST(req: NextRequest) {
+  const log = withRequest(req, '/api/user/vocab-bookmarks');
   if (!verifyCsrf(req)) {
     return NextResponse.json({ ok: false, error: 'CSRF check failed' }, { status: 403 });
   }
@@ -144,7 +147,7 @@ export async function POST(req: NextRequest) {
       )
       .onConflictDoNothing(); // user_id + vocab_id が重複の場合はスキップ
   } catch (err) {
-    console.error('[POST /api/user/vocab-bookmarks]', err);
+    log.error('vocab-bookmarks.post', { error: err instanceof Error ? err.message : String(err) });
     return NextResponse.json({ ok: false, error: 'サーバーエラーが発生しました' }, { status: 500 });
   }
 
@@ -153,6 +156,7 @@ export async function POST(req: NextRequest) {
 
 // ── DELETE: ブックマーク削除 ────────────────────────────────────
 export async function DELETE(req: NextRequest) {
+  const log = withRequest(req, '/api/user/vocab-bookmarks');
   if (!verifyCsrf(req)) {
     return NextResponse.json({ ok: false, error: 'CSRF check failed' }, { status: 403 });
   }
@@ -177,7 +181,7 @@ export async function DELETE(req: NextRequest) {
         ),
       );
   } catch (err) {
-    console.error('[DELETE /api/user/vocab-bookmarks]', err);
+    log.error('vocab-bookmarks.delete', { error: err instanceof Error ? err.message : String(err) });
     return NextResponse.json({ ok: false, error: 'サーバーエラーが発生しました' }, { status: 500 });
   }
 

@@ -11,6 +11,7 @@
 
 import { ImageResponse } from '@vercel/og';
 import { type NextRequest } from 'next/server';
+import { withRequest } from '@/lib/log';
 
 export const runtime = 'edge';
 
@@ -38,6 +39,7 @@ async function loadFont(baseUrl: string): Promise<ArrayBuffer> {
 
 // ── GET /api/og ───────────────────────────────────────────────
 export async function GET(req: NextRequest) {
+  const log = withRequest(req, '/api/og');
   const { searchParams, origin } = new URL(req.url);
 
   const title  = searchParams.get('title')  ?? 'familyai.jp';
@@ -206,7 +208,7 @@ export async function GET(req: NextRequest) {
       },
     );
   } catch (err) {
-    console.error('[GET /api/og] 生成エラー:', err);
+    log.error('og.generate_failed', { error: err instanceof Error ? err.message : String(err) });
     // フォールバック: テキストのみの最小 OGP
     return new ImageResponse(
       (

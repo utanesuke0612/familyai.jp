@@ -32,6 +32,7 @@ import {
   isRateLimitFailClosed,
   rateLimitedResponse,
 } from '@/lib/ratelimit';
+import { withRequest } from '@/lib/log';
 
 export const runtime  = 'nodejs';
 export const revalidate = 60;  // CDN: 60s cache + stale-while-revalidate
@@ -44,6 +45,7 @@ export async function GET(
   req: NextRequest,
   { params }: { params: { slug: string } },
 ) {
+  const log = withRequest(req, '/api/3d-models/:slug');
   // 1. 軽いレート制限（DoS 緩和）
   const limiter = getRateLimiter(RATE_LIMIT_PREFIX, RATE_LIMIT_TOKENS, RATE_LIMIT_WINDOW);
   if (limiter) {
@@ -68,8 +70,7 @@ export async function GET(
   try {
     model = await getPublishedModelBySlug(slug);
   } catch (err) {
-    console.error('[GET /api/3d-models/:slug] DB エラー:',
-      err instanceof Error ? err.message : String(err));
+    log.error('3d-models.get', { slug, error: err instanceof Error ? err.message : String(err) });
     return NextResponse.json(
       { ok: false, error: { code: 'INTERNAL', message: 'サーバーエラーが発生しました。' } },
       { status: 500 },

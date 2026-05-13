@@ -10,6 +10,7 @@ import { verifyCsrf }                from '@/lib/csrf';
 import { enforceAdminRateLimit }     from '@/lib/ratelimit';
 import { listAllArticles, createArticle } from '@/lib/repositories/articles';
 import { createArticleSchema, adminArticlesQuerySchema } from '@/lib/schemas/articles';
+import { withRequest } from '@/lib/log';
 
 // ─── GET: 全記事一覧 ──────────────────────────────────────────
 export async function GET(req: NextRequest) {
@@ -49,6 +50,7 @@ export async function GET(req: NextRequest) {
 
 // ─── POST: 記事新規作成 ───────────────────────────────────────
 export async function POST(req: NextRequest) {
+  const log = withRequest(req, '/api/admin/articles');
   // CSRF 防御（Origin チェック）
   if (!verifyCsrf(req)) {
     return NextResponse.json({ error: 'CSRF check failed' }, { status: 403 });
@@ -101,7 +103,7 @@ export async function POST(req: NextRequest) {
         { status: 409 },
       );
     }
-    console.error('[POST /api/admin/articles]', err);
+    log.error('admin.articles.post', { error: err instanceof Error ? err.message : String(err) });
     return NextResponse.json({ error: 'サーバーエラーが発生しました' }, { status: 500 });
   }
 }

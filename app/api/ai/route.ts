@@ -32,6 +32,7 @@ import { buildAiEchoSystemPrompt }  from '@/lib/ai/ai-echo-prompt';
 import { verifyCsrf }     from '@/lib/csrf';
 import { auth }           from '@/lib/auth';
 import { isRateLimitFailClosed } from '@/lib/ratelimit';
+import { withRequest }    from '@/lib/log';
 
 export const runtime = 'nodejs';
 
@@ -133,6 +134,7 @@ function sseHeaders(): HeadersInit {
 
 // ── POST /api/ai ───────────────────────────────────────────────
 export async function POST(req: NextRequest) {
+  const log = withRequest(req, '/api/ai');
   // 1. CSRF チェック
   if (!verifyCsrf(req)) {
     return new Response(
@@ -247,7 +249,7 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    console.error('[POST /api/ai] AI エラー:', msg);
+    log.error('ai.post', { error: msg });
 
     if (msg.includes('OPENROUTER_API_KEY')) {
       return errorResponse(

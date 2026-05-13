@@ -25,6 +25,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { z }                         from 'zod';
 import { getArticle, getRelatedArticles } from '@/lib/repositories/articles';
 import { toArticleSummary }          from '@/lib/mappers/articles';
+import { withRequest }               from '@/lib/log';
 
 export const runtime = 'nodejs';
 export const revalidate = 300;
@@ -37,6 +38,7 @@ export async function GET(
   req:        NextRequest,
   { params }: { params: { slug: string } },
 ) {
+  const log = withRequest(req, '/api/articles/:slug/related');
   try {
     const parsed = querySchema.safeParse({
       limit: req.nextUrl.searchParams.get('limit') ?? undefined,
@@ -79,7 +81,7 @@ export async function GET(
     );
     return res;
   } catch (err) {
-    console.error('[GET /api/articles/:slug/related] DB エラー:', err);
+    log.error('articles.related', { slug: params.slug, error: err instanceof Error ? err.message : String(err) });
     return NextResponse.json(
       {
         ok:    false,

@@ -16,15 +16,17 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getArticle }                from '@/lib/repositories/articles';
 import { toArticleDetail }           from '@/lib/mappers/articles';
+import { withRequest }               from '@/lib/log';
 
 export const runtime = 'nodejs';
 // ISR/CDN キャッシュ（記事更新は Rev21 の admin API 経由・revalidate しない運用で OK）
 export const revalidate = 300;
 
 export async function GET(
-  _req:    NextRequest,
+  req:    NextRequest,
   { params }: { params: { slug: string } },
 ) {
+  const log = withRequest(req, '/api/articles/:slug');
   try {
     const article = await getArticle(params.slug);
 
@@ -46,7 +48,7 @@ export async function GET(
     );
     return res;
   } catch (err) {
-    console.error('[GET /api/articles/:slug] DB エラー:', err);
+    log.error('articles.get', { slug: params.slug, error: err instanceof Error ? err.message : String(err) });
     return NextResponse.json(
       {
         ok:    false,

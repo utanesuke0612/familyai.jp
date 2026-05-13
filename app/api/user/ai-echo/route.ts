@@ -22,6 +22,7 @@ import {
   createAiEchoEntry,
   listAiEchoEntries,
 } from '@/lib/repositories/ai-echo';
+import { logger, withRequest } from '@/lib/log';
 
 export const runtime = 'nodejs';
 
@@ -35,6 +36,7 @@ const postBodySchema = z.object({
 });
 
 export async function POST(req: NextRequest) {
+  const log = withRequest(req, '/api/user/ai-echo');
   // CSRF
   if (!verifyCsrf(req)) {
     return NextResponse.json(
@@ -82,7 +84,7 @@ export async function POST(req: NextRequest) {
     // Rev38 #H1: apiFetch 契約準拠（{ ok, data }）— 旧 { ok, id } は破壊的に廃止
     return NextResponse.json({ ok: true, data: { id } });
   } catch (err) {
-    console.error('[POST /api/user/ai-echo] DB エラー:', err instanceof Error ? err.message : err);
+    log.error('ai-echo.post', { error: err instanceof Error ? err.message : String(err) });
     return NextResponse.json(
       { ok: false, error: { code: 'SERVER_ERROR', message: 'サーバーエラーが発生しました。' } },
       { status: 500 },
@@ -117,7 +119,7 @@ export async function GET() {
       })),
     });
   } catch (err) {
-    console.error('[GET /api/user/ai-echo] DB エラー:', err instanceof Error ? err.message : err);
+    logger.error('ai-echo.get', { route: '/api/user/ai-echo', error: err instanceof Error ? err.message : String(err) });
     return NextResponse.json(
       { ok: false, error: { code: 'SERVER_ERROR', message: 'サーバーエラーが発生しました。' } },
       { status: 500 },

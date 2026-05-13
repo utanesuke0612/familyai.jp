@@ -20,6 +20,7 @@ import { auth }                           from '@/lib/auth';
 import { db, userSentenceBookmarks }      from '@/lib/db';
 import { verifyCsrf }                     from '@/lib/csrf';
 import { toSentenceBookmarkItem }         from '@/lib/mappers/sentence-bookmarks';
+import { withRequest }                    from '@/lib/log';
 
 // ── バリデーション ──────────────────────────────────────────────
 const sentenceItemSchema = z.object({
@@ -45,6 +46,7 @@ const sentenceItemSchema = z.object({
 //   - `pageSize` (default 50, max 200)
 //   - レスポンス: `{ ok, data: items, meta: { total, page, perPage } }`
 export async function GET(req: NextRequest) {
+  const log = withRequest(req, '/api/user/sentence-bookmarks');
   const session = await auth();
   if (!session?.user?.id) {
     return NextResponse.json({ ok: false, error: 'Unauthorized' }, { status: 401 });
@@ -92,13 +94,14 @@ export async function GET(req: NextRequest) {
       meta: { total, page, perPage: pageSize },
     });
   } catch (err) {
-    console.error('[GET /api/user/sentence-bookmarks]', err);
+    log.error('sentence-bookmarks.get', { error: err instanceof Error ? err.message : String(err) });
     return NextResponse.json({ ok: false, error: 'サーバーエラーが発生しました' }, { status: 500 });
   }
 }
 
 // ── POST: 保存（bulk・upsert・最大 300 件） ────────────────────
 export async function POST(req: NextRequest) {
+  const log = withRequest(req, '/api/user/sentence-bookmarks');
   if (!verifyCsrf(req)) {
     return NextResponse.json({ ok: false, error: 'CSRF check failed' }, { status: 403 });
   }
@@ -154,7 +157,7 @@ export async function POST(req: NextRequest) {
       )
       .onConflictDoNothing(); // user_id + sentence_id 重複はスキップ
   } catch (err) {
-    console.error('[POST /api/user/sentence-bookmarks]', err);
+    log.error('sentence-bookmarks.post', { error: err instanceof Error ? err.message : String(err) });
     return NextResponse.json({ ok: false, error: 'サーバーエラーが発生しました' }, { status: 500 });
   }
 
@@ -163,6 +166,7 @@ export async function POST(req: NextRequest) {
 
 // ── DELETE: 削除 ─────────────────────────────────────────────────
 export async function DELETE(req: NextRequest) {
+  const log = withRequest(req, '/api/user/sentence-bookmarks');
   if (!verifyCsrf(req)) {
     return NextResponse.json({ ok: false, error: 'CSRF check failed' }, { status: 403 });
   }
@@ -187,7 +191,7 @@ export async function DELETE(req: NextRequest) {
         ),
       );
   } catch (err) {
-    console.error('[DELETE /api/user/sentence-bookmarks]', err);
+    log.error('sentence-bookmarks.delete', { error: err instanceof Error ? err.message : String(err) });
     return NextResponse.json({ ok: false, error: 'サーバーエラーが発生しました' }, { status: 500 });
   }
 

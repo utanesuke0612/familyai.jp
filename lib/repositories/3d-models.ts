@@ -10,6 +10,7 @@ import { cache }                          from 'react';
 import { eq, and, asc, desc, ilike, sql, count } from 'drizzle-orm';
 import { db }                              from '@/lib/db';
 import { tutor3dModels, user3dBookmarks }  from '@/lib/db/schema';
+import { logger }                          from '@/lib/log';
 import type {
   Tutor3dModel,
   Tutor3dModelSummary,
@@ -75,7 +76,7 @@ export async function incrementViewCount(slug: string): Promise<void> {
       .where(eq(tutor3dModels.slug, slug));
   } catch (err) {
     // ビューカウントの失敗は致命ではないのでログのみ
-    console.error('[3d-models] viewCount 更新失敗:', err);
+    logger.warn('3d-models.viewCount_update_failed', { slug, error: err instanceof Error ? err.message : String(err) });
   }
 }
 
