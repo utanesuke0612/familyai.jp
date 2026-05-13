@@ -1,8 +1,23 @@
 /**
  * app/api/cron/cleanup-3d-orphans/route.ts
- * familyai.jp — Rev39: 3D model orphan blob nightly cleanup
+ * familyai.jp — Rev39: 3D model orphan blob cleanup
  *
- * Vercel Cron から JST 03:00（UTC 18:00）に呼ばれる前提。
+ * ⚠️ 自動 Cron 実行は一時停止中（2026-05-13）⚠️
+ *   - `vercel.json` を削除して Vercel Cron 登録を解除済み。
+ *   - 誤削除リスク（アップロード途中ファイル / URL 正規化漏れ）への
+ *     defensive 設計（CRON_DRY_RUN モード + grace period）が Rev40 で
+ *     追加されたら、`vercel.json` を再作成して自動 Cron を復活させる。
+ *   - それまでは下記 curl で必要時のみ手動実行する:
+ *
+ *     curl -H "Authorization: Bearer $CRON_SECRET" \
+ *       https://www.familyai.jp/api/cron/cleanup-3d-orphans
+ *
+ *   - 復活時の vercel.json 例:
+ *     { "$schema": "https://openapi.vercel.sh/vercel.json",
+ *       "crons": [{ "path": "/api/cron/cleanup-3d-orphans",
+ *                   "schedule": "0 18 * * *" }] }
+ *     → JST 03:00 = UTC 18:00 に毎日実行。
+ *
  * `Authorization: Bearer <CRON_SECRET>` で簡易認証。
  *
  * 背景:
@@ -10,11 +25,17 @@
  *   変更したため、Blob 削除失敗時に orphan blob が累積し得る。
  *   本ジョブで `3d-models/` プレフィクスを全列挙し、DB に参照が無い blob を削除する。
  *
- * 安全策:
+ * 安全策（現状）:
  *   - DB 参照判定は `pathname` ベースで行う（URL は `/api/3d-models/assets/...` の
  *     proxy 形式と直 Blob URL の 2 種類があり、URL 全文一致では取りこぼす）。
  *   - 削除エラーは個別 catch して `failedCount` に集計（1件の失敗で全体停止しない）。
  *   - Cron Secret 一致のみで実行可能（管理者セッションは Cron では使えないため）。
+ *
+ * 安全策（Rev40 で追加予定）:
+ *   - CRON_DRY_RUN モード（env で削除をスキップしてログのみ出力）
+ *   - Grace period 1 時間（直近 1h にアップロードされた Blob は触らない）
+ *   - DB 参照が 0 件の場合は cleanup 中止（DB 障害時の全削除事故防止）
+ *   - 認証失敗時の IP/UA ログ
  */
 
 import { NextRequest, NextResponse } from 'next/server';
