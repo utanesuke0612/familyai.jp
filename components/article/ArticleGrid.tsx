@@ -21,24 +21,32 @@ interface ArticleGridProps {
   className?: string;
 }
 
-// ── スケルトンカード ───────────────────────────────────────────
+// ── スケルトンカード（Rev40 Phase B: Mingei 矩形）─────────────
 function SkeletonCard() {
   return (
-    <div
-      className="rounded-2xl overflow-hidden"
-      style={{ background: 'white', boxShadow: 'var(--shadow-warm-sm)' }}
-    >
-      <div className="skeleton" style={{ height: '140px' }} />
+    <div className="box-mingei p-0">
+      {/* サムネイル（washi-light） */}
+      <div
+        style={{
+          height:       '140px',
+          background:   'var(--washi-light)',
+          borderBottom: '1px solid var(--line-soft)',
+        }}
+      />
       <div className="p-5 flex flex-col gap-3">
-        <div className="flex gap-2">
-          <div className="skeleton h-5 w-16 rounded-full" />
-          <div className="skeleton h-5 w-20 rounded-full" />
+        <div className="flex justify-between">
+          <div className="skeleton h-3 w-16" />
+          <div className="skeleton h-3 w-20" />
         </div>
-        <div className="skeleton h-5 w-full rounded" />
-        <div className="skeleton h-4 w-4/5 rounded" />
-        <div className="flex justify-between pt-1">
-          <div className="skeleton h-4 w-24 rounded" />
-          <div className="skeleton h-5 w-16 rounded-full" />
+        <div className="skeleton h-5 w-full" />
+        <div className="skeleton h-4 w-4/5" />
+        <div
+          className="flex gap-3 pt-3 mt-1"
+          style={{ borderTop: '1px solid var(--line-soft)' }}
+        >
+          <div className="skeleton h-3 w-12" />
+          <div className="skeleton h-3 w-12" />
+          <div className="skeleton h-3 w-20" />
         </div>
       </div>
     </div>
