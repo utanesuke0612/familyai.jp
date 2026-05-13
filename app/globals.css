@@ -98,6 +98,38 @@
 
     /* ── ヒーロー背景（A案） ──────────────────────────────── */
     --hero-bg: linear-gradient(160deg, #FFF5EE 0%, #FFE8D4 100%);
+
+    /* ═══════════════════════════════════════════════════════════
+       Rev40 Phase A: 民藝（Mingei）パレット — 並行運用
+       「ぬくもりキャビネット」コンセプトを「使い込まれた家族カタログ」へ。
+       既存 token は撤去せず併設。Phase B 以降のコンポーネントで採用。
+       ═══════════════════════════════════════════════════════════ */
+
+    /* ─── 和紙トーン（cream をより深く・落ち着いた色味へ） ─── */
+    --washi:        #F5EDDE;  /* 主背景・和紙クリーム */
+    --washi-deep:   #ECDFC9;  /* 紙の影・重なり */
+    --washi-light:  #FBF5E8;  /* ハイライト */
+
+    /* ─── 墨（brown を黒寄りに深化） ───────────────────── */
+    --sumi:         #2A1A12;  /* 本文・タイトル主色 */
+    --sumi-light:   #6B5843;  /* 二次テキスト */
+    --sumi-soft:    #9A8470;  /* 弱いキャプション */
+
+    /* ─── 朱（orange の深化版・伝統色 朱赤） ────────────── */
+    --shu:          #D04A2E;  /* アクセント主色（既存 orange の代替） */
+    --shu-deep:     #A8341F;  /* hover・active */
+    --shu-soft:     #E89077;  /* 弱い強調・border */
+
+    /* ─── 罫線専用色（茶系・線で奥行きを作る） ──────────── */
+    --line:         #C9B393;  /* 主罫線 1px */
+    --line-soft:    #E2D2B5;  /* 副罫線・区切り */
+
+    /* ─── 動き — 抑制（Phase E で既存 animation 整理） ── */
+    --ease-mingei:  cubic-bezier(0.16, 1, 0.3, 1);
+
+    /* ─── 文字組 — 明朝の字間を広げる（伝統的タイポ） ──── */
+    --tracking-mincho: 0.04em;
+    --tracking-wide:   0.2em;
   }
 
   /* ── グローバルリセット・ベーススタイル ─────────────────── */
@@ -123,6 +155,21 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     overflow-x: hidden;
+
+    /* ─── Rev40 Phase A: 和紙の質感（極めて subtle） ───
+       小サイズの fractalNoise SVG を repeat。alpha 0.04 で
+       「うっすらと紙の繊維がある」程度の存在感に抑える。
+       fixed attachment で scroll 中も貼り付き、印刷物の感覚に。
+       prefers-reduced-data 利用者には適用しない（Phase A 範囲）。 */
+    background-image:
+      url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.45 0 0 0 0 0.35 0 0 0 0 0.25 0 0 0 0.045 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-attachment: fixed;
+    background-repeat: repeat;
+  }
+
+  /* prefers-reduced-data ユーザーには texture を外す（節約配慮）*/
+  @media (prefers-reduced-data: reduce) {
+    body { background-image: none; }
   }
 
   /* ── 見出しにdisplayフォント適用 ────────────────────────── */
@@ -748,6 +795,89 @@
       radial-gradient(ellipse 60% 50% at 80% 70%, rgba(200, 232, 248, 0.30) 0%, transparent 55%),
       radial-gradient(ellipse 50% 40% at 60% 20%, rgba(184, 237, 216, 0.20) 0%, transparent 50%),
       var(--color-cream);
+  }
+
+  /* ═══════════════════════════════════════════════════════════
+     Rev40 Phase A: 民藝（Mingei）utility class 群
+     Phase B 以降の段階的リデザインで使う部品。既存コンポーネントは
+     まだ採用しない。「使い込まれた家族カタログ」の表現要素。
+     ═══════════════════════════════════════════════════════════ */
+
+  /* ─── 明朝体 + 字間広め（伝統的タイポ）─────────────── */
+  .font-mincho {
+    font-family: var(--font-display), 'Shippori Mincho', 'Hiragino Mincho ProN', 'Yu Mincho', serif;
+    letter-spacing: var(--tracking-mincho);
+  }
+
+  /* ─── 通し番号 — 博物館図録風（No.001 等）────────── */
+  .serial {
+    font-family: var(--font-display), 'Shippori Mincho', serif;
+    font-size: 11px;
+    letter-spacing: var(--tracking-wide);
+    color: var(--sumi-light);
+    text-transform: uppercase;
+    font-feature-settings: "tnum" 1;  /* 等幅数字 */
+  }
+
+  /* ─── 罫線で囲む箱（紙が重なって覗いている表現）──── */
+  .box-mingei {
+    position: relative;
+    background: var(--washi);
+    border: 1px solid var(--line);
+  }
+  .box-mingei::after {
+    content: '';
+    position: absolute;
+    inset: 5px -5px -5px 5px;
+    background: var(--washi-deep);
+    border: 1px solid var(--line);
+    z-index: -1;
+    transition: transform 240ms var(--ease-mingei);
+  }
+  .box-mingei:hover::after {
+    transform: translate(2px, 2px);
+  }
+
+  /* ─── 短い飾り罫（タイトル下の区切り）─────────────── */
+  .rule-mingei {
+    display: inline-block;
+    width: 2em;
+    height: 1px;
+    background: var(--line);
+    vertical-align: middle;
+  }
+  .rule-mingei-shu {
+    background: var(--shu);
+  }
+
+  /* ─── Mingei ボタン（pill ではなく矩形・罫線重視）──── */
+  .btn-mingei {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 0.75rem;
+    padding: 0.75rem 1.5rem;
+    font-family: var(--font-display), serif;
+    font-size: 15px;
+    letter-spacing: var(--tracking-mincho);
+    background: var(--sumi);
+    color: var(--washi);
+    border: 1px solid var(--sumi);
+    transition: background-color 240ms var(--ease-mingei),
+                border-color   240ms var(--ease-mingei),
+                transform      240ms var(--ease-mingei);
+  }
+  .btn-mingei:hover {
+    background: var(--shu-deep);
+    border-color: var(--shu-deep);
+    transform: translateY(-1px);
+  }
+  .btn-mingei-outline {
+    background: transparent;
+    color: var(--sumi);
+  }
+  .btn-mingei-outline:hover {
+    background: var(--sumi);
+    color: var(--washi);
   }
 }
 

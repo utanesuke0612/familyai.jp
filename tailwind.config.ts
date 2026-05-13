@@ -71,6 +71,21 @@ const config: Config = {
         mint:            '#B8EDD8',
         yellow:          '#FFE066',
 
+        // ── Rev40 Phase A: 民藝（Mingei）パレット ─────
+        // CSS 変数を直接参照する形で Tailwind class 経由でも使える
+        // 例: text-sumi / bg-washi / border-line
+        washi:        '#F5EDDE',
+        'washi-deep': '#ECDFC9',
+        'washi-light':'#FBF5E8',
+        sumi:         '#2A1A12',
+        'sumi-light': '#6B5843',
+        'sumi-soft':  '#9A8470',
+        shu:          '#D04A2E',
+        'shu-deep':   '#A8341F',
+        'shu-soft':   '#E89077',
+        line:         '#C9B393',
+        'line-soft':  '#E2D2B5',
+
         // ── ロール別カラー ─────────────────────────────
         papa: {
           bg:     '#C8E8F8',   // sky
