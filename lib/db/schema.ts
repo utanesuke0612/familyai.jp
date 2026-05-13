@@ -80,7 +80,9 @@ export const users = pgTable(
     updatedAt:        timestamp('updated_at').defaultNow().notNull(),
   },
   // Rev35 #perf: 管理者ユーザー一覧の sort / プラン絞り込みでフルスキャンを避ける。
-  // email の trigram 検索 index は pg_trgm 拡張が必要なので別 PR で追加する。
+  // email / name の trigram 検索 index は drizzle/0019_search_trigram_indexes.sql
+  // で pg_trgm + GIN として追加済み（drizzle schema 側では gin_trgm_ops を直接
+  // 表現できないため SQL migration 経由・本ファイルは btree のみ管理）。
   (t) => ({
     createdAtIdx: index('users_created_at_idx').on(t.createdAt),
     planIdx:      index('users_plan_idx').on(t.plan),

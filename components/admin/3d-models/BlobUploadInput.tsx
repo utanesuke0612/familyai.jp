@@ -136,8 +136,10 @@ export function BlobUploadInput({
       // .glb / .usdz は file.type を信用せず強制値・thumbnail は file.type を優先
       const contentType = cfg.forceContentType ?? (file.type || 'application/octet-stream');
 
-      // デバッグ用ログ（問題切り分け中・本番では削除）
-      console.log('[BlobUpload] start', { pathname, size: file.size, fileType: file.type, contentType });
+      // 本番ではログ抑制（dev のみ詳細を出す）
+      if (process.env.NODE_ENV !== 'production') {
+        console.debug('[BlobUpload] start', { pathname, size: file.size, fileType: file.type, contentType });
+      }
 
       const blob = await upload(pathname, file, {
         access: 'private',
@@ -151,19 +153,22 @@ export function BlobUploadInput({
         onUploadProgress: (e) => {
           const pct = Math.round(e.percentage);
           setProgress(pct);
-          if (pct % 20 === 0 || pct === 100) {
-            console.log('[BlobUpload] progress', pct, '%');
+          if (process.env.NODE_ENV !== 'production' && (pct % 20 === 0 || pct === 100)) {
+            console.debug('[BlobUpload] progress', pct, '%');
           }
         },
       });
 
       const assetUrl = `/api/3d-models/assets/${blob.pathname}`;
-      console.log('[BlobUpload] success', { blobUrl: blob.url, assetUrl });
+      if (process.env.NODE_ENV !== 'production') {
+        // 本番では Blob URL 等の内部状態を console に出さない
+        console.debug('[BlobUpload] success', { assetUrl });
+      }
       onChange(assetUrl);
       setProgress(100);
       setTimeout(() => setProgress(null), 800);
     } catch (err) {
-      // 詳細なエラー情報を Console とユーザー UI 両方に出す
+      // エラーは本番でも出す（運用観測に必要）
       console.error('[BlobUpload] failed:', err);
       const msg = err instanceof Error
         ? `${err.name}: ${err.message}`

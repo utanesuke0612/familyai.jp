@@ -14,6 +14,7 @@
 
 import { useEffect, useState, useCallback } from 'react';
 import { useSession }                        from 'next-auth/react';
+import { fetchAllPages }                    from '@/lib/fetch-all-pages';
 
 // 型は shared/types に統合済み。後方互換のため re-export。
 export type { VocabItem } from '@/shared/types';
@@ -54,29 +55,13 @@ async function loadCache(userId: string): Promise<void> {
   _cachedUserId = userId;
   if (_loadPromise) return _loadPromise;
 
-  // CX-4: pagination 化に伴い最大件数 (200) を明示
-  _loadPromise = fetch('/api/user/vocab-bookmarks?pageSize=200')
-    .then((r) => {
-      if (!r.ok) throw new Error(`HTTP ${r.status}`);
-      return r.json();
-    })
-    .then((json: unknown) => {
-      if (
-        json !== null &&
-        typeof json === 'object' &&
-        'ok' in json &&
-        (json as { ok: unknown }).ok === true &&
-        'data' in json &&
-        Array.isArray((json as { data: unknown }).data)
-      ) {
-        const data = (json as { data: VocabItem[] }).data;
-        _cache.items  = [...data].sort((a, b) => b.addedAt - a.addedAt);
-        _cache.ids    = new Set(data.map((v) => v.id));
-        _cache.loaded = true;
-        notifyChange();
-      } else {
-        _cache.loaded = true;
-      }
+  // Codex P2 #8: meta.total を見て 201 件目以降も取り切る（fetchAllPages 経由）
+  _loadPromise = fetchAllPages<VocabItem>('/api/user/vocab-bookmarks')
+    .then((data) => {
+      _cache.items  = data.slice().sort((a, b) => b.addedAt - a.addedAt);
+      _cache.ids    = new Set(data.map((v) => v.id));
+      _cache.loaded = true;
+      notifyChange();
     })
     .catch((err) => {
       console.error('[vocab-store] loadCache error:', err);

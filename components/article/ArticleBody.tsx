@@ -31,13 +31,14 @@ import type { Components } from 'react-markdown';
 
 // rehype-sanitize: デフォルトスキーマに <iframe> を追加
 // 管理者のみが記事を書くため、XSS リスクは許容範囲内。
-// sandbox="allow-scripts" により親ページへのアクセスは遮断される。
+// P2 #3: `srcdoc` は使っていないので許可属性から外す（CMS 入力ミス・侵害時の被害縮小）。
+//        iframe src 自体は parseArticleSegments() で allowlist チェック済み。
 const sanitizeSchema = {
   ...defaultSchema,
   tagNames: [...(defaultSchema.tagNames ?? []), 'iframe'],
   attributes: {
     ...defaultSchema.attributes,
-    iframe: ['src', 'srcdoc', 'width', 'height', 'style', 'title', 'sandbox', 'loading', 'allowfullscreen'],
+    iframe: ['src', 'width', 'height', 'style', 'title', 'sandbox', 'loading', 'allowfullscreen', 'referrerpolicy'],
   },
 };
 
@@ -76,6 +77,34 @@ const YOUTUBE_EMBED_HOSTS = new Set([
   'youtube-nocookie.com',
   'youtu.be',
 ]);
+
+/**
+ * P2 #3: 任意 HTTPS を信頼するのを止め、明示 allowlist で iframe 許可ホストを管理する。
+ *
+ * 追加方針: 自社管理ドメイン（Vercel Blob / CDN）+ 必要な学習ソース。
+ * ここに含まれないホストは markdown コードブロックとしてフォールバック表示される。
+ */
+const EMBED_HOST_ALLOWLIST = new Set<string>([
+  // Vercel Blob（自社）
+  'blob.vercel-storage.com',
+  // 学習・教材ソース
+  'learningenglish.voanews.com',
+  'www.voanews.com',
+  'voanews.com',
+  // Spotify / Vimeo（記事埋め込みで実利用がある教材ホスト）
+  'open.spotify.com',
+  'player.vimeo.com',
+]);
+
+/** 末尾ホスト一致（サブドメインも OK にしたいホスト用）— *.public.blob.vercel-storage.com 等 */
+const EMBED_HOST_SUFFIX_ALLOWLIST: readonly string[] = [
+  '.public.blob.vercel-storage.com',
+];
+
+function isAllowedEmbedHost(hostname: string): boolean {
+  if (EMBED_HOST_ALLOWLIST.has(hostname)) return true;
+  return EMBED_HOST_SUFFIX_ALLOWLIST.some((s) => hostname.endsWith(s));
+}
 
 // 単語ツールチップ構文 `{word|meaning|pron?|example?}` を検出
 const ANNOTATE_REGEX = /\{([^|{}\n]+)\|([^|{}\n]+)(?:\|([^|{}\n]*))?(?:\|([^{}\n]*))?\}/g;
@@ -224,8 +253,11 @@ function parseArticleSegments(content: string): ArticleSegment[] {
             height: getIframeAttr(fullTag, 'height') ?? '360',
             title: 'YouTube embed',
           });
-        } else if (isHttpsUrl(src)) {
-          // VOA・YouTube 以外の HTTPS URL（S3 等）も信頼済み埋め込みとして扱う
+        } else if (isHttpsUrl(src) && (() => {
+          try { return isAllowedEmbedHost(new URL(src).hostname); } catch { return false; }
+        })()) {
+          // P2 #3: allowlist 経由のみ trusted-embed として通す。
+          // 任意 HTTPS を許可しない（CMS 入力ミス・管理画面侵害時の被害縮小）。
           segments.push({
             type: 'trusted-embed',
             src,
@@ -234,6 +266,7 @@ function parseArticleSegments(content: string): ArticleSegment[] {
             title:  getIframeAttr(fullTag, 'title')  ?? 'embed',
           });
         } else {
+          // allowlist 外は埋め込みせず、元のタグを markdown として出す（フォールバック）
           segments.push({ type: 'markdown', content: fullTag });
         }
       } else {

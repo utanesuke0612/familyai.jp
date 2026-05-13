@@ -90,7 +90,12 @@ export async function getArticleForAdmin(slug: string): Promise<ArticleRow | nul
 
 /**
  * 指定記事に関連する公開済み記事を取得する。
- * categories が重複するものをランダム順で返す。
+ * categories が重複するものを最新順で候補を絞り、アプリ側で軽くシャッフルして返す。
+ *
+ * P2 #6: 旧実装は `ORDER BY random()` で候補行全体にランダムソートをかけていたが、
+ *        記事数が増えると articles テーブルにフルスキャン + sort が走る。
+ *        現在は `publishedAt DESC` で index を効かせ、上位 `limit * 4` 件から
+ *        Fisher–Yates でアプリ側シャッフルする。多少のバラつきは保ちつつ DB 負荷を抑える。
  */
 export async function getRelatedArticles(
   currentSlug: string,
@@ -98,7 +103,7 @@ export async function getRelatedArticles(
   limit = 3,
 ): Promise<ArticleRow[]> {
   try {
-    return await db
+    const candidates = await db
       .select()
       .from(articles)
       .where(
@@ -108,8 +113,16 @@ export async function getRelatedArticles(
           sql`${articles.categories} && ${categories}::text[]`,
         ),
       )
-      .orderBy(sql`random()`)
-      .limit(limit);
+      .orderBy(desc(articles.publishedAt))
+      .limit(Math.max(limit, limit * 4));  // limit * 4 件から抽選（最低 limit 件）
+
+    // Fisher–Yates で上位候補をシャッフルして先頭 limit 件を返す
+    const a = candidates.slice();
+    for (let i = a.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [a[i], a[j]] = [a[j]!, a[i]!];
+    }
+    return a.slice(0, limit);
   } catch {
     return [];
   }

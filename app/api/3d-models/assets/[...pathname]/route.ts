@@ -64,7 +64,9 @@ async function handleAssetRequest(
   }
 
   const assetUrl = `/api/3d-models/assets/${pathname}`;
-  const canRead = await isReferencedByPublishedModel(assetUrl) || await isAdmin();
+  // 認可: 公開済みモデルから参照されている、もしくは管理者
+  const referencedPublic = await isReferencedByPublishedModel(assetUrl);
+  const canRead = referencedPublic || await isAdmin();
   if (!canRead) {
     return NextResponse.json(
       { ok: false, error: { code: 'NOT_FOUND', message: 'asset not found' } },
@@ -122,7 +124,17 @@ async function handleAssetRequest(
     const value = upstream.headers.get(key);
     if (value) headers.set(key, value);
   }
-  headers.set('Cache-Control', 'private, max-age=300');
+  // キャッシュ戦略（Rev38 #cache）:
+  //   ファイル名は `3d-models/{slug}-{hash8}.{ext}` の content-hash 付きで
+  //   イミュータブル（内容が変わると URL も変わる）。1 年 immutable で安全。
+  //   ・公開済みモデル経由: `public` で CDN にも乗せる（別ユーザー間共有）
+  //   ・admin 経由のみ: `private` でブラウザのみキャッシュ（CDN には乗せない）
+  headers.set(
+    'Cache-Control',
+    referencedPublic
+      ? 'public, max-age=31536000, s-maxage=31536000, immutable'
+      : 'private, max-age=31536000, immutable',
+  );
 
   return new Response(method === 'HEAD' ? null : upstream.body, {
     status: upstream.status,

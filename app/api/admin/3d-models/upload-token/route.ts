@@ -30,6 +30,7 @@ import type { HandleUploadBody }     from '@vercel/blob/client';
 import { requireAdmin }              from '@/lib/admin-auth';
 import { verifyCsrf }                from '@/lib/csrf';
 import { enforceAdminRateLimit }     from '@/lib/ratelimit';
+import { withRequest }               from '@/lib/log';
 
 export const runtime = 'nodejs';
 
@@ -51,6 +52,7 @@ function constraintsFor(pathname: string): { types: string[]; max: number } | nu
 }
 
 export async function POST(req: NextRequest) {
+  const log = withRequest(req, '/api/admin/3d-models/upload-token');
   // 重要: 本 endpoint は 2 段階で呼ばれる
   //   ① ブラウザ → サーバ: `type: 'blob.generate-client-token'`（token 取得）
   //   ② Vercel Blob → サーバ: `type: 'blob.upload-completed'`（完了通知・署名付き）
@@ -85,10 +87,9 @@ export async function POST(req: NextRequest) {
     if (rl) return rl;
   }
 
-  // デバッグログ（問題切り分け中）
-  console.log('[upload-token] body.type =', body.type);
+  log.debug('upload-token.received', { bodyType: body.type });
   if (!process.env.BLOB_READ_WRITE_TOKEN) {
-    console.error('[upload-token] ⚠️ BLOB_READ_WRITE_TOKEN 環境変数が未設定です');
+    log.error('upload-token.no_token');
     return NextResponse.json(
       { ok: false, error: { code: 'NO_BLOB_TOKEN', message: 'サーバ側 BLOB_READ_WRITE_TOKEN が未設定です。Vercel の Storage で Blob を作成し、.env.local に追加してください。' } },
       { status: 500 },
@@ -104,7 +105,7 @@ export async function POST(req: NextRequest) {
         if (!c) {
           throw new Error(`許可されていない拡張子です: ${pathname}`);
         }
-        console.log('[upload-token] generating token for', pathname, `(max ${c.max} bytes)`);
+        log.debug('upload-token.generate', { pathname, maxBytes: c.max });
         return {
           allowedContentTypes:    c.types,
           maximumSizeInBytes:     c.max,
@@ -125,11 +126,11 @@ export async function POST(req: NextRequest) {
       //     本番では VERCEL_BLOB_CALLBACK_URL を設定して有効化する。
     });
 
-    console.log('[upload-token] OK', body.type);
+    log.info('upload-token.ok', { bodyType: body.type });
     return NextResponse.json(jsonResponse);
   } catch (err) {
     const msg = err instanceof Error ? err.message : 'Upload token generation failed';
-    console.error('[upload-token] ❌', msg, err);
+    log.error('upload-token.failed', err, { bodyType: body.type });
     return NextResponse.json(
       { ok: false, error: { code: 'UPLOAD_TOKEN_ERROR', message: msg } },
       { status: 400 },

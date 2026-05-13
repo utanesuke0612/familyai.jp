@@ -60,15 +60,17 @@ const LEVELS: Level[] = [1, 2, 3];
 
 /** Level 別に独立して保持する状態（タブ切替で消えない） */
 interface LevelState {
-  input:    string;
-  feedback: string;
-  isSaved:  boolean;
-  isSaving: boolean;
-  error:    string | null;
+  input:     string;
+  feedback:  string;
+  isSaved:   boolean;
+  isSaving:  boolean;
+  error:     string | null;
+  /** P3 #12: 保存失敗の通知（aria-live 領域に表示）。alert() の置換 */
+  saveError: string | null;
 }
 
 const INITIAL_LEVEL_STATE: LevelState = {
-  input: '', feedback: '', isSaved: false, isSaving: false, error: null,
+  input: '', feedback: '', isSaved: false, isSaving: false, error: null, saveError: null,
 };
 
 interface AIEchoPanelProps {
@@ -124,10 +126,40 @@ export function AIEchoPanel({ lessonKey, lessonTitle, lessonScript }: AIEchoPane
 
     const lv = activeLevel;
     setStreamingLevel(lv);
-    patchLevel(lv, { feedback: '', isSaved: false, error: null });
+    patchLevel(lv, { feedback: '', isSaved: false, error: null, saveError: null });
 
     const ac = new AbortController();
     abortRef.current = ac;
+
+    // P3 #10: SSE delta 毎に React 再レンダーすると長文時にモバイルで詰まる。
+    // AIChatWidget と同じ 60ms throttle + 終端 flush で再レンダー回数を抑える。
+    const FLUSH_INTERVAL_MS = 60;
+    let accumulated = '';
+    let lastFlushedLen = 0;
+    let lastFlushAt = 0;
+    let flushTimer: ReturnType<typeof setTimeout> | null = null;
+    const cancelFlushTimer = () => {
+      if (flushTimer !== null) {
+        clearTimeout(flushTimer);
+        flushTimer = null;
+      }
+    };
+    const flushNow = () => {
+      cancelFlushTimer();
+      if (accumulated.length === lastFlushedLen) return;
+      lastFlushedLen = accumulated.length;
+      lastFlushAt    = Date.now();
+      patchLevel(lv, { feedback: accumulated });
+    };
+    const scheduleFlush = () => {
+      if (flushTimer !== null) return;
+      const elapsed = Date.now() - lastFlushAt;
+      if (elapsed >= FLUSH_INTERVAL_MS) {
+        flushNow();
+      } else {
+        flushTimer = setTimeout(flushNow, FLUSH_INTERVAL_MS - elapsed);
+      }
+    };
 
     try {
       const res = await fetch('/api/ai', {
@@ -156,7 +188,6 @@ export function AIEchoPanel({ lessonKey, lessonTitle, lessonScript }: AIEchoPane
       const reader  = res.body.getReader();
       const decoder = new TextDecoder();
       let buf = '';
-      let accumulated = '';
 
       while (true) {
         const { done, value } = await reader.read();
@@ -172,13 +203,14 @@ export function AIEchoPanel({ lessonKey, lessonTitle, lessonScript }: AIEchoPane
           try {
             const json = JSON.parse(payload) as { delta?: string; error?: string };
             if (json.error) {
+              cancelFlushTimer();
               patchLevel(lv, { error: json.error, feedback: json.error });
               setStreamingLevel(null);
               return;
             }
             if (json.delta) {
               accumulated += json.delta;
-              patchLevel(lv, { feedback: accumulated });
+              scheduleFlush();
             }
           } catch {
             // 不正な JSON はスキップ
@@ -186,8 +218,11 @@ export function AIEchoPanel({ lessonKey, lessonTitle, lessonScript }: AIEchoPane
         }
       }
 
+      // 受信完了: 最後の差分を確実に反映
+      flushNow();
       setStreamingLevel(null);
     } catch (err) {
+      cancelFlushTimer();
       if ((err as Error)?.name === 'AbortError') {
         setStreamingLevel(null);
         return;
@@ -207,7 +242,7 @@ export function AIEchoPanel({ lessonKey, lessonTitle, lessonScript }: AIEchoPane
     const s  = byLevel[lv];
     if (!s.feedback.trim() || s.isSaved || s.isSaving || isStreamingAny) return;
 
-    patchLevel(lv, { isSaving: true });
+    patchLevel(lv, { isSaving: true, saveError: null });
     try {
       const res = await fetch('/api/user/ai-echo', {
         method:  'POST',
@@ -221,14 +256,13 @@ export function AIEchoPanel({ lessonKey, lessonTitle, lessonScript }: AIEchoPane
         }),
       });
       if (res.ok) {
-        patchLevel(lv, { isSaved: true, isSaving: false });
+        patchLevel(lv, { isSaved: true, isSaving: false, saveError: null });
       } else {
-        patchLevel(lv, { isSaving: false });
-        alert('保存に失敗しました。もう一度お試しください。');
+        // P3 #12: alert() を廃止し、aria-live 領域での inline 通知に置換
+        patchLevel(lv, { isSaving: false, saveError: '保存に失敗しました。もう一度お試しください。' });
       }
     } catch {
-      patchLevel(lv, { isSaving: false });
-      alert('通信エラーが発生しました。');
+      patchLevel(lv, { isSaving: false, saveError: '通信エラーが発生しました。' });
     }
   }
 
@@ -434,6 +468,19 @@ export function AIEchoPanel({ lessonKey, lessonTitle, lessonScript }: AIEchoPane
                 >
                   ✏️ もう一度書く
                 </button>
+              </div>
+            )}
+
+            {/* P3 #12: 保存失敗の inline 通知（alert() の代替・SR 読み上げ対応） */}
+            {current.saveError && (
+              <div
+                role="alert"
+                aria-live="polite"
+                aria-atomic="true"
+                className="rounded-lg px-3 py-2 text-xs leading-relaxed mt-1"
+                style={{ background: '#FFF5F5', color: '#7A3030', border: '1px solid #FFB3B3' }}
+              >
+                ⚠️ {current.saveError}
               </div>
             )}
           </div>

@@ -17,6 +17,7 @@
 
 import { useEffect, useState, useCallback } from 'react';
 import { useSession }                        from 'next-auth/react';
+import { fetchAllPages }                    from '@/lib/fetch-all-pages';
 
 // 型は shared/types に統合済み。後方互換のため re-export。
 export type { AiMemoItem } from '@/shared/types';
@@ -82,26 +83,10 @@ export function useAiMemoList(): {
       return;
     }
     setLoading(true);
-    // CX-4: pagination 化に伴い最大件数 (200) を明示
-    fetch('/api/user/ai-memos?pageSize=200')
-      .then((r) => {
-        if (!r.ok) throw new Error(`HTTP ${r.status}`);
-        return r.json();
-      })
-      .then((json: unknown) => {
-        if (
-          json !== null &&
-          typeof json === 'object' &&
-          'ok' in json &&
-          (json as { ok: unknown }).ok === true &&
-          'data' in json &&
-          Array.isArray((json as { data: unknown }).data)
-        ) {
-          const data = (json as { data: AiMemoItem[] }).data;
-          setItems([...data].sort((a, b) => b.savedAt - a.savedAt));
-        } else {
-          setItems([]);
-        }
+    // Codex P2 #8: meta.total を見て 201 件目以降も取り切る（fetchAllPages 経由）
+    fetchAllPages<AiMemoItem>('/api/user/ai-memos')
+      .then((data) => {
+        setItems(data.sort((a, b) => b.savedAt - a.savedAt));
       })
       .catch((err) => {
         console.error('[ai-memo-store] useAiMemoList fetch error:', err);
@@ -115,22 +100,10 @@ export function useAiMemoList(): {
     setItems((prev) => prev.filter((i) => i.id !== id));
     const ok = await apiDelete(id);
     if (!ok) {
-      // 失敗時は再フェッチして正しい状態に戻す
-      // CX-4: pagination 化に伴い最大件数 (200) を明示
-    fetch('/api/user/ai-memos?pageSize=200')
-        .then((r) => r.json())
-        .then((json: unknown) => {
-          if (
-            json !== null &&
-            typeof json === 'object' &&
-            'ok' in json &&
-            (json as { ok: unknown }).ok === true &&
-            'data' in json &&
-            Array.isArray((json as { data: unknown }).data)
-          ) {
-            const data = (json as { data: AiMemoItem[] }).data;
-            setItems([...data].sort((a, b) => b.savedAt - a.savedAt));
-          }
+      // 失敗時は再フェッチして正しい状態に戻す（Codex P2 #8: 全ページ取得）
+      fetchAllPages<AiMemoItem>('/api/user/ai-memos')
+        .then((data) => {
+          setItems(data.sort((a, b) => b.savedAt - a.savedAt));
         })
         .catch(() => {/* keep optimistic state */});
     }

@@ -1,32 +1,17 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // ── サーバーレス関数バンドルに含めるファイル ─────────────
-  // Next.js は route ファイル以外を自動でバンドルしないため、
-  // readFileSync で読み込む skills/*.md を明示的に含める必要がある。
-  // これがないと Vercel デプロイ後に ENOENT エラーになる。
-  experimental: {
-    outputFileTracingIncludes: {
-      '/api/generate-animation': [
-        './skills/ai-kyoushitsu-prompt/**/*',
-      ],
-    },
-  },
+  // Rev38 cleanup: 旧 AI 生成アニメ API（/api/generate-animation,
+  // /api/animations）は Rev36 で 3D 図鑑に全面リプレイス済みのため、
+  // outputFileTracingIncludes / iframe 許可ヘッダーをまとめて削除した。
+  // 3D アセットの iframe 表示要件が出てきた場合は
+  // /api/3d-models/assets/:path* に対して明示的にヘッダーを追加する。
 
   // ── セキュリティヘッダー ──────────────────────────────────
   async headers() {
     return [
       {
-        // アニメーションHTML配信API: iframeで表示するため SAMEORIGIN を許可
-        source: '/api/animations/:path*',
-        headers: [
-          { key: 'X-Frame-Options',        value: 'SAMEORIGIN' },
-          { key: 'X-Content-Type-Options', value: 'nosniff' },
-          { key: 'Referrer-Policy',        value: 'strict-origin-when-cross-origin' },
-        ],
-      },
-      {
-        // その他すべてのページ・API: iframe埋め込みを禁止
-        source: '/((?!api/animations).*)',
+        // 全ページ・API で iframe 埋め込みを禁止（clickjacking 対策）
+        source: '/:path*',
         headers: [
           { key: 'X-Frame-Options',        value: 'DENY' },
           { key: 'X-Content-Type-Options', value: 'nosniff' },

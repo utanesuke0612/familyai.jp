@@ -362,6 +362,15 @@ export function AIChatWidget({
   const inputRef   = useRef<HTMLTextAreaElement>(null);
   const abortRef   = useRef<AbortController | null>(null);
   const composingRef = useRef(false);
+  // P3 #11: 閉じた時に元の opener ボタンへフォーカスを戻すための ref
+  const openerRef  = useRef<HTMLButtonElement>(null);
+
+  // チャットを閉じる: ストリーム中断 + opener へフォーカス復帰（キーボード/SR 利用者向け）
+  const closeChat = useCallback(() => {
+    abortRef.current?.abort();
+    setIsOpen(false);
+    requestAnimationFrame(() => openerRef.current?.focus());
+  }, []);
 
   // 新着メッセージへ自動スクロール（チャット内部のみスクロール、ページ全体は動かさない）
   useEffect(() => {
@@ -610,7 +619,11 @@ export function AIChatWidget({
             </button>
           ))}
 
-          <button onClick={() => setIsOpen(true)} className="btn-primary w-full text-sm mt-1">
+          <button
+            ref={openerRef}
+            onClick={() => setIsOpen(true)}
+            className="btn-primary w-full text-sm mt-1"
+          >
             チャットを開く →
           </button>
         </div>
@@ -640,7 +653,7 @@ export function AIChatWidget({
           <p className="font-bold text-sm text-white">AIに質問する</p>
         </div>
         <button
-          onClick={() => { abortRef.current?.abort(); setIsOpen(false); }}
+          onClick={closeChat}
           className="text-white/80 hover:text-white transition-colors text-lg leading-none min-h-[36px] min-w-[36px] flex items-center justify-center"
           aria-label="チャットを閉じる"
         >

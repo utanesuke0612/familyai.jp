@@ -4,22 +4,27 @@
  *
  * 役割:
  *   1. オフライン対応（主要ページのプリキャッシュ + フォールバック）
- *   2. MP3 音声のキャッシュ（cache-first・将来 AIctation 用）
- *   3. ナビゲーション要求は network-first（最新コンテンツ優先・オフライン時のみキャッシュ）
+ *   2. MP3 音声のキャッシュ（cache-first・AIctation 用）
+ *   3. 3D アセット (GLB / USDZ / 画像) のキャッシュ（cache-first・うごくAI教室 用・Rev38 #cache）
+ *   4. ナビゲーション要求は network-first（最新コンテンツ優先・オフライン時のみキャッシュ）
  *
  * 設計方針:
- *   - API ルート（/api/*）は完全にバイパス（動的・SSE・PII を扱うため）
+ *   - API ルート（/api/*）は原則バイパス（動的・SSE・PII を扱うため）
+ *     例外: `/api/3d-models/assets/*` は content-hash 付きの immutable ファイル
+ *           なので cache-first でキャッシュ可能（再ナビゲーション・オフライン時に効く）
  *   - 外部 origin（OpenRouter 等）はバイパス
  *   - 静的アセット（_next/* / 画像 / フォント等）は素通し（ブラウザの HTTP キャッシュに任せる）
  *   - VERSION 更新時は古いキャッシュを自動削除
  *
  * バージョン:
  *   v1（初版・2026-04-29）
+ *   v2（Rev38 #cache・2026-05-13）— 3D アセット cache-first を追加
  */
 
-const VERSION       = 'v1';
+const VERSION       = 'v2';
 const CACHE_PAGES   = `familyai-pages-${VERSION}`;
 const CACHE_AUDIO   = `familyai-audio-${VERSION}`;
+const CACHE_3D      = `familyai-3d-${VERSION}`;
 const OFFLINE_URL   = '/offline';
 
 /**
@@ -72,6 +77,14 @@ self.addEventListener('fetch', (event) => {
   // 別 origin（OpenRouter 等）はバイパス
   if (url.origin !== self.location.origin) return;
 
+  // 3D アセット配信 API → cache-first（Rev38 #cache）
+  // ファイル名が content-hash 付き immutable なので長期キャッシュで安全。
+  // API パスバイパス条件より先に判定する必要がある点に注意。
+  if (url.pathname.startsWith('/api/3d-models/assets/')) {
+    event.respondWith(cacheFirst(request, CACHE_3D));
+    return;
+  }
+
   // API ルートは完全バイパス（動的・SSE・PII を扱うため）
   if (url.pathname.startsWith('/api/')) return;
 
@@ -91,16 +104,25 @@ self.addEventListener('fetch', (event) => {
   // 明示的に何もしない = ネットワーク fetch
 });
 
-// ── 戦略 1: cache-first（MP3 用）─────────────────────────────
+// ── 戦略 1: cache-first（MP3 / 3D アセット用）────────────────
+//
+// 注意:
+//   Cache Storage API は 206 Partial Content を保存できない。
+//   Range リクエストは素通しさせ、フル本体取得時のみキャッシュに保存する。
 async function cacheFirst(request, cacheName) {
+  // Range リクエストはネットワーク直結（model-viewer は通常 Range を使わないが念のため）
+  if (request.headers.has('range')) {
+    return fetch(request);
+  }
+
   const cache = await caches.open(cacheName);
   const cached = await cache.match(request);
   if (cached) return cached;
 
   try {
     const response = await fetch(request);
-    // 200 系の正常レスポンスのみキャッシュ
-    if (response.ok) {
+    // 200 のみキャッシュ（206 や opaque は除外）
+    if (response.status === 200 && response.type === 'basic') {
       cache.put(request, response.clone()).catch(() => {});
     }
     return response;

@@ -18,6 +18,7 @@
 import { useEffect, useState, useCallback } from 'react';
 import { useSession }                        from 'next-auth/react';
 import type { SentenceBookmarkItem }         from '@/shared/types';
+import { fetchAllPages }                     from '@/lib/fetch-all-pages';
 
 export type { SentenceBookmarkItem } from '@/shared/types';
 
@@ -123,29 +124,13 @@ async function loadCache(userId: string | 'guest'): Promise<void> {
     return Promise.resolve();
   }
 
-  // ログイン会員: DB から取得（最大件数 200 を明示）
-  _loadPromise = fetch('/api/user/sentence-bookmarks?pageSize=200')
-    .then((r) => {
-      if (!r.ok) throw new Error(`HTTP ${r.status}`);
-      return r.json();
-    })
-    .then((json: unknown) => {
-      if (
-        json !== null &&
-        typeof json === 'object' &&
-        'ok' in json &&
-        (json as { ok: unknown }).ok === true &&
-        'data' in json &&
-        Array.isArray((json as { data: unknown }).data)
-      ) {
-        const data = (json as { data: SentenceBookmarkItem[] }).data;
-        _cache.items  = [...data].sort((a, b) => b.addedAt - a.addedAt);
-        _cache.ids    = new Set(data.map((s) => s.id));
-        _cache.loaded = true;
-        notifyChange();
-      } else {
-        _cache.loaded = true;
-      }
+  // ログイン会員: DB から全件取得（Codex P2 #8: fetchAllPages で 201 件目以降も拾う）
+  _loadPromise = fetchAllPages<SentenceBookmarkItem>('/api/user/sentence-bookmarks')
+    .then((data) => {
+      _cache.items  = data.slice().sort((a, b) => b.addedAt - a.addedAt);
+      _cache.ids    = new Set(data.map((s) => s.id));
+      _cache.loaded = true;
+      notifyChange();
     })
     .catch((err) => {
       console.error('[sentence-bookmark-store] loadCache error:', err);
