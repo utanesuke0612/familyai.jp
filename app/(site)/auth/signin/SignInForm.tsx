@@ -70,28 +70,20 @@ export function SignInForm() {
   return (
     <main
       className="min-h-screen flex items-center justify-center px-4 py-16"
-      style={{ background: 'var(--color-cream)' }}
+      style={{ background: 'var(--washi)' }}
     >
       <div
-        className="w-full max-w-sm rounded-3xl p-8"
+        className="w-full max-w-sm p-8 box-ehon"
         style={{
           background:  'white',
-          boxShadow:   'var(--shadow-warm)',
-          border:      '1px solid var(--color-beige)',
         }}
       >
         {/* ロゴ */}
         <div className="flex flex-col items-center gap-2 mb-8">
-          <div
-            className="w-12 h-12 rounded-2xl flex items-center justify-center text-2xl mb-1"
-            style={{ background: 'linear-gradient(135deg, #FFAD80, #FF8C42)' }}
-          >
-            🏠
-          </div>
-          <h1 className="text-xl font-bold" style={{ color: 'var(--color-brown)' }}>
-            family<span style={{ color: 'var(--color-orange)' }}>ai</span>.jp にログイン
+          <h1 className="font-mincho text-xl" style={{ fontWeight: 500, color: 'var(--sumi)' }}>
+            family<span style={{ color: 'var(--shu)' }}>ai</span>.jp にログイン
           </h1>
-          <p className="text-sm" style={{ color: 'var(--color-brown-light)' }}>
+          <p className="text-sm" style={{ color: 'var(--sumi-light)' }}>
             AI = 愛 — AI活用事例とAIツール
           </p>
         </div>
@@ -99,11 +91,11 @@ export function SignInForm() {
         {/* エラー表示 */}
         {errorMsg && (
           <div
-            className="mb-4 px-4 py-3 rounded-xl text-sm text-center"
-            style={{ background: '#FFF0F0', color: '#C0392B', border: '1px solid #F5C6CB' }}
+            className="mb-4 px-4 py-3 text-sm text-center"
+            style={{ background: '#FFF0F0', color: '#C0392B', border: '1px solid #F5C6CB', borderRadius: '4px' }}
             role="alert"
           >
-            ⚠️ {errorMsg}
+            {errorMsg}
           </div>
         )}
 
@@ -111,16 +103,17 @@ export function SignInForm() {
         <button
           onClick={handleGoogle}
           disabled={isGLoading || isLoading}
-          className="w-full flex items-center justify-center gap-3 rounded-xl border px-4 py-3 text-sm font-medium transition-opacity hover:opacity-80 disabled:opacity-50 mb-5 min-h-[48px]"
+          className="w-full flex items-center justify-center gap-3 border px-4 py-3 text-sm font-medium transition-opacity hover:opacity-80 disabled:opacity-50 mb-5 min-h-[48px]"
           style={{
-            borderColor: 'var(--color-beige-dark)',
-            color:       'var(--color-brown)',
-            background:  'white',
+            borderColor:  'var(--line)',
+            color:        'var(--sumi)',
+            background:   'white',
+            borderRadius: '4px',
           }}
         >
           {isGLoading ? (
             <span className="inline-block w-4 h-4 border-2 rounded-full animate-spin"
-              style={{ borderColor: 'var(--color-beige-dark)', borderTopColor: 'var(--color-orange)' }} />
+              style={{ borderColor: 'var(--washi-deep)', borderTopColor: 'var(--shu)' }} />
           ) : (
             <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true">
               <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
@@ -134,15 +127,15 @@ export function SignInForm() {
 
         {/* 区切り線 */}
         <div className="flex items-center gap-3 mb-5">
-          <div className="flex-1 h-px" style={{ background: 'var(--color-beige)' }} />
-          <span className="text-xs" style={{ color: 'var(--color-brown-light)' }}>または</span>
-          <div className="flex-1 h-px" style={{ background: 'var(--color-beige)' }} />
+          <div className="flex-1 h-px" style={{ background: 'var(--line)' }} />
+          <span className="text-xs" style={{ color: 'var(--sumi-light)' }}>または</span>
+          <div className="flex-1 h-px" style={{ background: 'var(--line)' }} />
         </div>
 
         {/* メール + パスワードフォーム */}
         <form onSubmit={handleCredentials} className="flex flex-col gap-3">
           <div className="flex flex-col gap-1.5">
-            <label className="text-xs font-medium" style={{ color: 'var(--color-brown)' }}>
+            <label className="text-xs font-medium" style={{ color: 'var(--sumi)' }}>
               メールアドレス
             </label>
             <input
@@ -152,17 +145,18 @@ export function SignInForm() {
               placeholder="mail@example.com"
               required
               autoComplete="email"
-              className="rounded-xl border px-3 py-2.5 text-sm outline-none transition-[border-color,box-shadow]"
+              className="border px-3 py-2.5 text-sm outline-none transition-[border-color,box-shadow]"
               style={{
-                borderColor: 'var(--color-beige-dark)',
-                color:       'var(--color-brown)',
-                background:  'var(--color-cream)',
+                borderColor:  'var(--line)',
+                color:        'var(--sumi)',
+                background:   'var(--washi-light)',
+                borderRadius: '4px',
               }}
             />
           </div>
 
           <div className="flex flex-col gap-1.5">
-            <label className="text-xs font-medium" style={{ color: 'var(--color-brown)' }}>
+            <label className="text-xs font-medium" style={{ color: 'var(--sumi)' }}>
               パスワード
             </label>
             <input
@@ -172,11 +166,12 @@ export function SignInForm() {
               placeholder="8文字以上"
               required
               autoComplete="current-password"
-              className="rounded-xl border px-3 py-2.5 text-sm outline-none transition-[border-color,box-shadow]"
+              className="border px-3 py-2.5 text-sm outline-none transition-[border-color,box-shadow]"
               style={{
-                borderColor: 'var(--color-beige-dark)',
-                color:       'var(--color-brown)',
-                background:  'var(--color-cream)',
+                borderColor:  'var(--line)',
+                color:        'var(--sumi)',
+                background:   'var(--washi-light)',
+                borderRadius: '4px',
               }}
             />
           </div>
@@ -184,7 +179,7 @@ export function SignInForm() {
           <button
             type="submit"
             disabled={isLoading || isGLoading || !email.trim() || !password.trim()}
-            className="btn-primary w-full mt-1 flex items-center justify-center gap-2 min-h-[48px] disabled:opacity-50"
+            className="btn-mingei w-full mt-1 flex items-center justify-center gap-2 min-h-[48px] disabled:opacity-50"
           >
             {isLoading ? (
               <>
@@ -199,12 +194,12 @@ export function SignInForm() {
         </form>
 
         {/* アカウント登録リンク */}
-        <p className="text-center text-sm mt-5" style={{ color: 'var(--color-brown-light)' }}>
+        <p className="text-center text-sm mt-5" style={{ color: 'var(--sumi-light)' }}>
           アカウントをお持ちでない方は{' '}
           <Link
             href="/auth/register"
             className="font-medium underline hover:opacity-80"
-            style={{ color: 'var(--color-orange)' }}
+            style={{ color: 'var(--shu)' }}
           >
             新規登録
           </Link>

@@ -216,12 +216,13 @@ export default async function ArticlePage({
               <a
                 key={c}
                 href={`/learn?cat=${c}`}
-                className="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-medium border transition-opacity hover:opacity-70"
+                className="inline-flex items-center gap-1 px-3 py-1 font-mincho text-xs border transition-opacity hover:opacity-70"
                 style={{
-                  background:  'white',
-                  borderColor: 'var(--color-beige-dark)',
-                  color:       'var(--color-brown-light)',
-                  minHeight:   'auto',
+                  background:   'white',
+                  borderColor:  'var(--line)',
+                  color:        'var(--sumi-light)',
+                  borderRadius: '4px',
+                  minHeight:    'auto',
                 }}
               >
                 {CATEGORY_EMOJI[c as ContentCategory]}
@@ -229,10 +230,12 @@ export default async function ArticlePage({
               </a>
             ))}
             <span
-              className="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold"
+              className="inline-flex items-center px-3 py-1 font-mincho text-xs"
               style={{
-                background: LEVEL_BG[level] ?? 'var(--color-beige)',
-                color:      LEVEL_TEXT[level] ?? 'var(--color-brown)',
+                background:   LEVEL_BG[level] ?? 'var(--washi-deep)',
+                color:        LEVEL_TEXT[level] ?? 'var(--sumi)',
+                border:       '1px solid var(--line)',
+                borderRadius: '4px',
               }}
             >
               {DIFFICULTY_LABEL[level] ?? level}

@@ -309,7 +309,7 @@ export default function AiMemoPage() {
           {/* ローディング */}
           {loading && (
             <div className="flex justify-center py-16">
-              <div className="w-8 h-8 border-2 border-orange-300 border-t-orange-500 rounded-full animate-spin" />
+              <div className="w-8 h-8 border-2 rounded-full animate-spin" style={{ borderColor: 'var(--washi-deep)', borderTopColor: 'var(--shu)' }} />
             </div>
           )}
 

@@ -57,17 +57,16 @@ function SkeletonCard() {
 function EmptyState() {
   return (
     <div
-      className="col-span-full flex flex-col items-center justify-center gap-4 py-20 rounded-2xl"
-      style={{ background: 'var(--color-beige)' }}
+      className="col-span-full flex flex-col items-center justify-center gap-3 py-20 box-ehon"
+      style={{ background: 'var(--washi-deep)' }}
     >
-      <span className="text-5xl">🔍</span>
       <p
-        className="font-display font-bold text-lg"
-        style={{ color: 'var(--color-brown)' }}
+        className="font-mincho text-base"
+        style={{ fontWeight: 500, color: 'var(--sumi)' }}
       >
         記事が見つかりませんでした
       </p>
-      <p className="text-sm" style={{ color: 'var(--color-brown-light)' }}>
+      <p className="text-sm" style={{ color: 'var(--sumi-light)' }}>
         フィルターを変更してもう一度お試しください
       </p>
     </div>

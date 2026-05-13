@@ -6,28 +6,28 @@
 function CardSkeleton() {
   return (
     <div
-      className="rounded-2xl overflow-hidden animate-pulse"
-      style={{ background: 'white', border: '2px solid var(--color-beige)' }}
+      className="overflow-hidden animate-pulse"
+      style={{ background: 'white', border: '1px solid var(--line)', borderRadius: '4px' }}
     >
       {/* サムネイル */}
       <div
         className="h-36"
-        style={{ background: 'var(--color-beige)' }}
+        style={{ background: 'var(--washi-deep)' }}
       />
       {/* ボディ */}
       <div className="p-5 flex flex-col gap-3">
         {/* タグ行 */}
         <div className="flex gap-2">
-          <div className="h-5 w-14 rounded-full" style={{ background: 'var(--color-beige)' }} />
-          <div className="h-5 w-20 rounded-full" style={{ background: 'var(--color-beige)' }} />
+          <div className="h-5 w-14" style={{ background: 'var(--washi-deep)', borderRadius: '4px' }} />
+          <div className="h-5 w-20" style={{ background: 'var(--washi-deep)', borderRadius: '4px' }} />
         </div>
         {/* タイトル */}
         <div className="flex flex-col gap-1.5">
-          <div className="h-4 w-full rounded-lg"  style={{ background: 'var(--color-beige)' }} />
-          <div className="h-4 w-3/4 rounded-lg"   style={{ background: 'var(--color-beige)' }} />
+          <div className="h-4 w-full"  style={{ background: 'var(--washi-deep)', borderRadius: '4px' }} />
+          <div className="h-4 w-3/4"   style={{ background: 'var(--washi-deep)', borderRadius: '4px' }} />
         </div>
         {/* メタ */}
-        <div className="h-3.5 w-1/2 rounded-lg mt-1" style={{ background: 'var(--color-beige)' }} />
+        <div className="h-3.5 w-1/2 mt-1" style={{ background: 'var(--washi-deep)', borderRadius: '4px' }} />
       </div>
     </div>
   );
@@ -35,16 +35,16 @@ function CardSkeleton() {
 
 export default function LearnLoading() {
   return (
-    <div style={{ background: 'var(--color-cream)', minHeight: '100vh' }}>
+    <div style={{ background: 'var(--washi)', minHeight: '100vh' }}>
       {/* ヘッダーエリア */}
       <div
         className="py-10 px-6 animate-pulse"
-        style={{ background: 'var(--color-beige)' }}
+        style={{ background: 'var(--washi-deep)' }}
       >
         <div className="max-w-container mx-auto flex flex-col gap-3">
-          <div className="h-5 w-32 rounded-lg"  style={{ background: 'var(--color-beige-dark)' }} />
-          <div className="h-8 w-64 rounded-xl"  style={{ background: 'var(--color-beige-dark)' }} />
-          <div className="h-4 w-full max-w-sm rounded-lg" style={{ background: 'var(--color-beige-dark)' }} />
+          <div className="h-5 w-32"  style={{ background: 'var(--line)', borderRadius: '4px' }} />
+          <div className="h-8 w-64"  style={{ background: 'var(--line)', borderRadius: '4px' }} />
+          <div className="h-4 w-full max-w-sm" style={{ background: 'var(--line)', borderRadius: '4px' }} />
         </div>
       </div>
 
@@ -54,8 +54,8 @@ export default function LearnLoading() {
           {[80, 64, 72, 60, 88].map((w, i) => (
             <div
               key={i}
-              className="h-9 rounded-full"
-              style={{ width: `${w}px`, background: 'var(--color-beige)' }}
+              className="h-9"
+              style={{ width: `${w}px`, background: 'var(--washi-deep)', borderRadius: '4px' }}
             />
           ))}
         </div>

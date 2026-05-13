@@ -156,23 +156,24 @@ function ChatBubble({ message, question, articleTitle, articleSlug }: ChatBubble
       className={`flex gap-2 ${isUser ? 'flex-row-reverse' : 'flex-row'} items-end`}
     >
       <div
-        className="shrink-0 w-7 h-7 rounded-full flex items-center justify-center text-sm"
+        className="shrink-0 w-7 h-7 rounded-full flex items-center justify-center font-mincho text-xs"
         style={{
-          background: isUser ? 'var(--color-orange)' : 'var(--color-beige)',
-          color:      isUser ? 'white' : 'var(--color-brown)',
+          background: isUser ? 'var(--shu)' : 'var(--washi-deep)',
+          color:      isUser ? 'white' : 'var(--sumi)',
+          fontWeight: 500,
         }}
         aria-hidden="true"
       >
-        {isUser ? '👤' : '💞'}
+        {isUser ? '私' : 'AI'}
       </div>
 
       <div className="max-w-[85%] flex flex-col gap-1">
         <div
           className="px-3 py-2 text-sm"
           style={{
-            background:   isUser ? 'var(--color-orange)' : 'var(--color-beige)',
-            color:        isUser ? 'white' : 'var(--color-brown)',
-            borderRadius: isUser ? '18px 18px 4px 18px' : '18px 18px 18px 4px',
+            background:   isUser ? 'var(--shu)' : 'var(--washi-deep)',
+            color:        isUser ? 'white' : 'var(--sumi)',
+            borderRadius: '4px',
           }}
         >
           {isUser ? (
@@ -186,13 +187,13 @@ function ChatBubble({ message, question, articleTitle, articleSlug }: ChatBubble
               {message.content}
               <span
                 className="inline-block w-0.5 h-4 ml-0.5 align-middle"
-                style={{ background: 'var(--color-brown-light)', animation: 'blink 0.8s step-end infinite' }}
+                style={{ background: 'var(--sumi-light)', animation: 'blink 0.8s step-end infinite' }}
                 aria-hidden="true"
               />
             </span>
           ) : message.content ? (
             /* ストリーミング完了: Markdown レンダリング */
-            <MarkdownContent color="var(--color-brown)" fontSize="0.875rem">
+            <MarkdownContent color="var(--sumi)" fontSize="0.875rem">
               {message.content}
             </MarkdownContent>
           ) : (
@@ -206,46 +207,49 @@ function ChatBubble({ message, question, articleTitle, articleSlug }: ChatBubble
               type="button"
               onClick={handleCopy}
               aria-label="回答をコピー"
-              className="text-xs px-2 py-0.5 rounded-md transition-opacity hover:opacity-80"
+              className="font-mincho text-xs px-2 py-0.5 transition-opacity hover:opacity-80"
               style={{
-                background: copied ? 'var(--color-orange)' : 'transparent',
-                color:      copied ? 'white' : 'var(--color-brown-light)',
-                border:     '1px solid var(--color-beige-dark)',
-                minHeight:  'auto',
+                background:   copied ? 'var(--shu)' : 'transparent',
+                color:        copied ? 'white' : 'var(--sumi-light)',
+                border:       '1px solid var(--line)',
+                borderRadius: '4px',
+                minHeight:    'auto',
               }}
             >
-              {copied ? '✓ コピー済' : '📋 コピー'}
+              {copied ? '✓ コピー済' : 'コピー'}
             </button>
             {isLoggedIn ? (
               <button
                 type="button"
                 onClick={handleSave}
                 aria-label={saved ? 'メモから外す' : 'AIメモ帳に保存'}
-                className="text-xs px-2 py-0.5 rounded-md transition-opacity hover:opacity-80"
+                className="font-mincho text-xs px-2 py-0.5 transition-opacity hover:opacity-80"
                 style={{
-                  background: saved ? 'var(--color-orange)' : 'transparent',
-                  color:      saved ? 'white' : 'var(--color-brown-light)',
-                  border:     '1px solid var(--color-beige-dark)',
-                  minHeight:  'auto',
+                  background:   saved ? 'var(--shu)' : 'transparent',
+                  color:        saved ? 'white' : 'var(--sumi-light)',
+                  border:       '1px solid var(--line)',
+                  borderRadius: '4px',
+                  minHeight:    'auto',
                 }}
               >
-                {saved ? '✓ 保存済' : '📌 保存'}
+                {saved ? '✓ 保存済' : '保存'}
               </button>
             ) : (
               <a
                 href="/auth/signin"
-                className="text-xs px-2 py-0.5 rounded-md transition-opacity hover:opacity-80"
+                className="font-mincho text-xs px-2 py-0.5 transition-opacity hover:opacity-80"
                 style={{
-                  background: 'transparent',
-                  color:      'var(--color-brown-light)',
-                  border:     '1px solid var(--color-beige-dark)',
-                  minHeight:  'auto',
+                  background:   'transparent',
+                  color:        'var(--sumi-light)',
+                  border:       '1px solid var(--line)',
+                  borderRadius: '4px',
+                  minHeight:    'auto',
                   textDecoration: 'none',
-                  display:    'inline-block',
+                  display:      'inline-block',
                 }}
                 title="ログインするとメモを保存できます"
               >
-                📌 ログインして保存
+                ログインして保存
               </a>
             )}
           </div>
@@ -268,7 +272,7 @@ function CategoryTabs({
       className="flex gap-1.5 px-2.5 py-2 overflow-x-auto scrollbar-hide"
       style={{
         WebkitOverflowScrolling: 'touch',
-        borderBottom: '1px solid var(--color-beige)',
+        borderBottom: '1px solid var(--line)',
       }}
       role="tablist"
       aria-label="質問カテゴリ"
@@ -281,12 +285,14 @@ function CategoryTabs({
             role="tab"
             aria-selected={selected}
             onClick={() => onChange(cat.id)}
-            className="shrink-0 rounded-full px-2.5 py-1.5 text-xs font-semibold transition-[background-color,color]"
+            className="shrink-0 px-2.5 py-1.5 font-mincho text-xs transition-[background-color,color]"
             style={{
-              background: selected ? 'var(--color-orange)' : 'var(--color-beige)',
-              color:      selected ? 'white' : 'var(--color-brown-light)',
-              minHeight:  '32px',
-              whiteSpace: 'nowrap',
+              background:   selected ? 'var(--shu)' : 'var(--washi-deep)',
+              color:        selected ? 'white' : 'var(--sumi-light)',
+              borderRadius: '4px',
+              minHeight:    '32px',
+              whiteSpace:   'nowrap',
+              fontWeight:   500,
             }}
           >
             {cat.label}
@@ -302,15 +308,15 @@ function TypingIndicator() {
   return (
     <div className="flex gap-2 items-end">
       <div
-        className="w-7 h-7 rounded-full flex items-center justify-center text-sm shrink-0"
-        style={{ background: 'var(--color-beige)', color: 'var(--color-brown)' }}
+        className="w-7 h-7 rounded-full flex items-center justify-center font-mincho text-xs shrink-0"
+        style={{ background: 'var(--washi-deep)', color: 'var(--sumi)', fontWeight: 500 }}
         aria-hidden="true"
       >
-        💞
+        AI
       </div>
       <div
-        className="px-4 py-3 rounded-2xl"
-        style={{ background: 'var(--color-beige)', borderRadius: '18px 18px 18px 4px' }}
+        className="px-4 py-3"
+        style={{ background: 'var(--washi-deep)', borderRadius: '4px' }}
       >
         <div className="flex gap-1 items-center">
           {[0, 1, 2].map((i) => (
@@ -318,7 +324,7 @@ function TypingIndicator() {
               key={i}
               className="w-1.5 h-1.5 rounded-full"
               style={{
-                background:     'var(--color-brown-light)',
+                background:     'var(--sumi-light)',
                 animation:      'pulse-soft 1.2s ease-in-out infinite',
                 animationDelay: `${i * 0.2}s`,
               }}
@@ -581,16 +587,15 @@ export function AIChatWidget({
   if (!isOpen) {
     return (
       <div
-        className="rounded-2xl overflow-hidden"
-        style={{ background: 'white', boxShadow: 'var(--shadow-warm-sm)', border: '1px solid var(--color-beige)' }}
+        className="overflow-hidden"
+        style={{ background: 'white', border: '1px solid var(--line)', borderRadius: '4px' }}
       >
         <div
           className="flex items-center gap-3 p-4"
-          style={{ background: 'linear-gradient(135deg, var(--color-orange) 0%, var(--color-peach) 100%)' }}
+          style={{ background: 'var(--shu)' }}
         >
-          <span className="text-2xl" aria-hidden="true">💞</span>
           <div>
-            <p className="font-bold text-sm text-white">AIに質問する</p>
+            <p className="font-mincho text-sm text-white" style={{ fontWeight: 500 }}>AIに質問する</p>
             <p className="text-xs text-white/80">
               {isAictation ? 'このレッスンについて何でも聞けます' : 'この記事について何でも聞けます'}
             </p>
@@ -604,7 +609,7 @@ export function AIChatWidget({
 
         <div className="p-4 flex flex-col gap-3">
           {/* タイトル紹介文（両モード共通） */}
-          <p className="text-sm" style={{ color: 'var(--color-brown-light)' }}>
+          <p className="text-sm" style={{ color: 'var(--sumi-light)' }}>
             「{articleTitle.length > 20 ? articleTitle.slice(0, 20) + '…' : articleTitle}」について疑問があれば、AIが丁寧にお答えします。
           </p>
 
@@ -612,17 +617,17 @@ export function AIChatWidget({
             <button
               key={q}
               onClick={() => { setIsOpen(true); setInput(q); }}
-              className="text-left text-sm px-3 py-2 rounded-xl border transition-opacity hover:opacity-80 min-h-[44px]"
-              style={{ background: 'var(--color-cream)', borderColor: 'var(--color-beige)', color: 'var(--color-brown)' }}
+              className="text-left text-sm px-3 py-2 border transition-opacity hover:opacity-80 min-h-[44px]"
+              style={{ background: 'var(--washi-light)', borderColor: 'var(--line)', color: 'var(--sumi)', borderRadius: '4px' }}
             >
-              💬 {q}
+              {q}
             </button>
           ))}
 
           <button
             ref={openerRef}
             onClick={() => setIsOpen(true)}
-            className="btn-primary w-full text-sm mt-1"
+            className="btn-mingei w-full text-sm mt-1"
           >
             チャットを開く →
           </button>
@@ -635,22 +640,21 @@ export function AIChatWidget({
   // AIctation モードはカテゴリタブと質問チップが追加されるため少し背を高く
   return (
     <div
-      className="rounded-2xl overflow-hidden flex flex-col"
+      className="overflow-hidden flex flex-col"
       style={{
-        background: 'white',
-        boxShadow:  'var(--shadow-warm-sm)',
-        border:     '1px solid var(--color-beige)',
-        height:     isAictation ? '600px' : '500px',
+        background:   'white',
+        border:       '1px solid var(--line)',
+        borderRadius: '4px',
+        height:       isAictation ? '600px' : '500px',
       }}
     >
       {/* ヘッダー */}
       <div
         className="flex items-center justify-between gap-3 px-4 py-3 shrink-0"
-        style={{ background: 'linear-gradient(135deg, var(--color-orange) 0%, var(--color-peach) 100%)' }}
+        style={{ background: 'var(--shu)' }}
       >
         <div className="flex items-center gap-2">
-          <span className="text-lg" aria-hidden="true">💞</span>
-          <p className="font-bold text-sm text-white">AIに質問する</p>
+          <p className="font-mincho text-sm text-white" style={{ fontWeight: 500 }}>AIに質問する</p>
         </div>
         <button
           onClick={closeChat}
@@ -668,7 +672,7 @@ export function AIChatWidget({
 
       {/* AIctation モード: 質問チップ（クリックで textarea に入力） */}
       {isAictation && messages.length === 0 && (
-        <div className="px-3 py-2 flex flex-wrap gap-1.5 shrink-0" style={{ borderBottom: '1px solid var(--color-beige)' }}>
+        <div className="px-3 py-2 flex flex-wrap gap-1.5 shrink-0" style={{ borderBottom: '1px solid var(--line)' }}>
           {quickQuestions.map((q) => (
             <button
               key={q}
@@ -677,14 +681,15 @@ export function AIChatWidget({
                 setInput(q);
                 setTimeout(() => inputRef.current?.focus(), 0);
               }}
-              className="text-xs px-2.5 py-1 rounded-full transition-opacity hover:opacity-80"
+              className="font-mincho text-xs px-2.5 py-1 transition-opacity hover:opacity-80"
               style={{
-                background: 'var(--color-cream)',
-                color:      'var(--color-brown)',
-                border:     '1px solid var(--color-beige-dark)',
+                background:   'var(--washi-light)',
+                color:        'var(--sumi)',
+                border:       '1px solid var(--line)',
+                borderRadius: '4px',
               }}
             >
-              💬 {q}
+              {q}
             </button>
           ))}
         </div>
@@ -701,9 +706,8 @@ export function AIChatWidget({
       >
         {messages.length === 0 && (
           <div className="text-center py-4 flex flex-col items-center gap-2">
-            <span className="text-3xl" aria-hidden="true">💬</span>
-            <p className="text-sm" style={{ color: 'var(--color-brown-light)' }}>
-              記事の内容について気軽に質問してください！
+            <p className="text-sm" style={{ color: 'var(--sumi-light)' }}>
+              記事の内容について気軽に質問してください。
             </p>
           </div>
         )}
@@ -727,14 +731,15 @@ export function AIChatWidget({
         {/* エラー通知 */}
         {error && (
           <p
-            className="text-xs leading-relaxed px-3 py-2 rounded-xl"
+            className="text-xs leading-relaxed px-3 py-2"
             style={{
-              background: 'var(--color-peach-light, var(--color-beige))',
-              color:      'var(--color-brown)',
-              border:     '1px solid var(--color-beige-dark)',
+              background:   'var(--washi-deep)',
+              color:        'var(--sumi)',
+              border:       '1px solid var(--line)',
+              borderRadius: '4px',
             }}
           >
-            ⚠️ {error}
+            {error}
           </p>
         )}
 
@@ -744,7 +749,7 @@ export function AIChatWidget({
       <form
         onSubmit={handleSubmit}
         className="shrink-0 flex gap-2 p-3 border-t"
-        style={{ borderColor: 'var(--color-beige)' }}
+        style={{ borderColor: 'var(--line)' }}
       >
         <textarea
           ref={inputRef}
@@ -756,23 +761,25 @@ export function AIChatWidget({
           placeholder="質問を入力…（Enterで送信 / Shift+Enterで改行）"
           rows={2}
           disabled={isLoading}
-          className="flex-1 resize-none rounded-xl border px-3 py-2 text-sm outline-none transition-[border-color,box-shadow]"
+          className="flex-1 resize-none border px-3 py-2 text-sm outline-none transition-[border-color,box-shadow]"
           style={{
-            borderColor: 'var(--color-beige-dark)',
-            color:       'var(--color-brown)',
-            background:  'var(--color-cream)',
-            maxHeight:   '120px',
-            lineHeight:  '1.5',
+            borderColor:  'var(--line)',
+            color:        'var(--sumi)',
+            background:   'var(--washi-light)',
+            borderRadius: '4px',
+            maxHeight:    '120px',
+            lineHeight:   '1.5',
           }}
           aria-label="質問を入力"
         />
         <button
           type="submit"
           disabled={!input.trim() || isLoading}
-          className="shrink-0 w-10 h-10 rounded-xl flex items-center justify-center transition-[background-color,color]"
+          className="shrink-0 w-10 h-10 flex items-center justify-center transition-[background-color,color]"
           style={{
-            background: input.trim() && !isLoading ? 'var(--color-orange)' : 'var(--color-beige)',
-            color:      input.trim() && !isLoading ? 'white' : 'var(--color-brown-light)',
+            background:   input.trim() && !isLoading ? 'var(--shu)' : 'var(--washi-deep)',
+            color:        input.trim() && !isLoading ? 'white' : 'var(--sumi-light)',
+            borderRadius: '4px',
           }}
           aria-label="送信"
         >

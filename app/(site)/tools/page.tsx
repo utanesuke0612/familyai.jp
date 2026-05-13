@@ -5,6 +5,8 @@
 
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import { ArrowRight, BookOpen, Globe2 } from 'lucide-react';
+import type { LucideIcon } from 'lucide-react';
 import { CATEGORY_EMOJI, CATEGORY_LABEL, SITE } from '@/shared';
 import type { ContentCategory } from '@/shared';
 import { isAdmin } from '@/lib/admin-auth';
@@ -22,6 +24,7 @@ type ToolItem = {
   status: string;
   cta: string;
   accent: string;
+  Icon?: LucideIcon;
   /**
    * Rev33: true ならログイン中の管理者（ADMIN_EMAIL 一致）にのみ表示する。
    * 当面は機能の出来栄えや収益化が固まっていないツールを段階公開するため。
@@ -45,6 +48,7 @@ const TOOLS_BY_CATEGORY: Array<{
         status: '公開中',
         cta: '使ってみる',
         accent: 'var(--color-mint)',
+        Icon: BookOpen,
       },
       {
         // Rev36: AI生成アニメから 3D 図鑑へ全面リプレイス。
@@ -56,6 +60,7 @@ const TOOLS_BY_CATEGORY: Array<{
         status: '公開中',
         cta: '見てみる',
         accent: 'var(--color-mint)',
+        Icon: Globe2,
       },
     ],
   },
@@ -94,17 +99,17 @@ export default async function ToolsPage({ searchParams }: ToolsPageProps) {
     .filter(({ tools }) => tools.length > 0);
 
   return (
-    <main style={{ background: 'var(--color-cream)' }}>
+    <main style={{ background: 'var(--washi)' }}>
       <section
         className="px-6 py-8 sm:py-10"
-        style={{ background: 'linear-gradient(160deg, var(--color-beige) 0%, var(--color-cream) 100%)' }}
+        style={{ background: 'var(--washi)' }}
       >
         <div className="max-w-5xl mx-auto">
           <div className="grid gap-6 lg:grid-cols-[minmax(0,1.4fr)_minmax(280px,0.8fr)] lg:items-start">
             <div className="flex flex-col gap-3">
               <h1
-                className="font-display font-bold leading-tight"
-                style={{ fontSize: 'clamp(30px, 5vw, 54px)', color: 'var(--color-brown)' }}
+                className="font-mincho leading-tight"
+                style={{ fontSize: 'clamp(30px, 5vw, 54px)', fontWeight: 500, color: 'var(--sumi)' }}
               >
                 家族の学びと暮らしを
                 <br />
@@ -112,7 +117,7 @@ export default async function ToolsPage({ searchParams }: ToolsPageProps) {
               </h1>
               <p
                 className="max-w-2xl text-base leading-relaxed sm:text-lg"
-                style={{ color: 'var(--color-brown-light)' }}
+                style={{ color: 'var(--sumi-light)' }}
               >
                 英語学習・教育コンテンツ生成など、家族みんなで使える AI ツールを公開中。
                 お子さまの学習サポートから大人の学び直しまで、親子で一緒にお使いいただけます。
@@ -120,10 +125,9 @@ export default async function ToolsPage({ searchParams }: ToolsPageProps) {
             </div>
 
             <div
-              className="rounded-[28px] p-5 sm:p-6 flex flex-col gap-4"
+              className="box-ehon p-5 sm:p-6 flex flex-col gap-4"
               style={{
                 background: 'rgba(255,255,255,0.82)',
-                boxShadow: 'var(--shadow-warm)',
               }}
             >
               {/* Rev40 Phase H: /learn の CategoryFilter と同じ「⁂ 分類で絞り込む ⁂」ラベル（左寄せ）*/}
@@ -158,7 +162,7 @@ export default async function ToolsPage({ searchParams }: ToolsPageProps) {
                       <div
                         className="mt-2 font-mincho text-sm"
                         style={{
-                          color:      isActive ? 'var(--shu)' : 'var(--color-brown)',
+                          color:      isActive ? 'var(--shu)' : 'var(--sumi)',
                           fontWeight: 500,
                         }}
                       >
@@ -176,52 +180,72 @@ export default async function ToolsPage({ searchParams }: ToolsPageProps) {
       <section className="px-6 py-8 sm:py-10">
         <div className="max-w-5xl mx-auto grid gap-6 md:grid-cols-2">
           {visibleSections.flatMap(({ category, tools }) =>
-            tools.map((tool) => {
+            tools.map((tool, i) => {
               const isReady = tool.status === '公開中';
+              const Icon = tool.Icon;
               const card = (
-                <article
-                  className="rounded-3xl p-5 transition-[transform,box-shadow] duration-200"
-                  style={{
-                    background: 'linear-gradient(180deg, rgba(255,255,255,0.96) 0%, rgba(255,250,245,0.92) 100%)',
-                    boxShadow: 'var(--shadow-warm-sm)',
-                  }}
-                >
-                  <div className="mb-4 flex items-center justify-between gap-3">
-                    <span
-                      className="inline-flex items-center rounded-full px-3 py-1 text-xs font-bold"
-                      style={{
-                        background: tool.accent,
-                        color: 'var(--color-brown)',
-                      }}
-                    >
+                <article className="box-ehon p-6 group">
+                  {/* 通し番号 + ステータス */}
+                  <div
+                    className="flex items-baseline justify-between mb-4 pb-3"
+                    style={{ borderBottom: '1px solid var(--line-soft)' }}
+                  >
+                    <span className="serial">№ {String(i + 1).padStart(2, '0')}</span>
+                    <span className="serial" style={{ color: 'var(--shu)' }}>
                       {tool.status}
-                    </span>
-                    <span className="text-xs font-medium" style={{ color: 'var(--color-brown-light)' }}>
-                      {CATEGORY_LABEL[category]}
                     </span>
                   </div>
 
-                  <h2
-                    className="font-display text-2xl font-bold leading-tight"
-                    style={{ color: 'var(--color-brown)' }}
-                  >
-                    {tool.name}
-                  </h2>
+                  {/* アイコン + タイトル */}
+                  <div className="flex items-start gap-3 mb-3">
+                    {Icon ? (
+                      <Icon
+                        strokeWidth={1.25}
+                        size={28}
+                        style={{ color: 'var(--sumi-soft)' }}
+                        className="shrink-0 mt-1"
+                        aria-hidden="true"
+                      />
+                    ) : null}
+                    <h2
+                      className="font-mincho leading-snug group-hover:text-[var(--shu)] transition-colors"
+                      style={{ fontSize: '18px', fontWeight: 500, color: 'var(--sumi)' }}
+                    >
+                      {tool.name}
+                    </h2>
+                  </div>
 
-                  <p className="mt-3 text-sm leading-relaxed" style={{ color: 'var(--color-brown-light)' }}>
+                  {/* カテゴリーラベル */}
+                  <p className="serial mb-2" style={{ color: 'var(--sumi-soft)' }}>
+                    {CATEGORY_LABEL[category]}
+                  </p>
+
+                  {/* 説明 */}
+                  <p className="text-sm leading-relaxed" style={{ color: 'var(--sumi-light)' }}>
                     {tool.summary}
                   </p>
 
-                  <div className="mt-5 inline-flex items-center gap-2 text-sm font-semibold" style={{ color: 'var(--color-orange)' }}>
-                    <span>{tool.cta}</span>
-                    <span aria-hidden="true">{isReady ? '→' : '·'}</span>
+                  {/* CTA 行 */}
+                  <div
+                    className="mt-5 pt-3 flex items-center gap-2 font-mincho text-sm"
+                    style={{ borderTop: '1px solid var(--line-soft)', color: 'var(--sumi-light)' }}
+                  >
+                    {tool.cta}
+                    {isReady ? (
+                      <ArrowRight
+                        strokeWidth={1.25}
+                        size={14}
+                        className="transition-transform group-hover:translate-x-1"
+                        aria-hidden="true"
+                      />
+                    ) : null}
                   </div>
                 </article>
               );
 
               if (isReady) {
                 return (
-                  <Link key={`${category}-${tool.name}`} href={tool.href} className="block hover:-translate-y-1">
+                  <Link key={`${category}-${tool.name}`} href={tool.href} className="block">
                     {card}
                   </Link>
                 );
@@ -240,14 +264,9 @@ export default async function ToolsPage({ searchParams }: ToolsPageProps) {
           <div className="mx-auto mt-6 max-w-5xl">
             <Link
               href="/tools"
-              className="inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-semibold"
-              style={{
-                background: 'rgba(255,255,255,0.9)',
-                color: 'var(--color-brown)',
-                boxShadow: 'var(--shadow-warm-sm)',
-              }}
+              className="btn-mingei btn-mingei-outline inline-flex items-center gap-2"
             >
-              <span>←</span>
+              <ArrowRight strokeWidth={1.25} size={14} aria-hidden="true" style={{ transform: 'rotate(180deg)' }} />
               <span>すべてのカテゴリーを表示</span>
             </Link>
           </div>

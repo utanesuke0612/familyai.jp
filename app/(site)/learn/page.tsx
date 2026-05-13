@@ -82,11 +82,12 @@ function Pagination({
       {currentPage > 1 ? (
         <a
           href={buildUrl(currentPage - 1)}
-          className="flex items-center gap-1 px-4 py-2 rounded-full text-sm font-medium border transition-all hover:opacity-80 min-h-[44px]"
+          className="flex items-center gap-1 px-4 py-2 font-mincho text-sm border transition-all hover:opacity-80 min-h-[44px]"
           style={{
-            background:  'white',
-            borderColor: 'var(--color-beige-dark)',
-            color:       'var(--color-brown)',
+            background:   'white',
+            borderColor:  'var(--line)',
+            color:        'var(--sumi)',
+            borderRadius: '4px',
           }}
           aria-label="前のページ"
         >
@@ -94,8 +95,8 @@ function Pagination({
         </a>
       ) : (
         <span
-          className="flex items-center gap-1 px-4 py-2 rounded-full text-sm font-medium border min-h-[44px] opacity-30 cursor-not-allowed"
-          style={{ background: 'white', borderColor: 'var(--color-beige-dark)', color: 'var(--color-brown)' }}
+          className="flex items-center gap-1 px-4 py-2 font-mincho text-sm border min-h-[44px] opacity-30 cursor-not-allowed"
+          style={{ background: 'white', borderColor: 'var(--line)', color: 'var(--sumi)', borderRadius: '4px' }}
           aria-disabled="true"
         >
           ← 前へ
@@ -109,7 +110,7 @@ function Pagination({
             <span
               key={`ellipsis-${i}`}
               className="w-9 h-9 flex items-center justify-center text-sm"
-              style={{ color: 'var(--color-brown-light)' }}
+              style={{ color: 'var(--sumi-light)' }}
             >
               …
             </span>
@@ -117,12 +118,13 @@ function Pagination({
             <a
               key={p}
               href={buildUrl(p)}
-              className="w-9 h-9 flex items-center justify-center rounded-full text-sm font-medium border transition-all hover:opacity-80"
+              className="w-9 h-9 flex items-center justify-center font-mincho text-sm border transition-all hover:opacity-80"
               style={{
-                background:  p === currentPage ? 'var(--color-orange)' : 'white',
-                borderColor: p === currentPage ? 'var(--color-orange)' : 'var(--color-beige-dark)',
-                color:       p === currentPage ? 'white' : 'var(--color-brown)',
-                boxShadow:   p === currentPage ? 'var(--shadow-orange)' : 'none',
+                background:   'white',
+                borderColor:  p === currentPage ? 'var(--shu)' : 'var(--line)',
+                color:        p === currentPage ? 'var(--shu)' : 'var(--sumi)',
+                borderRadius: '4px',
+                fontWeight:   p === currentPage ? 500 : 400,
               }}
               aria-current={p === currentPage ? 'page' : undefined}
             >
@@ -136,12 +138,12 @@ function Pagination({
       {currentPage < totalPages ? (
         <a
           href={buildUrl(currentPage + 1)}
-          className="flex items-center gap-1 px-4 py-2 rounded-full text-sm font-medium border transition-all hover:opacity-80 min-h-[44px]"
+          className="flex items-center gap-1 px-4 py-2 font-mincho text-sm border transition-all hover:opacity-80 min-h-[44px]"
           style={{
-            background:  'var(--color-orange)',
-            borderColor: 'var(--color-orange)',
-            color:       'white',
-            boxShadow:   'var(--shadow-orange)',
+            background:   'var(--shu)',
+            borderColor:  'var(--shu)',
+            color:        'white',
+            borderRadius: '4px',
           }}
           aria-label="次のページ"
         >
@@ -149,8 +151,8 @@ function Pagination({
         </a>
       ) : (
         <span
-          className="flex items-center gap-1 px-4 py-2 rounded-full text-sm font-medium border min-h-[44px] opacity-30 cursor-not-allowed"
-          style={{ background: 'var(--color-orange)', borderColor: 'var(--color-orange)', color: 'white' }}
+          className="flex items-center gap-1 px-4 py-2 font-mincho text-sm border min-h-[44px] opacity-30 cursor-not-allowed"
+          style={{ background: 'var(--shu)', borderColor: 'var(--shu)', color: 'white', borderRadius: '4px' }}
           aria-disabled="true"
         >
           次へ →
@@ -170,18 +172,18 @@ function ActiveFilterBanner({
 }) {
   return (
     <div className="flex items-center gap-3 py-3">
-      <p className="text-sm" style={{ color: 'var(--color-brown-light)' }}>
+      <p className="text-sm" style={{ color: 'var(--sumi-light)' }}>
         {isFiltered ? (
           <>
             フィルター結果：
-            <span className="font-bold ml-1" style={{ color: 'var(--color-orange)' }}>
+            <span className="font-mincho ml-1" style={{ fontWeight: 500, color: 'var(--shu)' }}>
               {total.toLocaleString('ja-JP')} 件
             </span>
           </>
         ) : (
           <>
             全
-            <span className="font-bold mx-1" style={{ color: 'var(--color-brown)' }}>
+            <span className="font-mincho mx-1" style={{ fontWeight: 500, color: 'var(--sumi)' }}>
               {total.toLocaleString('ja-JP')}
             </span>
             件の記事
@@ -246,7 +248,7 @@ export default async function LearnPage({ searchParams }: LearnPageProps) {
       {/* ── ページヘッダー ── */}
       <section
         className="px-6 py-8 sm:py-10"
-        style={{ background: 'linear-gradient(160deg, var(--color-beige) 0%, var(--color-cream) 100%)' }}
+        style={{ background: 'var(--washi)' }}
       >
         <div className="max-w-5xl mx-auto">
           <div className="grid gap-6 lg:grid-cols-[minmax(0,1.4fr)_minmax(280px,0.8fr)] lg:items-start">
@@ -254,14 +256,14 @@ export default async function LearnPage({ searchParams }: LearnPageProps) {
             {/* 左カラム: タイトル + 説明 */}
             <div className="flex flex-col gap-3">
               <h1
-                className="font-display font-bold leading-tight"
-                style={{ fontSize: 'clamp(30px, 5vw, 54px)', color: 'var(--color-brown)' }}
+                className="font-mincho leading-tight"
+                style={{ fontSize: 'clamp(30px, 5vw, 54px)', fontWeight: 500, color: 'var(--sumi)' }}
               >
                 みんなの<span style={{ color: 'var(--shu)' }}>AI</span>活用術
               </h1>
               <p
                 className="max-w-2xl text-base leading-relaxed sm:text-lg"
-                style={{ color: 'var(--color-brown-light)' }}
+                style={{ color: 'var(--sumi-light)' }}
               >
                 仕事・学習・日常ですぐ使えるAI活用事例を厳選。
                 初心者でも安心、今日から実践できる記事だけをお届けします。
@@ -270,10 +272,9 @@ export default async function LearnPage({ searchParams }: LearnPageProps) {
 
             {/* 右カラム: カテゴリピッカー（/tools と同じ位置・統一レイアウト） */}
             <div
-              className="rounded-[28px] p-5 sm:p-6"
+              className="box-ehon p-5 sm:p-6"
               style={{
                 background: 'rgba(255,255,255,0.82)',
-                boxShadow:  'var(--shadow-warm)',
               }}
             >
               <Suspense fallback={

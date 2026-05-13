@@ -130,32 +130,36 @@ export default function VoaEnglishToolPage({ searchParams }: VoaEnglishToolPageP
     : LEVELS;
 
   return (
-    <main style={{ background: 'var(--color-cream)' }}>
+    <main style={{ background: 'var(--washi)' }}>
       <section
         className="px-6 py-8 sm:py-10"
-        style={{ background: 'linear-gradient(160deg, var(--color-beige) 0%, var(--color-cream) 100%)' }}
+        style={{ background: 'var(--washi)' }}
       >
         <div className="mx-auto flex max-w-5xl flex-col gap-5">
-          <div className="flex flex-wrap items-center gap-3 text-sm font-semibold">
+          {/* Rev40 Phase I: Mingei 統一・パンくず風（矩形 4px + font-mincho・絵文字撤廃） */}
+          <div className="flex flex-wrap items-center gap-3 text-sm">
             <Link
               href="/tools"
-              className="rounded-full px-4 py-2"
+              className="font-mincho px-4 py-2 transition-colors hover:text-[var(--shu)] min-h-[44px] inline-flex items-center"
               style={{
-                background: 'rgba(255,255,255,0.88)',
-                color: 'var(--color-brown)',
-                boxShadow: 'var(--shadow-warm-sm)',
+                background:   'var(--washi-light)',
+                color:        'var(--sumi)',
+                border:       '1px solid var(--line)',
+                borderRadius: '4px',
               }}
             >
               ← AIツール一覧へ戻る
             </Link>
             <span
-              className="rounded-full px-4 py-2"
+              className="font-mincho px-4 py-2 inline-flex items-center"
               style={{
-                background: 'var(--color-mint)',
-                color: 'var(--color-brown)',
+                background:   'var(--washi-deep)',
+                color:        'var(--sumi)',
+                border:       '1px solid var(--line)',
+                borderRadius: '4px',
               }}
             >
-              📚 学習・教育
+              学習・教育
             </span>
           </div>
 

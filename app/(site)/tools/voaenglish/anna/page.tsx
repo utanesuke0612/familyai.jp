@@ -84,30 +84,38 @@ export default async function AnnaTopPage() {
         style={{ background: 'linear-gradient(160deg, var(--color-mint) 0%, var(--color-cream) 100%)' }}
       >
         <div className="mx-auto flex max-w-5xl flex-col gap-6">
-          <div className="flex flex-wrap items-center gap-3 text-sm font-semibold">
+          {/* Rev40 Phase I: Mingei 統一（矩形 4px + font-mincho・絵文字撤廃） */}
+          <div className="flex flex-wrap items-center gap-3 text-sm">
             <Link
               href="/tools/voaenglish"
-              className="rounded-full px-4 py-2"
+              className="font-mincho px-4 py-2 transition-colors hover:text-[var(--shu)] min-h-[44px] inline-flex items-center"
               style={{
-                background: 'rgba(255,255,255,0.9)',
-                color: 'var(--color-brown)',
-                boxShadow: 'var(--shadow-warm-sm)',
+                background:   'var(--washi-light)',
+                color:        'var(--sumi)',
+                border:       '1px solid var(--line)',
+                borderRadius: '4px',
               }}
             >
               ← VOA × AI ディクテーション教室へ戻る
             </Link>
             <span
-              className="rounded-full px-4 py-2"
-              style={{ background: 'var(--color-yellow)', color: 'var(--color-brown)' }}
+              className="font-mincho px-4 py-2 inline-flex items-center"
+              style={{
+                background:   'var(--washi-deep)',
+                color:        'var(--sumi)',
+                border:       '1px solid var(--line)',
+                borderRadius: '4px',
+              }}
             >
-              🌱 Beginning Level
+              Beginning Level
             </span>
             <span
-              className="rounded-full px-3 py-2 text-xs"
+              className="font-mincho px-4 py-2 text-xs inline-flex items-center"
               style={{
-                background: 'rgba(255,255,255,0.85)',
-                color: 'var(--color-brown)',
-                border: '1px solid rgba(120, 80, 40, 0.15)',
+                background:   'var(--washi-light)',
+                color:        'var(--sumi-light)',
+                border:       '1px solid var(--line)',
+                borderRadius: '4px',
               }}
             >
               CEFR A1–A2

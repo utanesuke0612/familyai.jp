@@ -88,28 +88,20 @@ export default function RegisterPage() {
   return (
     <main
       className="min-h-screen flex items-center justify-center px-4 py-16"
-      style={{ background: 'var(--color-cream)' }}
+      style={{ background: 'var(--washi)' }}
     >
       <div
-        className="w-full max-w-sm rounded-3xl p-8"
+        className="w-full max-w-sm p-8 box-ehon"
         style={{
           background: 'white',
-          boxShadow:  'var(--shadow-warm)',
-          border:     '1px solid var(--color-beige)',
         }}
       >
         {/* ロゴ */}
         <div className="flex flex-col items-center gap-2 mb-8">
-          <div
-            className="w-12 h-12 rounded-2xl flex items-center justify-center text-2xl mb-1"
-            style={{ background: 'linear-gradient(135deg, #FFAD80, #FF8C42)' }}
-          >
-            🏠
-          </div>
-          <h1 className="text-xl font-bold" style={{ color: 'var(--color-brown)' }}>
-            family<span style={{ color: 'var(--color-orange)' }}>ai</span>.jp に登録
+          <h1 className="font-mincho text-xl" style={{ fontWeight: 500, color: 'var(--sumi)' }}>
+            family<span style={{ color: 'var(--shu)' }}>ai</span>.jp に登録
           </h1>
-          <p className="text-sm" style={{ color: 'var(--color-brown-light)' }}>
+          <p className="text-sm" style={{ color: 'var(--sumi-light)' }}>
             無料でアカウントを作成できます
           </p>
         </div>
@@ -117,30 +109,30 @@ export default function RegisterPage() {
         {/* エラー */}
         {errorMsg && (
           <div
-            className="mb-4 px-4 py-3 rounded-xl text-sm text-center"
-            style={{ background: '#FFF0F0', color: '#C0392B', border: '1px solid #F5C6CB' }}
+            className="mb-4 px-4 py-3 text-sm text-center"
+            style={{ background: '#FFF0F0', color: '#C0392B', border: '1px solid #F5C6CB', borderRadius: '4px' }}
             role="alert"
           >
-            ⚠️ {errorMsg}
+            {errorMsg}
           </div>
         )}
 
         {/* 成功 */}
         {successMsg && (
           <div
-            className="mb-4 px-4 py-3 rounded-xl text-sm text-center"
-            style={{ background: '#F0FFF4', color: '#27AE60', border: '1px solid #B2DFCC' }}
+            className="mb-4 px-4 py-3 text-sm text-center"
+            style={{ background: '#F0FFF4', color: '#27AE60', border: '1px solid #B2DFCC', borderRadius: '4px' }}
             role="status"
           >
-            ✅ {successMsg}
+            {successMsg}
           </div>
         )}
 
         <form onSubmit={handleSubmit} className="flex flex-col gap-3">
           {/* 名前（任意） */}
           <div className="flex flex-col gap-1.5">
-            <label className="text-xs font-medium" style={{ color: 'var(--color-brown)' }}>
-              お名前 <span style={{ color: 'var(--color-brown-light)' }}>(任意)</span>
+            <label className="text-xs font-medium" style={{ color: 'var(--sumi)' }}>
+              お名前 <span style={{ color: 'var(--sumi-light)' }}>(任意)</span>
             </label>
             <input
               type="text"
@@ -148,18 +140,19 @@ export default function RegisterPage() {
               onChange={(e) => setName(e.target.value)}
               placeholder="例：田中 太郎"
               autoComplete="name"
-              className="rounded-xl border px-3 py-2.5 text-sm outline-none"
+              className="border px-3 py-2.5 text-sm outline-none"
               style={{
-                borderColor: 'var(--color-beige-dark)',
-                color:       'var(--color-brown)',
-                background:  'var(--color-cream)',
+                borderColor:  'var(--line)',
+                color:        'var(--sumi)',
+                background:   'var(--washi-light)',
+                borderRadius: '4px',
               }}
             />
           </div>
 
           {/* メール */}
           <div className="flex flex-col gap-1.5">
-            <label className="text-xs font-medium" style={{ color: 'var(--color-brown)' }}>
+            <label className="text-xs font-medium" style={{ color: 'var(--sumi)' }}>
               メールアドレス <span style={{ color: '#E07070' }}>*</span>
             </label>
             <input
@@ -169,18 +162,19 @@ export default function RegisterPage() {
               placeholder="mail@example.com"
               required
               autoComplete="email"
-              className="rounded-xl border px-3 py-2.5 text-sm outline-none"
+              className="border px-3 py-2.5 text-sm outline-none"
               style={{
-                borderColor: 'var(--color-beige-dark)',
-                color:       'var(--color-brown)',
-                background:  'var(--color-cream)',
+                borderColor:  'var(--line)',
+                color:        'var(--sumi)',
+                background:   'var(--washi-light)',
+                borderRadius: '4px',
               }}
             />
           </div>
 
           {/* パスワード */}
           <div className="flex flex-col gap-1.5">
-            <label className="text-xs font-medium" style={{ color: 'var(--color-brown)' }}>
+            <label className="text-xs font-medium" style={{ color: 'var(--sumi)' }}>
               パスワード <span style={{ color: '#E07070' }}>*</span>
             </label>
             <input
@@ -190,11 +184,12 @@ export default function RegisterPage() {
               placeholder="8文字以上・英数字混在"
               required
               autoComplete="new-password"
-              className="rounded-xl border px-3 py-2.5 text-sm outline-none"
+              className="border px-3 py-2.5 text-sm outline-none"
               style={{
-                borderColor: 'var(--color-beige-dark)',
-                color:       'var(--color-brown)',
-                background:  'var(--color-cream)',
+                borderColor:  'var(--line)',
+                color:        'var(--sumi)',
+                background:   'var(--washi-light)',
+                borderRadius: '4px',
               }}
             />
             {/* 強度バー */}
@@ -204,11 +199,11 @@ export default function RegisterPage() {
                   {[1, 2, 3].map((i) => (
                     <div
                       key={i}
-                      className="flex-1 h-1 rounded-full transition-colors"
+                      className="flex-1 h-1 transition-colors"
                       style={{
                         background: strength.level >= i * 1.5
                           ? strength.color
-                          : 'var(--color-beige)',
+                          : 'var(--washi-deep)',
                       }}
                     />
                   ))}
@@ -222,7 +217,7 @@ export default function RegisterPage() {
 
           {/* パスワード確認 */}
           <div className="flex flex-col gap-1.5">
-            <label className="text-xs font-medium" style={{ color: 'var(--color-brown)' }}>
+            <label className="text-xs font-medium" style={{ color: 'var(--sumi)' }}>
               パスワード確認 <span style={{ color: '#E07070' }}>*</span>
             </label>
             <input
@@ -232,11 +227,12 @@ export default function RegisterPage() {
               placeholder="もう一度入力"
               required
               autoComplete="new-password"
-              className="rounded-xl border px-3 py-2.5 text-sm outline-none"
+              className="border px-3 py-2.5 text-sm outline-none"
               style={{
-                borderColor: confirm && confirm !== password ? '#E07070' : 'var(--color-beige-dark)',
-                color:       'var(--color-brown)',
-                background:  'var(--color-cream)',
+                borderColor:  confirm && confirm !== password ? '#E07070' : 'var(--line)',
+                color:        'var(--sumi)',
+                background:   'var(--washi-light)',
+                borderRadius: '4px',
               }}
             />
             {confirm && confirm !== password && (
@@ -247,7 +243,7 @@ export default function RegisterPage() {
           <button
             type="submit"
             disabled={isLoading || !!successMsg}
-            className="btn-primary w-full mt-2 flex items-center justify-center gap-2 min-h-[48px] disabled:opacity-50"
+            className="btn-mingei w-full mt-2 flex items-center justify-center gap-2 min-h-[48px] disabled:opacity-50"
           >
             {isLoading ? (
               <>
@@ -262,12 +258,12 @@ export default function RegisterPage() {
         </form>
 
         {/* ログインリンク */}
-        <p className="text-center text-sm mt-5" style={{ color: 'var(--color-brown-light)' }}>
+        <p className="text-center text-sm mt-5" style={{ color: 'var(--sumi-light)' }}>
           既にアカウントをお持ちの方は{' '}
           <Link
             href="/auth/signin"
             className="font-medium underline hover:opacity-80"
-            style={{ color: 'var(--color-orange)' }}
+            style={{ color: 'var(--shu)' }}
           >
             ログイン
           </Link>

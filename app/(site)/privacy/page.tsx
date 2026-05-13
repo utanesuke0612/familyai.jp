@@ -69,19 +69,19 @@ Cookie の無効化はブラウザの設定から行えます。`,
 
 export default function PrivacyPage() {
   return (
-    <main style={{ background: 'var(--color-cream)' }}>
+    <main style={{ background: 'var(--washi)' }}>
       <section
         className="py-5 px-6"
-        style={{ background: 'var(--color-beige)' }}
+        style={{ background: 'var(--washi-deep)' }}
       >
         <div className="max-w-2xl mx-auto">
           <h1
-            className="font-display font-bold mb-2"
-            style={{ fontSize: 'clamp(24px, 4vw, 36px)', color: 'var(--color-brown)' }}
+            className="font-mincho mb-2"
+            style={{ fontSize: 'clamp(24px, 4vw, 36px)', fontWeight: 500, color: 'var(--sumi)' }}
           >
             プライバシーポリシー
           </h1>
-          <p className="text-sm" style={{ color: 'var(--color-brown-light)' }}>
+          <p className="text-sm" style={{ color: 'var(--sumi-light)' }}>
             最終更新日：2026年4月17日
           </p>
         </div>
@@ -89,7 +89,7 @@ export default function PrivacyPage() {
 
       <section className="py-4 px-6">
         <div className="max-w-2xl mx-auto flex flex-col gap-10">
-          <p className="text-sm leading-relaxed" style={{ color: 'var(--color-brown-light)' }}>
+          <p className="text-sm leading-relaxed" style={{ color: 'var(--sumi-light)' }}>
             familyai.jp（以下「当サイト」）は、ユーザーの個人情報保護を重要な責務と考え、
             以下のプライバシーポリシーを定めます。
           </p>
@@ -97,22 +97,22 @@ export default function PrivacyPage() {
           {SECTIONS.map((s) => (
             <div key={s.title} className="flex flex-col gap-3">
               <h2
-                className="font-bold text-base"
-                style={{ color: 'var(--color-brown)' }}
+                className="font-mincho text-base"
+                style={{ fontWeight: 500, color: 'var(--sumi)' }}
               >
                 {s.title}
               </h2>
               <p
                 className="text-sm leading-relaxed whitespace-pre-line"
-                style={{ color: 'var(--color-brown-light)' }}
+                style={{ color: 'var(--sumi-light)' }}
               >
                 {s.body}
               </p>
             </div>
           ))}
 
-          <hr style={{ borderColor: 'var(--color-beige-dark)' }} />
-          <p className="text-xs" style={{ color: 'var(--color-brown-light)' }}>
+          <hr style={{ borderColor: 'var(--line)' }} />
+          <p className="text-xs" style={{ color: 'var(--sumi-light)' }}>
             © 2026 familyai.jp
           </p>
         </div>

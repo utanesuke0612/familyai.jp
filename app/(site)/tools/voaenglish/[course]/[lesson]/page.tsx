@@ -43,11 +43,9 @@ const LEVEL_LABEL: Record<LessonLevel, string> = {
   advanced:     'Advanced',
 };
 
-const LEVEL_ICON: Record<LessonLevel, string> = {
-  beginning:    '🌱',
-  intermediate: '📰',
-  advanced:     '🎓',
-};
+// Rev40 Phase I: LEVEL_ICON (絵文字) を撤廃（Mingei 統一）
+// 必要になった時のために定義はコメントとして残置：
+//   beginning '🌱' / intermediate '📰' / advanced '🎓'
 
 const LEVEL_CEFR: Record<LessonLevel, string> = {
   beginning:    'A1–A2',
@@ -99,7 +97,7 @@ export default async function VoaLessonPage({
   const { prev, next } = getAdjacentLessons(course, lesson);
   const accent = LEVEL_ACCENT[data.level];
   const levelLabel = LEVEL_LABEL[data.level];
-  const levelIcon = LEVEL_ICON[data.level];
+  // Rev40 Phase I: levelIcon (絵文字) を撤廃したため削除（Mingei 統一）
   const cefr = LEVEL_CEFR[data.level];
 
   const headline = data.lessonNumber
@@ -132,51 +130,57 @@ export default async function VoaLessonPage({
           className="max-w-container mx-auto"
           style={{ paddingInline: 'var(--container-px)' }}
         >
-          <nav className="flex flex-wrap items-center gap-3 text-sm font-semibold mb-5">
+          {/* Rev40 Phase I: Mingei 統一（矩形 4px + font-mincho・絵文字撤廃） */}
+          <nav className="flex flex-wrap items-center gap-3 text-sm mb-5">
             <Link
               href={`/tools/voaenglish/${course}`}
-              className="inline-flex items-center rounded-full px-4"
+              className="font-mincho inline-flex items-center px-4 transition-colors hover:text-[var(--shu)]"
               style={{
-                minHeight: '44px',
-                background: 'rgba(255,255,255,0.9)',
-                color: 'var(--color-brown)',
-                boxShadow: 'var(--shadow-warm-sm)',
+                minHeight:    '44px',
+                background:   'var(--washi-light)',
+                color:        'var(--sumi)',
+                border:       '1px solid var(--line)',
+                borderRadius: '4px',
               }}
             >
               ← {data.courseTitle || course} へ戻る
             </Link>
             <span
-              className="inline-flex items-center rounded-full px-4"
+              className="font-mincho inline-flex items-center px-4"
               style={{
-                minHeight: '44px',
-                background: 'rgba(255,255,255,0.85)',
-                color: 'var(--color-brown)',
+                minHeight:    '44px',
+                background:   'var(--washi-deep)',
+                color:        'var(--sumi)',
+                border:       '1px solid var(--line)',
+                borderRadius: '4px',
               }}
             >
-              {levelIcon} {levelLabel} Level
+              {levelLabel} Level
             </span>
             <span
-              className="inline-flex items-center rounded-full px-3 text-xs"
+              className="font-mincho inline-flex items-center px-4 text-xs"
               style={{
-                minHeight: '44px',
-                background: 'rgba(255,255,255,0.85)',
-                color: 'var(--color-brown)',
-                border: '1px solid rgba(120, 80, 40, 0.15)',
+                minHeight:    '44px',
+                background:   'var(--washi-light)',
+                color:        'var(--sumi-light)',
+                border:       '1px solid var(--line)',
+                borderRadius: '4px',
               }}
             >
               CEFR {cefr}
             </span>
             <Link
               href="/mypage/bookmarks"
-              className="inline-flex items-center rounded-full px-4"
+              className="font-mincho inline-flex items-center px-4 transition-colors hover:text-[var(--shu)]"
               style={{
-                minHeight: '44px',
-                background: 'var(--color-yellow)',
-                color: 'var(--color-brown)',
-                boxShadow: 'var(--shadow-warm-sm)',
+                minHeight:    '44px',
+                background:   'var(--washi-light)',
+                color:        'var(--sumi)',
+                border:       '1px solid var(--line)',
+                borderRadius: '4px',
               }}
             >
-              🔖 ブックマーク
+              ブックマーク
             </Link>
           </nav>
 

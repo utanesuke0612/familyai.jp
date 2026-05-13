@@ -97,7 +97,11 @@ export default async function AiKyoshitsu3DPage({ searchParams }: PageProps) {
       {/* ── 絞り込み（サブカテゴリのみ・学年は Phase 2 で再検討） ── */}
       <section className="px-6 py-6">
         <div className="mx-auto max-w-6xl">
-          <h2 style={filterLabelStyle}>🧪 ジャンルでえらぶ</h2>
+          <h2 style={filterLabelStyle}>
+            <span className="ornament" aria-hidden="true">⁂</span>
+            <span style={{ margin: '0 8px' }}>ジャンルでえらぶ</span>
+            <span className="ornament" aria-hidden="true">⁂</span>
+          </h2>
           <div style={chipRowStyle}>
             <Link href={`/tools/ai-kyoshitsu${buildQuery({ subject: undefined })}`} style={chipStyle(!subject)}>
               すべて
@@ -141,33 +145,37 @@ export default async function AiKyoshitsu3DPage({ searchParams }: PageProps) {
   );
 }
 
-// ── スタイル ────────────────────────────────────────────────
+// ── スタイル（Rev40 Phase I: Mingei 統一）────────────────────
 const filterLabelStyle: React.CSSProperties = {
-  margin: '0 0 8px',
-  fontSize: 13,
-  fontWeight: 700,
-  color: 'var(--color-brown)',
+  margin:        '0 0 12px',
+  fontSize:      14,
+  fontFamily:    'var(--font-display), "Shippori Mincho", serif',
+  fontWeight:    500,
+  letterSpacing: '0.04em',
+  color:         'var(--sumi)',
 };
 
 const chipRowStyle: React.CSSProperties = {
-  display: 'flex',
-  gap: 8,
+  display:  'flex',
+  gap:      8,
   flexWrap: 'wrap',
 };
 
 function chipStyle(active: boolean): React.CSSProperties {
   return {
-    padding: '8px 14px',
-    borderRadius: 999,
-    fontSize: 13,
-    fontWeight: 600,
+    padding:        '8px 14px',
+    borderRadius:   4,
+    fontSize:       13,
+    fontFamily:     'var(--font-display), "Shippori Mincho", serif',
+    fontWeight:     500,
+    letterSpacing:  '0.04em',
     textDecoration: 'none',
-    transition: 'all 0.15s',
-    background: active ? 'var(--color-orange, #F39C5F)' : '#fff',
-    color:      active ? '#fff' : 'var(--color-brown, #6B4F3A)',
-    border:     active ? '2px solid var(--color-orange, #F39C5F)' : '2px solid var(--color-beige-dark, #D9C7A8)',
-    minHeight: 36,
-    display: 'inline-flex',
-    alignItems: 'center',
+    transition:     'background-color 0.2s, border-color 0.2s, color 0.2s',
+    background:     active ? 'var(--shu)'        : 'var(--washi-light)',
+    color:          active ? 'var(--washi)'      : 'var(--sumi)',
+    border:         `1px solid ${active ? 'var(--shu)' : 'var(--line)'}`,
+    minHeight:      36,
+    display:        'inline-flex',
+    alignItems:     'center',
   };
 }
