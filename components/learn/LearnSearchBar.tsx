@@ -59,9 +59,10 @@ export function LearnSearchBar() {
     <form onSubmit={onSubmit} role="search" className="w-full">
       <label
         htmlFor="learn-search"
-        className="block text-xs mb-1"
-        style={{ color: 'var(--color-brown-light)' }}
+        className="block font-mincho text-xs mb-1 tracking-wider"
+        style={{ color: 'var(--sumi-light)' }}
       >
+        <span className="ornament mr-1" aria-hidden="true">⁂</span>
         記事を検索
       </label>
       <div className="relative flex items-center">
@@ -71,14 +72,15 @@ export function LearnSearchBar() {
           inputMode="search"
           autoComplete="off"
           maxLength={100}
-          placeholder="キーワード・タイトルで検索（例：ChatGPT）"
+          placeholder="キーワード・タイトル（例：ChatGPT）"
           value={value}
           onChange={onChange}
-          className="w-full rounded-full border px-4 py-2 text-sm pr-10 min-h-[44px] focus:outline-none focus-visible:ring-2"
+          className="w-full font-mincho border px-4 py-2 text-sm pr-10 min-h-[44px] focus:outline-none focus-visible:ring-1"
           style={{
-            borderColor: 'var(--color-beige-dark)',
-            background:  'white',
-            color:       'var(--color-brown)',
+            borderColor: 'var(--line)',
+            background:  'var(--washi-light)',
+            color:       'var(--sumi)',
+            borderRadius: '4px',
           }}
         />
         {value.length > 0 && (
@@ -86,8 +88,8 @@ export function LearnSearchBar() {
             type="button"
             onClick={onClear}
             aria-label="検索をクリア"
-            className="absolute right-2 text-xs px-2 py-1 rounded-full hover:opacity-70 transition-opacity"
-            style={{ color: 'var(--color-brown-light)' }}
+            className="absolute right-2 text-sm px-2 py-1 hover:opacity-70 transition-opacity font-mincho"
+            style={{ color: 'var(--sumi-light)' }}
           >
             ×
           </button>

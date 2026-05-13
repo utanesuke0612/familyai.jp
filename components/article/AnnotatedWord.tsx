@@ -189,26 +189,26 @@ export function AnnotatedWord({ word, meaning, pron, example }: AnnotatedWordPro
           role="tooltip"
           onMouseEnter={cancelClose}
           onMouseLeave={scheduleClose}
-          className="block w-72 rounded-xl p-3 text-left text-sm"
+          className="block w-72 p-3 text-left text-sm font-mincho"
           style={{
-            position:   'fixed',
-            top:        pos.top,
-            left:       pos.left,
-            zIndex:     9999,
-            background: 'white',
-            boxShadow:  'var(--shadow-warm)',
-            border:     '1px solid var(--color-beige-dark)',
-            color:      'var(--color-brown)',
-            lineHeight: 1.5,
+            position:     'fixed',
+            top:          pos.top,
+            left:         pos.left,
+            zIndex:       9999,
+            background:   'var(--washi-light)',
+            border:       '1px solid var(--line)',
+            borderRadius: '4px',
+            color:        'var(--sumi)',
+            lineHeight:   1.6,
           }}
         >
-          {/* 1行目: 単語 + 発音記号 + 🔊 + ⭐ */}
+          {/* 1行目: 単語 + 発音記号 + 読み上げ + ブックマーク */}
           <span className="flex items-center gap-2">
-            <span className="font-bold" style={{ color: 'var(--color-brown)' }}>
+            <span className="font-mincho" style={{ color: 'var(--sumi)', fontWeight: 600 }}>
               {word}
             </span>
             {pron && (
-              <span className="text-xs font-normal" style={{ color: 'var(--color-brown-light)' }}>
+              <span className="text-xs font-normal" style={{ color: 'var(--sumi-light)' }}>
                 {pron}
               </span>
             )}
@@ -217,19 +217,21 @@ export function AnnotatedWord({ word, meaning, pron, example }: AnnotatedWordPro
                 type="button"
                 onClick={handleSpeak}
                 aria-label={`${word} を読み上げ`}
-                className="inline-flex items-center justify-center rounded-full"
+                className="inline-flex items-center justify-center"
                 style={{
-                  width:       '28px',
-                  height:      '28px',
-                  minHeight:   'auto',
-                  background:  'var(--color-cream)',
-                  border:      '1px solid var(--color-beige-dark)',
-                  fontSize:    '14px',
-                  padding:     0,
-                  lineHeight:  1,
+                  width:        '28px',
+                  height:       '28px',
+                  minHeight:    'auto',
+                  background:   'var(--washi)',
+                  border:       '1px solid var(--line)',
+                  borderRadius: '4px',
+                  color:        'var(--sumi)',
+                  fontSize:     '14px',
+                  padding:      0,
+                  lineHeight:   1,
                 }}
               >
-                🔊
+                ♪
               </button>
               {isLoggedIn ? (
                 <button
@@ -237,16 +239,18 @@ export function AnnotatedWord({ word, meaning, pron, example }: AnnotatedWordPro
                   onClick={handleBookmark}
                   aria-label={bookmarked ? 'ブックマーク解除' : 'ブックマークに追加'}
                   aria-pressed={bookmarked}
-                  className="inline-flex items-center justify-center rounded-full"
+                  className="inline-flex items-center justify-center"
                   style={{
-                    width:       '28px',
-                    height:      '28px',
-                    minHeight:   'auto',
-                    background:  bookmarked ? 'var(--color-yellow)' : 'var(--color-cream)',
-                    border:      `1px solid ${bookmarked ? 'var(--color-orange)' : 'var(--color-beige-dark)'}`,
-                    fontSize:    '14px',
-                    padding:     0,
-                    lineHeight:  1,
+                    width:        '28px',
+                    height:       '28px',
+                    minHeight:    'auto',
+                    background:   bookmarked ? 'var(--shu)' : 'var(--washi)',
+                    color:        bookmarked ? 'var(--washi)' : 'var(--sumi)',
+                    border:       `1px solid ${bookmarked ? 'var(--shu)' : 'var(--line)'}`,
+                    borderRadius: '4px',
+                    fontSize:     '14px',
+                    padding:      0,
+                    lineHeight:   1,
                   }}
                 >
                   {bookmarked ? '★' : '☆'}
@@ -257,18 +261,20 @@ export function AnnotatedWord({ word, meaning, pron, example }: AnnotatedWordPro
                   onClick={(e) => e.stopPropagation()}
                   aria-label="ログインしてブックマークに追加"
                   title="ログインするとブックマークをクラウドに保存できます"
-                  className="inline-flex items-center justify-center rounded-full"
+                  className="inline-flex items-center justify-center"
                   style={{
                     width:          '28px',
                     height:         '28px',
                     minHeight:      'auto',
-                    background:     'var(--color-cream)',
-                    border:         '1px solid var(--color-beige-dark)',
+                    background:     'var(--washi)',
+                    border:         '1px solid var(--line)',
+                    borderRadius:   '4px',
+                    color:          'var(--sumi-soft)',
                     fontSize:       '14px',
                     padding:        0,
                     lineHeight:     1,
                     textDecoration: 'none',
-                    opacity:        0.6,
+                    opacity:        0.7,
                   }}
                 >
                   ☆
@@ -278,7 +284,7 @@ export function AnnotatedWord({ word, meaning, pron, example }: AnnotatedWordPro
           </span>
 
           {/* 2行目: 意味 */}
-          <span className="mt-2 block" style={{ color: 'var(--color-brown)' }}>
+          <span className="mt-2 block" style={{ color: 'var(--sumi)' }}>
             {meaning}
           </span>
 
@@ -286,7 +292,7 @@ export function AnnotatedWord({ word, meaning, pron, example }: AnnotatedWordPro
           {example && (
             <span
               className="mt-2 block text-xs italic"
-              style={{ color: 'var(--color-brown-light)' }}
+              style={{ color: 'var(--sumi-light)' }}
             >
               例：{example}
             </span>
@@ -320,9 +326,9 @@ export function AnnotatedWord({ word, meaning, pron, example }: AnnotatedWordPro
           cursor:                'help',
           textDecoration:        'underline',
           textDecorationStyle:   'dotted',
-          textDecorationColor:   'var(--color-orange)',
+          textDecorationColor:   'var(--shu)',
           textUnderlineOffset:   '3px',
-          textDecorationThickness: '2px',
+          textDecorationThickness: '1.5px',
           color:                 'inherit',
           fontWeight:            'inherit',
         }}

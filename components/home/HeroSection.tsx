@@ -76,13 +76,14 @@ export function HeroSection() {
           する道具。
         </h1>
 
-        {/* 飾り罫（短い 1px 線） */}
-        <div className="flex justify-center my-10 animate-fade-in-up delay-100">
-          <span
-            className="inline-block"
-            style={{ width: '3em', height: '1px', background: 'var(--line)' }}
-            aria-hidden="true"
-          />
+        {/* 飾り罫（波線・絵本風） + 装飾アスタリスク */}
+        <div
+          className="flex items-center justify-center gap-4 my-10 animate-fade-in-up delay-100"
+          aria-hidden="true"
+        >
+          <span className="rule-wavy rule-wavy-shu" />
+          <span className="ornament ornament-shu" style={{ fontSize: '18px' }}>⁂</span>
+          <span className="rule-wavy rule-wavy-shu" />
         </div>
 
         {/* サブコピー */}
@@ -133,10 +134,12 @@ export function HeroSection() {
         {/* ─── 目次セクション（旧 4 隅カードの置換）── */}
         <div className="max-w-2xl mx-auto animate-fade-in-up delay-400">
           <h2
-            className="serial text-center mb-6"
+            className="serial text-center mb-6 flex items-center justify-center gap-2"
             style={{ color: 'var(--sumi-light)' }}
           >
+            <span className="ornament" aria-hidden="true">✦</span>
             目次 — TABLE OF CONTENTS
+            <span className="ornament" aria-hidden="true">✦</span>
           </h2>
 
           <ul className="space-y-0">

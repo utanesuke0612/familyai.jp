@@ -10,8 +10,9 @@
  */
 
 import { useRouter, useSearchParams } from 'next/navigation';
-import { CATEGORY_LABEL, CATEGORY_EMOJI } from '@/shared';
+import { CATEGORY_LABEL } from '@/shared';
 import type { ContentCategory } from '@/shared';
+// NOTE: CATEGORY_EMOJI を撤廃（民藝化のため絵文字を削除）
 
 // ── カテゴリ定義（表示順） ─────────────────────────────────────
 const CATEGORIES: ContentCategory[] = [
@@ -71,18 +72,20 @@ export function CategoryFilter({
       {/* ラベル + クリアボタン */}
       <div className="flex items-center justify-between gap-4">
         <p
-          className="text-sm font-medium"
-          style={{ color: 'var(--color-brown)' }}
+          className="font-mincho text-sm tracking-wide"
+          style={{ color: 'var(--sumi)' }}
         >
-          カテゴリで絞り込む
+          <span className="ornament" aria-hidden="true">⁂</span>
+          <span className="mx-2">分類で絞り込む</span>
+          <span className="ornament" aria-hidden="true">⁂</span>
         </p>
         {selected.length > 0 && (
           <button
             onClick={clearAll}
-            className="text-xs underline underline-offset-2 hover:opacity-70 transition-opacity min-h-[44px] px-2"
-            style={{ color: 'var(--color-brown-light)' }}
+            className="font-mincho text-xs underline underline-offset-2 hover:opacity-70 transition-opacity min-h-[44px] px-2"
+            style={{ color: 'var(--sumi-light)' }}
           >
-            クリア ({selected.length})
+            解除（{selected.length}）
           </button>
         )}
       </div>
@@ -100,18 +103,16 @@ export function CategoryFilter({
             <button
               key={cat}
               onClick={() => toggle(cat)}
-              className="inline-flex shrink-0 items-center gap-1.5 px-4 py-2 rounded-full text-sm font-medium border transition-[transform,box-shadow,border-color,background-color,color] duration-150 min-h-[44px]"
+              className="inline-flex shrink-0 items-center gap-1.5 px-4 py-2 text-sm font-mincho border transition-[border-color,background-color,color] duration-200 min-h-[44px]"
               style={{
-                background:   isActive ? 'var(--color-orange)' : 'white',
-                borderColor:  isActive ? 'var(--color-orange)' : 'var(--color-beige-dark)',
-                color:        isActive ? 'white' : 'var(--color-brown-light)',
-                transform:    isActive ? 'translateY(-2px)' : 'translateY(0)',
-                boxShadow:    isActive ? 'var(--shadow-orange)' : 'none',
+                background:   isActive ? 'var(--shu)'   : 'var(--washi)',
+                borderColor:  isActive ? 'var(--shu)'   : 'var(--line)',
+                color:        isActive ? 'var(--washi)' : 'var(--sumi-light)',
+                borderRadius: '4px',
               }}
               aria-pressed={isActive}
               aria-label={`${CATEGORY_LABEL[cat]}フィルター`}
             >
-              <span aria-hidden="true">{CATEGORY_EMOJI[cat]}</span>
               <span>{CATEGORY_LABEL[cat]}</span>
             </button>
           );
@@ -121,9 +122,10 @@ export function CategoryFilter({
       {/* 選択中のサマリー */}
       {selected.length > 0 && (
         <p
-          className="text-xs animate-fade-in-up"
-          style={{ color: 'var(--color-brown-light)' }}
+          className="font-mincho text-xs animate-fade-in-up"
+          style={{ color: 'var(--sumi-light)' }}
         >
+          <span className="rule-dashed mr-2" aria-hidden="true" />
           選択中：{selected.map((c) => CATEGORY_LABEL[c]).join('・')}
         </p>
       )}

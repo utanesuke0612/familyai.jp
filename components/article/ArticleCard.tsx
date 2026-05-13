@@ -81,7 +81,7 @@ export function ArticleCard({ article, featured = false }: ArticleCardProps) {
       className="group block"
       aria-label={`${article.title} — 記事を読む`}
     >
-      <article className="box-mingei p-0 transition-transform duration-200">
+      <article className="box-ehon p-0 transition-transform duration-200">
         {/* ── サムネイル（線画アイコン中央配置）── */}
         <div
           className="flex items-center justify-center border-b"

@@ -43,19 +43,20 @@
     --a-border:    #F0E4D4;
     --a-border-2:  #E5D4BE;
 
-    /* ── 旧トークン互換エイリアス ──────────────────────────── */
-    --color-cream:        var(--bg-warm);
-    --color-peach:        #FFAD80;
-    --color-peach-light:  #FFD4B2;
-    --color-orange:       var(--accent);
-    --color-beige:        var(--bg-warm);
-    --color-beige-dark:   var(--a-border);
-    --color-brown:        var(--ink);
-    --color-brown-light:  var(--ink-2);
-    --color-brown-muted:  var(--ink-3);
-    --color-sky:          #C8E8F8;
-    --color-mint:         #B8EDD8;
-    --color-yellow:       #FFE066;
+    /* ── 旧トークン → Mingei tokens への redirect（Rev40 Phase G）─── */
+    /* これにより既存コンポーネントが自動的に民藝パレットへ統一される */
+    --color-cream:        var(--washi);
+    --color-peach:        var(--shu-soft);    /* peach → 薄い朱 */
+    --color-peach-light:  var(--washi-light);
+    --color-orange:       var(--shu);          /* orange → 朱（深化）*/
+    --color-beige:        var(--washi-deep);
+    --color-beige-dark:   var(--line);
+    --color-brown:        var(--sumi);
+    --color-brown-light:  var(--sumi-light);
+    --color-brown-muted:  var(--sumi-soft);
+    --color-sky:          var(--washi-deep);   /* sky → 紙影（青を撤廃）*/
+    --color-mint:         var(--washi-deep);   /* mint → 紙影（緑を撤廃）*/
+    --color-yellow:       var(--washi-deep);   /* yellow → 紙影（黄を撤廃）*/
 
     --color-common-bg:    #FDF6ED;   /* cream */
     --color-common-accent:#3060D0;
@@ -878,6 +879,76 @@
   .btn-mingei-outline:hover {
     background: var(--sumi);
     color: var(--washi);
+  }
+
+  /* ═══════════════════════════════════════════════════════════
+     Rev40 Phase F: 絵本風アクセント（民藝の柔らかい派生）
+     民藝の品格を保ちつつ「絵本のぬくもり」を加える utility 群。
+     - .box-ehon       — .box-mingei の角丸 4px 版（やわらかい矩形）
+     - .ornament       — 装飾アスタリスク（⁂ ⁕ ✿ ✤ ※ 等を包む）
+     - .rule-dashed    — 点線飾り
+     - .rule-wavy      — 波線飾り（SVG・絵本の風合い）
+     既存 .box-mingei .rule-mingei .serial 等はそのまま利用可。
+     ═══════════════════════════════════════════════════════════ */
+
+  /* 装飾アスタリスク（⁂ ⁕ ✿ ✤ ※ の用） */
+  .ornament {
+    display:      inline-block;
+    font-family:  var(--font-display), 'Shippori Mincho', serif;
+    color:        var(--sumi-soft);
+    user-select:  none;
+    font-size:    14px;
+    line-height:  1;
+    vertical-align: middle;
+  }
+  .ornament-shu {
+    color: var(--shu-soft);
+  }
+
+  /* 絵本風 box（角丸 4px の民藝 box）*/
+  .box-ehon {
+    position:      relative;
+    background:    var(--washi);
+    border:        1px solid var(--line);
+    border-radius: 4px;
+  }
+  .box-ehon::after {
+    content:       '';
+    position:      absolute;
+    inset:         5px -5px -5px 5px;
+    background:    var(--washi-deep);
+    border:        1px solid var(--line);
+    border-radius: 4px;
+    z-index:       -1;
+    transition:    transform 240ms var(--ease-mingei);
+  }
+  .box-ehon:hover::after {
+    transform: translate(2px, 2px);
+  }
+
+  /* 点線飾り罫（短い） */
+  .rule-dashed {
+    display:       inline-block;
+    width:         2.5em;
+    height:        1px;
+    background-image:  linear-gradient(to right, var(--line) 50%, transparent 50%);
+    background-size:   6px 1px;
+    background-repeat: repeat-x;
+    vertical-align: middle;
+  }
+
+  /* 波線飾り罫（SVG・絵本の風合い） */
+  .rule-wavy {
+    display:       inline-block;
+    width:         3em;
+    height:        6px;
+    background-image:  url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 6'%3E%3Cpath d='M 0 3 Q 7.5 0 15 3 T 30 3' fill='none' stroke='%23C9B393' stroke-width='1'/%3E%3C/svg%3E");
+    background-repeat: repeat-x;
+    background-size:   30px 6px;
+    vertical-align: middle;
+  }
+  .rule-wavy-shu {
+    background-image: url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 6'%3E%3Cpath d='M 0 3 Q 7.5 0 15 3 T 30 3' fill='none' stroke='%23D04A2E' stroke-width='1'/%3E%3C/svg%3E");
   }
 }
 

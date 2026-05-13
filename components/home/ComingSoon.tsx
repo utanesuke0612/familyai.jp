@@ -57,9 +57,9 @@ export function ComingSoon() {
         }
 
         .cs-body {
-          font-family: 'Zen Maru Gothic', sans-serif;
-          background: var(--color-cream, #FDF6ED);
-          color: #8B5E3C;
+          font-family: 'Shippori Mincho', 'Zen Maru Gothic', serif;
+          background: var(--washi, #F5EDDE);
+          color: var(--sumi, #2A1A12);
           min-height: 100dvh;
           overflow-x: hidden;
           position: relative;
@@ -69,7 +69,7 @@ export function ComingSoon() {
           content: '';
           position: fixed;
           inset: 0;
-          background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.032'/%3E%3C/svg%3E");
+          background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.045'/%3E%3C/svg%3E");
           pointer-events: none;
           z-index: 0;
         }
@@ -85,19 +85,19 @@ export function ComingSoon() {
         .cs-blob { position: fixed; border-radius: 50%; pointer-events: none; z-index: 0; }
         .cs-blob1 {
           width: min(520px,90vw); height: min(520px,90vw);
-          background: radial-gradient(circle, #FFD4B2 0%, transparent 70%);
+          background: radial-gradient(circle, var(--washi-deep, #ECDFC9) 0%, transparent 70%);
           top: -15%; right: -10%;
           animation: cs-pulse 6s ease-in-out infinite;
         }
         .cs-blob2 {
           width: min(380px,70vw); height: min(380px,70vw);
-          background: radial-gradient(circle, #C8E8F8 0%, transparent 70%);
+          background: radial-gradient(circle, var(--washi-light, #FBF5E8) 0%, transparent 70%);
           bottom: -8%; left: -8%;
           animation: cs-pulseR 7s ease-in-out infinite 1s;
         }
         .cs-blob3 {
           width: min(240px,50vw); height: min(240px,50vw);
-          background: radial-gradient(circle, #B8EDD8 0%, transparent 70%);
+          background: radial-gradient(circle, var(--washi-deep, #ECDFC9) 0%, transparent 70%);
           top: 38%; left: 5%;
           animation: cs-pulse 8s ease-in-out infinite 2s;
         }
@@ -112,16 +112,17 @@ export function ComingSoon() {
 
         .cs-badge {
           display: inline-flex; align-items: center; gap: 8px;
-          background: #fff; border: 2px solid #E8CFA8; border-radius: 999px;
+          background: var(--washi-light, #FBF5E8); border: 1px solid var(--line, #C9B393); border-radius: 4px;
           padding: 6px 16px;
-          font-size: clamp(11px,3vw,13px); font-weight: 500; color: #B5896A;
+          font-size: clamp(11px,3vw,13px); font-weight: 400; color: var(--sumi-light, #6B5843);
           margin-bottom: clamp(20px,4vw,32px);
           animation: cs-fadeUp .5s ease both;
-          box-shadow: 0 2px 12px rgba(139,94,60,.08);
           white-space: nowrap;
+          font-family: 'Shippori Mincho', serif;
+          letter-spacing: .06em;
         }
         .cs-badge-dot {
-          width: 8px; height: 8px; background: #FF8C42;
+          width: 6px; height: 6px; background: var(--shu, #D04A2E);
           border-radius: 50%; flex-shrink: 0;
           animation: cs-blink 1.5s ease-in-out infinite;
         }
@@ -133,85 +134,89 @@ export function ComingSoon() {
         }
         .cs-logo-icon {
           width: clamp(44px,10vw,64px); height: clamp(44px,10vw,64px);
-          background: linear-gradient(135deg, #FFAD80, #FF8C42);
-          border-radius: clamp(12px,3vw,20px);
+          background: var(--shu, #D04A2E);
+          border: 1px solid var(--shu-deep, #A8341F);
+          border-radius: 4px;
           display: flex; align-items: center; justify-content: center;
           font-size: clamp(22px,5vw,32px);
-          box-shadow: 0 6px 20px rgba(255,140,66,.38);
-          animation: cs-float 3.5s ease-in-out infinite;
+          color: var(--washi, #F5EDDE);
           flex-shrink: 0;
         }
         .cs-logo-text {
-          font-family: 'Kaisei Opti', serif;
-          font-size: clamp(24px,6vw,44px); font-weight: 700;
-          color: #8B5E3C; letter-spacing: -.5px; white-space: nowrap;
+          font-family: 'Shippori Mincho', serif;
+          font-size: clamp(24px,6vw,44px); font-weight: 600;
+          color: var(--sumi, #2A1A12); letter-spacing: .02em; white-space: nowrap;
         }
-        .cs-logo-text span { color: #FF8C42; }
+        .cs-logo-text span { color: var(--shu, #D04A2E); }
 
         .cs-tagline {
-          font-family: 'Kaisei Opti', serif;
+          font-family: 'Shippori Mincho', serif;
           font-size: clamp(12px,3.2vw,16px); font-weight: 400;
-          color: #B5896A; letter-spacing: .04em; text-align: center;
+          color: var(--sumi-light, #6B5843); letter-spacing: .08em; text-align: center;
           margin-bottom: clamp(24px,5vw,40px);
           animation: cs-fadeUp .6s .15s ease both;
         }
 
         .cs-main-title {
-          font-family: 'Kaisei Opti', serif;
-          font-size: clamp(28px,7.5vw,64px); font-weight: 700; line-height: 1.25;
-          color: #8B5E3C; text-align: center;
+          font-family: 'Shippori Mincho', serif;
+          font-size: clamp(28px,7.5vw,64px); font-weight: 600; line-height: 1.4;
+          color: var(--sumi, #2A1A12); text-align: center;
           margin-bottom: clamp(16px,3vw,24px);
+          letter-spacing: .04em;
           animation: cs-fadeUp .6s .22s ease both;
         }
         .cs-highlight {
-          color: #FF8C42; position: relative; display: inline-block;
+          color: var(--shu, #D04A2E); position: relative; display: inline-block;
         }
         .cs-highlight::after {
           content: ''; position: absolute;
-          bottom: 2px; left: 0; right: 0;
-          height: clamp(6px,1.5vw,11px);
-          background: #FFE066; z-index: -1;
-          border-radius: 4px; opacity: .55;
+          bottom: -4px; left: 0; right: 0;
+          height: 1px;
+          background: var(--shu, #D04A2E); z-index: -1;
+          opacity: .6;
         }
 
         .cs-sub-msg {
-          font-size: clamp(13px,3.5vw,18px); line-height: 1.9;
-          color: #B5896A; text-align: center;
+          font-size: clamp(13px,3.5vw,18px); line-height: 2;
+          color: var(--sumi-light, #6B5843); text-align: center;
           max-width: 520px; width: 100%;
           margin-bottom: clamp(32px,6vw,52px);
+          font-family: 'Shippori Mincho', serif;
           animation: cs-fadeUp .6s .3s ease both;
         }
 
         .cs-release-card {
-          background: #fff; border: 2px solid #E8CFA8;
-          border-radius: clamp(20px,5vw,32px);
+          background: var(--washi-light, #FBF5E8); border: 1px solid var(--line, #C9B393);
+          border-radius: 4px;
           padding: clamp(24px,6vw,44px) clamp(20px,8vw,56px);
-          text-align: center; box-shadow: 0 8px 40px rgba(139,94,60,.09);
-          /* 最上部に移動したため上マージンを追加、下マージンは既存維持 */
+          text-align: center;
           margin-top: 0;
           margin-bottom: clamp(28px,5vw,44px);
           animation: cs-fadeUp .6s .1s ease both;
           max-width: 480px; width: 100%;
         }
         .cs-release-label {
-          font-size: clamp(10px,2.5vw,12px); font-weight: 700;
-          letter-spacing: .12em; color: #FF8C42; text-transform: uppercase;
+          font-size: clamp(10px,2.5vw,12px); font-weight: 500;
+          letter-spacing: .18em; color: var(--shu, #D04A2E); text-transform: uppercase;
           margin-bottom: 10px;
+          font-family: 'Shippori Mincho', serif;
         }
         .cs-release-date {
-          font-family: 'Kaisei Opti', serif;
-          font-size: clamp(22px,6vw,40px); font-weight: 700;
-          color: #8B5E3C; margin-bottom: 6px; line-height: 1.15;
+          font-family: 'Shippori Mincho', serif;
+          font-size: clamp(22px,6vw,40px); font-weight: 600;
+          color: var(--sumi, #2A1A12); margin-bottom: 6px; line-height: 1.25;
+          letter-spacing: .04em;
         }
         .cs-release-divider {
-          width: 44px; height: 3px; background: #FF8C42;
-          border-radius: 2px; margin: 14px auto; opacity: .5;
+          width: 44px; height: 1px; background: var(--line, #C9B393);
+          margin: 14px auto;
         }
         .cs-release-msg {
-          font-size: clamp(13px,3.5vw,16px); color: #B5896A; line-height: 1.8;
+          font-size: clamp(13px,3.5vw,16px); color: var(--sumi-light, #6B5843); line-height: 1.9;
+          font-family: 'Shippori Mincho', serif;
         }
         .cs-heart {
-          display: inline-block; color: #FF8C42;
+          display: inline-block; color: var(--shu, #D04A2E);
           font-size: clamp(14px,3.5vw,18px);
           animation: cs-heartbeat 2s ease-in-out infinite;
         }
@@ -222,19 +227,21 @@ export function ComingSoon() {
           margin-top: clamp(18px,4vw,28px);
         }
         .cs-count-box {
-          background: #F5E6D0; border-radius: clamp(10px,3vw,16px);
+          background: var(--washi, #F5EDDE); border: 1px solid var(--line, #C9B393);
+          border-radius: 4px;
           padding: clamp(10px,2.5vw,16px) clamp(12px,3vw,22px);
           min-width: clamp(56px,14vw,76px); text-align: center;
           flex: 1; max-width: 90px;
         }
         .cs-count-num {
-          font-family: 'Kaisei Opti', serif;
-          font-size: clamp(22px,6vw,32px); font-weight: 700;
-          color: #FF8C42; line-height: 1; display: block;
+          font-family: 'Shippori Mincho', serif;
+          font-size: clamp(22px,6vw,32px); font-weight: 600;
+          color: var(--sumi, #2A1A12); line-height: 1; display: block;
         }
         .cs-count-label {
-          font-size: clamp(9px,2.2vw,11px); color: #B5896A;
-          font-weight: 500; margin-top: 4px; display: block; letter-spacing: .06em;
+          font-size: clamp(9px,2.2vw,11px); color: var(--sumi-soft, #9A8470);
+          font-weight: 400; margin-top: 4px; display: block; letter-spacing: .12em;
+          font-family: 'Shippori Mincho', serif;
         }
 
         .cs-family-row {
@@ -245,18 +252,17 @@ export function ComingSoon() {
           max-width: 560px; width: 100%;
         }
         .cs-fam-chip {
-          background: #fff; border: 2px solid #E8CFA8; border-radius: 999px;
+          background: var(--washi-light, #FBF5E8); border: 1px solid var(--line, #C9B393); border-radius: 4px;
           padding: clamp(7px,2vw,10px) clamp(12px,3vw,20px);
           display: flex; align-items: center; gap: clamp(5px,1.5vw,8px);
-          font-size: clamp(12px,3vw,14px); font-weight: 500; color: #8B5E3C;
-          box-shadow: 0 2px 10px rgba(139,94,60,.07);
-          transition: transform .2s, box-shadow .2s, border-color .2s;
+          font-size: clamp(12px,3vw,14px); font-weight: 400; color: var(--sumi, #2A1A12);
+          font-family: 'Shippori Mincho', serif;
+          transition: border-color .2s, background-color .2s;
           cursor: default;
         }
         .cs-fam-chip:hover {
-          transform: translateY(-3px);
-          box-shadow: 0 6px 20px rgba(255,140,66,.2);
-          border-color: #FF8C42;
+          border-color: var(--shu, #D04A2E);
+          background: var(--washi, #F5EDDE);
         }
         .cs-fam-chip .cs-icon { font-size: clamp(16px,4vw,20px); }
 
@@ -274,18 +280,20 @@ export function ComingSoon() {
         .cs-ticker-item {
           display: flex; align-items: center; gap: 10px;
           padding: 0 28px;
-          font-size: clamp(12px,3vw,14px); font-weight: 500;
-          color: #B5896A; white-space: nowrap;
+          font-size: clamp(12px,3vw,14px); font-weight: 400;
+          color: var(--sumi-light, #6B5843); white-space: nowrap;
+          font-family: 'Shippori Mincho', serif;
         }
         .cs-ticker-dot {
-          width: 5px; height: 5px; background: #FF8C42;
+          width: 4px; height: 4px; background: var(--shu, #D04A2E);
           border-radius: 50%; opacity: .6; flex-shrink: 0;
         }
 
         .cs-preview-label {
-          font-size: clamp(11px,3vw,13px); font-weight: 500; color: #B5896A;
+          font-size: clamp(11px,3vw,13px); font-weight: 400; color: var(--sumi-light, #6B5843);
           margin-bottom: clamp(14px,3vw,20px); text-align: center;
-          animation: cs-fadeUp .6s .52s ease both; letter-spacing: .04em;
+          animation: cs-fadeUp .6s .52s ease both; letter-spacing: .08em;
+          font-family: 'Shippori Mincho', serif;
         }
         .cs-sneak-grid {
           display: grid; grid-template-columns: repeat(3, 1fr);
@@ -295,37 +303,40 @@ export function ComingSoon() {
           animation: cs-fadeUp .6s .58s ease both;
         }
         .cs-sneak-card {
-          background: #fff; border: 2px solid #E8CFA8;
-          border-radius: clamp(14px,4vw,22px);
+          background: var(--washi-light, #FBF5E8); border: 1px solid var(--line, #C9B393);
+          border-radius: 4px;
           padding: clamp(14px,4vw,22px) clamp(8px,2vw,14px);
           text-align: center;
-          transition: transform .2s, box-shadow .2s, border-color .2s;
+          transition: border-color .2s, background-color .2s;
           cursor: default;
         }
         .cs-sneak-card:hover {
-          transform: translateY(-4px);
-          box-shadow: 0 8px 24px rgba(255,140,66,.18);
-          border-color: #FFAD80;
+          border-color: var(--shu, #D04A2E);
+          background: var(--washi, #F5EDDE);
         }
         .cs-sneak-card .cs-s-icon {
           font-size: clamp(22px,5.5vw,30px); display: block;
           margin-bottom: clamp(6px,1.5vw,10px);
         }
         .cs-sneak-card .cs-s-title {
-          font-size: clamp(10px,2.5vw,12px); font-weight: 700;
-          color: #8B5E3C; line-height: 1.4;
+          font-size: clamp(10px,2.5vw,12px); font-weight: 500;
+          color: var(--sumi, #2A1A12); line-height: 1.4;
+          font-family: 'Shippori Mincho', serif;
         }
         .cs-sneak-card .cs-s-tag {
           display: inline-block; margin-top: clamp(4px,1vw,6px);
-          font-size: clamp(9px,2vw,11px); font-weight: 500;
-          background: #F5E6D0; color: #B5896A;
-          padding: 2px 8px; border-radius: 999px;
+          font-size: clamp(9px,2vw,11px); font-weight: 400;
+          background: var(--washi-deep, #ECDFC9); color: var(--sumi-soft, #9A8470);
+          padding: 2px 8px; border-radius: 4px;
+          font-family: 'Shippori Mincho', serif;
         }
 
         .cs-footer-note {
-          font-size: clamp(11px,2.8vw,13px); color: #B5896A;
-          text-align: center; opacity: .75; line-height: 1.8;
+          font-size: clamp(11px,2.8vw,13px); color: var(--sumi-soft, #9A8470);
+          text-align: center; opacity: .9; line-height: 1.9;
           animation: cs-fadeUp .6s .68s ease both;
+          font-family: 'Shippori Mincho', serif;
+          letter-spacing: .06em;
         }
 
         @media (max-width: 480px) {
@@ -338,10 +349,10 @@ export function ComingSoon() {
           .cs-count-box { min-width: 48px; padding: 8px 6px; }
         }
         @media (hover: none) {
-          .cs-fam-chip:hover   { transform: none; box-shadow: 0 2px 10px rgba(139,94,60,.07); border-color: #E8CFA8; }
-          .cs-sneak-card:hover { transform: none; box-shadow: none; border-color: #E8CFA8; }
-          .cs-fam-chip:active   { transform: translateY(-2px); border-color: #FF8C42; }
-          .cs-sneak-card:active { transform: translateY(-2px); border-color: #FFAD80; }
+          .cs-fam-chip:hover   { border-color: var(--line, #C9B393); background: var(--washi-light, #FBF5E8); }
+          .cs-sneak-card:hover { border-color: var(--line, #C9B393); background: var(--washi-light, #FBF5E8); }
+          .cs-fam-chip:active   { border-color: var(--shu, #D04A2E); }
+          .cs-sneak-card:active { border-color: var(--shu, #D04A2E); }
         }
         @media (prefers-reduced-motion: reduce) {
           .cs-blob1, .cs-blob2, .cs-blob3,

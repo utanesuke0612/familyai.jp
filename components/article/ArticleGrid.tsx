@@ -24,7 +24,7 @@ interface ArticleGridProps {
 // ── スケルトンカード（Rev40 Phase B: Mingei 矩形）─────────────
 function SkeletonCard() {
   return (
-    <div className="box-mingei p-0">
+    <div className="box-ehon p-0">
       {/* サムネイル（washi-light） */}
       <div
         style={{

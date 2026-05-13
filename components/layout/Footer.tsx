@@ -11,18 +11,17 @@ import Link from 'next/link';
 import { ROUTES } from '@/shared';
 
 const NAV_LINKS = [
-  // CX-12: 装飾絵文字は icon フィールドで分離・aria-hidden で SR から非表示
-  // Rev33: 「AIツール」を「AI活用事例」より前に出す（Hero CTA / Header / MobileNav と整合）
-  { href: ROUTES.home,     icon: '🏠', label: 'ホーム' },
-  { href: '/tools',        icon: '🧰', label: 'AIツール' },
-  { href: ROUTES.articles, icon: '📝', label: 'AI活用事例' },
+  // Rev40 Phase G: 絵文字撤廃 — 民藝奥付風の純テキストへ
+  { href: ROUTES.home,     label: 'ホーム' },
+  { href: '/tools',        label: 'AIツール' },
+  { href: ROUTES.articles, label: 'AI活用事例' },
 ];
 
 const CATEGORY_LINKS = [
-  { href: '/learn?cat=education', icon: '📚', label: '学習・教育' },
-  { href: '/learn?cat=lifestyle', icon: '🏠', label: '家事・暮らし' },
-  { href: '/learn?cat=work',      icon: '💼', label: '仕事・効率化' },
-  { href: '/learn?cat=creative',  icon: '🎨', label: '創作・表現' },
+  { href: '/learn?cat=education', label: '学習・教育' },
+  { href: '/learn?cat=lifestyle', label: '家事・暮らし' },
+  { href: '/learn?cat=work',      label: '仕事・効率化' },
+  { href: '/learn?cat=creative',  label: '創作・表現' },
 ];
 
 const SITE_LINKS = [
@@ -33,7 +32,7 @@ const SITE_LINKS = [
 
 export function Footer() {
   return (
-    <footer style={{ background: 'var(--color-brown)', color: 'rgba(255,255,255,0.8)' }}>
+    <footer style={{ background: 'var(--sumi)', color: 'var(--washi)' }}>
 
       {/* ── メインコンテンツ ── */}
       <div
@@ -45,35 +44,44 @@ export function Footer() {
         <div className="lg:col-span-1">
           <Link
             href={ROUTES.home}
-            className="inline-flex items-center gap-2 mb-4 min-h-[44px]"
+            className="inline-flex items-center gap-3 mb-4 min-h-[44px]"
             aria-label="familyai.jp トップへ"
           >
             <span
-              className="flex items-center justify-center w-9 h-9 rounded-xl text-lg"
+              className="flex items-center justify-center w-9 h-9 text-base font-mincho"
               style={{
-                background: 'linear-gradient(135deg, var(--color-peach) 0%, var(--color-orange) 100%)',
+                background: 'var(--shu)',
+                color:      'var(--washi)',
+                border:     '1px solid var(--shu-deep)',
+                borderRadius: '4px',
               }}
               aria-hidden="true"
             >
-              🏠
+              愛
             </span>
-            <span className="font-display text-xl font-bold leading-none">
-              <span className="text-white/90">family</span>
-              <span style={{ color: 'var(--color-peach)' }}>ai</span>
-              <span className="text-white/90">.jp</span>
+            <span className="font-mincho text-xl leading-none tracking-wide">
+              <span style={{ color: 'var(--washi)' }}>family</span>
+              <span style={{ color: 'var(--shu-soft)' }}>ai</span>
+              <span style={{ color: 'var(--washi)' }}>.jp</span>
             </span>
           </Link>
-          <p className="text-sm leading-relaxed text-white/70 max-w-[220px]">
-            AI = 愛、暮らしに役立つAI活用事例と使いやすいAIツールをまとめています。
+          <p className="font-mincho text-sm leading-relaxed max-w-[240px]" style={{ color: 'rgba(245,237,222,0.72)' }}>
+            <span className="ornament ornament-shu mr-1" aria-hidden="true">⁂</span>
+            AI＝愛、暮らしに役立つ活用事例と道具をまとめた手帖。
           </p>
-          {/* SNSリンク（将来実装用） */}
+          {/* SNSリンク */}
           <div className="flex gap-3 mt-5">
             <a
               href="https://x.com/familyaijp"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center justify-center w-9 h-9 rounded-lg text-sm transition-opacity hover:opacity-70 min-h-[44px] min-w-[44px]"
-              style={{ background: 'rgba(255,255,255,0.12)' }}
+              className="flex items-center justify-center w-9 h-9 text-sm transition-opacity hover:opacity-70 min-h-[44px] min-w-[44px] font-mincho"
+              style={{
+                background:   'rgba(245,237,222,0.08)',
+                border:       '1px solid rgba(245,237,222,0.16)',
+                borderRadius: '4px',
+                color:        'var(--washi)',
+              }}
               aria-label="X（旧Twitter）"
             >
               𝕏
@@ -83,18 +91,19 @@ export function Footer() {
 
         {/* ② ナビ */}
         <div>
-          <h3 className="font-display font-bold text-base text-white mb-4">
-            メニュー
+          <h3 className="font-mincho text-base mb-4 tracking-wider" style={{ color: 'var(--washi)' }}>
+            <span className="ornament ornament-shu mr-1" aria-hidden="true">⁂</span>
+            目次
           </h3>
           <ul className="flex flex-col gap-2">
             {NAV_LINKS.map((link) => (
               <li key={link.href}>
                 <Link
                   href={link.href}
-                  className="inline-flex items-center gap-2 text-sm text-white/70 hover:text-white transition-colors min-h-[44px]"
+                  className="font-mincho inline-flex items-center gap-2 text-sm hover:opacity-100 transition-opacity min-h-[44px]"
+                  style={{ color: 'rgba(245,237,222,0.72)' }}
                 >
-                  <span aria-hidden="true">{link.icon}</span>
-                  {' '}{link.label}
+                  {link.label}
                 </Link>
               </li>
             ))}
@@ -103,18 +112,19 @@ export function Footer() {
 
         {/* ③ カテゴリ */}
         <div>
-          <h3 className="font-display font-bold text-base text-white mb-4">
-            カテゴリ
+          <h3 className="font-mincho text-base mb-4 tracking-wider" style={{ color: 'var(--washi)' }}>
+            <span className="ornament ornament-shu mr-1" aria-hidden="true">⁂</span>
+            分類
           </h3>
           <ul className="flex flex-col gap-2">
             {CATEGORY_LINKS.map((link) => (
               <li key={link.href}>
                 <Link
                   href={link.href}
-                  className="text-sm text-white/70 hover:text-white transition-colors min-h-[44px] inline-flex items-center"
+                  className="font-mincho text-sm hover:opacity-100 transition-opacity min-h-[44px] inline-flex items-center"
+                  style={{ color: 'rgba(245,237,222,0.72)' }}
                 >
-                  <span aria-hidden="true">{link.icon}</span>
-                  {' '}{link.label}
+                  {link.label}
                 </Link>
               </li>
             ))}
@@ -123,15 +133,17 @@ export function Footer() {
 
         {/* ④ サイト情報 */}
         <div>
-          <h3 className="font-display font-bold text-base text-white mb-4">
-            サイト情報
+          <h3 className="font-mincho text-base mb-4 tracking-wider" style={{ color: 'var(--washi)' }}>
+            <span className="ornament ornament-shu mr-1" aria-hidden="true">⁂</span>
+            奥付
           </h3>
           <ul className="flex flex-col gap-2">
             {SITE_LINKS.map((link) => (
               <li key={link.href}>
                 <Link
                   href={link.href}
-                  className="text-sm text-white/70 hover:text-white transition-colors min-h-[44px] inline-flex items-center"
+                  className="font-mincho text-sm hover:opacity-100 transition-opacity min-h-[44px] inline-flex items-center"
+                  style={{ color: 'rgba(245,237,222,0.72)' }}
                 >
                   {link.label}
                 </Link>
@@ -143,14 +155,15 @@ export function Footer() {
 
       {/* ── ボトムバー ── */}
       <div
-        className="border-t max-w-container mx-auto flex flex-col sm:flex-row items-center justify-between gap-2 py-6 text-sm text-white/50"
+        className="border-t max-w-container mx-auto flex flex-col sm:flex-row items-center justify-between gap-2 py-6 font-mincho text-sm"
         style={{
           paddingInline: 'var(--container-px)',
-          borderColor: 'rgba(255,255,255,0.12)',
+          borderColor:   'rgba(245,237,222,0.16)',
+          color:         'rgba(245,237,222,0.5)',
         }}
       >
-        <p>© 2026 familyai.jp — AI = 愛</p>
-        <p className="text-xs">
+        <p>© 2026 familyai.jp ― AI＝愛</p>
+        <p className="text-xs tracking-wider">
           Powered by Next.js · Hosted on Vercel
         </p>
       </div>

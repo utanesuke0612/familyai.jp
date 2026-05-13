@@ -43,7 +43,7 @@ export function SortLevelBar() {
 
       {/* ── ソート ── */}
       <div className="flex items-center gap-1.5">
-        <span className="text-xs font-medium" style={{ color: 'var(--color-brown-light)' }}>
+        <span className="font-mincho text-xs tracking-wide" style={{ color: 'var(--sumi-light)' }}>
           並び順：
         </span>
         {(['latest', 'popular'] as const).map((s) => {
@@ -52,17 +52,16 @@ export function SortLevelBar() {
             <button
               key={s}
               onClick={() => update('sort', s)}
-              className="px-3 py-1.5 rounded-full text-xs font-medium transition-[transform,background-color,border-color,color,box-shadow] duration-150 min-h-[36px]"
+              className="px-3 py-1.5 text-xs font-mincho transition-[background-color,border-color,color] duration-200 min-h-[36px]"
               style={{
-                background:  active ? 'var(--color-brown)' : 'white',
-                color:       active ? 'white' : 'var(--color-brown-light)',
-                border:      `1px solid ${active ? 'var(--color-brown)' : 'var(--color-beige-dark)'}`,
-                transform:   active ? 'translateY(-1px)' : 'none',
-                boxShadow:   active ? 'var(--shadow-warm-sm)' : 'none',
+                background:   active ? 'var(--sumi)'  : 'var(--washi)',
+                color:        active ? 'var(--washi)' : 'var(--sumi-light)',
+                border:       `1px solid ${active ? 'var(--sumi)' : 'var(--line)'}`,
+                borderRadius: '4px',
               }}
               aria-pressed={active}
             >
-              {s === 'latest' ? '🕐 新着順' : '🔥 人気順'}
+              {s === 'latest' ? '新着順' : '人気順'}
             </button>
           );
         })}
@@ -70,7 +69,7 @@ export function SortLevelBar() {
 
       {/* ── 難易度 ── */}
       <div className="flex items-center gap-1.5 flex-wrap">
-        <span className="text-xs font-medium" style={{ color: 'var(--color-brown-light)' }}>
+        <span className="font-mincho text-xs tracking-wide" style={{ color: 'var(--sumi-light)' }}>
           難易度：
         </span>
         {LEVELS.map(({ value, label }) => {
@@ -79,13 +78,12 @@ export function SortLevelBar() {
             <button
               key={value || 'all'}
               onClick={() => update('level', value)}
-              className="px-3 py-1.5 rounded-full text-xs font-medium transition-[transform,background-color,border-color,color,box-shadow] duration-150 min-h-[36px]"
+              className="px-3 py-1.5 text-xs font-mincho transition-[background-color,border-color,color] duration-200 min-h-[36px]"
               style={{
-                background:  active ? 'var(--color-orange)' : 'white',
-                color:       active ? 'white' : 'var(--color-brown-light)',
-                border:      `1px solid ${active ? 'var(--color-orange)' : 'var(--color-beige-dark)'}`,
-                transform:   active ? 'translateY(-1px)' : 'none',
-                boxShadow:   active ? 'var(--shadow-orange)' : 'none',
+                background:   active ? 'var(--shu)'   : 'var(--washi)',
+                color:        active ? 'var(--washi)' : 'var(--sumi-light)',
+                border:       `1px solid ${active ? 'var(--shu)' : 'var(--line)'}`,
+                borderRadius: '4px',
               }}
               aria-pressed={active}
             >

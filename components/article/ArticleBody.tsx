@@ -338,10 +338,10 @@ function EmbedWithFullscreen({
 
   // autoHeight があれば固定px、なければ aspect-ratio でフォールバック
   const containerStyle: React.CSSProperties = isFs
-    ? { position: 'relative', width: '100%', height: '100%', background: 'var(--color-cream, #fdf6ee)' }
+    ? { position: 'relative', width: '100%', height: '100%', background: 'var(--washi, #F5EDDE)' }
     : autoHeight !== null
-      ? { position: 'relative', margin: '1.5rem 0', width: '100%', height: `${autoHeight}px`, background: 'var(--color-cream, #fdf6ee)', borderRadius: '12px', overflow: 'hidden', boxShadow: 'var(--shadow-warm-sm, 0 2px 12px rgba(0,0,0,0.08))' }
-      : { position: 'relative', margin: '1.5rem 0', width: '100%', aspectRatio, background: 'var(--color-cream, #fdf6ee)', borderRadius: '12px', overflow: 'hidden', boxShadow: 'var(--shadow-warm-sm, 0 2px 12px rgba(0,0,0,0.08))' };
+      ? { position: 'relative', margin: '1.5rem 0', width: '100%', height: `${autoHeight}px`, background: 'var(--washi, #F5EDDE)', border: '1px solid var(--line)', borderRadius: '4px', overflow: 'hidden' }
+      : { position: 'relative', margin: '1.5rem 0', width: '100%', aspectRatio, background: 'var(--washi, #F5EDDE)', border: '1px solid var(--line)', borderRadius: '4px', overflow: 'hidden' };
 
   return (
     <div ref={wrapRef} style={containerStyle}>
@@ -372,10 +372,10 @@ function EmbedWithFullscreen({
           right:          '10px',
           width:          '34px',
           height:         '34px',
-          borderRadius:   '8px',
-          border:         '1px solid rgba(255,255,255,0.3)',
-          background:     'rgba(60,40,20,0.45)',
-          color:          'white',
+          borderRadius:   '4px',
+          border:         '1px solid rgba(245,237,222,0.3)',
+          background:     'rgba(42,26,18,0.7)',
+          color:          'var(--washi, #F5EDDE)',
           cursor:         'pointer',
           display:        'flex',
           alignItems:     'center',
@@ -384,10 +384,10 @@ function EmbedWithFullscreen({
           zIndex:         10,
           padding:        0,
           minHeight:      'auto',
-          transition:     'background 0.15s',
+          transition:     'background 0.2s',
         }}
-        onMouseEnter={(e) => { (e.currentTarget as HTMLButtonElement).style.background = 'rgba(60,40,20,0.75)'; }}
-        onMouseLeave={(e) => { (e.currentTarget as HTMLButtonElement).style.background = 'rgba(60,40,20,0.45)'; }}
+        onMouseEnter={(e) => { (e.currentTarget as HTMLButtonElement).style.background = 'rgba(42,26,18,0.9)'; }}
+        onMouseLeave={(e) => { (e.currentTarget as HTMLButtonElement).style.background = 'rgba(42,26,18,0.7)'; }}
       >
         {isFs ? (
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
@@ -430,16 +430,17 @@ function CodeBlockWithCopy({ children, ...props }: React.HTMLAttributes<HTMLPreE
         type="button"
         onClick={handleCopy}
         aria-label="コードをコピー"
-        className="absolute top-2 right-2 text-xs px-2 py-1 rounded-md transition-opacity hover:opacity-80"
+        className="absolute top-2 right-2 text-xs px-2 py-1 transition-opacity hover:opacity-80 font-mincho"
         style={{
-          background: copied ? 'var(--color-orange)' : 'rgba(255,255,255,0.85)',
-          color:      copied ? 'white' : 'var(--color-brown)',
-          border:     '1px solid var(--color-beige-dark)',
-          minHeight:  'auto',
-          zIndex:     1,
+          background:   copied ? 'var(--shu)' : 'var(--washi-light, rgba(251,245,232,0.9))',
+          color:        copied ? 'var(--washi)' : 'var(--sumi)',
+          border:       '1px solid var(--line)',
+          borderRadius: '4px',
+          minHeight:    'auto',
+          zIndex:       1,
         }}
       >
-        {copied ? '✓ コピー済' : '📋 コピー'}
+        {copied ? '✓ コピー済' : 'コピー'}
       </button>
       <pre ref={preRef} {...props}>{children}</pre>
     </div>
@@ -487,7 +488,7 @@ const components: Components = {
         alt={alt ?? ''}
         loading="lazy"
         decoding="async"
-        style={{ maxWidth: '100%', borderRadius: '12px', margin: '1.5rem 0' }}
+        style={{ maxWidth: '100%', borderRadius: '4px', border: '1px solid var(--line)', margin: '1.5rem 0' }}
         {...props}
       />
     );
@@ -503,10 +504,10 @@ const components: Components = {
     return (
       <blockquote
         style={{
-          borderLeft:  '4px solid var(--color-peach)',
+          borderLeft:  '3px solid var(--shu)',
           paddingLeft: '1.25rem',
           margin:      '1.5rem 0',
-          color:       'var(--color-brown-light)',
+          color:       'var(--sumi-light)',
           fontStyle:   'italic',
         }}
         {...props}
@@ -522,7 +523,7 @@ const components: Components = {
       <hr
         style={{
           border: 'none',
-          borderTop: '2px solid var(--color-beige)',
+          borderTop: '1px solid var(--line)',
           margin: '2rem 0',
         }}
       />
@@ -538,7 +539,7 @@ const components: Components = {
             width:           '100%',
             borderCollapse:  'collapse',
             fontSize:        '14px',
-            color:           'var(--color-brown)',
+            color:           'var(--sumi)',
           }}
           {...props}
         >
@@ -551,11 +552,11 @@ const components: Components = {
     return (
       <th
         style={{
-          background:    'var(--color-beige)',
+          background:    'var(--washi-deep)',
           padding:       '8px 12px',
           textAlign:     'left',
           fontWeight:    600,
-          border:        '1px solid var(--color-beige-dark)',
+          border:        '1px solid var(--line)',
           whiteSpace:    'nowrap',
         }}
         {...props}
@@ -569,7 +570,7 @@ const components: Components = {
       <td
         style={{
           padding: '8px 12px',
-          border:  '1px solid var(--color-beige-dark)',
+          border:  '1px solid var(--line)',
           verticalAlign: 'top',
         }}
         {...props}
@@ -620,7 +621,7 @@ export function ArticleBody({ content, className = '' }: ArticleBodyProps) {
                   src={segment.src}
                   style={{
                     width:        '100%',
-                    borderRadius: '8px',
+                    borderRadius: '4px',
                     display:      'block',
                   }}
                 />

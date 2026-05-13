@@ -7,7 +7,7 @@
 
 import { useScrollReveal } from '@/hooks/useScrollReveal';
 
-// Rev33: ナビ順序統一に合わせて 🧰 AIツール を先頭側に
+// Rev40 Phase G: 民藝奥付風に — 絵文字撤廃、明朝控えめ
 const STATS = [
   { emoji: '🧰', value: '2',       label: 'AIツール' },
   { emoji: '📚', value: '100+',   label: 'AI活用事例' },
@@ -21,10 +21,10 @@ export function StatsRow() {
   return (
     <div
       ref={ref}
-      className="py-4 border-y"
+      className="py-5 border-y"
       style={{
-        background:   'var(--color-beige)',
-        borderColor:  'var(--color-beige-dark)',
+        background:   'var(--washi-deep)',
+        borderColor:  'var(--line)',
       }}
     >
       <div
@@ -36,16 +36,16 @@ export function StatsRow() {
             key={s.label}
             className={`reveal reveal-delay-${i + 1} flex flex-col items-center gap-1`}
           >
-            <span className="text-3xl mb-1">{s.emoji}</span>
             <span
-              className="font-display font-bold text-3xl"
-              style={{ color: 'var(--color-orange)' }}
+              className="font-mincho text-2xl tracking-wide"
+              style={{ color: 'var(--sumi)' }}
             >
               {s.value}
             </span>
+            <span className="rule-dashed" aria-hidden="true" />
             <span
-              className="text-sm"
-              style={{ color: 'var(--color-brown-light)' }}
+              className="font-mincho text-xs tracking-wide"
+              style={{ color: 'var(--sumi-light)' }}
             >
               {s.label}
             </span>
