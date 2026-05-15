@@ -269,7 +269,7 @@ function CategoryTabs({
 }) {
   return (
     <div
-      className="flex gap-1.5 px-2.5 py-2 overflow-x-auto scrollbar-hide"
+      className="flex gap-1 px-2 py-2 overflow-x-auto scrollbar-hide"
       style={{
         WebkitOverflowScrolling: 'touch',
         borderBottom: '1px solid var(--line)',
@@ -285,7 +285,7 @@ function CategoryTabs({
             role="tab"
             aria-selected={selected}
             onClick={() => onChange(cat.id)}
-            className="shrink-0 px-2.5 py-1.5 font-mincho text-xs transition-[background-color,color]"
+            className="shrink-0 px-2 py-1.5 font-mincho text-xs transition-[background-color,color]"
             style={{
               background:   selected ? 'var(--shu)' : 'var(--washi-deep)',
               color:        selected ? 'white' : 'var(--sumi-light)',
