@@ -10,18 +10,19 @@
 export function HandwritingNote() {
   return (
     <div
-      className="rounded-xl p-3 mb-3"
+      className="p-3 mb-3"
       style={{
         background: '#fff',
-        border:     '1px solid #cfe1f0',
+        border:       '1px solid var(--line)',
+        borderRadius: '4px',
       }}
     >
-      <p className="text-sm font-bold" style={{ color: 'var(--color-brown)' }}>
+      <p className="text-sm font-mincho" style={{ fontWeight: 500, color: 'var(--sumi)' }}>
         紙とペンを用意して、聴いた英語を書き取ってみよう
       </p>
       <p
         className="text-xs leading-relaxed mt-1"
-        style={{ color: 'var(--color-brown-light)' }}
+        style={{ color: 'var(--sumi-light)' }}
       >
         キーボードではなく手書きで書くことで、耳・目・手・声を同時に使えます。
         五感を使う学習が、最も記憶に残ります。

@@ -168,28 +168,28 @@ export function AdminModelTable({ initialModels, initialTotal }: Props) {
       <div style={filterBarStyle}>
         <input
           type="search"
-          placeholder="🔍 タイトルで検索…"
+          placeholder="タイトルで検索…"
           value={search}
           onChange={(e) => setSearch(e.target.value)}
           style={searchInputStyle}
           aria-label="タイトル検索"
         />
         <select value={subject} onChange={(e) => setSubject(e.target.value as Tutor3dSubject | 'all')} style={selectStyle}>
-          <option value="all">🧪 すべてのジャンル</option>
+          <option value="all">すべてのジャンル</option>
           {TUTOR3D_SUBJECTS.map((s) => (
             <option key={s} value={s}>{TUTOR3D_SUBJECT_LABEL[s]}</option>
           ))}
         </select>
         <select value={published} onChange={(e) => setPublished(e.target.value as PublishedKey)} style={selectStyle}>
-          <option value="all">📢 すべて</option>
-          <option value="true">✅ 公開のみ</option>
-          <option value="false">🚧 非公開のみ</option>
+          <option value="all">すべて</option>
+          <option value="true">公開のみ</option>
+          <option value="false">非公開のみ</option>
         </select>
         <select value={sort} onChange={(e) => setSort(e.target.value as SortKey)} style={selectStyle}>
-          <option value="latest">📅 新しい順</option>
-          <option value="oldest">📅 古い順</option>
-          <option value="popular">👀 人気順</option>
-          <option value="title">🔤 タイトル順</option>
+          <option value="latest">新しい順</option>
+          <option value="oldest">古い順</option>
+          <option value="popular">人気順</option>
+          <option value="title">タイトル順</option>
         </select>
         {loading && <span style={{ fontSize: 12, color: '#6B7280' }}>読み込み中…</span>}
       </div>
@@ -219,7 +219,7 @@ export function AdminModelTable({ initialModels, initialTotal }: Props) {
                 <td style={tdStyle}>
                   <div style={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
                     <span style={{ fontWeight: 600, color: '#111827' }}>
-                      {m.isFeatured && <span title="おすすめ">⭐ </span>}
+                      {m.isFeatured && <span title="おすすめ" style={{ color: 'var(--shu)' }}>★ </span>}
                       {m.title}
                     </span>
                     <span style={{ fontSize: 11, color: '#6B7280', fontFamily: 'monospace' }}>
@@ -240,20 +240,20 @@ export function AdminModelTable({ initialModels, initialTotal }: Props) {
                     aria-label={`公開を切り替え（現在: ${m.published ? '公開中' : '非公開'}）`}
                     style={togglePillStyle(m.published)}
                   >
-                    {m.published ? '✅ 公開中' : '🚧 非公開'}
+                    {m.published ? '公開中' : '非公開'}
                   </button>
                 </td>
                 <td style={tdStyle}>
                   <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap' }}>
-                    <Link href={`/admin/3d-models/${m.slug}/preview`} style={linkBtnStyle}>👁 プレビュー</Link>
-                    <Link href={`/admin/3d-models/${m.slug}/edit`}    style={linkBtnStyle}>✏️ 編集</Link>
+                    <Link href={`/admin/3d-models/${m.slug}/preview`} style={linkBtnStyle}>プレビュー</Link>
+                    <Link href={`/admin/3d-models/${m.slug}/edit`}    style={linkBtnStyle}>編集</Link>
                     <button
                       type="button"
                       onClick={() => handleDelete(m.slug, m.title)}
                       disabled={isRowPending(m.slug)}
                       style={deleteBtnStyle}
                     >
-                      🗑 削除
+                      削除
                     </button>
                   </div>
                 </td>

@@ -40,16 +40,17 @@ export function ModelDetailClient({ model }: ModelDetailClientProps) {
           style={{
             margin: '16px 0 0',
             padding: '12px 14px',
-            background: 'var(--color-peach-light)',
-            borderRadius: 12,
+            background: 'var(--washi-deep)',
+            border: '1px solid var(--line)',
+            borderRadius: 4,
             fontSize: 13,
-            color: 'var(--color-brown)',
+            color: 'var(--sumi)',
             lineHeight: 1.6,
           }}
         >
           {model.hotspots.length === 0
-            ? '💡 このモデルにはまだ解説ポイントが設定されていません。指でぐるぐる回したり、ピンチで拡大／縮小できます。'
-            : '💡 3D モデルの気になる部分をタップすると、右側の AI チャットで詳しく教えてくれるよ！'}
+            ? 'このモデルにはまだ解説ポイントが設定されていません。指でぐるぐる回したり、ピンチで拡大／縮小できます。'
+            : '3D モデルの気になる部分をタップすると、右側の AI チャットで詳しく教えてくれるよ！'}
         </p>
       </div>
 

@@ -76,37 +76,37 @@ export default function AiEchoList({ items }: { items: AiEchoListItem[] }) {
         return (
           <li
             key={it.id}
-            className="rounded-2xl overflow-hidden"
+            className="overflow-hidden"
             style={{
-              background: 'rgba(255,255,255,0.95)',
-              border:     '1.5px solid #E8CFA8',
-              boxShadow:  'var(--shadow-warm-sm)',
+              background:   'rgba(255,255,255,0.95)',
+              border:       '1px solid var(--line)',
+              borderRadius: '4px',
             }}
           >
             {/* ── ヘッダー（クリックで展開） ── */}
             <button
               type="button"
               onClick={() => setExpandedId(isExpanded ? null : it.id)}
-              className="w-full text-left px-4 py-3 flex items-center gap-3 transition-colors hover:bg-[#FFF7EB]"
+              className="w-full text-left px-4 py-3 flex items-center gap-3 transition-colors hover:bg-[var(--washi-light)]"
             >
               <span
-                className="rounded-full px-2 py-0.5 text-xs font-bold shrink-0"
-                style={{ background: meta.color, color: '#fff' }}
+                className="px-2 py-0.5 text-xs font-bold shrink-0"
+                style={{ background: meta.color, color: '#fff', borderRadius: '4px' }}
                 title={meta.label}
               >
                 {meta.emoji} L{it.level}
               </span>
               <div className="flex-1 min-w-0">
-                <p className="text-sm font-bold truncate" style={{ color: 'var(--color-brown)' }}>
+                <p className="text-sm font-mincho truncate" style={{ fontWeight: 500, color: 'var(--sumi)' }}>
                   {it.lessonTitle}
                 </p>
-                <p className="text-[11px] truncate" style={{ color: 'var(--color-brown-light)' }}>
+                <p className="text-[11px] truncate" style={{ color: 'var(--sumi-light)' }}>
                   {formatDate(it.createdAt)} ・ {it.lessonKey}
                 </p>
               </div>
               <span
                 className="shrink-0 text-sm"
-                style={{ color: 'var(--color-orange)' }}
+                style={{ color: 'var(--shu)' }}
                 aria-hidden
               >
                 {isExpanded ? '▲' : '▼'}
@@ -115,18 +115,19 @@ export default function AiEchoList({ items }: { items: AiEchoListItem[] }) {
 
             {/* ── 展開時のコンテンツ ── */}
             {isExpanded && (
-              <div className="px-4 pb-4 flex flex-col gap-3" style={{ borderTop: '1px solid #F0E5D0' }}>
+              <div className="px-4 pb-4 flex flex-col gap-3" style={{ borderTop: '1px solid var(--line)' }}>
                 {/* ユーザー入力 */}
                 <div className="pt-3">
-                  <p className="text-[11px] font-bold mb-1" style={{ color: 'var(--color-brown-light)' }}>
-                    📝 自分の英文
+                  <p className="text-[11px] font-bold mb-1" style={{ color: 'var(--sumi-light)' }}>
+                    自分の英文
                   </p>
                   <p
-                    className="text-sm leading-relaxed rounded-xl px-3 py-2"
+                    className="text-sm leading-relaxed px-3 py-2"
                     style={{
-                      background: '#FDF6ED',
-                      color:      'var(--color-brown)',
-                      whiteSpace: 'pre-wrap',
+                      background:   'var(--washi-light)',
+                      borderRadius: '4px',
+                      color:        'var(--sumi)',
+                      whiteSpace:   'pre-wrap',
                     }}
                   >
                     {it.userInput}
@@ -135,16 +136,17 @@ export default function AiEchoList({ items }: { items: AiEchoListItem[] }) {
 
                 {/* AI フィードバック */}
                 <div>
-                  <p className="text-[11px] font-bold mb-1" style={{ color: 'var(--color-brown-light)' }}>
-                    🤖 AI Echo からのフィードバック
+                  <p className="text-[11px] font-bold mb-1" style={{ color: 'var(--sumi-light)' }}>
+                    AI Echo からのフィードバック
                   </p>
                   <p
-                    className="text-sm leading-relaxed rounded-xl px-3 py-2"
+                    className="text-sm leading-relaxed px-3 py-2"
                     style={{
-                      background: 'linear-gradient(135deg, #FFF7EB, #FDF6ED)',
-                      border:     '1px solid #E8CFA8',
-                      color:      'var(--color-brown)',
-                      whiteSpace: 'pre-wrap',
+                      background:   'var(--washi-deep)',
+                      border:       '1px solid var(--line)',
+                      borderRadius: '4px',
+                      color:        'var(--sumi)',
+                      whiteSpace:   'pre-wrap',
                     }}
                   >
                     {it.aiFeedback}
@@ -155,13 +157,14 @@ export default function AiEchoList({ items }: { items: AiEchoListItem[] }) {
                 <div className="flex items-center justify-between gap-2 flex-wrap mt-1">
                   <Link
                     href={`/tools/voaenglish/${it.lessonKey}`}
-                    className="text-xs font-semibold rounded-full px-3 py-1.5 transition-opacity hover:opacity-80"
+                    className="text-xs font-semibold px-3 py-1.5 transition-opacity hover:opacity-80"
                     style={{
-                      background: '#FF8C42',
-                      color:      '#fff',
+                      background:   'var(--shu)',
+                      color:        '#fff',
+                      borderRadius: '4px',
                     }}
                   >
-                    📚 レッスンへ戻る →
+                    レッスンへ戻る →
                   </Link>
 
                   {!isConfirming ? (
@@ -169,37 +172,38 @@ export default function AiEchoList({ items }: { items: AiEchoListItem[] }) {
                       type="button"
                       onClick={() => setConfirmId(it.id)}
                       disabled={isDeleting}
-                      className="text-xs font-semibold rounded-full px-3 py-1.5 transition-opacity hover:opacity-80 disabled:opacity-50"
+                      className="text-xs font-semibold px-3 py-1.5 transition-opacity hover:opacity-80 disabled:opacity-50"
                       style={{
-                        background: '#fff',
-                        color:      '#c0392b',
-                        border:     '1px solid #ffb3b3',
+                        background:   '#fff',
+                        color:        '#c0392b',
+                        border:       '1px solid #ffb3b3',
+                        borderRadius: '4px',
                       }}
                     >
-                      🗑 削除
+                      削除
                     </button>
                   ) : (
                     <div className="flex items-center gap-1.5 flex-wrap">
-                      <span className="text-xs" style={{ color: 'var(--color-brown-light)' }}>
+                      <span className="text-xs" style={{ color: 'var(--sumi-light)' }}>
                         本当に削除しますか？
                       </span>
                       <button
                         type="button"
                         onClick={() => handleDelete(it.id)}
                         disabled={isDeleting}
-                        className="text-xs font-bold rounded-full px-3 py-1.5 disabled:opacity-50"
-                        style={{ background: '#e74c3c', color: '#fff' }}
+                        className="text-xs font-bold px-3 py-1.5 disabled:opacity-50"
+                        style={{ background: '#e74c3c', color: '#fff', borderRadius: '4px' }}
                       >
-                        {isDeleting ? '⏳ 削除中…' : '✓ 削除する'}
+                        {isDeleting ? '削除中…' : '削除する'}
                       </button>
                       <button
                         type="button"
                         onClick={() => setConfirmId(null)}
                         disabled={isDeleting}
-                        className="text-xs font-semibold rounded-full px-3 py-1.5 disabled:opacity-50"
-                        style={{ background: '#fff', color: 'var(--color-brown)', border: '1px solid #ddd6cc' }}
+                        className="text-xs font-semibold px-3 py-1.5 disabled:opacity-50"
+                        style={{ background: '#fff', color: 'var(--sumi)', border: '1px solid var(--line)', borderRadius: '4px' }}
                       >
-                        ✕ やめる
+                        やめる
                       </button>
                     </div>
                   )}

@@ -37,19 +37,19 @@ export default async function AiEchoHistoryPage() {
   }));
 
   return (
-    <main style={{ background: 'var(--color-cream)', minHeight: '100vh' }}>
+    <main style={{ background: 'var(--washi)', minHeight: '100vh' }}>
       {/* ── ヘッダー ──────────────────────────── */}
       <section
         className="px-6 py-8 sm:py-10"
-        style={{ background: 'linear-gradient(160deg, #FFF7EB 0%, var(--color-cream) 100%)' }}
+        style={{ background: 'var(--washi-deep)', borderBottom: '1px solid var(--line)' }}
       >
         <div className="mx-auto max-w-5xl">
           {/* パンくず */}
           <div
             className="flex items-center gap-2 text-sm mb-5 leading-none"
-            style={{ color: 'var(--color-brown-light)' }}
+            style={{ color: 'var(--sumi-light)' }}
           >
-            <Link href="/mypage" className="leading-none" style={{ color: 'var(--color-orange)' }}>
+            <Link href="/mypage" className="leading-none" style={{ color: 'var(--shu)' }}>
               マイページ
             </Link>
             <span aria-hidden="true" className="leading-none translate-y-[-1px]">›</span>
@@ -59,21 +59,21 @@ export default async function AiEchoHistoryPage() {
           <div className="flex flex-wrap items-center justify-between gap-4">
             <div>
               <h1
-                className="font-display font-bold"
-                style={{ fontSize: 'clamp(22px, 3vw + 12px, 32px)', color: 'var(--color-brown)' }}
+                className="font-mincho"
+                style={{ fontSize: 'clamp(22px, 3vw + 12px, 32px)', fontWeight: 500, color: 'var(--sumi)' }}
               >
-                🔊 AI Echo 履歴
+                AI Echo 履歴
               </h1>
-              <p className="mt-1 text-sm" style={{ color: 'var(--color-brown-light)' }}>
+              <p className="mt-1 text-sm" style={{ color: 'var(--sumi-light)' }}>
                 自分の言葉で書いた英文と AI からのフィードバック ({items.length} 件)
               </p>
             </div>
             <Link
               href="/tools/voaenglish"
-              className="inline-flex items-center rounded-full px-5 text-sm font-semibold"
-              style={{ minHeight: 44, background: '#FF8C42', color: 'white', boxShadow: '0 2px 8px rgba(255,140,66,0.35)' }}
+              className="inline-flex items-center px-5 text-sm font-semibold"
+              style={{ minHeight: 44, background: 'var(--shu)', color: 'white', borderRadius: '4px' }}
             >
-              📚 レッスン一覧へ
+              レッスン一覧へ
             </Link>
           </div>
         </div>
@@ -84,22 +84,21 @@ export default async function AiEchoHistoryPage() {
         <div className="mx-auto max-w-5xl">
           {items.length === 0 ? (
             <div
-              className="rounded-2xl p-8 text-center"
-              style={{ background: 'rgba(255,255,255,0.92)', boxShadow: 'var(--shadow-warm-sm)' }}
+              className="p-8 text-center"
+              style={{ background: 'rgba(255,255,255,0.92)', border: '1px solid var(--line)', borderRadius: '4px' }}
             >
-              <span className="text-4xl block mb-2">📭</span>
-              <p className="text-base font-bold mb-1" style={{ color: 'var(--color-brown)' }}>
+              <p className="text-base font-mincho mb-1" style={{ fontWeight: 500, color: 'var(--sumi)' }}>
                 まだ AI Echo の履歴がありません
               </p>
-              <p className="text-sm leading-relaxed" style={{ color: 'var(--color-brown-light)' }}>
+              <p className="text-sm leading-relaxed" style={{ color: 'var(--sumi-light)' }}>
                 レッスンページの AI Echo パネルで英文を書いて評価してもらうと、ここに表示されます。
               </p>
               <Link
                 href="/tools/voaenglish"
-                className="inline-block mt-4 rounded-full px-5 py-2 text-sm font-bold"
-                style={{ background: '#FF8C42', color: '#fff' }}
+                className="inline-block mt-4 px-5 py-2 text-sm font-mincho"
+                style={{ background: 'var(--shu)', color: '#fff', fontWeight: 500, borderRadius: '4px' }}
               >
-                📚 レッスン一覧を見る
+                レッスン一覧を見る
               </Link>
             </div>
           ) : (

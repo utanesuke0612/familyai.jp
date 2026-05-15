@@ -195,16 +195,17 @@ export function ModelViewer({
           width:  '100%',
           height: heightCss ?? '60vh',
           minHeight: 360,
-          borderRadius: 24,
-          background: 'radial-gradient(ellipse at center, var(--color-peach-light) 0%, var(--color-cream) 80%)',
+          borderRadius: 4,
+          border: '1px solid var(--line)',
+          background: 'var(--washi-deep)',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          color: 'var(--color-brown-muted)',
+          color: 'var(--sumi-light)',
           fontSize: 14,
         }}
       >
-        🌀 読み込み中…
+        読み込み中…
       </div>
     );
   }
@@ -217,10 +218,10 @@ export function ModelViewer({
         width: '100%',
         height: heightCss ?? '60vh',
         minHeight: 360,
-        borderRadius: 24,
+        borderRadius: 4,
         overflow: 'hidden',
-        background: 'radial-gradient(ellipse at center, var(--color-peach-light) 0%, var(--color-cream) 80%)',
-        boxShadow: 'inset 0 0 0 1px rgba(0,0,0,0.04)',
+        background: 'var(--washi-deep)',
+        border: '1px solid var(--line)',
         cursor: hotspots.length > 0 && !loadError ? 'pointer' : 'default',
       }}
     >
@@ -237,21 +238,21 @@ export function ModelViewer({
             justifyContent: 'center',
             gap: 12,
             padding: 16,
-            background: 'rgba(253, 246, 237, 0.94)',
+            background: 'rgba(247, 243, 233, 0.96)',
             zIndex: 5,
             textAlign: 'center',
           }}
         >
-          <span style={{ fontSize: 48 }} aria-hidden>⚠️</span>
           <p style={{
-            margin: 0, fontSize: 14, fontWeight: 600,
-            color: 'var(--color-brown, #6B4F3A)',
+            margin: 0, fontSize: 15, fontWeight: 500,
+            fontFamily: "var(--font-display), 'Shippori Mincho', serif",
+            color: 'var(--sumi)',
           }}>
             3D モデルの読み込みに失敗しました
           </p>
           <p style={{
             margin: 0, fontSize: 12, lineHeight: 1.6,
-            color: 'var(--color-brown-muted, #A48B72)',
+            color: 'var(--sumi-light)',
             maxWidth: 360,
           }}>
             通信状況やファイル URL を確認してください。<br />
@@ -264,16 +265,16 @@ export function ModelViewer({
               marginTop: 8,
               padding: '10px 18px',
               border: 'none',
-              borderRadius: 999,
-              background: 'var(--color-orange, #F39C5F)',
+              borderRadius: 4,
+              background: 'var(--shu)',
               color: '#fff',
-              fontWeight: 700,
+              fontWeight: 500,
               fontSize: 13,
               cursor: 'pointer',
               minHeight: 44,
             }}
           >
-            🔁 もう一度読み込む
+            もう一度読み込む
           </button>
         </div>
       )}
@@ -309,20 +310,19 @@ export function ModelViewer({
               position: 'absolute',
               bottom: 16,
               right: 16,
-              background: 'var(--color-orange, #F39C5F)',
+              background: 'var(--shu)',
               color: '#fff',
-              border: 'none',
-              borderRadius: 999,
+              border: '1px solid var(--line)',
+              borderRadius: 4,
               padding: '10px 16px',
-              fontWeight: 700,
+              fontWeight: 500,
               fontSize: 13,
-              boxShadow: '0 4px 12px rgba(0,0,0,0.2)',
               cursor: 'pointer',
               minHeight: 44,
             }}
             aria-label="AR モードを起動"
           >
-            🌐 AR で見る
+            AR で見る
           </button>
         )}
       </model-viewer>

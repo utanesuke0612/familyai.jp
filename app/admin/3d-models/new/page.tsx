@@ -10,7 +10,7 @@ export default function NewModelPage() {
     <>
       <div style={{ marginBottom: '1.5rem' }}>
         <h1 style={{ fontSize: '22px', fontWeight: 700, color: '#111827', margin: 0 }}>
-          ➕ 新規 3D モデル
+          新規 3D モデル
         </h1>
         <p style={{ fontSize: '14px', color: '#6B7280', marginTop: '4px' }}>
           GLB ファイルとメタ情報を登録します。アップロード後、プレビューで確認できます。

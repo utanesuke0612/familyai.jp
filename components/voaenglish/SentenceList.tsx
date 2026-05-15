@@ -21,6 +21,7 @@
  */
 
 import { useEffect, useRef, useState } from 'react';
+import { Bookmark, BookmarkCheck, ChevronDown, ChevronUp } from 'lucide-react';
 import type { Sentence } from '@/shared/types';
 import { AnnotatedSentence } from './AnnotatedSentence';
 import {
@@ -100,19 +101,23 @@ export function SentenceList({
         <button
           type="button"
           onClick={() => setOpen((v) => !v)}
-          className="rounded-full px-3 py-1.5 text-xs font-semibold transition-opacity hover:opacity-90"
+          className="inline-flex items-center gap-1 px-3 py-1.5 text-xs font-semibold transition-opacity hover:opacity-90"
           style={{
-            background: '#fff',
-            color:      'var(--color-brown)',
-            border:     '1px solid #cfe1f0',
-            minHeight:  32,
+            background:   '#fff',
+            color:        'var(--sumi)',
+            border:       '1px solid var(--line)',
+            borderRadius: '4px',
+            minHeight:    32,
           }}
           aria-expanded={open}
         >
-          📜 スクリプトを{open ? '隠す ▲' : '表示する ▼'}
+          スクリプトを{open ? '隠す' : '表示する'}
+          {open
+            ? <ChevronUp size={14} aria-hidden />
+            : <ChevronDown size={14} aria-hidden />}
         </button>
-        <span className="text-xs" style={{ color: 'var(--color-brown-light)' }}>
-          ⚠️ 先に答えを見ないようにしよう！
+        <span className="text-xs" style={{ color: 'var(--sumi-light)' }}>
+          先に答えを見ないようにしよう
         </span>
       </div>
 
@@ -120,11 +125,12 @@ export function SentenceList({
       {open && (
         <div
           ref={containerRef}
-          className="rounded-xl overflow-y-auto scrollbar-hide relative"
+          className="overflow-y-auto scrollbar-hide relative"
           style={{
-            background: '#fff',
-            border:     '1px solid #cfe1f0',
-            maxHeight:  300,
+            background:   '#fff',
+            border:       '1px solid var(--line)',
+            borderRadius: '4px',
+            maxHeight:    300,
             scrollBehavior: 'smooth',
           }}
         >
@@ -194,31 +200,31 @@ function SentenceRow({
   };
 
   return (
-    <li className="flex items-stretch" style={{ background: isCurrent ? '#E6F2FB' : 'transparent' }}>
+    <li className="flex items-stretch" style={{ background: isCurrent ? 'var(--washi-deep)' : 'transparent' }}>
       <button
         ref={registerRef}
         type="button"
         onClick={() => onJump(idx)}
-        className="flex-1 min-w-0 text-left px-3 py-2 transition-colors hover:bg-[var(--color-cream)]"
+        className="flex-1 min-w-0 text-left px-3 py-2 transition-colors hover:bg-[var(--washi-light)]"
         style={{
-          borderLeft: isCurrent ? '3px solid #2D78C8' : '3px solid transparent',
-          color:      'var(--color-brown)',
+          borderLeft: isCurrent ? '3px solid var(--shu)' : '3px solid transparent',
+          color:      'var(--sumi)',
         }}
         aria-current={isCurrent ? 'true' : undefined}
       >
         <div className="flex items-baseline gap-2 text-xs">
-          <span style={{ color: 'var(--color-brown-light)', minWidth: '3em' }}>
+          <span style={{ color: 'var(--sumi-light)', minWidth: '3em' }}>
             [{formatTime(sentence.start)}]
           </span>
           {speaker && (
-            <span className="font-bold" style={{ color: '#2D78C8', minWidth: '4em' }}>
+            <span className="font-mincho" style={{ fontWeight: 500, color: 'var(--shu)', minWidth: '4em' }}>
               {speaker}
             </span>
           )}
         </div>
         <p
           className="text-sm leading-relaxed mt-0.5"
-          style={{ fontWeight: isCurrent ? 700 : 400, color: 'var(--color-brown)' }}
+          style={{ fontWeight: isCurrent ? 700 : 400, color: 'var(--sumi)' }}
         >
           <AnnotatedSentence text={text} />
         </p>
@@ -233,16 +239,17 @@ function SentenceRow({
           style={{
             width:    44,
             minWidth: 44,
-            color:    bookmarked ? 'var(--color-orange)' : 'var(--color-brown-light)',
-            fontSize: 18,
+            color:    bookmarked ? 'var(--shu)' : 'var(--sumi-light)',
             background: 'transparent',
             border:   'none',
           }}
           aria-label={bookmarked ? 'ブックマークを解除' : 'ブックマークに保存'}
           aria-pressed={bookmarked}
-          title={bookmarked ? 'ブックマーク済み（解除する）' : '🔖 マイブックマークに保存'}
+          title={bookmarked ? 'ブックマーク済み（解除する）' : 'マイブックマークに保存'}
         >
-          {bookmarked ? '🔖' : '🏷️'}
+          {bookmarked
+            ? <BookmarkCheck size={18} aria-hidden />
+            : <Bookmark size={18} aria-hidden />}
         </button>
       )}
     </li>

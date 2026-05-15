@@ -27,7 +27,6 @@ type UploadKind = 'glb' | 'usdz' | 'thumbnail';
 
 interface KindConfig {
   label:    string;
-  emoji:    string;
   accept:   string;
   ext:      string;
   maxBytes: number;
@@ -43,7 +42,6 @@ interface KindConfig {
 const KIND_CONFIG: Record<UploadKind, KindConfig> = {
   glb: {
     label:    'GLB（3D モデル本体）',
-    emoji:    '📦',
     accept:   '.glb,model/gltf-binary',
     ext:      'glb',
     maxBytes: 30 * 1024 * 1024,
@@ -51,7 +49,6 @@ const KIND_CONFIG: Record<UploadKind, KindConfig> = {
   },
   usdz: {
     label:    'USDZ（iOS AR・任意）',
-    emoji:    '🍎',
     accept:   '.usdz,model/vnd.usdz+zip',
     ext:      'usdz',
     maxBytes: 30 * 1024 * 1024,
@@ -59,7 +56,6 @@ const KIND_CONFIG: Record<UploadKind, KindConfig> = {
   },
   thumbnail: {
     label:    'サムネ画像（任意）',
-    emoji:    '🖼️',
     accept:   '.webp,.png,.jpg,.jpeg,image/webp,image/png,image/jpeg',
     ext:      'auto',
     maxBytes:  2 * 1024 * 1024,
@@ -188,7 +184,7 @@ export function BlobUploadInput({
   return (
     <div>
       <label style={{ display: 'block', fontSize: 13, fontWeight: 600, color: '#374151', marginBottom: 6 }}>
-        {cfg.emoji} {labelOverride ?? cfg.label}
+        {labelOverride ?? cfg.label}
         <span style={{ marginLeft: 6, fontSize: 11, color: '#9CA3AF', fontWeight: 400 }}>
           （最大 {Math.round(cfg.maxBytes / 1024 / 1024)}MB）
         </span>
@@ -198,7 +194,7 @@ export function BlobUploadInput({
       {value && progress === null && (
         <div style={currentUrlStyle}>
           <span style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', flex: 1 }}>
-            ✅ {value
+            {value
               .replace(/^.*\/3d-models\//, '3d-models/')
               .replace(/^.*\/tutor3d\//, 'tutor3d/')
               .replace(/^\/api\/3d-models\/assets\//, '')}
@@ -256,7 +252,7 @@ export function BlobUploadInput({
 
       {error && (
         <p role="alert" style={{ fontSize: 12, color: '#DC2626', marginTop: 6 }}>
-          ⚠️ {error}
+          {error}
         </p>
       )}
     </div>

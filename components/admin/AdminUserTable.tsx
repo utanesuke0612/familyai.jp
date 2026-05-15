@@ -271,7 +271,7 @@ export function AdminUserTable({ initialUsers, initialTotal, initialSummary }: P
                   </td>
                   <td style={cell}>
                     <span style={planBadge(u.plan)}>
-                      {u.plan === 'premium' ? '⭐ 有料' : '無料'}
+                      {u.plan === 'premium' ? '有料' : '無料'}
                     </span>
                   </td>
                   <td style={cell}>

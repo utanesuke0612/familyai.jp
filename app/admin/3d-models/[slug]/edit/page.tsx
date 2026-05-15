@@ -21,7 +21,7 @@ export default async function EditModelPage({ params }: Ctx) {
       <div style={{ marginBottom: '1.5rem', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', gap: 16, flexWrap: 'wrap' }}>
         <div>
           <h1 style={{ fontSize: '22px', fontWeight: 700, color: '#111827', margin: 0 }}>
-            ✏️ {model.title} を編集
+            {model.title} を編集
           </h1>
           <p style={{ fontSize: '14px', color: '#6B7280', marginTop: '4px' }}>
             slug: <code style={{ fontFamily: 'monospace' }}>{model.slug}</code>
@@ -41,7 +41,7 @@ export default async function EditModelPage({ params }: Ctx) {
             textDecoration: 'none',
           }}
         >
-          👁 プレビュー
+          プレビュー
         </Link>
       </div>
 

@@ -63,30 +63,32 @@ export function CompletionDialog({
       <div
         ref={dialogRef}
         tabIndex={-1}
-        className="w-full max-w-md rounded-3xl p-6 sm:p-7 outline-none"
+        className="w-full max-w-md p-6 sm:p-7 outline-none"
         style={{
-          background: 'white',
-          boxShadow:  '0 20px 60px rgba(0,0,0,0.25)',
-          maxHeight:  '90vh',
-          overflowY:  'auto',
+          background:   'white',
+          border:       '1px solid var(--line)',
+          borderRadius: '4px',
+          boxShadow:    '0 20px 60px rgba(0,0,0,0.25)',
+          maxHeight:    '90vh',
+          overflowY:    'auto',
         }}
       >
         {/* ヘッダー */}
         <div className="text-center mb-5">
-          <div className="text-5xl mb-3" aria-hidden="true">🎧</div>
           <h2
             id="completion-dialog-title"
-            className="font-display font-bold leading-tight"
+            className="font-mincho leading-tight"
             style={{
-              fontSize: 'clamp(20px, 2.5vw, 24px)',
-              color:    'var(--color-brown)',
+              fontSize:   'clamp(20px, 2.5vw, 24px)',
+              fontWeight: 500,
+              color:      'var(--sumi)',
             }}
           >
-            お疲れさまでした！
+            お疲れさまでした
           </h2>
           <p
             className="mt-2 text-sm"
-            style={{ color: 'var(--color-brown-light)' }}
+            style={{ color: 'var(--sumi-light)' }}
           >
             「{lessonTitle.length > 30 ? lessonTitle.slice(0, 30) + '…' : lessonTitle}」<br />
             の聴写、どうでしたか？
@@ -103,37 +105,40 @@ export function CompletionDialog({
         {/* 非ログイン時のログイン誘導（Q4=B） */}
         {!isLoggedIn && (
           <div
-            className="mt-5 rounded-xl p-3 text-center"
+            className="mt-5 p-3 text-center"
             style={{
-              background: 'var(--color-cream)',
-              border:     '1px solid var(--color-beige-dark)',
+              background:   'var(--washi-deep)',
+              border:       '1px solid var(--line)',
+              borderRadius: '4px',
             }}
           >
-            <p className="text-xs leading-relaxed" style={{ color: 'var(--color-brown-light)' }}>
-              💡 <strong>ログイン</strong>すると進捗をクラウドに保存できて、
+            <p className="text-xs leading-relaxed" style={{ color: 'var(--sumi-light)' }}>
+              <strong>ログイン</strong>すると進捗をクラウドに保存できて、
               <br />
               どのデバイスからでも続きから学べます。
             </p>
             <div className="mt-2 flex gap-2 justify-center flex-wrap">
               <Link
                 href="/auth/signin"
-                className="inline-flex items-center rounded-full px-4 text-xs font-semibold"
+                className="inline-flex items-center px-4 text-xs font-semibold"
                 style={{
-                  minHeight:  '36px',
-                  background: 'var(--color-orange)',
-                  color:      'white',
+                  minHeight:    '36px',
+                  borderRadius: '4px',
+                  background:   'var(--shu)',
+                  color:        'white',
                 }}
               >
                 ログイン
               </Link>
               <Link
                 href="/auth/register"
-                className="inline-flex items-center rounded-full px-4 text-xs font-semibold"
+                className="inline-flex items-center px-4 text-xs font-semibold"
                 style={{
-                  minHeight:  '36px',
-                  background: 'white',
-                  color:      'var(--color-brown)',
-                  border:     '1px solid var(--color-beige-dark)',
+                  minHeight:    '36px',
+                  borderRadius: '4px',
+                  background:   'white',
+                  color:        'var(--sumi)',
+                  border:       '1px solid var(--line)',
                 }}
               >
                 無料登録
@@ -148,7 +153,7 @@ export function CompletionDialog({
             type="button"
             onClick={onClose}
             className="block mx-auto mt-5 text-xs underline"
-            style={{ color: 'var(--color-brown-light)' }}
+            style={{ color: 'var(--sumi-light)' }}
           >
             あとで答える（閉じる）
           </button>

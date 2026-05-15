@@ -20,7 +20,7 @@ export default async function Admin3dModelsPage() {
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: '1.5rem', gap: 16, flexWrap: 'wrap' }}>
         <div>
           <h1 style={{ fontSize: '22px', fontWeight: 700, color: '#111827', margin: 0 }}>
-            🪐 3D 図鑑 — モデル管理
+            3D 図鑑 — モデル管理
           </h1>
           <p style={{ fontSize: '14px', color: '#6B7280', marginTop: '4px' }}>
             全 {total.toLocaleString('ja-JP')} 件
@@ -40,7 +40,7 @@ export default async function Admin3dModelsPage() {
             whiteSpace: 'nowrap',
           }}
         >
-          ➕ 新規モデル
+          新規モデル
         </Link>
       </div>
 

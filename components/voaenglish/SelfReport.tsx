@@ -70,19 +70,20 @@ export function SelfReport({ onSelect, isSubmitting = false, layout = 'horizonta
           type="button"
           onClick={() => onSelect(b.action)}
           disabled={isSubmitting}
-          className="rounded-2xl px-3 py-4 transition-[transform,opacity] duration-150 hover:-translate-y-0.5 disabled:opacity-50 disabled:cursor-not-allowed"
+          className="px-3 py-4 transition-[transform,opacity] duration-150 hover:-translate-y-0.5 disabled:opacity-50 disabled:cursor-not-allowed"
           style={{
-            background: b.bg,
-            color:      b.fg,
-            border:     `1px solid ${b.border}`,
-            minHeight:  '88px',
+            background:   b.bg,
+            color:        b.fg,
+            border:       `1px solid ${b.border}`,
+            borderRadius: '4px',
+            minHeight:    '88px',
           }}
           aria-label={`${b.emoji} ${b.label} — ${b.hint}`}
         >
           <div className="text-3xl leading-none mb-1.5" aria-hidden="true">
             {b.emoji}
           </div>
-          <div className="font-bold text-sm">{b.label}</div>
+          <div className="font-mincho text-sm" style={{ fontWeight: 500 }}>{b.label}</div>
           <div className="text-xs mt-1 opacity-80">{b.hint}</div>
         </button>
       ))}

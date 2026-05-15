@@ -32,10 +32,11 @@ export function AdminNav({ email }: AdminNavProps) {
       <div style={{ display: 'flex', alignItems: 'center', gap: '2rem' }}>
         <Link
           href="/admin"
+          className="font-mincho"
           style={{
-            fontWeight:  700,
+            fontWeight:  500,
             fontSize:    '16px',
-            color:       'var(--color-orange)',
+            color:       'var(--shu)',
             textDecoration: 'none',
             letterSpacing: '-0.3px',
           }}
@@ -45,22 +46,22 @@ export function AdminNav({ email }: AdminNavProps) {
 
         <nav style={{ display: 'flex', gap: '1.25rem' }}>
           <Link href="/admin" style={navLinkStyle}>
-            📋 記事一覧
+            記事一覧
           </Link>
           <Link href="/admin/articles/new" style={navLinkStyle}>
-            ✏️ 新規作成
+            新規作成
           </Link>
           <Link href="/admin/users" style={navLinkStyle}>
-            👥 会員管理
+            会員管理
           </Link>
           <Link href="/admin/ai-config" style={navLinkStyle}>
-            🛠️ AI設定
+            AI設定
           </Link>
           <Link href="/admin/3d-models" style={navLinkStyle}>
-            🪐 3D図鑑
+            3D図鑑
           </Link>
           <Link href="/" target="_blank" style={navLinkStyle}>
-            🌐 サイトを見る
+            サイトを見る
           </Link>
         </nav>
       </div>

@@ -115,10 +115,11 @@ export const SentencePlayer = forwardRef<SentencePlayerHandle, SentencePlayerPro
 
   return (
     <div
-      className="flex flex-col gap-3 rounded-2xl p-4"
+      className="flex flex-col gap-3 p-4"
       style={{
-        background: 'var(--color-water-light, #E6F2FB)',
-        border:     '1px solid #cfe1f0',
+        background:   'var(--washi-deep)',
+        border:       '1px solid var(--line)',
+        borderRadius: '4px',
       }}
     >
       {/* ── 操作ボタン群 ───────────────────────────────────────────
@@ -132,13 +133,14 @@ export const SentencePlayer = forwardRef<SentencePlayerHandle, SentencePlayerPro
             type="button"
             onClick={() => void actions.toggle()}
             disabled={!state.isReady}
-            className="rounded-full font-bold transition-opacity hover:opacity-90 disabled:opacity-50"
+            className="rounded-full font-mincho transition-opacity hover:opacity-90 disabled:opacity-50"
             style={{
               minWidth:   52,
               minHeight:  52,
-              background: 'var(--color-orange)',
+              background: 'var(--shu)',
               color:      'white',
               fontSize:   22,
+              fontWeight: 500,
             }}
             aria-label={state.isPlaying ? '一時停止' : '再生'}
           >
@@ -154,8 +156,8 @@ export const SentencePlayer = forwardRef<SentencePlayerHandle, SentencePlayerPro
               minWidth:   44,
               minHeight:  44,
               background: '#fff',
-              color:      'var(--color-brown)',
-              border:     '1px solid #cfe1f0',
+              color:      'var(--sumi)',
+              border:     '1px solid var(--line)',
               fontSize:   16,
             }}
             aria-label="前のセンテンス"
@@ -173,8 +175,8 @@ export const SentencePlayer = forwardRef<SentencePlayerHandle, SentencePlayerPro
               minWidth:   44,
               minHeight:  44,
               background: '#fff',
-              color:      'var(--color-brown)',
-              border:     '1px solid #cfe1f0',
+              color:      'var(--sumi)',
+              border:     '1px solid var(--line)',
               fontSize:   16,
             }}
             aria-label="次のセンテンス"
@@ -189,33 +191,35 @@ export const SentencePlayer = forwardRef<SentencePlayerHandle, SentencePlayerPro
           <button
             type="button"
             onClick={actions.toggleRepeat}
-            className="rounded-full px-3 text-xs font-semibold transition-opacity hover:opacity-90"
+            className="px-3 text-xs font-semibold transition-opacity hover:opacity-90"
             style={{
-              minHeight:  40,
-              background: state.repeat ? '#2D78C8' : '#fff',
-              color:      state.repeat ? 'white' : 'var(--color-brown)',
-              border:     '1px solid #cfe1f0',
+              minHeight:    40,
+              borderRadius: '4px',
+              background:   state.repeat ? 'var(--shu)' : '#fff',
+              color:        state.repeat ? 'white' : 'var(--sumi)',
+              border:       '1px solid var(--line)',
             }}
             aria-pressed={state.repeat}
             title={`現在センテンスをリピート（Rキー）— 現在: ${state.repeat ? 'ON' : 'OFF'}`}
           >
-            🔁 リピート
+            リピート
           </button>
 
           <button
             type="button"
             onClick={actions.toggleAutoStop}
-            className="rounded-full px-3 text-xs font-semibold transition-opacity hover:opacity-90"
+            className="px-3 text-xs font-semibold transition-opacity hover:opacity-90"
             style={{
-              minHeight:  40,
-              background: state.autoStop ? '#2D78C8' : '#fff',
-              color:      state.autoStop ? 'white' : 'var(--color-brown)',
-              border:     '1px solid #cfe1f0',
+              minHeight:    40,
+              borderRadius: '4px',
+              background:   state.autoStop ? 'var(--shu)' : '#fff',
+              color:        state.autoStop ? 'white' : 'var(--sumi)',
+              border:       '1px solid var(--line)',
             }}
             aria-pressed={state.autoStop}
             title={`センテンス末尾で自動停止（Sキー）— 現在: ${state.autoStop ? 'ON' : 'OFF'}`}
           >
-            ⏹ 自動停止
+            自動停止
           </button>
         </div>
       </div>
@@ -234,11 +238,11 @@ export const SentencePlayer = forwardRef<SentencePlayerHandle, SentencePlayerPro
           className="w-full"
           aria-label="再生位置"
           style={{
-            accentColor: '#2D78C8',
+            accentColor: 'var(--shu)',
             height:      6,
           }}
         />
-        <div className="flex justify-between items-center text-xs flex-wrap gap-y-1" style={{ color: 'var(--color-brown-light)' }}>
+        <div className="flex justify-between items-center text-xs flex-wrap gap-y-1" style={{ color: 'var(--sumi-light)' }}>
           <span>{formatTime(state.currentTime)} / {formatTime(state.duration)}</span>
 
           {/* 速度ボタン群 */}
@@ -250,12 +254,13 @@ export const SentencePlayer = forwardRef<SentencePlayerHandle, SentencePlayerPro
                   key={rate}
                   type="button"
                   onClick={() => actions.setPlaybackRate(rate)}
-                  className="rounded-full px-2.5 py-0.5 text-xs font-semibold transition-opacity hover:opacity-90"
+                  className="px-2.5 py-0.5 text-xs font-semibold transition-opacity hover:opacity-90"
                   style={{
-                    background: selected ? '#2D78C8' : '#fff',
-                    color:      selected ? 'white' : 'var(--color-brown)',
-                    border:     '1px solid #cfe1f0',
-                    minHeight:  28,
+                    background:   selected ? 'var(--shu)' : '#fff',
+                    color:        selected ? 'white' : 'var(--sumi)',
+                    border:       '1px solid var(--line)',
+                    borderRadius: '4px',
+                    minHeight:    28,
                   }}
                   aria-pressed={selected}
                 >
@@ -270,19 +275,20 @@ export const SentencePlayer = forwardRef<SentencePlayerHandle, SentencePlayerPro
       {/* ── エラー / ローディング表示 ──────────────────────── */}
       {state.error && (
         <div
-          className="rounded-xl px-3 py-2 text-xs"
+          className="px-3 py-2 text-xs"
           style={{
-            background: '#FFF0F0',
-            color:      '#E05050',
-            border:     '1px solid #ffcdd2',
+            background:   '#FFF0F0',
+            color:        '#E05050',
+            border:       '1px solid #ffcdd2',
+            borderRadius: '4px',
           }}
         >
-          ⚠️ {state.error}
+          {state.error}
         </div>
       )}
       {!state.isReady && !state.error && (
-        <div className="text-xs" style={{ color: 'var(--color-brown-light)' }}>
-          🔄 音声を読み込み中…
+        <div className="text-xs" style={{ color: 'var(--sumi-light)' }}>
+          音声を読み込み中…
         </div>
       )}
 

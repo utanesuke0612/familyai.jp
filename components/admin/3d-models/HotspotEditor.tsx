@@ -119,7 +119,7 @@ export function HotspotEditor({ glbUrl, hotspots, onChange }: HotspotEditorProps
     return (
       <div style={emptyBoxStyle}>
         <p style={{ fontSize: 13, color: '#6B7280', margin: 0 }}>
-          🚧 まず <strong>GLB ファイルをアップロード</strong>してください。<br />
+          まず <strong>GLB ファイルをアップロード</strong>してください。<br />
           アップロード後、ここで 3D 上をクリックして hotspot を追加できます。
         </p>
         {hotspots.length > 0 && (
@@ -136,7 +136,7 @@ export function HotspotEditor({ glbUrl, hotspots, onChange }: HotspotEditorProps
       {/* 3D ビューア（クリック採取エリア） */}
       <div style={viewerWrapStyle}>
         {!ready ? (
-          <div style={loadingStyle}>🌀 3D ビューア読み込み中…</div>
+          <div style={loadingStyle}>3D ビューア読み込み中…</div>
         ) : (
           <model-viewer
             ref={(el: HTMLElement | null) => { viewerRef.current = el; }}
@@ -177,7 +177,7 @@ export function HotspotEditor({ glbUrl, hotspots, onChange }: HotspotEditorProps
       </div>
 
       <p style={{ fontSize: 12, color: '#6B7280', margin: 0 }}>
-        💡 3D モデルの<strong>気になる場所をクリック</strong>すると、その位置に hotspot が追加されます。
+        3D モデルの<strong>気になる場所をクリック</strong>すると、その位置に hotspot が追加されます。
         マテリアル名が取れた場合は <strong>meshName</strong> に自動セットされ、公開ページでの命中精度が上がります。
       </p>
 
@@ -241,7 +241,7 @@ function HotspotListItem({ index, hotspot, active, onSelect, onChange, onRemove 
           aria-label={`${hotspot.partName} を削除`}
           title="削除"
         >
-          🗑
+          削除
         </button>
       </div>
 
@@ -286,13 +286,13 @@ const emptyBoxStyle: React.CSSProperties = {
 };
 const viewerWrapStyle: React.CSSProperties = {
   position: 'relative', width: '100%', height: 'min(50vh, 480px)',
-  minHeight: 320, borderRadius: 12, overflow: 'hidden',
-  background: 'radial-gradient(ellipse at center, #FFEBD8 0%, #FDF6ED 80%)',
-  boxShadow: 'inset 0 0 0 1px rgba(0,0,0,0.04)',
+  minHeight: 320, borderRadius: 4, overflow: 'hidden',
+  background: 'var(--washi-deep)',
+  border: '1px solid var(--line)',
 };
 const loadingStyle: React.CSSProperties = {
   display: 'flex', alignItems: 'center', justifyContent: 'center',
-  width: '100%', height: '100%', color: '#A48B72', fontSize: 14,
+  width: '100%', height: '100%', color: 'var(--sumi-light)', fontSize: 14,
 };
 const rowStyle: React.CSSProperties = {
   padding: 12, background: '#fff', border: '1px solid #E5E7EB',
@@ -304,7 +304,7 @@ const rowHeaderStyle: React.CSSProperties = {
 };
 const rowIndexStyle: React.CSSProperties = {
   width: 24, height: 24, borderRadius: '50%',
-  background: '#F39C5F', color: '#fff', fontSize: 12, fontWeight: 700,
+  background: 'var(--shu)', color: '#fff', fontSize: 12, fontWeight: 700,
   display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0,
 };
 const partNameInputStyle: React.CSSProperties = {
@@ -331,7 +331,7 @@ const textareaStyle: React.CSSProperties = {
 function dotStyle(active: boolean): React.CSSProperties {
   return {
     width: 28, height: 28, borderRadius: '50%',
-    background: active ? '#3B82F6' : 'var(--color-orange, #F39C5F)',
+    background: active ? '#3B82F6' : 'var(--shu)',
     boxShadow: active
       ? '0 0 0 4px rgba(59, 130, 246, 0.3), 0 2px 8px rgba(0,0,0,0.3)'
       : '0 2px 8px rgba(0,0,0,0.3), 0 0 0 3px rgba(255,255,255,0.9)',

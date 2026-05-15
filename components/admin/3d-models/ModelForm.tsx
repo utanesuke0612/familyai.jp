@@ -162,12 +162,12 @@ export function ModelForm({ mode, initial, originalSlug }: ModelFormProps) {
     <form onSubmit={handleSubmit} style={{ maxWidth: 880 }}>
       {error && (
         <div role="alert" style={errorBoxStyle}>
-          ⚠️ {error}
+          {error}
         </div>
       )}
 
       {/* ── 基本情報 ──────────────────────────────────── */}
-      <Section title="📋 基本情報">
+      <Section title="基本情報">
         <Field label="slug" required hint="URL の一部になる識別子（例: solar-system）">
           <input
             type="text"
@@ -224,13 +224,13 @@ export function ModelForm({ mode, initial, originalSlug }: ModelFormProps) {
         <CheckboxField
           checked={isFeatured}
           onChange={setIsFeatured}
-          label="⭐ おすすめモデルとして表示"
+          label="おすすめモデルとして表示"
           hint="カタログで最上段に固定表示される"
         />
       </Section>
 
       {/* ── アセットファイル ────────────────────────────────── */}
-      <Section title="📤 アセットファイル">
+      <Section title="アセットファイル">
         <BlobUploadInput
           slug={effectiveSlug}
           kind="glb"
@@ -252,14 +252,14 @@ export function ModelForm({ mode, initial, originalSlug }: ModelFormProps) {
           onChange={setThumbnailUrl}
         />
         <p style={{ fontSize: 11, color: '#9CA3AF', marginTop: 12 }}>
-          💡 slug を先に入力するとアップロードが有効になります。
+          slug を先に入力するとアップロードが有効になります。
           ファイル名は <code>3d-models/&#123;slug&#125;-&#123;hash&#125;.glb</code> 形式で
           自動命名され、cache-busting されます。
         </p>
       </Section>
 
       {/* ── ホットスポット（段階 D-1: 3D 上クリック採取 UI） ── */}
-      <Section title={`🎯 ホットスポット（${hotspots.length} 件）`}>
+      <Section title={`ホットスポット（${hotspots.length} 件）`}>
         <HotspotEditor
           glbUrl={glbUrl || undefined}
           hotspots={hotspots}
@@ -268,7 +268,7 @@ export function ModelForm({ mode, initial, originalSlug }: ModelFormProps) {
       </Section>
 
       {/* ── 出典・ライセンス ────────────────────────────────── */}
-      <Section title="📜 出典・ライセンス">
+      <Section title="出典・ライセンス">
         <Field label="Attribution" hint="例: AI Coding Agent 生成 / Smithsonian Institution 等">
           <input
             type="text"
@@ -302,11 +302,11 @@ export function ModelForm({ mode, initial, originalSlug }: ModelFormProps) {
       </Section>
 
       {/* ── 公開設定 ─────────────────────────────────────── */}
-      <Section title="🚦 公開設定">
+      <Section title="公開設定">
         <CheckboxField
           checked={published}
           onChange={setPublished}
-          label="✅ 公開する"
+          label="公開する"
           hint="チェックを外すと非公開（admin プレビューのみ閲覧可能）"
         />
       </Section>
@@ -315,7 +315,7 @@ export function ModelForm({ mode, initial, originalSlug }: ModelFormProps) {
       <div style={actionBarStyle}>
         <Link href="/admin/3d-models" style={cancelBtnStyle}>← キャンセル</Link>
         <button type="submit" disabled={saving} style={saveBtnStyle(saving)}>
-          {saving ? '💾 保存中…' : (mode === 'create' ? '💾 作成して保存' : '💾 変更を保存')}
+          {saving ? '保存中…' : (mode === 'create' ? '作成して保存' : '変更を保存')}
         </button>
       </div>
     </form>

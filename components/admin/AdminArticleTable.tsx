@@ -255,7 +255,7 @@ export function AdminArticleTable({ initialArticles, initialTotal }: Props) {
           style={{
             padding:      '8px 16px',
             borderRadius: '8px',
-            background:   'var(--color-orange)',
+            background:   'var(--shu)',
             color:        'white',
             fontSize:     '14px',
             fontWeight:   600,

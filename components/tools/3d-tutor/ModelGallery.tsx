@@ -21,12 +21,12 @@ export function ModelGallery({ models }: ModelGalleryProps) {
         style={{
           padding: '48px 24px',
           textAlign: 'center',
-          color: 'var(--color-brown-muted, #A48B72)',
-          background: 'rgba(255,255,255,0.6)',
-          borderRadius: 24,
+          color: 'var(--sumi-light)',
+          background: 'var(--washi-deep)',
+          border: '1px solid var(--line)',
+          borderRadius: 4,
         }}
       >
-        <div style={{ fontSize: 56, marginBottom: 12, opacity: 0.5 }}>🪐</div>
         <p style={{ margin: 0, fontSize: 16 }}>このカテゴリの 3D モデルはまだ準備中です</p>
       </div>
     );
@@ -48,12 +48,12 @@ export function ModelGallery({ models }: ModelGalleryProps) {
           style={{
             display: 'block',
             background: '#fff',
-            borderRadius: 20,
+            borderRadius: 4,
             overflow: 'hidden',
             textDecoration: 'none',
             color: 'inherit',
-            boxShadow: '0 2px 10px rgba(107, 79, 58, 0.08)',
-            transition: 'transform 0.18s, box-shadow 0.18s',
+            border: '1px solid var(--line)',
+            transition: 'transform 0.18s',
           }}
         >
           {/* サムネ */}
@@ -62,17 +62,17 @@ export function ModelGallery({ models }: ModelGalleryProps) {
               width: '100%',
               aspectRatio: '4/3',
               background: m.thumbnailUrl
-                ? `var(--color-peach-light) url("${m.thumbnailUrl}") center/cover no-repeat`
-                : 'radial-gradient(ellipse at center, var(--color-peach-light) 0%, var(--color-cream) 80%)',
+                ? `var(--washi-deep) url("${m.thumbnailUrl}") center/cover no-repeat`
+                : 'var(--washi-deep)',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
               fontSize: 64,
-              color: 'var(--color-brown-muted)',
+              color: 'var(--sumi-light)',
             }}
             aria-hidden
           >
-            {!m.thumbnailUrl && <span>🧊</span>}
+            {!m.thumbnailUrl && <span>3D</span>}
           </div>
 
           {/* メタ */}
@@ -81,11 +81,12 @@ export function ModelGallery({ models }: ModelGalleryProps) {
               <span
                 style={{
                   fontSize: 11,
-                  fontWeight: 700,
+                  fontWeight: 500,
                   padding: '3px 10px',
-                  borderRadius: 999,
-                  background: 'var(--color-peach-light)',
-                  color: 'var(--color-brown)',
+                  borderRadius: 4,
+                  background: 'var(--washi-deep)',
+                  color: 'var(--sumi)',
+                  border: '1px solid var(--line)',
                 }}
               >
                 {TUTOR3D_SUBJECT_LABEL[m.subject]}
@@ -94,9 +95,10 @@ export function ModelGallery({ models }: ModelGalleryProps) {
                 style={{
                   fontSize: 11,
                   padding: '3px 10px',
-                  borderRadius: 999,
-                  background: 'var(--color-cream)',
-                  color: 'var(--color-brown-muted)',
+                  borderRadius: 4,
+                  background: 'var(--washi-deep)',
+                  color: 'var(--sumi-light)',
+                  border: '1px solid var(--line)',
                 }}
               >
                 {TUTOR3D_GRADE_LABEL[m.grade]}
@@ -106,22 +108,23 @@ export function ModelGallery({ models }: ModelGalleryProps) {
                   style={{
                     fontSize: 11,
                     padding: '3px 10px',
-                    borderRadius: 999,
-                    background: 'var(--color-orange, #F39C5F)',
+                    borderRadius: 4,
+                    background: 'var(--shu)',
                     color: '#fff',
-                    fontWeight: 700,
+                    fontWeight: 500,
                   }}
                 >
-                  ⭐ おすすめ
+                  おすすめ
                 </span>
               )}
             </div>
             <h3
+              className="font-mincho"
               style={{
                 margin: 0,
                 fontSize: 17,
-                fontWeight: 700,
-                color: 'var(--color-brown)',
+                fontWeight: 500,
+                color: 'var(--sumi)',
                 lineHeight: 1.4,
               }}
             >
@@ -132,7 +135,7 @@ export function ModelGallery({ models }: ModelGalleryProps) {
                 style={{
                   margin: '6px 0 0',
                   fontSize: 13,
-                  color: 'var(--color-brown-muted)',
+                  color: 'var(--sumi-light)',
                   lineHeight: 1.5,
                   display: '-webkit-box',
                   WebkitLineClamp: 2,

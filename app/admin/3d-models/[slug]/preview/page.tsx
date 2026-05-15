@@ -54,7 +54,7 @@ export default async function ModelPreviewPage({ params }: Ctx) {
       >
         <div style={{ fontSize: 14 }}>
           <strong style={{ color: model.published ? '#1E40AF' : '#92400E' }}>
-            {model.published ? '🔵 公開中モデルのプレビュー' : '🚧 非公開モデルのプレビュー（一般ユーザーには見えません）'}
+            {model.published ? '公開中モデルのプレビュー' : '非公開モデルのプレビュー（一般ユーザーには見えません）'}
           </strong>
           <div style={{ fontSize: 12, color: '#6B7280', marginTop: 2 }}>
             この画面はビューカウントを増やしません。公開ページと同じ表示で動作確認できます。
@@ -65,7 +65,7 @@ export default async function ModelPreviewPage({ params }: Ctx) {
             href={`/admin/3d-models/${model.slug}/edit`}
             style={{ padding: '6px 12px', background: '#fff', color: '#374151', border: '1px solid #D1D5DB', borderRadius: 6, fontSize: 13, fontWeight: 600, textDecoration: 'none' }}
           >
-            ✏️ 編集に戻る
+            編集に戻る
           </Link>
           <Link
             href="/admin/3d-models"
@@ -77,27 +77,27 @@ export default async function ModelPreviewPage({ params }: Ctx) {
       </div>
 
       {/* ── 公開ページ相当のレイアウト ────────────────────────── */}
-      <div style={{ background: 'var(--color-cream, #FDF6ED)', borderRadius: 16, padding: 16 }}>
+      <div style={{ background: 'var(--washi)', border: '1px solid var(--line)', borderRadius: 4, padding: 16 }}>
         {/* タイトル */}
         <div style={{ marginBottom: 16 }}>
           <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', marginBottom: 8 }}>
-            <span style={{ padding: '4px 12px', borderRadius: 999, background: '#FFEBD8', color: '#6B4F3A', fontSize: 12, fontWeight: 600 }}>
+            <span style={{ padding: '4px 12px', borderRadius: 4, background: 'var(--washi-deep)', color: 'var(--sumi)', fontSize: 12, fontWeight: 600, border: '1px solid var(--line)' }}>
               {TUTOR3D_SUBJECT_LABEL[model.subject]}
             </span>
-            <span style={{ padding: '4px 12px', borderRadius: 999, background: '#FDF6ED', color: '#A48B72', fontSize: 12 }}>
+            <span style={{ padding: '4px 12px', borderRadius: 4, background: 'var(--washi-deep)', color: 'var(--sumi-light)', fontSize: 12, border: '1px solid var(--line)' }}>
               {TUTOR3D_GRADE_LABEL[model.grade]}
             </span>
             {model.isFeatured && (
-              <span style={{ padding: '4px 12px', borderRadius: 999, background: '#F39C5F', color: '#fff', fontSize: 12, fontWeight: 700 }}>
-                ⭐ おすすめ
+              <span style={{ padding: '4px 12px', borderRadius: 4, background: 'var(--shu)', color: '#fff', fontSize: 12, fontWeight: 700 }}>
+                おすすめ
               </span>
             )}
           </div>
-          <h1 style={{ fontSize: 'clamp(22px, 3vw + 10px, 32px)', color: '#6B4F3A', margin: 0, fontWeight: 700 }}>
-            🔬 {model.title}
+          <h1 className="font-mincho" style={{ fontSize: 'clamp(22px, 3vw + 10px, 32px)', color: 'var(--sumi)', margin: 0, fontWeight: 500 }}>
+            {model.title}
           </h1>
           {model.description && (
-            <p style={{ margin: '8px 0 0', fontSize: 14, color: '#8B7355', lineHeight: 1.7 }}>
+            <p style={{ margin: '8px 0 0', fontSize: 14, color: 'var(--sumi-light)', lineHeight: 1.7 }}>
               {model.description}
             </p>
           )}
@@ -108,14 +108,14 @@ export default async function ModelPreviewPage({ params }: Ctx) {
 
         {/* 出典・ライセンス */}
         {(model.attribution || model.license || model.sourceUrl) && (
-          <div style={{ marginTop: 16, padding: '14px 18px', background: '#fff', borderRadius: 16, fontSize: 12, color: '#A48B72', lineHeight: 1.6 }}>
-            <strong style={{ color: '#6B4F3A' }}>📜 出典 / ライセンス</strong>
+          <div style={{ marginTop: 16, padding: '14px 18px', background: '#fff', border: '1px solid var(--line)', borderRadius: 4, fontSize: 12, color: 'var(--sumi-light)', lineHeight: 1.6 }}>
+            <strong style={{ color: 'var(--sumi)' }}>出典 / ライセンス</strong>
             {model.attribution && <div style={{ marginTop: 4 }}>{model.attribution}</div>}
             {model.license      && <div>ライセンス: {model.license}</div>}
             {model.sourceUrl    && (
               <div>
                 出典元:{' '}
-                <a href={model.sourceUrl} target="_blank" rel="noreferrer noopener" style={{ color: '#F39C5F' }}>
+                <a href={model.sourceUrl} target="_blank" rel="noreferrer noopener" style={{ color: 'var(--shu)' }}>
                   {model.sourceUrl}
                 </a>
               </div>

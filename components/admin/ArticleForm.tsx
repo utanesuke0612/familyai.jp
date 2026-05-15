@@ -142,7 +142,7 @@ export function ArticleForm({ article }: ArticleFormProps) {
             outline: 'none',
           }}
         >
-          ⚠️ {error}
+          {error}
         </div>
       )}
 
@@ -210,7 +210,7 @@ export function ArticleForm({ article }: ArticleFormProps) {
                       type="checkbox"
                       checked={categories.includes(c)}
                       onChange={() => toggleCategory(c)}
-                      style={{ accentColor: 'var(--color-orange)', width: '16px', height: '16px' }}
+                      style={{ accentColor: 'var(--shu)', width: '16px', height: '16px' }}
                     />
                     {CATEGORY_LABEL[c]}
                   </label>
@@ -253,7 +253,7 @@ export function ArticleForm({ article }: ArticleFormProps) {
                     type="checkbox"
                     checked={published}
                     onChange={(e) => setPublished(e.target.checked)}
-                    style={{ accentColor: 'var(--color-orange)', width: '18px', height: '18px' }}
+                    style={{ accentColor: 'var(--shu)', width: '18px', height: '18px' }}
                   />
                   <span style={{ fontSize: '14px' }}>公開する</span>
                 </label>
@@ -265,7 +265,7 @@ export function ArticleForm({ article }: ArticleFormProps) {
                     type="checkbox"
                     checked={isFeatured}
                     onChange={(e) => setIsFeatured(e.target.checked)}
-                    style={{ accentColor: 'var(--color-orange)', width: '18px', height: '18px' }}
+                    style={{ accentColor: 'var(--shu)', width: '18px', height: '18px' }}
                   />
                   <span style={{ fontSize: '14px' }}>トップおすすめに表示</span>
                 </label>
@@ -289,7 +289,7 @@ export function ArticleForm({ article }: ArticleFormProps) {
                     borderRadius: '6px',
                     border:       '1px solid #D1D5DB',
                     fontSize:     '12px',
-                    background:   preview === mode ? 'var(--color-orange)' : 'white',
+                    background:   preview === mode ? 'var(--shu)' : 'white',
                     color:        preview === mode ? 'white' : '#374151',
                     cursor:       'pointer',
                   }}
@@ -395,7 +395,7 @@ export function ArticleForm({ article }: ArticleFormProps) {
               padding:      '10px 32px',
               borderRadius: '8px',
               border:       'none',
-              background:   loading ? '#9CA3AF' : 'var(--color-orange)',
+              background:   loading ? '#9CA3AF' : 'var(--shu)',
               color:        'white',
               fontSize:     '14px',
               fontWeight:   700,
@@ -470,7 +470,7 @@ function Field({
         style={{ display: 'block', fontSize: '13px', fontWeight: 600, color: '#374151', marginBottom: '6px' }}
       >
         {label}
-        {required && <span style={{ color: 'var(--color-orange)', marginLeft: '4px' }}>*</span>}
+        {required && <span style={{ color: 'var(--shu)', marginLeft: '4px' }}>*</span>}
       </label>
       {children({ id, hintId })}
       {hint && (
@@ -499,7 +499,7 @@ function FieldGroup({
     <fieldset style={{ border: 'none', padding: 0, margin: 0, minWidth: 0 }}>
       <legend style={{ padding: 0, fontSize: '13px', fontWeight: 600, color: '#374151', marginBottom: '6px' }}>
         {label}
-        {required && <span style={{ color: 'var(--color-orange)', marginLeft: '4px' }}>*</span>}
+        {required && <span style={{ color: 'var(--shu)', marginLeft: '4px' }}>*</span>}
       </legend>
       {children}
     </fieldset>

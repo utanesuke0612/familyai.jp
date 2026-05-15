@@ -233,31 +233,29 @@ export function HotspotPanel({ model, hotspot, onClose }: HotspotPanelProps) {
   if (!hotspot) {
     return (
       <div
-        className="rounded-2xl overflow-hidden"
+        className="overflow-hidden"
         style={{
-          background: 'white',
-          boxShadow:  'var(--shadow-warm-sm, 0 2px 10px rgba(107, 79, 58, 0.08))',
-          border:     '1px solid var(--color-beige)',
+          background:   'white',
+          border:       '1px solid var(--line)',
+          borderRadius: '4px',
         }}
       >
         <div
           className="flex items-center gap-3 p-4"
-          style={{ background: 'linear-gradient(135deg, var(--color-orange) 0%, var(--color-peach) 100%)' }}
+          style={{ background: 'var(--shu)' }}
         >
-          <span className="text-2xl" aria-hidden="true">💞</span>
           <div>
-            <p className="font-bold text-sm text-white">AI に質問する</p>
+            <p className="font-mincho text-sm text-white" style={{ fontWeight: 500 }}>AI に質問する</p>
             <p className="text-xs text-white/80 truncate">
               3D「{model.title}」を一緒に観察
             </p>
           </div>
         </div>
         <div className="p-4 flex flex-col gap-3 text-center">
-          <span className="text-3xl" aria-hidden="true">👆</span>
-          <p className="text-sm" style={{ color: 'var(--color-brown-light)', lineHeight: 1.7 }}>
+          <p className="text-sm" style={{ color: 'var(--sumi-light)', lineHeight: 1.7 }}>
             左の 3D モデルを<br />
             ぐるぐる回したり、<br />
-            <strong style={{ color: 'var(--color-orange)' }}>気になる部分をタップ</strong>してみよう。<br />
+            <strong style={{ color: 'var(--shu)' }}>気になる部分をタップ</strong>してみよう。<br />
             あいちゃんが、その部分について<br />
             やさしく教えてくれるよ！
           </p>
@@ -270,26 +268,26 @@ export function HotspotPanel({ model, hotspot, onClose }: HotspotPanelProps) {
     <div
       role="dialog"
       aria-labelledby="hotspot-panel-title"
-      className="rounded-2xl overflow-hidden flex flex-col"
+      className="overflow-hidden flex flex-col"
       style={{
-        background: 'white',
-        boxShadow:  'var(--shadow-warm-sm, 0 2px 10px rgba(107, 79, 58, 0.08))',
-        border:     '1px solid var(--color-beige)',
-        height:     'min(70vh, 560px)',
-        animation:  'fadeUp 0.2s ease-out',
+        background:   'white',
+        border:       '1px solid var(--line)',
+        borderRadius: '4px',
+        height:       'min(70vh, 560px)',
+        animation:    'fadeUp 0.2s ease-out',
       }}
     >
-      {/* ── ヘッダー（AIChatWidget 同等のグラデ） ─────────────── */}
+      {/* ── ヘッダー ─────────────── */}
       <div
         className="flex items-center justify-between gap-3 px-4 py-3 shrink-0"
-        style={{ background: 'linear-gradient(135deg, var(--color-orange) 0%, var(--color-peach) 100%)' }}
+        style={{ background: 'var(--shu)' }}
       >
         <div className="flex items-center gap-2 min-w-0">
-          <span className="text-lg shrink-0" aria-hidden="true">💞</span>
           <div className="flex flex-col min-w-0">
             <p
               id="hotspot-panel-title"
-              className="font-bold text-sm text-white truncate"
+              className="font-mincho text-sm text-white truncate"
+              style={{ fontWeight: 500 }}
             >
               {hotspot.partName} について
             </p>
@@ -319,8 +317,7 @@ export function HotspotPanel({ model, hotspot, onClose }: HotspotPanelProps) {
         >
           {messages.length === 0 && (
             <div className="text-center py-6 flex flex-col items-center gap-2">
-              <span className="text-3xl" aria-hidden="true">💬</span>
-              <p className="text-sm" style={{ color: 'var(--color-brown-light)' }}>
+              <p className="text-sm" style={{ color: 'var(--sumi-light)' }}>
                 「{hotspot.partName}」について何でも質問してね！
               </p>
             </div>
@@ -334,14 +331,15 @@ export function HotspotPanel({ model, hotspot, onClose }: HotspotPanelProps) {
 
           {error && (
             <p
-              className="text-xs leading-relaxed px-3 py-2 rounded-xl"
+              className="text-xs leading-relaxed px-3 py-2"
               style={{
-                background: 'var(--color-peach-light, var(--color-beige))',
-                color:      'var(--color-brown)',
-                border:     '1px solid var(--color-beige-dark)',
+                background:   'var(--washi-deep)',
+                color:        'var(--sumi)',
+                border:       '1px solid var(--line)',
+                borderRadius: '4px',
               }}
             >
-              ⚠️ {error}
+              {error}
             </p>
           )}
         </div>
@@ -350,7 +348,7 @@ export function HotspotPanel({ model, hotspot, onClose }: HotspotPanelProps) {
         <form
           onSubmit={handleSubmit}
           className="shrink-0 flex gap-2 p-3 border-t"
-          style={{ borderColor: 'var(--color-beige)' }}
+          style={{ borderColor: 'var(--line)' }}
         >
           <textarea
             ref={inputRef}
@@ -362,27 +360,29 @@ export function HotspotPanel({ model, hotspot, onClose }: HotspotPanelProps) {
             placeholder="質問を入力…（Enterで送信 / Shift+Enterで改行）"
             rows={2}
             disabled={isLoading}
-            className="flex-1 resize-none rounded-xl border px-3 py-2 text-sm outline-none transition-[border-color,box-shadow]"
+            className="flex-1 resize-none border px-3 py-2 text-sm outline-none transition-[border-color,box-shadow]"
             style={{
-              borderColor: 'var(--color-beige-dark)',
-              color:       'var(--color-brown)',
-              background:  'var(--color-cream)',
-              maxHeight:   '120px',
-              lineHeight:  '1.5',
+              borderColor:  'var(--line)',
+              borderRadius: '4px',
+              color:        'var(--sumi)',
+              background:   'var(--washi-light)',
+              maxHeight:    '120px',
+              lineHeight:   '1.5',
             }}
             aria-label="質問を入力"
           />
           <button
             type="submit"
             disabled={!input.trim() || isLoading}
-            className="shrink-0 w-10 h-10 rounded-xl flex items-center justify-center transition-[background-color,color] disabled:opacity-40"
+            className="shrink-0 w-10 h-10 flex items-center justify-center transition-[background-color,color] disabled:opacity-40"
             style={{
-              background: input.trim() && !isLoading ? 'var(--color-orange)' : 'var(--color-beige-dark)',
-              color:      'white',
-              minHeight:  44,
-              minWidth:   44,
-              border:     'none',
-              cursor:     input.trim() && !isLoading ? 'pointer' : 'not-allowed',
+              background:   input.trim() && !isLoading ? 'var(--shu)' : 'var(--line)',
+              color:        'white',
+              minHeight:    44,
+              minWidth:     44,
+              border:       'none',
+              borderRadius: '4px',
+              cursor:       input.trim() && !isLoading ? 'pointer' : 'not-allowed',
             }}
             aria-label="質問を送信"
           >
@@ -399,22 +399,23 @@ function ChatBubble({ message }: { message: Message }) {
   return (
     <div className={`flex gap-2 ${isUser ? 'flex-row-reverse' : 'flex-row'} items-end`}>
       <div
-        className="shrink-0 w-7 h-7 rounded-full flex items-center justify-center text-sm"
+        className="shrink-0 w-7 h-7 rounded-full flex items-center justify-center font-mincho text-xs"
         style={{
-          background: isUser ? 'var(--color-orange)' : 'var(--color-beige)',
-          color:      isUser ? 'white' : 'var(--color-brown)',
+          background: isUser ? 'var(--shu)' : 'var(--washi-deep)',
+          color:      isUser ? 'white' : 'var(--sumi)',
+          fontWeight: 500,
         }}
         aria-hidden="true"
       >
-        {isUser ? '👤' : '💞'}
+        {isUser ? '私' : 'AI'}
       </div>
       <div className="max-w-[85%]">
         <div
           className="px-3 py-2 text-sm"
           style={{
-            background:   isUser ? 'var(--color-orange)' : 'var(--color-beige)',
-            color:        isUser ? 'white' : 'var(--color-brown)',
-            borderRadius: isUser ? '18px 18px 4px 18px' : '18px 18px 18px 4px',
+            background:   isUser ? 'var(--shu)' : 'var(--washi-deep)',
+            color:        isUser ? 'white' : 'var(--sumi)',
+            borderRadius: '4px',
             whiteSpace:   'pre-wrap',
             lineHeight:   1.75,
           }}
@@ -423,7 +424,7 @@ function ChatBubble({ message }: { message: Message }) {
           {message.streaming && (
             <span
               className="inline-block w-0.5 h-4 ml-0.5 align-middle"
-              style={{ background: 'var(--color-brown-light)', animation: 'blink 0.8s step-end infinite' }}
+              style={{ background: 'var(--sumi-light)', animation: 'blink 0.8s step-end infinite' }}
               aria-hidden="true"
             />
           )}
@@ -438,15 +439,15 @@ function TypingIndicator() {
   return (
     <div className="flex gap-2 items-end">
       <div
-        className="w-7 h-7 rounded-full flex items-center justify-center text-sm shrink-0"
-        style={{ background: 'var(--color-beige)', color: 'var(--color-brown)' }}
+        className="w-7 h-7 rounded-full flex items-center justify-center font-mincho text-xs shrink-0"
+        style={{ background: 'var(--washi-deep)', color: 'var(--sumi)', fontWeight: 500 }}
         aria-hidden="true"
       >
-        💞
+        AI
       </div>
       <div
-        className="px-4 py-3 rounded-2xl"
-        style={{ background: 'var(--color-beige)', borderRadius: '18px 18px 18px 4px' }}
+        className="px-4 py-3"
+        style={{ background: 'var(--washi-deep)', borderRadius: '4px' }}
       >
         <div className="flex gap-1 items-center">
           {[0, 1, 2].map((i) => (
@@ -454,7 +455,7 @@ function TypingIndicator() {
               key={i}
               className="w-1.5 h-1.5 rounded-full"
               style={{
-                background:     'var(--color-brown-light)',
+                background:     'var(--sumi-light)',
                 animation:      'pulse-soft 1.2s ease-in-out infinite',
                 animationDelay: `${i * 0.2}s`,
               }}

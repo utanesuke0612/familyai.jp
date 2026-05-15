@@ -35,7 +35,7 @@ const LEVEL_META: Record<Level, LevelMeta> = {
     label:       'Level 1',
     subtitle:    '3文でまとめる',
     description: '今日のレッスンを英語3文でまとめてみましょう。',
-    hint:        '💡 ヒント: スクリプトを見ずに、思い出しながら書いてみよう！',
+    hint:        'ヒント: スクリプトを見ずに、思い出しながら書いてみよう',
     placeholder: 'The president went to Japan. They talked about trade...',
   },
   2: {
@@ -43,7 +43,7 @@ const LEVEL_META: Record<Level, LevelMeta> = {
     label:       'Level 2',
     subtitle:    'くわしく復述',
     description: 'スクリプトを見ずに、今日の内容を自由に説明してください。英語で書いてみましょう。',
-    hint:        '💡 ヒント: 「誰が・何を・なぜ」 を意識して書いてみよう！',
+    hint:        'ヒント: 「誰が・何を・なぜ」 を意識して書いてみよう',
     placeholder: 'The US president visited Japan to discuss trade issues. They reached some agreements...',
   },
   3: {
@@ -51,7 +51,7 @@ const LEVEL_META: Record<Level, LevelMeta> = {
     label:       'Level 3',
     subtitle:    '意見を書く',
     description: 'このレッスンについてあなたの意見を英語で書いてください。',
-    hint:        '💡 ヒント: 「私は〜だと思います。なぜなら〜だからです。」 という構成で書いてみよう！',
+    hint:        'ヒント: 「私は〜だと思います。なぜなら〜だからです。」 という構成で書いてみよう',
     placeholder: 'I think this lesson is interesting because...',
   },
 };
@@ -270,8 +270,8 @@ export function AIEchoPanel({ lessonKey, lessonTitle, lessonScript }: AIEchoPane
     <div className="flex flex-col gap-0">
       {/* ── タブ ──────────────────────────── */}
       <div
-        className="flex rounded-t-xl overflow-hidden"
-        style={{ borderBottom: '1.5px solid #E8CFA8' }}
+        className="flex overflow-hidden"
+        style={{ borderBottom: '1.5px solid var(--line)' }}
         role="tablist"
         aria-label="AI Echo Level 切替"
       >
@@ -288,22 +288,23 @@ export function AIEchoPanel({ lessonKey, lessonTitle, lessonScript }: AIEchoPane
               aria-selected={active}
               onClick={() => switchLevel(lv)}
               disabled={isStreamingAny && !active}
-              className="flex-1 py-3 px-2 text-sm font-bold transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              className="flex-1 py-3 px-2 text-sm font-mincho transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
               style={{
-                background: active ? '#FF8C42' : '#FDF6ED',
-                color:      active ? '#fff'    : '#B5896A',
+                background: active ? 'var(--shu)' : 'var(--washi-deep)',
+                color:      active ? '#fff'       : 'var(--sumi-light)',
+                fontWeight: 500,
               }}
             >
               {m.emoji} {m.label}
               <span className="hidden sm:inline ml-1 font-normal opacity-90">
                 {m.subtitle}
               </span>
-              {/* タブに既存内容を持っているサイン（小さい黄色ドット） */}
+              {/* タブに既存内容を持っているサイン（小さいドット） */}
               {!active && hasContent && (
                 <span
                   aria-hidden
                   className="inline-block ml-1 rounded-full"
-                  style={{ width: 6, height: 6, background: '#FF8C42' }}
+                  style={{ width: 6, height: 6, background: 'var(--shu)' }}
                   title="入力 / フィードバックが残っています"
                 />
               )}
@@ -318,10 +319,10 @@ export function AIEchoPanel({ lessonKey, lessonTitle, lessonScript }: AIEchoPane
       >
         {/* 説明 + ヒント（タブにすでにタイトルがあるので重複は省略） */}
         <div>
-          <p className="text-sm leading-relaxed" style={{ color: 'var(--color-brown)' }}>
+          <p className="text-sm leading-relaxed" style={{ color: 'var(--sumi)' }}>
             {meta.description}
           </p>
-          <p className="text-xs mt-1.5 leading-relaxed" style={{ color: 'var(--color-brown-light)' }}>
+          <p className="text-xs mt-1.5 leading-relaxed" style={{ color: 'var(--sumi-light)' }}>
             {meta.hint}
           </p>
         </div>
@@ -334,45 +335,47 @@ export function AIEchoPanel({ lessonKey, lessonTitle, lessonScript }: AIEchoPane
           placeholder={meta.placeholder}
           rows={5}
           maxLength={2000}
-          className="w-full rounded-xl px-4 py-3 text-sm resize-y outline-none transition-shadow disabled:opacity-50"
+          className="w-full px-4 py-3 text-sm resize-y outline-none transition-shadow disabled:opacity-50"
           style={{
-            background: 'rgba(253, 246, 237, 0.5)',
-            border:     '1.5px solid #E8CFA8',
-            color:      'var(--color-brown)',
-            fontFamily: '"Hiragino Sans", "Meiryo", sans-serif',
-            boxShadow:  'inset 0 1px 3px rgba(0,0,0,0.04)',
-            minHeight:  140,
+            background:   'var(--washi-light)',
+            border:       '1.5px solid var(--line)',
+            borderRadius: '4px',
+            color:        'var(--sumi)',
+            fontFamily:   '"Hiragino Sans", "Meiryo", sans-serif',
+            boxShadow:    'inset 0 1px 3px rgba(0,0,0,0.04)',
+            minHeight:    140,
           }}
           onFocus={(e) => {
             if (isStreamingHere || current.isSaving) return;
-            e.currentTarget.style.border    = '1.5px solid #FF8C42';
-            e.currentTarget.style.boxShadow = '0 0 0 3px rgba(255,140,66,0.15), inset 0 1px 3px rgba(0,0,0,0.04)';
+            e.currentTarget.style.border    = '1.5px solid var(--shu)';
+            e.currentTarget.style.boxShadow = '0 0 0 3px rgba(178,58,42,0.12), inset 0 1px 3px rgba(0,0,0,0.04)';
           }}
           onBlur={(e) => {
-            e.currentTarget.style.border    = '1.5px solid #E8CFA8';
+            e.currentTarget.style.border    = '1.5px solid var(--line)';
             e.currentTarget.style.boxShadow = 'inset 0 1px 3px rgba(0,0,0,0.04)';
           }}
         />
 
         {/* 送信ボタン + 文字数 */}
         <div className="flex items-center justify-between gap-2 flex-wrap">
-          <span className="text-[11px]" style={{ color: 'var(--color-brown-light)' }}>
+          <span className="text-[11px]" style={{ color: 'var(--sumi-light)' }}>
             {current.input.length} / 2000 文字
           </span>
           <button
             type="button"
             onClick={submitForFeedback}
             disabled={!canSubmit}
-            className="rounded-full px-5 py-2.5 text-sm font-bold transition-all duration-150 disabled:opacity-40 disabled:cursor-not-allowed flex items-center gap-2"
+            className="px-5 py-2.5 text-sm font-mincho transition-all duration-150 disabled:opacity-40 disabled:cursor-not-allowed flex items-center gap-2"
             style={{
-              background: canSubmit ? 'linear-gradient(135deg, #FF8C42, #FFA563)' : '#ccc',
-              color:      '#fff',
-              boxShadow:  canSubmit ? '0 2px 8px rgba(255,140,66,0.35)' : 'none',
+              background:   canSubmit ? 'var(--shu)' : '#ccc',
+              color:        '#fff',
+              fontWeight:   500,
+              borderRadius: '4px',
             }}
           >
             {isStreamingHere
               ? <><span style={{ display: 'inline-block', animation: 'spin 1s linear infinite' }}>⟳</span> 評価中…</>
-              : <>💞 AI Echoに評価してもらう →</>
+              : <>AI Echoに評価してもらう →</>
             }
           </button>
         </div>
@@ -380,10 +383,10 @@ export function AIEchoPanel({ lessonKey, lessonTitle, lessonScript }: AIEchoPane
         {/* ── ローディング（フィードバック未受信時のみ） ── */}
         {isStreamingHere && !current.feedback && (
           <div
-            className="rounded-xl px-4 py-3 text-sm"
-            style={{ background: '#FDF6ED', color: 'var(--color-brown-light)' }}
+            className="px-4 py-3 text-sm"
+            style={{ background: 'var(--washi-deep)', color: 'var(--sumi-light)', borderRadius: '4px' }}
           >
-            💞 AI Echo が考えています
+            AI Echo が考えています
             <span style={{ animation: 'aiEchoDots 1.4s infinite', marginLeft: 4 }}>...</span>
           </div>
         )}
@@ -391,21 +394,22 @@ export function AIEchoPanel({ lessonKey, lessonTitle, lessonScript }: AIEchoPane
         {/* ── フィードバック表示 ────────────────────── */}
         {current.feedback && (
           <div
-            className="rounded-xl px-4 py-3 flex flex-col gap-2"
+            className="px-4 py-3 flex flex-col gap-2"
             style={{
-              background: 'linear-gradient(135deg, #FFF7EB, #FDF6ED)',
-              border:     '1px solid #E8CFA8',
+              background:   'var(--washi-deep)',
+              border:       '1px solid var(--line)',
+              borderRadius: '4px',
             }}
           >
             <div className="flex items-center gap-2 flex-wrap">
-              <span className="text-sm font-bold" style={{ color: 'var(--color-brown)' }}>
-                💞 AI Echo からのフィードバック
+              <span className="text-sm font-mincho" style={{ fontWeight: 500, color: 'var(--sumi)' }}>
+                AI Echo からのフィードバック
               </span>
               {/* 保存ステータス */}
               {!isStreamingHere && current.isSaved && (
                 <span
-                  className="rounded-full px-2 py-0.5 text-[10px] font-bold"
-                  style={{ background: '#E8F5E9', color: '#2E7D32' }}
+                  className="px-2 py-0.5 text-[10px] font-bold"
+                  style={{ background: '#E8F5E9', color: '#2E7D32', borderRadius: '4px' }}
                 >
                   ✓ 保存済み
                 </span>
@@ -413,7 +417,7 @@ export function AIEchoPanel({ lessonKey, lessonTitle, lessonScript }: AIEchoPane
             </div>
             <p
               className="text-sm leading-relaxed"
-              style={{ color: 'var(--color-brown)', whiteSpace: 'pre-wrap' }}
+              style={{ color: 'var(--sumi)', whiteSpace: 'pre-wrap' }}
             >
               {current.feedback}
               {isStreamingHere && (
@@ -433,25 +437,26 @@ export function AIEchoPanel({ lessonKey, lessonTitle, lessonScript }: AIEchoPane
                     type="button"
                     onClick={saveToHistory}
                     disabled={current.isSaving}
-                    className="rounded-full px-3 py-1.5 text-xs font-bold transition-opacity hover:opacity-80 disabled:opacity-50"
+                    className="px-3 py-1.5 text-xs font-mincho transition-opacity hover:opacity-80 disabled:opacity-50"
                     style={{
-                      background: '#FF8C42',
-                      color:      '#fff',
-                      boxShadow:  '0 2px 6px rgba(255,140,66,0.3)',
+                      background:   'var(--shu)',
+                      color:        '#fff',
+                      fontWeight:   500,
+                      borderRadius: '4px',
                     }}
                   >
-                    {current.isSaving ? '⏳ 保存中…' : '📌 保存'}
+                    {current.isSaving ? '保存中…' : '保存'}
                   </button>
                 )}
 
                 {/* 未ログイン誘導 */}
                 {!isLoggedIn && authStatus !== 'loading' && (
                   <span
-                    className="rounded-full px-3 py-1.5 text-[11px] font-bold"
-                    style={{ background: '#FFF3CD', color: '#856404', border: '1px solid #FFD54F' }}
+                    className="px-3 py-1.5 text-[11px] font-bold"
+                    style={{ background: '#FFF3CD', color: '#856404', border: '1px solid #FFD54F', borderRadius: '4px' }}
                     title="ログインすると履歴を保存できます"
                   >
-                    💡 ログインで保存可能
+                    ログインで保存可能
                   </span>
                 )}
 
@@ -459,14 +464,15 @@ export function AIEchoPanel({ lessonKey, lessonTitle, lessonScript }: AIEchoPane
                 <button
                   type="button"
                   onClick={resetForRewrite}
-                  className="rounded-full px-3 py-1.5 text-xs font-semibold transition-opacity hover:opacity-80"
+                  className="px-3 py-1.5 text-xs font-semibold transition-opacity hover:opacity-80"
                   style={{
-                    background: '#fff',
-                    color:      'var(--color-brown)',
-                    border:     '1px solid #E8CFA8',
+                    background:   '#fff',
+                    color:        'var(--sumi)',
+                    border:       '1px solid var(--line)',
+                    borderRadius: '4px',
                   }}
                 >
-                  ✏️ もう一度書く
+                  もう一度書く
                 </button>
               </div>
             )}
@@ -477,10 +483,10 @@ export function AIEchoPanel({ lessonKey, lessonTitle, lessonScript }: AIEchoPane
                 role="alert"
                 aria-live="polite"
                 aria-atomic="true"
-                className="rounded-lg px-3 py-2 text-xs leading-relaxed mt-1"
-                style={{ background: '#FFF5F5', color: '#7A3030', border: '1px solid #FFB3B3' }}
+                className="px-3 py-2 text-xs leading-relaxed mt-1"
+                style={{ background: '#FFF5F5', color: '#7A3030', border: '1px solid #FFB3B3', borderRadius: '4px' }}
               >
-                ⚠️ {current.saveError}
+                {current.saveError}
               </div>
             )}
           </div>
@@ -489,10 +495,10 @@ export function AIEchoPanel({ lessonKey, lessonTitle, lessonScript }: AIEchoPane
         {/* エラー */}
         {current.error && !current.feedback && (
           <div
-            className="rounded-xl px-4 py-3 text-sm leading-relaxed"
-            style={{ background: '#FFF5F5', color: '#7A3030', border: '1px solid #FFB3B3' }}
+            className="px-4 py-3 text-sm leading-relaxed"
+            style={{ background: '#FFF5F5', color: '#7A3030', border: '1px solid #FFB3B3', borderRadius: '4px' }}
           >
-            ⚠️ {current.error}
+            {current.error}
           </div>
         )}
       </div>
