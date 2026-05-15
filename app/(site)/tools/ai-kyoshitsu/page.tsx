@@ -67,10 +67,10 @@ export default async function AiKyoshitsu3DPage({ searchParams }: PageProps) {
 
   return (
     <main style={{ background: 'var(--washi)', minHeight: '100vh' }}>
-      {/* ── ヘッダー（Rev40 Phase J+: /learn /tools と統一仕様）── */}
+      {/* ── ヘッダー（Rev40 Phase J+: /learn /tools と統一仕様・余白は /learn/[slug] と統一）── */}
       <section
-        className="px-6 py-8 sm:py-10"
-        style={{ background: 'var(--washi)' }}
+        className="px-6"
+        style={{ background: 'var(--washi)', paddingBlock: 'clamp(7px, 1vw, 12px)' }}
       >
         <div className="max-w-5xl mx-auto">
           {/* パンくず */}

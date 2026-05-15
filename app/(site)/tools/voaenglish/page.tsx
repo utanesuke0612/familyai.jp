@@ -132,8 +132,8 @@ export default function VoaEnglishToolPage({ searchParams }: VoaEnglishToolPageP
   return (
     <main style={{ background: 'var(--washi)' }}>
       <section
-        className="px-6 py-8 sm:py-10"
-        style={{ background: 'var(--washi)' }}
+        className="px-6"
+        style={{ background: 'var(--washi)', paddingBlock: 'clamp(7px, 1vw, 12px)' }}
       >
         <div className="mx-auto flex max-w-5xl flex-col gap-5">
           {/* パンくず */}
