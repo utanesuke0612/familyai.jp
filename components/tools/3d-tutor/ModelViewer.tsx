@@ -635,19 +635,21 @@ function PanControls({
   panBy:       (dx: number, dy: number) => void;
   resetCamera: () => void;
 }) {
+  // 36 → 24px (2/3) に縮小 + 透明感アップ (alpha 0.88 → 0.55)
   const btnCommon: React.CSSProperties = {
-    width:          36,
-    height:         36,
+    width:          24,
+    height:         24,
     display:        'inline-flex',
     alignItems:     'center',
     justifyContent: 'center',
-    background:     'rgba(255, 255, 255, 0.88)',
-    color:          'var(--sumi)',
-    border:         '1px solid var(--line)',
+    background:     'rgba(255, 255, 255, 0.55)',
+    color:          'rgba(60, 50, 40, 0.85)',
+    border:         '1px solid rgba(180, 165, 145, 0.55)',
     borderRadius:   4,
     cursor:         'pointer',
-    fontSize:       14,
+    fontSize:       10,
     lineHeight:     1,
+    padding:        0,
     backdropFilter: 'blur(4px)',
     WebkitBackdropFilter: 'blur(4px)',
   };
@@ -659,9 +661,9 @@ function PanControls({
         bottom:   12,
         zIndex:   4,
         display:  'grid',
-        gridTemplateColumns: 'repeat(3, 36px)',
-        gridTemplateRows:    'repeat(3, 36px)',
-        gap:      4,
+        gridTemplateColumns: 'repeat(3, 24px)',
+        gridTemplateRows:    'repeat(3, 24px)',
+        gap:      3,
       }}
       aria-label="3D ビューア パン操作"
     >
