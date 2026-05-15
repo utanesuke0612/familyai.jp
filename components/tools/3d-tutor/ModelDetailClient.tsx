@@ -192,6 +192,13 @@ function SolarViewer({
           border: 'none',
           background: 'transparent',
           display: 'block',
+          // Rev40 (M1 Chrome 対策): iframe を独立した GPU 合成レイヤーに昇格させ、
+          // 親 DOM 側の paint 操作と Metal タイル境界を共有しないようにする。
+          // これでグレー矩形フリッカリングを根本的に回避。
+          transform:  'translateZ(0)',
+          isolation:  'isolate',
+          willChange: 'transform',
+          contain:    'paint',
         }}
       />
 

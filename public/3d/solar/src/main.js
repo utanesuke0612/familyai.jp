@@ -665,8 +665,12 @@ function updateLabels() {
       if (overlapX && overlapY) y -= 26;
     }
     placed.push({ x, y, width, height });
-    el.style.left = `${x}px`;
-    el.style.top = `${y}px`;
+    // Rev40 (M1 Chrome 対策): top/left は毎フレーム layout + paint を起こし、
+    // WebGL canvas 上の DOM 反復更新で Metal GPU の合成タイル境界に
+    // グレー矩形のフリッカリングが発生する (Apple Silicon 既知のバグ)。
+    // transform: translate(...) なら composite-only で済むので回避できる。
+    // CSS 側の transform: translate(-50%, -50%) は left/top: 0 で代替済み。
+    el.style.transform = `translate3d(${x}px, ${y}px, 0) translate(-50%, -50%)`;
   }
 }
 
