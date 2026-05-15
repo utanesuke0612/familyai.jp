@@ -1,6 +1,7 @@
 /**
  * test/integration/admin-ai-config.integration.test.ts
- * QA-T1（Rev30）: 管理者用 AI教室パイプライン設定 API の Route Handler を直接叩く。
+ * QA-T1（Rev30 / Rev40 で AIチャット設定へ再設計）:
+ * 管理者用 AIチャット設定 API の Route Handler を直接叩く。
  *
  * 対象:
  *   GET    /api/admin/ai-config     — 現在値（effective + dbPartial）取得
@@ -10,7 +11,7 @@
  * モック戦略:
  *   - `@/lib/auth`                        : auth() で 管理者 / 非管理者 / 未ログイン
  *   - `@/lib/repositories/ai-config`     : DB 操作関数を vi.fn() に差し替え
- *   - `@/lib/config/ai-config`           : getAiConfig / invalidateAiConfigCache をスタブ
+ *   - `@/lib/config/ai-config`           : getAiChatConfig / invalidateAiConfigCache をスタブ
  *
  * カバレッジ:
  *   GET    : 200（effective+dbPartial 返却）／ 403（非管理者）／ 403（未ログイン）／ 500（DB 例外）
@@ -36,7 +37,7 @@ vi.mock('@/lib/repositories/ai-config', () => ({
 }));
 
 vi.mock('@/lib/config/ai-config', () => ({
-  getAiConfig:              vi.fn(),
+  getAiChatConfig:          vi.fn(),
   invalidateAiConfigCache:  vi.fn(),
 }));
 
@@ -51,7 +52,7 @@ import {
   resetAiConfig,
 } from '@/lib/repositories/ai-config';
 import {
-  getAiConfig,
+  getAiChatConfig,
   invalidateAiConfigCache,
 } from '@/lib/config/ai-config';
 
@@ -87,15 +88,11 @@ function makeReq(
   });
 }
 
-/** AiKyoshitsuConfig fixture（DEFAULTS と同一形） */
+/** AiChatConfig fixture（DEFAULTS と同一形） */
 const sampleEffective = {
-  stage1Model:       'google/gemini-2.0-flash-001',
-  stage2Model:       'google/gemini-2.0-flash-001',
-  stage1TimeoutMs:   10_000,
-  stage2TimeoutMs:   40_000,
-  stage2MaxTokens:   5_000,
-  stage2Temperature: 0.5,
-  chatModel:         'qwen/qwen3-14b',
+  chatModel:       'qwen/qwen3-14b',
+  chatMaxTokens:   800,
+  chatTemperature: 0.7,
 };
 
 // ─── GET ────────────────────────────────────────────────────────
@@ -106,9 +103,9 @@ describe('GET /api/admin/ai-config — 現在値取得', () => {
 
   it('200 + data.effective / data.dbPartial を返す（管理者）', async () => {
     setAdminSession();
-    (getAiConfig as unknown as ReturnType<typeof vi.fn>).mockResolvedValue(sampleEffective);
+    (getAiChatConfig as unknown as ReturnType<typeof vi.fn>).mockResolvedValue(sampleEffective);
     (getAiConfigFromDb as unknown as ReturnType<typeof vi.fn>).mockResolvedValue({
-      stage2MaxTokens: 4_000,
+      chatMaxTokens: 1_200,
     });
 
     const { GET } = await import('@/app/api/admin/ai-config/route');
@@ -120,7 +117,7 @@ describe('GET /api/admin/ai-config — 現在値取得', () => {
     };
     expect(json.ok).toBe(true);
     expect(json.data.effective).toEqual(sampleEffective);
-    expect(json.data.dbPartial).toEqual({ stage2MaxTokens: 4_000 });
+    expect(json.data.dbPartial).toEqual({ chatMaxTokens: 1_200 });
   });
 
   it('403 when 非管理者', async () => {
@@ -139,7 +136,7 @@ describe('GET /api/admin/ai-config — 現在値取得', () => {
 
   it('500 when DB 例外', async () => {
     setAdminSession();
-    (getAiConfig as unknown as ReturnType<typeof vi.fn>).mockRejectedValue(new Error('boom'));
+    (getAiChatConfig as unknown as ReturnType<typeof vi.fn>).mockRejectedValue(new Error('boom'));
     (getAiConfigFromDb as unknown as ReturnType<typeof vi.fn>).mockResolvedValue({});
 
     const { GET } = await import('@/app/api/admin/ai-config/route');
@@ -163,8 +160,8 @@ describe('PUT /api/admin/ai-config — 設定保存', () => {
       makeReq('http://familyai.jp/api/admin/ai-config', {
         method: 'PUT',
         body: {
-          stage2MaxTokens: 4_000,
-          changeNote:      'タイムアウトを延長',
+          chatMaxTokens: 1_200,
+          changeNote:    '最大トークンを増やした',
         },
       }),
     );
@@ -174,7 +171,7 @@ describe('PUT /api/admin/ai-config — 設定保存', () => {
     expect(saveAiConfig).toHaveBeenCalledOnce();
     // 第1引数は config（changeNote が剥がされている）
     expect((saveAiConfig as unknown as ReturnType<typeof vi.fn>).mock.calls[0][0]).toEqual({
-      stage2MaxTokens: 4_000,
+      chatMaxTokens: 1_200,
     });
     // 第2引数は admin email
     expect((saveAiConfig as unknown as ReturnType<typeof vi.fn>).mock.calls[0][1]).toBe(
@@ -182,7 +179,7 @@ describe('PUT /api/admin/ai-config — 設定保存', () => {
     );
     // 第3引数は changeNote
     expect((saveAiConfig as unknown as ReturnType<typeof vi.fn>).mock.calls[0][2]).toBe(
-      'タイムアウトを延長',
+      '最大トークンを増やした',
     );
     // キャッシュ無効化が呼ばれる
     expect(invalidateAiConfigCache).toHaveBeenCalledOnce();
@@ -194,7 +191,7 @@ describe('PUT /api/admin/ai-config — 設定保存', () => {
     const res = await PUT(
       makeReq('http://familyai.jp/api/admin/ai-config', {
         method:         'PUT',
-        body:           { stage2MaxTokens: 4_000 },
+        body:           { chatMaxTokens: 1_200 },
         originMismatch: true,
       }),
     );
@@ -208,7 +205,7 @@ describe('PUT /api/admin/ai-config — 設定保存', () => {
     const res = await PUT(
       makeReq('http://familyai.jp/api/admin/ai-config', {
         method: 'PUT',
-        body:   { stage2MaxTokens: 4_000 },
+        body:   { chatMaxTokens: 1_200 },
       }),
     );
     expect(res.status).toBe(403);
@@ -239,21 +236,21 @@ describe('PUT /api/admin/ai-config — 設定保存', () => {
     const res = await PUT(
       makeReq('http://familyai.jp/api/admin/ai-config', {
         method: 'PUT',
-        body:   { stage1Model: 'unknown/model-x' },
+        body:   { chatModel: 'unknown/model-x' },
       }),
     );
     expect(res.status).toBe(400);
     expect(saveAiConfig).not.toHaveBeenCalled();
   });
 
-  it('400 when zod 違反（数値範囲外・stage2TimeoutMs 上限超過）', async () => {
+  it('400 when zod 違反（数値範囲外・chatMaxTokens 上限超過）', async () => {
     setAdminSession();
     const { PUT } = await import('@/app/api/admin/ai-config/route');
     const res = await PUT(
       makeReq('http://familyai.jp/api/admin/ai-config', {
         method: 'PUT',
-        // 範囲は最大 58_000（Vercel 60秒制限）
-        body:   { stage2TimeoutMs: 999_999 },
+        // 範囲は最大 2_000
+        body:   { chatMaxTokens: 999_999 },
       }),
     );
     expect(res.status).toBe(400);
@@ -267,7 +264,7 @@ describe('PUT /api/admin/ai-config — 設定保存', () => {
     const res = await PUT(
       makeReq('http://familyai.jp/api/admin/ai-config', {
         method: 'PUT',
-        body:   { stage2MaxTokens: 4_000 },
+        body:   { chatMaxTokens: 1_200 },
       }),
     );
     expect(res.status).toBe(500);

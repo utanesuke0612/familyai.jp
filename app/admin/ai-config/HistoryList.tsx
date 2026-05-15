@@ -23,7 +23,7 @@ interface HistoryListProps {
 
 export function HistoryList({ history }: HistoryListProps) {
   return (
-    <Section title="📜 変更履歴（直近10件）">
+    <Section title="変更履歴（直近10件）">
       {history.length === 0 ? (
         <p style={{ fontSize: 13, color: '#6B7280' }}>まだ変更履歴はありません</p>
       ) : (
@@ -55,7 +55,7 @@ export function HistoryList({ history }: HistoryListProps) {
               </div>
               {h.changeNote && (
                 <div style={{ marginTop: 4, fontSize: 13, color: '#374151' }}>
-                  📝 {h.changeNote}
+                  {h.changeNote}
                 </div>
               )}
               <pre

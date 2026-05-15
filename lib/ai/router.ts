@@ -13,8 +13,8 @@
  *   text-quality が要求されても月間コストが上限に近い場合 → text-simple に降格
  */
 
-import { MODEL_ROUTER, type ModelRouterType, AI_KYOSHITSU_DEFAULTS, findAiModel } from '@/shared';
-import { getAiConfig } from '@/lib/config/ai-config';
+import { MODEL_ROUTER, type ModelRouterType, AI_CHAT_DEFAULTS, findAiModel } from '@/shared';
+import { getAiChatConfig } from '@/lib/config/ai-config';
 import {
   streamOpenRouter,
   completeOpenRouter,
@@ -53,7 +53,7 @@ export function streamByModelId(
 
 /**
  * モデル ID から適切なプロバイダーへ非ストリーム完了リクエストを発行する。
- * AI教室 Stage1/Stage2 のように全文応答を待つ用途で使う。
+ * ストリームせず全文応答を待つ用途で使う。
  */
 export async function completeByModelId(
   modelId:  string,
@@ -76,7 +76,7 @@ export async function completeByModelId(
 /**
  * 非ストリーム + 使用統計（cache hit ratio 計測用）。
  * OpenRouter のキャッシュ統計（cache_read_input_tokens 等）を使うため、
- * Anthropic キャッシュを期待する Stage2 では必ず OpenRouter 経由を選ぶ運用が望ましい。
+ * Anthropic キャッシュを期待する用途では OpenRouter 経由を選ぶ運用が望ましい。
  * 直 API（DeepSeek / Qwen）でもこの関数は動くが、cache 統計は返らない。
  */
 export async function completeByModelIdWithUsage(
@@ -107,9 +107,9 @@ export async function routeAI(
       : type;
 
   // 管理画面で chatModel が DEFAULTS と異なる値に設定されていれば最優先
-  const cfg = await getAiConfig();
+  const cfg = await getAiChatConfig();
   const adminOverride =
-    cfg.chatModel && cfg.chatModel !== AI_KYOSHITSU_DEFAULTS.chatModel
+    cfg.chatModel && cfg.chatModel !== AI_CHAT_DEFAULTS.chatModel
       ? cfg.chatModel
       : null;
 
@@ -118,9 +118,10 @@ export async function routeAI(
     ?? MODEL_ROUTER[effectiveType]
     ?? MODEL_ROUTER.fallback;
 
+  // maxTokens / temperature が未指定なら、管理画面の AIチャット設定をデフォルトに使う
   return streamByModelId(modelId, messages, {
-    maxTokens:   options.maxTokens,
-    temperature: options.temperature,
+    maxTokens:   options.maxTokens   ?? cfg.chatMaxTokens,
+    temperature: options.temperature ?? cfg.chatTemperature,
     signal:      options.signal,
   });
 }

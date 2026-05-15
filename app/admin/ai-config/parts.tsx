@@ -149,6 +149,58 @@ export function NumberInput({
   );
 }
 
+/**
+ * Rev40: AIチャット設定用の range slider + 現在値表示。
+ * 最大出力トークン・temperature のような連続値の調整に使用。
+ */
+export function RangeInput({
+  value,
+  onChange,
+  min,
+  max,
+  step,
+  disabled,
+}: {
+  value:     number;
+  onChange:  (v: number) => void;
+  min:       number;
+  max:       number;
+  step:      number;
+  disabled?: boolean;
+}) {
+  // step が 1 未満（temperature 等）なら小数 1 桁、それ以外は整数表示
+  const display = step < 1 ? value.toFixed(1) : Math.round(value).toLocaleString();
+  return (
+    <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+      <input
+        type="range"
+        value={value}
+        onChange={(e) => onChange(Number(e.target.value))}
+        min={min}
+        max={max}
+        step={step}
+        disabled={disabled}
+        style={{ flex: 1, cursor: disabled ? 'not-allowed' : 'pointer' }}
+      />
+      <span
+        style={{
+          minWidth:     56,
+          padding:      '2px 8px',
+          textAlign:    'right',
+          fontSize:     14,
+          fontWeight:   700,
+          color:        '#1F2937',
+          background:   '#F9FAFB',
+          border:       '1px solid #E5E7EB',
+          borderRadius: 6,
+        }}
+      >
+        {display}
+      </span>
+    </div>
+  );
+}
+
 // ─── 共通スタイル ───────────────────────────────────────────────
 
 export const inputStyle: CSSProperties = {
@@ -165,7 +217,7 @@ export const btnPrimary: CSSProperties = {
   fontSize:     14,
   fontWeight:   700,
   color:        'white',
-  background:   '#FF8C42',
+  background:   'var(--shu)',
   border:       'none',
   borderRadius: 8,
   cursor:       'pointer',

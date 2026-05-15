@@ -3,7 +3,7 @@
  * familyai.jp — アプリ全体で使う定数（pure TypeScript / iOS 移植対応）
  */
 
-import type { ContentCategory, DifficultyLevel, AiKyoshitsuConfig } from '../types';
+import type { ContentCategory, DifficultyLevel, AiChatConfig } from '../types';
 
 // ─── サイトメタ ────────────────────────────────────────────────
 export const SITE = {
@@ -14,32 +14,23 @@ export const SITE = {
   twitterHandle: '@familyaijp',
 } as const;
 
-// ─── カテゴリ設定 ──────────────────────────────────────────────
-// ─── うごくAI教室 関連 ────────────────────────────────────────
-// Codex Q2-4 対応 (Rev36): 旧 AI 生成アニメ用の MAX_GENERATED_HTML_BYTES /
-// MAX_ANIMATION_PROMPT は本機能の 3D 図鑑化により未参照となったため削除済。
-// AI_KYOSHITSU_DEFAULTS は /admin/ai-config の chatModel 設定で使用継続。
+// ─── AIチャット設定 関連 ──────────────────────────────────────
+// Rev36: 旧 AI 生成アニメ用の MAX_GENERATED_HTML_BYTES / MAX_ANIMATION_PROMPT は
+// 本機能の 3D 図鑑化により削除済。
+// Rev40: 旧 AI教室パイプライン用の AI_KYOSHITSU_DEFAULTS（stage1/2 設定）を
+// 完全削除し、現行の AI チャット設定 AI_CHAT_DEFAULTS に再設計した。
 
 /**
- * うごくAI教室パイプラインのデフォルト設定（フォールバック値）。
+ * AIチャット設定のデフォルト値（フォールバック値）。
  *
- * `lib/config/ai-config.ts:getAiConfig()` の最下層レイヤーとして利用される。
+ * `lib/config/ai-config.ts:getAiChatConfig()` の最下層レイヤーとして利用される。
  * env / DB から値が来ない場合は必ずこの値が使われるため、
  * 「ハードコードのまま動く保証値」となる。
- *
- * 変更時は値の安全性（Vercel 60秒制限内に収まるか等）を必ず確認すること。
  */
-export const AI_KYOSHITSU_DEFAULTS: AiKyoshitsuConfig = {
-  stage1Model:       'google/gemini-2.0-flash-001',
-  stage2Model:       'google/gemini-2.0-flash-001',
-  // タイムアウト合計が Vercel 60秒制限から 10秒以上 buffer を確保
-  // Stage1 10s + Stage2 40s + buffer 10s = 60s
-  stage1TimeoutMs:   10_000,
-  stage2TimeoutMs:   40_000,
-  // Gemini 2.0 Flash で 5000 tokens ≒ 約 20秒で生成完了見込み
-  stage2MaxTokens:   5_000,
-  stage2Temperature: 0.5,
-  chatModel:         'qwen/qwen3-14b',
+export const AI_CHAT_DEFAULTS: AiChatConfig = {
+  chatModel:       'qwen/qwen3-14b',   // 現状の chatModel デフォルトを維持
+  chatMaxTokens:   800,                // 約 300 文字の応答想定
+  chatTemperature: 0.7,
 };
 
 /** カテゴリの表示ラベル */
@@ -190,7 +181,7 @@ export const TUTOR3D_GRADES: readonly Tutor3dGrade[] = [
   'middle',
 ] as const;
 
-// ─── AI教室パイプラインのモデル一覧・プリセット・範囲制限（再エクスポート） ──
+// ─── AIチャット設定のモデル一覧・プリセット・範囲制限（再エクスポート） ──
 export {
   AI_MODEL_OPTIONS,
   AI_CONFIG_PRESETS,

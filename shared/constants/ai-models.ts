@@ -1,15 +1,15 @@
 /**
  * shared/constants/ai-models.ts
- * familyai.jp — AI教室で利用可能なモデル一覧と料金テーブル
+ * familyai.jp — AI チャットで利用可能なモデル一覧と料金テーブル
  *
- * 管理画面のドロップダウン選択肢・コスト試算に利用される。
+ * /admin/ai-config のドロップダウン選択肢・コスト試算に利用される。
  * 価格は OpenRouter 経由の概算値（USD ベースで 1USD=150円換算）。
  */
 
 /** AI 呼び出し経路（プロバイダー）。Rev32 で導入。 */
 export type AiProvider = 'openrouter' | 'deepseek' | 'qwen';
 
-/** AI教室パイプラインで利用可能なモデル ID（管理画面のドロップダウン選択肢） */
+/** AI チャットで利用可能なモデル ID（/admin/ai-config のドロップダウン選択肢） */
 export interface AiModelOption {
   /**
    * 内部 ID（ユニーク・DB に保存される）。
@@ -164,100 +164,60 @@ export function findAiModel(id: string): AiModelOption | undefined {
 }
 
 // ─── プリセット（管理画面の「プリセット切替」用） ─────────────
+/**
+ * AI チャット設定のプリセット。
+ * 「コスト最優先 / バランス / 品質重視」の 3 段階で、
+ * 管理画面からワンクリックで chatModel + chatMaxTokens + chatTemperature を一括適用する。
+ */
 export interface AiConfigPreset {
   id:          string;
   label:       string;
   description: string;
-  /** Partial<AiKyoshitsuConfig> を指定（型は循環参照回避のため緩く） */
-  values: {
-    stage1Model?:        string;
-    stage2Model?:        string;
-    stage1TimeoutMs?:    number;
-    stage2TimeoutMs?:    number;
-    stage2MaxTokens?:    number;
-    stage2Temperature?:  number;
+  /** Partial<AiChatConfig> を指定（型は循環参照回避のため緩く） */
+  config: {
+    chatModel?:       string;
+    chatMaxTokens?:   number;
+    chatTemperature?: number;
   };
 }
 
 export const AI_CONFIG_PRESETS: readonly AiConfigPreset[] = [
-  // 共通方針:
-  //   - Vercel 60秒制限から最低 8〜20秒の buffer を確保
-  //   - Stage1 + Stage2 ≤ 52秒 を目安
-  //   - 各モデルの実速度を考慮した maxTokens 上限
-  //
-  // ⚠️ Gemini 2.0 Flash は OpenRouter 共有プールの 429 / 上流タイムアウトが
-  //    発生しやすい（is_byok=false の場合）。本番運用では「安定運用」推奨。
   {
-    id:          'stable',
-    label:       '🛡️ 安定運用（推奨）',
-    description: 'Anthropic Haiku 3.5 を全Stageで利用（buffer 8秒）。Gemini共有プール由来の429・AbortErrorを回避できる最も安定な構成。本番運用に最適。',
-    values: {
-      stage1Model:       'anthropic/claude-3.5-haiku',
-      stage2Model:       'anthropic/claude-3.5-haiku',
-      stage1TimeoutMs:   12_000,
-      stage2TimeoutMs:   40_000,   // 合計 52秒・buffer 8秒
-      stage2MaxTokens:   4_000,
-      stage2Temperature: 0.5,
-    },
-  },
-  {
-    id:          'cheapest',
-    label:       '💰 最安構成（テスト用）',
-    description: '速度・コスト最優先（buffer 20秒）。⚠️ Gemini共有プール混雑時は429/AbortErrorで失敗しやすい。本番では「安定運用」を推奨。',
-    values: {
-      stage1Model:       'google/gemini-2.0-flash-001',
-      stage2Model:       'google/gemini-2.0-flash-001',
-      stage1TimeoutMs:   10_000,
-      stage2TimeoutMs:   30_000,   // 合計 40秒・buffer 20秒
-      stage2MaxTokens:   4_000,
-      stage2Temperature: 0.5,
+    id:          'economy',
+    label:       '💰 最安',
+    description: 'コスト最優先・軽量モデル。短めの応答でトークンを節約する。',
+    config: {
+      chatModel:       'qwen:qwen-turbo',   // 価格テーブル最安（入力¥6 / 出力¥12 per M tok）
+      chatMaxTokens:   500,
+      chatTemperature: 0.5,
     },
   },
   {
     id:          'balanced',
-    label:       '⚖️ バランス（Gemini）',
-    description: '速度・品質・コストの中間（buffer 15秒）。⚠️ Gemini 共有プール混雑の影響あり。安定優先なら「安定運用」を選択。',
-    values: {
-      stage1Model:       'google/gemini-2.0-flash-001',
-      stage2Model:       'google/gemini-2.0-flash-001',
-      stage1TimeoutMs:   10_000,
-      stage2TimeoutMs:   35_000,   // 合計 45秒・buffer 15秒
-      stage2MaxTokens:   5_000,
-      stage2Temperature: 0.5,
+    label:       '⚖️ バランス（推奨）',
+    description: '標準設定・コストと品質の両立。通常運用はこれで十分。',
+    config: {
+      chatModel:       'qwen/qwen3-14b',
+      chatMaxTokens:   800,
+      chatTemperature: 0.7,
     },
   },
   {
     id:          'quality',
-    label:       '✨ 品質重視（Haiku 3.5）',
-    description: 'Stage2 のみ Haiku 3.5 で高品質HTML（buffer 10秒）。Stage1 が Gemini なので 429 リスクは残る。完全安定は「安定運用」。',
-    values: {
-      stage1Model:       'google/gemini-2.0-flash-001',
-      stage2Model:       'anthropic/claude-3.5-haiku',
-      stage1TimeoutMs:   10_000,
-      stage2TimeoutMs:   40_000,   // 合計 50秒・buffer 10秒
-      stage2MaxTokens:   5_000,
-      stage2Temperature: 0.5,
-    },
-  },
-  {
-    id:          'premium',
-    label:       '👑 最高品質（実験的・タイムアウトリスクあり）',
-    description: 'Sonnet 4 でフル実装。Vercel 60秒制限と Sonnet 4 の生成速度の関係で、テーマによりタイムアウトする場合あり。',
-    values: {
-      stage1Model:       'google/gemini-2.0-flash-001',
-      stage2Model:       'anthropic/claude-sonnet-4',
-      stage1TimeoutMs:   10_000,
-      stage2TimeoutMs:   40_000,   // 合計 50秒・buffer 10秒
-      stage2MaxTokens:   3_000,    // Sonnet 4 は 50tok/s なので 3000tok ≒ 60秒（ギリギリ）
-      stage2Temperature: 0.5,
+    label:       '✨ 品質重視',
+    description: '回答品質優先・上位モデル。長め・高品質な応答が必要なときに。',
+    config: {
+      // Claude 3.5 Haiku を採用（出力 ¥600/M tok ≒ 1回 ¥0.6）。
+      // claude-sonnet-4 は ¥2250/M tok と高すぎるためチャット用途では過剰。
+      chatModel:       'anthropic/claude-3.5-haiku',
+      chatMaxTokens:   1_200,
+      chatTemperature: 0.7,
     },
   },
 ];
 
 // ─── 値の範囲制限（zod スキーマで使用） ──────────────────────
 export const AI_CONFIG_RANGES = {
-  stage1TimeoutMs:   { min: 3_000,  max: 30_000  },
-  stage2TimeoutMs:   { min: 10_000, max: 58_000  }, // Vercel 60秒制限を考慮
-  stage2MaxTokens:   { min: 1_000,  max: 16_000  },
-  stage2Temperature: { min: 0.0,    max: 1.0     },
+  chatMaxTokens:   { min: 200, max: 2_000, step: 100 },
+  chatTemperature: { min: 0,   max: 1,     step: 0.1 },
 } as const;

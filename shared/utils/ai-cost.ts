@@ -1,73 +1,61 @@
 /**
  * shared/utils/ai-cost.ts
- * familyai.jp — AI教室パイプラインのコスト試算
+ * familyai.jp — AIチャット 1 回あたりのコスト試算
  *
- * 管理画面の「コスト試算」表示用。
- * 想定トークン数 × モデル単価で1リクエストあたりの円コストを算出する。
+ * /admin/ai-config の「コスト試算」表示用。
+ * 想定トークン数 × モデル単価で 1 リクエストあたりの円コストを算出する。
  */
 
-import type { AiKyoshitsuConfig } from '../types';
+import type { AiChatConfig } from '../types';
 import { findAiModel } from '../constants/ai-models';
 
-/** 1リクエストの想定トークン数（経験則） */
+/** AIチャット 1 リクエストの想定トークン数（経験則） */
 export const TOKEN_ESTIMATE = {
-  /** Stage 1 入力（system prompt + user message） */
-  stage1Input:  6_500,
-  /** Stage 1 出力（JSON spec） */
-  stage1Output: 3_000,
-  /** Stage 2 入力（system prompt + Stage1 JSON） */
-  stage2Input:  4_000,
   /**
-   * Stage 2 出力は maxTokens を上限値として使うが、
-   * 実際は平均で 70% 程度しか使わない経験則
+   * 入力トークン（システムプロンプト + 記事/レッスンコンテキスト + 質問）。
+   * buildArticleSystemPrompt の固定文 + 記事概要 + ユーザー質問でおおよそ 500 token。
    */
-  stage2OutputUsageRate: 0.7,
+  chatInput: 500,
+  /**
+   * 出力トークンは chatMaxTokens を上限として使うが、
+   * 実際は平均で 70% 程度しか使わない経験則。
+   */
+  chatOutputUsageRate: 0.7,
 } as const;
 
-/** 1回のリクエストにかかる推定コスト（円） */
+/** AIチャット 1 回のリクエストにかかる推定コスト（円） */
 export interface AiCostBreakdown {
-  stage1InputJpy:  number;
-  stage1OutputJpy: number;
-  stage2InputJpy:  number;
-  stage2OutputJpy: number;
-  totalJpy:        number;
-  /** モデルが見つからなかった場合は true（試算は推定値） */
+  inputJpy:  number;
+  outputJpy: number;
+  totalJpy:  number;
+  /** モデルが料金テーブルに無かった場合は true（試算は推定値） */
   hasUnknownModel: boolean;
 }
 
 /**
- * 設定から1リクエストの推定コストを計算する。
+ * AIチャット設定から 1 リクエストの推定コストを計算する。
  * モデルが価格テーブルに無い場合は 0 円扱いで totalJpy に加算しない。
  */
-export function estimateAiCost(cfg: AiKyoshitsuConfig): AiCostBreakdown {
-  const stage1Model = findAiModel(cfg.stage1Model);
-  const stage2Model = findAiModel(cfg.stage2Model);
-  const hasUnknownModel = !stage1Model || !stage2Model;
+export function estimateAiCost(cfg: AiChatConfig): AiCostBreakdown {
+  const model = findAiModel(cfg.chatModel);
+  const hasUnknownModel = !model;
 
-  const stage1InputJpy  = stage1Model
-    ? (TOKEN_ESTIMATE.stage1Input  / 1_000_000) * stage1Model.inputPriceJpy
+  const inputJpy = model
+    ? (TOKEN_ESTIMATE.chatInput / 1_000_000) * model.inputPriceJpy
     : 0;
-  const stage1OutputJpy = stage1Model
-    ? (TOKEN_ESTIMATE.stage1Output / 1_000_000) * stage1Model.outputPriceJpy
-    : 0;
-  const stage2InputJpy  = stage2Model
-    ? (TOKEN_ESTIMATE.stage2Input  / 1_000_000) * stage2Model.inputPriceJpy
-    : 0;
-  const stage2OutputJpy = stage2Model
-    ? (cfg.stage2MaxTokens * TOKEN_ESTIMATE.stage2OutputUsageRate / 1_000_000) * stage2Model.outputPriceJpy
+  const outputJpy = model
+    ? (cfg.chatMaxTokens * TOKEN_ESTIMATE.chatOutputUsageRate / 1_000_000) * model.outputPriceJpy
     : 0;
 
   return {
-    stage1InputJpy,
-    stage1OutputJpy,
-    stage2InputJpy,
-    stage2OutputJpy,
-    totalJpy: stage1InputJpy + stage1OutputJpy + stage2InputJpy + stage2OutputJpy,
+    inputJpy,
+    outputJpy,
+    totalJpy: inputJpy + outputJpy,
     hasUnknownModel,
   };
 }
 
 /** 月間コスト試算（リクエスト数を掛けるだけ） */
-export function estimateMonthlyCost(cfg: AiKyoshitsuConfig, requestsPerMonth: number): number {
+export function estimateMonthlyCost(cfg: AiChatConfig, requestsPerMonth: number): number {
   return estimateAiCost(cfg).totalJpy * requestsPerMonth;
 }

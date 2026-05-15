@@ -233,21 +233,25 @@ export const userAnimations = pgTable(
   }),
 );
 
-// ─── ai_config（管理画面で編集可能なAI教室パイプライン設定）───
+// ─── ai_config（管理画面で編集可能な AIチャット設定）─────────
 /**
- * AI教室パイプラインのランタイム設定（DB管理）。
+ * AIチャットのランタイム設定（DB管理）。
  * 1行限定（id=1 固定）。partial 値を JSONB で保存し、
- * 未設定フィールドは shared/constants の AI_KYOSHITSU_DEFAULTS を使う。
+ * 未設定フィールドは shared/constants の AI_CHAT_DEFAULTS を使う。
+ *
+ * Rev40: 旧 AI教室パイプライン用の stage1/2 フィールドを廃止し、
+ * AIチャット用 3 フィールド（chatModel / chatMaxTokens / chatTemperature）に
+ * 再設計済み。JSONB なので migration 不要（旧キーは自動的に無視される）。
  */
 export const aiConfig = pgTable('ai_config', {
   id:        integer('id').primaryKey().default(1),  // 常に 1
-  config:    jsonb('config').notNull(),               // Partial<AiKyoshitsuConfig>
+  config:    jsonb('config').notNull(),               // Partial<AiChatConfig>
   updatedAt: timestamp('updated_at').defaultNow().notNull(),
   updatedBy: varchar('updated_by', { length: 255 }),  // 管理者メール
 });
 
 /**
- * AI教室設定の変更履歴（直近 10 件保持の運用想定）。
+ * AIチャット設定の変更履歴（直近 10 件保持の運用想定）。
  * PUT 時に1件 INSERT、リセット時に1件 INSERT（空 config）。
  */
 export const aiConfigHistory = pgTable(

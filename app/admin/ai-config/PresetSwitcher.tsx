@@ -1,25 +1,24 @@
 /**
  * app/admin/ai-config/PresetSwitcher.tsx
- * familyai.jp — AI設定 プリセット比較カード（Client Component）
+ * familyai.jp — AIチャット設定 プリセット比較カード（Client Component）
  *
- * 旧版（横並びの pill ボタン）を比較カードに刷新。
- * 各プリセットの主要パラメータ（Stage1/Stage2 モデル略称・合計タイムアウト・1回コスト）
- * をインラインで一覧でき、現在のフォームに最も近いプリセットを active 表示する。
+ * Rev40: 旧 5 プリセット（stable / cheapest / balanced / quality / premium）→
+ *        AI チャット用 3 プリセット（economy / balanced / quality）に再設計。
  *
  * UX 設計:
- *   - クリックで一括適用（旧挙動を維持）
- *   - active 判定: stage1Model + stage2Model + stage2MaxTokens が完全一致
- *   - 危険警告（💸 高コスト・⚠ Gemini 共有プール混雑リスク）はカード内で色付け
+ *   - クリックで chatModel + chatMaxTokens + chatTemperature を一括適用
+ *   - active 判定: 主要 3 値（model / maxTokens / temperature）が完全一致
+ *   - 各カードに 1 回コスト目安と簡単な説明を表示
  */
 
 'use client';
 
-import { AI_CONFIG_PRESETS, findAiModel, estimateAiCost, AI_KYOSHITSU_DEFAULTS } from '@/shared';
-import type { AiKyoshitsuConfig } from '@/shared/types';
+import { AI_CONFIG_PRESETS, findAiModel, estimateAiCost, AI_CHAT_DEFAULTS } from '@/shared';
+import type { AiChatConfig } from '@/shared/types';
 
 interface PresetSwitcherProps {
   /** 現在のフォーム状態（active 判定用） */
-  current:   AiKyoshitsuConfig;
+  current:   AiChatConfig;
   /** プリセット適用ハンドラ。preset.id を受け取る */
   onApply:   (presetId: string) => void;
   disabled?: boolean;
@@ -37,7 +36,7 @@ export function PresetSwitcher({ current, onApply, disabled }: PresetSwitcherPro
     >
       <header style={{ padding: '1rem 1.25rem', borderBottom: '1px solid #F3F4F6' }}>
         <h2 style={{ fontSize: 16, fontWeight: 700, color: '#1F2937', margin: 0 }}>
-          🎁 プリセット切替
+          プリセット切替
         </h2>
         <p style={{ fontSize: 12, color: '#6B7280', margin: '4px 0 0' }}>
           クリックで一括適用。各カードに主要パラメータと 1 回コスト目安を表示。
@@ -48,41 +47,28 @@ export function PresetSwitcher({ current, onApply, disabled }: PresetSwitcherPro
         style={{
           padding:             '1rem 1.25rem',
           display:             'grid',
-          gridTemplateColumns: 'repeat(auto-fill, minmax(260px, 1fr))',
+          gridTemplateColumns: 'repeat(auto-fill, minmax(240px, 1fr))',
           gap:                 '0.75rem',
         }}
       >
         {AI_CONFIG_PRESETS.map((p) => {
           // ── プリセット適用後のフォーム状態を仮想的に計算してコスト試算
-          const applied: AiKyoshitsuConfig = {
-            ...AI_KYOSHITSU_DEFAULTS,
+          const applied: AiChatConfig = {
+            ...AI_CHAT_DEFAULTS,
             ...current,
-            ...(p.values as Partial<AiKyoshitsuConfig>),
+            ...(p.config as Partial<AiChatConfig>),
           };
           const cost = estimateAiCost(applied);
-          const stage1Model = findAiModel(applied.stage1Model);
-          const stage2Model = findAiModel(applied.stage2Model);
+          const model = findAiModel(applied.chatModel);
 
           // ── active 判定（主要 3 値の一致）
           const isActive =
-            current.stage1Model === applied.stage1Model &&
-            current.stage2Model === applied.stage2Model &&
-            current.stage2MaxTokens === applied.stage2MaxTokens &&
-            current.stage1TimeoutMs === applied.stage1TimeoutMs &&
-            current.stage2TimeoutMs === applied.stage2TimeoutMs;
+            current.chatModel       === applied.chatModel &&
+            current.chatMaxTokens   === applied.chatMaxTokens &&
+            current.chatTemperature === applied.chatTemperature;
 
-          // ── コスト警告（10円/回超で警告色）
-          const costWarn = cost.totalJpy >= 10;
-          // ── Gemini 共有プール混雑リスク（label 内の ⚠ で識別）
-          const reliability =
-            p.id === 'stable' ? 'high'
-            : p.id === 'premium' ? 'mid'
-            : 'risk';   // gemini-base は共有プール 429 リスクあり
-
-          const reliabilityBadge =
-            reliability === 'high' ? { label: '🛡️ 安定', color: '#065F46', bg: '#D1FAE5' }
-            : reliability === 'mid'  ? { label: '🧪 実験的', color: '#92400E', bg: '#FEF3C7' }
-            :                          { label: '⚠ 共有プール', color: '#92400E', bg: '#FEF3C7' };
+          // ── コスト警告（0.5 円/回超で警告色・チャットは Stage 生成より安い想定）
+          const costWarn = cost.totalJpy >= 0.5;
 
           return (
             <button
@@ -93,9 +79,9 @@ export function PresetSwitcher({ current, onApply, disabled }: PresetSwitcherPro
               aria-pressed={isActive}
               aria-label={`プリセット「${p.label}」を適用 ${isActive ? '（適用中）' : ''}`}
               style={{
-                background:    isActive ? '#FFF7ED' : 'white',
-                border:        `2px solid ${isActive ? '#FB923C' : '#E5E7EB'}`,
-                borderRadius:  10,
+                background:    isActive ? 'var(--washi-deep)' : 'white',
+                border:        `2px solid ${isActive ? 'var(--shu)' : '#E5E7EB'}`,
+                borderRadius:  4,
                 padding:       '12px 14px',
                 textAlign:     'left',
                 cursor:        disabled ? 'not-allowed' : 'pointer',
@@ -104,47 +90,26 @@ export function PresetSwitcher({ current, onApply, disabled }: PresetSwitcherPro
                 position:      'relative',
                 transition:    'border-color 120ms, background 120ms, transform 120ms',
               }}
-              onMouseEnter={(e) => { if (!disabled && !isActive) e.currentTarget.style.borderColor = '#FDBA74'; }}
+              onMouseEnter={(e) => { if (!disabled && !isActive) e.currentTarget.style.borderColor = 'var(--shu-soft)'; }}
               onMouseLeave={(e) => { if (!disabled && !isActive) e.currentTarget.style.borderColor = '#E5E7EB'; }}
             >
-              {/* ── ヘッダ行：ラベル + 信頼性バッジ */}
-              <div style={{ display: 'flex', alignItems: 'flex-start', gap: 6, marginBottom: 8 }}>
-                <span style={{ flex: 1, fontWeight: 700, fontSize: 14, color: '#1F2937', lineHeight: 1.3 }}>
+              {/* ── ヘッダ行：ラベル */}
+              <div style={{ marginBottom: 8 }}>
+                <span style={{ fontWeight: 700, fontSize: 14, color: '#1F2937', lineHeight: 1.3 }}>
                   {p.label}
-                </span>
-                <span
-                  style={{
-                    fontSize:     10,
-                    fontWeight:   700,
-                    padding:      '2px 6px',
-                    borderRadius: 999,
-                    background:   reliabilityBadge.bg,
-                    color:        reliabilityBadge.color,
-                    whiteSpace:   'nowrap',
-                  }}
-                >
-                  {reliabilityBadge.label}
                 </span>
               </div>
 
               {/* ── 主要パラメータ（grid 2 列） */}
               <div style={{ display: 'grid', gridTemplateColumns: 'auto 1fr', columnGap: 8, rowGap: 4, fontSize: 11 }}>
-                <span style={paramKey()}>Stage1</span>
-                <span style={paramVal()}>{stage1Model?.label ?? applied.stage1Model}</span>
-
-                <span style={paramKey()}>Stage2</span>
-                <span style={paramVal()}>{stage2Model?.label ?? applied.stage2Model}</span>
-
-                <span style={paramKey()}>合計時間</span>
-                <span style={paramVal()}>
-                  {Math.round((applied.stage1TimeoutMs + applied.stage2TimeoutMs) / 1000)} 秒
-                  <span style={{ color: '#9CA3AF' }}>
-                    {' '}（buffer {Math.max(0, 60 - Math.round((applied.stage1TimeoutMs + applied.stage2TimeoutMs) / 1000))}秒）
-                  </span>
-                </span>
+                <span style={paramKey()}>モデル</span>
+                <span style={paramVal()}>{model?.label ?? applied.chatModel}</span>
 
                 <span style={paramKey()}>最大tok</span>
-                <span style={paramVal()}>{applied.stage2MaxTokens.toLocaleString()}</span>
+                <span style={paramVal()}>{applied.chatMaxTokens.toLocaleString()}</span>
+
+                <span style={paramKey()}>temp</span>
+                <span style={paramVal()}>{applied.chatTemperature.toFixed(1)}</span>
               </div>
 
               {/* ── 1回コスト */}
@@ -163,7 +128,7 @@ export function PresetSwitcher({ current, onApply, disabled }: PresetSwitcherPro
                 }}
               >
                 <span>1回コスト</span>
-                <span style={{ fontSize: 13 }}>¥{cost.totalJpy.toFixed(2)}</span>
+                <span style={{ fontSize: 13 }}>¥{cost.totalJpy.toFixed(3)}</span>
               </div>
 
               {/* ── 説明（キャプション） */}
@@ -181,8 +146,8 @@ export function PresetSwitcher({ current, onApply, disabled }: PresetSwitcherPro
                     fontSize:   10,
                     fontWeight: 800,
                     padding:    '2px 6px',
-                    borderRadius: 999,
-                    background: '#FB923C',
+                    borderRadius: 4,
+                    background: 'var(--shu)',
                     color:      'white',
                     letterSpacing: 0.5,
                   }}

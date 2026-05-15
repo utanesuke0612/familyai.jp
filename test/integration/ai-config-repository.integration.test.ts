@@ -83,10 +83,10 @@ describe('getAiConfigFromDb', () => {
 
   it('行あり: config を返す', async () => {
     dbCalls.selectResults = [[
-      { id: 1, config: { stage2MaxTokens: 4_000 }, updatedBy: 'a@b', updatedAt: new Date() },
+      { id: 1, config: { chatMaxTokens: 1_200 }, updatedBy: 'a@b', updatedAt: new Date() },
     ]];
     const result = await getAiConfigFromDb();
-    expect(result).toEqual({ stage2MaxTokens: 4_000 });
+    expect(result).toEqual({ chatMaxTokens: 1_200 });
   });
 
   it('row.config が null の場合: 空オブジェクト', async () => {
@@ -109,9 +109,9 @@ describe('saveAiConfig', () => {
     dbCalls.selectResults = [Array.from({ length: 5 }, (_, i) => ({ id: i + 1 }))];
 
     await saveAiConfig(
-      { stage2MaxTokens: 4_000 },
+      { chatMaxTokens: 1_200 },
       'admin@familyai.jp',
-      'タイムアウト調整',
+      '最大トークン調整',
     );
 
     // insert は2回（aiConfig upsert + history insert）
@@ -122,7 +122,7 @@ describe('saveAiConfig', () => {
 
   it('changeNote 省略でも upsert + history insert が呼ばれる', async () => {
     dbCalls.selectResults = [[]];
-    await saveAiConfig({ stage2MaxTokens: 4_000 }, 'admin@familyai.jp');
+    await saveAiConfig({ chatMaxTokens: 1_200 }, 'admin@familyai.jp');
     expect(dbMock.insert).toHaveBeenCalledTimes(2);
   });
 

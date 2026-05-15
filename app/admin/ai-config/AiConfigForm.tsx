@@ -5,11 +5,10 @@
  * 状態管理（form / message / 保存処理）と、サブコンポーネントの
  * コンポジションを担当する薄いコンテナ。
  *
- * 構成（Rev30 H4 分割 → Rev31 H7 で table 化 → Rev32 で Section 縦並びに復帰）:
- *   - parts.tsx          : 共通 UI 部品（Section/Field/Hint/Stat/etc）+ styles
- *   - PresetSwitcher.tsx : 🎁 プリセット比較カード（Rev31 で刷新）
- *   - StageFields.tsx    : 💬 AIチャット → 🧠 Stage1 → 🎬 Stage2 の Section 縦並び
- *                          （Rev32 で順序変更：利用頻度の高い AIチャットを先頭に）
+ * 構成（Rev40 で AI チャット 3 フィールドに再設計）:
+ *   - parts.tsx          : 共通 UI 部品（Section/Field/Hint/RangeInput/etc）+ styles
+ *   - PresetSwitcher.tsx : 🎁 プリセット比較カード（最安/バランス/品質重視）
+ *   - ChatFields.tsx     : 💬 AIチャット 3 項目（model / maxTokens / temperature）
  *   - CostEstimator.tsx  : 💰 月間コスト試算（コンパクトバー）
  *   - HistoryList.tsx    : 📜 変更履歴
  */
@@ -18,19 +17,19 @@
 
 import { useState, useTransition } from 'react';
 import { useRouter } from 'next/navigation';
-import { AI_CONFIG_PRESETS, AI_KYOSHITSU_DEFAULTS } from '@/shared';
-import type { AiKyoshitsuConfig } from '@/shared/types';
+import { AI_CONFIG_PRESETS, AI_CHAT_DEFAULTS } from '@/shared';
+import type { AiChatConfig } from '@/shared/types';
 import { useConfirm } from '@/components/ui/ConfirmDialog';
 
 import { Section, Field, btnPrimary, btnSecondary, inputStyle } from './parts';
 import { PresetSwitcher } from './PresetSwitcher';
-import { StageFields }    from './StageFields';
+import { ChatFields }     from './ChatFields';
 import { CostEstimator }  from './CostEstimator';
 import { HistoryList, type HistoryItem } from './HistoryList';
 
 interface AiConfigFormProps {
-  effective: AiKyoshitsuConfig;
-  dbPartial: Partial<AiKyoshitsuConfig>;
+  effective: AiChatConfig;
+  dbPartial: Partial<AiChatConfig>;
   history:   HistoryItem[];
 }
 
@@ -43,9 +42,9 @@ export function AiConfigForm({ effective, dbPartial, history }: AiConfigFormProp
     useState<{ kind: 'ok' | 'err'; text: string } | null>(null);
 
   // フォーム状態（DB 値があればそれを、なければ effective を初期値に）
-  const [form, setForm] = useState<AiKyoshitsuConfig>(() => ({
+  const [form, setForm] = useState<AiChatConfig>(() => ({
     ...effective,
-    ...(dbPartial as Partial<AiKyoshitsuConfig>),
+    ...(dbPartial as Partial<AiChatConfig>),
   }));
   const [changeNote, setChangeNote] = useState('');
 
@@ -53,7 +52,7 @@ export function AiConfigForm({ effective, dbPartial, history }: AiConfigFormProp
   function applyPreset(presetId: string) {
     const preset = AI_CONFIG_PRESETS.find((p) => p.id === presetId);
     if (!preset) return;
-    setForm((prev) => ({ ...prev, ...preset.values } as AiKyoshitsuConfig));
+    setForm((prev: AiChatConfig) => ({ ...prev, ...preset.config } as AiChatConfig));
     setChangeNote(`プリセット「${preset.label}」を適用`);
   }
 
@@ -62,10 +61,10 @@ export function AiConfigForm({ effective, dbPartial, history }: AiConfigFormProp
     setIsSaving(true);
     setMessage(null);
     try {
-      // dbPartial と差があるフィールドだけ送る（minimal payload）
+      // DEFAULTS と差があるフィールドだけ送る（minimal payload）
       const payload: Record<string, unknown> = {};
-      (Object.keys(form) as (keyof AiKyoshitsuConfig)[]).forEach((k) => {
-        if (form[k] !== AI_KYOSHITSU_DEFAULTS[k]) payload[k] = form[k];
+      (Object.keys(form) as (keyof AiChatConfig)[]).forEach((k) => {
+        if (form[k] !== AI_CHAT_DEFAULTS[k]) payload[k] = form[k];
       });
       if (changeNote.trim()) payload.changeNote = changeNote.trim();
 
@@ -107,7 +106,7 @@ export function AiConfigForm({ effective, dbPartial, history }: AiConfigFormProp
       const json = (await res.json()) as { ok: boolean; error?: string };
       if (json.ok) {
         setMessage({ kind: 'ok', text: 'リセットしました' });
-        setForm({ ...AI_KYOSHITSU_DEFAULTS });
+        setForm({ ...AI_CHAT_DEFAULTS });
         setChangeNote('');
         startTransition(() => router.refresh());
       } else {
@@ -141,20 +140,20 @@ export function AiConfigForm({ effective, dbPartial, history }: AiConfigFormProp
       {/* プリセット切替（比較カード） */}
       <PresetSwitcher current={form} onApply={applyPreset} disabled={isSaving} />
 
-      {/* AIチャット → Stage1 → Stage2 の順で Section 縦並び表示 */}
-      <StageFields form={form} onChange={setForm} disabled={isSaving} />
+      {/* AIチャット 3 項目（model / maxTokens / temperature） */}
+      <ChatFields form={form} onChange={setForm} disabled={isSaving} />
 
       {/* 月間コスト試算（コンパクトバー） */}
       <CostEstimator form={form} />
 
       {/* 変更メモ + 保存ボタン */}
-      <Section title="💾 保存">
+      <Section title="保存">
         <Field label="変更メモ（任意・履歴に残ります）">
           <input
             type="text"
             value={changeNote}
             onChange={(e) => setChangeNote(e.target.value)}
-            placeholder="例: タイムアウトを 50秒に延長"
+            placeholder="例: 最大トークンを 1000 に増やした"
             maxLength={500}
             disabled={isSaving}
             style={{ ...inputStyle, width: '100%' }}
@@ -173,14 +172,14 @@ export function AiConfigForm({ effective, dbPartial, history }: AiConfigFormProp
             disabled={isSaving || isPending}
             style={{ ...btnPrimary, opacity: isSaving ? 0.5 : 1 }}
           >
-            {isSaving ? '⏳ 保存中…' : '💾 保存（即時反映）'}
+            {isSaving ? '保存中…' : '保存（即時反映）'}
           </button>
           <button
             onClick={handleReset}
             disabled={isSaving || isPending}
             style={btnSecondary}
           >
-            🔄 デフォルトに戻す
+            デフォルトに戻す
           </button>
         </div>
       </Section>

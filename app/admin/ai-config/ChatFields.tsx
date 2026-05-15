@@ -1,136 +1,80 @@
 /**
- * app/admin/ai-config/StageFields.tsx
- * familyai.jp — AI設定 AIチャット / Stage1 / Stage2 入力フィールド（Section 縦並び版）
+ * app/admin/ai-config/ChatFields.tsx
+ * familyai.jp — AIチャット設定の入力フィールド（Section 1 枚）
  *
- * Rev30 H4 で初出 → Rev31 で SettingsTable 化 → Rev32 で復活（テーブル形式は
- * 一覧性低下の声があったため）。順序を「AIチャット → Stage1 → Stage2」に変更し、
- * 利用頻度が高い AIチャットを先頭に配置。
+ * Rev40: 旧 StageFields（AIチャット + Stage1 + Stage2 の 3 セクション）から
+ *        AI チャット用 3 項目のみ表示する 1 セクションへ全面リプレイス。
  *
- * Section 構成:
- *   ① 💬 AIチャット   — 記事ページ右下のチャットウィジェット既定モデル
- *   ② 🧠 Stage 1     — テーマ詳細化・JSON 設計
- *   ③ 🎬 Stage 2     — HTML 生成（Vercel 60 秒制限を考慮）
- *
- * Rev32 で provider バッジを各モデル選択直下に表示し、
- * OpenRouter / DeepSeek 公式 / Qwen 公式 のどの経路で呼ばれるか一目でわかるように。
+ * 表示項目:
+ *   ① モデル選択       — chatModel（AI_MODEL_OPTIONS から選択）
+ *   ② 最大出力トークン  — chatMaxTokens（range slider）
+ *   ③ temperature      — chatTemperature（range slider）
  */
 
 'use client';
 
-import { AI_CONFIG_RANGES, AI_KYOSHITSU_DEFAULTS, findAiModel } from '@/shared';
-import type { AiKyoshitsuConfig, AiProvider } from '@/shared';
-import { Section, Field, Hint, ModelSelect, NumberInput } from './parts';
+import { AI_CONFIG_RANGES, AI_CHAT_DEFAULTS, findAiModel } from '@/shared';
+import type { AiChatConfig, AiProvider } from '@/shared';
+import { Section, Field, Hint, ModelSelect, RangeInput } from './parts';
 
-interface StageFieldsProps {
-  form:     AiKyoshitsuConfig;
-  onChange: (next: AiKyoshitsuConfig) => void;
+interface ChatFieldsProps {
+  form:     AiChatConfig;
+  onChange: (next: AiChatConfig) => void;
   disabled?: boolean;
 }
 
-export function StageFields({ form, onChange, disabled }: StageFieldsProps) {
+export function ChatFields({ form, onChange, disabled }: ChatFieldsProps) {
   return (
-    <>
-      {/* ① 💬 AIチャット ───────────────────────────────────── */}
-      <Section title="💬 AIチャット（記事ページ右下のチャット既定モデル）">
-        <Field label="モデル">
-          <ModelSelect
-            value={form.chatModel}
-            onChange={(v) => onChange({ ...form, chatModel: v })}
-            disabled={disabled}
-          />
-          <ModelMeta modelId={form.chatModel} />
-          <Hint>
-            デフォルト: <code>{AI_KYOSHITSU_DEFAULTS.chatModel}</code>
-          </Hint>
-        </Field>
-      </Section>
+    <Section title="AIチャット設定">
+      {/* ① モデル選択 ───────────────────────────────────── */}
+      <Field label="モデル">
+        <ModelSelect
+          value={form.chatModel}
+          onChange={(v) => onChange({ ...form, chatModel: v })}
+          disabled={disabled}
+        />
+        <ModelMeta modelId={form.chatModel} />
+        <Hint>
+          デフォルト: <code>{AI_CHAT_DEFAULTS.chatModel}</code>。
+          記事チャット・AI Echo・3D 図鑑ホットスポットなど全 AI チャットで共通。
+        </Hint>
+      </Field>
 
-      {/* ② 🧠 Stage 1 ─────────────────────────────────────── */}
-      <Section title="🧠 Stage 1（テーマ詳細化・JSON設計）">
-        <Field label="モデル">
-          <ModelSelect
-            value={form.stage1Model}
-            onChange={(v) => onChange({ ...form, stage1Model: v })}
-            disabled={disabled}
-          />
-          <ModelMeta modelId={form.stage1Model} />
-          <Hint>
-            デフォルト: <code>{AI_KYOSHITSU_DEFAULTS.stage1Model}</code>
-          </Hint>
-        </Field>
-        <Field
-          label={`タイムアウト（${AI_CONFIG_RANGES.stage1TimeoutMs.min}〜${AI_CONFIG_RANGES.stage1TimeoutMs.max} ms）`}
-        >
-          <NumberInput
-            value={form.stage1TimeoutMs}
-            onChange={(v) => onChange({ ...form, stage1TimeoutMs: v })}
-            min={AI_CONFIG_RANGES.stage1TimeoutMs.min}
-            max={AI_CONFIG_RANGES.stage1TimeoutMs.max}
-            step={500}
-            disabled={disabled}
-          />
-          <Hint>デフォルト: {AI_KYOSHITSU_DEFAULTS.stage1TimeoutMs} ms</Hint>
-        </Field>
-      </Section>
+      {/* ② 最大出力トークン ─────────────────────────────── */}
+      <Field
+        label={`最大出力トークン（${AI_CONFIG_RANGES.chatMaxTokens.min}〜${AI_CONFIG_RANGES.chatMaxTokens.max}）`}
+      >
+        <RangeInput
+          value={form.chatMaxTokens}
+          onChange={(v) => onChange({ ...form, chatMaxTokens: v })}
+          min={AI_CONFIG_RANGES.chatMaxTokens.min}
+          max={AI_CONFIG_RANGES.chatMaxTokens.max}
+          step={AI_CONFIG_RANGES.chatMaxTokens.step}
+          disabled={disabled}
+        />
+        <Hint>
+          応答の長さ上限。800 ≒ 約 300 文字。デフォルト: {AI_CHAT_DEFAULTS.chatMaxTokens}。
+          長くするほど待ち時間とコストが増える。
+        </Hint>
+      </Field>
 
-      {/* ③ 🎬 Stage 2 ─────────────────────────────────────── */}
-      <Section title="🎬 Stage 2（HTML生成）">
-        <Field label="モデル">
-          <ModelSelect
-            value={form.stage2Model}
-            onChange={(v) => onChange({ ...form, stage2Model: v })}
-            disabled={disabled}
-          />
-          <ModelMeta modelId={form.stage2Model} />
-          <Hint>
-            デフォルト: <code>{AI_KYOSHITSU_DEFAULTS.stage2Model}</code>
-          </Hint>
-        </Field>
-        <Field
-          label={`タイムアウト（${AI_CONFIG_RANGES.stage2TimeoutMs.min}〜${AI_CONFIG_RANGES.stage2TimeoutMs.max} ms）`}
-        >
-          <NumberInput
-            value={form.stage2TimeoutMs}
-            onChange={(v) => onChange({ ...form, stage2TimeoutMs: v })}
-            min={AI_CONFIG_RANGES.stage2TimeoutMs.min}
-            max={AI_CONFIG_RANGES.stage2TimeoutMs.max}
-            step={1000}
-            disabled={disabled}
-          />
-          <Hint>
-            Vercel 60秒制限を考慮し最大 58000 まで。デフォルト: {AI_KYOSHITSU_DEFAULTS.stage2TimeoutMs} ms
-          </Hint>
-        </Field>
-        <Field
-          label={`最大トークン（${AI_CONFIG_RANGES.stage2MaxTokens.min}〜${AI_CONFIG_RANGES.stage2MaxTokens.max}）`}
-        >
-          <NumberInput
-            value={form.stage2MaxTokens}
-            onChange={(v) => onChange({ ...form, stage2MaxTokens: v })}
-            min={AI_CONFIG_RANGES.stage2MaxTokens.min}
-            max={AI_CONFIG_RANGES.stage2MaxTokens.max}
-            step={500}
-            disabled={disabled}
-          />
-          <Hint>
-            大きいほど詳細だが時間とコストがかかる。デフォルト: {AI_KYOSHITSU_DEFAULTS.stage2MaxTokens}
-          </Hint>
-        </Field>
-        <Field
-          label={`Temperature（${AI_CONFIG_RANGES.stage2Temperature.min}〜${AI_CONFIG_RANGES.stage2Temperature.max}）`}
-        >
-          <NumberInput
-            value={form.stage2Temperature}
-            onChange={(v) => onChange({ ...form, stage2Temperature: v })}
-            min={AI_CONFIG_RANGES.stage2Temperature.min}
-            max={AI_CONFIG_RANGES.stage2Temperature.max}
-            step={0.1}
-            disabled={disabled}
-          />
-          <Hint>低いほど確定的。デフォルト: {AI_KYOSHITSU_DEFAULTS.stage2Temperature}</Hint>
-        </Field>
-      </Section>
-    </>
+      {/* ③ temperature ─────────────────────────────────── */}
+      <Field
+        label={`Temperature（${AI_CONFIG_RANGES.chatTemperature.min}〜${AI_CONFIG_RANGES.chatTemperature.max}）`}
+      >
+        <RangeInput
+          value={form.chatTemperature}
+          onChange={(v) => onChange({ ...form, chatTemperature: v })}
+          min={AI_CONFIG_RANGES.chatTemperature.min}
+          max={AI_CONFIG_RANGES.chatTemperature.max}
+          step={AI_CONFIG_RANGES.chatTemperature.step}
+          disabled={disabled}
+        />
+        <Hint>
+          0 に近いほど確定的・1 に近いほど創造的。デフォルト: {AI_CHAT_DEFAULTS.chatTemperature}。
+        </Hint>
+      </Field>
+    </Section>
   );
 }
 

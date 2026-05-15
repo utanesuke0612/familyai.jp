@@ -1,25 +1,20 @@
 /**
  * app/admin/ai-config/CostEstimator.tsx
- * familyai.jp — AI設定 月間コスト試算（コンパクトバー版）
+ * familyai.jp — AIチャット設定 月間コスト試算（コンパクトバー版）
  *
- * 旧版（Stat カード3つ + 月間入力欄）を、設定 Table の真下に置く帯型 UI に
- * 刷新。1回コストは Table フッターで既に表示しているため、ここは
- * 「月間リクエスト数 → 月額」の試算と、警告表示に専念する。
- *
- * 主な変更:
- *   - スライダ + 数値入力で月間リクエスト数を素早く調整
- *   - 月額が高額（5,000 円超）になった瞬間に warning カラー
- *   - hasUnknownModel 警告は同帯内で右端に小さく表示
+ * Rev40: 旧 Stage1+Stage2 のコスト計算 → AIチャット 1 回あたりのコストに刷新。
+ * 想定入力 500 token + chatMaxTokens × 70% のコストを 1 回コストとして
+ * 月間リクエスト数を掛けた月額を試算する。
  */
 
 'use client';
 
 import { useMemo, useState } from 'react';
 import { estimateAiCost, estimateMonthlyCost } from '@/shared';
-import type { AiKyoshitsuConfig } from '@/shared/types';
+import type { AiChatConfig } from '@/shared/types';
 
 interface CostEstimatorProps {
-  form: AiKyoshitsuConfig;
+  form: AiChatConfig;
 }
 
 const PRESET_VOLUMES = [100, 1000, 5000, 10000];
@@ -48,7 +43,7 @@ export function CostEstimator({ form }: CostEstimatorProps) {
       }}
     >
       <span style={{ fontSize: 14, fontWeight: 700, color: '#1F2937' }}>
-        💰 月間コスト試算
+        月間コスト試算
       </span>
 
       {/* リクエスト数調整 — preset chip 群 */}
@@ -66,10 +61,10 @@ export function CostEstimator({ form }: CostEstimatorProps) {
                 padding:    '4px 10px',
                 fontSize:   12,
                 fontWeight: 600,
-                background: active ? '#FF8C42' : 'white',
+                background: active ? 'var(--shu)' : 'white',
                 color:      active ? 'white' : '#374151',
-                border:     `1px solid ${active ? '#FF8C42' : '#D1D5DB'}`,
-                borderRadius: 999,
+                border:     `1px solid ${active ? 'var(--shu)' : '#D1D5DB'}`,
+                borderRadius: 4,
                 cursor:     'pointer',
               }}
             >
@@ -127,10 +122,10 @@ export function CostEstimator({ form }: CostEstimatorProps) {
             borderTop:    '1px dashed rgba(0,0,0,0.08)',
           }}
         >
-          {isHigh && '⚠️ 月額 5,000 円を超えています。プリセット見直しを検討してください。'}
+          {isHigh && '月額 5,000 円を超えています。プリセット見直しを検討してください。'}
           {cost.hasUnknownModel && (
             <span style={{ marginLeft: isHigh ? 12 : 0 }}>
-              ℹ️ 一部モデルが料金テーブルに無いため部分的な試算です（実コストはこれ以上の可能性）
+              一部モデルが料金テーブルに無いため部分的な試算です（実コストはこれ以上の可能性）
             </span>
           )}
         </div>

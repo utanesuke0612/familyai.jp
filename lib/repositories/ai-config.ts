@@ -1,16 +1,16 @@
 /**
  * lib/repositories/ai-config.ts
- * familyai.jp — AI教室パイプライン設定の DB アクセス層
+ * familyai.jp — AIチャット設定の DB アクセス層
  *
  * 1行限定の ai_config テーブルと、変更履歴 ai_config_history を扱う。
- * 値は AiKyoshitsuConfig の Partial（管理画面で設定したフィールドだけ）。
- * 未設定フィールドは shared/constants の DEFAULTS が使われる。
+ * 値は AiChatConfig の Partial（管理画面で設定したフィールドだけ）。
+ * 未設定フィールドは shared/constants の AI_CHAT_DEFAULTS が使われる。
  */
 
 import { desc, eq, notInArray } from 'drizzle-orm';
 import { db } from '@/lib/db';
 import { aiConfig, aiConfigHistory } from '@/lib/db/schema';
-import type { AiKyoshitsuConfig } from '@/shared/types';
+import type { AiChatConfig } from '@/shared/types';
 
 /** ai_config テーブルの単一行 ID（1行限定運用） */
 const AI_CONFIG_ROW_ID = 1;
@@ -22,7 +22,7 @@ const HISTORY_KEEP_COUNT = 10;
  * 現在保存されている AI設定（Partial）を取得する。
  * 行が存在しない場合は空オブジェクトを返す（DEFAULTS が使われる）。
  */
-export async function getAiConfigFromDb(): Promise<Partial<AiKyoshitsuConfig>> {
+export async function getAiConfigFromDb(): Promise<Partial<AiChatConfig>> {
   const [row] = await db
     .select()
     .from(aiConfig)
@@ -30,7 +30,7 @@ export async function getAiConfigFromDb(): Promise<Partial<AiKyoshitsuConfig>> {
     .limit(1);
   if (!row) return {};
   // jsonb 列なので Drizzle が自動 JSON.parse 済み
-  return (row.config as Partial<AiKyoshitsuConfig>) ?? {};
+  return (row.config as Partial<AiChatConfig>) ?? {};
 }
 
 /**
@@ -44,7 +44,7 @@ export async function getAiConfigFromDb(): Promise<Partial<AiKyoshitsuConfig>> {
  * @param changeNote 変更理由（任意）
  */
 export async function saveAiConfig(
-  config:     Partial<AiKyoshitsuConfig>,
+  config:     Partial<AiChatConfig>,
   changedBy:  string,
   changeNote?: string,
 ): Promise<void> {
@@ -87,7 +87,7 @@ export async function resetAiConfig(
 ): Promise<void> {
   await db.delete(aiConfig).where(eq(aiConfig.id, AI_CONFIG_ROW_ID));
   await db.insert(aiConfigHistory).values({
-    config:     {} as Partial<AiKyoshitsuConfig>,
+    config:     {} as Partial<AiChatConfig>,
     changedBy,
     changeNote: changeNote ?? 'リセット（DEFAULTS に戻す）',
   });

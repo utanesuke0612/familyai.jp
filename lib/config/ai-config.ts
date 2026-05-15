@@ -1,41 +1,39 @@
 /**
  * lib/config/ai-config.ts
- * familyai.jp — AI教室パイプラインのランタイム設定取得
+ * familyai.jp — AIチャット設定のランタイム取得
  *
  * 設計方針:
- *   - 呼び出し側は `await getAiConfig()` だけで完結（async インターフェース）
- *   - 優先順位（下が優先）: DEFAULTS < DB（Phase 2）< env
+ *   - 呼び出し側は `await getAiChatConfig()` だけで完結（async インターフェース）
+ *   - 優先順位（下が優先）: DEFAULTS < DB < env
  *   - レイヤーを後付けしても呼び出し側のコード変更不要
  *
- * 拡張ロードマップ:
- *   Phase 1（現行）: env オーバーライドのみ
- *   Phase 2:        DB レイヤー追加（管理画面から編集）
- *                   → loadFromDb() の中身を実装するだけで切替完了
- *   Phase 3:        Edge Config / Vercel KV キャッシュ追加
- *                   → loadFromDb() の頭にキャッシュ参照を追加するだけ
+ * レイヤー構成:
+ *   1. DEFAULTS: shared/constants の AI_CHAT_DEFAULTS（ハードコード保証値）
+ *   2. DB:       ai_config テーブル（/admin/ai-config から編集・60秒キャッシュ）
+ *   3. env:      緊急時の即時オーバーライド（最優先）
  */
 
-import type { AiKyoshitsuConfig } from '@/shared/types';
-import { AI_KYOSHITSU_DEFAULTS }    from '@/shared';
-import { getAiConfigFromDb }        from '@/lib/repositories/ai-config';
+import type { AiChatConfig } from '@/shared/types';
+import { AI_CHAT_DEFAULTS }    from '@/shared';
+import { getAiConfigFromDb }   from '@/lib/repositories/ai-config';
 
 /**
- * AI教室パイプラインの実効設定を取得する。
+ * AIチャットの実効設定を取得する。
  *
  * @returns 必ず全フィールドが埋まった設定（DEFAULTS で保証）
  *
  * 利用例:
  * ```ts
- * const cfg = await getAiConfig();
- * await completeOpenRouter(cfg.stage2Model, ..., {
- *   maxTokens: cfg.stage2MaxTokens,
- *   temperature: cfg.stage2Temperature,
+ * const cfg = await getAiChatConfig();
+ * await streamByModelId(cfg.chatModel, messages, {
+ *   maxTokens:   cfg.chatMaxTokens,
+ *   temperature: cfg.chatTemperature,
  * });
  * ```
  */
-export async function getAiConfig(): Promise<AiKyoshitsuConfig> {
+export async function getAiChatConfig(): Promise<AiChatConfig> {
   // 1. DEFAULTS で初期化（必ず全フィールドが埋まる）
-  let config: AiKyoshitsuConfig = { ...AI_KYOSHITSU_DEFAULTS };
+  let config: AiChatConfig = { ...AI_CHAT_DEFAULTS };
 
   // 2. DB レイヤー（管理画面 /admin/ai-config で編集可能）
   //    キャッシュ TTL = 60秒。DB 障害時は黙ってスキップ（DEFAULTS で動く保証）
@@ -53,13 +51,13 @@ export async function getAiConfig(): Promise<AiKyoshitsuConfig> {
 const DB_CACHE_TTL_MS = 60_000;
 
 interface DbCacheEntry {
-  data:      Partial<AiKyoshitsuConfig>;
+  data:      Partial<AiChatConfig>;
   expiresAt: number;
 }
 
 let dbCache: DbCacheEntry | null = null;
 
-async function loadFromDbCached(): Promise<Partial<AiKyoshitsuConfig>> {
+async function loadFromDbCached(): Promise<Partial<AiChatConfig>> {
   if (dbCache && dbCache.expiresAt > Date.now()) {
     return dbCache.data;
   }
@@ -82,22 +80,18 @@ export function invalidateAiConfigCache(): void {
   dbCache = null;
 }
 
-// ── env レイヤー（Phase 1 メイン実装） ────────────────────────────
+// ── env レイヤー ────────────────────────────────────────────────
 
 /**
  * 環境変数から有効値だけを抽出する。
  * 未設定 / 空文字 / 数値変換失敗の場合は undefined を返し、
  * 上位の DEFAULTS / DB 値を使うようにする。
  */
-function loadFromEnv(): Partial<AiKyoshitsuConfig> {
+function loadFromEnv(): Partial<AiChatConfig> {
   return stripUndefined({
-    stage1Model:       strOrUndef(process.env.AI_STAGE1_MODEL),
-    stage2Model:       strOrUndef(process.env.AI_STAGE2_MODEL),
-    stage1TimeoutMs:   numOrUndef(process.env.AI_STAGE1_TIMEOUT_MS),
-    stage2TimeoutMs:   numOrUndef(process.env.AI_STAGE2_TIMEOUT_MS),
-    stage2MaxTokens:   numOrUndef(process.env.AI_STAGE2_MAX_TOKENS),
-    stage2Temperature: numOrUndef(process.env.AI_STAGE2_TEMPERATURE),
-    chatModel:         strOrUndef(process.env.CHAT_DEFAULT_MODEL),
+    chatModel:       strOrUndef(process.env.CHAT_DEFAULT_MODEL),
+    chatMaxTokens:   numOrUndef(process.env.CHAT_MAX_TOKENS),
+    chatTemperature: numOrUndef(process.env.CHAT_TEMPERATURE),
   });
 }
 

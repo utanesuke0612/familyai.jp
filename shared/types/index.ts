@@ -77,8 +77,8 @@ export {
 //
 // DB の `user_animations` テーブルは Phase 2 で AI 3D 生成版として再利用
 // する想定で残置（lib/db/schema.ts のコメント参照）。
-// AI 教室パイプライン関連の `AiKyoshitsuConfig` 型と `AI_KYOSHITSU_DEFAULTS`
-// 定数は /admin/ai-config が chatModel 設定で使用継続中のため残置。
+// AI 教室パイプライン用の `AiKyoshitsuConfig`（stage1/2 設定）は Rev40 で
+// 完全削除し、現行の AI チャット設定 `AiChatConfig` に再設計した（下記参照）。
 
 // ─── 3D 図鑑（Rev34 Phase 1）─────────────────────────────────
 /**
@@ -180,29 +180,20 @@ export interface LessonProgress {
 }
 
 /**
- * うごくAI教室パイプラインのランタイム設定。
+ * AI チャット機能のランタイム設定。
+ * 記事チャット・AI Echo・3D 図鑑ホットスポットの全 AI チャットで共有される。
+ * /admin/ai-config から編集可能。
  *
- * `lib/config/ai-config.ts:getAiConfig()` から取得する。
- * Phase 1（現行）: コードのデフォルト値 < env オーバーライド
- * Phase 2（将来）: DB レイヤーが間に入る予定（呼び出し側に変更不要）
- *
+ * 設定の優先順位（下が優先）: コード DEFAULTS < DB < env
  * iOS / Android 側でも同じ型で扱えるよう shared/types に置く。
  */
-export interface AiKyoshitsuConfig {
-  /** Stage 1（テーマ詳細化）モデル ID */
-  stage1Model:        string;
-  /** Stage 2（HTML生成）モデル ID */
-  stage2Model:        string;
-  /** Stage 1 の最大実行時間（ms） */
-  stage1TimeoutMs:    number;
-  /** Stage 2 の最大実行時間（ms） */
-  stage2TimeoutMs:    number;
-  /** Stage 2 の最大出力トークン数 */
-  stage2MaxTokens:    number;
-  /** Stage 2 の生成 temperature（0〜1） */
-  stage2Temperature:  number;
+export interface AiChatConfig {
   /** AIチャット既定モデル ID */
-  chatModel:          string;
+  chatModel:       string;
+  /** 最大出力トークン数（応答の長さ上限） */
+  chatMaxTokens:   number;
+  /** 生成 temperature（0=厳密 〜 1=創造的） */
+  chatTemperature: number;
 }
 
 // ─── AI メモ関連 ───────────────────────────────────────────────

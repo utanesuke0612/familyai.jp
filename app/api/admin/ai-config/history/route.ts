@@ -1,6 +1,6 @@
 /**
  * app/api/admin/ai-config/history/route.ts
- * familyai.jp — AI教室パイプライン設定の変更履歴 API（管理者専用）
+ * familyai.jp — AIチャット設定の変更履歴 API（管理者専用）
  *
  * GET /api/admin/ai-config/history — 直近10件の変更履歴
  */
