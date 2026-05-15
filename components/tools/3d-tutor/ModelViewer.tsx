@@ -495,6 +495,10 @@ export function ModelViewer({
            - theta / phi は auto のままなので回転は標準どおり */
         min-camera-orbit="auto auto 0%"
         max-camera-orbit="auto auto 1000%"
+        /* Rev40: パン (左右上下移動) は <model-viewer> v4.x の camera-controls に
+           デフォルトで含まれている（disable-pan を指定しない限り有効）。
+           - Desktop : 右クリック + ドラッグ
+           - Touch   : 2 本指ドラッグ */
         onClick={handleViewerClick}
         style={{
           width:  '100%',
