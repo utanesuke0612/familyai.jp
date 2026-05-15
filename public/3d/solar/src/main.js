@@ -294,6 +294,11 @@ const lineProgram = createProgram(
   uniform mat4 uMvp;
   void main() {
     gl_Position = uMvp * vec4(aPosition, 1.0);
+    // Rev40 (M1 Mac 灰色矩形フリッカ修正・真因):
+    // gl_PointSize 未設定だと Apple Silicon の Metal バックエンドで
+    // 未定義動作となり、POINTS 描画が巨大矩形になる。明示することで
+    // 軌道線 (LINE_STRIP) では無視され、星 (POINTS) では 1.5px の点になる。
+    gl_PointSize = 1.5;
   }
 `,
   `
