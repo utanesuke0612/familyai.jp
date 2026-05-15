@@ -19,6 +19,7 @@ import {
 } from '@/shared';
 import type { Tutor3dSubject } from '@/shared';
 import { listPublishedModels } from '@/lib/repositories/3d-models';
+import { STATIC_MODEL_SUMMARIES } from '@/lib/tutor3d/static-models';
 import { ModelGallery }        from '@/components/tools/3d-tutor/ModelGallery';
 
 export const metadata: Metadata = {
@@ -47,14 +48,26 @@ export default async function AiKyoshitsu3DPage({ searchParams }: PageProps) {
       : undefined;
 
   // 2. DB 取得（公開済み・featured 優先）
-  let models: Awaited<ReturnType<typeof listPublishedModels>> = [];
+  let dbModels: Awaited<ReturnType<typeof listPublishedModels>> = [];
   try {
-    models = await listPublishedModels({ subject, limit: 50 });
+    dbModels = await listPublishedModels({ subject, limit: 50 });
   } catch (err) {
     console.error('[ai-kyoshitsu page] DB エラー:',
       err instanceof Error ? err.message : String(err));
-    models = [];
+    dbModels = [];
   }
+
+  // 2-bis. 静的モデル (太陽系など DB 不要の特殊実装) をマージする。
+  // subject フィルタが指定されている場合は静的モデルも同じ subject に絞る。
+  const staticModels = subject
+    ? STATIC_MODEL_SUMMARIES.filter((m) => m.subject === subject)
+    : STATIC_MODEL_SUMMARIES;
+
+  // featured 優先 → DB の新しい順、の表示順をなるべく崩さないように
+  // 静的モデルは featured フラグに従って先頭に並べる。
+  const featuredStatic = staticModels.filter((m) => m.isFeatured);
+  const restStatic     = staticModels.filter((m) => !m.isFeatured);
+  const models = [...featuredStatic, ...dbModels, ...restStatic];
 
   // 3. クエリ文字列ヘルパー
   const buildQuery = (next: { subject?: string }): string => {

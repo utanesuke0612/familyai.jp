@@ -15,6 +15,7 @@ import type { Metadata } from 'next';
 import Link              from 'next/link';
 import { notFound }      from 'next/navigation';
 import { SITE }          from '@/shared';
+import type { Tutor3dModel } from '@/shared';
 import {
   TUTOR3D_SUBJECT_LABEL,
   TUTOR3D_GRADE_LABEL,
@@ -23,6 +24,7 @@ import {
   getPublishedModelBySlugCached,
   incrementViewCount,
 } from '@/lib/repositories/3d-models';
+import { STATIC_MODELS_BY_SLUG } from '@/lib/tutor3d/static-models';
 import { ModelDetailClient } from '@/components/tools/3d-tutor/ModelDetailClient';
 
 // ISR: モデル本体は変動少ないので 10 分キャッシュ
@@ -33,11 +35,14 @@ type PageProps = {
 };
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
-  let model;
-  try {
-    model = await getPublishedModelBySlugCached(params.slug);
-  } catch {
-    model = null;
+  // 静的モデル (太陽系など DB 不要の特殊実装) を最優先で参照
+  let model: Tutor3dModel | null = STATIC_MODELS_BY_SLUG[params.slug] ?? null;
+  if (!model) {
+    try {
+      model = await getPublishedModelBySlugCached(params.slug);
+    } catch {
+      model = null;
+    }
   }
   if (!model) {
     return {
@@ -77,12 +82,15 @@ export default async function ModelDetailPage({ params }: PageProps) {
   // getPublishedModelBySlugCached は published=true 限定で取得するため、
   // 非公開モデルへの直 URL アクセスは下の notFound() で 404 になる。
 
-  // 1. DB 取得
-  const model = await getPublishedModelBySlugCached(params.slug);
+  // 1. モデル取得: 静的モデル (太陽系など) を最優先、なければ DB
+  const staticModel = STATIC_MODELS_BY_SLUG[params.slug] ?? null;
+  const model = staticModel ?? await getPublishedModelBySlugCached(params.slug);
   if (!model) notFound();
 
-  // 2. ビューカウント加算（fire-and-forget）
-  void incrementViewCount(params.slug);
+  // 2. ビューカウント加算（fire-and-forget・静的モデルは DB に無いのでスキップ）
+  if (!staticModel) {
+    void incrementViewCount(params.slug);
+  }
 
   // 3. UI
   return (
