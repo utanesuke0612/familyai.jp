@@ -452,6 +452,28 @@ function setSelected(body) {
   selected = body;
   selectedName.textContent = body.name;
   selectedCopy.textContent = body.copy;
+
+  // 親フレーム (Next.js / ModelDetailClient) に通知する。
+  // 同一オリジンのみ受信させるため、targetOrigin に明示的に location.origin を渡す。
+  // (location.origin はこの iframe を配信した familyai.jp となる)
+  if (window.parent && window.parent !== window) {
+    try {
+      window.parent.postMessage(
+        {
+          type: 'solar:select',
+          body: {
+            key:     body.key,
+            name:    body.name,
+            english: body.english,
+            copy:    body.copy,
+          },
+        },
+        location.origin,
+      );
+    } catch (err) {
+      // postMessage 失敗 (sandbox 等) は致命ではないので握りつぶす
+    }
+  }
 }
 
 document.getElementById("toggleMotion").addEventListener("click", (event) => {
