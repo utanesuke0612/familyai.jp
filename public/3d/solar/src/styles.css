@@ -73,20 +73,7 @@ input {
   pointer-events: none;
 }
 
-.hud h1 {
-  margin: 0 0 6px;
-  font-size: clamp(22px, 3vw, 34px);
-  line-height: 1.08;
-  letter-spacing: 0;
-}
-
-.hud p {
-  max-width: 520px;
-  margin: 0;
-  color: var(--muted);
-  font-size: 14px;
-  line-height: 1.55;
-}
+/* Rev40: .hud h1 / .hud p (タイトル・説明) は HTML から削除済みのため孤立 CSS も削除 */
 
 .controls {
   display: flex;
@@ -95,8 +82,9 @@ input {
   padding: 8px;
   border: 1px solid var(--line);
   border-radius: 8px;
-  background: var(--panel);
-  backdrop-filter: blur(16px);
+  /* Rev40: iframe を跨いだ backdrop-filter のグレー塗り潰し問題を回避するため、
+     blur を撤廃し不透明な panel-strong を使用する。 */
+  background: rgba(9, 19, 37, 0.96);
   pointer-events: auto;
 }
 
@@ -142,7 +130,8 @@ input {
   padding: 3px 7px 4px;
   border: 1px solid rgba(216, 232, 255, 0.26);
   border-radius: 6px;
-  background: rgba(4, 10, 20, 0.66);
+  /* Rev40: backdrop-filter を撤廃し alpha を上げて不透明寄りに */
+  background: rgba(4, 10, 20, 0.88);
   color: #ffffff;
   font-size: 13px;
   font-weight: 700;
@@ -151,7 +140,6 @@ input {
   text-shadow: 0 1px 3px rgba(0, 0, 0, 0.9);
   transform: translate(-50%, -50%);
   white-space: nowrap;
-  backdrop-filter: blur(8px);
 }
 
 .planet-label::before {
@@ -168,33 +156,8 @@ input {
   display: none;
 }
 
-.info-panel {
-  position: absolute;
-  left: 20px;
-  bottom: 20px;
-  z-index: 5;
-  width: min(360px, calc(100vw - 40px));
-  padding: 14px 16px 15px;
-  border: 1px solid var(--line);
-  border-radius: 8px;
-  background: var(--panel-strong);
-  backdrop-filter: blur(16px);
-}
-
-.info-panel span {
-  display: block;
-  margin-bottom: 7px;
-  color: var(--accent);
-  font-size: 15px;
-  font-weight: 800;
-}
-
-.info-panel p {
-  margin: 0;
-  color: #c9d7e8;
-  font-size: 13px;
-  line-height: 1.55;
-}
+/* Rev40: .info-panel (天体名+説明) は HTML から削除済み (親 AI チャットに統合) のため
+   styles.css 側の定義も整理した。 */
 
 @media (max-width: 760px) {
   .hud {

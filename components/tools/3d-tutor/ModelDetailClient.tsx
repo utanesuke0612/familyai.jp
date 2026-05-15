@@ -215,13 +215,15 @@ function SolarViewer({
           style={{
             width: 40, height: 40,
             display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
-            background: 'rgba(255, 255, 255, 0.88)',
+            // Rev40: iframe を跨いだ backdrop-filter は Chrome / Safari で
+            // グレーで塗りつぶされる不具合 (合成バグ) があるため、
+            // 不透明な washi-light に固定して回避する。
+            background: 'var(--washi-light, #f7f3e9)',
             color: 'var(--sumi)',
             border: '1px solid var(--line)',
             borderRadius: 4,
             cursor: 'pointer',
-            backdropFilter: 'blur(4px)',
-            WebkitBackdropFilter: 'blur(4px)',
+            boxShadow: '0 1px 2px rgba(0,0,0,0.15)',
           }}
         >
           <span
@@ -245,13 +247,15 @@ function SolarViewer({
           style={{
             width: 40, height: 40,
             display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
-            background: 'rgba(255, 255, 255, 0.88)',
+            // Rev40: iframe を跨いだ backdrop-filter は Chrome / Safari で
+            // グレーで塗りつぶされる不具合 (合成バグ) があるため、
+            // 不透明な washi-light に固定して回避する。
+            background: 'var(--washi-light, #f7f3e9)',
             color: 'var(--sumi)',
             border: '1px solid var(--line)',
             borderRadius: 4,
             cursor: 'pointer',
-            backdropFilter: 'blur(4px)',
-            WebkitBackdropFilter: 'blur(4px)',
+            boxShadow: '0 1px 2px rgba(0,0,0,0.15)',
           }}
         >
           {isAnyFullscreen ? (
