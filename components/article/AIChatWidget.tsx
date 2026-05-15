@@ -269,7 +269,7 @@ function CategoryTabs({
 }) {
   return (
     <div
-      className="flex gap-1 px-2 py-2 overflow-x-auto scrollbar-hide"
+      className="flex justify-between gap-1 px-2 py-2 overflow-x-auto scrollbar-hide"
       style={{
         WebkitOverflowScrolling: 'touch',
         borderBottom: '1px solid var(--line)',
