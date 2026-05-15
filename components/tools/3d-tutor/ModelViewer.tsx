@@ -47,6 +47,19 @@ async function ensureModelViewerLoaded(): Promise<void> {
  */
 const HOTSPOT_CLICK_THRESHOLD = 1.5;
 
+/**
+ * 背景色プリセット。クリックで順に切り替える。
+ * モデルが背景と同色で見えなくなる場合の対比調整用（例: 太陽は washi-deep に
+ * 溶け込みやすい）。Mingei トーンの「砂」を基本に、白／灰／墨／黒を用意する。
+ */
+const BG_PRESETS = [
+  { id: 'washi', label: '砂 (デフォルト)', color: 'var(--washi-deep)', swatch: '#EFE5D4' },
+  { id: 'white', label: '白',              color: '#ffffff',           swatch: '#ffffff' },
+  { id: 'gray',  label: '灰',              color: '#999999',           swatch: '#999999' },
+  { id: 'dark',  label: '墨',              color: '#2b2b2b',           swatch: '#2b2b2b' },
+  { id: 'black', label: '黒（宇宙）',       color: '#000000',           swatch: '#000000' },
+] as const;
+
 /** 2 点間ユークリッド距離（3D）。 */
 function distance3D(
   a: { x: number; y: number; z: number },
@@ -98,6 +111,13 @@ export function ModelViewer({
   const [isFullscreen, setIsFullscreen] = useState(false);
   // CSS 擬似フルスクリーン (Fullscreen API 非対応端末の fallback。主に古い iOS 等)
   const [cssFullscreen, setCssFullscreen] = useState(false);
+  // 背景色プリセットの index
+  const [bgIndex, setBgIndex] = useState(0);
+  const currentBg = BG_PRESETS[bgIndex]!;
+
+  const cycleBg = useCallback(() => {
+    setBgIndex((i) => (i + 1) % BG_PRESETS.length);
+  }, []);
 
   // 1. Web Component を遅延ロード
   useEffect(() => {
@@ -292,7 +312,7 @@ export function ModelViewer({
         minHeight:  cssFullscreen ? '100vh' : 0,
         borderRadius: 0,
         overflow:   'hidden',
-        background: 'var(--washi-deep)',
+        background: currentBg.color,
         border:     'none',
         cursor:     hotspots.length > 0 && !loadError ? 'pointer' : 'default',
       }
@@ -303,7 +323,7 @@ export function ModelViewer({
         minHeight:  360,
         borderRadius: 4,
         overflow:   'hidden',
-        background: 'var(--washi-deep)',
+        background: currentBg.color,
         border:     '1px solid var(--line)',
         cursor:     hotspots.length > 0 && !loadError ? 'pointer' : 'default',
       };
@@ -367,17 +387,60 @@ export function ModelViewer({
           </button>
         </div>
       )}
-      {/* フルスクリーン切替ボタン（右上・<model-viewer> の外側 = light DOM ではなく通常子要素） */}
+      {/* コントロール群（右上・<model-viewer> の外側 = light DOM ではなく通常子要素） */}
       {!loadError && (
+        <div
+          style={{
+            position: 'absolute',
+            top:      12,
+            right:    12,
+            display:  'flex',
+            gap:      8,
+            zIndex:   4,
+          }}
+        >
+          {/* 背景色切替ボタン（クリックで次のプリセット） */}
+          <button
+            type="button"
+            onClick={cycleBg}
+            aria-label={`背景色を変更（現在: ${currentBg.label}）`}
+            title={`背景色: ${currentBg.label}（クリックで切替）`}
+            style={{
+              width:          40,
+              height:         40,
+              display:        'inline-flex',
+              alignItems:     'center',
+              justifyContent: 'center',
+              background:     'rgba(255, 255, 255, 0.88)',
+              color:          'var(--sumi)',
+              border:         '1px solid var(--line)',
+              borderRadius:   4,
+              cursor:         'pointer',
+              backdropFilter: 'blur(4px)',
+              WebkitBackdropFilter: 'blur(4px)',
+            }}
+          >
+            {/* 現在の背景色を示す丸スウォッチ */}
+            <span
+              aria-hidden="true"
+              style={{
+                width:        18,
+                height:       18,
+                borderRadius: '50%',
+                background:   currentBg.swatch,
+                border:       '1px solid var(--line)',
+                boxShadow:    '0 0 0 1px rgba(255,255,255,0.6) inset',
+                display:      'block',
+              }}
+            />
+          </button>
+
         <button
           type="button"
           onClick={toggleFullscreen}
           aria-label={isAnyFullscreen ? 'フルスクリーンを終了' : 'フルスクリーンで表示'}
           title={isAnyFullscreen ? 'フルスクリーンを終了 (Esc)' : 'フルスクリーンで表示'}
           style={{
-            position:       'absolute',
-            top:            12,
-            right:          12,
             width:          40,
             height:         40,
             display:        'inline-flex',
@@ -388,7 +451,6 @@ export function ModelViewer({
             border:         '1px solid var(--line)',
             borderRadius:   4,
             cursor:         'pointer',
-            zIndex:         4,
             backdropFilter: 'blur(4px)',
             WebkitBackdropFilter: 'blur(4px)',
           }}
@@ -407,6 +469,7 @@ export function ModelViewer({
             </svg>
           )}
         </button>
+        </div>
       )}
 
       <model-viewer
@@ -426,6 +489,12 @@ export function ModelViewer({
         environment-image="neutral"
         exposure="1.0"
         loading="eager"
+        /* Rev40: ズーム制限を緩和して "無限拡大" 体感を実現
+           - radius 0% で限界近くまで寄れる（モデル内部直前）
+           - radius 1000% でデフォルトの 10 倍まで離れる
+           - theta / phi は auto のままなので回転は標準どおり */
+        min-camera-orbit="auto auto 0%"
+        max-camera-orbit="auto auto 1000%"
         onClick={handleViewerClick}
         style={{
           width:  '100%',
