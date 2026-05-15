@@ -13,10 +13,7 @@
         <canvas id="scene" aria-label="Interactive 3D solar system"></canvas>
         <div id="labels" class="labels" aria-hidden="true"></div>
         <div class="hud">
-          <div>
-            <h1>太陽系 3D 教育モデル</h1>
-            <p>ドラッグで回転、ホイールで拡大縮小できます。惑星名は日本語で表示され、表面テクスチャをリアルタイムに描画します。</p>
-          </div>
+          <!-- Rev40: タイトル/説明は親 Next.js の操作ガイドに統合したため削除 -->
           <div class="controls" aria-label="solar system controls">
             <button id="toggleMotion" type="button">一時停止</button>
             <button id="toggleLabels" type="button">ラベル</button>
@@ -28,10 +25,7 @@
             <button id="resetView" type="button">視点をリセット</button>
           </div>
         </div>
-        <aside class="info-panel">
-          <span id="selectedName">地球</span>
-          <p id="selectedCopy">青い海、緑の陸地、雲のテクスチャにより、生命を育む惑星の基本的な特徴を説明しやすくしています。</p>
-        </aside>
+        <!-- Rev40: info-panel (選択天体名+説明) は親側の AI チャットに統合したため削除 -->
       </section>
     </main>
     <script type="module" src="./src/main.js"></script>

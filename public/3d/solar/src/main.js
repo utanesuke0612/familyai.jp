@@ -428,6 +428,29 @@ const textures = new Map();
 for (const body of bodies) textures.set(body.key, loadTexture(textureRoot + body.texture));
 textures.set("saturnRing", loadTexture(textureRoot + "saturn_ring.png"));
 
+// Rev40: 背景色 (gl.clearColor) を可変にし、親フレームから postMessage で変更できるようにする
+let clearColor = [0.012, 0.022, 0.042];  // 既定: 深い宇宙ネイビー
+
+function hexToGlColor(hex) {
+  const h = String(hex).replace('#', '');
+  if (h.length !== 6) return null;
+  const r = parseInt(h.slice(0, 2), 16);
+  const g = parseInt(h.slice(2, 4), 16);
+  const b = parseInt(h.slice(4, 6), 16);
+  if ([r, g, b].some(Number.isNaN)) return null;
+  return [r / 255, g / 255, b / 255];
+}
+
+// 親フレームからの背景色変更指示を受け取る (同一オリジン限定)
+window.addEventListener('message', (event) => {
+  if (event.origin !== location.origin) return;
+  const data = event.data;
+  if (!data || data.type !== 'solar:setBg') return;
+  const next = hexToGlColor(data.color);
+  if (!next) return;
+  clearColor = next;
+});
+
 let paused = false;
 let showLabels = true;
 let showOrbits = true;
@@ -445,13 +468,14 @@ let view = mat4.identity();
 let viewProjection = mat4.identity();
 const positions = new Map();
 
+// Rev40: info-panel を撤去したため null になりうる。後方互換のため guard 付きで参照する。
 const selectedName = document.getElementById("selectedName");
 const selectedCopy = document.getElementById("selectedCopy");
 
 function setSelected(body) {
   selected = body;
-  selectedName.textContent = body.name;
-  selectedCopy.textContent = body.copy;
+  if (selectedName) selectedName.textContent = body.name;
+  if (selectedCopy) selectedCopy.textContent = body.copy;
 
   // 親フレーム (Next.js / ModelDetailClient) に通知する。
   // 同一オリジンのみ受信させるため、targetOrigin に明示的に location.origin を渡す。
@@ -688,7 +712,7 @@ function render(now) {
   lastTime = now;
   if (!paused) simTime += dt * speed;
 
-  gl.clearColor(0.012, 0.022, 0.042, 1);
+  gl.clearColor(clearColor[0], clearColor[1], clearColor[2], 1);
   gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
   gl.enable(gl.DEPTH_TEST);
   gl.enable(gl.CULL_FACE);
