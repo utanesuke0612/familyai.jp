@@ -15,7 +15,6 @@ import type { Metadata } from 'next';
 import Link              from 'next/link';
 import { SITE }          from '@/shared';
 import {
-  TUTOR3D_SUBJECT_LABEL,
   TUTOR3D_SUBJECTS,
 } from '@/shared';
 import type { Tutor3dSubject } from '@/shared';
@@ -132,15 +131,40 @@ export default async function AiKyoshitsu3DPage({ searchParams }: PageProps) {
                 <span className="mx-2">ジャンルでえらぶ</span>
                 <span className="ornament" aria-hidden="true">⁂</span>
               </p>
-              <div style={chipRowStyle}>
-                <Link href={`/tools/ai-kyoshitsu${buildQuery({ subject: undefined })}`} style={chipStyle(!subject)}>
-                  すべて
-                </Link>
-                {TUTOR3D_SUBJECTS.map((s) => (
-                  <Link key={s} href={`/tools/ai-kyoshitsu${buildQuery({ subject: s })}`} style={chipStyle(subject === s)}>
-                    {TUTOR3D_SUBJECT_LABEL[s]}
-                  </Link>
-                ))}
+              {/* Rev40: /tools・/learn の CategoryFilter と同じ 2x2 カード式 */}
+              <div className="grid grid-cols-2 gap-3">
+                {TUTOR3D_SUBJECTS.map((s) => {
+                  const isActive = subject === s;
+                  const hasSelection = !!subject;
+                  const display = SUBJECT_DISPLAY[s];
+                  return (
+                    <Link
+                      key={s}
+                      href={isActive
+                        ? `/tools/ai-kyoshitsu${buildQuery({ subject: undefined })}`
+                        : `/tools/ai-kyoshitsu${buildQuery({ subject: s })}`}
+                      className="px-4 py-4 text-center transition-[transform,opacity,border-color,color] duration-200 hover:-translate-y-0.5"
+                      style={{
+                        background:   'var(--washi-deep)',
+                        border:       `1px solid ${isActive ? 'var(--shu)' : 'var(--line)'}`,
+                        borderRadius: '4px',
+                        opacity:      hasSelection && !isActive ? 0.55 : 1,
+                      }}
+                      aria-pressed={isActive}
+                    >
+                      <div className="text-3xl" aria-hidden="true">{display.emoji}</div>
+                      <div
+                        className="mt-2 font-mincho text-sm"
+                        style={{
+                          color:      isActive ? 'var(--shu)' : 'var(--sumi)',
+                          fontWeight: 500,
+                        }}
+                      >
+                        {display.label}
+                      </div>
+                    </Link>
+                  );
+                })}
               </div>
             </div>
           </div>
@@ -177,31 +201,11 @@ export default async function AiKyoshitsu3DPage({ searchParams }: PageProps) {
   );
 }
 
-// ── スタイル（Rev40 Phase I: Mingei 統一）────────────────────
-// Rev40: filterLabelStyle はヘッダー右カラム統合で不要になり撤去
-// （ジャンルでえらぶラベルは inline className に変更）
-
-const chipRowStyle: React.CSSProperties = {
-  display:  'flex',
-  gap:      8,
-  flexWrap: 'wrap',
+// ── ジャンル表示用の絵文字 + ラベル（カード式・/tools の CategoryFilter と同パターン）
+// Rev40 Phase K+: 旧 chipStyle/chipRowStyle/filterLabelStyle はカード式統合で全廃
+const SUBJECT_DISPLAY: Record<Tutor3dSubject, { emoji: string; label: string }> = {
+  biology:       { emoji: '🧬', label: '生物' },
+  chemistry:     { emoji: '⚗️', label: '化学' },
+  'earth-space': { emoji: '🪐', label: '地学・宇宙' },
+  physics:       { emoji: '⚡', label: '物理' },
 };
-
-function chipStyle(active: boolean): React.CSSProperties {
-  return {
-    padding:        '8px 14px',
-    borderRadius:   4,
-    fontSize:       13,
-    fontFamily:     'var(--font-mincho), "Shippori Mincho", serif',
-    fontWeight:     500,
-    letterSpacing:  '0.04em',
-    textDecoration: 'none',
-    transition:     'background-color 0.2s, border-color 0.2s, color 0.2s',
-    background:     active ? 'var(--shu)'        : 'var(--washi-light)',
-    color:          active ? 'var(--washi)'      : 'var(--sumi)',
-    border:         `1px solid ${active ? 'var(--shu)' : 'var(--line)'}`,
-    minHeight:      36,
-    display:        'inline-flex',
-    alignItems:     'center',
-  };
-}
