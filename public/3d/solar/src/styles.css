@@ -19,7 +19,9 @@ body {
   height: 100%;
   margin: 0;
   overflow: hidden;
-  background: var(--bg);
+  /* Rev40: 固定 --bg を撤廃。WebGL clearColor が背景を完全に担う。
+     親 iframe の inline style.background が初期色を担保する。 */
+  background: transparent;
   font-family:
     Inter, "Segoe UI", "Yu Gothic UI", "Hiragino Sans", Meiryo, system-ui,
     sans-serif;
@@ -34,10 +36,8 @@ input {
 .app-shell {
   width: 100vw;
   height: 100vh;
-  background:
-    radial-gradient(circle at 18% 24%, rgba(255, 188, 58, 0.12), transparent 28%),
-    radial-gradient(circle at 70% 34%, rgba(82, 142, 255, 0.16), transparent 32%),
-    linear-gradient(180deg, #071327 0%, #02040a 100%);
+  /* Rev40: 固定の宇宙グラデーションを撤廃 (動的背景色を妨げる) */
+  background: transparent;
 }
 
 .viewport {
@@ -54,13 +54,10 @@ input {
   height: 100%;
   display: block;
   cursor: grab;
-  /* Rev40 (M1 対策): canvas を単独 compositing layer に分離。これだけは保持。
-     labels / controls にも layer を作ると M1 GPU は逆に苦しくなる (タイル
-     ゴミの出やすさが増す) ため、それらは composit-only の transform 更新で済ます。 */
+  /* Rev40 (M1 対策): canvas を単独 compositing layer に分離 */
   transform: translateZ(0);
-  /* 黒背景を CSS にも持たせて、万一 WebGL クリアが落ちた瞬間も
-     画面が灰色化しないよう保険にする。 */
-  background: #000;
+  /* CSS 背景は持たない — WebGL の gl.clearColor が常に背景を担う。
+     固定色 (黒) を入れると iframe 側で設定した動的背景色を上書きしてしまう。 */
 }
 
 #scene:active {

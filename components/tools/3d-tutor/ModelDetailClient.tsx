@@ -45,14 +45,18 @@ function solarBodyToHotspot(body: SolarSelectMessage['body']): Tutor3dHotspot {
   };
 }
 
-/** 太陽系専用の背景色プリセット（宇宙トーンを基本に、明るい色も提供） */
+/**
+ * 太陽系専用の背景色プリセット。
+ * GLB ModelViewer (saibo2 等) と初期背景色 (砂 / washi-deep) を統一する。
+ * 各ステップを視覚的に明確に異ならせるため、隣接プリセットは大きく異なる
+ * 明度を持たせる (旧版は #050914 → #000000 で差が見えなかった)。
+ */
 const SOLAR_BG_PRESETS = [
-  { id: 'cosmic', label: '宇宙 (デフォルト)', color: '#050914' },
-  { id: 'black',  label: '黒',                color: '#000000' },
-  { id: 'dark',   label: '墨',                color: '#2b2b2b' },
-  { id: 'gray',   label: '灰',                color: '#5a5a5a' },
-  { id: 'washi',  label: '砂',                color: '#EFE5D4' },
+  { id: 'washi',  label: '砂 (デフォルト)', color: '#EFE5D4' },  // GLB と同じ初期色
   { id: 'white',  label: '白',                color: '#FFFFFF' },
+  { id: 'gray',   label: '灰',                color: '#999999' },
+  { id: 'dark',   label: '墨',                color: '#2b2b2b' },
+  { id: 'cosmic', label: '宇宙',              color: '#050914' },
 ] as const;
 
 // ── 太陽系専用のサブコンポーネント ─────────────────────────────
@@ -129,8 +133,14 @@ function SolarViewer({
   }, []);
 
   const cycleBg = useCallback(() => {
-    setBgIndex((i) => (i + 1) % SOLAR_BG_PRESETS.length);
-  }, []);
+    setBgIndex((i) => {
+      const next = (i + 1) % SOLAR_BG_PRESETS.length;
+      // 念のためここでも直接送信 (useEffect は次レンダーまで遅延するため
+      // 即座に iframe へ反映させたい)
+      sendBg(SOLAR_BG_PRESETS[next]!.color);
+      return next;
+    });
+  }, [sendBg]);
 
   const toggleFullscreen = useCallback(async () => {
     const el = wrapperRef.current;
@@ -190,10 +200,11 @@ function SolarViewer({
           width:  '100%',
           height: '100%',
           border: 'none',
-          background: '#000',     // 黒の保険 (WebGL クリア失敗時の fallback)
+          // Rev40: 現在の背景色プリセットを iframe の CSS bg にも反映。
+          // WebGL クリア前 (iframe ロード直後の一瞬) もスムーズに同色で見える。
+          background: currentBg.color,
           display: 'block',
-          // Rev40 (M1 対策): iframe を別 stacking context に隔離。
-          // (will-change は外して layer の競合を防ぐ — canvas 側 1 layer で十分)
+          // M1 対策: iframe を別 stacking context に隔離
           isolation: 'isolate',
         }}
       />
