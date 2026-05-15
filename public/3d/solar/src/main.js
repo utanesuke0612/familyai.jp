@@ -623,7 +623,11 @@ function drawMesh(mesh, model, texture, emissive = 0, alpha = 1) {
   gl.drawElements(gl.TRIANGLES, mesh.indexCount, gl.UNSIGNED_SHORT, 0);
 }
 
-function drawOrbit(buffer, color = [0.56, 0.72, 1.0, 0.28]) {
+// Rev40: 軌道線の視認性を強化。
+// 旧 [0.56, 0.72, 1.0, 0.28] は淡い水色 + alpha 28% で暗背景にほぼ溶け込んでいた。
+// 新 [0.96, 0.78, 0.42, 0.65] は温かいゴールド + alpha 65% で
+// 太陽系の明るい雰囲気にも馴染み、暗背景でも明確に弧が見える。
+function drawOrbit(buffer, color = [0.96, 0.78, 0.42, 0.65]) {
   gl.useProgram(lineProgram);
   gl.bindBuffer(gl.ARRAY_BUFFER, buffer.buffer);
   gl.enableVertexAttribArray(lineLoc.aPosition);

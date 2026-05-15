@@ -47,16 +47,15 @@ function solarBodyToHotspot(body: SolarSelectMessage['body']): Tutor3dHotspot {
 
 /**
  * 太陽系専用の背景色プリセット。
- * GLB ModelViewer (saibo2 等) と初期背景色 (砂 / washi-deep) を統一する。
- * 各ステップを視覚的に明確に異ならせるため、隣接プリセットは大きく異なる
- * 明度を持たせる (旧版は #050914 → #000000 で差が見えなかった)。
+ * 惑星と星のコントラストが最も高い「宇宙」を初期色にする (ユーザー指定)。
+ * 隣接プリセット間は明度差を最大化して 1 クリックの変化が明確に見えるようにする。
  */
 const SOLAR_BG_PRESETS = [
-  { id: 'washi',  label: '砂 (デフォルト)', color: '#EFE5D4' },  // GLB と同じ初期色
-  { id: 'white',  label: '白',                color: '#FFFFFF' },
-  { id: 'gray',   label: '灰',                color: '#999999' },
+  { id: 'cosmic', label: '宇宙 (デフォルト)', color: '#050914' },  // 星と惑星が一番見やすい
   { id: 'dark',   label: '墨',                color: '#2b2b2b' },
-  { id: 'cosmic', label: '宇宙',              color: '#050914' },
+  { id: 'gray',   label: '灰',                color: '#999999' },
+  { id: 'washi',  label: '砂',                color: '#EFE5D4' },
+  { id: 'white',  label: '白',                color: '#FFFFFF' },
 ] as const;
 
 // ── 太陽系専用のサブコンポーネント ─────────────────────────────
