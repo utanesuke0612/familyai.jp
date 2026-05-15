@@ -137,27 +137,27 @@ export default function VoaEnglishToolPage({ searchParams }: VoaEnglishToolPageP
       >
         <div className="mx-auto flex max-w-5xl flex-col gap-5">
           <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_220px] lg:items-start">
-            <div className="flex flex-col gap-4">
+            <div className="flex flex-col gap-3">
               <h1
-                className="font-display font-bold leading-tight"
-                style={{ fontSize: 'clamp(26px, 4vw, 44px)', color: 'var(--color-brown)' }}
+                className="font-mincho leading-tight"
+                style={{ fontSize: 'clamp(30px, 5vw, 54px)', fontWeight: 500, color: 'var(--sumi)' }}
               >
-                VOA × AI ディクテーション教室
+                VOA × <span style={{ color: 'var(--shu)' }}>AI</span> ディクテーション教室
               </h1>
               <p
-                className="max-w-2xl text-base leading-relaxed sm:text-lg font-bold"
-                style={{ color: 'var(--color-brown)' }}
+                className="max-w-2xl text-base leading-relaxed sm:text-lg"
+                style={{ color: 'var(--sumi)' }}
               >
-                <strong>聴いて、書いて、声に出す。繰り返すほど、英語は身につく。</strong>
+                聴いて、書いて、声に出す。繰り返すほど、英語は身につく。
               </p>
               <p
                 className="max-w-2xl text-base leading-relaxed sm:text-lg"
-                style={{ color: 'var(--color-brown-light)' }}
+                style={{ color: 'var(--sumi-light)' }}
               >
-                <strong>ディクテーション</strong>は、五感をフル活用する学習法。<br />
+                ディクテーションは、五感をフル活用する学習法。<br />
                 最も効果的な英語学習法のひとつです。<br />
-                教材は <strong>VOA</strong>（Voice of America）の公式素材。<br />
-                <strong>AIサポート</strong>で、いつでもどこでも自分のペースで。<br />
+                教材は VOA（Voice of America）の公式素材。<br />
+                AI サポートで、いつでもどこでも自分のペースで。<br />
                 疑問はその場で AI に質問できます。
               </p>
 

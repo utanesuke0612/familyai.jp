@@ -66,31 +66,34 @@ export default async function AiKyoshitsu3DPage({ searchParams }: PageProps) {
   };
 
   return (
-    <main style={{ background: 'var(--color-cream)', minHeight: '100vh' }}>
-      {/* ── ヘッダー ── */}
+    <main style={{ background: 'var(--washi)', minHeight: '100vh' }}>
+      {/* ── ヘッダー（Rev40 Phase J+: /learn /tools と統一仕様）── */}
       <section
         className="px-6 py-8 sm:py-10"
-        style={{ background: 'linear-gradient(160deg, var(--color-peach-light) 0%, var(--color-cream) 80%)' }}
+        style={{ background: 'var(--washi)' }}
       >
-        <div className="mx-auto max-w-6xl">
-          <div className="flex items-center gap-3 mb-3">
-            <span style={{ fontSize: 36 }} aria-hidden>🌐</span>
-            <div>
-              <h1
-                className="font-display font-bold"
-                style={{ fontSize: 'clamp(22px, 3vw + 12px, 32px)', color: 'var(--color-brown)', margin: 0 }}
-              >
-                うごくAI教室・3D 図鑑
-              </h1>
-              <p style={{ margin: '4px 0 0', fontSize: 14, color: 'var(--color-brown-light)' }}>
-                理科を 3D で観察 ✨ あいちゃんと一緒に発見しよう
-              </p>
-            </div>
+        <div className="max-w-6xl mx-auto">
+          <div className="flex flex-col gap-3">
+            <h1
+              className="font-mincho leading-tight"
+              style={{ fontSize: 'clamp(30px, 5vw, 54px)', fontWeight: 500, color: 'var(--sumi)' }}
+            >
+              うごく<span style={{ color: 'var(--shu)' }}>AI</span>教室・3D 図鑑
+            </h1>
+            <p
+              className="max-w-2xl text-base leading-relaxed sm:text-lg"
+              style={{ color: 'var(--sumi)' }}
+            >
+              理科を 3D で観察。あいちゃんと一緒に発見しよう。
+            </p>
+            <p
+              className="max-w-2xl text-base leading-relaxed sm:text-lg"
+              style={{ color: 'var(--sumi-light)' }}
+            >
+              回したり・拡大したり・AR でリビングに置いたり。
+              気になる場所をタップすると、AI が詳しく教えてくれます。
+            </p>
           </div>
-          <p style={{ margin: '12px 0 0', fontSize: 14, color: 'var(--color-brown-muted)', lineHeight: 1.6 }}>
-            回したり・拡大したり・AR でリビングに置いたり。
-            気になる場所をタップすると、AI が詳しく教えてくれます。
-          </p>
         </div>
       </section>
 
