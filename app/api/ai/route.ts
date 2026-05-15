@@ -25,8 +25,7 @@
 
 import { NextRequest }    from 'next/server';
 import { z }              from 'zod';
-import { routeAI, buildArticleSystemPrompt } from '@/lib/ai/router';
-import { buildAiEchoSystemPrompt }  from '@/lib/ai/ai-echo-prompt';
+import { streamArticleChat, streamAiEcho } from '@/lib/ai/router';
 import { verifyCsrf }     from '@/lib/csrf';
 import { auth }           from '@/lib/auth';
 import { enforceAiRateLimit } from '@/lib/ratelimit';
@@ -138,22 +137,9 @@ export async function POST(req: NextRequest) {
   const rl = await enforceAiRateLimit(req, plan, userId);
   if (rl) return rl;
 
-  // 4. システムプロンプト構築
-  // feature='ai-echo' なら専用プロンプト、それ以外は従来の記事/レッスン用プロンプト。
-  const systemContent = feature === 'ai-echo' && level
-    ? buildAiEchoSystemPrompt(level, lessonContext)
-    : buildArticleSystemPrompt({
-        articleTitle,
-        articleExcerpt,
-        lessonContext,
-      });
-
-  const fullMessages = [
-    { role: 'system' as const, content: systemContent },
-    ...messages.map((m) => ({ role: m.role as 'user' | 'assistant', content: m.content })),
-  ];
-
-  // 5. AI ルーティング & ストリーム生成
+  // 4. AI ルーティング & ストリーム生成
+  // Rev40 (Deepening #4): system prompt 構築・messages 組み立ては lib/ai/router.ts に集約。
+  // route は feature をディスパッチするだけ。
   const ac = new AbortController();
   req.signal.addEventListener('abort', () => ac.abort());
 
@@ -161,14 +147,29 @@ export async function POST(req: NextRequest) {
   const timeoutId = setTimeout(() => ac.abort(), 8_000);
 
   try {
-    // text-simple / text-quality のみストリーミング対応
+    // text-simple / text-quality / math-reasoning のみストリーミング対応
     // transcribe / image-gen / tts-japanese は将来実装
     if (type !== 'text-simple' && type !== 'text-quality' && type !== 'math-reasoning') {
       clearTimeout(timeoutId);
       return errorResponse('UNSUPPORTED_TYPE', 'このAI機能は現在準備中です。', 400);
     }
 
-    const stream = await routeAI(type, fullMessages, { signal: ac.signal });
+    const userMessages = messages.map((m) => ({
+      role:    m.role as 'user' | 'assistant',
+      content: m.content,
+    }));
+
+    const stream = feature === 'ai-echo' && level
+      ? await streamAiEcho(
+          type,
+          { level, lessonScript: lessonContext, messages: userMessages },
+          { signal: ac.signal },
+        )
+      : await streamArticleChat(
+          type,
+          { articleTitle, articleExcerpt, lessonContext, messages: userMessages },
+          { signal: ac.signal },
+        );
 
     // ストリーム開始後はタイムアウトをクリア（クライアント切断シグナルに任せる）
     clearTimeout(timeoutId);
