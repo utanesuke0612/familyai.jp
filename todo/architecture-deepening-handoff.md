@@ -1,5 +1,19 @@
 # Architecture Deepening Handoff — familyai.jp
 
+## Codex確認コメント（2026-05-15）
+
+このレビュー結果は、全体として **70〜80%程度は妥当** と判断します。ただし、これはバグ修正レビューではなく、アーキテクチャ改善・中長期リファクタ計画として扱うべき内容です。別AI Agentへ渡す場合は、この文書だけで優先順位を上書きせず、既存のSecurity / UI / 不要物整理レビューのP1/P2指摘を先に扱ってください。
+
+特に妥当性が高い候補は、`Candidate #1 Admin Route Protection`、`Candidate #2 Article List Duplicate`、`Candidate #4 AI Router Feature分離`、`Candidate #6 Rate Limit統合` です。これらは現コード上でも重複・責務漏れ・エラー形式のdriftが確認でき、段階的に実装する価値があります。
+
+一方で、`Candidate #3 MappersをRepositoriesに内包` は「公開GET API向けRepositoryはDTOを返す」程度に限定するのが安全です。mapperを完全削除する必要はなく、内部純関数として残して構いません。Admin編集系や内部処理ではDB rowを返す方が自然な場面があります。
+
+`Candidate #5 VOA Lesson Session Module` は方向性は理解できますが、提案範囲が大きく退行リスクも高いです。いきなり全store / API / UI状態を統合せず、まずは `LessonProvider` など読み取り・状態共有の薄い段階導入に留めるべきです。全面実装は別PRまたは別Phaseで扱ってください。
+
+この文書では、以前の重要指摘である 3D admin限定ページと公開APIの不整合、3D metadataの認可漏れ、ArticleBodyの任意HTTPS iframe許可、AI風UI・レイアウト改善、`next.config.mjs` の旧アニメーション設定、同期API clientの先頭200件問題などは十分に扱われていません。したがって、本ドキュメントはそれらの代替ではなく、追加のアーキテクチャ改善候補として位置づけます。
+
+推奨実装順序は、まず既存P1/P2のSecurity/UI指摘を解消し、その後この文書の中では `#1 → #6 → #2/#3の小範囲 → #4 → #5検討のみ` の順です。各候補は小さくコミットし、`npm run lint`、`npx tsc --noEmit`、`npm test`、可能なら `npm run build` を必ず確認してください。
+
 > 別エージェントがこの 1 ファイルだけで「判断 → 実装」まで進められるように、
 > `/Users/junli/.agents/skills/improve-codebase-architecture/` の SKILL に沿って
 > familyai.jp のソースコードを精査した結果をまとめたものです。
