@@ -54,18 +54,13 @@ input {
   height: 100%;
   display: block;
   cursor: grab;
-  /* Rev40 (M1 Chrome 対策): WebGL canvas を独立 compositing layer に。
-     これで上に重なる DOM (labels / controls) が反復更新されても、
-     canvas の paint タイルが invalidate されない。 */
+  /* Rev40 (M1 対策): canvas を単独 compositing layer に分離。これだけは保持。
+     labels / controls にも layer を作ると M1 GPU は逆に苦しくなる (タイル
+     ゴミの出やすさが増す) ため、それらは composit-only の transform 更新で済ます。 */
   transform: translateZ(0);
-  will-change: transform;
-}
-
-/* 同 — labels コンテナと controls にも適用 (個別レイヤーで paint 分離) */
-#labels,
-.controls {
-  transform: translateZ(0);
-  will-change: transform;
+  /* 黒背景を CSS にも持たせて、万一 WebGL クリアが落ちた瞬間も
+     画面が灰色化しないよう保険にする。 */
+  background: #000;
 }
 
 #scene:active {
@@ -138,14 +133,14 @@ input {
 
 .planet-label {
   position: absolute;
-  /* Rev40 (M1 Chrome 対策): left/top: 0 を起点に main.js で transform を指定する */
+  /* Rev40: transform で位置制御するため left/top は 0 起点に */
   left: 0;
   top: 0;
   min-width: 52px;
   padding: 3px 7px 4px;
   border: 1px solid rgba(216, 232, 255, 0.26);
   border-radius: 6px;
-  background: rgba(4, 10, 20, 0.88);
+  background: rgba(4, 10, 20, 0.92);
   color: #ffffff;
   font-size: 13px;
   font-weight: 700;
@@ -153,9 +148,9 @@ input {
   text-align: center;
   text-shadow: 0 1px 3px rgba(0, 0, 0, 0.9);
   white-space: nowrap;
-  /* GPU 合成レイヤーに固定し DOM 反復更新による layout 連鎖を防ぐ */
-  will-change: transform;
-  contain: layout paint;
+  /* Rev40 (M1 対策): will-change / contain は外す。9 個分の GPU layer を
+     確保すると M1 の Metal タイルバジェットを圧迫し、別途タイルゴミ問題
+     を誘発するため。transform 更新だけでも paint コストは小さい。 */
 }
 
 .planet-label::before {

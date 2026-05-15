@@ -1,5 +1,15 @@
 const canvas = document.getElementById("scene");
-const gl = canvas.getContext("webgl", { antialias: true, alpha: false });
+// Rev40 (M1 Chrome / Safari 対策): preserveDrawingBuffer: true で前フレームの
+// drawing buffer を保持する。これで Metal GPU の compositing で「未初期化
+// メモリ (灰色矩形タイルゴミ)」が露出する症状を防ぐ。
+// 軽微なメモリ帯域コストはあるが、9 天体の小規模シーンでは無視可能。
+const gl = canvas.getContext("webgl", {
+  antialias:              true,
+  alpha:                  false,
+  preserveDrawingBuffer:  true,
+  premultipliedAlpha:     true,
+  powerPreference:        "default",
+});
 const labelLayer = document.getElementById("labels");
 
 if (!gl) {
@@ -566,7 +576,11 @@ canvas.addEventListener("click", (event) => {
 });
 
 function resize() {
-  const dpr = Math.min(window.devicePixelRatio || 1, 2);
+  // Rev40 (M1 対策): DPR 上限を 2 → 1.5 に下げる。
+  // Retina (DPR=2) で 2x スケールするとフレームバッファサイズが 4 倍になり、
+  // M1 GPU の Metal タイルバジェットを圧迫してタイルゴミ (灰色矩形) が
+  // 発生しやすくなるため、視覚的にほぼ違いの分からない 1.5x に抑える。
+  const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
   const width = Math.max(1, Math.floor(canvas.clientWidth * dpr));
   const height = Math.max(1, Math.floor(canvas.clientHeight * dpr));
   if (canvas.width !== width || canvas.height !== height) {
@@ -716,6 +730,11 @@ function render(now) {
   lastTime = now;
   if (!paused) simTime += dt * speed;
 
+  // Rev40 (M1 対策): scissor test を必ず無効化し、ビューポート全域を確実にクリアする。
+  // タイルゴミ (灰色矩形) は Metal ドライバが部分クリアと判断して
+  // 古いタイル内容を残すパターンが原因のため、明示的に全面クリアを強制。
+  gl.disable(gl.SCISSOR_TEST);
+  gl.colorMask(true, true, true, true);
   gl.clearColor(clearColor[0], clearColor[1], clearColor[2], 1);
   gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
   gl.enable(gl.DEPTH_TEST);

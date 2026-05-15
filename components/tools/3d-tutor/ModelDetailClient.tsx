@@ -190,15 +190,11 @@ function SolarViewer({
           width:  '100%',
           height: '100%',
           border: 'none',
-          background: 'transparent',
+          background: '#000',     // 黒の保険 (WebGL クリア失敗時の fallback)
           display: 'block',
-          // Rev40 (M1 Chrome 対策): iframe を独立した GPU 合成レイヤーに昇格させ、
-          // 親 DOM 側の paint 操作と Metal タイル境界を共有しないようにする。
-          // これでグレー矩形フリッカリングを根本的に回避。
-          transform:  'translateZ(0)',
-          isolation:  'isolate',
-          willChange: 'transform',
-          contain:    'paint',
+          // Rev40 (M1 対策): iframe を別 stacking context に隔離。
+          // (will-change は外して layer の競合を防ぐ — canvas 側 1 layer で十分)
+          isolation: 'isolate',
         }}
       />
 
