@@ -8,19 +8,18 @@
  *   sort     - 'newest' | 'oldest' | 'name' | 'plan'
  *   page     - 1-based
  *   pageSize - default 50
+ *
+ * Architecture Deepening #1: ガードを protectAdminRoute に集約。
  */
 
 import { NextRequest, NextResponse } from 'next/server';
 import { ilike, or, eq, asc, desc, count, and } from 'drizzle-orm';
-import { requireAdmin }  from '@/lib/admin-auth';
-import { db, users }     from '@/lib/db';
-import { escapeLike }    from '@/lib/repositories/articles';
+import { protectAdminRoute }    from '@/lib/api/admin-guard';
+import { db, users }            from '@/lib/db';
+import { escapeLike }           from '@/lib/repositories/articles';
 import { adminUsersQuerySchema } from '@/lib/schemas/users';
 
-export async function GET(req: NextRequest) {
-  const check = await requireAdmin();
-  if (!check.ok) return check.response;
-
+export const GET = protectAdminRoute(async (req: NextRequest) => {
   // ── クエリパラメータ検証（C1: page=abc 等の NaN 攻撃防止） ──
   const sp     = req.nextUrl.searchParams;
   const parsed = adminUsersQuerySchema.safeParse({
@@ -115,4 +114,4 @@ export async function GET(req: NextRequest) {
       summary,
     },
   });
-}
+});

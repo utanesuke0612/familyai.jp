@@ -15,7 +15,6 @@
 
 import { NextRequest, NextResponse } from 'next/server';
 import { getArticle }                from '@/lib/repositories/articles';
-import { toArticleDetail }           from '@/lib/mappers/articles';
 import { withRequest }               from '@/lib/log';
 
 export const runtime = 'nodejs';
@@ -40,7 +39,8 @@ export async function GET(
       );
     }
 
-    const res = NextResponse.json({ ok: true, data: toArticleDetail(article) });
+    // Rev40 (Deepening #3): getArticle が DTO を返すようになったため mapper 呼び出しは不要
+    const res = NextResponse.json({ ok: true, data: article });
     // CDN 60秒キャッシュ + 10分 stale-while-revalidate
     res.headers.set(
       'Cache-Control',

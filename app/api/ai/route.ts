@@ -24,14 +24,11 @@
  */
 
 import { NextRequest }    from 'next/server';
-import { Ratelimit }      from '@upstash/ratelimit';
-import { Redis }          from '@upstash/redis';
 import { z }              from 'zod';
-import { routeAI, buildArticleSystemPrompt } from '@/lib/ai/router';
-import { buildAiEchoSystemPrompt }  from '@/lib/ai/ai-echo-prompt';
+import { streamArticleChat, streamAiEcho } from '@/lib/ai/router';
 import { verifyCsrf }     from '@/lib/csrf';
 import { auth }           from '@/lib/auth';
-import { isRateLimitFailClosed } from '@/lib/ratelimit';
+import { enforceAiRateLimit } from '@/lib/ratelimit';
 import { withRequest }    from '@/lib/log';
 
 export const runtime = 'nodejs';
@@ -69,41 +66,6 @@ const bodySchema = z.object({
    */
   level:          z.union([z.literal(1), z.literal(2), z.literal(3)]).optional().nullable(),
 });
-
-// ── Redis / Ratelimit lazy init ────────────────────────────────
-let _redis:         Redis | null = null;
-let _rlAnon:        Ratelimit | null = null;
-let _rlFree:        Ratelimit | null = null;
-let _rlPro:         Ratelimit | null = null;
-
-function getRedis(): Redis | null {
-  if (_redis) return _redis;
-  if (!process.env.UPSTASH_REDIS_REST_URL || !process.env.UPSTASH_REDIS_REST_TOKEN) {
-    return null;
-  }
-  _redis = Redis.fromEnv();
-  return _redis;
-}
-
-function getRatelimiters() {
-  const redis = getRedis();
-  if (!redis) return null;
-  if (!_rlAnon) {
-    _rlAnon = new Ratelimit({ redis, limiter: Ratelimit.slidingWindow(10,  '1 d'), prefix: 'ratelimit:ai:anon' });
-    _rlFree = new Ratelimit({ redis, limiter: Ratelimit.slidingWindow(30,  '1 d'), prefix: 'ratelimit:ai:free' });
-    _rlPro  = new Ratelimit({ redis, limiter: Ratelimit.slidingWindow(200, '1 d'), prefix: 'ratelimit:ai:pro'  });
-  }
-  return { anon: _rlAnon!, free: _rlFree!, pro: _rlPro! };
-}
-
-// ── IP 取得 ────────────────────────────────────────────────────
-function getClientIp(req: NextRequest): string {
-  return (
-    req.headers.get('x-forwarded-for')?.split(',')[0]?.trim() ??
-    req.headers.get('x-real-ip') ??
-    '127.0.0.1'
-  );
-}
 
 // ── エラーレスポンスヘルパー ───────────────────────────────────
 /**
@@ -165,58 +127,19 @@ export async function POST(req: NextRequest) {
   const { type, messages, articleTitle, articleExcerpt, lessonContext, feature, level } = parsed.data;
 
   // 3. レート制限チェック（セッション対応: ログイン済みはプラン別制限）
-  const ratelimiters = getRatelimiters();
-  if (ratelimiters) {
-    const ip      = getClientIp(req);
-    const session = await auth();
+  // Rev40 (Deepening #6): lib/ratelimit.ts の enforceAiRateLimit に集約。
+  // 旧実装は本 route 内に Redis singleton と 3 つの Ratelimit を直書きしていた。
+  const session = await auth();
+  const userId  = session?.user?.id ?? null;
+  const plan    = !userId ? 'anon'
+                : session?.user?.plan === 'premium' ? 'premium'
+                : 'free';
+  const rl = await enforceAiRateLimit(req, plan, userId);
+  if (rl) return rl;
 
-    let limiter    = ratelimiters.anon;
-    let limitKey   = ip;
-
-    if (session?.user?.id) {
-      // ログイン済み：plan は JWT に埋め込み済み（Rev23 #4）のため DB 呼び出し不要
-      const plan = session.user.plan ?? 'free';
-      limiter  = plan === 'premium' ? ratelimiters.pro : ratelimiters.free;
-      limitKey = session.user.id;
-    }
-
-    const { success } = await limiter.limit(limitKey);
-    if (!success) {
-      const message = session?.user?.id
-        ? '本日の利用上限に達しました。明日またお試しください。'
-        : '1日の利用上限に達しました。ログインするとより多く使えます。';
-      return new Response(
-        JSON.stringify({ ok: false, error: { code: 'RATE_LIMIT_EXCEEDED', message } }),
-        { status: 429, headers: { 'Content-Type': 'application/json' } },
-      );
-    }
-  } else if (isRateLimitFailClosed()) {
-    // Rev35 #security: production で Redis 未設定なら AI コスト爆発を防ぐため fail closed。
-    return new Response(
-      JSON.stringify({
-        ok: false,
-        error: { code: 'RATE_LIMIT_EXCEEDED', message: 'AI は一時的に利用できません。' },
-      }),
-      { status: 429, headers: { 'Content-Type': 'application/json' } },
-    );
-  }
-
-  // 4. システムプロンプト構築
-  // feature='ai-echo' なら専用プロンプト、それ以外は従来の記事/レッスン用プロンプト。
-  const systemContent = feature === 'ai-echo' && level
-    ? buildAiEchoSystemPrompt(level, lessonContext)
-    : buildArticleSystemPrompt({
-        articleTitle,
-        articleExcerpt,
-        lessonContext,
-      });
-
-  const fullMessages = [
-    { role: 'system' as const, content: systemContent },
-    ...messages.map((m) => ({ role: m.role as 'user' | 'assistant', content: m.content })),
-  ];
-
-  // 5. AI ルーティング & ストリーム生成
+  // 4. AI ルーティング & ストリーム生成
+  // Rev40 (Deepening #4): system prompt 構築・messages 組み立ては lib/ai/router.ts に集約。
+  // route は feature をディスパッチするだけ。
   const ac = new AbortController();
   req.signal.addEventListener('abort', () => ac.abort());
 
@@ -224,14 +147,29 @@ export async function POST(req: NextRequest) {
   const timeoutId = setTimeout(() => ac.abort(), 8_000);
 
   try {
-    // text-simple / text-quality のみストリーミング対応
+    // text-simple / text-quality / math-reasoning のみストリーミング対応
     // transcribe / image-gen / tts-japanese は将来実装
     if (type !== 'text-simple' && type !== 'text-quality' && type !== 'math-reasoning') {
       clearTimeout(timeoutId);
       return errorResponse('UNSUPPORTED_TYPE', 'このAI機能は現在準備中です。', 400);
     }
 
-    const stream = await routeAI(type, fullMessages, { signal: ac.signal });
+    const userMessages = messages.map((m) => ({
+      role:    m.role as 'user' | 'assistant',
+      content: m.content,
+    }));
+
+    const stream = feature === 'ai-echo' && level
+      ? await streamAiEcho(
+          type,
+          { level, lessonScript: lessonContext, messages: userMessages },
+          { signal: ac.signal },
+        )
+      : await streamArticleChat(
+          type,
+          { articleTitle, articleExcerpt, lessonContext, messages: userMessages },
+          { signal: ac.signal },
+        );
 
     // ストリーム開始後はタイムアウトをクリア（クライアント切断シグナルに任せる）
     clearTimeout(timeoutId);

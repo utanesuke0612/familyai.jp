@@ -2,30 +2,20 @@
  * app/api/admin/articles/[slug]/route.ts
  * PUT    /api/admin/articles/:slug — 記事更新（管理者専用）
  * DELETE /api/admin/articles/:slug — 記事削除（管理者専用）
+ *
+ * Architecture Deepening #1: ガード三和音を protectAdminRoute に集約。
  */
 
 import { NextRequest, NextResponse } from 'next/server';
-import { requireAdmin }              from '@/lib/admin-auth';
-import { verifyCsrf }                from '@/lib/csrf';
-import { enforceAdminRateLimit }     from '@/lib/ratelimit';
+import { protectAdminRoute, legacyErrorBuilder } from '@/lib/api/admin-guard';
 import { updateArticle, deleteArticle } from '@/lib/repositories/articles';
 import { updateArticleSchema }       from '@/lib/schemas/articles';
 
+interface Ctx { params?: { slug: string }; }
+
 // ─── PUT: 記事更新 ────────────────────────────────────────────
-export async function PUT(
-  req:     NextRequest,
-  { params }: { params: { slug: string } },
-) {
-  if (!verifyCsrf(req)) {
-    return NextResponse.json({ error: 'CSRF check failed' }, { status: 403 });
-  }
-
-  const check = await requireAdmin();
-  if (!check.ok) return check.response;
-
-  // レート制限（Rev23 #5）
-  const rl = await enforceAdminRateLimit(req, 'admin');
-  if (rl) return rl;
+export const PUT = protectAdminRoute<{ slug: string }>(async (req: NextRequest, { params }: Ctx) => {
+  const slug = params!.slug;
 
   let body: unknown;
   try {
@@ -42,32 +32,19 @@ export async function PUT(
     );
   }
 
-  const updated = await updateArticle(params.slug, parsed.data);
+  const updated = await updateArticle(slug, parsed.data);
   if (!updated) {
     return NextResponse.json({ error: '記事が見つかりません' }, { status: 404 });
   }
   return NextResponse.json({ ok: true, data: updated });
-}
+}, { errorBuilder: legacyErrorBuilder });
 
 // ─── DELETE: 記事削除 ─────────────────────────────────────────
-export async function DELETE(
-  req:    NextRequest,
-  { params }: { params: { slug: string } },
-) {
-  if (!verifyCsrf(req)) {
-    return NextResponse.json({ error: 'CSRF check failed' }, { status: 403 });
-  }
-
-  const check = await requireAdmin();
-  if (!check.ok) return check.response;
-
-  // レート制限（Rev23 #5）
-  const rl = await enforceAdminRateLimit(req, 'admin');
-  if (rl) return rl;
-
-  const ok = await deleteArticle(params.slug);
+export const DELETE = protectAdminRoute<{ slug: string }>(async (_req: NextRequest, { params }: Ctx) => {
+  const slug = params!.slug;
+  const ok = await deleteArticle(slug);
   if (!ok) {
     return NextResponse.json({ error: '記事が見つかりません' }, { status: 404 });
   }
   return NextResponse.json({ ok: true });
-}
+}, { errorBuilder: legacyErrorBuilder });

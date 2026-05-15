@@ -5,36 +5,32 @@
  * GET /api/articles
  *
  * クエリパラメータ:
- *   cat    : ContentCategory（任意）
+ *   cat    : ContentCategory（任意・複数可）
  *   level  : 'beginner' | 'intermediate' | 'advanced'（任意）
  *   page   : number（デフォルト: 1）
  *   limit  : number（デフォルト: 12・最大: 50）
  *   sort   : 'latest' | 'popular'（デフォルト: 'latest'）
+ *   search : string（タイトル/description 部分一致・ILIKE）
  *
  * レスポンス（200）:
  * {
  *   ok: true,
  *   data: {
- *     items: Article[];
+ *     items: ArticleSummary[];
  *     meta:  { page, perPage, total, totalPages, hasNext, hasPrev }
  *   }
  * }
  * ※ shared/api/index.ts の PaginatedResult<T> と同一形式（iOS 共通）
  *
- * 実装ルール:
- * - published: true の記事のみ返す
- * - sort='popular' → viewCount 降順
- * - sort='latest'  → publishedAt 降順
- * - カテゴリは PostgreSQL 配列の @> 演算子でフィルタ
- * - Cache-Control: public, s-maxage=60（CDN 1分キャッシュ）
+ * Rev40 (Deepening #2): 旧実装は WHERE/ORDER BY/Promise.all を route 内に直書きしていたが、
+ * lib/repositories/articles.ts の getArticleList() に完全同型の実装が既にあったため統合。
+ * route の責務は HTTP 入出力 (バリデーション・キャッシュヘッダ・DTO 変換) のみに絞った。
  */
 
 import { NextRequest, NextResponse } from 'next/server';
-import { eq, and, or, desc, sql, count, ilike } from 'drizzle-orm';
 import { z }                         from 'zod';
-import { db, articles }              from '@/lib/db';
+import { getArticleList }            from '@/lib/repositories/articles';
 import { toArticleSummary }          from '@/lib/mappers/articles';
-import { escapeLike }                from '@/lib/repositories/articles';
 import { withRequest }               from '@/lib/log';
 
 export const runtime = 'nodejs';
@@ -78,21 +74,6 @@ const querySchema = z.object({
   search: z.string().trim().min(1).max(100).optional(),
 });
 
-// ── レスポンス用の記事フィールド ────────────────────────────────
-const SELECT_FIELDS = {
-  id:               articles.id,
-  slug:             articles.slug,
-  title:            articles.title,
-  description:      articles.description,
-  categories:       articles.categories,
-  level:            articles.level,
-  thumbnailUrl:     articles.thumbnailUrl,
-  viewCount:        articles.viewCount,
-  isFeatured:       articles.isFeatured,
-  publishedAt:      articles.publishedAt,
-  updatedAt:        articles.updatedAt,
-} as const;
-
 // ── GET /api/articles ──────────────────────────────────────────
 export async function GET(req: NextRequest) {
   const log = withRequest(req, '/api/articles');
@@ -125,62 +106,13 @@ export async function GET(req: NextRequest) {
   }
 
   const { cat, level, page, limit, sort, search } = parsed.data;
-  const offset = (page - 1) * limit;
 
-  // 2. WHERE 句の構築
-  const conditions = [eq(articles.published, true)];
-
-  if (cat && cat.length > 0) {
-    // 複数カテゴリは OR（いずれかを含む）で検索
-    const catConditions = cat.map(
-      (c) => sql`${articles.categories} @> ARRAY[${c}]::text[]`,
-    );
-    conditions.push(
-      catConditions.length === 1 ? catConditions[0]! : or(...catConditions)!,
-    );
-  }
-
-  if (level) {
-    conditions.push(eq(articles.level, level));
-  }
-
-  if (search) {
-    const pattern = `%${escapeLike(search)}%`;
-    conditions.push(
-      or(
-        ilike(articles.title, pattern),
-        ilike(articles.description, pattern),
-      )!,
-    );
-  }
-
-  const where = and(...conditions);
-
-  // 3. ORDER BY
-  const orderBy = sort === 'popular'
-    ? desc(articles.viewCount)
-    : desc(articles.publishedAt);
-
-  // 4. DB クエリ（件数 + データを並列取得）
+  // 2. Repository 経由でフィルタ + ページネーション取得
   try {
-    const [countResult, rows] = await Promise.all([
-      db
-        .select({ total: count() })
-        .from(articles)
-        .where(where)
-        .then((r) => r[0]?.total ?? 0),
-
-      db
-        .select(SELECT_FIELDS)
-        .from(articles)
-        .where(where)
-        .orderBy(orderBy)
-        .limit(limit)
-        .offset(offset),
-    ]);
-
-    const total      = Number(countResult);
-    const totalPages = Math.max(1, Math.ceil(total / limit));
+    const { items: rows, total, totalPages } = await getArticleList(
+      { categories: cat, level, sort, search },
+      { page, pageSize: limit },
+    );
 
     const res = NextResponse.json({
       ok:   true,

@@ -71,7 +71,7 @@ export function ModelDetailClient({ model }: ModelDetailClientProps) {
         />
 
         {/* 操作ガイド */}
-        <p
+        <div
           style={{
             margin: '16px 0 0',
             padding: '12px 14px',
@@ -83,10 +83,22 @@ export function ModelDetailClient({ model }: ModelDetailClientProps) {
             lineHeight: 1.6,
           }}
         >
-          {model.hotspots.length === 0
-            ? 'このモデルにはまだ解説ポイントが設定されていません。指でぐるぐる回したり、ピンチで拡大／縮小できます。'
-            : '3D モデルの気になる部分をタップすると、右側の AI チャットで詳しく教えてくれるよ！'}
-        </p>
+          {model.hotspots.length > 0 && (
+            <p style={{ margin: '0 0 8px' }}>
+              3D モデルの気になる部分をタップすると、右側の AI チャットで詳しく教えてくれるよ！
+            </p>
+          )}
+          <p style={{ margin: 0, fontSize: 12, color: 'var(--sumi-light)' }}>
+            <strong style={{ color: 'var(--sumi)' }}>操作方法：</strong>{' '}
+            <span style={{ whiteSpace: 'nowrap' }}>📱 1本指ドラッグで回転</span>・
+            <span style={{ whiteSpace: 'nowrap' }}>2本指ドラッグで左右上下に移動</span>・
+            <span style={{ whiteSpace: 'nowrap' }}>ピンチで拡大／縮小</span>
+            <br />
+            <span style={{ whiteSpace: 'nowrap' }}>🖱️ 左クリックドラッグで回転</span>・
+            <span style={{ whiteSpace: 'nowrap' }}>右クリックドラッグで移動</span>・
+            <span style={{ whiteSpace: 'nowrap' }}>ホイールで拡大／縮小</span>
+          </p>
+        </div>
       </div>
 
       {/* ── 右：AI チャットサイドバー（Lesson と同じ sticky パターン） ── */}

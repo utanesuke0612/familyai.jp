@@ -25,6 +25,7 @@ import {
   type UsageStats,
 } from './providers/openrouter';
 import { streamOpenAICompat, completeOpenAICompat } from './providers/openai-compatible';
+import { buildAiEchoSystemPrompt, type AiEchoLevel } from './ai-echo-prompt';
 
 export interface RouteAIOptions extends StreamOptions {
   /** 月額コスト上限（USD）を超えた場合に text-quality → text-simple にダウングレードする */
@@ -167,4 +168,68 @@ export function buildArticleSystemPrompt(opts: {
   lines.push('\nユーザーの質問に上記の記事内容を踏まえて回答してください。');
 
   return lines.join('\n');
+}
+
+// ── Feature-first API (Rev40 / Deepening #4) ─────────────────────
+//
+// 旧 app/api/ai/route.ts は feature 分岐 (article-chat / ai-echo) を
+// route 内部で行い、prompt builder と routeAI を別々に呼んでいた。
+// 「ある AI feature を呼ぶ」というドメイン操作を 1 つの interface に集約し、
+// route は HTTP 入出力のみに専念できるようにする。
+
+export interface ArticleChatInput {
+  /** ユーザーが読んでいる記事のタイトル（system prompt 用・任意） */
+  articleTitle?:   string | null;
+  /** 記事の概要・上限300字（system prompt 用・任意） */
+  articleExcerpt?: string | null;
+  /** AIctation の VOA レッスン全文（上限 8000 字・任意） */
+  lessonContext?:  string | null;
+  /** user / assistant の会話履歴。system プロンプトは本関数内で組み立てる */
+  messages:        OpenRouterMessage[];
+}
+
+export interface AiEchoInput {
+  level:         AiEchoLevel;
+  /** VOA レッスンの英文スクリプト（参照用・任意） */
+  lessonScript?: string | null;
+  /** user / assistant の会話履歴。system プロンプトは本関数内で組み立てる */
+  messages:      OpenRouterMessage[];
+}
+
+/**
+ * 記事 / AIctation チャットのストリーム生成。
+ * system プロンプト構築・モデル選択・ストリーム化までを集約する。
+ */
+export async function streamArticleChat(
+  type:    ModelRouterType,
+  input:   ArticleChatInput,
+  options: RouteAIOptions = {},
+): Promise<ReadableStream<Uint8Array>> {
+  const system = buildArticleSystemPrompt({
+    articleTitle:   input.articleTitle,
+    articleExcerpt: input.articleExcerpt,
+    lessonContext:  input.lessonContext,
+  });
+  const messages: OpenRouterMessage[] = [
+    { role: 'system', content: system },
+    ...input.messages,
+  ];
+  return routeAI(type, messages, options);
+}
+
+/**
+ * AI Echo（VOA レッスン後の英文評価）のストリーム生成。
+ * Level 別の system プロンプトを内部で組み立てる。
+ */
+export async function streamAiEcho(
+  type:    ModelRouterType,
+  input:   AiEchoInput,
+  options: RouteAIOptions = {},
+): Promise<ReadableStream<Uint8Array>> {
+  const system = buildAiEchoSystemPrompt(input.level, input.lessonScript);
+  const messages: OpenRouterMessage[] = [
+    { role: 'system', content: system },
+    ...input.messages,
+  ];
+  return routeAI(type, messages, options);
 }

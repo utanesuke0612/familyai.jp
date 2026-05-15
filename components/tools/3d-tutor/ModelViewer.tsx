@@ -47,6 +47,19 @@ async function ensureModelViewerLoaded(): Promise<void> {
  */
 const HOTSPOT_CLICK_THRESHOLD = 1.5;
 
+/**
+ * 背景色プリセット。クリックで順に切り替える。
+ * モデルが背景と同色で見えなくなる場合の対比調整用（例: 太陽は washi-deep に
+ * 溶け込みやすい）。Mingei トーンの「砂」を基本に、白／灰／墨／黒を用意する。
+ */
+const BG_PRESETS = [
+  { id: 'washi', label: '砂 (デフォルト)', color: 'var(--washi-deep)', swatch: '#EFE5D4' },
+  { id: 'white', label: '白',              color: '#ffffff',           swatch: '#ffffff' },
+  { id: 'gray',  label: '灰',              color: '#999999',           swatch: '#999999' },
+  { id: 'dark',  label: '墨',              color: '#2b2b2b',           swatch: '#2b2b2b' },
+  { id: 'black', label: '黒（宇宙）',       color: '#000000',           swatch: '#000000' },
+] as const;
+
 /** 2 点間ユークリッド距離（3D）。 */
 function distance3D(
   a: { x: number; y: number; z: number },
@@ -62,6 +75,15 @@ function distance3D(
 type Hit = {
   position: { x: number; y: number; z: number };
   normal:   { x: number; y: number; z: number };
+};
+
+/** model-viewer 要素が公開している JS API 部分の型。 */
+type ModelViewerEl = HTMLElement & {
+  getCameraOrbit?: () => { theta: number; phi: number; radius: number };
+  getCameraTarget?: () => { x: number; y: number; z: number };
+  positionAndNormalFromPoint?: (x: number, y: number) => Hit | null;
+  materialFromPoint?: (x: number, y: number) => { name?: string; index?: number } | null;
+  canActivateAR?: boolean;
 };
 
 export interface ModelViewerProps {
@@ -89,11 +111,107 @@ export function ModelViewer({
   className,
   heightCss,
 }: ModelViewerProps) {
-  const viewerRef = useRef<HTMLElement | null>(null);
+  const viewerRef  = useRef<HTMLElement | null>(null);
+  const wrapperRef = useRef<HTMLDivElement | null>(null);
   const [ready,    setReady]    = useState(false);
   const [arAvail,  setArAvail]  = useState(false);
   const [loadError, setLoadError] = useState<string | null>(null);
   const [retryKey, setRetryKey] = useState(0);  // src 再読み込みトリガー
+  const [isFullscreen, setIsFullscreen] = useState(false);
+  // CSS 擬似フルスクリーン (Fullscreen API 非対応端末の fallback。主に古い iOS 等)
+  const [cssFullscreen, setCssFullscreen] = useState(false);
+  // 背景色プリセットの index
+  const [bgIndex, setBgIndex] = useState(0);
+  const currentBg = BG_PRESETS[bgIndex]!;
+
+  const cycleBg = useCallback(() => {
+    setBgIndex((i) => (i + 1) % BG_PRESETS.length);
+  }, []);
+
+  // 自動回転 ON/OFF（props.autoRotate を初期値にユーザーが切替可能）
+  const [rotating, setRotating] = useState(autoRotate);
+  const toggleRotate = useCallback(() => setRotating((r) => !r), []);
+
+  /**
+   * カメラを画面の左右上右に「パン」する（カメラターゲットを画面平面上で移動）。
+   * dx / dy は画面右(+) / 画面上(+) 方向の符号。
+   * 移動量 = ステップ係数 × 現在の radius（モデルのスケールに自動追従）。
+   */
+  const panBy = useCallback((dx: number, dy: number) => {
+    const el = viewerRef.current as ModelViewerEl | null;
+    if (!el?.getCameraOrbit || !el.getCameraTarget) return;
+
+    const orbit  = el.getCameraOrbit();
+    const target = el.getCameraTarget();
+    const step   = Math.max(orbit.radius * 0.15, 0.05);
+
+    // 画面の右ベクトル（ワールド XZ 平面上で theta に対し直交）
+    const rX = Math.cos(orbit.theta);
+    const rZ = -Math.sin(orbit.theta);
+    // 画面の上ベクトル（right × view）— phi が垂直角度
+    const uX = -Math.sin(orbit.theta) * Math.cos(orbit.phi);
+    const uY =  Math.sin(orbit.phi);
+    const uZ = -Math.cos(orbit.theta) * Math.cos(orbit.phi);
+
+    const nx = target.x + (dx * rX + dy * uX) * step;
+    const ny = target.y +                 dy * uY  * step;
+    const nz = target.z + (dx * rZ + dy * uZ) * step;
+    el.setAttribute('camera-target', `${nx}m ${ny}m ${nz}m`);
+  }, []);
+
+  /** カメラ位置を初期に戻す（パン / ズーム結果のリセット）。 */
+  const resetCamera = useCallback(() => {
+    const el = viewerRef.current;
+    if (!el) return;
+    el.setAttribute('camera-target', 'auto auto auto');
+    el.setAttribute('camera-orbit',  '0deg 75deg auto');
+  }, []);
+
+  /**
+   * Zoom-to-cursor: ホイール後にカーソル真下のワールド座標を保持するよう
+   * camera-target を補正する。
+   * - model-viewer のデフォルト zoom は radius のみ変える（target は変化なし）
+   * - 1 ティック後（rAF）に「ズーム前のカーソル下ワールド座標」と
+   *   「ズーム後のカーソル下ワールド座標」の差分だけ target をオフセット
+   * - これでカーソル位置のワールド点が画面上で動かない = 直感的なズーム
+   * - カーソルがモデル外なら補正をスキップ（中心ズームにフォールバック）
+   */
+  useEffect(() => {
+    const wrapper = wrapperRef.current;
+    if (!wrapper) return;
+
+    const onWheel = (e: WheelEvent) => {
+      const el = viewerRef.current as ModelViewerEl | null;
+      if (!el?.positionAndNormalFromPoint || !el.getCameraTarget) return;
+
+      const rect = el.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+
+      // ズーム前のカーソル下ワールド座標
+      const preHit = el.positionAndNormalFromPoint(x, y);
+      if (!preHit) return;  // モデルに当たっていない → 標準ズームのまま
+
+      // model-viewer のデフォルト zoom が radius を変えた後に補正
+      requestAnimationFrame(() => {
+        const postHit = el.positionAndNormalFromPoint?.(x, y);
+        if (!postHit) return;
+        const target = el.getCameraTarget?.();
+        if (!target) return;
+
+        const dx = preHit.position.x - postHit.position.x;
+        const dy = preHit.position.y - postHit.position.y;
+        const dz = preHit.position.z - postHit.position.z;
+        // 異常値（モデル裏側など）はスキップ
+        if (Math.abs(dx) > 1e3 || Math.abs(dy) > 1e3 || Math.abs(dz) > 1e3) return;
+
+        el.setAttribute('camera-target', `${target.x + dx}m ${target.y + dy}m ${target.z + dz}m`);
+      });
+    };
+
+    wrapper.addEventListener('wheel', onWheel, { passive: true });
+    return () => wrapper.removeEventListener('wheel', onWheel);
+  }, []);
 
   // 1. Web Component を遅延ロード
   useEffect(() => {
@@ -103,6 +221,73 @@ export function ModelViewer({
     });
     return () => { active = false; };
   }, []);
+
+  // 2-bis. Fullscreen API の状態を監視
+  //   - ESC や OS UI で退出した場合も isFullscreen を同期する
+  //   - webkit prefix（Safari）にも対応
+  useEffect(() => {
+    type ExtDoc = Document & { webkitFullscreenElement?: Element };
+    const docExt = document as ExtDoc;
+    const onChange = () => {
+      const active = !!(docExt.fullscreenElement || docExt.webkitFullscreenElement);
+      setIsFullscreen(active);
+      // 真の Fullscreen 復帰時は CSS 擬似モードも解除
+      if (active) setCssFullscreen(false);
+    };
+    document.addEventListener('fullscreenchange', onChange);
+    document.addEventListener('webkitfullscreenchange', onChange);
+    return () => {
+      document.removeEventListener('fullscreenchange', onChange);
+      document.removeEventListener('webkitfullscreenchange', onChange);
+    };
+  }, []);
+
+  // 2-ter. CSS 擬似フルスクリーン中の ESC で退出可能にする
+  useEffect(() => {
+    if (!cssFullscreen) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setCssFullscreen(false);
+    };
+    document.addEventListener('keydown', onKey);
+    return () => document.removeEventListener('keydown', onKey);
+  }, [cssFullscreen]);
+
+  // フルスクリーン切り替え（真の Fullscreen API 優先・失敗時は CSS 擬似モードへ）
+  const toggleFullscreen = useCallback(async () => {
+    const el = wrapperRef.current;
+    if (!el) return;
+    type ExtEl = HTMLDivElement & { webkitRequestFullscreen?: () => Promise<void> };
+    type ExtDoc = Document & {
+      webkitFullscreenElement?: Element;
+      webkitExitFullscreen?: () => Promise<void>;
+    };
+    const elExt  = el as ExtEl;
+    const docExt = document as ExtDoc;
+
+    const inRealFs = !!(docExt.fullscreenElement || docExt.webkitFullscreenElement);
+
+    // 退出
+    if (inRealFs) {
+      try {
+        if (docExt.exitFullscreen)              await docExt.exitFullscreen();
+        else if (docExt.webkitExitFullscreen)   await docExt.webkitExitFullscreen();
+      } catch { /* ignore */ }
+      return;
+    }
+    if (cssFullscreen) {
+      setCssFullscreen(false);
+      return;
+    }
+
+    // 入場: 真の Fullscreen API を試す
+    try {
+      if (elExt.requestFullscreen)             { await elExt.requestFullscreen(); return; }
+      if (elExt.webkitRequestFullscreen)       { await elExt.webkitRequestFullscreen(); return; }
+    } catch { /* 権限拒否等は CSS fallback へ落とす */ }
+
+    // フォールバック: CSS 擬似フルスクリーン
+    setCssFullscreen(true);
+  }, [cssFullscreen]);
 
   // 2. AR 利用可否 + ロードエラー監視
   //    Codex Q1-9 対応: GLB 取得失敗時の UI を追加
@@ -210,20 +395,38 @@ export function ModelViewer({
     );
   }
 
+  // フルスクリーン中（真 or CSS 擬似）はビューポート一杯にする
+  const isAnyFullscreen = isFullscreen || cssFullscreen;
+  const wrapperStyle: React.CSSProperties = isAnyFullscreen
+    ? {
+        position:   cssFullscreen ? 'fixed' : 'relative',
+        ...(cssFullscreen ? { inset: 0, zIndex: 9999 } : null),
+        width:      '100%',
+        height:     '100%',
+        minHeight:  cssFullscreen ? '100vh' : 0,
+        borderRadius: 0,
+        overflow:   'hidden',
+        background: currentBg.color,
+        border:     'none',
+        cursor:     hotspots.length > 0 && !loadError ? 'pointer' : 'default',
+      }
+    : {
+        position:   'relative',
+        width:      '100%',
+        height:     heightCss ?? '60vh',
+        minHeight:  360,
+        borderRadius: 4,
+        overflow:   'hidden',
+        background: currentBg.color,
+        border:     '1px solid var(--line)',
+        cursor:     hotspots.length > 0 && !loadError ? 'pointer' : 'default',
+      };
+
   return (
     <div
+      ref={wrapperRef}
       className={className}
-      style={{
-        position: 'relative',
-        width: '100%',
-        height: heightCss ?? '60vh',
-        minHeight: 360,
-        borderRadius: 4,
-        overflow: 'hidden',
-        background: 'var(--washi-deep)',
-        border: '1px solid var(--line)',
-        cursor: hotspots.length > 0 && !loadError ? 'pointer' : 'default',
-      }}
+      style={wrapperStyle}
     >
       {/* ── 読み込みエラー UI（Codex Q1-9 対応）── */}
       {loadError && (
@@ -278,6 +481,130 @@ export function ModelViewer({
           </button>
         </div>
       )}
+      {/* コントロール群（右上・<model-viewer> の外側 = light DOM ではなく通常子要素） */}
+      {!loadError && (
+        <div
+          style={{
+            position: 'absolute',
+            top:      12,
+            right:    12,
+            display:  'flex',
+            gap:      8,
+            zIndex:   4,
+          }}
+        >
+          {/* 自動回転 ON/OFF トグル（再生/一時停止アイコン） */}
+          <button
+            type="button"
+            onClick={toggleRotate}
+            aria-label={rotating ? '自動回転を止める' : '自動回転を再開する'}
+            aria-pressed={rotating}
+            title={rotating ? '自動回転を止める' : '自動回転を再開する'}
+            style={{
+              width:          40,
+              height:         40,
+              display:        'inline-flex',
+              alignItems:     'center',
+              justifyContent: 'center',
+              background:     'rgba(255, 255, 255, 0.88)',
+              color:          rotating ? 'var(--shu)' : 'var(--sumi)',
+              border:         '1px solid var(--line)',
+              borderRadius:   4,
+              cursor:         'pointer',
+              backdropFilter: 'blur(4px)',
+              WebkitBackdropFilter: 'blur(4px)',
+            }}
+          >
+            {rotating ? (
+              // Pause アイコン（2 本の縦棒）
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <rect x="6" y="5" width="4" height="14" rx="1" />
+                <rect x="14" y="5" width="4" height="14" rx="1" />
+              </svg>
+            ) : (
+              // Play アイコン（三角）
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M8 5v14l11-7z" />
+              </svg>
+            )}
+          </button>
+
+          {/* 背景色切替ボタン（クリックで次のプリセット） */}
+          <button
+            type="button"
+            onClick={cycleBg}
+            aria-label={`背景色を変更（現在: ${currentBg.label}）`}
+            title={`背景色: ${currentBg.label}（クリックで切替）`}
+            style={{
+              width:          40,
+              height:         40,
+              display:        'inline-flex',
+              alignItems:     'center',
+              justifyContent: 'center',
+              background:     'rgba(255, 255, 255, 0.88)',
+              color:          'var(--sumi)',
+              border:         '1px solid var(--line)',
+              borderRadius:   4,
+              cursor:         'pointer',
+              backdropFilter: 'blur(4px)',
+              WebkitBackdropFilter: 'blur(4px)',
+            }}
+          >
+            {/* 現在の背景色を示す丸スウォッチ */}
+            <span
+              aria-hidden="true"
+              style={{
+                width:        18,
+                height:       18,
+                borderRadius: '50%',
+                background:   currentBg.swatch,
+                border:       '1px solid var(--line)',
+                boxShadow:    '0 0 0 1px rgba(255,255,255,0.6) inset',
+                display:      'block',
+              }}
+            />
+          </button>
+
+        <button
+          type="button"
+          onClick={toggleFullscreen}
+          aria-label={isAnyFullscreen ? 'フルスクリーンを終了' : 'フルスクリーンで表示'}
+          title={isAnyFullscreen ? 'フルスクリーンを終了 (Esc)' : 'フルスクリーンで表示'}
+          style={{
+            width:          40,
+            height:         40,
+            display:        'inline-flex',
+            alignItems:     'center',
+            justifyContent: 'center',
+            background:     'rgba(255, 255, 255, 0.88)',
+            color:          'var(--sumi)',
+            border:         '1px solid var(--line)',
+            borderRadius:   4,
+            cursor:         'pointer',
+            backdropFilter: 'blur(4px)',
+            WebkitBackdropFilter: 'blur(4px)',
+          }}
+        >
+          {isAnyFullscreen ? (
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
+                 stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round"
+                 aria-hidden="true">
+              <path d="M9 3v3a2 2 0 0 1-2 2H4M15 3v3a2 2 0 0 0 2 2h3M15 21v-3a2 2 0 0 1 2-2h3M9 21v-3a2 2 0 0 0-2-2H4" />
+            </svg>
+          ) : (
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
+                 stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round"
+                 aria-hidden="true">
+              <path d="M3 9V5a2 2 0 0 1 2-2h4M21 9V5a2 2 0 0 0-2-2h-4M21 15v4a2 2 0 0 1-2 2h-4M3 15v4a2 2 0 0 0 2 2h4" />
+            </svg>
+          )}
+        </button>
+        </div>
+      )}
+
+      {/* パン用十字ボタン（左下） — 明示的な左右上下移動 + リセット */}
+      {!loadError && <PanControls panBy={panBy} resetCamera={resetCamera} />}
+
       <model-viewer
         key={retryKey}
         ref={(el: HTMLElement | null) => { viewerRef.current = el; }}
@@ -288,13 +615,23 @@ export function ModelViewer({
         ar
         ar-modes="webxr scene-viewer quick-look"
         camera-controls
-        auto-rotate={autoRotate ? '' : undefined}
+        auto-rotate={rotating ? '' : undefined}
         rotation-per-second="20deg"
         interaction-prompt="none"
         shadow-intensity="0.6"
         environment-image="neutral"
         exposure="1.0"
         loading="eager"
+        /* Rev40: ズーム制限を緩和して "無限拡大" 体感を実現
+           - radius 0% で限界近くまで寄れる（モデル内部直前）
+           - radius 1000% でデフォルトの 10 倍まで離れる
+           - theta / phi は auto のままなので回転は標準どおり */
+        min-camera-orbit="auto auto 0%"
+        max-camera-orbit="auto auto 1000%"
+        /* Rev40: パン (左右上下移動) は <model-viewer> v4.x の camera-controls に
+           デフォルトで含まれている（disable-pan を指定しない限り有効）。
+           - Desktop : 右クリック + ドラッグ
+           - Touch   : 2 本指ドラッグ */
         onClick={handleViewerClick}
         style={{
           width:  '100%',
@@ -326,6 +663,59 @@ export function ModelViewer({
           </button>
         )}
       </model-viewer>
+    </div>
+  );
+}
+
+// ── パン用十字ボタン（左下に配置） ────────────────────────────
+function PanControls({
+  panBy,
+  resetCamera,
+}: {
+  panBy:       (dx: number, dy: number) => void;
+  resetCamera: () => void;
+}) {
+  // 36 → 24px (2/3) に縮小 + 透明感アップ (alpha 0.88 → 0.55)
+  const btnCommon: React.CSSProperties = {
+    width:          24,
+    height:         24,
+    display:        'inline-flex',
+    alignItems:     'center',
+    justifyContent: 'center',
+    background:     'rgba(255, 255, 255, 0.55)',
+    color:          'rgba(60, 50, 40, 0.85)',
+    border:         '1px solid rgba(180, 165, 145, 0.55)',
+    borderRadius:   4,
+    cursor:         'pointer',
+    fontSize:       10,
+    lineHeight:     1,
+    padding:        0,
+    backdropFilter: 'blur(4px)',
+    WebkitBackdropFilter: 'blur(4px)',
+  };
+  return (
+    <div
+      style={{
+        position: 'absolute',
+        left:     12,
+        bottom:   12,
+        zIndex:   4,
+        display:  'grid',
+        gridTemplateColumns: 'repeat(3, 24px)',
+        gridTemplateRows:    'repeat(3, 24px)',
+        gap:      3,
+      }}
+      aria-label="3D ビューア パン操作"
+    >
+      <span />
+      <button type="button" onClick={() => panBy(0, +1)} title="上に移動" aria-label="上に移動" style={btnCommon}>▲</button>
+      <span />
+      <button type="button" onClick={() => panBy(-1, 0)} title="左に移動" aria-label="左に移動" style={btnCommon}>◀</button>
+      <button type="button" onClick={resetCamera} title="視点をリセット" aria-label="視点をリセット" style={btnCommon}>⟲</button>
+      <button type="button" onClick={() => panBy(+1, 0)} title="右に移動" aria-label="右に移動" style={btnCommon}>▶</button>
+      <span />
+      <button type="button" onClick={() => panBy(0, -1)} title="下に移動" aria-label="下に移動" style={btnCommon}>▼</button>
+      <span />
     </div>
   );
 }

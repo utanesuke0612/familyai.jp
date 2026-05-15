@@ -109,7 +109,7 @@ describe('GET /api/admin/ai-config — 現在値取得', () => {
     });
 
     const { GET } = await import('@/app/api/admin/ai-config/route');
-    const res = await GET();
+    const res = await GET(makeReq('http://familyai.jp/api/admin/ai-config'));
     expect(res.status).toBe(200);
     const json = (await res.json()) as {
       ok:   boolean;
@@ -123,14 +123,14 @@ describe('GET /api/admin/ai-config — 現在値取得', () => {
   it('403 when 非管理者', async () => {
     setNonAdminSession();
     const { GET } = await import('@/app/api/admin/ai-config/route');
-    const res = await GET();
+    const res = await GET(makeReq('http://familyai.jp/api/admin/ai-config'));
     expect(res.status).toBe(403);
   });
 
   it('403 when 未ログイン', async () => {
     setUnauthSession();
     const { GET } = await import('@/app/api/admin/ai-config/route');
-    const res = await GET();
+    const res = await GET(makeReq('http://familyai.jp/api/admin/ai-config'));
     expect(res.status).toBe(403);
   });
 
@@ -140,7 +140,7 @@ describe('GET /api/admin/ai-config — 現在値取得', () => {
     (getAiConfigFromDb as unknown as ReturnType<typeof vi.fn>).mockResolvedValue({});
 
     const { GET } = await import('@/app/api/admin/ai-config/route');
-    const res = await GET();
+    const res = await GET(makeReq('http://familyai.jp/api/admin/ai-config'));
     expect(res.status).toBe(500);
   });
 });

@@ -3,25 +3,20 @@
  * GET  /api/admin/3d-models  — 3D モデル一覧（管理者専用・公開非公開含む）
  * POST /api/admin/3d-models  — 3D モデル新規作成（管理者専用）
  *
- * 既存 /api/admin/articles と同パターン:
- *   - requireAdmin（ADMIN_EMAIL 一致）
- *   - verifyCsrf（POST のみ Origin チェック）
- *   - enforceAdminRateLimit（10 req/min・侵害アカウント保護）
+ * Architecture Deepening #1: ガード三和音を protectAdminRoute に集約。
+ * 既存クライアント (components/admin/3d-models/ModelForm.tsx) は json.error.message を読むため
+ * デフォルトの structuredErrorBuilder のままで変更なし。
  */
 
 import { NextRequest, NextResponse } from 'next/server';
-import { requireAdmin }              from '@/lib/admin-auth';
-import { verifyCsrf }                from '@/lib/csrf';
-import { enforceAdminRateLimit }     from '@/lib/ratelimit';
+import { protectAdminRoute }         from '@/lib/api/admin-guard';
 import { listAllModelsForAdmin, upsertModel } from '@/lib/repositories/3d-models';
 import { adminTutor3dQuerySchema, createTutor3dModelSchema } from '@/lib/schemas/3d-models';
 import { withRequest } from '@/lib/log';
 
 // ─── GET: 全モデル一覧 ───────────────────────────────────────
-export async function GET(req: NextRequest) {
+export const GET = protectAdminRoute(async (req: NextRequest) => {
   const log = withRequest(req, '/api/admin/3d-models');
-  const check = await requireAdmin();
-  if (!check.ok) return check.response;
 
   const { searchParams } = req.nextUrl;
   const parsedQuery = adminTutor3dQuerySchema.safeParse({
@@ -62,23 +57,11 @@ export async function GET(req: NextRequest) {
       { status: 500 },
     );
   }
-}
+});
 
 // ─── POST: モデル新規作成 ───────────────────────────────────
-export async function POST(req: NextRequest) {
+export const POST = protectAdminRoute(async (req: NextRequest) => {
   const log = withRequest(req, '/api/admin/3d-models');
-  if (!verifyCsrf(req)) {
-    return NextResponse.json(
-      { ok: false, error: { code: 'CSRF', message: 'CSRF check failed' } },
-      { status: 403 },
-    );
-  }
-
-  const check = await requireAdmin();
-  if (!check.ok) return check.response;
-
-  const rl = await enforceAdminRateLimit(req, 'admin');
-  if (rl) return rl;
 
   let body: unknown;
   try {
@@ -118,4 +101,4 @@ export async function POST(req: NextRequest) {
       { status: 500 },
     );
   }
-}
+});

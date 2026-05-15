@@ -38,9 +38,8 @@ import {
   CATEGORY_EMOJI,
   DIFFICULTY_LABEL,
   formatDateJa,
-  estimateReadingMin,
 } from '@/shared';
-import type { ContentCategory, DifficultyLevel } from '@/shared';
+import type { ContentCategory } from '@/shared';
 
 // ISR: 1時間ごとに再検証
 export const revalidate = 3600;
@@ -90,8 +89,9 @@ export async function generateMetadata({
       url,
       type:   'article',
       images: [{ url: ogImage, width: 1200, height: 630, alt: article.title }],
-      publishedTime: article.publishedAt?.toISOString(),
-      modifiedTime:  article.updatedAt?.toISOString(),
+      // Rev40 (Deepening #3): article は DTO のため既に ISO 文字列
+      publishedTime: article.publishedAt ?? undefined,
+      modifiedTime:  article.updatedAt,
     },
     twitter: {
       card:        'summary_large_image',
@@ -115,8 +115,9 @@ function JsonLd({ article }: { article: NonNullable<Awaited<ReturnType<typeof ge
     // Rev27 #3: /og-default.png は存在しないため、Next.js 14 の動的 OGP
     // エンドポイント（app/opengraph-image.tsx → /opengraph-image）を使用する
     image:      article.thumbnailUrl ?? `${SITE.url}/opengraph-image`,
-    datePublished: article.publishedAt?.toISOString(),
-    dateModified:  article.updatedAt?.toISOString() ?? article.publishedAt?.toISOString(),
+    // Rev40 (Deepening #3): DTO は ISO 文字列のためそのまま使う
+    datePublished: article.publishedAt,
+    dateModified:  article.updatedAt ?? article.publishedAt,
     url:        articleUrl,
     inLanguage: 'ja',
     publisher: {
@@ -168,11 +169,11 @@ export default async function ArticlePage({
   );
 
   // 計算済みメタ
-  const level           = article.level as DifficultyLevel;
-  const readingMin      = estimateReadingMin(article.body);
-  const dateStr         = article.publishedAt
-    ? formatDateJa(article.publishedAt.toISOString())
-    : null;
+  // Rev40 (Deepening #3): article は DTO (Article) — level は narrow 済み、
+  // publishedAt は ISO 文字列、readingMin はマッパーで事前計算済み
+  const level           = article.level;
+  const readingMin      = article.readingMin;
+  const dateStr         = article.publishedAt ? formatDateJa(article.publishedAt) : null;
 
   return (
     <>

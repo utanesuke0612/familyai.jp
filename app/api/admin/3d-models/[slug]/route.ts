@@ -5,13 +5,13 @@
  * DELETE /api/admin/3d-models/:slug — 削除
  *
  * 公開フラグの切替は /api/admin/3d-models/:slug/toggle 側を使う。
+ *
+ * Architecture Deepening #1: ガード三和音を protectAdminRoute に集約。
  */
 
 import { NextRequest, NextResponse } from 'next/server';
 import { del }                       from '@vercel/blob';
-import { requireAdmin }              from '@/lib/admin-auth';
-import { verifyCsrf }                from '@/lib/csrf';
-import { enforceAdminRateLimit }     from '@/lib/ratelimit';
+import { protectAdminRoute }         from '@/lib/api/admin-guard';
 import {
   getModelBySlugForAdmin,
   updateModel,
@@ -20,7 +20,7 @@ import {
 import { updateTutor3dModelSchema } from '@/lib/schemas/3d-models';
 import { withRequest } from '@/lib/log';
 
-interface Ctx { params: { slug: string }; }
+interface Ctx { params?: { slug: string }; }
 
 function assetUrlToBlobPathname(url: string | null | undefined): string | null {
   if (!url) return null;
@@ -57,11 +57,9 @@ async function deleteModelBlobs(model: {
 }
 
 // ─── GET: 1 件取得 ─────────────────────────────────────────
-export async function GET(_req: NextRequest, { params }: Ctx) {
-  const check = await requireAdmin();
-  if (!check.ok) return check.response;
-
-  const model = await getModelBySlugForAdmin(params.slug);
+export const GET = protectAdminRoute<{ slug: string }>(async (_req: NextRequest, { params }: Ctx) => {
+  const slug = params!.slug;
+  const model = await getModelBySlugForAdmin(slug);
   if (!model) {
     return NextResponse.json(
       { ok: false, error: { code: 'NOT_FOUND', message: 'モデルが見つかりません' } },
@@ -69,23 +67,12 @@ export async function GET(_req: NextRequest, { params }: Ctx) {
     );
   }
   return NextResponse.json({ ok: true, data: model });
-}
+});
 
 // ─── PUT: 更新 ───────────────────────────────────────────
-export async function PUT(req: NextRequest, { params }: Ctx) {
+export const PUT = protectAdminRoute<{ slug: string }>(async (req: NextRequest, { params }: Ctx) => {
+  const slug = params!.slug;
   const log = withRequest(req, '/api/admin/3d-models/:slug');
-  if (!verifyCsrf(req)) {
-    return NextResponse.json(
-      { ok: false, error: { code: 'CSRF', message: 'CSRF check failed' } },
-      { status: 403 },
-    );
-  }
-
-  const check = await requireAdmin();
-  if (!check.ok) return check.response;
-
-  const rl = await enforceAdminRateLimit(req, 'admin');
-  if (rl) return rl;
 
   let body: unknown;
   try {
@@ -106,38 +93,27 @@ export async function PUT(req: NextRequest, { params }: Ctx) {
   }
 
   try {
-    const updated = await updateModel(params.slug, parsed.data);
+    const updated = await updateModel(slug, parsed.data);
     if (!updated) {
       return NextResponse.json(
         { ok: false, error: { code: 'NOT_FOUND', message: 'モデルが見つかりません' } },
         { status: 404 },
       );
     }
-    return NextResponse.json({ ok: true, data: { slug: params.slug } });
+    return NextResponse.json({ ok: true, data: { slug } });
   } catch (err) {
-    log.error('admin.3d-models.put', { slug: params.slug, error: err instanceof Error ? err.message : String(err) });
+    log.error('admin.3d-models.put', { slug, error: err instanceof Error ? err.message : String(err) });
     return NextResponse.json(
       { ok: false, error: { code: 'INTERNAL', message: 'サーバーエラーが発生しました' } },
       { status: 500 },
     );
   }
-}
+});
 
 // ─── DELETE: 削除 ────────────────────────────────────────
-export async function DELETE(req: NextRequest, { params }: Ctx) {
+export const DELETE = protectAdminRoute<{ slug: string }>(async (req: NextRequest, { params }: Ctx) => {
+  const slug = params!.slug;
   const log = withRequest(req, '/api/admin/3d-models/:slug');
-  if (!verifyCsrf(req)) {
-    return NextResponse.json(
-      { ok: false, error: { code: 'CSRF', message: 'CSRF check failed' } },
-      { status: 403 },
-    );
-  }
-
-  const check = await requireAdmin();
-  if (!check.ok) return check.response;
-
-  const rl = await enforceAdminRateLimit(req, 'admin');
-  if (rl) return rl;
 
   // Rev38 #H4: 旧実装は getModel → blob.del → deleteModel の 3 段階だったため、
   // 並行 DELETE で「両方が getModel 成功 → 片方は blob.del が 404 で fail」する race があった。
@@ -148,7 +124,7 @@ export async function DELETE(req: NextRequest, { params }: Ctx) {
   //      orphan blob のクリーンナップは別ジョブで対処可能（DB 行が無いと参照不能）。
   try {
     // 1. blob URL 取得のため、まずモデルを読む
-    const model = await getModelBySlugForAdmin(params.slug);
+    const model = await getModelBySlugForAdmin(slug);
     if (!model) {
       return NextResponse.json(
         { ok: false, error: { code: 'NOT_FOUND', message: 'モデルが見つかりません' } },
@@ -157,7 +133,7 @@ export async function DELETE(req: NextRequest, { params }: Ctx) {
     }
 
     // 2. DB を先に削除（returning が空なら並行 DELETE に負けた = 既に削除済み）
-    const deleted = await deleteModel(params.slug);
+    const deleted = await deleteModel(slug);
     if (!deleted) {
       return NextResponse.json(
         { ok: false, error: { code: 'NOT_FOUND', message: 'モデルが見つかりません' } },
@@ -170,15 +146,15 @@ export async function DELETE(req: NextRequest, { params }: Ctx) {
       await deleteModelBlobs(model);
     } catch (err) {
       log.warn('admin.3d-models.delete.blob_failed',
-        { slug: params.slug, error: err instanceof Error ? err.message : String(err) });
+        { slug, error: err instanceof Error ? err.message : String(err) });
     }
 
-    return NextResponse.json({ ok: true, data: { slug: params.slug } });
+    return NextResponse.json({ ok: true, data: { slug } });
   } catch (err) {
-    log.error('admin.3d-models.delete', { slug: params.slug, error: err instanceof Error ? err.message : String(err) });
+    log.error('admin.3d-models.delete', { slug, error: err instanceof Error ? err.message : String(err) });
     return NextResponse.json(
       { ok: false, error: { code: 'INTERNAL', message: 'サーバーエラーが発生しました' } },
       { status: 500 },
     );
   }
-}
+});
