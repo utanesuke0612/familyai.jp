@@ -12,6 +12,7 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 
 import { AIChatWidget }         from '@/components/article/AIChatWidget';
+import { FloatingShareButtons } from '@/components/article/FloatingShareButtons';
 import { MarkdownContent }      from '@/components/ui/MarkdownContent';
 import { DictationPanel }       from '@/components/voaenglish/DictationPanel';
 import { AIEchoPanel }          from '@/components/voaenglish/AIEchoPanel';
@@ -388,6 +389,12 @@ export default async function VoaLessonPage({
           </div>
         </div>
       </section>
+
+      {/* フローティングシェアボタン（X / LINE）— Desktop は左中央・Mobile は左下 */}
+      <FloatingShareButtons
+        title={`${headline} | ${data.courseTitle}`}
+        url={`${SITE.url}/tools/voaenglish/${course}/${lesson}`}
+      />
     </main>
   );
 }
