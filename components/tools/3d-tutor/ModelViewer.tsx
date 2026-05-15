@@ -128,6 +128,10 @@ export function ModelViewer({
     setBgIndex((i) => (i + 1) % BG_PRESETS.length);
   }, []);
 
+  // 自動回転 ON/OFF（props.autoRotate を初期値にユーザーが切替可能）
+  const [rotating, setRotating] = useState(autoRotate);
+  const toggleRotate = useCallback(() => setRotating((r) => !r), []);
+
   /**
    * カメラを画面の左右上右に「パン」する（カメラターゲットを画面平面上で移動）。
    * dx / dy は画面右(+) / 画面上(+) 方向の符号。
@@ -489,6 +493,42 @@ export function ModelViewer({
             zIndex:   4,
           }}
         >
+          {/* 自動回転 ON/OFF トグル（再生/一時停止アイコン） */}
+          <button
+            type="button"
+            onClick={toggleRotate}
+            aria-label={rotating ? '自動回転を止める' : '自動回転を再開する'}
+            aria-pressed={rotating}
+            title={rotating ? '自動回転を止める' : '自動回転を再開する'}
+            style={{
+              width:          40,
+              height:         40,
+              display:        'inline-flex',
+              alignItems:     'center',
+              justifyContent: 'center',
+              background:     'rgba(255, 255, 255, 0.88)',
+              color:          rotating ? 'var(--shu)' : 'var(--sumi)',
+              border:         '1px solid var(--line)',
+              borderRadius:   4,
+              cursor:         'pointer',
+              backdropFilter: 'blur(4px)',
+              WebkitBackdropFilter: 'blur(4px)',
+            }}
+          >
+            {rotating ? (
+              // Pause アイコン（2 本の縦棒）
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <rect x="6" y="5" width="4" height="14" rx="1" />
+                <rect x="14" y="5" width="4" height="14" rx="1" />
+              </svg>
+            ) : (
+              // Play アイコン（三角）
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M8 5v14l11-7z" />
+              </svg>
+            )}
+          </button>
+
           {/* 背景色切替ボタン（クリックで次のプリセット） */}
           <button
             type="button"
@@ -575,7 +615,7 @@ export function ModelViewer({
         ar
         ar-modes="webxr scene-viewer quick-look"
         camera-controls
-        auto-rotate={autoRotate ? '' : undefined}
+        auto-rotate={rotating ? '' : undefined}
         rotation-per-second="20deg"
         interaction-prompt="none"
         shadow-intensity="0.6"
