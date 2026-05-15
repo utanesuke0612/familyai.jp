@@ -153,35 +153,7 @@ export default async function ModelDetailPage({ params }: PageProps) {
         </div>
       </section>
 
-      {/* 出典・ライセンス */}
-      {(model.attribution || model.license || model.sourceUrl) && (
-        <section className="px-6 py-4">
-          <div
-            className="mx-auto max-w-5xl"
-            style={{
-              padding: '14px 18px',
-              background: 'var(--washi-light)',
-              border: '1px solid var(--line)',
-              borderRadius: 16,
-              fontSize: 12,
-              color: 'var(--sumi-soft)',
-              lineHeight: 1.6,
-            }}
-          >
-            <strong style={{ color: 'var(--sumi)' }}>📜 出典 / ライセンス</strong>
-            {model.attribution && <div style={{ marginTop: 4 }}>{model.attribution}</div>}
-            {model.license      && <div>ライセンス: {model.license}</div>}
-            {model.sourceUrl    && (
-              <div>
-                出典元:{' '}
-                <a href={model.sourceUrl} target="_blank" rel="noreferrer noopener" style={{ color: 'var(--shu)' }}>
-                  {model.sourceUrl}
-                </a>
-              </div>
-            )}
-          </div>
-        </section>
-      )}
+      {/* Rev40: 出典・ライセンス表示は撤廃（DB カラムは温存） */}
 
       {/* 戻る CTA */}
       <section className="px-6 pb-12">

@@ -106,22 +106,7 @@ export default async function ModelPreviewPage({ params }: Ctx) {
         {/* 公開ページと同じ ModelDetailClient（2 カラム + AI チャット） */}
         <ModelDetailClient model={model} />
 
-        {/* 出典・ライセンス */}
-        {(model.attribution || model.license || model.sourceUrl) && (
-          <div style={{ marginTop: 16, padding: '14px 18px', background: '#fff', border: '1px solid var(--line)', borderRadius: 4, fontSize: 12, color: 'var(--sumi-light)', lineHeight: 1.6 }}>
-            <strong style={{ color: 'var(--sumi)' }}>出典 / ライセンス</strong>
-            {model.attribution && <div style={{ marginTop: 4 }}>{model.attribution}</div>}
-            {model.license      && <div>ライセンス: {model.license}</div>}
-            {model.sourceUrl    && (
-              <div>
-                出典元:{' '}
-                <a href={model.sourceUrl} target="_blank" rel="noreferrer noopener" style={{ color: 'var(--shu)' }}>
-                  {model.sourceUrl}
-                </a>
-              </div>
-            )}
-          </div>
-        )}
+        {/* Rev40: 出典・ライセンス表示は撤廃（DB カラムは温存） */}
       </div>
     </main>
   );

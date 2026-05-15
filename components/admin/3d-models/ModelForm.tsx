@@ -81,9 +81,11 @@ export function ModelForm({ mode, initial, originalSlug }: ModelFormProps) {
   const [glbUrl,       setGlbUrl]       = useState<string>(base.glbUrl);
   const [usdzUrl,      setUsdzUrl]      = useState<string | null>(base.usdzUrl);
   const [thumbnailUrl, setThumbnailUrl] = useState<string | null>(base.thumbnailUrl);
-  const [attribution,  setAttribution]  = useState(base.attribution);
-  const [license,      setLicense]      = useState(base.license);
-  const [sourceUrl,    setSourceUrl]    = useState<string>(base.sourceUrl ?? '');
+  // Rev40: 出典・ライセンスの入力 UI は撤廃したが、
+  // 既存値を save 時に上書きクリアしないよう state は残置（read-only）
+  const [attribution]  = useState(base.attribution);
+  const [license]      = useState(base.license);
+  const [sourceUrl]    = useState<string>(base.sourceUrl ?? '');
   const [published,    setPublished]    = useState(base.published);
   const [isFeatured,   setIsFeatured]   = useState(base.isFeatured);
 
@@ -267,39 +269,11 @@ export function ModelForm({ mode, initial, originalSlug }: ModelFormProps) {
         />
       </Section>
 
-      {/* ── 出典・ライセンス ────────────────────────────────── */}
-      <Section title="出典・ライセンス">
-        <Field label="Attribution" hint="例: AI Coding Agent 生成 / Smithsonian Institution 等">
-          <input
-            type="text"
-            value={attribution}
-            onChange={(e) => setAttribution(e.target.value)}
-            style={inputStyle}
-            maxLength={800}
-          />
-        </Field>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: 12 }}>
-          <Field label="License">
-            <select value={license} onChange={(e) => setLicense(e.target.value)} style={selectStyle}>
-              <option value="CC0">CC0 (Public Domain)</option>
-              <option value="CC BY 4.0">CC BY 4.0</option>
-              <option value="CC BY-SA 4.0">CC BY-SA 4.0</option>
-              <option value="CC BY-NC 4.0">CC BY-NC 4.0</option>
-              <option value="Smithsonian Open Access">Smithsonian Open Access</option>
-              <option value="Custom">その他（attribution に明記）</option>
-            </select>
-          </Field>
-          <Field label="Source URL" hint="出典元の URL（任意）">
-            <input
-              type="url"
-              value={sourceUrl}
-              onChange={(e) => setSourceUrl(e.target.value)}
-              placeholder="https://3d.si.edu/..."
-              style={inputStyle}
-            />
-          </Field>
-        </div>
-      </Section>
+      {/* Rev40: 出典・ライセンス入力セクションは撤廃。
+           DB カラム (attribution / license / sourceUrl) は temporal して
+           既存値を保持・新規モデルは空で保存される。
+           表示も /tools/ai-kyoshitsu/[slug] と /admin/.../preview から撤去済。
+           state は保持しているため既存データは save 時に上書きされない。 */}
 
       {/* ── 公開設定 ─────────────────────────────────────── */}
       <Section title="公開設定">
