@@ -123,3 +123,66 @@ export async function enforceAdminRateLimit(
   if (!success) return rateLimitedResponse();
   return null;
 }
+
+// ── /api/ai 用 ────────────────────────────────────────────────
+/**
+ * Rev40 (Architecture Deepening #6): AI route のプラン別 1日制限を共通化。
+ *
+ * 旧実装は app/api/ai/route.ts 内に Redis singleton と 3 つの Ratelimit を直書きしていたが、
+ * lib/ratelimit.ts の getRateLimiter() で同じ Redis シングルトンを共有するように統合した。
+ *
+ * Prefix 名 / token / window は完全互換（既存の 24h カウントを温存する必要があるため
+ * 文字列を変更してはならない）。
+ *
+ * @param plan   'anon' / 'free' / 'premium'
+ * @param userId 'free'/'premium' のときの key（null のときは ip フォールバック）
+ * @returns 制限超過時は 429 NextResponse / OK なら null
+ */
+export type AiPlan = 'anon' | 'free' | 'premium';
+
+interface AiPlanPolicy {
+  tokens: number;
+  prefix: string;
+}
+
+const AI_PLAN_POLICY: Record<AiPlan, AiPlanPolicy> = {
+  anon:    { tokens: 10,  prefix: 'ratelimit:ai:anon' },
+  free:    { tokens: 30,  prefix: 'ratelimit:ai:free' },
+  premium: { tokens: 200, prefix: 'ratelimit:ai:pro'  },
+};
+
+export async function enforceAiRateLimit(
+  req:    NextRequest,
+  plan:   AiPlan,
+  userId: string | null,
+): Promise<NextResponse | null> {
+  const { tokens, prefix } = AI_PLAN_POLICY[plan];
+  const rl = getRateLimiter(prefix, tokens, '1 d');
+
+  if (!rl) {
+    // Rev35 #security: production で Redis 未設定なら fail closed（AI コスト爆発を防ぐ）。
+    if (isRateLimitFailClosed()) {
+      return NextResponse.json(
+        {
+          ok:    false,
+          error: { code: 'RATE_LIMIT_EXCEEDED', message: 'AI は一時的に利用できません。' },
+        },
+        { status: 429 },
+      );
+    }
+    return null;
+  }
+
+  // ログイン済みは userId、未ログインは IP をキーにする（旧実装と互換）。
+  const key = userId ?? getClientIp(req);
+  const { success } = await rl.limit(key);
+  if (success) return null;
+
+  const message = userId
+    ? '本日の利用上限に達しました。明日またお試しください。'
+    : '1日の利用上限に達しました。ログインするとより多く使えます。';
+  return NextResponse.json(
+    { ok: false, error: { code: 'RATE_LIMIT_EXCEEDED', message } },
+    { status: 429 },
+  );
+}
