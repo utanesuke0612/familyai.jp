@@ -31,10 +31,12 @@ type PageParams = {
 };
 
 // レベル別のアクセントカラー
+// Rev40 Phase K: Mingei トークンへ統一。色相識別が必要だが washi 系トーンで揃え、
+// レベル順に淡 → 中 → 深 のグラデーションで段階感を表現する。
 const LEVEL_ACCENT: Record<LessonLevel, string> = {
-  beginning:    'var(--color-mint)',
-  intermediate: 'var(--color-sky)',
-  advanced:     'var(--color-yellow)',
+  beginning:    'var(--washi-light)',
+  intermediate: 'var(--washi-deep)',
+  advanced:     'var(--shu-soft)',
 };
 
 const LEVEL_LABEL: Record<LessonLevel, string> = {
@@ -119,10 +121,10 @@ export default async function VoaLessonPage({
       : data.description ?? '';
 
   return (
-    <main style={{ background: 'var(--color-cream)' }}>
+    <main style={{ background: 'var(--washi)' }}>
       <header
         style={{
-          background: `linear-gradient(160deg, ${accent} 0%, var(--color-cream) 100%)`,
+          background: 'var(--washi)',
           paddingBlock: 'clamp(16px, 2.5vw, 28px)',
         }}
       >
@@ -185,8 +187,8 @@ export default async function VoaLessonPage({
           </nav>
 
           <h1
-            className="font-display font-bold leading-tight"
-            style={{ fontSize: 'clamp(22px, 4vw, 42px)', color: 'var(--color-brown)' }}
+            className="font-mincho leading-tight"
+            style={{ fontSize: 'clamp(22px, 4vw, 42px)', color: 'var(--sumi)', fontWeight: 500 }}
           >
             {headline}
           </h1>
@@ -195,7 +197,7 @@ export default async function VoaLessonPage({
 
       <section
         style={{
-          background: 'var(--color-cream)',
+          background: 'var(--washi)',
           paddingBlock: 'clamp(8px, 1.25vw, 16px)',
         }}
       >
@@ -215,13 +217,13 @@ export default async function VoaLessonPage({
                 {data.description ? (
                   // Markdown でレンダリング（**太字** / 箇条書き / リンク等が効く）
                   <MarkdownContent
-                    color="var(--color-brown)"
+                    color="var(--sumi)"
                     fontSize="0.95rem"
                   >
                     {data.description}
                   </MarkdownContent>
                 ) : (
-                  <p className="text-sm" style={{ color: 'var(--color-brown-light)' }}>
+                  <p className="text-sm" style={{ color: 'var(--sumi-light)' }}>
                     （このレッスンの日本語概要は準備中です）
                   </p>
                 )}
@@ -231,7 +233,7 @@ export default async function VoaLessonPage({
                     target="_blank"
                     rel="noreferrer"
                     className="mt-3 inline-flex items-center gap-1 text-xs font-semibold"
-                    style={{ color: 'var(--color-orange)' }}
+                    style={{ color: 'var(--shu)' }}
                   >
                     📰 VOA 公式ページを開く ↗
                   </a>
@@ -261,7 +263,7 @@ export default async function VoaLessonPage({
                     />
                   </div>
                 ) : (
-                  <p className="text-sm" style={{ color: 'var(--color-brown-light)' }}>
+                  <p className="text-sm" style={{ color: 'var(--sumi-light)' }}>
                     （このレッスンの動画は準備中です）
                   </p>
                 )}
@@ -286,15 +288,15 @@ export default async function VoaLessonPage({
                   <div
                     className="rounded-xl p-4 mb-4 text-center"
                     style={{
-                      background: 'rgba(255,255,255,0.7)',
-                      border:     '1px dashed var(--color-beige-dark)',
+                      background: 'var(--washi-light)',
+                      border:     '1px dashed var(--line)',
                     }}
                   >
                     <span className="text-3xl block mb-2" aria-hidden="true">🔧</span>
-                    <p className="text-sm font-bold mb-1" style={{ color: 'var(--color-brown)' }}>
+                    <p className="text-sm font-bold mb-1" style={{ color: 'var(--sumi)' }}>
                       このレッスンの音声は準備中です
                     </p>
-                    <p className="text-xs leading-relaxed" style={{ color: 'var(--color-brown-light)' }}>
+                    <p className="text-xs leading-relaxed" style={{ color: 'var(--sumi-light)' }}>
                       MP3 / SRT が準備でき次第、センテンス単位プレイヤーが表示されます。
                     </p>
                   </div>
@@ -335,7 +337,7 @@ export default async function VoaLessonPage({
 
       <section
         style={{
-          background: 'var(--color-cream)',
+          background: 'var(--washi)',
           paddingBlock: 'clamp(12px, 2vw, 20px)',
         }}
       >
@@ -350,12 +352,12 @@ export default async function VoaLessonPage({
                   href={`/tools/voaenglish/${prev.course}/${prev.slug}`}
                   className="flex items-center gap-3 rounded-2xl p-4"
                   style={{
-                    background: 'rgba(255,255,255,0.9)',
-                    boxShadow: 'var(--shadow-warm-sm)',
-                    color: 'var(--color-brown)',
+                    background: 'var(--washi-light)',
+                    border: '1px solid var(--line)',
+                    color: 'var(--sumi)',
                   }}
                 >
-                  <span className="shrink-0 text-xs font-semibold" style={{ color: 'var(--color-brown-light)' }}>
+                  <span className="shrink-0 text-xs font-semibold" style={{ color: 'var(--sumi-light)' }}>
                     ← 前のレッスン
                   </span>
                   <span className="truncate text-sm font-bold">
@@ -368,15 +370,15 @@ export default async function VoaLessonPage({
                   href={`/tools/voaenglish/${next.course}/${next.slug}`}
                   className="flex items-center justify-end gap-3 rounded-2xl p-4"
                   style={{
-                    background: 'rgba(255,255,255,0.9)',
-                    boxShadow: 'var(--shadow-warm-sm)',
-                    color: 'var(--color-brown)',
+                    background: 'var(--washi-light)',
+                    border: '1px solid var(--line)',
+                    color: 'var(--sumi)',
                   }}
                 >
                   <span className="truncate text-sm font-bold">
                     {next.lessonNumber ? `Lesson ${next.lessonNumber}: ` : ''}{next.title}
                   </span>
-                  <span className="shrink-0 text-xs font-semibold" style={{ color: 'var(--color-brown-light)' }}>
+                  <span className="shrink-0 text-xs font-semibold" style={{ color: 'var(--sumi-light)' }}>
                     次のレッスン →
                   </span>
                 </Link>
@@ -410,30 +412,30 @@ function SectionCard({
     <section
       className="rounded-3xl p-5 sm:p-7"
       style={{
-        background: 'rgba(255,255,255,0.94)',
-        boxShadow:  'var(--shadow-warm-sm)',
-        border:     '1px solid rgba(120,80,40,0.1)',
+        background: 'var(--washi-light)',
+        border:     '1px solid var(--line)',
       }}
     >
       <header
         className="flex items-start gap-3 mb-4 pb-3"
-        style={{ borderBottom: `2px solid ${accent}55` }}
+        style={{ borderBottom: `2px solid ${accent}` }}
       >
         <span aria-hidden="true" style={{ fontSize: 28, lineHeight: 1 }}>
           {emoji}
         </span>
         <div className="flex flex-col gap-0.5 min-w-0">
           <h2
-            className="font-display font-bold leading-tight"
+            className="font-mincho leading-tight"
             style={{
               fontSize: 'clamp(18px, 2.5vw, 24px)',
-              color:    'var(--color-brown)',
+              color:    'var(--sumi)',
+              fontWeight: 500,
             }}
           >
             {title}
           </h2>
           {subtitle && (
-            <p className="text-xs" style={{ color: 'var(--color-brown-light)' }}>
+            <p className="text-xs" style={{ color: 'var(--sumi-light)' }}>
               {subtitle}
             </p>
           )}

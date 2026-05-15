@@ -250,7 +250,7 @@ export default async function LearnPage({ searchParams }: LearnPageProps) {
         className="px-6 py-8 sm:py-10"
         style={{ background: 'var(--washi)' }}
       >
-        <div className="max-w-5xl mx-auto">
+        <div className="max-w-container mx-auto">
           <div className="grid gap-6 lg:grid-cols-[minmax(0,1.4fr)_minmax(280px,0.8fr)] lg:items-start">
 
             {/* 左カラム: タイトル + 説明 */}

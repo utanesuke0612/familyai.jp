@@ -34,7 +34,7 @@ const LEVELS: LevelSection[] = [
     level: 'Beginning Level',
     cefr: 'A1–A2',
     description: 'アメリカ人の英語教師が初心者向けに作った新しいコースです。Let\'s Learn English Level 1 と Level 2 を中心に、動画・語彙・スピーキング・ワークシートを使って基礎から学べます。',
-    accent: 'var(--color-mint)',
+    accent: 'var(--washi-deep)',
     chipText: '基礎から始める',
     icon: '🌱',
     modules: [
@@ -60,7 +60,7 @@ const LEVELS: LevelSection[] = [
     level: 'Intermediate Level',
     cefr: 'B1',
     description: 'アメリカ英語にまだ慣れていない方のための中級レベルです。500〜1,000語程度のニュース記事が中心で、ニュースメーカー本人の音声を含む場合もあります。',
-    accent: 'var(--color-sky)',
+    accent: 'var(--washi-deep)',
     chipText: 'ニュースで学ぶ',
     icon: '📰',
     modules: [
@@ -86,7 +86,7 @@ const LEVELS: LevelSection[] = [
     level: 'Advanced Level',
     cefr: 'B2 以上',
     description: 'すでにアメリカ英語を学んできた方が、読解力とリスニング力をさらに伸ばすための上級レベルです。500語を超える記事が中心で、ニュースメーカー本人の音声を含む場合もあります。',
-    accent: 'var(--color-yellow)',
+    accent: 'var(--washi-deep)',
     chipText: '表現を深める',
     icon: '🎓',
     modules: [
@@ -188,13 +188,13 @@ export default function VoaEnglishToolPage({ searchParams }: VoaEnglishToolPageP
             <aside
               className="rounded-[28px] p-6"
               style={{
-                background: 'rgba(255,255,255,0.86)',
-                boxShadow: 'var(--shadow-warm)',
+                background: 'var(--washi-light)',
+                border: '1px solid var(--line)',
               }}
             >
               <p
-                className="mb-4 text-center font-display text-base font-bold sm:text-lg"
-                style={{ color: 'var(--color-brown)' }}
+                className="mb-4 text-center font-mincho text-base sm:text-lg"
+                style={{ color: 'var(--sumi)', fontWeight: 500 }}
               >
                 Haste Makes Waste
               </p>
@@ -205,10 +205,10 @@ export default function VoaEnglishToolPage({ searchParams }: VoaEnglishToolPageP
                     href={selectedLevel === level.key ? '/tools/voaenglish' : `/tools/voaenglish?level=${level.key}`}
                     /* lg 以上ではカード内を水平レイアウト化（高さを左説明エリアに揃えるため） */
                     /* 絵文字・数字・ラベルが3カードで縦に揃うよう、左寄せ + 絵文字スロットを固定幅に */
-                    className="rounded-2xl px-3 py-4 transition-[transform,box-shadow,opacity] duration-200 hover:-translate-y-1 lg:flex lg:items-center lg:justify-start lg:gap-3 lg:py-2.5 lg:pl-5"
+                    className="rounded-2xl px-3 py-4 transition-[transform,opacity] duration-200 hover:-translate-y-1 lg:flex lg:items-center lg:justify-start lg:gap-3 lg:py-2.5 lg:pl-5"
                     style={{
                       background: level.accent,
-                      boxShadow: selectedLevel === level.key ? 'var(--shadow-warm-sm)' : 'none',
+                      border: selectedLevel === level.key ? '1px solid var(--shu-soft)' : '1px solid var(--line)',
                       opacity: selectedLevel && selectedLevel !== level.key ? 0.55 : 1,
                     }}
                     aria-pressed={selectedLevel === level.key}
@@ -217,7 +217,7 @@ export default function VoaEnglishToolPage({ searchParams }: VoaEnglishToolPageP
                       <span aria-hidden="true" className="lg:inline-block lg:w-8 lg:text-center">{level.icon}</span>
                       <span>{index + 1}</span>
                     </div>
-                    <div className="mt-1 text-xs font-semibold lg:mt-0" style={{ color: 'var(--color-brown)' }}>
+                    <div className="mt-1 text-xs font-semibold lg:mt-0" style={{ color: 'var(--sumi)' }}>
                       {level.level.replace(' Level', '')}
                     </div>
                   </Link>
@@ -236,8 +236,8 @@ export default function VoaEnglishToolPage({ searchParams }: VoaEnglishToolPageP
               key={section.level}
               className="rounded-[30px] p-6 sm:p-8"
               style={{
-                background: 'rgba(255,255,255,0.9)',
-                boxShadow: 'var(--shadow-warm-sm)',
+                background: 'var(--washi-light)',
+                border: '1px solid var(--line)',
               }}
             >
               <div className="mb-6 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
@@ -246,32 +246,32 @@ export default function VoaEnglishToolPage({ searchParams }: VoaEnglishToolPageP
                     className="inline-flex rounded-full px-3 py-1 text-sm font-semibold"
                     style={{
                       background: section.accent,
-                      color: 'var(--color-brown)',
+                      color: 'var(--sumi)',
                     }}
                   >
                     {section.chipText}
                   </span>
                   <h2
-                    className="mt-3 flex flex-wrap items-center gap-3 font-display text-3xl font-bold"
-                    style={{ color: 'var(--color-brown)' }}
+                    className="mt-3 flex flex-wrap items-center gap-3 font-mincho text-3xl"
+                    style={{ color: 'var(--sumi)', fontWeight: 500 }}
                   >
                     <span>{section.level}</span>
                     <span
                       className="inline-flex rounded-full px-3 py-1 text-sm font-semibold"
                       style={{
-                        background: 'var(--color-cream)',
-                        color: 'var(--color-brown)',
-                        border: '1px solid rgba(120, 80, 40, 0.15)',
+                        background: 'var(--washi)',
+                        color: 'var(--sumi)',
+                        border: '1px solid var(--line)',
                       }}
                     >
                       CEFR {section.cefr}
                     </span>
                   </h2>
-                  <p className="mt-2 text-sm leading-relaxed sm:text-base" style={{ color: 'var(--color-brown-light)' }}>
+                  <p className="mt-2 text-sm leading-relaxed sm:text-base" style={{ color: 'var(--sumi-light)' }}>
                     {section.description}
                   </p>
                 </div>
-                <div className="text-sm font-medium" style={{ color: 'var(--color-brown-light)' }}>
+                <div className="text-sm font-medium" style={{ color: 'var(--sumi-light)' }}>
                   {section.modules.length} modules
                 </div>
               </div>
@@ -279,15 +279,15 @@ export default function VoaEnglishToolPage({ searchParams }: VoaEnglishToolPageP
               <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
                 {section.modules.map((module) => {
                   const isInternal = module.href.startsWith('/');
-                  const cardClassName = 'block rounded-3xl p-5 transition-[transform,box-shadow] duration-200 hover:-translate-y-1';
+                  const cardClassName = 'block rounded-3xl p-5 transition-transform duration-200 hover:-translate-y-1';
                   const cardStyle = {
-                    background: 'linear-gradient(180deg, rgba(255,255,255,0.98) 0%, rgba(255,250,245,0.92) 100%)',
-                    boxShadow: 'var(--shadow-warm-sm)',
+                    background: 'var(--washi-light)',
+                    border: '1px solid var(--line)',
                   } as const;
                   const cardInner = (
                     <>
                       <div className="flex items-center justify-between gap-2">
-                        <div className="inline-flex rounded-full px-3 py-1 text-xs font-bold" style={{ background: section.accent, color: 'var(--color-brown)' }}>
+                        <div className="inline-flex rounded-full px-3 py-1 text-xs font-bold" style={{ background: section.accent, color: 'var(--sumi)' }}>
                           {isInternal ? 'VOA × AI' : 'VOA'}
                         </div>
                         {!isInternal && (
@@ -306,14 +306,14 @@ export default function VoaEnglishToolPage({ searchParams }: VoaEnglishToolPageP
                       </div>
                       <h3
                         className="mt-4 text-xl font-bold leading-tight"
-                        style={{ color: 'var(--color-brown)' }}
+                        style={{ color: 'var(--sumi)' }}
                       >
                         {module.title}
                       </h3>
-                      <p className="mt-3 text-sm leading-relaxed" style={{ color: 'var(--color-brown-light)' }}>
+                      <p className="mt-3 text-sm leading-relaxed" style={{ color: 'var(--sumi-light)' }}>
                         {module.summary}
                       </p>
-                      <div className="mt-5 text-sm font-semibold" style={{ color: 'var(--color-orange)' }}>
+                      <div className="mt-5 text-sm font-semibold" style={{ color: 'var(--shu)' }}>
                         {isInternal ? 'コースを開く →' : 'VOAで開く ↗'}
                       </div>
                     </>
@@ -350,9 +350,9 @@ export default function VoaEnglishToolPage({ searchParams }: VoaEnglishToolPageP
                 href="/tools/voaenglish"
                 className="inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-semibold"
                 style={{
-                  background: 'rgba(255,255,255,0.9)',
-                  color: 'var(--color-brown)',
-                  boxShadow: 'var(--shadow-warm-sm)',
+                  background: 'var(--washi-light)',
+                  color: 'var(--sumi)',
+                  border: '1px solid var(--line)',
                 }}
               >
                 <span>←</span>
@@ -364,20 +364,20 @@ export default function VoaEnglishToolPage({ searchParams }: VoaEnglishToolPageP
           <aside
             className="rounded-[28px] p-6 sm:p-7"
             style={{
-              background: 'rgba(255,255,255,0.86)',
-              boxShadow: 'var(--shadow-warm-sm)',
+              background: 'var(--washi-light)',
+              border: '1px solid var(--line)',
             }}
           >
             <div className="flex flex-col gap-3">
               <div className="flex flex-wrap items-center gap-2">
                 <span
                   className="inline-flex rounded-full px-3 py-1 text-xs font-bold"
-                  style={{ background: 'var(--color-mint)', color: 'var(--color-brown)' }}
+                  style={{ background: 'var(--washi-deep)', color: 'var(--sumi)' }}
                 >
                   📝 コンテンツの再利用について
                 </span>
               </div>
-              <p className="text-sm leading-relaxed sm:text-base" style={{ color: 'var(--color-brown)' }}>
+              <p className="text-sm leading-relaxed sm:text-base" style={{ color: 'var(--sumi)' }}>
                 VOA Learning English のテキスト・MP3・写真・動画はパブリックドメインで公開されており、
                 <strong>教育目的でも商用目的でも再利用することができます。</strong>
               </p>
@@ -387,7 +387,7 @@ export default function VoaEnglishToolPage({ searchParams }: VoaEnglishToolPageP
                   target="_blank"
                   rel="noreferrer"
                   className="inline-flex items-center gap-1 text-sm font-semibold"
-                  style={{ color: 'var(--color-orange)' }}
+                  style={{ color: 'var(--shu)' }}
                 >
                   VOA公式ポリシーを読む ↗
                 </a>

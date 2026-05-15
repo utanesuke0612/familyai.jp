@@ -86,19 +86,19 @@ export default async function ModelDetailPage({ params }: PageProps) {
 
   // 3. UI
   return (
-    <main style={{ background: 'var(--color-cream)', minHeight: '100vh' }}>
+    <main style={{ background: 'var(--washi)', minHeight: '100vh' }}>
       {/* パンくず + 戻る */}
       <section
         className="px-6 py-4"
-        style={{ background: 'linear-gradient(160deg, var(--color-peach-light) 0%, var(--color-cream) 80%)' }}
+        style={{ background: 'var(--washi)' }}
       >
         <div className="mx-auto max-w-5xl">
-          <nav style={{ fontSize: 13, color: 'var(--color-brown-muted)' }} aria-label="パンくず">
+          <nav style={{ fontSize: 13, color: 'var(--sumi-soft)' }} aria-label="パンくず">
             <Link href="/tools" style={{ color: 'inherit' }}>AIツール</Link>
             <span style={{ margin: '0 6px' }}>›</span>
             <Link href="/tools/ai-kyoshitsu" style={{ color: 'inherit' }}>3D 図鑑</Link>
             <span style={{ margin: '0 6px' }}>›</span>
-            <span style={{ color: 'var(--color-brown)', fontWeight: 700 }}>{model.title}</span>
+            <span style={{ color: 'var(--sumi)', fontWeight: 700 }}>{model.title}</span>
           </nav>
         </div>
       </section>
@@ -107,24 +107,25 @@ export default async function ModelDetailPage({ params }: PageProps) {
       <section className="px-6 pt-4 pb-2">
         <div className="mx-auto max-w-5xl">
           <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', marginBottom: 8 }}>
-            <span style={badgeStyle('var(--color-peach-light)', 'var(--color-brown)')}>
+            <span style={badgeStyle('var(--washi-deep)', 'var(--sumi)')}>
               {TUTOR3D_SUBJECT_LABEL[model.subject]}
             </span>
-            <span style={badgeStyle('var(--color-cream)', 'var(--color-brown-muted)')}>
+            <span style={badgeStyle('var(--washi-light)', 'var(--sumi-soft)')}>
               {TUTOR3D_GRADE_LABEL[model.grade]}
             </span>
             {model.isFeatured && (
-              <span style={badgeStyle('var(--color-orange, #F39C5F)', '#fff', 700)}>
+              <span style={badgeStyle('var(--shu)', '#fff', 700)}>
                 ⭐ おすすめ
               </span>
             )}
           </div>
           <h1
-            className="font-display font-bold"
+            className="font-mincho"
             style={{
               margin: 0,
               fontSize: 'clamp(22px, 3vw + 10px, 32px)',
-              color: 'var(--color-brown)',
+              color: 'var(--sumi)',
+              fontWeight: 500,
               lineHeight: 1.3,
             }}
           >
@@ -135,7 +136,7 @@ export default async function ModelDetailPage({ params }: PageProps) {
               style={{
                 margin: '8px 0 0',
                 fontSize: 14,
-                color: 'var(--color-brown-light)',
+                color: 'var(--sumi-light)',
                 lineHeight: 1.7,
               }}
             >
@@ -147,7 +148,7 @@ export default async function ModelDetailPage({ params }: PageProps) {
 
       {/* 3D ビューア + AI チャットサイドバー（Lesson と同じ 2 カラム）*/}
       <section className="px-4 sm:px-6 py-4">
-        <div className="mx-auto max-w-6xl">
+        <div className="mx-auto max-w-5xl">
           <ModelDetailClient model={model} />
         </div>
       </section>
@@ -159,20 +160,21 @@ export default async function ModelDetailPage({ params }: PageProps) {
             className="mx-auto max-w-5xl"
             style={{
               padding: '14px 18px',
-              background: '#fff',
+              background: 'var(--washi-light)',
+              border: '1px solid var(--line)',
               borderRadius: 16,
               fontSize: 12,
-              color: 'var(--color-brown-muted)',
+              color: 'var(--sumi-soft)',
               lineHeight: 1.6,
             }}
           >
-            <strong style={{ color: 'var(--color-brown)' }}>📜 出典 / ライセンス</strong>
+            <strong style={{ color: 'var(--sumi)' }}>📜 出典 / ライセンス</strong>
             {model.attribution && <div style={{ marginTop: 4 }}>{model.attribution}</div>}
             {model.license      && <div>ライセンス: {model.license}</div>}
             {model.sourceUrl    && (
               <div>
                 出典元:{' '}
-                <a href={model.sourceUrl} target="_blank" rel="noreferrer noopener" style={{ color: 'var(--color-orange, #F39C5F)' }}>
+                <a href={model.sourceUrl} target="_blank" rel="noreferrer noopener" style={{ color: 'var(--shu)' }}>
                   {model.sourceUrl}
                 </a>
               </div>
@@ -188,9 +190,9 @@ export default async function ModelDetailPage({ params }: PageProps) {
             href="/tools/ai-kyoshitsu"
             className="inline-flex items-center rounded-full px-6 py-3 text-sm font-bold transition-all hover:-translate-y-0.5"
             style={{
-              background: '#fff',
-              color: 'var(--color-brown)',
-              border: '2px solid var(--color-beige-dark)',
+              background: 'var(--washi-light)',
+              color: 'var(--sumi)',
+              border: '1px solid var(--line)',
               textDecoration: 'none',
             }}
           >

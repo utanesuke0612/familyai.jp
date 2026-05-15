@@ -23,21 +23,23 @@ export const metadata: Metadata = {
 };
 
 // 状態ごとの見た目設定
+// Rev40 Phase K: gradient/role-specific 色を Mingei トークンへ統一。
+// ロール識別はバッジテキスト + 罫線色の濃淡で表現（背景は washi 系単色）。
 const STATE_CONFIG = {
   anon: {
-    bgGradient:   'linear-gradient(160deg, var(--color-beige) 0%, var(--color-cream) 100%)',
+    bgGradient:   'var(--washi)',
     badge:        '👋 ゲスト',
-    badgeBg:      'rgba(255,255,255,0.85)',
+    badgeBg:      'var(--washi-light)',
   },
   free: {
-    bgGradient:   'linear-gradient(160deg, var(--color-mint) 0%, var(--color-cream) 100%)',
+    bgGradient:   'var(--washi-light)',
     badge:        '🌱 無料会員',
-    badgeBg:      'var(--color-mint)',
+    badgeBg:      'var(--washi-deep)',
   },
   premium: {
-    bgGradient:   'linear-gradient(160deg, var(--color-yellow) 0%, var(--color-cream) 100%)',
+    bgGradient:   'var(--washi-deep)',
     badge:        '👑 プレミアム会員',
-    badgeBg:      'var(--color-yellow)',
+    badgeBg:      'var(--shu-soft)',
   },
 } as const;
 
@@ -62,11 +64,11 @@ export default async function MyPage() {
   const showPremium = await isAdmin();
 
   return (
-    <main style={{ background: 'var(--color-cream)' }}>
+    <main style={{ background: 'var(--washi)' }}>
       {/* ───── ヒーロー ───── */}
       <section
-        className="px-4 sm:px-6 py-6 sm:py-10"
-        style={{ background: config.bgGradient }}
+        className="px-4 sm:px-6"
+        style={{ background: config.bgGradient, paddingBlock: 'clamp(7px, 1vw, 12px)' }}
       >
         <div className="mx-auto flex max-w-5xl flex-col gap-5">
           <span
@@ -74,8 +76,8 @@ export default async function MyPage() {
             style={{
               minHeight: '44px',
               background: config.badgeBg,
-              color: 'var(--color-brown)',
-              boxShadow: 'var(--shadow-warm-sm)',
+              color: 'var(--sumi)',
+              border: '1px solid var(--line)',
             }}
           >
             {config.badge}
@@ -90,32 +92,33 @@ export default async function MyPage() {
                 width={64}
                 height={64}
                 className="rounded-full shrink-0"
-                style={{ border: '2px solid white', boxShadow: 'var(--shadow-warm-sm)' }}
+                style={{ border: '1px solid var(--line)' }}
               />
             )}
             {/* 見出し領域: flex-1 + min-w-0 で flex 親内に収め、長い user.name を折返し可能に */}
             <div className="flex-1 min-w-0">
               {isLoggedIn ? (
                 <h1
-                  className="font-display font-bold leading-tight"
+                  className="font-mincho leading-tight"
                   style={{
                     // max を 28px に抑え、長いユーザー名でレイアウト崩壊を防ぐ
                     fontSize:    'clamp(20px, 2.4vw + 14px, 28px)',
-                    color:       'var(--color-brown)',
+                    color:       'var(--sumi)',
+                    fontWeight:   500,
                     overflowWrap: 'anywhere',  // 日本語連結の長い user.name でも折返す
                     wordBreak:    'normal',
                   }}
                 >
                   ようこそ、
-                  <span className="font-bold" style={{ color: 'var(--color-orange)' }}>
+                  <span style={{ color: 'var(--shu)', fontWeight: 600 }}>
                     {session.user.name ?? 'あなた'}
                   </span>
                   さん
                 </h1>
               ) : (
                 <h1
-                  className="font-display font-bold leading-tight"
-                  style={{ fontSize: 'clamp(22px, 3vw + 14px, 32px)', color: 'var(--color-brown)' }}
+                  className="font-mincho leading-tight"
+                  style={{ fontSize: 'clamp(22px, 3vw + 14px, 32px)', color: 'var(--sumi)', fontWeight: 500 }}
                 >
                   MyPage
                 </h1>
@@ -124,7 +127,7 @@ export default async function MyPage() {
                 <p
                   className="text-sm mt-1"
                   style={{
-                    color:        'var(--color-brown-light)',
+                    color:        'var(--sumi-light)',
                     overflowWrap: 'anywhere',
                   }}
                 >
@@ -132,7 +135,7 @@ export default async function MyPage() {
                 </p>
               )}
               {!isLoggedIn && (
-                <p className="mt-2 text-sm sm:text-base" style={{ color: 'var(--color-brown-light)' }}>
+                <p className="mt-2 text-sm sm:text-base" style={{ color: 'var(--sumi-light)' }}>
                   ログインすると、利用回数や学習記録を複数の端末で共有できます。
                   ログインしなくても一部の機能（単語帳など）はお使いいただけます。
                 </p>
@@ -147,7 +150,7 @@ export default async function MyPage() {
                 className="inline-flex items-center rounded-full px-5 text-sm font-semibold"
                 style={{
                   minHeight: '44px',
-                  background: 'var(--color-orange)',
+                  background: 'var(--shu)',
                   color: 'white',
                 }}
               >
@@ -158,9 +161,9 @@ export default async function MyPage() {
                 className="inline-flex items-center rounded-full px-5 text-sm font-semibold"
                 style={{
                   minHeight: '44px',
-                  background: 'rgba(255,255,255,0.9)',
-                  color: 'var(--color-brown)',
-                  boxShadow: 'var(--shadow-warm-sm)',
+                  background: 'var(--washi-light)',
+                  color: 'var(--sumi)',
+                  border: '1px solid var(--line)',
                 }}
               >
                 新規登録
@@ -178,13 +181,13 @@ export default async function MyPage() {
           <article
             className="rounded-[24px] sm:rounded-[28px] p-5 sm:p-6"
             style={{
-              background: 'rgba(255,255,255,0.92)',
-              boxShadow: 'var(--shadow-warm-sm)',
+              background: 'var(--washi-light)',
+              border: '1px solid var(--line)',
             }}
           >
             <div className="flex items-center gap-2 mb-3">
               <span className="text-2xl" aria-hidden="true">📚</span>
-              <h2 className="font-display text-xl font-bold" style={{ color: 'var(--color-brown)' }}>
+              <h2 className="font-mincho text-xl" style={{ color: 'var(--sumi)', fontWeight: 500 }}>
                 わたしの学習
               </h2>
             </div>
@@ -195,16 +198,16 @@ export default async function MyPage() {
                   href="/mypage/bookmarks"
                   className="flex items-center justify-between rounded-2xl p-3"
                   style={{
-                    background: 'var(--color-cream)',
-                    border: '1px solid var(--color-beige-dark)',
-                    color: 'var(--color-brown)',
+                    background: 'var(--washi)',
+                    border: '1px solid var(--line)',
+                    color: 'var(--sumi)',
                   }}
                 >
                   <span className="flex items-center gap-2">
                     <span className="text-xl" aria-hidden="true">🔖</span>
                     <span className="font-semibold">単語・センテンス</span>
                   </span>
-                  <span style={{ color: 'var(--color-orange)' }}>→</span>
+                  <span style={{ color: 'var(--shu)' }}>→</span>
                 </Link>
               </li>
               {/* Rev36: AI教室（アニメ生成）は 3D 図鑑に置換済み・履歴ページは Phase 2 で再設計予定 */}
@@ -213,16 +216,16 @@ export default async function MyPage() {
                   href="/mypage/aimemo"
                   className="flex items-center justify-between rounded-2xl p-3"
                   style={{
-                    background: 'var(--color-cream)',
-                    border: '1px solid var(--color-beige-dark)',
-                    color: 'var(--color-brown)',
+                    background: 'var(--washi)',
+                    border: '1px solid var(--line)',
+                    color: 'var(--sumi)',
                   }}
                 >
                   <span className="flex items-center gap-2">
                     <span className="text-xl" aria-hidden="true">📌</span>
                     <span className="font-semibold">AIメモ帳</span>
                   </span>
-                  <span style={{ color: 'var(--color-orange)' }}>→</span>
+                  <span style={{ color: 'var(--shu)' }}>→</span>
                 </Link>
               </li>
               <li>
@@ -230,16 +233,16 @@ export default async function MyPage() {
                   href="/mypage/ai-echo"
                   className="flex items-center justify-between rounded-2xl p-3"
                   style={{
-                    background: 'var(--color-cream)',
-                    border: '1px solid var(--color-beige-dark)',
-                    color: 'var(--color-brown)',
+                    background: 'var(--washi)',
+                    border: '1px solid var(--line)',
+                    color: 'var(--sumi)',
                   }}
                 >
                   <span className="flex items-center gap-2">
                     <span className="text-xl" aria-hidden="true">🔊</span>
                     <span className="font-semibold">AI Echo 履歴</span>
                   </span>
-                  <span style={{ color: 'var(--color-orange)' }}>→</span>
+                  <span style={{ color: 'var(--shu)' }}>→</span>
                 </Link>
               </li>
             </ul>
@@ -249,19 +252,19 @@ export default async function MyPage() {
           <article
             className="rounded-[24px] sm:rounded-[28px] p-5 sm:p-6"
             style={{
-              background: 'rgba(255,255,255,0.92)',
-              boxShadow: 'var(--shadow-warm-sm)',
+              background: 'var(--washi-light)',
+              border: '1px solid var(--line)',
             }}
           >
             <div className="flex items-center gap-2 mb-2">
               <span className="text-2xl" aria-hidden="true">💞</span>
-              <h2 className="font-display text-xl font-bold" style={{ color: 'var(--color-brown)' }}>
+              <h2 className="font-mincho text-xl" style={{ color: 'var(--sumi)', fontWeight: 500 }}>
                 AI 利用状況
               </h2>
             </div>
-            <p className="text-sm mb-4" style={{ color: 'var(--color-brown-light)' }}>
+            <p className="text-sm mb-4" style={{ color: 'var(--sumi-light)' }}>
               プランごとの機能と利用回数の比較です。
-              <span className="font-semibold" style={{ color: 'var(--color-orange)' }}>
+              <span className="font-semibold" style={{ color: 'var(--shu)' }}>
                 （現在: {quota.label}）
               </span>
             </p>
@@ -276,16 +279,15 @@ export default async function MyPage() {
                 className="mt-5 inline-flex w-full items-center justify-center rounded-full px-4 text-sm font-bold"
                 style={{
                   minHeight: '44px',
-                  background: 'var(--color-orange)',
+                  background: 'var(--shu)',
                   color: 'white',
-                  boxShadow: '0 2px 8px rgba(255,140,66,0.35)',
                 }}
               >
                 🌱 無料で登録 → AI教室・履歴・メモ帳が使えます
               </Link>
             )}
             {plan === 'premium' && (
-              <p className="mt-5 text-center text-sm font-semibold" style={{ color: 'var(--color-brown)' }}>
+              <p className="mt-5 text-center text-sm font-semibold" style={{ color: 'var(--sumi)' }}>
                 👑 プレミアムプランをご利用いただきありがとうございます！
               </p>
             )}
@@ -378,10 +380,10 @@ function FeatureComparison({ plan, showPremium }: { plan: PlanKey; showPremium: 
       <div className="hidden sm:block overflow-x-auto">
         <table className="w-full text-sm">
           <thead>
-            <tr style={{ borderBottom: '2px solid var(--color-beige-dark)' }}>
+            <tr style={{ borderBottom: '2px solid var(--line)' }}>
               <th
                 className="text-left py-2 px-3 font-semibold"
-                style={{ color: 'var(--color-brown)' }}
+                style={{ color: 'var(--sumi)' }}
               >
                 機能
               </th>
@@ -417,15 +419,15 @@ function FeatureMobileCard({
     <div
       className="rounded-2xl p-4 flex flex-col gap-3"
       style={{
-        background: 'var(--color-cream)',
-        border:     '1px solid var(--color-beige-dark)',
+        background: 'var(--washi)',
+        border:     '1px solid var(--line)',
       }}
     >
       <div>
-        <div className="font-semibold text-sm" style={{ color: 'var(--color-brown)' }}>
+        <div className="font-semibold text-sm" style={{ color: 'var(--sumi)' }}>
           {item.feature}
         </div>
-        <div className="text-xs mt-0.5" style={{ color: 'var(--color-brown-light)' }}>
+        <div className="text-xs mt-0.5" style={{ color: 'var(--sumi-light)' }}>
           {item.desc}
         </div>
       </div>
@@ -457,8 +459,8 @@ function PlanValueRow({
     <div
       className="flex items-center justify-between gap-2 rounded-xl px-3 py-2 text-xs"
       style={{
-        background: isCurrent ? 'rgba(255,140,66,0.12)' : 'rgba(255,255,255,0.6)',
-        border:     isCurrent ? '1.5px solid var(--color-orange)' : '1px solid var(--color-beige-dark)',
+        background: isCurrent ? 'var(--shu-soft)' : 'var(--washi-light)',
+        border:     isCurrent ? '1.5px solid var(--shu)' : '1px solid var(--line)',
       }}
     >
       <span className="flex items-center gap-1.5 min-w-0">
@@ -466,18 +468,18 @@ function PlanValueRow({
         <span
           className="truncate"
           style={{
-            color:      isCurrent ? 'var(--color-brown)' : 'var(--color-brown-light)',
+            color:      isCurrent ? 'var(--sumi)' : 'var(--sumi-light)',
             fontWeight: isCurrent ? 700 : 500,
           }}
         >
           {meta.title}
-          {isCurrent && <span className="ml-1 text-[10px]" style={{ color: 'var(--color-orange)' }}>（あなた）</span>}
+          {isCurrent && <span className="ml-1 text-[10px]" style={{ color: 'var(--shu)' }}>（あなた）</span>}
         </span>
       </span>
       <span
         className="shrink-0 font-semibold"
         style={{
-          color: isDisabled ? 'var(--color-brown-muted)' : (isCurrent ? 'var(--color-orange)' : 'var(--color-brown)'),
+          color: isDisabled ? 'var(--sumi-soft)' : (isCurrent ? 'var(--shu)' : 'var(--sumi)'),
         }}
       >
         {isDisabled ? <span style={{ opacity: 0.7 }}>✕ {value}</span> : value}
@@ -491,9 +493,9 @@ function PlanHeader({ title, emoji, current }: { title: string; emoji: string; c
     <th
       className="py-2 px-2 sm:px-3 text-center font-semibold whitespace-nowrap"
       style={{
-        background: current ? 'var(--color-orange)' : 'transparent',
-        color:      current ? '#fff'                 : 'var(--color-brown)',
-        borderRadius: current ? '12px 12px 0 0'      : 0,
+        background: current ? 'var(--shu)' : 'transparent',
+        color:      current ? '#fff'        : 'var(--sumi)',
+        borderRadius: current ? '12px 12px 0 0' : 0,
       }}
     >
       <div className="flex flex-col items-center gap-0.5">
@@ -517,12 +519,12 @@ function FeatureRow({
   showPremium: boolean;
 }) {
   return (
-    <tr style={{ borderBottom: '1px solid var(--color-beige)' }}>
+    <tr style={{ borderBottom: '1px solid var(--line)' }}>
       <td className="py-3 px-2 sm:px-3" style={{ verticalAlign: 'top' }}>
-        <div className="font-semibold text-xs sm:text-sm" style={{ color: 'var(--color-brown)' }}>
+        <div className="font-semibold text-xs sm:text-sm" style={{ color: 'var(--sumi)' }}>
           {feature}
         </div>
-        <div className="text-[11px] mt-0.5" style={{ color: 'var(--color-brown-light)' }}>
+        <div className="text-[11px] mt-0.5" style={{ color: 'var(--sumi-light)' }}>
           {desc}
         </div>
       </td>
@@ -539,8 +541,8 @@ function CellValue({ value, isCurrent }: { value: string; isCurrent: boolean }) 
     <td
       className="py-3 px-2 sm:px-3 text-center text-xs sm:text-sm"
       style={{
-        background: isCurrent ? 'rgba(255,140,66,0.08)' : 'transparent',
-        color:      isDisabled ? 'var(--color-brown-muted)' : 'var(--color-brown)',
+        background: isCurrent ? 'var(--shu-soft)' : 'transparent',
+        color:      isDisabled ? 'var(--sumi-soft)' : 'var(--sumi)',
         fontWeight: isCurrent && !isDisabled ? 700 : 500,
       }}
     >

@@ -94,20 +94,20 @@ function MemoItem({ item, onRemove }: { item: AiMemoItem; onRemove: (id: string)
     <article
       className="rounded-[24px] p-5 sm:p-6"
       style={{
-        background: 'rgba(255,255,255,0.92)',
-        boxShadow:  'var(--shadow-warm-sm)',
+        background: 'var(--washi-light)',
+        border:     '1px solid var(--line)',
       }}
     >
       {/* メタ情報 */}
       <div className="flex items-center justify-between gap-3 mb-3">
         <div className="flex flex-col gap-0.5 min-w-0">
           <span
-            className="font-display text-lg font-bold leading-snug"
-            style={{ color: 'var(--color-brown)' }}
+            className="font-mincho text-lg leading-snug"
+            style={{ color: 'var(--sumi)', fontWeight: 500 }}
           >
             {item.articleTitle}
           </span>
-          <span className="text-xs" style={{ color: 'var(--color-brown-light)' }}>
+          <span className="text-xs" style={{ color: 'var(--sumi-light)' }}>
             {formatDate(item.savedAt)}
           </span>
         </div>
@@ -115,7 +115,7 @@ function MemoItem({ item, onRemove }: { item: AiMemoItem; onRemove: (id: string)
           <Link
             href={resolveHref(item.articleSlug)}
             className="inline-flex items-center text-sm font-semibold whitespace-nowrap shrink-0"
-            style={{ color: 'var(--color-orange)', height: '36px' }}
+            style={{ color: 'var(--shu)', height: '36px' }}
           >
             レッスンを開く →
           </Link>
@@ -126,7 +126,7 @@ function MemoItem({ item, onRemove }: { item: AiMemoItem; onRemove: (id: string)
       <div
         className="rounded-xl px-3 py-2 text-sm mb-3"
         style={{
-          background: 'var(--color-orange)',
+          background: 'var(--shu)',
           color:      'white',
         }}
       >
@@ -138,15 +138,15 @@ function MemoItem({ item, onRemove }: { item: AiMemoItem; onRemove: (id: string)
       <div
         className="rounded-xl px-3 py-2 text-sm"
         style={{
-          background: 'var(--color-cream)',
-          color:      'var(--color-brown)',
-          border:     '1px solid var(--color-beige-dark)',
+          background: 'var(--washi)',
+          color:      'var(--sumi)',
+          border:     '1px solid var(--line)',
         }}
       >
-        <span className="text-xs font-semibold block mb-1" style={{ color: 'var(--color-brown-light)' }}>
+        <span className="text-xs font-semibold block mb-1" style={{ color: 'var(--sumi-light)' }}>
           AI の回答
         </span>
-        <MarkdownContent color="var(--color-brown)" fontSize="0.875rem">
+        <MarkdownContent color="var(--sumi)" fontSize="0.875rem">
           {item.answer}
         </MarkdownContent>
       </div>
@@ -159,9 +159,9 @@ function MemoItem({ item, onRemove }: { item: AiMemoItem; onRemove: (id: string)
           aria-label="回答をコピー"
           className="text-xs px-2 py-0.5 rounded-md transition-opacity hover:opacity-80"
           style={{
-            background: copied ? 'var(--color-orange)' : 'transparent',
-            color:      copied ? 'white' : 'var(--color-brown-light)',
-            border:     '1px solid var(--color-beige-dark)',
+            background: copied ? 'var(--shu)' : 'transparent',
+            color:      copied ? 'white' : 'var(--sumi-light)',
+            border:     '1px solid var(--line)',
             minHeight:  'auto',
           }}
         >
@@ -173,9 +173,9 @@ function MemoItem({ item, onRemove }: { item: AiMemoItem; onRemove: (id: string)
           aria-label="メモから外す"
           className="text-xs px-2 py-0.5 rounded-md transition-opacity hover:opacity-80"
           style={{
-            background: 'var(--color-orange)',
+            background: 'var(--shu)',
             color:      'white',
-            border:     '1px solid var(--color-beige-dark)',
+            border:     '1px solid var(--line)',
             minHeight:  'auto',
           }}
         >
@@ -189,27 +189,27 @@ function MemoItem({ item, onRemove }: { item: AiMemoItem; onRemove: (id: string)
 // ── ログインウォール ──────────────────────────────────────────────
 function LoginWall() {
   return (
-    <main style={{ background: 'var(--color-cream)', minHeight: '60vh' }}>
+    <main style={{ background: 'var(--washi)', minHeight: '60vh' }}>
       <div className="max-w-container mx-auto flex flex-col items-center justify-center gap-6 py-24" style={{ paddingInline: 'var(--container-px)' }}>
         <p className="text-5xl">📌</p>
-        <h1 className="font-display font-bold text-2xl text-center" style={{ color: 'var(--color-brown)' }}>
+        <h1 className="font-mincho text-2xl text-center" style={{ color: 'var(--sumi)', fontWeight: 500 }}>
           AIメモ帳はログイン会員専用です
         </h1>
-        <p className="text-sm text-center leading-relaxed" style={{ color: 'var(--color-brown-light)', maxWidth: '360px' }}>
+        <p className="text-sm text-center leading-relaxed" style={{ color: 'var(--sumi-light)', maxWidth: '360px' }}>
           無料会員登録をすると、AIチャットの回答をクラウドに保存して、どのデバイスからでも見返せます。
         </p>
         <div className="flex gap-3 flex-wrap justify-center">
           <Link
             href="/auth/signin"
             className="inline-flex items-center rounded-full px-6 text-sm font-semibold"
-            style={{ minHeight: '44px', background: 'var(--color-orange)', color: 'white' }}
+            style={{ minHeight: '44px', background: 'var(--shu)', color: 'white' }}
           >
             ログイン
           </Link>
           <Link
             href="/auth/register"
             className="inline-flex items-center rounded-full px-6 text-sm font-semibold"
-            style={{ minHeight: '44px', background: 'white', color: 'var(--color-brown)', border: '1px solid var(--color-beige-dark)' }}
+            style={{ minHeight: '44px', background: 'var(--washi-light)', color: 'var(--sumi)', border: '1px solid var(--line)' }}
           >
             無料会員登録
           </Link>
@@ -226,11 +226,11 @@ export default function AiMemoPage() {
   if (!loading && !isLoggedIn) return <LoginWall />;
 
   return (
-    <main style={{ background: 'var(--color-cream)' }}>
+    <main style={{ background: 'var(--washi)' }}>
       <header
         style={{
-          background:   'linear-gradient(160deg, var(--color-peach) 0%, var(--color-cream) 100%)',
-          paddingBlock: 'clamp(16px, 2.5vw, 28px)',
+          background:   'var(--washi)',
+          paddingBlock: 'clamp(7px, 1vw, 12px)',
         }}
       >
         <div className="max-w-container mx-auto" style={{ paddingInline: 'var(--container-px)' }}>
@@ -240,9 +240,9 @@ export default function AiMemoPage() {
               className="inline-flex items-center rounded-full px-4"
               style={{
                 minHeight:  '44px',
-                background: 'rgba(255,255,255,0.9)',
-                color:      'var(--color-brown)',
-                boxShadow:  'var(--shadow-warm-sm)',
+                background: 'var(--washi-light)',
+                color:      'var(--sumi)',
+                border:     '1px solid var(--line)',
               }}
             >
               ← MyPage へ戻る
@@ -252,12 +252,12 @@ export default function AiMemoPage() {
           <div className="flex flex-wrap items-end justify-between gap-3">
             <div>
               <h1
-                className="font-display font-bold leading-tight"
-                style={{ fontSize: 'clamp(22px, 4vw, 42px)', color: 'var(--color-brown)' }}
+                className="font-mincho leading-tight"
+                style={{ fontSize: 'clamp(22px, 4vw, 42px)', color: 'var(--sumi)', fontWeight: 500 }}
               >
                 📌 AIメモ帳
               </h1>
-              <p className="mt-2 text-sm" style={{ color: 'var(--color-brown-light)' }}>
+              <p className="mt-2 text-sm" style={{ color: 'var(--sumi-light)' }}>
                 AIチャットの回答で 📌 を押して保存したメモが集まります。
               </p>
             </div>
@@ -270,9 +270,9 @@ export default function AiMemoPage() {
                   className="inline-flex items-center gap-2 rounded-full px-4 text-sm font-semibold"
                   style={{
                     minHeight:  '44px',
-                    background: 'rgba(255,255,255,0.9)',
-                    color:      'var(--color-brown)',
-                    boxShadow:  'var(--shadow-warm-sm)',
+                    background: 'var(--washi-light)',
+                    color:      'var(--sumi)',
+                    border:     '1px solid var(--line)',
                   }}
                   title="Excelで開ける CSV 形式で書き出す"
                 >
@@ -284,9 +284,9 @@ export default function AiMemoPage() {
                   className="inline-flex items-center gap-2 rounded-full px-4 text-sm font-semibold"
                   style={{
                     minHeight:  '44px',
-                    background: 'rgba(255,255,255,0.9)',
-                    color:      'var(--color-brown)',
-                    boxShadow:  'var(--shadow-warm-sm)',
+                    background: 'var(--washi-light)',
+                    color:      'var(--sumi)',
+                    border:     '1px solid var(--line)',
                   }}
                   title="プログラム連携用 JSON 形式で書き出す"
                 >
@@ -300,7 +300,7 @@ export default function AiMemoPage() {
 
       <section
         style={{
-          background:   'var(--color-cream)',
+          background:   'var(--washi)',
           paddingBlock: 'clamp(12px, 2vw, 20px)',
         }}
       >
@@ -318,14 +318,14 @@ export default function AiMemoPage() {
             <div
               className="rounded-[28px] p-6 sm:p-8 text-center"
               style={{
-                background: 'rgba(255,255,255,0.88)',
-                boxShadow:  'var(--shadow-warm-sm)',
+                background: 'var(--washi-light)',
+                border:     '1px solid var(--line)',
               }}
             >
-              <p className="text-base" style={{ color: 'var(--color-brown)' }}>
+              <p className="text-base" style={{ color: 'var(--sumi)' }}>
                 まだメモが保存されていません。
               </p>
-              <p className="mt-2 text-sm" style={{ color: 'var(--color-brown-light)' }}>
+              <p className="mt-2 text-sm" style={{ color: 'var(--sumi-light)' }}>
                 記事ページのAIチャットで回答の 📌 ボタンを押すと保存できます。
               </p>
               <Link
@@ -333,7 +333,7 @@ export default function AiMemoPage() {
                 className="mt-5 inline-flex items-center rounded-full px-4 text-sm font-semibold"
                 style={{
                   minHeight:  '44px',
-                  background: 'var(--color-orange)',
+                  background: 'var(--shu)',
                   color:      'white',
                 }}
               >

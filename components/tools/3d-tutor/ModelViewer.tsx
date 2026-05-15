@@ -245,7 +245,7 @@ export function ModelViewer({
         >
           <p style={{
             margin: 0, fontSize: 15, fontWeight: 500,
-            fontFamily: "var(--font-display), 'Shippori Mincho', serif",
+            fontFamily: "var(--font-mincho), 'Shippori Mincho', serif",
             color: 'var(--sumi)',
           }}>
             3D モデルの読み込みに失敗しました

@@ -37,10 +37,10 @@ export default async function Level1TopPage() {
     .sort((a, b) => (a.lessonNumber ?? 0) - (b.lessonNumber ?? 0));
 
   return (
-    <main style={{ background: 'var(--color-cream)' }}>
+    <main style={{ background: 'var(--washi)' }}>
       <section
         className="px-6 py-8 sm:py-10"
-        style={{ background: 'linear-gradient(160deg, var(--color-mint) 0%, var(--color-cream) 100%)' }}
+        style={{ background: 'var(--washi)' }}
       >
         <div className="mx-auto flex max-w-5xl flex-col gap-6">
           {/* Rev40 Phase I: Mingei 統一（矩形 4px + font-mincho・絵文字撤廃） */}
@@ -83,14 +83,14 @@ export default async function Level1TopPage() {
 
           <div className="flex flex-col gap-4">
             <h1
-              className="font-display font-bold leading-tight"
-              style={{ fontSize: 'clamp(28px, 4.6vw, 48px)', color: 'var(--color-brown)' }}
+              className="font-mincho leading-tight"
+              style={{ fontSize: 'clamp(28px, 4.6vw, 48px)', color: 'var(--sumi)', fontWeight: 500 }}
             >
               Let&apos;s Learn English - Level 1
             </h1>
             <p
               className="text-base leading-relaxed sm:text-lg"
-              style={{ color: 'var(--color-brown-light)' }}
+              style={{ color: 'var(--sumi-light)' }}
             >
               <strong>52 週分</strong>のステップアップ式レッスン。挨拶や自己紹介から始まり、
               日常会話・買い物・天気・趣味など、生活に身近なテーマで初級英語を着実に身につけられます。
@@ -106,11 +106,11 @@ export default async function Level1TopPage() {
             <div className="flex flex-col gap-2">
               <span
                 className="inline-flex w-fit rounded-full px-3 py-1 text-xs font-bold"
-                style={{ background: 'var(--color-mint)', color: 'var(--color-brown)' }}
+                style={{ background: 'var(--washi-deep)', color: 'var(--sumi)' }}
               >
                 📚 全{lessons.length}レッスン
               </span>
-              <h2 className="font-display text-2xl font-bold sm:text-3xl" style={{ color: 'var(--color-brown)' }}>
+              <h2 className="font-mincho text-2xl sm:text-3xl" style={{ color: 'var(--sumi)', fontWeight: 500 }}>
                 Lessons
               </h2>
             </div>
@@ -118,7 +118,7 @@ export default async function Level1TopPage() {
               <Link
                 href="/mypage/bookmarks"
                 className="text-sm font-semibold"
-                style={{ color: 'var(--color-orange)' }}
+                style={{ color: 'var(--shu)' }}
               >
                 🔖 マイブックマークを開く →
               </Link>
@@ -127,7 +127,7 @@ export default async function Level1TopPage() {
                 target="_blank"
                 rel="noreferrer"
                 className="text-sm font-semibold"
-                style={{ color: 'var(--color-orange)' }}
+                style={{ color: 'var(--shu)' }}
               >
                 VOA公式で全レッスンを見る ↗
               </a>
@@ -139,21 +139,20 @@ export default async function Level1TopPage() {
             <div
               className="rounded-2xl px-4 py-3 flex items-center gap-3 flex-wrap"
               style={{
-                background: 'linear-gradient(135deg, #FFF7EB, #FDF6ED)',
-                border:     '1px solid #E8CFA8',
+                background: 'var(--washi-light)',
+                border:     '1px solid var(--line)',
               }}
             >
               <span className="text-xl">💡</span>
-              <p className="flex-1 text-sm" style={{ color: 'var(--color-brown)' }}>
+              <p className="flex-1 text-sm" style={{ color: 'var(--sumi)' }}>
                 ログインすると、各レッスンの<strong>挑戦回数</strong>を記録・表示できます。
               </p>
               <Link
                 href="/api/auth/signin"
                 className="rounded-full px-4 py-1.5 text-xs font-bold transition-opacity hover:opacity-80"
                 style={{
-                  background: 'var(--color-orange)',
+                  background: 'var(--shu)',
                   color:      '#fff',
-                  boxShadow:  '0 2px 6px rgba(255,140,66,0.3)',
                 }}
               >
                 ログインする →
@@ -169,15 +168,15 @@ export default async function Level1TopPage() {
                 <li key={lesson.slug}>
                   <Link
                     href={`/tools/voaenglish/level-1/${lesson.slug}`}
-                    className="group block overflow-hidden rounded-2xl transition-[transform,box-shadow] duration-200 hover:-translate-y-1"
+                    className="group block overflow-hidden rounded-2xl transition-transform duration-200 hover:-translate-y-1"
                     style={{
-                      background: 'rgba(255,255,255,0.92)',
-                      boxShadow: 'var(--shadow-warm-sm)',
+                      background: 'var(--washi-light)',
+                      border: '1px solid var(--line)',
                     }}
                   >
                     <div
                       className="relative w-full overflow-hidden"
-                      style={{ aspectRatio: '16 / 9', background: 'var(--color-beige)' }}
+                      style={{ aspectRatio: '16 / 9', background: 'var(--washi-deep)' }}
                     >
                       {lesson.thumbnail && (
                         // eslint-disable-next-line @next/next/no-img-element
@@ -204,10 +203,10 @@ export default async function Level1TopPage() {
                       )}
                     </div>
                     <div className="flex flex-col gap-1 p-3">
-                      <span className="text-xs font-bold" style={{ color: 'var(--color-orange)' }}>
+                      <span className="text-xs font-bold" style={{ color: 'var(--shu)' }}>
                         Lesson {lesson.lessonNumber}
                       </span>
-                      <span className="text-sm font-semibold leading-snug" style={{ color: 'var(--color-brown)' }}>
+                      <span className="text-sm font-semibold leading-snug" style={{ color: 'var(--sumi)' }}>
                         {lesson.title}
                       </span>
                     </div>
@@ -222,9 +221,9 @@ export default async function Level1TopPage() {
               href="/tools/voaenglish?level=beginning"
               className="inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-semibold"
               style={{
-                background: 'rgba(255,255,255,0.9)',
-                color: 'var(--color-brown)',
-                boxShadow: 'var(--shadow-warm-sm)',
+                background: 'var(--washi-light)',
+                color: 'var(--sumi)',
+                border: '1px solid var(--line)',
               }}
             >
               <span>←</span>

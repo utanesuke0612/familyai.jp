@@ -46,15 +46,16 @@ import type { ContentCategory, DifficultyLevel } from '@/shared';
 export const revalidate = 3600;
 
 // ── 難易度バッジ色 ────────────────────────────────────────────
+// Rev40 Phase K: Mingei トークンへ統一。難易度の段階感は washi 系の濃淡で表現。
 const LEVEL_BG: Record<string, string> = {
-  beginner:     'var(--color-mint)',
-  intermediate: 'var(--color-yellow)',
-  advanced:     'var(--color-peach)',
+  beginner:     'var(--washi-light)',
+  intermediate: 'var(--washi-deep)',
+  advanced:     'var(--shu-soft)',
 };
 const LEVEL_TEXT: Record<string, string> = {
-  beginner:     '#145c38',
-  intermediate: '#7a5000',
-  advanced:     'var(--color-brown)',
+  beginner:     'var(--sumi)',
+  intermediate: 'var(--sumi)',
+  advanced:     'var(--sumi)',
 };
 // ── generateMetadata ──────────────────────────────────────────
 export async function generateMetadata({
@@ -180,7 +181,7 @@ export default async function ArticlePage({
       {/* ── 記事ヘッダー ── */}
       <header
         style={{
-          background:   'var(--color-cream)',
+          background:   'var(--washi)',
           paddingBlock: 'clamp(7px, 1vw, 12px)',
         }}
       >
@@ -193,17 +194,17 @@ export default async function ArticlePage({
             className="flex items-center gap-2 text-xs mb-3 flex-wrap"
             aria-label="パンくずリスト"
           >
-            <a href="/" className="inline-flex items-center hover:opacity-70 transition-opacity" style={{ color: 'var(--color-brown-light)' }}>
+            <a href="/" className="inline-flex items-center hover:opacity-70 transition-opacity" style={{ color: 'var(--sumi-light)' }}>
               ホーム
             </a>
-            <span style={{ color: 'var(--color-brown-light)' }} aria-hidden="true">/</span>
-            <a href="/learn" className="inline-flex items-center hover:opacity-70 transition-opacity" style={{ color: 'var(--color-brown-light)' }}>
+            <span style={{ color: 'var(--sumi-light)' }} aria-hidden="true">/</span>
+            <a href="/learn" className="inline-flex items-center hover:opacity-70 transition-opacity" style={{ color: 'var(--sumi-light)' }}>
               記事一覧
             </a>
-            <span style={{ color: 'var(--color-brown-light)' }} aria-hidden="true">/</span>
+            <span style={{ color: 'var(--sumi-light)' }} aria-hidden="true">/</span>
             <span
               className="truncate"
-              style={{ color: 'var(--color-orange)', maxWidth: '240px' }}
+              style={{ color: 'var(--shu)', maxWidth: '240px' }}
               aria-current="page"
             >
               {article.title}
@@ -244,10 +245,11 @@ export default async function ArticlePage({
 
           {/* タイトル */}
           <h1
-            className="font-display font-bold leading-tight mb-4"
+            className="font-mincho leading-tight mb-4"
             style={{
               fontSize: 'clamp(22px, 4vw, 42px)',
-              color:    'var(--color-brown)',
+              color:    'var(--sumi)',
+              fontWeight: 500,
             }}
           >
             {article.title}
@@ -259,7 +261,7 @@ export default async function ArticlePage({
               className="mb-6 max-w-2xl leading-relaxed"
               style={{
                 fontSize: 'clamp(14px, 2vw, 17px)',
-                color:    'var(--color-brown-light)',
+                color:    'var(--sumi-light)',
               }}
             >
               {article.description}
@@ -269,7 +271,7 @@ export default async function ArticlePage({
           {/* メタ情報バー */}
           <div
             className="flex flex-wrap items-center gap-4 text-sm pt-4 border-t"
-            style={{ borderColor: 'var(--color-beige)', color: 'var(--color-brown-light)' }}
+            style={{ borderColor: 'var(--line)', color: 'var(--sumi-light)' }}
           >
             {dateStr && (
               <span className="flex items-center gap-1.5">
@@ -291,7 +293,7 @@ export default async function ArticlePage({
       {/* ── 本文エリア ── */}
       <section
         style={{
-          background:   'var(--color-cream)',
+          background:   'var(--washi)',
           paddingBlock: 'clamp(8px, 1.25vw, 16px)',
         }}
       >
@@ -311,9 +313,9 @@ export default async function ArticlePage({
                   href="/learn"
                   className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium border transition-all hover:opacity-80 min-h-[44px]"
                   style={{
-                    background:  'white',
-                    borderColor: 'var(--color-beige-dark)',
-                    color:       'var(--color-brown-light)',
+                    background:  'var(--washi-light)',
+                    borderColor: 'var(--line)',
+                    color:       'var(--sumi-light)',
                   }}
                 >
                   ← 記事一覧に戻る
@@ -346,7 +348,7 @@ export default async function ArticlePage({
       {relatedArticles.length > 0 && (
         <section
           style={{
-            background:   'var(--color-beige)',
+            background:   'var(--washi-deep)',
             paddingBlock: 'clamp(16px, 3vw, 28px)',
           }}
         >
@@ -356,12 +358,12 @@ export default async function ArticlePage({
           >
             <div className="flex items-end justify-between mb-8">
               <div>
-                <p className="text-sm font-medium mb-1" style={{ color: 'var(--color-orange)' }}>
+                <p className="text-sm font-medium mb-1" style={{ color: 'var(--shu)' }}>
                   あわせて読みたい
                 </p>
                 <h2
-                  className="font-display font-bold"
-                  style={{ fontSize: 'var(--text-title)', color: 'var(--color-brown)' }}
+                  className="font-mincho"
+                  style={{ fontSize: 'var(--text-title)', color: 'var(--sumi)', fontWeight: 500 }}
                 >
                   関連記事
                 </h2>
@@ -369,7 +371,7 @@ export default async function ArticlePage({
               <a
                 href="/learn"
                 className="text-sm font-medium hover:opacity-70 transition-opacity hidden sm:block"
-                style={{ color: 'var(--color-orange)' }}
+                style={{ color: 'var(--shu)' }}
               >
                 すべて見る →
               </a>

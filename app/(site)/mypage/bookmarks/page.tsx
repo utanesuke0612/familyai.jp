@@ -52,11 +52,11 @@ function BookmarksInner() {
   };
 
   return (
-    <main style={{ background: 'var(--color-cream)' }}>
+    <main style={{ background: 'var(--washi)' }}>
       <header
         style={{
-          background:   'linear-gradient(160deg, var(--color-yellow) 0%, var(--color-cream) 100%)',
-          paddingBlock: 'clamp(16px, 2.5vw, 28px)',
+          background:   'var(--washi)',
+          paddingBlock: 'clamp(7px, 1vw, 12px)',
         }}
       >
         <div className="max-w-container mx-auto" style={{ paddingInline: 'var(--container-px)' }}>
@@ -66,9 +66,9 @@ function BookmarksInner() {
               className="inline-flex items-center rounded-full px-4"
               style={{
                 minHeight:  '44px',
-                background: 'rgba(255,255,255,0.9)',
-                color:      'var(--color-brown)',
-                boxShadow:  'var(--shadow-warm-sm)',
+                background: 'var(--washi-light)',
+                color:      'var(--sumi)',
+                border:     '1px solid var(--line)',
               }}
             >
               ← MyPage へ戻る
@@ -76,12 +76,12 @@ function BookmarksInner() {
           </nav>
 
           <h1
-            className="font-display font-bold leading-tight"
-            style={{ fontSize: 'clamp(22px, 4vw, 42px)', color: 'var(--color-brown)' }}
+            className="font-mincho leading-tight"
+            style={{ fontSize: 'clamp(22px, 4vw, 42px)', color: 'var(--sumi)', fontWeight: 500 }}
           >
             🔖 マイブックマーク
           </h1>
-          <p className="mt-2 text-sm" style={{ color: 'var(--color-brown-light)' }}>
+          <p className="mt-2 text-sm" style={{ color: 'var(--sumi-light)' }}>
             VOA レッスンで保存した単語とセンテンスをまとめて見直せます。
           </p>
 
@@ -90,7 +90,7 @@ function BookmarksInner() {
             role="tablist"
             aria-label="ブックマーク種別"
             className="mt-4 inline-flex rounded-full p-1"
-            style={{ background: 'rgba(255,255,255,0.7)', border: '1px solid var(--color-beige-dark)' }}
+            style={{ background: 'var(--washi-light)', border: '1px solid var(--line)' }}
           >
             <TabButton active={tab === 'words'}     label="📚 単語"     onClick={() => switchTab('words')} />
             <TabButton active={tab === 'sentences'} label="📜 センテンス" onClick={() => switchTab('sentences')} />
@@ -118,8 +118,8 @@ function TabButton({ active, label, onClick }: { active: boolean; label: string;
       className="rounded-full px-4 text-sm font-semibold transition-colors"
       style={{
         minHeight:  '40px',
-        background: active ? 'var(--color-orange)' : 'transparent',
-        color:      active ? '#fff'                : 'var(--color-brown)',
+        background: active ? 'var(--shu)' : 'transparent',
+        color:      active ? '#fff'        : 'var(--sumi)',
       }}
     >
       {label}
@@ -177,9 +177,9 @@ function WordsTab() {
           className="inline-flex items-center gap-2 rounded-full px-4 text-sm font-semibold"
           style={{
             minHeight:  '44px',
-            background: 'rgba(255,255,255,0.9)',
-            color:      'var(--color-brown)',
-            boxShadow:  'var(--shadow-warm-sm)',
+            background: 'var(--washi-light)',
+            color:      'var(--sumi)',
+            border:     '1px solid var(--line)',
           }}
         >
           📊 CSV
@@ -190,9 +190,9 @@ function WordsTab() {
           className="inline-flex items-center gap-2 rounded-full px-4 text-sm font-semibold"
           style={{
             minHeight:  '44px',
-            background: 'rgba(255,255,255,0.9)',
-            color:      'var(--color-brown)',
-            boxShadow:  'var(--shadow-warm-sm)',
+            background: 'var(--washi-light)',
+            color:      'var(--sumi)',
+            border:     '1px solid var(--line)',
           }}
         >
           📥 JSON
@@ -203,21 +203,21 @@ function WordsTab() {
         <section
           key={`${g.course}/${g.lesson}`}
           className="rounded-[24px] p-5 sm:p-6"
-          style={{ background: 'rgba(255,255,255,0.92)', boxShadow: 'var(--shadow-warm-sm)' }}
+          style={{ background: 'var(--washi-light)', border: '1px solid var(--line)' }}
         >
           <div className="flex flex-wrap items-center justify-between gap-3 mb-4">
             <div>
-              <h2 className="font-display text-lg font-bold" style={{ color: 'var(--color-brown)' }}>
+              <h2 className="font-mincho text-lg" style={{ color: 'var(--sumi)', fontWeight: 500 }}>
                 {g.course} / {g.lesson}
               </h2>
-              <p className="text-xs" style={{ color: 'var(--color-brown-light)' }}>
+              <p className="text-xs" style={{ color: 'var(--sumi-light)' }}>
                 {g.items.length} 語
               </p>
             </div>
             <Link
               href={`/tools/voaenglish/${g.course}/${g.lesson}`}
               className="text-sm font-semibold"
-              style={{ color: 'var(--color-orange)' }}
+              style={{ color: 'var(--shu)' }}
             >
               レッスンを開く →
             </Link>
@@ -228,18 +228,18 @@ function WordsTab() {
               <li
                 key={it.id}
                 className="flex flex-wrap items-start gap-3 rounded-2xl p-3"
-                style={{ background: 'var(--color-cream)', border: '1px solid var(--color-beige-dark)' }}
+                style={{ background: 'var(--washi)', border: '1px solid var(--line)' }}
               >
                 <div className="flex flex-col min-w-0 flex-1">
                   <div className="flex flex-wrap items-center gap-2">
-                    <span className="font-bold" style={{ color: 'var(--color-brown)' }}>{it.word}</span>
+                    <span className="font-bold" style={{ color: 'var(--sumi)' }}>{it.word}</span>
                     {it.pron && (
-                      <span className="text-xs" style={{ color: 'var(--color-brown-light)' }}>{it.pron}</span>
+                      <span className="text-xs" style={{ color: 'var(--sumi-light)' }}>{it.pron}</span>
                     )}
                   </div>
-                  <span className="text-sm mt-0.5" style={{ color: 'var(--color-brown)' }}>{it.meaning}</span>
+                  <span className="text-sm mt-0.5" style={{ color: 'var(--sumi)' }}>{it.meaning}</span>
                   {it.example && (
-                    <span className="text-xs italic mt-1" style={{ color: 'var(--color-brown-light)' }}>
+                    <span className="text-xs italic mt-1" style={{ color: 'var(--sumi-light)' }}>
                       例：{it.example}
                     </span>
                   )}
@@ -250,14 +250,14 @@ function WordsTab() {
                     onClick={() => speakEnglish(it.word)}
                     aria-label={`${it.word} を読み上げ`}
                     className="inline-flex items-center justify-center rounded-full"
-                    style={{ width: '36px', height: '36px', background: 'white', border: '1px solid var(--color-beige-dark)', fontSize: '16px' }}
+                    style={{ width: '36px', height: '36px', background: 'var(--washi-light)', border: '1px solid var(--line)', fontSize: '16px' }}
                   >🔊</button>
                   <button
                     type="button"
                     onClick={() => remove(it.id)}
                     aria-label="単語帳から外す"
                     className="inline-flex items-center justify-center rounded-full"
-                    style={{ width: '36px', height: '36px', background: 'var(--color-yellow)', border: '1px solid var(--color-orange)', fontSize: '14px' }}
+                    style={{ width: '36px', height: '36px', background: 'var(--shu-soft)', border: '1px solid var(--shu)', fontSize: '14px' }}
                   >★</button>
                 </div>
               </li>
@@ -313,11 +313,11 @@ function SentencesTab() {
       {!isLoggedIn && (
         <div
           className="rounded-2xl p-4 text-sm"
-          style={{ background: '#FFF8E1', border: '1px solid #FFD54F', color: '#7a5000' }}
+          style={{ background: 'var(--washi-deep)', border: '1px solid var(--line)', color: 'var(--sumi)' }}
         >
           ℹ️ 現在ゲストモードです。保存はこのデバイスのブラウザ内（localStorage）に
           のみ残ります。
-          <Link href="/auth/signin" className="font-semibold underline ml-1" style={{ color: 'var(--color-orange)' }}>
+          <Link href="/auth/signin" className="font-semibold underline ml-1" style={{ color: 'var(--shu)' }}>
             ログイン
           </Link>
           すればクラウドに同期されます。
@@ -331,9 +331,9 @@ function SentencesTab() {
           className="inline-flex items-center gap-2 rounded-full px-4 text-sm font-semibold"
           style={{
             minHeight:  '44px',
-            background: 'rgba(255,255,255,0.9)',
-            color:      'var(--color-brown)',
-            boxShadow:  'var(--shadow-warm-sm)',
+            background: 'var(--washi-light)',
+            color:      'var(--sumi)',
+            border:     '1px solid var(--line)',
           }}
         >
           📥 JSON
@@ -344,21 +344,21 @@ function SentencesTab() {
         <section
           key={`${g.course}/${g.lesson}`}
           className="rounded-[24px] p-5 sm:p-6"
-          style={{ background: 'rgba(255,255,255,0.92)', boxShadow: 'var(--shadow-warm-sm)' }}
+          style={{ background: 'var(--washi-light)', border: '1px solid var(--line)' }}
         >
           <div className="flex flex-wrap items-center justify-between gap-3 mb-4">
             <div>
-              <h2 className="font-display text-lg font-bold" style={{ color: 'var(--color-brown)' }}>
+              <h2 className="font-mincho text-lg" style={{ color: 'var(--sumi)', fontWeight: 500 }}>
                 {g.lessonTitle ?? `${g.course} / ${g.lesson}`}
               </h2>
-              <p className="text-xs" style={{ color: 'var(--color-brown-light)' }}>
+              <p className="text-xs" style={{ color: 'var(--sumi-light)' }}>
                 {g.items.length} 文
               </p>
             </div>
             <Link
               href={`/tools/voaenglish/${g.course}/${g.lesson}`}
               className="text-sm font-semibold"
-              style={{ color: 'var(--color-orange)' }}
+              style={{ color: 'var(--shu)' }}
             >
               レッスンを開く →
             </Link>
@@ -369,15 +369,15 @@ function SentencesTab() {
               <li
                 key={it.id}
                 className="flex items-start gap-3 rounded-2xl p-3"
-                style={{ background: 'var(--color-cream)', border: '1px solid var(--color-beige-dark)' }}
+                style={{ background: 'var(--washi)', border: '1px solid var(--line)' }}
               >
                 <div className="flex flex-col min-w-0 flex-1">
                   {it.speaker && (
-                    <span className="text-xs font-bold mb-0.5" style={{ color: '#2D78C8' }}>
+                    <span className="text-xs font-bold mb-0.5" style={{ color: 'var(--shu)' }}>
                       {it.speaker}
                     </span>
                   )}
-                  <p className="text-sm leading-relaxed" style={{ color: 'var(--color-brown)' }}>
+                  <p className="text-sm leading-relaxed" style={{ color: 'var(--sumi)' }}>
                     {it.textPlain}
                   </p>
                 </div>
@@ -390,8 +390,8 @@ function SentencesTab() {
                   style={{
                     width: '36px',
                     height: '36px',
-                    background: 'var(--color-yellow)',
-                    border:     '1px solid var(--color-orange)',
+                    background: 'var(--shu-soft)',
+                    border:     '1px solid var(--shu)',
                     fontSize:   '14px',
                   }}
                 >
@@ -413,27 +413,27 @@ function LoginWallForWords() {
   return (
     <div
       className="rounded-[28px] p-8 text-center"
-      style={{ background: 'rgba(255,255,255,0.88)', boxShadow: 'var(--shadow-warm-sm)' }}
+      style={{ background: 'var(--washi-light)', border: '1px solid var(--line)' }}
     >
-      <p className="text-5xl mb-4">⭐</p>
-      <h2 className="font-display font-bold text-xl mb-2" style={{ color: 'var(--color-brown)' }}>
+      {/* Rev40 Phase K: 装飾的な大型 ⭐ 絵文字を撤廃（Mingei 統一） */}
+      <h2 className="font-mincho text-xl mb-2" style={{ color: 'var(--sumi)', fontWeight: 500 }}>
         単語帳はログイン会員専用です
       </h2>
-      <p className="text-sm leading-relaxed mb-6" style={{ color: 'var(--color-brown-light)' }}>
+      <p className="text-sm leading-relaxed mb-6" style={{ color: 'var(--sumi-light)' }}>
         無料会員登録をすると、VOAレッスンで覚えた単語をクラウドに保存して、どのデバイスからでも復習できます。
       </p>
       <div className="flex gap-3 flex-wrap justify-center">
         <Link
           href="/auth/signin"
           className="inline-flex items-center rounded-full px-6 text-sm font-semibold"
-          style={{ minHeight: '44px', background: 'var(--color-orange)', color: 'white' }}
+          style={{ minHeight: '44px', background: 'var(--shu)', color: 'white' }}
         >
           🌱 ログイン / 登録
         </Link>
         <Link
           href="/mypage/bookmarks?tab=sentences"
           className="inline-flex items-center rounded-full px-6 text-sm font-semibold"
-          style={{ minHeight: '44px', background: 'white', color: 'var(--color-brown)', border: '1px solid var(--color-beige-dark)' }}
+          style={{ minHeight: '44px', background: 'var(--washi-light)', color: 'var(--sumi)', border: '1px solid var(--line)' }}
         >
           📜 センテンスタブを見る
         </Link>
@@ -454,14 +454,14 @@ function EmptyCard({
   return (
     <div
       className="rounded-[28px] p-6 sm:p-8 text-center"
-      style={{ background: 'rgba(255,255,255,0.88)', boxShadow: 'var(--shadow-warm-sm)' }}
+      style={{ background: 'var(--washi-light)', border: '1px solid var(--line)' }}
     >
-      <p className="text-base" style={{ color: 'var(--color-brown)' }}>{message}</p>
-      <p className="mt-2 text-sm" style={{ color: 'var(--color-brown-light)' }}>{hint}</p>
+      <p className="text-base" style={{ color: 'var(--sumi)' }}>{message}</p>
+      <p className="mt-2 text-sm" style={{ color: 'var(--sumi-light)' }}>{hint}</p>
       <Link
         href={cta.href}
         className="mt-5 inline-flex items-center rounded-full px-4 text-sm font-semibold"
-        style={{ minHeight: '44px', background: 'var(--color-orange)', color: 'white' }}
+        style={{ minHeight: '44px', background: 'var(--shu)', color: 'white' }}
       >
         {cta.label}
       </Link>

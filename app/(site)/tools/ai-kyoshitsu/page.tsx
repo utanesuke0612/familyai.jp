@@ -149,7 +149,7 @@ export default async function AiKyoshitsu3DPage({ searchParams }: PageProps) {
 
       {/* ── ギャラリー ── */}
       <section className="px-6 pb-12">
-        <div className="mx-auto max-w-6xl">
+        <div className="mx-auto max-w-5xl">
           <ModelGallery models={models} />
         </div>
       </section>
@@ -192,7 +192,7 @@ function chipStyle(active: boolean): React.CSSProperties {
     padding:        '8px 14px',
     borderRadius:   4,
     fontSize:       13,
-    fontFamily:     'var(--font-display), "Shippori Mincho", serif',
+    fontFamily:     'var(--font-mincho), "Shippori Mincho", serif',
     fontWeight:     500,
     letterSpacing:  '0.04em',
     textDecoration: 'none',
