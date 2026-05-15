@@ -184,7 +184,7 @@ export default async function ToolsPage({ searchParams }: ToolsPageProps) {
               const isReady = tool.status === '公開中';
               const Icon = tool.Icon;
               const card = (
-                <article className="box-ehon p-6 group">
+                <article className="box-ehon p-6 group transition-transform duration-200 hover:-translate-y-1">
                   {/* 通し番号 + ステータス */}
                   <div
                     className="flex items-baseline justify-between mb-4 pb-3"

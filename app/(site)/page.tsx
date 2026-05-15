@@ -75,7 +75,7 @@ function ToolsListSection() {
             const Icon = tool.Icon;
             return (
               <Link key={tool.href} href={tool.href} className="group block">
-                <article className="box-ehon p-6">
+                <article className="box-ehon p-6 transition-transform duration-200 hover:-translate-y-1">
 
                   {/* 通し番号 + ステータス */}
                   <div
