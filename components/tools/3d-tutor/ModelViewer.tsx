@@ -77,6 +77,15 @@ type Hit = {
   normal:   { x: number; y: number; z: number };
 };
 
+/** model-viewer 要素が公開している JS API 部分の型。 */
+type ModelViewerEl = HTMLElement & {
+  getCameraOrbit?: () => { theta: number; phi: number; radius: number };
+  getCameraTarget?: () => { x: number; y: number; z: number };
+  positionAndNormalFromPoint?: (x: number, y: number) => Hit | null;
+  materialFromPoint?: (x: number, y: number) => { name?: string; index?: number } | null;
+  canActivateAR?: boolean;
+};
+
 export interface ModelViewerProps {
   src:         string;                 // GLB URL
   iosSrc?:     string | null;          // USDZ URL（iOS AR 用・任意）
@@ -117,6 +126,87 @@ export function ModelViewer({
 
   const cycleBg = useCallback(() => {
     setBgIndex((i) => (i + 1) % BG_PRESETS.length);
+  }, []);
+
+  /**
+   * カメラを画面の左右上右に「パン」する（カメラターゲットを画面平面上で移動）。
+   * dx / dy は画面右(+) / 画面上(+) 方向の符号。
+   * 移動量 = ステップ係数 × 現在の radius（モデルのスケールに自動追従）。
+   */
+  const panBy = useCallback((dx: number, dy: number) => {
+    const el = viewerRef.current as ModelViewerEl | null;
+    if (!el?.getCameraOrbit || !el.getCameraTarget) return;
+
+    const orbit  = el.getCameraOrbit();
+    const target = el.getCameraTarget();
+    const step   = Math.max(orbit.radius * 0.15, 0.05);
+
+    // 画面の右ベクトル（ワールド XZ 平面上で theta に対し直交）
+    const rX = Math.cos(orbit.theta);
+    const rZ = -Math.sin(orbit.theta);
+    // 画面の上ベクトル（right × view）— phi が垂直角度
+    const uX = -Math.sin(orbit.theta) * Math.cos(orbit.phi);
+    const uY =  Math.sin(orbit.phi);
+    const uZ = -Math.cos(orbit.theta) * Math.cos(orbit.phi);
+
+    const nx = target.x + (dx * rX + dy * uX) * step;
+    const ny = target.y +                 dy * uY  * step;
+    const nz = target.z + (dx * rZ + dy * uZ) * step;
+    el.setAttribute('camera-target', `${nx}m ${ny}m ${nz}m`);
+  }, []);
+
+  /** カメラ位置を初期に戻す（パン / ズーム結果のリセット）。 */
+  const resetCamera = useCallback(() => {
+    const el = viewerRef.current;
+    if (!el) return;
+    el.setAttribute('camera-target', 'auto auto auto');
+    el.setAttribute('camera-orbit',  '0deg 75deg auto');
+  }, []);
+
+  /**
+   * Zoom-to-cursor: ホイール後にカーソル真下のワールド座標を保持するよう
+   * camera-target を補正する。
+   * - model-viewer のデフォルト zoom は radius のみ変える（target は変化なし）
+   * - 1 ティック後（rAF）に「ズーム前のカーソル下ワールド座標」と
+   *   「ズーム後のカーソル下ワールド座標」の差分だけ target をオフセット
+   * - これでカーソル位置のワールド点が画面上で動かない = 直感的なズーム
+   * - カーソルがモデル外なら補正をスキップ（中心ズームにフォールバック）
+   */
+  useEffect(() => {
+    const wrapper = wrapperRef.current;
+    if (!wrapper) return;
+
+    const onWheel = (e: WheelEvent) => {
+      const el = viewerRef.current as ModelViewerEl | null;
+      if (!el?.positionAndNormalFromPoint || !el.getCameraTarget) return;
+
+      const rect = el.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+
+      // ズーム前のカーソル下ワールド座標
+      const preHit = el.positionAndNormalFromPoint(x, y);
+      if (!preHit) return;  // モデルに当たっていない → 標準ズームのまま
+
+      // model-viewer のデフォルト zoom が radius を変えた後に補正
+      requestAnimationFrame(() => {
+        const postHit = el.positionAndNormalFromPoint?.(x, y);
+        if (!postHit) return;
+        const target = el.getCameraTarget?.();
+        if (!target) return;
+
+        const dx = preHit.position.x - postHit.position.x;
+        const dy = preHit.position.y - postHit.position.y;
+        const dz = preHit.position.z - postHit.position.z;
+        // 異常値（モデル裏側など）はスキップ
+        if (Math.abs(dx) > 1e3 || Math.abs(dy) > 1e3 || Math.abs(dz) > 1e3) return;
+
+        el.setAttribute('camera-target', `${target.x + dx}m ${target.y + dy}m ${target.z + dz}m`);
+      });
+    };
+
+    wrapper.addEventListener('wheel', onWheel, { passive: true });
+    return () => wrapper.removeEventListener('wheel', onWheel);
   }, []);
 
   // 1. Web Component を遅延ロード
@@ -472,6 +562,9 @@ export function ModelViewer({
         </div>
       )}
 
+      {/* パン用十字ボタン（左下） — 明示的な左右上下移動 + リセット */}
+      {!loadError && <PanControls panBy={panBy} resetCamera={resetCamera} />}
+
       <model-viewer
         key={retryKey}
         ref={(el: HTMLElement | null) => { viewerRef.current = el; }}
@@ -530,6 +623,57 @@ export function ModelViewer({
           </button>
         )}
       </model-viewer>
+    </div>
+  );
+}
+
+// ── パン用十字ボタン（左下に配置） ────────────────────────────
+function PanControls({
+  panBy,
+  resetCamera,
+}: {
+  panBy:       (dx: number, dy: number) => void;
+  resetCamera: () => void;
+}) {
+  const btnCommon: React.CSSProperties = {
+    width:          36,
+    height:         36,
+    display:        'inline-flex',
+    alignItems:     'center',
+    justifyContent: 'center',
+    background:     'rgba(255, 255, 255, 0.88)',
+    color:          'var(--sumi)',
+    border:         '1px solid var(--line)',
+    borderRadius:   4,
+    cursor:         'pointer',
+    fontSize:       14,
+    lineHeight:     1,
+    backdropFilter: 'blur(4px)',
+    WebkitBackdropFilter: 'blur(4px)',
+  };
+  return (
+    <div
+      style={{
+        position: 'absolute',
+        left:     12,
+        bottom:   12,
+        zIndex:   4,
+        display:  'grid',
+        gridTemplateColumns: 'repeat(3, 36px)',
+        gridTemplateRows:    'repeat(3, 36px)',
+        gap:      4,
+      }}
+      aria-label="3D ビューア パン操作"
+    >
+      <span />
+      <button type="button" onClick={() => panBy(0, +1)} title="上に移動" aria-label="上に移動" style={btnCommon}>▲</button>
+      <span />
+      <button type="button" onClick={() => panBy(-1, 0)} title="左に移動" aria-label="左に移動" style={btnCommon}>◀</button>
+      <button type="button" onClick={resetCamera} title="視点をリセット" aria-label="視点をリセット" style={btnCommon}>⟲</button>
+      <button type="button" onClick={() => panBy(+1, 0)} title="右に移動" aria-label="右に移動" style={btnCommon}>▶</button>
+      <span />
+      <button type="button" onClick={() => panBy(0, -1)} title="下に移動" aria-label="下に移動" style={btnCommon}>▼</button>
+      <span />
     </div>
   );
 }
