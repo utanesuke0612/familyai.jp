@@ -136,33 +136,6 @@ export default function VoaEnglishToolPage({ searchParams }: VoaEnglishToolPageP
         style={{ background: 'var(--washi)' }}
       >
         <div className="mx-auto flex max-w-5xl flex-col gap-5">
-          {/* Rev40 Phase I: Mingei 統一・パンくず風（矩形 4px + font-mincho・絵文字撤廃） */}
-          <div className="flex flex-wrap items-center gap-3 text-sm">
-            <Link
-              href="/tools"
-              className="font-mincho px-4 py-2 transition-colors hover:text-[var(--shu)] min-h-[44px] inline-flex items-center"
-              style={{
-                background:   'var(--washi-light)',
-                color:        'var(--sumi)',
-                border:       '1px solid var(--line)',
-                borderRadius: '4px',
-              }}
-            >
-              ← AIツール一覧へ戻る
-            </Link>
-            <span
-              className="font-mincho px-4 py-2 inline-flex items-center"
-              style={{
-                background:   'var(--washi-deep)',
-                color:        'var(--sumi)',
-                border:       '1px solid var(--line)',
-                borderRadius: '4px',
-              }}
-            >
-              学習・教育
-            </span>
-          </div>
-
           <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_220px] lg:items-start">
             <div className="flex flex-col gap-4">
               <h1
