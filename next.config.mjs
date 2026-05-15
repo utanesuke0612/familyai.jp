@@ -1,17 +1,21 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // Rev38 cleanup: 旧 AI 生成アニメ API（/api/generate-animation,
-  // /api/animations）は Rev36 で 3D 図鑑に全面リプレイス済みのため、
-  // outputFileTracingIncludes / iframe 許可ヘッダーをまとめて削除した。
-  // 3D アセットの iframe 表示要件が出てきた場合は
-  // /api/3d-models/assets/:path* に対して明示的にヘッダーを追加する。
-
   // ── セキュリティヘッダー ──────────────────────────────────
   async headers() {
     return [
       {
-        // 全ページ・API で iframe 埋め込みを禁止（clickjacking 対策）
-        source: '/:path*',
+        // 太陽系 HTML デモは /tools/ai-kyoshitsu/solar-system 内の iframe で表示する。
+        // 外部サイトからの埋め込みは防ぎ、同一オリジンだけ許可する。
+        source: '/3d/solar/:path*',
+        headers: [
+          { key: 'X-Frame-Options',        value: 'SAMEORIGIN' },
+          { key: 'X-Content-Type-Options', value: 'nosniff' },
+          { key: 'Referrer-Policy',        value: 'strict-origin-when-cross-origin' },
+        ],
+      },
+      {
+        // その他すべてのページ・API で iframe 埋め込みを禁止（clickjacking 対策）
+        source: '/((?!3d/solar).*)',
         headers: [
           { key: 'X-Frame-Options',        value: 'DENY' },
           { key: 'X-Content-Type-Options', value: 'nosniff' },

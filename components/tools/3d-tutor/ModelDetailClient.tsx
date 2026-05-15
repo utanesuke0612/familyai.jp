@@ -20,6 +20,41 @@ export interface ModelDetailClientProps {
 export function ModelDetailClient({ model }: ModelDetailClientProps) {
   const [activeHotspot, setActiveHotspot] = useState<Tutor3dHotspot | null>(null);
 
+  if (model.slug === 'solar-system') {
+    return (
+      <div>
+        <iframe
+          title={model.title}
+          src="/3d/solar/index.html"
+          style={{
+            width: '100%',
+            height: 'min(72vh, 760px)',
+            minHeight: 520,
+            border: 'none',
+            borderRadius: 16,
+            background: '#050914',
+            boxShadow: 'inset 0 0 0 1px rgba(0,0,0,0.08)',
+          }}
+        />
+
+        <p
+          style={{
+            margin: '16px 0 0',
+            padding: '12px 14px',
+            background: 'var(--washi-deep)',
+            border: '1px solid var(--line)',
+            borderRadius: 4,
+            fontSize: 13,
+            color: 'var(--sumi)',
+            lineHeight: 1.6,
+          }}
+        >
+          太陽系をドラッグで回転、ホイールやピンチで拡大・縮小できます。画面内のボタンでラベル、軌道、速度を調整できます。
+        </p>
+      </div>
+    );
+  }
+
   return (
     <div className="grid grid-cols-1 lg:grid-cols-[1fr_340px] gap-6 items-start">
       {/* ── 左：3D ビューア + ガイド ── */}

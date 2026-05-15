@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Interactive Textured Solar System</title>
+    <link rel="icon" href="data:," />
+    <link rel="stylesheet" href="./src/styles.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <section class="viewport" aria-label="3D textured solar system">
+        <canvas id="scene" aria-label="Interactive 3D solar system"></canvas>
+        <div id="labels" class="labels" aria-hidden="true"></div>
+        <div class="hud">
+          <div>
+            <h1>太陽系 3D 教育モデル</h1>
+            <p>ドラッグで回転、ホイールで拡大縮小できます。惑星名は日本語で表示され、表面テクスチャをリアルタイムに描画します。</p>
+          </div>
+          <div class="controls" aria-label="solar system controls">
+            <button id="toggleMotion" type="button">一時停止</button>
+            <button id="toggleLabels" type="button">ラベル</button>
+            <button id="toggleOrbits" type="button">軌道</button>
+            <label class="speed-control">
+              <span>速度</span>
+              <input id="speed" type="range" min="0" max="4" value="1.2" step="0.1" />
+            </label>
+            <button id="resetView" type="button">視点をリセット</button>
+          </div>
+        </div>
+        <aside class="info-panel">
+          <span id="selectedName">地球</span>
+          <p id="selectedCopy">青い海、緑の陸地、雲のテクスチャにより、生命を育む惑星の基本的な特徴を説明しやすくしています。</p>
+        </aside>
+      </section>
+    </main>
+    <script type="module" src="./src/main.js"></script>
+  </body>
+</html>
