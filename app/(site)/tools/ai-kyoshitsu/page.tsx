@@ -72,7 +72,7 @@ export default async function AiKyoshitsu3DPage({ searchParams }: PageProps) {
         className="px-6 py-8 sm:py-10"
         style={{ background: 'var(--washi)' }}
       >
-        <div className="max-w-6xl mx-auto">
+        <div className="max-w-5xl mx-auto">
           {/* パンくず */}
           <nav
             className="flex items-center gap-2 text-xs flex-wrap mb-4"
@@ -95,47 +95,54 @@ export default async function AiKyoshitsu3DPage({ searchParams }: PageProps) {
             </span>
           </nav>
 
-          <div className="flex flex-col gap-3">
-            <h1
-              className="font-mincho leading-tight"
-              style={{ fontSize: 'clamp(30px, 5vw, 54px)', fontWeight: 500, color: 'var(--sumi)' }}
-            >
-              うごく<span style={{ color: 'var(--shu)' }}>AI</span>教室・3D 図鑑
-            </h1>
-            <p
-              className="max-w-2xl text-base leading-relaxed sm:text-lg"
-              style={{ color: 'var(--sumi)' }}
-            >
-              理科を 3D で観察。あいちゃんと一緒に発見しよう。
-            </p>
-            <p
-              className="max-w-2xl text-base leading-relaxed sm:text-lg"
-              style={{ color: 'var(--sumi-light)' }}
-            >
-              回したり・拡大したり・AR でリビングに置いたり。
-              気になる場所をタップすると、AI が詳しく教えてくれます。
-            </p>
-          </div>
-        </div>
-      </section>
+          <div className="grid gap-6 lg:grid-cols-[minmax(0,1.4fr)_minmax(280px,0.8fr)] lg:items-start">
+            {/* 左カラム: タイトル + 説明（/tools と同位置） */}
+            <div className="flex flex-col gap-3">
+              <h1
+                className="font-mincho leading-tight"
+                style={{ fontSize: 'clamp(30px, 5vw, 54px)', fontWeight: 500, color: 'var(--sumi)' }}
+              >
+                うごく<span style={{ color: 'var(--shu)' }}>AI</span>教室・3D 図鑑
+              </h1>
+              <p
+                className="max-w-2xl text-base leading-relaxed sm:text-lg"
+                style={{ color: 'var(--sumi)' }}
+              >
+                理科を 3D で観察。あいちゃんと一緒に発見しよう。
+              </p>
+              <p
+                className="max-w-2xl text-base leading-relaxed sm:text-lg"
+                style={{ color: 'var(--sumi-light)' }}
+              >
+                回したり・拡大したり・AR でリビングに置いたり。
+                気になる場所をタップすると、AI が詳しく教えてくれます。
+              </p>
+            </div>
 
-      {/* ── 絞り込み（サブカテゴリのみ・学年は Phase 2 で再検討） ── */}
-      <section className="px-6 py-6">
-        <div className="mx-auto max-w-6xl">
-          <h2 style={filterLabelStyle}>
-            <span className="ornament" aria-hidden="true">⁂</span>
-            <span style={{ margin: '0 8px' }}>ジャンルでえらぶ</span>
-            <span className="ornament" aria-hidden="true">⁂</span>
-          </h2>
-          <div style={chipRowStyle}>
-            <Link href={`/tools/ai-kyoshitsu${buildQuery({ subject: undefined })}`} style={chipStyle(!subject)}>
-              すべて
-            </Link>
-            {TUTOR3D_SUBJECTS.map((s) => (
-              <Link key={s} href={`/tools/ai-kyoshitsu${buildQuery({ subject: s })}`} style={chipStyle(subject === s)}>
-                {TUTOR3D_SUBJECT_LABEL[s]}
-              </Link>
-            ))}
+            {/* 右カラム: ジャンルフィルター（/tools のカテゴリピッカーと同位置） */}
+            <div
+              className="box-ehon p-5 sm:p-6 flex flex-col gap-4"
+              style={{ background: 'rgba(255,255,255,0.82)' }}
+            >
+              <p
+                className="font-mincho text-sm tracking-wide"
+                style={{ color: 'var(--sumi)' }}
+              >
+                <span className="ornament" aria-hidden="true">⁂</span>
+                <span className="mx-2">ジャンルでえらぶ</span>
+                <span className="ornament" aria-hidden="true">⁂</span>
+              </p>
+              <div style={chipRowStyle}>
+                <Link href={`/tools/ai-kyoshitsu${buildQuery({ subject: undefined })}`} style={chipStyle(!subject)}>
+                  すべて
+                </Link>
+                {TUTOR3D_SUBJECTS.map((s) => (
+                  <Link key={s} href={`/tools/ai-kyoshitsu${buildQuery({ subject: s })}`} style={chipStyle(subject === s)}>
+                    {TUTOR3D_SUBJECT_LABEL[s]}
+                  </Link>
+                ))}
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -171,14 +178,8 @@ export default async function AiKyoshitsu3DPage({ searchParams }: PageProps) {
 }
 
 // ── スタイル（Rev40 Phase I: Mingei 統一）────────────────────
-const filterLabelStyle: React.CSSProperties = {
-  margin:        '0 0 12px',
-  fontSize:      14,
-  fontFamily:    'var(--font-display), "Shippori Mincho", serif',
-  fontWeight:    500,
-  letterSpacing: '0.04em',
-  color:         'var(--sumi)',
-};
+// Rev40: filterLabelStyle はヘッダー右カラム統合で不要になり撤去
+// （ジャンルでえらぶラベルは inline className に変更）
 
 const chipRowStyle: React.CSSProperties = {
   display:  'flex',
