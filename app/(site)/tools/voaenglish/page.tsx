@@ -136,6 +136,28 @@ export default function VoaEnglishToolPage({ searchParams }: VoaEnglishToolPageP
         style={{ background: 'var(--washi)' }}
       >
         <div className="mx-auto flex max-w-5xl flex-col gap-5">
+          {/* パンくず */}
+          <nav
+            className="flex items-center gap-2 text-xs flex-wrap"
+            aria-label="パンくずリスト"
+          >
+            <a href="/" className="inline-flex items-center hover:opacity-70 transition-opacity" style={{ color: 'var(--sumi-light)' }}>
+              ホーム
+            </a>
+            <span style={{ color: 'var(--sumi-light)' }} aria-hidden="true">/</span>
+            <a href="/tools" className="inline-flex items-center hover:opacity-70 transition-opacity" style={{ color: 'var(--sumi-light)' }}>
+              ツール
+            </a>
+            <span style={{ color: 'var(--sumi-light)' }} aria-hidden="true">/</span>
+            <span
+              className="truncate"
+              style={{ color: 'var(--shu)', maxWidth: '240px' }}
+              aria-current="page"
+            >
+              VOA × AI ディクテーション教室
+            </span>
+          </nav>
+
           <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_220px] lg:items-start">
             <div className="flex flex-col gap-3">
               <h1
