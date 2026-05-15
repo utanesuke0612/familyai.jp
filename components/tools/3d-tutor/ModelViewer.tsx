@@ -89,11 +89,15 @@ export function ModelViewer({
   className,
   heightCss,
 }: ModelViewerProps) {
-  const viewerRef = useRef<HTMLElement | null>(null);
+  const viewerRef  = useRef<HTMLElement | null>(null);
+  const wrapperRef = useRef<HTMLDivElement | null>(null);
   const [ready,    setReady]    = useState(false);
   const [arAvail,  setArAvail]  = useState(false);
   const [loadError, setLoadError] = useState<string | null>(null);
   const [retryKey, setRetryKey] = useState(0);  // src 再読み込みトリガー
+  const [isFullscreen, setIsFullscreen] = useState(false);
+  // CSS 擬似フルスクリーン (Fullscreen API 非対応端末の fallback。主に古い iOS 等)
+  const [cssFullscreen, setCssFullscreen] = useState(false);
 
   // 1. Web Component を遅延ロード
   useEffect(() => {
@@ -103,6 +107,73 @@ export function ModelViewer({
     });
     return () => { active = false; };
   }, []);
+
+  // 2-bis. Fullscreen API の状態を監視
+  //   - ESC や OS UI で退出した場合も isFullscreen を同期する
+  //   - webkit prefix（Safari）にも対応
+  useEffect(() => {
+    type ExtDoc = Document & { webkitFullscreenElement?: Element };
+    const docExt = document as ExtDoc;
+    const onChange = () => {
+      const active = !!(docExt.fullscreenElement || docExt.webkitFullscreenElement);
+      setIsFullscreen(active);
+      // 真の Fullscreen 復帰時は CSS 擬似モードも解除
+      if (active) setCssFullscreen(false);
+    };
+    document.addEventListener('fullscreenchange', onChange);
+    document.addEventListener('webkitfullscreenchange', onChange);
+    return () => {
+      document.removeEventListener('fullscreenchange', onChange);
+      document.removeEventListener('webkitfullscreenchange', onChange);
+    };
+  }, []);
+
+  // 2-ter. CSS 擬似フルスクリーン中の ESC で退出可能にする
+  useEffect(() => {
+    if (!cssFullscreen) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setCssFullscreen(false);
+    };
+    document.addEventListener('keydown', onKey);
+    return () => document.removeEventListener('keydown', onKey);
+  }, [cssFullscreen]);
+
+  // フルスクリーン切り替え（真の Fullscreen API 優先・失敗時は CSS 擬似モードへ）
+  const toggleFullscreen = useCallback(async () => {
+    const el = wrapperRef.current;
+    if (!el) return;
+    type ExtEl = HTMLDivElement & { webkitRequestFullscreen?: () => Promise<void> };
+    type ExtDoc = Document & {
+      webkitFullscreenElement?: Element;
+      webkitExitFullscreen?: () => Promise<void>;
+    };
+    const elExt  = el as ExtEl;
+    const docExt = document as ExtDoc;
+
+    const inRealFs = !!(docExt.fullscreenElement || docExt.webkitFullscreenElement);
+
+    // 退出
+    if (inRealFs) {
+      try {
+        if (docExt.exitFullscreen)              await docExt.exitFullscreen();
+        else if (docExt.webkitExitFullscreen)   await docExt.webkitExitFullscreen();
+      } catch { /* ignore */ }
+      return;
+    }
+    if (cssFullscreen) {
+      setCssFullscreen(false);
+      return;
+    }
+
+    // 入場: 真の Fullscreen API を試す
+    try {
+      if (elExt.requestFullscreen)             { await elExt.requestFullscreen(); return; }
+      if (elExt.webkitRequestFullscreen)       { await elExt.webkitRequestFullscreen(); return; }
+    } catch { /* 権限拒否等は CSS fallback へ落とす */ }
+
+    // フォールバック: CSS 擬似フルスクリーン
+    setCssFullscreen(true);
+  }, [cssFullscreen]);
 
   // 2. AR 利用可否 + ロードエラー監視
   //    Codex Q1-9 対応: GLB 取得失敗時の UI を追加
@@ -210,20 +281,38 @@ export function ModelViewer({
     );
   }
 
+  // フルスクリーン中（真 or CSS 擬似）はビューポート一杯にする
+  const isAnyFullscreen = isFullscreen || cssFullscreen;
+  const wrapperStyle: React.CSSProperties = isAnyFullscreen
+    ? {
+        position:   cssFullscreen ? 'fixed' : 'relative',
+        ...(cssFullscreen ? { inset: 0, zIndex: 9999 } : null),
+        width:      '100%',
+        height:     '100%',
+        minHeight:  cssFullscreen ? '100vh' : 0,
+        borderRadius: 0,
+        overflow:   'hidden',
+        background: 'var(--washi-deep)',
+        border:     'none',
+        cursor:     hotspots.length > 0 && !loadError ? 'pointer' : 'default',
+      }
+    : {
+        position:   'relative',
+        width:      '100%',
+        height:     heightCss ?? '60vh',
+        minHeight:  360,
+        borderRadius: 4,
+        overflow:   'hidden',
+        background: 'var(--washi-deep)',
+        border:     '1px solid var(--line)',
+        cursor:     hotspots.length > 0 && !loadError ? 'pointer' : 'default',
+      };
+
   return (
     <div
+      ref={wrapperRef}
       className={className}
-      style={{
-        position: 'relative',
-        width: '100%',
-        height: heightCss ?? '60vh',
-        minHeight: 360,
-        borderRadius: 4,
-        overflow: 'hidden',
-        background: 'var(--washi-deep)',
-        border: '1px solid var(--line)',
-        cursor: hotspots.length > 0 && !loadError ? 'pointer' : 'default',
-      }}
+      style={wrapperStyle}
     >
       {/* ── 読み込みエラー UI（Codex Q1-9 対応）── */}
       {loadError && (
@@ -278,6 +367,48 @@ export function ModelViewer({
           </button>
         </div>
       )}
+      {/* フルスクリーン切替ボタン（右上・<model-viewer> の外側 = light DOM ではなく通常子要素） */}
+      {!loadError && (
+        <button
+          type="button"
+          onClick={toggleFullscreen}
+          aria-label={isAnyFullscreen ? 'フルスクリーンを終了' : 'フルスクリーンで表示'}
+          title={isAnyFullscreen ? 'フルスクリーンを終了 (Esc)' : 'フルスクリーンで表示'}
+          style={{
+            position:       'absolute',
+            top:            12,
+            right:          12,
+            width:          40,
+            height:         40,
+            display:        'inline-flex',
+            alignItems:     'center',
+            justifyContent: 'center',
+            background:     'rgba(255, 255, 255, 0.88)',
+            color:          'var(--sumi)',
+            border:         '1px solid var(--line)',
+            borderRadius:   4,
+            cursor:         'pointer',
+            zIndex:         4,
+            backdropFilter: 'blur(4px)',
+            WebkitBackdropFilter: 'blur(4px)',
+          }}
+        >
+          {isAnyFullscreen ? (
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
+                 stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round"
+                 aria-hidden="true">
+              <path d="M9 3v3a2 2 0 0 1-2 2H4M15 3v3a2 2 0 0 0 2 2h3M15 21v-3a2 2 0 0 1 2-2h3M9 21v-3a2 2 0 0 0-2-2H4" />
+            </svg>
+          ) : (
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
+                 stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round"
+                 aria-hidden="true">
+              <path d="M3 9V5a2 2 0 0 1 2-2h4M21 9V5a2 2 0 0 0-2-2h-4M21 15v4a2 2 0 0 1-2 2h-4M3 15v4a2 2 0 0 0 2 2h4" />
+            </svg>
+          )}
+        </button>
+      )}
+
       <model-viewer
         key={retryKey}
         ref={(el: HTMLElement | null) => { viewerRef.current = el; }}
