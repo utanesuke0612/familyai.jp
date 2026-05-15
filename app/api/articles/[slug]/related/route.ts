@@ -66,9 +66,11 @@ export async function GET(
       );
     }
 
+    // Rev40 (Deepening #3): getArticle が DTO を返すため categories は ContentCategory[] 確定
+    // getRelatedArticles は row を返したまま（list 系ページで body が必要なため未統合）
     const rows = await getRelatedArticles(
       params.slug,
-      article.categories ?? [],
+      article.categories,
       parsed.data.limit,
     );
     const data = rows.map(toArticleSummary);

@@ -14,6 +14,8 @@
 import { and, ne, or, asc, desc, eq, sql, count, ilike } from 'drizzle-orm';
 import { db, articles } from '@/lib/db';
 import type { Article, NewArticle } from '@/lib/db/schema';
+import type { Article as ArticleDto, ArticleSummary } from '@/shared/types';
+import { toArticleDetail, toArticleSummary } from '@/lib/mappers/articles';
 import { logger } from '@/lib/log';
 
 // ─── 共通型 ───────────────────────────────────────────────────
@@ -53,15 +55,19 @@ export interface ArticleListResult {
 /**
  * スラッグから公開済み記事を1件取得する。
  * 記事が存在しない・非公開・DB エラー時は null を返す。
+ *
+ * Rev40 (Deepening #3): mapper を内部に内包し、DTO (Article) を返す。
+ * 旧版は ArticleRow を返していたため caller 側で `toArticleDetail()` が必要だった。
  */
-export async function getArticle(slug: string): Promise<ArticleRow | null> {
+export async function getArticle(slug: string): Promise<ArticleDto | null> {
   try {
     const rows = await db
       .select()
       .from(articles)
       .where(and(eq(articles.slug, slug), eq(articles.published, true)))
       .limit(1);
-    return rows[0] ?? null;
+    const row = rows[0];
+    return row ? toArticleDetail(row) : null;
   } catch {
     return null;
   }
@@ -204,11 +210,12 @@ export async function getArticleList(
 
 /**
  * 公開済み記事を新着順で取得する（トップページ新着セクション用）。
- * description が null の場合は空文字列に変換して返す。
+ *
+ * Rev40 (Deepening #3): mapper を内部に内包し、DTO (ArticleSummary[]) を返す。
+ * 旧版は ArticleRow に独自フィールド付与した中間型を返していたが、
+ * caller (API route) はすぐに toArticleSummary でラップしていたため統合した。
  */
-export async function getLatestArticles(limit = 6): Promise<
-  (Omit<ArticleRow, 'description'> & { description: string })[]
-> {
+export async function getLatestArticles(limit = 6): Promise<ArticleSummary[]> {
   try {
     const rows = await db
       .select()
@@ -217,10 +224,7 @@ export async function getLatestArticles(limit = 6): Promise<
       .orderBy(desc(articles.publishedAt))
       .limit(limit);
 
-    return rows.map((row) => ({
-      ...row,
-      description: row.description ?? '',
-    }));
+    return rows.map(toArticleSummary);
   } catch (err) {
     logger.error('articles.getLatestArticles', { error: err instanceof Error ? err.message : String(err) });
     return [];

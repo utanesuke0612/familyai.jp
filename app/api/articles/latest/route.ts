@@ -19,7 +19,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { z }                         from 'zod';
 import { getLatestArticles }         from '@/lib/repositories/articles';
-import { toArticleSummary }          from '@/lib/mappers/articles';
 import { withRequest }               from '@/lib/log';
 
 export const runtime = 'nodejs';
@@ -50,8 +49,8 @@ export async function GET(req: NextRequest) {
       );
     }
 
-    const rows = await getLatestArticles(parsed.data.limit);
-    const data = rows.map(toArticleSummary);
+    // Rev40 (Deepening #3): getLatestArticles が DTO を返すようになったため mapper 不要
+    const data = await getLatestArticles(parsed.data.limit);
 
     const res = NextResponse.json({ ok: true, data });
     // CDN 60秒キャッシュ + 10分 stale-while-revalidate
