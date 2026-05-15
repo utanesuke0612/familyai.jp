@@ -5,13 +5,16 @@
  * GET    /api/admin/ai-config  — 現在の有効値（DB+env+DEFAULTS マージ後）
  * PUT    /api/admin/ai-config  — 設定を保存（partial 値）
  * DELETE /api/admin/ai-config  — 設定をリセット（DEFAULTS に戻す）
+ *
+ * Architecture Deepening #1: ガードを protectAdminRoute に集約。
+ * 既存クライアント (AiConfigForm.tsx) は json.error を文字列で読むため aiConfigErrorBuilder を使う。
+ * 既存仕様 (PUT/DELETE は rate-limit を持たない) を保つため rateLimit: false を明示。
  */
 
 import { NextRequest, NextResponse } from 'next/server';
 import { z } from 'zod';
 import { auth } from '@/lib/auth';
-import { isAdmin } from '@/lib/admin-auth';
-import { verifyCsrf } from '@/lib/csrf';
+import { protectAdminRoute, aiConfigErrorBuilder } from '@/lib/api/admin-guard';
 import {
   getAiConfigFromDb,
   saveAiConfig,
@@ -40,14 +43,7 @@ const aiConfigPartialSchema = z.object({
 });
 
 // ── GET: 現在の有効値（マージ後）と DB 上の partial 値を返す ───
-export async function GET() {
-  if (!(await isAdmin())) {
-    return NextResponse.json(
-      { ok: false, error: '管理者権限が必要です。' },
-      { status: 403 },
-    );
-  }
-
+export const GET = protectAdminRoute(async () => {
   try {
     const [effective, dbPartial] = await Promise.all([
       getAiChatConfig(),     // DEFAULTS + DB + env マージ後の有効値
@@ -61,17 +57,11 @@ export async function GET() {
       { status: 500 },
     );
   }
-}
+}, { errorBuilder: aiConfigErrorBuilder });
 
 // ── PUT: 設定を保存 ───────────────────────────────────────────
-export async function PUT(req: NextRequest) {
+export const PUT = protectAdminRoute(async (req: NextRequest) => {
   const log = withRequest(req, '/api/admin/ai-config');
-  if (!verifyCsrf(req)) {
-    return NextResponse.json({ ok: false, error: '不正なリクエストです。' }, { status: 403 });
-  }
-  if (!(await isAdmin())) {
-    return NextResponse.json({ ok: false, error: '管理者権限が必要です。' }, { status: 403 });
-  }
 
   let body: unknown;
   try { body = await req.json(); }
@@ -100,17 +90,11 @@ export async function PUT(req: NextRequest) {
       { status: 500 },
     );
   }
-}
+}, { errorBuilder: aiConfigErrorBuilder, rateLimit: false });
 
 // ── DELETE: 設定をリセット ────────────────────────────────────
-export async function DELETE(req: NextRequest) {
+export const DELETE = protectAdminRoute(async (req: NextRequest) => {
   const log = withRequest(req, '/api/admin/ai-config');
-  if (!verifyCsrf(req)) {
-    return NextResponse.json({ ok: false, error: '不正なリクエストです。' }, { status: 403 });
-  }
-  if (!(await isAdmin())) {
-    return NextResponse.json({ ok: false, error: '管理者権限が必要です。' }, { status: 403 });
-  }
 
   const session   = await auth();
   const adminMail = session?.user?.email ?? 'unknown';
@@ -126,4 +110,4 @@ export async function DELETE(req: NextRequest) {
       { status: 500 },
     );
   }
-}
+}, { errorBuilder: aiConfigErrorBuilder, rateLimit: false });

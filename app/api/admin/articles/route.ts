@@ -2,21 +2,20 @@
  * app/api/admin/articles/route.ts
  * GET  /api/admin/articles  — 全記事一覧（管理者専用）
  * POST /api/admin/articles  — 記事新規作成（管理者専用）
+ *
+ * Architecture Deepening #1: ガード三和音を protectAdminRoute に集約。
+ * 既存クライアント (components/admin/ArticleForm.tsx) が `json.error` を文字列で
+ * 読むため legacyErrorBuilder を継続使用。
  */
 
 import { NextRequest, NextResponse } from 'next/server';
-import { requireAdmin }              from '@/lib/admin-auth';
-import { verifyCsrf }                from '@/lib/csrf';
-import { enforceAdminRateLimit }     from '@/lib/ratelimit';
+import { protectAdminRoute, legacyErrorBuilder } from '@/lib/api/admin-guard';
 import { listAllArticles, createArticle } from '@/lib/repositories/articles';
 import { createArticleSchema, adminArticlesQuerySchema } from '@/lib/schemas/articles';
 import { withRequest } from '@/lib/log';
 
 // ─── GET: 全記事一覧 ──────────────────────────────────────────
-export async function GET(req: NextRequest) {
-  const check = await requireAdmin();
-  if (!check.ok) return check.response;
-
+export const GET = protectAdminRoute(async (req: NextRequest) => {
   const { searchParams } = req.nextUrl;
   const parsedQuery = adminArticlesQuerySchema.safeParse({
     search:   searchParams.get('search')   ?? undefined,
@@ -46,22 +45,11 @@ export async function GET(req: NextRequest) {
       },
     },
   });
-}
+}, { errorBuilder: legacyErrorBuilder });
 
 // ─── POST: 記事新規作成 ───────────────────────────────────────
-export async function POST(req: NextRequest) {
+export const POST = protectAdminRoute(async (req: NextRequest) => {
   const log = withRequest(req, '/api/admin/articles');
-  // CSRF 防御（Origin チェック）
-  if (!verifyCsrf(req)) {
-    return NextResponse.json({ error: 'CSRF check failed' }, { status: 403 });
-  }
-
-  const check = await requireAdmin();
-  if (!check.ok) return check.response;
-
-  // レート制限（Rev23 #5・10req/min・侵害アカウントの Blob コスト爆発対策）
-  const rl = await enforceAdminRateLimit(req, 'admin');
-  if (rl) return rl;
 
   let body: unknown;
   try {
@@ -106,4 +94,4 @@ export async function POST(req: NextRequest) {
     log.error('admin.articles.post', { error: err instanceof Error ? err.message : String(err) });
     return NextResponse.json({ error: 'サーバーエラーが発生しました' }, { status: 500 });
   }
-}
+}, { errorBuilder: legacyErrorBuilder });
