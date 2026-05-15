@@ -246,11 +246,14 @@ export default async function LearnPage({ searchParams }: LearnPageProps) {
   return (
     <>
       {/* ── ページヘッダー ── */}
+      {/* Rev40: max-width を /tools と同じ max-w-5xl (1024px) に統一。
+          旧 max-w-container (1140px) → 1024px に変更し、タイトル/カテゴリピッカー/
+          記事グリッドの 3 セクションすべてを /tools と同じ幅に揃える。 */}
       <section
         className="px-6 py-8 sm:py-10"
         style={{ background: 'var(--washi)' }}
       >
-        <div className="max-w-container mx-auto">
+        <div className="max-w-5xl mx-auto">
           <div className="grid gap-6 lg:grid-cols-[minmax(0,1.4fr)_minmax(280px,0.8fr)] lg:items-start">
 
             {/* 左カラム: タイトル + 説明 */}
@@ -301,7 +304,7 @@ export default async function LearnPage({ searchParams }: LearnPageProps) {
         }}
       >
         <div
-          className="max-w-container mx-auto flex flex-col sm:flex-row sm:flex-wrap sm:items-center gap-4 sm:gap-6"
+          className="max-w-5xl mx-auto flex flex-col sm:flex-row sm:flex-wrap sm:items-center gap-4 sm:gap-6"
           style={{ paddingInline: 'var(--container-px)' }}
         >
           {/* 検索バー（Rev26 #2）*/}
@@ -330,7 +333,7 @@ export default async function LearnPage({ searchParams }: LearnPageProps) {
         }}
       >
         <div
-          className="max-w-container mx-auto"
+          className="max-w-5xl mx-auto"
           style={{ paddingInline: 'var(--container-px)' }}
         >
           {/* 件数表示 */}
