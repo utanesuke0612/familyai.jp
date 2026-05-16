@@ -19,6 +19,7 @@
 
 import { useState, useRef, useEffect, useCallback } from 'react';
 import type { Tutor3dHotspot, Tutor3dModel } from '@/shared';
+import { MarkdownContent } from '@/components/ui/MarkdownContent';
 
 interface Message {
   id:        string;
@@ -393,7 +394,7 @@ export function HotspotPanel({ model, hotspot, onClose }: HotspotPanelProps) {
   );
 }
 
-// ── チャットバブル（AIChatWidget の ChatBubble 簡易版） ──
+// ── チャットバブル（AIChatWidget の ChatBubble と同等・Markdown レンダリング対応）──
 function ChatBubble({ message }: { message: Message }) {
   const isUser = message.role === 'user';
   return (
@@ -416,17 +417,31 @@ function ChatBubble({ message }: { message: Message }) {
             background:   isUser ? 'var(--shu)' : 'var(--washi-deep)',
             color:        isUser ? 'white' : 'var(--sumi)',
             borderRadius: '4px',
-            whiteSpace:   'pre-wrap',
             lineHeight:   1.75,
           }}
         >
-          {message.content || (message.streaming ? '' : '…')}
-          {message.streaming && (
-            <span
-              className="inline-block w-0.5 h-4 ml-0.5 align-middle"
-              style={{ background: 'var(--sumi-light)', animation: 'blink 0.8s step-end infinite' }}
-              aria-hidden="true"
-            />
+          {isUser ? (
+            // ユーザー発言: プレーンテキスト
+            <span style={{ whiteSpace: 'pre-wrap' }}>
+              {message.content || (message.streaming ? '' : '…')}
+            </span>
+          ) : message.streaming ? (
+            // ストリーミング中: プレーンテキスト + 点滅カーソル (Markdown は完了後に差し替え)
+            <span style={{ whiteSpace: 'pre-wrap' }}>
+              {message.content}
+              <span
+                className="inline-block w-0.5 h-4 ml-0.5 align-middle"
+                style={{ background: 'var(--sumi-light)', animation: 'blink 0.8s step-end infinite' }}
+                aria-hidden="true"
+              />
+            </span>
+          ) : message.content ? (
+            // ストリーミング完了: Markdown レンダリング (AIChatWidget と同じ仕組み)
+            <MarkdownContent color="var(--sumi)" fontSize="0.875rem">
+              {message.content}
+            </MarkdownContent>
+          ) : (
+            <span>…</span>
           )}
         </div>
       </div>
