@@ -26,6 +26,7 @@ import {
 } from '@/lib/repositories/3d-models';
 import { STATIC_MODELS_BY_SLUG } from '@/lib/tutor3d/static-models';
 import { ModelDetailClient } from '@/components/tools/3d-tutor/ModelDetailClient';
+import { FloatingShareButtons } from '@/components/article/FloatingShareButtons';
 
 // ISR: モデル本体は変動少ないので 10 分キャッシュ
 export const revalidate = 600;
@@ -180,6 +181,12 @@ export default async function ModelDetailPage({ params }: PageProps) {
           </Link>
         </div>
       </section>
+
+      {/* フローティングシェアボタン（X / LINE）— 記事・レッスンと同じ意匠 */}
+      <FloatingShareButtons
+        title={`${model.title} | うごくAI教室・3D 図鑑`}
+        url={`${SITE.url}/tools/ai-kyoshitsu/${model.slug}`}
+      />
     </main>
   );
 }
