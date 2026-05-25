@@ -48,26 +48,13 @@ export function TagFilter({ tags }: TagFilterProps) {
   if (options.length === 0) return null;
 
   return (
-    <div className="flex flex-col gap-2 w-full">
-      <div className="flex items-center justify-between gap-3">
-        <span
-          className="font-mincho text-xs tracking-wide shrink-0"
-          style={{ color: 'var(--sumi-light)' }}
-        >
-          タグ：
-        </span>
-        {selected.length > 0 && (
-          <button
-            type="button"
-            onClick={() => commit([])}
-            className="font-mincho text-xs underline underline-offset-2 hover:opacity-70 transition-opacity min-h-[36px] px-2"
-            style={{ color: 'var(--sumi-light)' }}
-          >
-            タグ解除（{selected.length}）
-          </button>
-        )}
-      </div>
-
+    <div className="flex flex-wrap items-center gap-2 sm:gap-3">
+      <span
+        className="font-mincho text-xs tracking-wide shrink-0"
+        style={{ color: 'var(--sumi-light)' }}
+      >
+        タグ：
+      </span>
       <div
         className="flex flex-wrap gap-2"
         role="group"
@@ -95,6 +82,16 @@ export function TagFilter({ tags }: TagFilterProps) {
           );
         })}
       </div>
+      {selected.length > 0 && (
+        <button
+          type="button"
+          onClick={() => commit([])}
+          className="font-mincho text-xs underline underline-offset-2 hover:opacity-70 transition-opacity min-h-[36px] px-2"
+          style={{ color: 'var(--sumi-light)' }}
+        >
+          タグ解除（{selected.length}）
+        </button>
+      )}
     </div>
   );
 }

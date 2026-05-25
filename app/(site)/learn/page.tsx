@@ -321,6 +321,10 @@ export default async function LearnPage({ searchParams }: LearnPageProps) {
             <LearnSearchBar />
           </Suspense>
 
+          <Suspense fallback={<div className="h-9 skeleton w-40" style={{ borderRadius: '4px' }} />}>
+            <TagFilter tags={availableTags} />
+          </Suspense>
+
           {/* ソート・難易度バー（同じ行に並ぶ） */}
           <Suspense fallback={
             <div className="flex gap-2">
@@ -330,10 +334,6 @@ export default async function LearnPage({ searchParams }: LearnPageProps) {
             </div>
           }>
             <SortLevelBar />
-          </Suspense>
-
-          <Suspense fallback={<div className="h-9 skeleton w-full" style={{ borderRadius: '4px' }} />}>
-            <TagFilter tags={availableTags} />
           </Suspense>
         </div>
       </section>
