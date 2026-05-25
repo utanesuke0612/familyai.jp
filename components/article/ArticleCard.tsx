@@ -25,6 +25,7 @@ export interface ArticleCardProps {
     title:       string;
     description: string;
     categories:  string[];
+    tags?:       string[];
     level:       string;
     thumbnailUrl?: string | null;
     publishedAt: Date | string | null;
@@ -155,6 +156,25 @@ export function ArticleCard({ article, featured = false }: ArticleCardProps) {
               </>
             )}
           </div>
+
+          {article.tags && article.tags.length > 0 && (
+            <div className="flex flex-wrap gap-1.5">
+              {article.tags.slice(0, 3).map((tag) => (
+                <span
+                  key={tag}
+                  className="font-mincho text-[11px]"
+                  style={{
+                    color:        'var(--sumi-light)',
+                    border:       '1px solid var(--line-soft)',
+                    borderRadius: '4px',
+                    padding:      '2px 6px',
+                  }}
+                >
+                  #{tag}
+                </span>
+              ))}
+            </div>
+          )}
         </div>
       </article>
     </Link>

@@ -33,6 +33,7 @@ export const escapeLike = (s: string): string => s.replace(/[\\%_]/g, '\\$&');
 
 export interface ArticleListFilter {
   categories?: string[];   // OR 条件で複数カテゴリに対応
+  tags?:       string[];   // OR 条件で自由タグに対応
   level?:      string;
   sort?:       'latest' | 'popular';
   /** タイトル・description 部分一致検索（Rev26 #2・ILIKE、ユーザー入力は escapeLike 適用）*/
@@ -145,7 +146,7 @@ export async function getArticleList(
   filter:     ArticleListFilter = {},
   pagination: ArticleListPagination = { page: 1, pageSize: 12 },
 ): Promise<ArticleListResult> {
-  const { categories = [], level, sort = 'latest', search } = filter;
+  const { categories = [], tags = [], level, sort = 'latest', search } = filter;
   const { page, pageSize } = pagination;
   const offset = (page - 1) * pageSize;
 
@@ -159,6 +160,15 @@ export async function getArticleList(
       );
       conditions.push(
         catConditions.length === 1 ? catConditions[0]! : or(...catConditions)!,
+      );
+    }
+
+    if (tags.length > 0) {
+      const tagConditions = tags.map(
+        (tag) => sql`${articles.tags} @> ARRAY[${tag}]::text[]`,
+      );
+      conditions.push(
+        tagConditions.length === 1 ? tagConditions[0]! : or(...tagConditions)!,
       );
     }
 
@@ -227,6 +237,30 @@ export async function getLatestArticles(limit = 6): Promise<ArticleSummary[]> {
     return rows.map(toArticleSummary);
   } catch (err) {
     logger.error('articles.getLatestArticles', { error: err instanceof Error ? err.message : String(err) });
+    return [];
+  }
+}
+
+/**
+ * 公開済み記事に付与されている自由タグ一覧を返す。
+ * /learn のタグフィルター候補として使うため、空文字は除外して重複を排除する。
+ */
+export async function getArticleTags(limit = 80): Promise<string[]> {
+  try {
+    const rows = await db
+      .select({ tags: articles.tags })
+      .from(articles)
+      .where(eq(articles.published, true))
+      .orderBy(desc(articles.publishedAt))
+      .limit(300);
+
+    return Array.from(
+      new Set(rows.flatMap((row) => row.tags.map((tag) => tag.trim()).filter(Boolean))),
+    )
+      .sort((a, b) => a.localeCompare(b, 'ja-JP'))
+      .slice(0, limit);
+  } catch (err) {
+    logger.error('articles.getArticleTags', { error: err instanceof Error ? err.message : String(err) });
     return [];
   }
 }

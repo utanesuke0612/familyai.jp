@@ -11,6 +11,7 @@
  *   limit  : number（デフォルト: 12・最大: 50）
  *   sort   : 'latest' | 'popular'（デフォルト: 'latest'）
  *   search : string（タイトル/description 部分一致・ILIKE）
+ *   tag    : string（任意・複数可・自由タグ）
  *
  * レスポンス（200）:
  * {
@@ -64,12 +65,25 @@ const catSchema = z
     return validated.length > 0 ? validated : undefined;
   });
 
+const tagSchema = z
+  .union([z.string(), z.array(z.string())])
+  .optional()
+  .transform((v): string[] | undefined => {
+    if (v === undefined) return undefined;
+    const arr = Array.isArray(v) ? v : v.split(',');
+    const tags = Array.from(new Set(arr.map((s) => s.trim()).filter(Boolean)))
+      .filter((s) => s.length <= 32)
+      .slice(0, 20);
+    return tags.length > 0 ? tags : undefined;
+  });
+
 const querySchema = z.object({
   cat:    catSchema,
   level:  z.enum(['beginner', 'intermediate', 'advanced']).optional(),
   page:   z.coerce.number().int().min(1).default(1),
   limit:  z.coerce.number().int().min(1).max(50).default(12),
   sort:   z.enum(['latest', 'popular']).default('latest'),
+  tag:    tagSchema,
   // Rev26 #2: 公開 search（タイトル/description 部分一致・ILIKE）
   search: z.string().trim().min(1).max(100).optional(),
 });
@@ -80,6 +94,7 @@ export async function GET(req: NextRequest) {
   // 1. クエリパラメータのバリデーション
   const { searchParams } = new URL(req.url);
   const catParams = searchParams.getAll('cat');
+  const tagParams = searchParams.getAll('tag');
   const raw = {
     cat:    catParams.length > 1 ? catParams
          : catParams.length === 1 ? catParams[0]
@@ -88,6 +103,9 @@ export async function GET(req: NextRequest) {
     page:   searchParams.get('page')   ?? undefined,
     limit:  searchParams.get('limit')  ?? undefined,
     sort:   searchParams.get('sort')   ?? undefined,
+    tag:    tagParams.length > 1 ? tagParams
+         : tagParams.length === 1 ? tagParams[0]
+         : undefined,
     search: searchParams.get('search') ?? undefined,
   };
 
@@ -105,12 +123,12 @@ export async function GET(req: NextRequest) {
     );
   }
 
-  const { cat, level, page, limit, sort, search } = parsed.data;
+  const { cat, level, page, limit, sort, tag, search } = parsed.data;
 
   // 2. Repository 経由でフィルタ + ページネーション取得
   try {
     const { items: rows, total, totalPages } = await getArticleList(
-      { categories: cat, level, sort, search },
+      { categories: cat, tags: tag, level, sort, search },
       { page, pageSize: limit },
     );
 

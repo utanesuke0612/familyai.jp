@@ -36,6 +36,18 @@ interface ArticleFormProps {
 const dateToInput = (d: Date | null | undefined): string =>
   d ? new Date(d).toISOString().split('T')[0]! : '';
 
+const normalizeTags = (value: string): string[] => {
+  const seen = new Set<string>();
+  const tags: string[] = [];
+  for (const raw of value.split(',')) {
+    const tag = raw.trim();
+    if (!tag || seen.has(tag)) continue;
+    seen.add(tag);
+    tags.push(tag);
+  }
+  return tags;
+};
+
 // ─── フォーム本体 ─────────────────────────────────────────────
 export function ArticleForm({ article }: ArticleFormProps) {
   const router  = useRouter();
@@ -49,6 +61,7 @@ export function ArticleForm({ article }: ArticleFormProps) {
   const [categories,      setCategories]      = useState<ContentCategory[]>(
     (article?.categories ?? []) as ContentCategory[],
   );
+  const [tagsText,        setTagsText]        = useState((article?.tags ?? []).join(', '));
   const [level,           setLevel]           = useState<DifficultyLevel>(
     (article?.level ?? 'beginner') as DifficultyLevel,
   );
@@ -86,6 +99,10 @@ export function ArticleForm({ article }: ArticleFormProps) {
     if (!body.trim())            return fail('本文は必須です');
     if (categories.length === 0) return fail('カテゴリを1つ以上選択してください');
 
+    const tags = normalizeTags(tagsText);
+    if (tags.length > 20) return fail('タグは20個以内にしてください');
+    if (tags.some((tag) => tag.length > 32)) return fail('タグは1つ32文字以内にしてください');
+
     setLoading(true);
     try {
       const payload = {
@@ -94,6 +111,7 @@ export function ArticleForm({ article }: ArticleFormProps) {
         description:      description.trim() || null,
         body:             body.trim(),
         categories,
+        tags,
         level,
         published,
         publishedAt:      publishedAt || null,
@@ -217,6 +235,24 @@ export function ArticleForm({ article }: ArticleFormProps) {
                 ))}
               </div>
             </FieldGroup>
+
+            {/* タグ */}
+            <Field
+              label="タグ"
+              hint="カンマ区切りで自由に追加できます。例: ChatGPT, 画像生成, 初心者向け"
+            >
+              {({ id, hintId }) => (
+                <input
+                  id={id}
+                  type="text"
+                  value={tagsText}
+                  onChange={(e) => setTagsText(e.target.value)}
+                  placeholder="ChatGPT, 画像生成, 初心者向け"
+                  aria-describedby={hintId}
+                  style={inputStyle}
+                />
+              )}
+            </Field>
 
             {/* 難易度 / 公開設定 */}
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1rem' }}>

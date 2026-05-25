@@ -133,7 +133,7 @@ function JsonLd({ article }: { article: NonNullable<Awaited<ReturnType<typeof ge
       '@type': 'WebPage',
       '@id':   articleUrl,
     },
-    keywords: [...article.categories, 'AI', '人工知能', '家族'].join(', '),
+    keywords: [...article.categories, ...article.tags, 'AI', '人工知能', '家族'].join(', '),
   };
 
   // `</script>` 抜け出し・`<!--` 早期終了を防ぐため、`<` を U+003C のエスケープに置換
@@ -242,6 +242,22 @@ export default async function ArticlePage({
             >
               {DIFFICULTY_LABEL[level] ?? level}
             </span>
+            {article.tags.map((tag) => (
+              <a
+                key={tag}
+                href={`/learn?tag=${encodeURIComponent(tag)}`}
+                className="inline-flex items-center px-3 py-1 font-mincho text-xs border transition-opacity hover:opacity-70"
+                style={{
+                  background:   'var(--washi-light)',
+                  borderColor:  'var(--line-soft)',
+                  color:        'var(--sumi-light)',
+                  borderRadius: '4px',
+                  minHeight:    'auto',
+                }}
+              >
+                #{tag}
+              </a>
+            ))}
           </div>
 
           {/* タイトル */}
@@ -384,6 +400,7 @@ export default async function ArticlePage({
                 title:        a.title,
                 description:  a.description ?? '',
                 categories:   a.categories,
+                tags:         a.tags,
                 level:        a.level,
                 thumbnailUrl: a.thumbnailUrl ?? null,
                 publishedAt:  a.publishedAt?.toISOString() ?? null,

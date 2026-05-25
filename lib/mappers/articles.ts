@@ -31,6 +31,11 @@ function filterCategories(values: string[] | null | undefined): ContentCategory[
   return values.filter((v): v is ContentCategory => (CATEGORIES as readonly string[]).includes(v));
 }
 
+function normalizeTags(values: string[] | null | undefined): string[] {
+  if (!values) return [];
+  return Array.from(new Set(values.map((v) => v.trim()).filter(Boolean)));
+}
+
 function coerceLevel(value: string | null | undefined): DifficultyLevel {
   return (LEVELS as readonly string[]).includes(value ?? '')
     ? (value as DifficultyLevel)
@@ -50,6 +55,7 @@ export interface ArticleRowSummary {
   title:       string;
   description: string | null;
   categories:  string[] | null;
+  tags:        string[] | null;
   level:       string;
   thumbnailUrl: string | null;
   viewCount:   number;
@@ -70,6 +76,7 @@ export function toArticleSummary(row: ArticleRowSummary): ArticleSummary {
     title:       row.title,
     description: row.description,
     categories:  filterCategories(row.categories),
+    tags:        normalizeTags(row.tags),
     level:       coerceLevel(row.level),
     thumbnailUrl: row.thumbnailUrl,
     viewCount:   row.viewCount,

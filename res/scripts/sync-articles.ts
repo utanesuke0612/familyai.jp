@@ -15,6 +15,7 @@
  *   title: タイトル
  *   description: 一行説明
  *   categories: [education]  # education / lifestyle / work / creative
+ *   tags: [ChatGPT, 初心者向け] # 任意・自由入力タグ
  *   level: beginner          # beginner / intermediate / advanced
  *   published: true          # false にすると非公開（DBには入るが表示されない）
  *   publishedAt: 2026-04-01  # 公開日（YYYY-MM-DD）
@@ -42,12 +43,19 @@ const ARTICLES_DIR = path.join(process.cwd(), 'content', 'articles');
 
 type FrontmatterValue = string | boolean | null | string[];
 
-function parseScalar(value: string): string | boolean | null {
+function parseScalar(value: string): FrontmatterValue {
   const trimmed = value.trim();
 
   if (trimmed === 'true') return true;
   if (trimmed === 'false') return false;
   if (trimmed === '~' || trimmed === 'null') return null;
+  if (trimmed.startsWith('[') && trimmed.endsWith(']')) {
+    return trimmed
+      .slice(1, -1)
+      .split(',')
+      .map((item) => item.trim().replace(/^['\"]|['\"]$/g, ''))
+      .filter(Boolean);
+  }
 
   return trimmed;
 }
@@ -113,6 +121,19 @@ function toStringArray(value: FrontmatterValue | undefined): string[] {
   return [];
 }
 
+function normalizeTags(value: FrontmatterValue | undefined): string[] {
+  const seen = new Set<string>();
+  const tags: string[] = [];
+  for (const item of toStringArray(value)) {
+    const tag = item.trim();
+    if (!tag || tag.length > 32 || seen.has(tag)) continue;
+    seen.add(tag);
+    tags.push(tag);
+    if (tags.length >= 20) break;
+  }
+  return tags;
+}
+
 function toValidCategories(value: FrontmatterValue | undefined): string[] | null {
   const categories = toStringArray(value);
   const invalid = categories.filter((category) => !(CATEGORIES as readonly string[]).includes(category));
@@ -170,6 +191,7 @@ async function syncArticles() {
       description: data.description ? String(data.description) : null,
       body:        content.trim(),
       categories,
+      tags:        normalizeTags(data.tags),
       level:       String(data.level) as 'beginner' | 'intermediate' | 'advanced',
       published:   data.published === true,
       publishedAt: typeof data.publishedAt === 'string' ? new Date(data.publishedAt) : null,

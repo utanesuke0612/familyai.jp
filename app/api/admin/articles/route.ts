@@ -74,6 +74,7 @@ export const POST = protectAdminRoute(async (req: NextRequest) => {
       description:      data.description,
       body:             data.body,
       categories:       data.categories,
+      tags:             data.tags,
       level:            data.level,
       published:        data.published,
       publishedAt:      data.publishedAt ?? null,

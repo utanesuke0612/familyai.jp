@@ -2,7 +2,7 @@
  * app/(site)/learn/page.tsx
  * familyai.jp — 記事一覧ページ（Server Component）
  *
- * - searchParams でカテゴリ / 難易度 / ソート / ページを受け取る
+ * - searchParams でカテゴリ / タグ / 難易度 / ソート / ページを受け取る
  * - getArticleList() (Repository) でフィルタリング・ページネーション
  * - CategoryFilter / SortLevelBar は Client Components
  * - DB 接続失敗時は空状態にフォールバック
@@ -12,11 +12,12 @@ import type { Metadata } from 'next';
 import { Suspense }      from 'react';
 import { redirect }      from 'next/navigation';
 
-import { getArticleList }    from '@/lib/repositories/articles';
+import { getArticleList, getArticleTags } from '@/lib/repositories/articles';
 import { CategoryFilter }    from '@/components/home/CategoryFilter';
 import { ArticleGrid }       from '@/components/article/ArticleGrid';
 import { SortLevelBar }      from '@/components/learn/SortLevelBar';
 import { LearnSearchBar }    from '@/components/learn/LearnSearchBar';
+import { TagFilter }         from '@/components/learn/TagFilter';
 
 // ── 定数 ──────────────────────────────────────────────────────
 const PAGE_SIZE = 12;
@@ -203,6 +204,7 @@ interface LearnPageProps {
     sort?:   string;
     page?:   string;
     search?: string;
+    tag?:    string;
   };
 }
 
@@ -218,6 +220,7 @@ export default async function LearnPage({ searchParams }: LearnPageProps) {
 
   // ── パラメータ解析 ──────────────────────────────────────────
   const cats   = searchParams.cat   ? searchParams.cat.split(',').filter(Boolean) : [];
+  const tags   = searchParams.tag   ? searchParams.tag.split(',').map((tag) => tag.trim()).filter(Boolean).slice(0, 20) : [];
   const level  = searchParams.level || null;
   const sort   = searchParams.sort === 'popular' ? 'popular' : 'latest';
   const page   = Math.max(1, parseInt(searchParams.page ?? '1', 10));
@@ -225,18 +228,24 @@ export default async function LearnPage({ searchParams }: LearnPageProps) {
   const searchRaw = (searchParams.search ?? '').trim();
   const search    = searchRaw.length > 0 && searchRaw.length <= 100 ? searchRaw : null;
 
-  const isFiltered = !!(cats.length || level || search);
+  const isFiltered = !!(cats.length || tags.length || level || search);
 
   // ── Repository 経由でフィルタ + ページネーション取得 ────────
-  const { items: articleRows, total: totalCount, totalPages } = await getArticleList(
-    {
-      categories: cats,
-      level:      level      ?? undefined,
-      sort,
-      search:     search     ?? undefined,
-    },
-    { page, pageSize: PAGE_SIZE },
-  );
+  const [articleList, availableTags] = await Promise.all([
+    getArticleList(
+      {
+        categories: cats,
+        tags,
+        level:      level      ?? undefined,
+        sort,
+        search:     search     ?? undefined,
+      },
+      { page, pageSize: PAGE_SIZE },
+    ),
+    getArticleTags(),
+  ]);
+
+  const { items: articleRows, total: totalCount, totalPages } = articleList;
 
   // searchParams を string のみのレコードに変換（Pagination コンポーネント用）
   const spRecord: Record<string, string> = Object.fromEntries(
@@ -322,6 +331,10 @@ export default async function LearnPage({ searchParams }: LearnPageProps) {
           }>
             <SortLevelBar />
           </Suspense>
+
+          <Suspense fallback={<div className="h-9 skeleton w-full" style={{ borderRadius: '4px' }} />}>
+            <TagFilter tags={availableTags} />
+          </Suspense>
         </div>
       </section>
 
@@ -347,6 +360,7 @@ export default async function LearnPage({ searchParams }: LearnPageProps) {
               title:        a.title,
               description:  a.description ?? '',
               categories:   a.categories,
+              tags:         a.tags,
               level:        a.level,
               thumbnailUrl: a.thumbnailUrl ?? null,
               publishedAt:  a.publishedAt?.toISOString() ?? null,

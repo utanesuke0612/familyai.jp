@@ -28,6 +28,7 @@ export interface ArticleSummary {
   title:       string;
   description: string | null;
   categories:  ContentCategory[];
+  tags:        string[];
   level:       DifficultyLevel;
   thumbnailUrl: string | null;
   viewCount:   number;

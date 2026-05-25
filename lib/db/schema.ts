@@ -6,6 +6,7 @@
  *    ここで直接定義せず shared/ から import すること（二重管理防止）。
  */
 
+import { sql } from 'drizzle-orm';
 import {
   pgTable,
   uuid,
@@ -34,6 +35,7 @@ export const articles = pgTable(
 
     // カテゴリ・難易度
     categories:       text('categories').array().notNull(),
+    tags:             text('tags').array().notNull().default(sql`ARRAY[]::text[]`),
     level:            varchar('level', { length: 20 }).notNull().default('beginner'),
 
     // メタデータ
@@ -53,6 +55,7 @@ export const articles = pgTable(
     idxIsFeatured:  index('articles_is_featured_idx').on(table.isFeatured),
     // 配列カラムの絞込に GIN（`@>` `&&` オペレータで使用）
     idxCategories:  index('articles_categories_gin_idx').using('gin', table.categories),
+    idxTags:        index('articles_tags_gin_idx').using('gin', table.tags),
   }),
 );
 

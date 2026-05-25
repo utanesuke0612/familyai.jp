@@ -12,6 +12,24 @@ export const LEVELS       = ['beginner', 'intermediate', 'advanced'] as const;
 export const ARTICLE_SORTS = ['latest', 'oldest', 'popular', 'title'] as const;
 export type ArticleSort = (typeof ARTICLE_SORTS)[number];
 
+const normalizeTags = (values: string[]): string[] => {
+  const seen = new Set<string>();
+  const tags: string[] = [];
+  for (const value of values) {
+    const tag = value.trim();
+    if (!tag || seen.has(tag)) continue;
+    seen.add(tag);
+    tags.push(tag);
+  }
+  return tags;
+};
+
+export const tagsSchema = z
+  .array(z.string().trim().min(1).max(32))
+  .max(20)
+  .default([])
+  .transform(normalizeTags);
+
 /** 管理 API の GET クエリパラメータ（Rev26 #6: sort を zod 検証・Rev24 #④: pagination 追加）*/
 export const adminArticlesQuerySchema = z.object({
   search:   z.string().trim().min(1).max(100).optional(),
@@ -40,6 +58,7 @@ export const createArticleSchema = z.object({
   description:      z.string().nullable().optional().transform((v) => v ?? null),
   body:             z.string().min(1),
   categories:       z.array(z.enum(CATEGORIES)).default([]),
+  tags:             tagsSchema,
   level:            z.enum(LEVELS).default('beginner'),
   published:        z.boolean().optional().default(false),
   publishedAt:      optionalDate,
@@ -52,6 +71,7 @@ export const updateArticleSchema = z.object({
   description:      z.string().nullable().optional(),
   body:             z.string().min(1).optional(),
   categories:       z.array(z.enum(CATEGORIES)).optional(),
+  tags:             tagsSchema.optional(),
   level:            z.enum(LEVELS).optional(),
   published:        z.boolean().optional(),
   publishedAt:      optionalDate,
