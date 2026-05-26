@@ -70,7 +70,8 @@ const highlightLanguages = {
 type ArticleSegment =
   | { type: 'markdown'; content: string }
   | { type: 'trusted-embed'; src: string; width: string; height: string; title: string }
-  | { type: 'audio'; src: string };
+  | { type: 'audio'; src: string }
+  | { type: 'message'; variant: 'message' | 'alert'; content: string };
 
 const VOA_EMBED_HOSTS = new Set(['learningenglish.voanews.com', 'www.voanews.com', 'voanews.com']);
 const YOUTUBE_EMBED_HOSTS = new Set([
@@ -212,7 +213,7 @@ function extractAudioSrc(tag: string): string | null {
   return null;
 }
 
-function parseArticleSegments(content: string): ArticleSegment[] {
+function parseEmbeddedSegments(content: string): ArticleSegment[] {
   // <iframe> と <audio> を同時にスキャン
   const tokenRegex = /(<iframe\b[^>]*><\/iframe>|<audio\b[^>]*>(?:[\s\S]*?<\/audio>)?)/gi;
   const segments: ArticleSegment[] = [];
@@ -288,6 +289,123 @@ function parseArticleSegments(content: string): ArticleSegment[] {
   }
 
   return segments.length > 0 ? segments : [{ type: 'markdown', content }];
+}
+
+function parseArticleSegments(content: string): ArticleSegment[] {
+  const segments: ArticleSegment[] = [];
+  const markdownLines: string[] = [];
+  const messageLines: string[] = [];
+  let inFence = false;
+  let fenceMarker: '```' | '~~~' | null = null;
+  let messageVariant: 'message' | 'alert' | null = null;
+
+  const flushMarkdown = () => {
+    if (markdownLines.length === 0) return;
+    const markdown = markdownLines.join('\n');
+    if (markdown.trim()) segments.push(...parseEmbeddedSegments(markdown));
+    markdownLines.length = 0;
+  };
+
+  const flushUnclosedMessageAsMarkdown = () => {
+    if (!messageVariant) return;
+    markdownLines.push(`:::message${messageVariant === 'alert' ? ' alert' : ''}`);
+    markdownLines.push(...messageLines);
+    messageLines.length = 0;
+    messageVariant = null;
+  };
+
+  for (const line of content.split(/\r?\n/)) {
+    const trimmed = line.trim();
+    const fence = trimmed.match(/^(```|~~~)/)?.[1] as '```' | '~~~' | undefined;
+
+    if (!messageVariant && fence) {
+      if (!inFence) {
+        inFence = true;
+        fenceMarker = fence;
+      } else if (fenceMarker === fence) {
+        inFence = false;
+        fenceMarker = null;
+      }
+      markdownLines.push(line);
+      continue;
+    }
+
+    if (!inFence && !messageVariant) {
+      const messageStart = trimmed.match(/^:::message(?:\s+(alert))?\s*$/);
+      if (messageStart) {
+        flushMarkdown();
+        messageVariant = messageStart[1] === 'alert' ? 'alert' : 'message';
+        continue;
+      }
+    }
+
+    if (messageVariant) {
+      if (trimmed === ':::') {
+        segments.push({
+          type: 'message',
+          variant: messageVariant,
+          content: messageLines.join('\n').trim(),
+        });
+        messageLines.length = 0;
+        messageVariant = null;
+      } else {
+        messageLines.push(line);
+      }
+      continue;
+    }
+
+    markdownLines.push(line);
+  }
+
+  flushUnclosedMessageAsMarkdown();
+  flushMarkdown();
+  return segments.length > 0 ? segments : [{ type: 'markdown', content }];
+}
+
+function ArticleMessage({
+  variant,
+  children,
+}: {
+  variant: 'message' | 'alert';
+  children: ReactNode;
+}) {
+  const isAlert = variant === 'alert';
+  return (
+    <aside
+      style={{
+        display:       'grid',
+        gridTemplateColumns: '24px minmax(0,1fr)',
+        gap:           '0.75rem',
+        alignItems:    'start',
+        margin:        '1.25rem 0',
+        padding:       '1rem',
+        borderRadius:  '6px',
+        background:    isAlert ? '#FEF2F2' : '#FFF7E6',
+        border:        `1px solid ${isAlert ? '#FECACA' : '#FDE3B0'}`,
+        color:         'var(--sumi)',
+      }}
+    >
+      <span
+        aria-hidden="true"
+        style={{
+          display:        'inline-flex',
+          alignItems:     'center',
+          justifyContent: 'center',
+          width:          '22px',
+          height:         '22px',
+          borderRadius:   '999px',
+          background:     isAlert ? '#FF6B6B' : '#FFA500',
+          color:          'white',
+          fontSize:       '14px',
+          fontWeight:     700,
+          lineHeight:     1,
+        }}
+      >
+        !
+      </span>
+      <div className="article-message-body">{children}</div>
+    </aside>
+  );
 }
 
 // ── フルスクリーン付き埋め込みコンポーネント ──────────────────────
@@ -676,6 +794,9 @@ export function ArticleBody({ content, className = '' }: ArticleBodyProps) {
         .hljs-strong { font-weight: 700; }
         .code-block-wrapper pre { margin: 1.25rem 0; }
         .code-block-wrapper pre code { background: transparent; color: inherit; padding: 0; }
+        .article-message-body > :first-child { margin-top: 0; }
+        .article-message-body > :last-child { margin-bottom: 0; }
+        .article-message-body p { margin-bottom: 0.5em; }
       `}</style>
 
       <article className={`prose-warm ${className}`}>
@@ -710,6 +831,24 @@ export function ArticleBody({ content, className = '' }: ArticleBodyProps) {
                 title={segment.title}
                 index={index}
               />
+            );
+          }
+
+          if (segment.type === 'message') {
+            return (
+              <ArticleMessage key={`message-${index}`} variant={segment.variant}>
+                <ReactMarkdown
+                  remarkPlugins={[remarkGfm]}
+                  rehypePlugins={[
+                    rehypeRaw,
+                    [rehypeSanitize, sanitizeSchema],
+                    [rehypeHighlight, { languages: highlightLanguages, detect: true }],
+                  ]}
+                  components={components}
+                >
+                  {segment.content}
+                </ReactMarkdown>
+              </ArticleMessage>
             );
           }
 
