@@ -10,13 +10,15 @@
  * - リンクは外部リンクを新タブで開く
  */
 
-import { useState, useRef, useEffect, Fragment, type ReactNode } from 'react';
+import { useState, useRef, useEffect, Fragment, isValidElement, type ReactNode } from 'react';
 import ReactMarkdown     from 'react-markdown';
 import remarkGfm         from 'remark-gfm';
 import rehypeSanitize, { defaultSchema } from 'rehype-sanitize';
 import rehypeRaw         from 'rehype-raw';
 import rehypeHighlight   from 'rehype-highlight';
 import { AnnotatedWord } from '@/components/article/AnnotatedWord';
+import { LinkPreviewCard } from '@/components/article/LinkPreviewCard';
+import { MermaidDiagram } from '@/components/article/MermaidDiagram';
 import { collectArticleHeadings } from '@/lib/articles/toc';
 import bash              from 'highlight.js/lib/languages/bash';
 import css               from 'highlight.js/lib/languages/css';
@@ -410,6 +412,47 @@ function EmbedWithFullscreen({
   );
 }
 
+
+function extractCodeBlock(children: ReactNode): { language: string; code: string } | null {
+  if (!isValidElement(children)) return null;
+  const props = children.props as { className?: string; children?: ReactNode };
+  const className = props.className ?? '';
+  const language = className.match(/language-([\w-]+)/)?.[1] ?? '';
+  const code = typeof props.children === 'string'
+    ? props.children
+    : Array.isArray(props.children)
+      ? props.children.join('')
+      : '';
+  return { language, code };
+}
+
+function textFromNode(node: ReactNode): string {
+  if (typeof node === 'string' || typeof node === 'number') return String(node);
+  if (Array.isArray(node)) return node.map(textFromNode).join('');
+  if (isValidElement(node)) {
+    const props = node.props as { children?: ReactNode };
+    return textFromNode(props.children);
+  }
+  return '';
+}
+
+function getSingleExternalLinkUrl(children: ReactNode): string | null {
+  const text = textFromNode(children).trim();
+  if (!/^https?:\/\/\S+$/.test(text)) return null;
+
+  const nodes = Array.isArray(children)
+    ? children.filter((node) => textFromNode(node).trim().length > 0)
+    : [children];
+
+  if (nodes.length === 1 && isValidElement(nodes[0]) && nodes[0].type === 'a') {
+    const props = nodes[0].props as { href?: string };
+    const href = props.href?.trim();
+    return href && href === text ? href : null;
+  }
+
+  return text;
+}
+
 function CodeBlockWithCopy({ children, ...props }: React.HTMLAttributes<HTMLPreElement>) {
   const preRef = useRef<HTMLPreElement>(null);
   const [copied, setCopied] = useState(false);
@@ -453,6 +496,8 @@ const components: Components = {
   // 段落・見出し・リスト・リンクなどテキストを含むノードは `annotateChildren` で
   // `{word|meaning|pron|example}` 構文を AnnotatedWord へ展開する
   p({ children, ...props }) {
+    const previewUrl = getSingleExternalLinkUrl(children);
+    if (previewUrl) return <LinkPreviewCard url={previewUrl} />;
     return <p {...props}>{annotateChildren(children)}</p>;
   },
   li({ children, ...props }) {
@@ -495,8 +540,12 @@ const components: Components = {
     );
   },
 
-  // コードブロック（インライン以外）は wrapper div + コピーボタン付き
+  // コードブロック（インライン以外）は wrapper div + コピーボタン付き。Mermaid は図として描画する。
   pre({ children, ...props }) {
+    const codeBlock = extractCodeBlock(children);
+    if (codeBlock?.language === 'mermaid') {
+      return <MermaidDiagram chart={codeBlock.code.trim()} />;
+    }
     return <CodeBlockWithCopy {...props}>{children}</CodeBlockWithCopy>;
   },
 
@@ -614,17 +663,19 @@ export function ArticleBody({ content, className = '' }: ArticleBodyProps) {
     <>
       {/* highlight.js テーマ（atom-one-light 系カスタム） */}
       <style>{`
-        .hljs { background: #f6f8fa; color: #24292e; border-radius: 8px; padding: 1rem 1.25rem; overflow-x: auto; font-size: 13px; line-height: 1.6; }
-        .hljs-comment,.hljs-quote { color: #6a737d; font-style: italic; }
-        .hljs-keyword,.hljs-selector-tag,.hljs-addition { color: #d73a49; }
-        .hljs-number,.hljs-string,.hljs-meta .hljs-string,.hljs-literal,.hljs-doctag,.hljs-regexp { color: #032f62; }
-        .hljs-title,.hljs-section,.hljs-name,.hljs-selector-id,.hljs-selector-class { color: #6f42c1; font-weight: 600; }
-        .hljs-attribute,.hljs-attr,.hljs-variable,.hljs-template-variable,.hljs-class .hljs-title,.hljs-type { color: #e36209; }
-        .hljs-symbol,.hljs-bullet,.hljs-subst,.hljs-meta,.hljs-meta .hljs-keyword,.hljs-selector-attr,.hljs-selector-pseudo,.hljs-link { color: #005cc5; }
-        .hljs-built_in,.hljs-deletion { color: #005cc5; }
+        .hljs { background: transparent; color: #e6edf3; overflow-x: auto; font-size: inherit; line-height: inherit; }
+        .hljs-comment,.hljs-quote { color: #8b949e; font-style: italic; }
+        .hljs-keyword,.hljs-selector-tag,.hljs-deletion { color: #ff7b72; }
+        .hljs-number,.hljs-literal { color: #79c0ff; }
+        .hljs-string,.hljs-meta .hljs-string,.hljs-doctag,.hljs-regexp { color: #a5d6ff; }
+        .hljs-title,.hljs-section,.hljs-name,.hljs-selector-id,.hljs-selector-class { color: #d2a8ff; font-weight: 600; }
+        .hljs-attribute,.hljs-attr,.hljs-variable,.hljs-template-variable,.hljs-class .hljs-title,.hljs-type { color: #ffa657; }
+        .hljs-symbol,.hljs-bullet,.hljs-subst,.hljs-meta,.hljs-meta .hljs-keyword,.hljs-selector-attr,.hljs-selector-pseudo,.hljs-link { color: #7ee787; }
+        .hljs-built_in,.hljs-addition { color: #7ee787; }
         .hljs-emphasis { font-style: italic; }
         .hljs-strong { font-weight: 700; }
         .code-block-wrapper pre { margin: 1.25rem 0; }
+        .code-block-wrapper pre code { background: transparent; color: inherit; padding: 0; }
       `}</style>
 
       <article className={`prose-warm ${className}`}>
