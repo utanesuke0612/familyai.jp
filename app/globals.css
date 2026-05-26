@@ -1032,3 +1032,21 @@ body {
 .overflow-scroll {
   -webkit-overflow-scrolling: touch;
 }
+
+/* ── ArticleBody: highlight.js テーマ ─────────────────────────── */
+.hljs { background: transparent; color: #e6edf3; overflow-x: auto; font-size: inherit; line-height: inherit; }
+.hljs-comment,.hljs-quote { color: #8b949e; font-style: italic; }
+.hljs-keyword,.hljs-selector-tag,.hljs-deletion { color: #ff7b72; }
+.hljs-number,.hljs-literal { color: #79c0ff; }
+.hljs-string,.hljs-meta .hljs-string,.hljs-doctag,.hljs-regexp { color: #a5d6ff; }
+.hljs-title,.hljs-section,.hljs-name,.hljs-selector-id,.hljs-selector-class { color: #d2a8ff; font-weight: 600; }
+.hljs-attribute,.hljs-attr,.hljs-variable,.hljs-template-variable,.hljs-class .hljs-title,.hljs-type { color: #ffa657; }
+.hljs-symbol,.hljs-bullet,.hljs-subst,.hljs-meta,.hljs-meta .hljs-keyword,.hljs-selector-attr,.hljs-selector-pseudo,.hljs-link { color: #7ee787; }
+.hljs-built_in,.hljs-addition { color: #7ee787; }
+.hljs-emphasis { font-style: italic; }
+.hljs-strong { font-weight: 700; }
+.code-block-wrapper pre { margin: 1.25rem 0; }
+.code-block-wrapper pre code { background: transparent; color: inherit; padding: 0; }
+.article-message-body > :first-child { margin-top: 0; }
+.article-message-body > :last-child { margin-bottom: 0; }
+.article-message-body p { margin-bottom: 0.5em; }

@@ -13,7 +13,7 @@ function stripInlineMarkdown(value: string): string {
     .trim();
 }
 
-function slugBase(value: string): string {
+export function slugBase(value: string): string {
   const slug = value
     .normalize('NFKC')
     .toLowerCase()
