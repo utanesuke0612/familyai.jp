@@ -286,19 +286,31 @@ export interface ListAllArticlesResult {
  */
 export async function listAllArticles(opts: {
   search?:   string;
+  category?: string;
+  tag?:      string;
   sort?:     AdminArticleSort;
   page?:     number;
   pageSize?: number;
 } = {}): Promise<ListAllArticlesResult> {
-  const { search, sort = 'latest' } = opts;
+  const { search, category, tag, sort = 'latest' } = opts;
   const page     = Math.max(1, Math.floor(opts.page ?? 1));
   const pageSize = Math.min(200, Math.max(1, Math.floor(opts.pageSize ?? 50)));
   const offset   = (page - 1) * pageSize;
 
   try {
-    const conditions = search
-      ? [ilike(articles.title, `%${escapeLike(search)}%`)]
-      : [];
+    const conditions = [];
+
+    if (search) {
+      conditions.push(ilike(articles.title, `%${escapeLike(search)}%`));
+    }
+
+    if (category) {
+      conditions.push(sql`${articles.categories} @> ARRAY[${category}]::text[]`);
+    }
+
+    if (tag) {
+      conditions.push(sql`${articles.tags} @> ARRAY[${tag}]::text[]`);
+    }
 
     const whereClause  = conditions.length > 0 ? and(...conditions) : undefined;
     const orderByClause = {

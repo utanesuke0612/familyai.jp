@@ -16,11 +16,14 @@ import { useState, useEffect, useRef, useTransition } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import type { Article } from '@/lib/db/schema';
+import { CATEGORY_LABEL } from '@/shared';
+import type { ContentCategory } from '@/shared';
 import { useConfirm } from '@/components/ui/ConfirmDialog';
 
 type SortKey = 'latest' | 'oldest' | 'popular' | 'title';
 
 const PAGE_SIZE = 50;
+const CATEGORIES: ContentCategory[] = ['education', 'lifestyle', 'work', 'creative'];
 
 interface Props {
   initialArticles: Article[];
@@ -33,9 +36,12 @@ export function AdminArticleTable({ initialArticles, initialTotal }: Props) {
   const confirm = useConfirm();
   const [articles, setArticles]   = useState<Article[]>(initialArticles);
   const [search,   setSearch]     = useState('');
+  const [categoryFilter, setCategoryFilter] = useState<ContentCategory | ''>('');
+  const [tagFilter, setTagFilter] = useState('');
   const [sort,     setSort]       = useState<SortKey>('latest');
   const [page,     setPage]       = useState(1);
   const [total,    setTotal]      = useState<number>(initialTotal ?? initialArticles.length);
+  const [selectedSlugs, setSelectedSlugs] = useState<Set<string>>(new Set());
   const [, startTransition] = useTransition();
 
   // Rev28 #HIGH-9: alert() を置換する SR 通知トースト（aria-live アナウンス領域）
@@ -67,7 +73,7 @@ export function AdminArticleTable({ initialArticles, initialTotal }: Props) {
   // 検索・ソート変更時は 1 ページ目に戻す
   useEffect(() => {
     setPage(1);
-  }, [search, sort]);
+  }, [search, categoryFilter, tagFilter, sort]);
 
   useEffect(() => {
     if (isFirstRender.current) {
@@ -78,7 +84,10 @@ export function AdminArticleTable({ initialArticles, initialTotal }: Props) {
     const timer = setTimeout(async () => {
       const params = new URLSearchParams();
       const q = search.trim();
+      const tag = tagFilter.trim();
       if (q) params.set('search', q);
+      if (categoryFilter) params.set('category', categoryFilter);
+      if (tag) params.set('tag', tag.slice(0, 32));
       params.set('sort',     sort);
       params.set('page',     String(page));
       params.set('pageSize', String(PAGE_SIZE));
@@ -119,9 +128,18 @@ export function AdminArticleTable({ initialArticles, initialTotal }: Props) {
       controller.abort();
       clearTimeout(timer);
     };
-  }, [search, sort, page]);
+  }, [search, categoryFilter, tagFilter, sort, page]);
 
   const filtered = articles;
+  const visibleSlugs = filtered.map((article) => article.slug);
+  const selectedArticles = filtered.filter((article) => selectedSlugs.has(article.slug));
+  const allVisibleSelected = visibleSlugs.length > 0 && visibleSlugs.every((slug) => selectedSlugs.has(slug));
+  const someVisibleSelected = visibleSlugs.some((slug) => selectedSlugs.has(slug));
+
+  useEffect(() => {
+    const currentSlugs = new Set(articles.map((article) => article.slug));
+    setSelectedSlugs((prev) => new Set(Array.from(prev).filter((slug) => currentSlugs.has(slug))));
+  }, [articles]);
 
   // ── 公開トグル ────────────────────────────────────────────────
   async function handleToggle(slug: string) {
@@ -166,6 +184,51 @@ export function AdminArticleTable({ initialArticles, initialTotal }: Props) {
     } finally {
       markPending(slug, false);
     }
+  }
+
+  function toggleSelection(slug: string) {
+    setSelectedSlugs((prev) => {
+      const next = new Set(prev);
+      if (next.has(slug)) next.delete(slug);
+      else next.add(slug);
+      return next;
+    });
+  }
+
+  function toggleAllVisible() {
+    setSelectedSlugs((prev) => {
+      const next = new Set(prev);
+      if (allVisibleSelected) {
+        visibleSlugs.forEach((slug) => next.delete(slug));
+      } else {
+        visibleSlugs.forEach((slug) => next.add(slug));
+      }
+      return next;
+    });
+  }
+
+  function exportSelectedAsMarkdown() {
+    if (selectedArticles.length === 0) {
+      setFlash({ kind: 'error', message: 'エクスポートする記事を選択してください' });
+      return;
+    }
+
+    selectedArticles.forEach((article) => {
+      const blob = new Blob([toMarkdown(article)], { type: 'text/markdown;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `${article.slug}.md`;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(url);
+    });
+
+    setFlash({
+      kind:    'info',
+      message: `${selectedArticles.length} 件の Markdown をエクスポートしました`,
+    });
   }
 
   // ── フォーマット ──────────────────────────────────────────────
@@ -224,6 +287,44 @@ export function AdminArticleTable({ initialArticles, initialTotal }: Props) {
           }}
         />
 
+        {/* 分類 */}
+        <select
+          value={categoryFilter}
+          onChange={(e) => setCategoryFilter(e.target.value as ContentCategory | '')}
+          aria-label="分類で絞り込み"
+          style={{
+            padding:      '8px 12px',
+            borderRadius: '8px',
+            border:       '1px solid #D1D5DB',
+            fontSize:     '14px',
+            background:   'white',
+            cursor:       'pointer',
+          }}
+        >
+          <option value="">分類すべて</option>
+          {CATEGORIES.map((category) => (
+            <option key={category} value={category}>{CATEGORY_LABEL[category]}</option>
+          ))}
+        </select>
+
+        {/* タグ */}
+        <input
+          type="search"
+          placeholder="タグで絞り込み…"
+          aria-label="記事タグで絞り込み"
+          aria-busy={loading || undefined}
+          maxLength={32}
+          value={tagFilter}
+          onChange={(e) => setTagFilter(e.target.value)}
+          style={{
+            padding:      '8px 12px',
+            borderRadius: '8px',
+            border:       '1px solid #D1D5DB',
+            fontSize:     '14px',
+            width:        '180px',
+          }}
+        />
+
         {/* ソート */}
         <select
           value={sort}
@@ -243,6 +344,24 @@ export function AdminArticleTable({ initialArticles, initialTotal }: Props) {
           <option value="popular">人気順</option>
           <option value="title">タイトル順</option>
         </select>
+
+        <button
+          type="button"
+          onClick={exportSelectedAsMarkdown}
+          disabled={selectedArticles.length === 0}
+          style={{
+            padding:      '8px 14px',
+            borderRadius: '8px',
+            border:       '1px solid #D1D5DB',
+            background:   selectedArticles.length === 0 ? '#F3F4F6' : 'white',
+            color:        selectedArticles.length === 0 ? '#9CA3AF' : '#111827',
+            fontSize:     '14px',
+            fontWeight:   600,
+            cursor:       selectedArticles.length === 0 ? 'not-allowed' : 'pointer',
+          }}
+        >
+          MDエクスポート（{selectedArticles.length}）
+        </button>
 
         <span style={{ marginLeft: 'auto', fontSize: '13px', color: '#6B7280' }}>
           {loading
@@ -271,7 +390,19 @@ export function AdminArticleTable({ initialArticles, initialTotal }: Props) {
         <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '14px' }}>
           <thead>
             <tr style={{ borderBottom: '1px solid #E5E7EB', background: '#F9FAFB' }}>
-              {['状態', 'タイトル', '難易度', '閲覧数', '作成日', '操作'].map((h) => (
+              <th style={{ padding: '10px 14px', textAlign: 'left', width: '44px' }}>
+                <input
+                  type="checkbox"
+                  checked={allVisibleSelected}
+                  ref={(el) => {
+                    if (el) el.indeterminate = someVisibleSelected && !allVisibleSelected;
+                  }}
+                  onChange={toggleAllVisible}
+                  aria-label="表示中の記事をすべて選択"
+                  style={{ width: '16px', height: '16px', accentColor: 'var(--shu)' }}
+                />
+              </th>
+              {['状態', 'タイトル', '分類', 'タグ', '難易度', '閲覧数', '作成日', '操作'].map((h) => (
                 <th key={h} style={{ padding: '10px 14px', textAlign: 'left', fontWeight: 600, color: '#374151', whiteSpace: 'nowrap' }}>
                   {h}
                 </th>
@@ -281,13 +412,23 @@ export function AdminArticleTable({ initialArticles, initialTotal }: Props) {
           <tbody>
             {filtered.length === 0 && (
               <tr>
-                <td colSpan={6} style={{ padding: '3rem', textAlign: 'center', color: '#9CA3AF' }}>
+                <td colSpan={9} style={{ padding: '3rem', textAlign: 'center', color: '#9CA3AF' }}>
                   記事が見つかりません
                 </td>
               </tr>
             )}
             {filtered.map((article) => (
               <tr key={article.slug} style={{ borderBottom: '1px solid #F3F4F6' }}>
+                <td style={{ padding: '10px 14px' }}>
+                  <input
+                    type="checkbox"
+                    checked={selectedSlugs.has(article.slug)}
+                    onChange={() => toggleSelection(article.slug)}
+                    aria-label={`「${article.title}」を選択`}
+                    style={{ width: '16px', height: '16px', accentColor: 'var(--shu)' }}
+                  />
+                </td>
+
                 {/* 状態トグル */}
                 <td style={{ padding: '10px 14px' }}>
                   <button
@@ -327,6 +468,16 @@ export function AdminArticleTable({ initialArticles, initialTotal }: Props) {
                   <div style={{ fontSize: '12px', color: '#9CA3AF', marginTop: '2px' }}>
                     /learn/{article.slug}
                   </div>
+                </td>
+
+                {/* 分類 */}
+                <td style={{ padding: '10px 14px', minWidth: '140px' }}>
+                  <CategoryBadges categories={article.categories} />
+                </td>
+
+                {/* タグ */}
+                <td style={{ padding: '10px 14px', minWidth: '160px', maxWidth: '260px' }}>
+                  <TagBadges tags={article.tags ?? []} />
                 </td>
 
                 {/* 難易度 */}
@@ -418,6 +569,38 @@ export function AdminArticleTable({ initialArticles, initialTotal }: Props) {
   );
 }
 
+
+function toMarkdown(article: Article): string {
+  const frontmatter = [
+    '---',
+    `title: ${formatScalar(article.title)}`,
+    `description: ${article.description ? formatScalar(article.description) : '~'}`,
+    `categories: ${formatArray(article.categories)}`,
+    `tags: ${formatArray(article.tags ?? [])}`,
+    `level: ${article.level}`,
+    `published: ${article.published ? 'true' : 'false'}`,
+    `publishedAt: ${formatDateForFrontmatter(article.publishedAt)}`,
+    '---',
+    '',
+  ].join('\n');
+
+  return `${frontmatter}${article.body.trim()}\n`;
+}
+
+function formatScalar(value: string): string {
+  return JSON.stringify(value);
+}
+
+function formatArray(values: string[]): string {
+  if (values.length === 0) return '[]';
+  return `[${values.map(formatScalar).join(', ')}]`;
+}
+
+function formatDateForFrontmatter(value: Date | string | null): string {
+  if (!value) return '~';
+  return new Date(value).toISOString().slice(0, 10);
+}
+
 function pagerBtnStyle(disabled: boolean): React.CSSProperties {
   return {
     padding:      '6px 14px',
@@ -430,6 +613,51 @@ function pagerBtnStyle(disabled: boolean): React.CSSProperties {
     cursor:       disabled ? 'not-allowed' : 'pointer',
   };
 }
+
+// ── 分類・タグバッジ ──────────────────────────────────────────
+function CategoryBadges({ categories }: { categories: string[] }) {
+  if (categories.length === 0) return <span style={emptyTextStyle}>—</span>;
+  return (
+    <div style={{ display: 'flex', gap: '4px', flexWrap: 'wrap' }}>
+      {categories.map((category) => {
+        const key = category as ContentCategory;
+        return (
+          <span key={category} style={pillStyle('#EFF6FF', '#1D4ED8')}>
+            {CATEGORY_LABEL[key] ?? category}
+          </span>
+        );
+      })}
+    </div>
+  );
+}
+
+function TagBadges({ tags }: { tags: string[] }) {
+  if (tags.length === 0) return <span style={emptyTextStyle}>—</span>;
+  return (
+    <div style={{ display: 'flex', gap: '4px', flexWrap: 'wrap' }}>
+      {tags.map((tag) => (
+        <span key={tag} style={pillStyle('#F5F3FF', '#6D28D9')}>
+          #{tag}
+        </span>
+      ))}
+    </div>
+  );
+}
+
+function pillStyle(bg: string, color: string): React.CSSProperties {
+  return {
+    padding:      '2px 7px',
+    borderRadius: '999px',
+    background:   bg,
+    color,
+    fontSize:     '12px',
+    fontWeight:   600,
+    lineHeight:   1.6,
+    whiteSpace:   'nowrap',
+  };
+}
+
+const emptyTextStyle: React.CSSProperties = { color: '#9CA3AF', fontSize: '12px' };
 
 // ── 難易度バッジ ──────────────────────────────────────────────
 function LevelBadge({ level }: { level: string }) {

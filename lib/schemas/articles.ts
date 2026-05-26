@@ -33,6 +33,8 @@ export const tagsSchema = z
 /** 管理 API の GET クエリパラメータ（Rev26 #6: sort を zod 検証・Rev24 #④: pagination 追加）*/
 export const adminArticlesQuerySchema = z.object({
   search:   z.string().trim().min(1).max(100).optional(),
+  category: z.enum(CATEGORIES).optional(),
+  tag:      z.string().trim().min(1).max(32).optional(),
   sort:     z.enum(ARTICLE_SORTS).default('latest'),
   page:     z.coerce.number().int().min(1).default(1),
   pageSize: z.coerce.number().int().min(1).max(200).default(50),

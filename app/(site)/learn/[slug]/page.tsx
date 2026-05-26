@@ -31,7 +31,9 @@ const getArticleCached = cache(getArticle);
 import { ArticleBody }           from '@/components/article/ArticleBody';
 import { AIChatWidget }          from '@/components/article/AIChatWidget';
 import { FloatingShareButtons }  from '@/components/article/FloatingShareButtons';
+import { ArticleTableOfContents } from '@/components/article/ArticleTableOfContents';
 import { ArticleGrid }  from '@/components/article/ArticleGrid';
+import { collectArticleHeadings } from '@/lib/articles/toc';
 import {
   SITE,
   CATEGORY_LABEL,
@@ -174,6 +176,7 @@ export default async function ArticlePage({
   const level           = article.level;
   const readingMin      = article.readingMin;
   const dateStr         = article.publishedAt ? formatDateJa(article.publishedAt) : null;
+  const tocItems        = collectArticleHeadings(article.body);
 
   return (
     <>
@@ -348,6 +351,8 @@ export default async function ArticlePage({
 
             {/* ── 右：スティッキーサイドバー ── */}
             <aside className="flex flex-col gap-6 lg:sticky lg:top-[calc(var(--header-height)+24px)]">
+              <ArticleTableOfContents items={tocItems} />
+
               {/* AIチャットウィジェット */}
               <AIChatWidget
                 articleTitle={article.title}

@@ -17,6 +17,7 @@ import rehypeSanitize, { defaultSchema } from 'rehype-sanitize';
 import rehypeRaw         from 'rehype-raw';
 import rehypeHighlight   from 'rehype-highlight';
 import { AnnotatedWord } from '@/components/article/AnnotatedWord';
+import { collectArticleHeadings } from '@/lib/articles/toc';
 import bash              from 'highlight.js/lib/languages/bash';
 import css               from 'highlight.js/lib/languages/css';
 import javascript        from 'highlight.js/lib/languages/javascript';
@@ -581,6 +582,22 @@ const components: Components = {
   },
 };
 
+function createComponentsWithHeadingIds(headingIds: string[]): Components {
+  let headingIndex = 0;
+
+  return {
+    ...components,
+    h1({ children, ...props }) {
+      const id = headingIds[headingIndex++];
+      return <h1 id={id} {...props}>{annotateChildren(children)}</h1>;
+    },
+    h2({ children, ...props }) {
+      const id = headingIds[headingIndex++];
+      return <h2 id={id} {...props}>{annotateChildren(children)}</h2>;
+    },
+  };
+}
+
 // ── メインコンポーネント ───────────────────────────────────────
 interface ArticleBodyProps {
   content: string;
@@ -589,6 +606,9 @@ interface ArticleBodyProps {
 
 export function ArticleBody({ content, className = '' }: ArticleBodyProps) {
   const segments = parseArticleSegments(content);
+  const markdownComponents = createComponentsWithHeadingIds(
+    collectArticleHeadings(content).map((heading) => heading.id),
+  );
 
   return (
     <>
@@ -655,7 +675,7 @@ export function ArticleBody({ content, className = '' }: ArticleBodyProps) {
                 [rehypeSanitize, sanitizeSchema],
                 [rehypeHighlight, { languages: highlightLanguages, detect: true }],
               ]}
-              components={components}
+              components={markdownComponents}
             >
               {segment.content}
             </ReactMarkdown>
