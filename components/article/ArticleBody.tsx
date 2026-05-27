@@ -19,7 +19,7 @@ import rehypeHighlight   from 'rehype-highlight';
 import { AnnotatedWord } from '@/components/article/AnnotatedWord';
 import { LinkPreviewCard } from '@/components/article/LinkPreviewCard';
 import { MermaidDiagram } from '@/components/article/MermaidDiagram';
-import { collectArticleHeadings } from '@/lib/articles/toc';
+import { collectArticleHeadings, slugBase } from '@/lib/articles/toc';
 import bash              from 'highlight.js/lib/languages/bash';
 import css               from 'highlight.js/lib/languages/css';
 import javascript        from 'highlight.js/lib/languages/javascript';
@@ -749,17 +749,57 @@ const components: Components = {
   },
 };
 
-function createComponentsWithHeadingIds(headingIds: string[]): Components {
-  let headingIndex = 0;
+/**
+ * Build the markdown component map with heading IDs derived from heading text.
+ *
+ * WHY text-based lookup instead of a sequential counter:
+ * React 18 StrictMode calls each component function TWICE per render. A shared
+ * mutable counter (`headingIndex++`) therefore advances by 2 per heading on the
+ * client while the SSR pass (no StrictMode) advances it by 1, causing a
+ * server/client `id` mismatch (hydration warning).
+ *
+ * By grouping the pre-computed IDs into `Map<slugBase, id[]>` and cycling with
+ * `count % ids.length`, a non-duplicate heading always resolves to the same ID
+ * regardless of how many times the component function is invoked:
+ *   ids = ["foo"]  →  ids[0 % 1] === ids[1 % 1] === "foo"  ✓
+ *
+ * Duplicate headings still cycle correctly in production (no StrictMode), and
+ * the worst-case in development is a wrong anchor on a duplicate — content is
+ * never affected.
+ */
+function createComponentsWithHeadingIds(headings: ReturnType<typeof collectArticleHeadings>): Components {
+  // Group IDs by the slugBase of each heading title (order preserved per slug)
+  const idsBySlug = new Map<string, string[]>();
+  for (const { title, id } of headings) {
+    const slug = slugBase(title);
+    const list = idsBySlug.get(slug);
+    if (list) list.push(id);
+    else idsBySlug.set(slug, [id]);
+  }
+
+  // Per-slug invocation counter — shared across h1/h2 but NOT inside them,
+  // so StrictMode's double-call of a single heading cycles back to the same ID.
+  const seenCount = new Map<string, number>();
+
+  function resolveId(children: React.ReactNode): string | undefined {
+    const slug = slugBase(textFromNode(children).trim());
+    const ids = idsBySlug.get(slug);
+    if (!ids?.length) return undefined;
+    const count = seenCount.get(slug) ?? 0;
+    seenCount.set(slug, count + 1);
+    // `% ids.length` ensures a repeated call with the same slug cycles back,
+    // so the result of call-1 and call-2 (StrictMode) are identical for unique headings.
+    return ids[count % ids.length];
+  }
 
   return {
     ...components,
     h1({ children, ...props }) {
-      const id = headingIds[headingIndex++];
+      const id = resolveId(children);
       return <h1 id={id} {...props}>{annotateChildren(children)}</h1>;
     },
     h2({ children, ...props }) {
-      const id = headingIds[headingIndex++];
+      const id = resolveId(children);
       return <h2 id={id} {...props}>{annotateChildren(children)}</h2>;
     },
   };
@@ -774,7 +814,7 @@ interface ArticleBodyProps {
 export function ArticleBody({ content, className = '' }: ArticleBodyProps) {
   const segments = parseArticleSegments(content);
   const markdownComponents = createComponentsWithHeadingIds(
-    collectArticleHeadings(content).map((heading) => heading.id),
+    collectArticleHeadings(content),
   );
 
   return (

@@ -12,13 +12,15 @@
  * - 保存後 /admin にリダイレクト
  */
 
-import { useId, useRef, useState } from 'react';
+import { useEffect, useId, useMemo, useRef, useState } from 'react';
 import { useRouter }        from 'next/navigation';
 import { ArticleBody }      from '@/components/article/ArticleBody';
+import { MarkdownEditor, TOOLBAR_ACTIONS, type MarkdownEditorHandle, type ToolbarAction } from '@/components/admin/MarkdownEditor';
 import type { Article }     from '@/lib/db/schema';
 import {
   CATEGORY_LABEL,
   DIFFICULTY_LABEL,
+  estimateReadingMin,
 } from '@/shared';
 import type { ContentCategory, DifficultyLevel } from '@/shared';
 
@@ -73,14 +75,94 @@ export function ArticleForm({ article }: ArticleFormProps) {
   const [loading, setLoading] = useState(false);
   const [error,   setError]   = useState('');
   const [preview, setPreview] = useState<'split' | 'full'>('split');
+  const [draftAvailable, setDraftAvailable] = useState(false);
+  const [draftStatus, setDraftStatus] = useState<'idle' | 'saved' | 'restored'>('idle');
+  const [isFullscreen, setIsFullscreen] = useState(false);
   // Rev28 #HIGH-7: 送信失敗時に SR がエラーへ辿れるよう、バナーにフォーカス移動する
   const errorRef = useRef<HTMLDivElement | null>(null);
+  const editorRef = useRef<MarkdownEditorHandle | null>(null);
+  const previewRef = useRef<HTMLDivElement | null>(null);
+  const editorStats = useMemo(() => analyzeMarkdown(body), [body]);
+  const draftKey = useMemo(() => {
+    const keySlug = isEdit ? article!.slug : slug.trim() || 'new';
+    return `familyai:admin:article-draft:${keySlug}`;
+  }, [article, isEdit, slug]);
+  const isDirty = useMemo(() => {
+    if (!article) {
+      return Boolean(slug || title || description || body || tagsText || thumbnailUrl || published || isFeatured);
+    }
+    return (
+      slug !== article.slug ||
+      title !== article.title ||
+      description !== (article.description ?? '') ||
+      body !== article.body ||
+      tagsText !== (article.tags ?? []).join(', ') ||
+      level !== article.level ||
+      published !== article.published ||
+      publishedAt !== dateToInput(article.publishedAt) ||
+      thumbnailUrl !== (article.thumbnailUrl ?? '') ||
+      isFeatured !== article.isFeatured ||
+      categories.join(',') !== ((article.categories ?? []) as ContentCategory[]).join(',')
+    );
+  }, [article, body, categories, description, isFeatured, level, published, publishedAt, slug, tagsText, thumbnailUrl, title]);
 
   // ── カテゴリ チェックボックス制御 ──────────────────────────
   function toggleCategory(c: ContentCategory) {
     setCategories((prev) =>
       prev.includes(c) ? prev.filter((x) => x !== c) : [...prev, c],
     );
+  }
+
+  useEffect(() => {
+    try {
+      const draft = window.localStorage.getItem(draftKey);
+      setDraftAvailable(Boolean(draft && draft !== body));
+    } catch {
+      setDraftAvailable(false);
+    }
+  }, [body, draftKey]);
+
+  useEffect(() => {
+    if (!body.trim()) return;
+    if (!isDirty) return;
+    const id = window.setTimeout(() => {
+      try {
+        window.localStorage.setItem(draftKey, body);
+        setDraftStatus('saved');
+      } catch {
+        setDraftStatus('idle');
+      }
+    }, 800);
+    return () => window.clearTimeout(id);
+  }, [body, draftKey, isDirty]);
+
+  useEffect(() => {
+    const onBeforeUnload = (event: BeforeUnloadEvent) => {
+      if (!isDirty) return;
+      event.preventDefault();
+      event.returnValue = '';
+    };
+    window.addEventListener('beforeunload', onBeforeUnload);
+    return () => window.removeEventListener('beforeunload', onBeforeUnload);
+  }, [isDirty]);
+
+  useEffect(() => {
+    if (!isFullscreen) return;
+    const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') setIsFullscreen(false); };
+    document.addEventListener('keydown', onKey);
+    return () => document.removeEventListener('keydown', onKey);
+  }, [isFullscreen]);
+
+  function restoreDraft(): void {
+    try {
+      const draft = window.localStorage.getItem(draftKey);
+      if (!draft) return;
+      setBody(draft);
+      setDraftAvailable(false);
+      setDraftStatus('restored');
+    } catch {
+      // localStorage が使えない環境では何もしない
+    }
   }
 
   // ── 送信 ──────────────────────────────────────────────────
@@ -134,6 +216,7 @@ export function ArticleForm({ article }: ArticleFormProps) {
         return;
       }
 
+      window.localStorage.removeItem(draftKey);
       router.push('/admin');
       router.refresh();
     } catch {
@@ -141,6 +224,14 @@ export function ArticleForm({ article }: ArticleFormProps) {
     } finally {
       setLoading(false);
     }
+  }
+
+  function handleEditorScrollRatio(ratio: number): void {
+    const previewEl = previewRef.current;
+    if (!previewEl) return;
+    const max = previewEl.scrollHeight - previewEl.clientHeight;
+    if (max <= 0) return;
+    previewEl.scrollTop = max * ratio;
   }
 
   // ── レンダリング ──────────────────────────────────────────
@@ -311,10 +402,42 @@ export function ArticleForm({ article }: ArticleFormProps) {
         </Section>
 
         {/* ── セクション: 本文エディタ ── */}
+        <div
+          style={isFullscreen ? {
+            position:   'fixed',
+            inset:      0,
+            zIndex:     50,
+            overflowY:  'auto',
+            background: '#F3F4F6',
+            padding:    '1rem',
+          } : {}}
+        >
         <Section
           title="本文（Markdown）"
           action={
-            <div style={{ display: 'flex', gap: '4px' }}>
+            <div style={{ display: 'flex', gap: '6px', alignItems: 'center', flexWrap: 'wrap' }}>
+              {draftAvailable && (
+                <button
+                  type="button"
+                  onClick={restoreDraft}
+                  style={{
+                    padding:      '4px 10px',
+                    borderRadius: '6px',
+                    border:       '1px solid #F59E0B',
+                    fontSize:     '12px',
+                    background:   '#FFFBEB',
+                    color:        '#92400E',
+                    cursor:       'pointer',
+                  }}
+                >
+                  下書きを復元
+                </button>
+              )}
+              {draftStatus !== 'idle' && (
+                <span style={{ fontSize: '12px', color: '#6B7280' }}>
+                  {draftStatus === 'saved' ? '下書き保存済み' : '下書きを復元しました'}
+                </span>
+              )}
               {(['split', 'full'] as const).map((mode) => (
                 <button
                   key={mode}
@@ -333,36 +456,129 @@ export function ArticleForm({ article }: ArticleFormProps) {
                   {mode === 'split' ? '分割表示' : '全画面入力'}
                 </button>
               ))}
+              <button
+                type="button"
+                onClick={() => setIsFullscreen((v) => !v)}
+                aria-label={isFullscreen ? '全画面を終了 (Esc)' : 'エディタを全画面表示'}
+                title={isFullscreen ? '全画面を終了 (Esc)' : 'エディタを全画面表示'}
+                style={{
+                  padding:      '4px 8px',
+                  borderRadius: '6px',
+                  border:       '1px solid #D1D5DB',
+                  fontSize:     '14px',
+                  lineHeight:   1,
+                  background:   isFullscreen ? '#1F2937' : 'white',
+                  color:        isFullscreen ? 'white' : '#374151',
+                  cursor:       'pointer',
+                }}
+              >
+                {isFullscreen ? '⛶' : '⛶'}
+              </button>
             </div>
           }
         >
-          {preview === 'split' ? (
+          {/* 警告 — 常に全幅 */}
+          {editorStats.warnings.length > 0 && (
             <div
-              className="grid gap-4 md:grid-cols-2 grid-cols-1"
-              style={{ minHeight: '520px' }}
-            >
-              <textarea
-                value={body}
-                onChange={(e) => setBody(e.target.value)}
-                placeholder={'## 見出し\n\n本文を Markdown で書いてください…'}
-                aria-label="本文（Markdown 入力）"
-                style={{
-                  ...inputStyle,
-                  fontFamily:  'ui-monospace, SFMono-Regular, monospace',
-                  fontSize:    '13px',
-                  lineHeight:  1.7,
-                  resize:      'none',
-                  height:      '520px',
-                }}
-              />
-              <div style={{
-                border:       '1px solid #D1D5DB',
+              role="status"
+              style={{
+                display:      'grid',
+                gap:          '4px',
+                marginBottom: '12px',
+                padding:      '10px 12px',
+                border:       '1px solid #FDE68A',
                 borderRadius: '8px',
-                padding:      '1rem',
-                background:   'white',
-                overflowY:    'auto',
-                height:       '520px',
-              }}>
+                background:   '#FFFBEB',
+                color:        '#92400E',
+                fontSize:     '12px',
+              }}
+            >
+              {editorStats.warnings.map((warning) => (
+                <p key={warning} style={{ margin: 0 }}>{warning}</p>
+              ))}
+            </div>
+          )}
+
+          {preview === 'split' ? (
+            /*
+             * CSS Grid 2列2行:
+             *   行1: [統計バッジ] [ツールバー]  ← 同一行なので自動等高
+             *   行2: [Editor]     [Viewer]       ← どちらも height:520px でピッタリ揃う
+             */
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', columnGap: '16px', rowGap: '8px' }}>
+              {/* 行1-左: ツールバー */}
+              <div
+                aria-label="Markdown ツールバー"
+                role="toolbar"
+                style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: '6px' }}
+              >
+                {TOOLBAR_ACTIONS.map((action) => {
+                  const Icon = action.icon;
+                  return (
+                    <button
+                      key={action.kind}
+                      type="button"
+                      onClick={() => editorRef.current?.applyEdit(action.kind as ToolbarAction)}
+                      aria-label={action.label}
+                      title={action.label}
+                      style={{
+                        width:          '34px',
+                        height:         '34px',
+                        display:        'inline-flex',
+                        alignItems:     'center',
+                        justifyContent: 'center',
+                        border:         '1px solid #D1D5DB',
+                        borderRadius:   '6px',
+                        background:     'white',
+                        color:          '#374151',
+                        cursor:         'pointer',
+                      }}
+                    >
+                      <Icon size={16} strokeWidth={2} aria-hidden="true" />
+                    </button>
+                  );
+                })}
+              </div>
+
+              {/* 行1-右: 統計バッジ */}
+              <div
+                style={{
+                  display:     'flex',
+                  flexWrap:    'wrap',
+                  alignItems:  'center',
+                  gap:         '6px',
+                  fontSize:    '12px',
+                  color:       '#6B7280',
+                }}
+              >
+                <EditorMetric label="文字" value={editorStats.characters.toLocaleString('ja-JP')} />
+                <EditorMetric label="読了" value={`${editorStats.readingMin}分`} />
+                <EditorMetric label="見出し" value={`${editorStats.headingCount}`} />
+                <EditorMetric label="Mermaid" value={`${editorStats.mermaidCount}`} />
+              </div>
+
+              {/* 行2-左: Editor */}
+              <MarkdownEditor
+                ref={editorRef}
+                value={body}
+                onChange={setBody}
+                height={isFullscreen ? 'calc(100vh - 200px)' : '520px'}
+                showToolbar={false}
+                onScrollRatioChange={handleEditorScrollRatio}
+              />
+
+              {/* 行2-右: Viewer */}
+              <div
+                ref={previewRef}
+                style={{
+                  border:       '1px solid #D1D5DB',
+                  borderRadius: '8px',
+                  padding:      '1rem',
+                  background:   'white',
+                  overflowY:    'auto',
+                  height:       isFullscreen ? 'calc(100vh - 200px)' : '520px',
+                }}
+              >
                 {body.trim()
                   ? <ArticleBody content={body} />
                   : <p style={{ color: '#9CA3AF', fontSize: '14px' }}>プレビューがここに表示されます</p>
@@ -370,22 +586,34 @@ export function ArticleForm({ article }: ArticleFormProps) {
               </div>
             </div>
           ) : (
-            <textarea
-              value={body}
-              onChange={(e) => setBody(e.target.value)}
-              placeholder={'## 見出し\n\n本文を Markdown で書いてください…'}
-              aria-label="本文（Markdown 入力）"
-              style={{
-                ...inputStyle,
-                fontFamily: 'ui-monospace, SFMono-Regular, monospace',
-                fontSize:   '13px',
-                lineHeight: 1.7,
-                resize:     'vertical',
-                height:     '600px',
-              }}
-            />
+            /* 全画面入力: 統計バーとツールバー内蔵エディタ */
+            <>
+              <div
+                style={{
+                  display:      'flex',
+                  flexWrap:     'wrap',
+                  alignItems:   'center',
+                  gap:          '6px',
+                  marginBottom: '12px',
+                  fontSize:     '12px',
+                  color:        '#6B7280',
+                }}
+              >
+                <EditorMetric label="文字" value={editorStats.characters.toLocaleString('ja-JP')} />
+                <EditorMetric label="読了" value={`${editorStats.readingMin}分`} />
+                <EditorMetric label="見出し" value={`${editorStats.headingCount}`} />
+                <EditorMetric label="Mermaid" value={`${editorStats.mermaidCount}`} />
+              </div>
+              <MarkdownEditor
+                ref={editorRef}
+                value={body}
+                onChange={setBody}
+                height={isFullscreen ? 'calc(100vh - 160px)' : '600px'}
+              />
+            </>
           )}
         </Section>
+        </div>
 
         {/* ── セクション: メディア ── */}
         <Section title="メディア（任意）">
@@ -540,6 +768,72 @@ function FieldGroup({
       {children}
     </fieldset>
   );
+}
+
+function EditorMetric({ label, value }: { label: string; value: string }) {
+  return (
+    <span
+      style={{
+        display:      'inline-flex',
+        alignItems:   'center',
+        gap:          '4px',
+        padding:      '4px 8px',
+        border:       '1px solid #E5E7EB',
+        borderRadius: '999px',
+        background:   '#F9FAFB',
+      }}
+    >
+      <span>{label}</span>
+      <strong style={{ color: '#374151', fontWeight: 700 }}>{value}</strong>
+    </span>
+  );
+}
+
+interface MarkdownStats {
+  characters:   number;
+  readingMin:   number;
+  headingCount: number;
+  mermaidCount: number;
+  warnings:     string[];
+}
+
+function analyzeMarkdown(markdown: string): MarkdownStats {
+  const warnings: string[] = [];
+  const lines = markdown.split(/\r?\n/);
+  let inFence = false;
+  let fenceMarker: '```' | '~~~' | null = null;
+  let mermaidCount = 0;
+  let headingCount = 0;
+
+  for (const line of lines) {
+    const trimmed = line.trim();
+    const fence = trimmed.match(/^(```|~~~)\s*([\w-]+)?/) as RegExpMatchArray | null;
+    if (fence) {
+      if (!inFence) {
+        inFence = true;
+        fenceMarker = fence[1] as '```' | '~~~';
+        if ((fence[2] ?? '').toLowerCase() === 'mermaid') mermaidCount += 1;
+      } else if (fenceMarker === fence[1]) {
+        inFence = false;
+        fenceMarker = null;
+      }
+      continue;
+    }
+    if (!inFence && /^ {0,3}#{1,6}\s+/.test(line)) headingCount += 1;
+  }
+
+  if (inFence) warnings.push('コードブロックが閉じられていない可能性があります。');
+  if (/\[[^\]]*\]\(\s*\)/.test(markdown)) warnings.push('URL が空のリンクがあります。');
+  if (/!\[\s*\]\([^)]+\)/.test(markdown)) warnings.push('alt が空の画像があります。');
+  if (mermaidCount > 0) warnings.push('Mermaid 図があります。保存前にプレビュー表示を確認してください。');
+
+  return {
+    characters: markdown.trim().length,
+    readingMin: estimateReadingMin(markdown),
+    headingCount,
+    mermaidCount,
+    warnings,
+  };
 }
 
 const inputStyle: React.CSSProperties = {

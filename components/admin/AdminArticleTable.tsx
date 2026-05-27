@@ -283,7 +283,7 @@ export function AdminArticleTable({ initialArticles, initialTotal }: Props) {
             borderRadius: '8px',
             border:       '1px solid #D1D5DB',
             fontSize:     '14px',
-            width:        '240px',
+            width:        '144px',
           }}
         />
 
@@ -363,12 +363,6 @@ export function AdminArticleTable({ initialArticles, initialTotal }: Props) {
           MDエクスポート（{selectedArticles.length}）
         </button>
 
-        <span style={{ marginLeft: 'auto', fontSize: '13px', color: '#6B7280' }}>
-          {loading
-            ? '読み込み中…'
-            : `${filtered.length} / ${total.toLocaleString('ja-JP')} 件（${page} / ${totalPages} ページ）`}
-        </span>
-
         <Link
           href="/admin/articles/new"
           style={{
@@ -379,10 +373,17 @@ export function AdminArticleTable({ initialArticles, initialTotal }: Props) {
             fontSize:     '14px',
             fontWeight:   600,
             textDecoration: 'none',
+            whiteSpace:   'nowrap',
           }}
         >
           ＋ 新規作成
         </Link>
+
+        <span style={{ marginLeft: 'auto', fontSize: '13px', color: '#6B7280' }}>
+          {loading
+            ? '読み込み中…'
+            : `${filtered.length} / ${total.toLocaleString('ja-JP')} 件（${page} / ${totalPages} ページ）`}
+        </span>
       </div>
 
       {/* ── テーブル ── */}
@@ -682,9 +683,16 @@ function actionBtnStyle(bg: string, color: string): React.CSSProperties {
     border:         'none',
     fontSize:       '12px',
     fontWeight:     600,
+    fontFamily:     'inherit',
+    lineHeight:     1,
     background:     bg,
     color,
     textDecoration: 'none',
-    display:        'inline-block',
+    display:        'inline-flex',
+    alignItems:     'center',
+    justifyContent: 'center',
+    minWidth:       '48px',
+    height:         '26px',
+    boxSizing:      'border-box',
   };
 }
