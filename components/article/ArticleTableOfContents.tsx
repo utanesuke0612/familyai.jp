@@ -32,7 +32,7 @@ export function ArticleTableOfContents({ items }: ArticleTableOfContentsProps) {
       </summary>
 
       <nav aria-label="記事の目次" className="mt-3">
-        <ol className="flex flex-col gap-2">
+        <ol className="flex flex-col" style={{ gap: '0.15rem' }}>
           {items.map((item) => (
             <li key={item.id}>
               <a

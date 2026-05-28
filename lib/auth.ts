@@ -21,6 +21,7 @@ import 'next-auth/jwt';
 import bcrypt              from 'bcryptjs';
 import { eq }              from 'drizzle-orm';
 import { db, users }       from '@/lib/db';
+import { getRateLimiter }  from '@/lib/ratelimit';
 
 // ── NextAuth Session 型拡張 ───────────────────────────────────
 declare module 'next-auth' {
@@ -70,8 +71,19 @@ const credentialsProvider = Credentials({
     email:    { label: 'メールアドレス', type: 'email' },
     password: { label: 'パスワード',     type: 'password' },
   },
-  async authorize(credentials) {
+  async authorize(credentials, request) {
     if (!credentials?.email || !credentials?.password) return null;
+
+    // H-1: ブルートフォース対策 — IP + メール単位で 5 回 / 15 分に制限
+    // fail-open：Redis 障害時でもユーザーをロックアウトしない
+    const ip = (request as Request).headers.get('x-forwarded-for')?.split(',')[0]?.trim()
+      ?? '127.0.0.1';
+    const loginKey = `${ip}:${String(credentials.email).toLowerCase()}`;
+    const loginRl = getRateLimiter('ratelimit:login', 5, '15 m');
+    if (loginRl) {
+      const { success } = await loginRl.limit(loginKey);
+      if (!success) return null;
+    }
 
     const user = await getUserByEmail(credentials.email as string);
     if (!user || !user.passwordHash) return null;

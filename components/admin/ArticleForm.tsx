@@ -14,6 +14,7 @@
 
 import { useEffect, useId, useMemo, useRef, useState } from 'react';
 import { useRouter }        from 'next/navigation';
+import { Maximize2, Minimize2 } from 'lucide-react';
 import { ArticleBody }      from '@/components/article/ArticleBody';
 import { MarkdownEditor, TOOLBAR_ACTIONS, type MarkdownEditorHandle, type ToolbarAction } from '@/components/admin/MarkdownEditor';
 import type { Article }     from '@/lib/db/schema';
@@ -83,10 +84,14 @@ export function ArticleForm({ article }: ArticleFormProps) {
   const editorRef = useRef<MarkdownEditorHandle | null>(null);
   const previewRef = useRef<HTMLDivElement | null>(null);
   const editorStats = useMemo(() => analyzeMarkdown(body), [body]);
+  // M-5: 新規作成時はマウントごとに UUID を生成してタブ間の下書き衝突を防ぐ
+  const [draftUuidForNew] = useState<string>(() =>
+    isEdit ? '' : crypto.randomUUID(),
+  );
   const draftKey = useMemo(() => {
-    const keySlug = isEdit ? article!.slug : slug.trim() || 'new';
-    return `familyai:admin:article-draft:${keySlug}`;
-  }, [article, isEdit, slug]);
+    if (isEdit) return `familyai:admin:article-draft:${article!.slug}`;
+    return `familyai:admin:article-draft:new:${draftUuidForNew}`;
+  }, [article, isEdit, draftUuidForNew]);
   const isDirty = useMemo(() => {
     if (!article) {
       return Boolean(slug || title || description || body || tagsText || thumbnailUrl || published || isFeatured);
@@ -102,7 +107,7 @@ export function ArticleForm({ article }: ArticleFormProps) {
       publishedAt !== dateToInput(article.publishedAt) ||
       thumbnailUrl !== (article.thumbnailUrl ?? '') ||
       isFeatured !== article.isFeatured ||
-      categories.join(',') !== ((article.categories ?? []) as ContentCategory[]).join(',')
+      [...categories].sort().join(',') !== [...((article.categories ?? []) as ContentCategory[])].sort().join(',')  // M-4
     );
   }, [article, body, categories, description, isFeatured, level, published, publishedAt, slug, tagsText, thumbnailUrl, title]);
 
@@ -152,6 +157,13 @@ export function ArticleForm({ article }: ArticleFormProps) {
     document.addEventListener('keydown', onKey);
     return () => document.removeEventListener('keydown', onKey);
   }, [isFullscreen]);
+
+  // L-2: 「下書き保存済み」「下書きを復元しました」を 3 秒後に消す
+  useEffect(() => {
+    if (draftStatus === 'idle') return;
+    const id = window.setTimeout(() => setDraftStatus('idle'), 3000);
+    return () => window.clearTimeout(id);
+  }, [draftStatus]);
 
   function restoreDraft(): void {
     try {
@@ -472,7 +484,9 @@ export function ArticleForm({ article }: ArticleFormProps) {
                   cursor:       'pointer',
                 }}
               >
-                {isFullscreen ? '⛶' : '⛶'}
+                {isFullscreen
+                  ? <Minimize2 size={14} strokeWidth={2} aria-hidden="true" />
+                  : <Maximize2 size={14} strokeWidth={2} aria-hidden="true" />}
               </button>
             </div>
           }

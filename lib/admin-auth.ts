@@ -13,6 +13,7 @@
 
 import { NextResponse } from 'next/server';
 import { auth }         from '@/lib/auth';
+import { logger }       from '@/lib/log';
 
 /** ログイン中ユーザーが管理者かどうかを返す */
 export async function isAdmin(): Promise<boolean> {
@@ -33,8 +34,18 @@ export async function isAdmin(): Promise<boolean> {
 export async function requireAdmin(): Promise<
   { ok: true } | { ok: false; response: NextResponse }
 > {
-  const ok = await isAdmin();
+  // isAdmin() を inline 展開し、失敗時にセッション情報を監査ログへ残す（M-1）
+  const session    = await auth();
+  const adminEmail = process.env.ADMIN_EMAIL;
+  const ok = !!adminEmail &&
+             !!session?.user?.email &&
+             session.user.email === adminEmail;
+
   if (!ok) {
+    logger.warn('admin.access.denied', {
+      email:                session?.user?.email ?? 'unauthenticated',
+      adminEmailConfigured: !!adminEmail,
+    });
     return {
       ok: false,
       response: NextResponse.json(

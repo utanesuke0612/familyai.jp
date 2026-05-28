@@ -130,9 +130,9 @@ export function AdminArticleTable({ initialArticles, initialTotal }: Props) {
     };
   }, [search, categoryFilter, tagFilter, sort, page]);
 
-  const filtered = articles;
-  const visibleSlugs = filtered.map((article) => article.slug);
-  const selectedArticles = filtered.filter((article) => selectedSlugs.has(article.slug));
+  // L-4: filtered は articles の無意味なエイリアスだったため削除
+  const visibleSlugs = articles.map((article) => article.slug);
+  const selectedArticles = articles.filter((article) => selectedSlugs.has(article.slug));
   const allVisibleSelected = visibleSlugs.length > 0 && visibleSlugs.every((slug) => selectedSlugs.has(slug));
   const someVisibleSelected = visibleSlugs.some((slug) => selectedSlugs.has(slug));
 
@@ -213,16 +213,19 @@ export function AdminArticleTable({ initialArticles, initialTotal }: Props) {
       return;
     }
 
-    selectedArticles.forEach((article) => {
-      const blob = new Blob([toMarkdown(article)], { type: 'text/markdown;charset=utf-8' });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = `${article.slug}.md`;
-      document.body.appendChild(a);
-      a.click();
-      a.remove();
-      URL.revokeObjectURL(url);
+    // L-3: ブラウザのブロック防止のため 200ms ずつ遅延してダウンロードを順次発火する
+    selectedArticles.forEach((article, i) => {
+      setTimeout(() => {
+        const blob = new Blob([toMarkdown(article)], { type: 'text/markdown;charset=utf-8' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `${article.slug}.md`;
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        URL.revokeObjectURL(url);
+      }, i * 200);
     });
 
     setFlash({
@@ -382,7 +385,7 @@ export function AdminArticleTable({ initialArticles, initialTotal }: Props) {
         <span style={{ marginLeft: 'auto', fontSize: '13px', color: '#6B7280' }}>
           {loading
             ? '読み込み中…'
-            : `${filtered.length} / ${total.toLocaleString('ja-JP')} 件（${page} / ${totalPages} ページ）`}
+            : `${articles.length} / ${total.toLocaleString('ja-JP')} 件（${page} / ${totalPages} ページ）`}
         </span>
       </div>
 
@@ -411,14 +414,14 @@ export function AdminArticleTable({ initialArticles, initialTotal }: Props) {
             </tr>
           </thead>
           <tbody>
-            {filtered.length === 0 && (
+            {articles.length === 0 && (
               <tr>
                 <td colSpan={9} style={{ padding: '3rem', textAlign: 'center', color: '#9CA3AF' }}>
                   記事が見つかりません
                 </td>
               </tr>
             )}
-            {filtered.map((article) => (
+            {articles.map((article) => (
               <tr key={article.slug} style={{ borderBottom: '1px solid #F3F4F6' }}>
                 <td style={{ padding: '10px 14px' }}>
                   <input

@@ -84,12 +84,27 @@ export const MarkdownEditor = forwardRef<MarkdownEditorHandle, MarkdownEditorPro
         },
       }),
     ],
-    [height],
+    [],  // L-1: height は extension の内容に影響しない（テーマの height: '100%' で対応済み）
   );
 
   useEffect(() => {
     return () => scrollCleanupRef.current?.();
   }, []);
+
+  // applyEdit は useImperativeHandle と内部ツールバーの両方から使うため
+  // ローカル関数として一箇所に定義し、ref 経由でも公開する（C-2）
+  function applyEdit(kind: ToolbarAction): void {
+    const view = editorRef.current;
+    if (!view) return;
+    const selection = view.state.selection.main;
+    const selected = view.state.sliceDoc(selection.from, selection.to);
+    const insert = buildInsert(kind, selected);
+    view.dispatch({
+      changes: { from: selection.from, to: selection.to, insert: insert.text },
+      selection: { anchor: selection.from + insert.cursorOffset },
+    });
+    view.focus();
+  }
 
   useImperativeHandle(ref, () => ({
     focusLine(lineNumber: number) {
@@ -103,34 +118,9 @@ export const MarkdownEditor = forwardRef<MarkdownEditorHandle, MarkdownEditorPro
       view.focus();
     },
     applyEdit(kind: ToolbarAction) {
-      const view = editorRef.current;
-      if (!view) return;
-      const selection = view.state.selection.main;
-      const selected = view.state.sliceDoc(selection.from, selection.to);
-      const insert = buildInsert(kind, selected);
-      view.dispatch({
-        changes: { from: selection.from, to: selection.to, insert: insert.text },
-        selection: { anchor: selection.from + insert.cursorOffset },
-      });
-      view.focus();
+      applyEdit(kind);
     },
   }), []);
-
-  function applyEdit(kind: ToolbarAction): void {
-    const view = editorRef.current;
-    if (!view) return;
-
-    const selection = view.state.selection.main;
-    const selected = view.state.sliceDoc(selection.from, selection.to);
-    const insert = buildInsert(kind, selected);
-    const anchor = selection.from + insert.cursorOffset;
-
-    view.dispatch({
-      changes: { from: selection.from, to: selection.to, insert: insert.text },
-      selection: { anchor },
-    });
-    view.focus();
-  }
 
   return (
     <div style={{ height, display: 'flex', flexDirection: 'column' }}>

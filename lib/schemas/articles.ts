@@ -64,7 +64,7 @@ export const createArticleSchema = z.object({
   level:            z.enum(LEVELS).default('beginner'),
   published:        z.boolean().optional().default(false),
   publishedAt:      optionalDate,
-  thumbnailUrl:     z.string().nullable().optional().transform((v) => v ?? null),
+  thumbnailUrl:     z.string().url().nullable().optional().transform((v) => v ?? null),  // M-3
   isFeatured:       z.boolean().optional().default(false),
 });
 
@@ -77,6 +77,6 @@ export const updateArticleSchema = z.object({
   level:            z.enum(LEVELS).optional(),
   published:        z.boolean().optional(),
   publishedAt:      optionalDate,
-  thumbnailUrl:     z.string().nullable().optional(),
+  thumbnailUrl:     z.string().url().nullable().optional(),  // M-3
   isFeatured:       z.boolean().optional(),
 });

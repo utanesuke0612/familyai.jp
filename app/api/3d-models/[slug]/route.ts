@@ -58,7 +58,8 @@ export async function GET(
 
   // 2. slug バリデーション（DB に流す前の軽い防御）
   const slug = params.slug.trim();
-  if (!slug || !/^[a-z0-9-]{1,120}$/.test(slug)) {
+  // L-5: 先頭・末尾ハイフンを拒否する強化正規表現
+  if (!slug || slug.length > 120 || !/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(slug)) {
     return NextResponse.json(
       { ok: false, error: { code: 'INVALID_SLUG', message: 'slug が不正です。' } },
       { status: 400 },

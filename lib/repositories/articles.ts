@@ -460,5 +460,11 @@ export function incrementViewCount(slug: string): void {
     .update(articles)
     .set({ viewCount: sql`${articles.viewCount} + 1` })
     .where(eq(articles.slug, slug))
-    .catch(() => {/* 失敗しても無視 */});
+    .catch((err: unknown) => {
+      // L-6: サイレント無視ではなく warn ログで可観測性を確保
+      logger.warn('articles.incrementViewCount', {
+        slug,
+        error: err instanceof Error ? err.message : String(err),
+      });
+    });
 }

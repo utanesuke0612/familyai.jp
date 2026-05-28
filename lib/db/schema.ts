@@ -187,7 +187,7 @@ export const userSentenceBookmarks = pgTable(
 
 // ─── user_animations ──────────────────────────────────────────
 /**
- * 【Phase 2 用に残置 — 現状未使用】
+ * 【Phase 2 用に残置 — 現状未使用・目標 2026 Q3 着手】(L-8)
  *
  * 旧: AI 生成アニメーション（HTML）を保存するテーブル。
  * Rev36 で機能を 3D 図鑑にリプレイス (commit 88362a4) し、関連 API・mapper・
@@ -381,8 +381,8 @@ export const tutor3dModels = pgTable(
  * - /api/user/3d-bookmarks CRUD ❌ 未実装
  * - mypage / 詳細ページの ⭐ ボタン UI ❌ 未実装
  *
- * 次の Admin 機能着手時にまとめて UI / API を追加する。
- * Admin が不要と判断した場合は本テーブル + repository も削除する。
+ * TODO(L-7): Phase 2（目標 2026 Q3）で /api/user/3d-bookmarks + UI を接続する。
+ * 期限までに着手しない場合はテーブル + repository を削除すること。
  */
 export const user3dBookmarks = pgTable(
   'user_3d_bookmarks',
