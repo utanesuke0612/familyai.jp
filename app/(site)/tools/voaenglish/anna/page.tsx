@@ -5,6 +5,7 @@
 
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import Image from 'next/image';
 import { SITE } from '@/shared';
 import { auth } from '@/lib/auth';
 import { listUserProgressByPrefix } from '@/lib/repositories/lessons-progress';
@@ -219,12 +220,12 @@ export default async function AnnaTopPage() {
                       className="relative w-full overflow-hidden"
                       style={{ aspectRatio: '16 / 9', background: 'var(--washi-deep)' }}
                     >
-                      {/* eslint-disable-next-line @next/next/no-img-element */}
-                      <img
+                      <Image
                         src={lesson.thumbnail}
                         alt={`Lesson ${lesson.number}: ${lesson.title}`}
-                        loading="lazy"
-                        className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+                        fill
+                        sizes="(max-width: 768px) 100vw, 400px"
+                        className="object-cover transition-transform duration-300 group-hover:scale-105"
                       />
                       {/* 挑戦回数バッジ（0 回時は非表示・Q2=F+B） */}
                       {attempts > 0 && (

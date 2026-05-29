@@ -10,6 +10,7 @@
  */
 
 import { useState, useEffect }  from 'react';
+import Image                     from 'next/image';
 import { useSession }            from 'next-auth/react';
 import { Pencil, Trash2, Check, X } from 'lucide-react';
 import { MarkdownContent }       from '@/components/ui/MarkdownContent';
@@ -180,10 +181,12 @@ export function ArticleCommentList({ articleSlug, reloadTrigger }: ArticleCommen
             <div className="flex items-start justify-between gap-2 mb-3">
               <div className="flex items-center gap-2">
                 {comment.author.image ? (
-                  <img
+                  <Image
                     src={comment.author.image}
                     alt={comment.author.name ?? 'User'}
-                    className="w-7 h-7 rounded-full object-cover flex-shrink-0"
+                    width={28}
+                    height={28}
+                    className="rounded-full object-cover flex-shrink-0"
                   />
                 ) : (
                   <div

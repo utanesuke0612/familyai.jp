@@ -12,6 +12,7 @@
 
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import Image from 'next/image';
 import { auth } from '@/lib/auth';
 import { isAdmin } from '@/lib/admin-auth';
 import { SITE } from '@/shared';
@@ -85,8 +86,7 @@ export default async function MyPage() {
 
           <div className="flex flex-wrap items-center gap-4">
             {session?.user?.image && (
-              // eslint-disable-next-line @next/next/no-img-element
-              <img
+              <Image
                 src={session.user.image}
                 alt=""
                 width={64}

@@ -12,6 +12,7 @@
  */
 
 import { and, ne, or, asc, desc, eq, sql, count, ilike } from 'drizzle-orm';
+import { unstable_cache } from 'next/cache';
 import { db, articles } from '@/lib/db';
 import type { Article, NewArticle } from '@/lib/db/schema';
 import type { Article as ArticleDto, ArticleSummary } from '@/shared/types';
@@ -60,19 +61,23 @@ export interface ArticleListResult {
  * Rev40 (Deepening #3): mapper を内部に内包し、DTO (Article) を返す。
  * 旧版は ArticleRow を返していたため caller 側で `toArticleDetail()` が必要だった。
  */
-export async function getArticle(slug: string): Promise<ArticleDto | null> {
-  try {
-    const rows = await db
-      .select()
-      .from(articles)
-      .where(and(eq(articles.slug, slug), eq(articles.published, true)))
-      .limit(1);
-    const row = rows[0];
-    return row ? toArticleDetail(row) : null;
-  } catch {
-    return null;
-  }
-}
+export const getArticle = unstable_cache(
+  async (slug: string): Promise<ArticleDto | null> => {
+    try {
+      const rows = await db
+        .select()
+        .from(articles)
+        .where(and(eq(articles.slug, slug), eq(articles.published, true)))
+        .limit(1);
+      const row = rows[0];
+      return row ? toArticleDetail(row) : null;
+    } catch {
+      return null;
+    }
+  },
+  ['article-detail'],
+  { tags: ['article-detail'], revalidate: 3600 },
+);
 
 // ─── 管理画面用：記事1件取得（非公開含む） ──────────────────
 
@@ -105,36 +110,40 @@ export async function getArticleForAdmin(slug: string): Promise<ArticleRow | nul
  *        現在は `publishedAt DESC` で index を効かせ、上位 `limit * 4` 件から
  *        Fisher–Yates でアプリ側シャッフルする。多少のバラつきは保ちつつ DB 負荷を抑える。
  */
-export async function getRelatedArticles(
-  currentSlug: string,
-  categories:  string[],
-  limit = 3,
-): Promise<ArticleRow[]> {
-  try {
-    const candidates = await db
-      .select()
-      .from(articles)
-      .where(
-        and(
-          eq(articles.published, true),
-          ne(articles.slug, currentSlug),
-          sql`${articles.categories} && ${categories}::text[]`,
-        ),
-      )
-      .orderBy(desc(articles.publishedAt))
-      .limit(Math.max(limit, limit * 4));  // limit * 4 件から抽選（最低 limit 件）
+export const getRelatedArticles = unstable_cache(
+  async (
+    currentSlug: string,
+    categories:  string[],
+    limit = 3,
+  ): Promise<ArticleRow[]> => {
+    try {
+      const candidates = await db
+        .select()
+        .from(articles)
+        .where(
+          and(
+            eq(articles.published, true),
+            ne(articles.slug, currentSlug),
+            sql`${articles.categories} && ${categories}::text[]`,
+          ),
+        )
+        .orderBy(desc(articles.publishedAt))
+        .limit(Math.max(limit, limit * 4));
 
-    // Fisher–Yates で上位候補をシャッフルして先頭 limit 件を返す
-    const a = candidates.slice();
-    for (let i = a.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [a[i], a[j]] = [a[j]!, a[i]!];
+      // Fisher–Yates で上位候補をシャッフルして先頭 limit 件を返す
+      const a = candidates.slice();
+      for (let i = a.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [a[i], a[j]] = [a[j]!, a[i]!];
+      }
+      return a.slice(0, limit);
+    } catch {
+      return [];
     }
-    return a.slice(0, limit);
-  } catch {
-    return [];
-  }
-}
+  },
+  ['article-related'],
+  { tags: ['article-related'], revalidate: 300 },
+);
 
 // ─── 記事一覧取得（フィルタ + ページネーション） ─────────────
 
@@ -142,79 +151,83 @@ export async function getRelatedArticles(
  * フィルタ・ページネーションに対応した記事一覧を取得する。
  * DB エラー時は空リストを返す（ページが壊れないようにフォールバック）。
  */
-export async function getArticleList(
-  filter:     ArticleListFilter = {},
-  pagination: ArticleListPagination = { page: 1, pageSize: 12 },
-): Promise<ArticleListResult> {
-  const { categories = [], tags = [], level, sort = 'latest', search } = filter;
-  const { page, pageSize } = pagination;
-  const offset = (page - 1) * pageSize;
+export const getArticleList = unstable_cache(
+  async (
+    filter:     ArticleListFilter = {},
+    pagination: ArticleListPagination = { page: 1, pageSize: 12 },
+  ): Promise<ArticleListResult> => {
+    const { categories = [], tags = [], level, sort = 'latest', search } = filter;
+    const { page, pageSize } = pagination;
+    const offset = (page - 1) * pageSize;
 
-  try {
-    // WHERE 句の組み立て
-    const conditions = [eq(articles.published, true)];
+    try {
+      // WHERE 句の組み立て
+      const conditions = [eq(articles.published, true)];
 
-    if (categories.length > 0) {
-      const catConditions = categories.map(
-        (c) => sql`${articles.categories} @> ARRAY[${c}]::text[]`,
-      );
-      conditions.push(
-        catConditions.length === 1 ? catConditions[0]! : or(...catConditions)!,
-      );
+      if (categories.length > 0) {
+        const catConditions = categories.map(
+          (c) => sql`${articles.categories} @> ARRAY[${c}]::text[]`,
+        );
+        conditions.push(
+          catConditions.length === 1 ? catConditions[0]! : or(...catConditions)!,
+        );
+      }
+
+      if (tags.length > 0) {
+        const tagConditions = tags.map(
+          (tag) => sql`${articles.tags} @> ARRAY[${tag}]::text[]`,
+        );
+        conditions.push(
+          tagConditions.length === 1 ? tagConditions[0]! : or(...tagConditions)!,
+        );
+      }
+
+      if (level) {
+        conditions.push(eq(articles.level, level));
+      }
+
+      if (search && search.trim()) {
+        const pattern = `%${escapeLike(search.trim())}%`;
+        conditions.push(
+          or(
+            ilike(articles.title, pattern),
+            ilike(articles.description, pattern),
+          )!,
+        );
+      }
+
+      const whereClause  = and(...conditions);
+      const orderByClause = sort === 'popular'
+        ? desc(articles.viewCount)
+        : desc(articles.publishedAt);
+
+      // 件数 + データを並列取得
+      const [items, countRows] = await Promise.all([
+        db
+          .select()
+          .from(articles)
+          .where(whereClause)
+          .orderBy(orderByClause)
+          .limit(pageSize)
+          .offset(offset),
+        db
+          .select({ total: count() })
+          .from(articles)
+          .where(whereClause),
+      ]);
+
+      const total      = Number(countRows[0]?.total ?? 0);
+      const totalPages = Math.max(1, Math.ceil(total / pageSize));
+
+      return { items, total, totalPages };
+    } catch (err) {
+      logger.error('articles.getArticleList', { error: err instanceof Error ? err.message : String(err) });
+      return { items: [], total: 0, totalPages: 1 };
     }
-
-    if (tags.length > 0) {
-      const tagConditions = tags.map(
-        (tag) => sql`${articles.tags} @> ARRAY[${tag}]::text[]`,
-      );
-      conditions.push(
-        tagConditions.length === 1 ? tagConditions[0]! : or(...tagConditions)!,
-      );
-    }
-
-    if (level) {
-      conditions.push(eq(articles.level, level));
-    }
-
-    if (search && search.trim()) {
-      const pattern = `%${escapeLike(search.trim())}%`;
-      conditions.push(
-        or(
-          ilike(articles.title, pattern),
-          ilike(articles.description, pattern),
-        )!,
-      );
-    }
-
-    const whereClause  = and(...conditions);
-    const orderByClause = sort === 'popular'
-      ? desc(articles.viewCount)
-      : desc(articles.publishedAt);
-
-    // 件数 + データを並列取得
-    const [items, countRows] = await Promise.all([
-      db
-        .select()
-        .from(articles)
-        .where(whereClause)
-        .orderBy(orderByClause)
-        .limit(pageSize)
-        .offset(offset),
-      db
-        .select({ total: count() })
-        .from(articles)
-        .where(whereClause),
-    ]);
-
-    const total      = Number(countRows[0]?.total ?? 0);
-    const totalPages = Math.max(1, Math.ceil(total / pageSize));
-
-    return { items, total, totalPages };
-  } catch (err) {
-    logger.error('articles.getArticleList', { error: err instanceof Error ? err.message : String(err) });
-    return { items: [], total: 0, totalPages: 1 };
-  }
-}
+  },
+  ['article-list'],
+  { tags: ['article-list'], revalidate: 60 },
+);
 
 // ─── 最新記事取得（トップページ用） ──────────────────────────
 
@@ -225,45 +238,53 @@ export async function getArticleList(
  * 旧版は ArticleRow に独自フィールド付与した中間型を返していたが、
  * caller (API route) はすぐに toArticleSummary でラップしていたため統合した。
  */
-export async function getLatestArticles(limit = 6): Promise<ArticleSummary[]> {
-  try {
-    const rows = await db
-      .select()
-      .from(articles)
-      .where(eq(articles.published, true))
-      .orderBy(desc(articles.publishedAt))
-      .limit(limit);
+export const getLatestArticles = unstable_cache(
+  async (limit = 6): Promise<ArticleSummary[]> => {
+    try {
+      const rows = await db
+        .select()
+        .from(articles)
+        .where(eq(articles.published, true))
+        .orderBy(desc(articles.publishedAt))
+        .limit(limit);
 
-    return rows.map(toArticleSummary);
-  } catch (err) {
-    logger.error('articles.getLatestArticles', { error: err instanceof Error ? err.message : String(err) });
-    return [];
-  }
-}
+      return rows.map(toArticleSummary);
+    } catch (err) {
+      logger.error('articles.getLatestArticles', { error: err instanceof Error ? err.message : String(err) });
+      return [];
+    }
+  },
+  ['article-latest'],
+  { tags: ['article-latest'], revalidate: 60 },
+);
 
 /**
  * 公開済み記事に付与されている自由タグ一覧を返す。
  * /learn のタグフィルター候補として使うため、空文字は除外して重複を排除する。
  */
-export async function getArticleTags(limit = 80): Promise<string[]> {
-  try {
-    const rows = await db
-      .select({ tags: articles.tags })
-      .from(articles)
-      .where(eq(articles.published, true))
-      .orderBy(desc(articles.publishedAt))
-      .limit(300);
+export const getArticleTags = unstable_cache(
+  async (limit = 80): Promise<string[]> => {
+    try {
+      const rows = await db
+        .select({ tags: articles.tags })
+        .from(articles)
+        .where(eq(articles.published, true))
+        .orderBy(desc(articles.publishedAt))
+        .limit(300);
 
-    return Array.from(
-      new Set(rows.flatMap((row) => row.tags.map((tag) => tag.trim()).filter(Boolean))),
-    )
-      .sort((a, b) => a.localeCompare(b, 'ja-JP'))
-      .slice(0, limit);
-  } catch (err) {
-    logger.error('articles.getArticleTags', { error: err instanceof Error ? err.message : String(err) });
-    return [];
-  }
-}
+      return Array.from(
+        new Set(rows.flatMap((row) => row.tags.map((tag) => tag.trim()).filter(Boolean))),
+      )
+        .sort((a, b) => a.localeCompare(b, 'ja-JP'))
+        .slice(0, limit);
+    } catch (err) {
+      logger.error('articles.getArticleTags', { error: err instanceof Error ? err.message : String(err) });
+      return [];
+    }
+  },
+  ['article-tags'],
+  { tags: ['article-tags'], revalidate: 300 },
+);
 
 // ─── 管理画面用：全記事取得（非公開含む） ────────────────────
 
@@ -468,3 +489,23 @@ export function incrementViewCount(slug: string): void {
       });
     });
 }
+
+// ─── generateStaticParams 用 ─────────────────────────────────
+
+/** 公開済み全記事の slug を取得（generateStaticParams 用の軽量クエリ） */
+export const getAllPublishedSlugs = unstable_cache(
+  async (): Promise<string[]> => {
+    try {
+      const rows = await db
+        .select({ slug: articles.slug })
+        .from(articles)
+        .where(eq(articles.published, true));
+      return rows.map((r) => r.slug);
+    } catch (err) {
+      logger.error('articles.getAllPublishedSlugs', { error: err instanceof Error ? err.message : String(err) });
+      return [];
+    }
+  },
+  ['article-slugs'],
+  { tags: ['article-slugs'], revalidate: 3600 },
+);

@@ -12,12 +12,14 @@
  */
 
 import type { Metadata }    from 'next';
+import dynamic               from 'next/dynamic';
 import { notFound }         from 'next/navigation';
 import { cache }            from 'react';
 
 import {
   getArticle,
   getRelatedArticles,
+  getAllPublishedSlugs,
   incrementViewCount,
 } from '@/lib/repositories/articles';
 
@@ -28,11 +30,13 @@ import {
  * → generateMetadata と ArticlePage で同じ slug を2回叩かないようにする。
  */
 const getArticleCached = cache(getArticle);
-import { ArticleBody }           from '@/components/article/ArticleBody';
-import { AIChatWidget }          from '@/components/article/AIChatWidget';
-import { FloatingShareButtons }  from '@/components/article/FloatingShareButtons';
+
+// ── 遅延ロード（初期バンドル削減） ─────────────────────────────
+const ArticleBody           = dynamic(() => import('@/components/article/ArticleBody').then(m => m.ArticleBody),           { loading: () => <SkeletonBlock height="60vh" /> });
+const AIChatWidget          = dynamic(() => import('@/components/article/AIChatWidget').then(m => m.AIChatWidget),         { ssr: false, loading: () => <SkeletonBlock height="300px" /> });
+const ArticleComments       = dynamic(() => import('@/components/article/ArticleComments').then(m => m.ArticleComments),       { loading: () => <SkeletonBlock height="200px" /> });
+const FloatingShareButtons  = dynamic(() => import('@/components/article/FloatingShareButtons').then(m => m.FloatingShareButtons),  { loading: () => <SkeletonBlock height="48px" /> });
 import { ArticleTableOfContents } from '@/components/article/ArticleTableOfContents';
-import { ArticleComments }       from '@/components/article/ArticleComments';
 import { ArticleGrid }           from '@/components/article/ArticleGrid';
 import { getArticleBookmarkCount } from '@/lib/repositories/article-bookmarks';
 import { collectArticleHeadings } from '@/lib/articles/toc';
@@ -45,8 +49,29 @@ import {
 } from '@/shared';
 import type { ContentCategory } from '@/shared';
 
-// ISR: 1時間ごとに再検証
+/** 遅延ロード中のスケルトンプレースホルダー */
+function SkeletonBlock({ height }: { height: string }) {
+  return (
+    <div
+      aria-busy="true"
+      style={{
+        height,
+        background: 'var(--paper-2)',
+        borderRadius: '12px',
+        animation: 'pulse-soft 2s ease-in-out infinite',
+      }}
+    />
+  );
+}
+
+// ISR: 1時間ごとに再検証（generateStaticParams に含まれない新規記事も対応）
 export const revalidate = 3600;
+
+// ビルド時に公開済み全記事の静的HTMLを生成。未知の slug も ISR で動的対応。
+export async function generateStaticParams() {
+  const slugs = await getAllPublishedSlugs();
+  return slugs.map((slug) => ({ slug }));
+}
 
 // ── 難易度バッジ色 ────────────────────────────────────────────
 // Rev40 Phase K: Mingei トークンへ統一。難易度の段階感は washi 系の濃淡で表現。

@@ -8,11 +8,12 @@
  */
 
 import type { Metadata } from 'next';
+import dynamic from 'next/dynamic';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 
-import { AIChatWidget }         from '@/components/article/AIChatWidget';
-import { FloatingShareButtons } from '@/components/article/FloatingShareButtons';
+const AIChatWidget         = dynamic(() => import('@/components/article/AIChatWidget').then(m => m.AIChatWidget),         { ssr: false, loading: () => <SkeletonBlock height="300px" /> });
+const FloatingShareButtons = dynamic(() => import('@/components/article/FloatingShareButtons').then(m => m.FloatingShareButtons), { loading: () => <SkeletonBlock height="48px" /> });
 import { MarkdownContent }      from '@/components/ui/MarkdownContent';
 import { DictationPanel }       from '@/components/voaenglish/DictationPanel';
 import { AIEchoPanel }          from '@/components/voaenglish/AIEchoPanel';
@@ -55,6 +56,21 @@ const LEVEL_CEFR: Record<LessonLevel, string> = {
   intermediate: 'B1',
   advanced:     'B2+',
 };
+
+/** 遅延ロード中のスケルトンプレースホルダー */
+function SkeletonBlock({ height }: { height: string }) {
+  return (
+    <div
+      aria-busy="true"
+      style={{
+        height,
+        background: 'var(--paper-2)',
+        borderRadius: '12px',
+        animation: 'pulse-soft 2s ease-in-out infinite',
+      }}
+    />
+  );
+}
 
 // ── generateStaticParams ──────────────────────────────────────────
 export function generateStaticParams(): PageParams[] {

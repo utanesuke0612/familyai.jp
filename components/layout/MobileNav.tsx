@@ -11,6 +11,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { Menu, X, UserCircle, LogOut, ArrowRight } from 'lucide-react';
 import { useSession, signOut } from 'next-auth/react';
 
@@ -145,14 +146,13 @@ export function MobileNav({ onClose }: MobileNavProps) {
               {/* ユーザー情報 */}
               <div className="flex items-center gap-3">
                 {user.image ? (
-                  /* eslint-disable-next-line @next/next/no-img-element */
-                  <img
+                  <Image
                     src={user.image}
                     alt=""
                     width={40}
                     height={40}
                     className="object-cover"
-                    style={{ width: 40, height: 40, border: '1px solid var(--line)' }}
+                    style={{ border: '1px solid var(--line)' }}
                   />
                 ) : (
                   <span

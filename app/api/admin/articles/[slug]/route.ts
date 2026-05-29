@@ -7,6 +7,7 @@
  */
 
 import { NextRequest, NextResponse } from 'next/server';
+import { revalidatePath, revalidateTag } from 'next/cache';
 import { protectAdminRoute, legacyErrorBuilder } from '@/lib/api/admin-guard';
 import { updateArticle, deleteArticle } from '@/lib/repositories/articles';
 import { updateArticleSchema }       from '@/lib/schemas/articles';
@@ -36,6 +37,18 @@ export const PUT = protectAdminRoute<{ slug: string }>(async (req: NextRequest, 
   if (!updated) {
     return NextResponse.json({ error: '記事が見つかりません' }, { status: 404 });
   }
+
+  // キャッシュ破棄
+  revalidatePath('/learn');
+  revalidatePath(`/learn/${slug}`);
+  revalidatePath('/', 'layout');
+  revalidateTag('article-detail');
+  revalidateTag('article-list');
+  revalidateTag('article-latest');
+  revalidateTag('article-related');
+  revalidateTag('article-tags');
+  revalidateTag('article-slugs');
+
   return NextResponse.json({ ok: true, data: updated });
 }, { errorBuilder: legacyErrorBuilder });
 
@@ -46,5 +59,17 @@ export const DELETE = protectAdminRoute<{ slug: string }>(async (_req: NextReque
   if (!ok) {
     return NextResponse.json({ error: '記事が見つかりません' }, { status: 404 });
   }
+
+  // キャッシュ破棄
+  revalidatePath('/learn');
+  revalidatePath(`/learn/${slug}`);
+  revalidatePath('/', 'layout');
+  revalidateTag('article-detail');
+  revalidateTag('article-list');
+  revalidateTag('article-latest');
+  revalidateTag('article-related');
+  revalidateTag('article-tags');
+  revalidateTag('article-slugs');
+
   return NextResponse.json({ ok: true });
 }, { errorBuilder: legacyErrorBuilder });

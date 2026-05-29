@@ -9,6 +9,7 @@
  */
 
 import { NextRequest, NextResponse } from 'next/server';
+import { revalidatePath, revalidateTag } from 'next/cache';
 import { protectAdminRoute, legacyErrorBuilder } from '@/lib/api/admin-guard';
 import { listAllArticles, createArticle } from '@/lib/repositories/articles';
 import { createArticleSchema, adminArticlesQuerySchema } from '@/lib/schemas/articles';
@@ -84,6 +85,18 @@ export const POST = protectAdminRoute(async (req: NextRequest) => {
       viewCount:        0,
       isFeatured:       data.isFeatured,
     });
+
+    // キャッシュ破棄: ページ + Data Cache
+    revalidatePath('/learn');
+    revalidatePath(`/learn/${data.slug}`);
+    revalidatePath('/', 'layout');
+    revalidateTag('article-detail');
+    revalidateTag('article-list');
+    revalidateTag('article-latest');
+    revalidateTag('article-related');
+    revalidateTag('article-tags');
+    revalidateTag('article-slugs');
+
     return NextResponse.json({ ok: true, data: article }, { status: 201 });
   } catch (err: unknown) {
     // slug 重複（PostgreSQL unique 制約違反）

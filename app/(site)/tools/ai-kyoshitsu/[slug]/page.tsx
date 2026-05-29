@@ -12,6 +12,7 @@
  */
 
 import type { Metadata } from 'next';
+import dynamic           from 'next/dynamic';
 import Link              from 'next/link';
 import { notFound }      from 'next/navigation';
 import { SITE }          from '@/shared';
@@ -26,7 +27,22 @@ import {
 } from '@/lib/repositories/3d-models';
 import { STATIC_MODELS_BY_SLUG } from '@/lib/tutor3d/static-models';
 import { ModelDetailClient } from '@/components/tools/3d-tutor/ModelDetailClient';
-import { FloatingShareButtons } from '@/components/article/FloatingShareButtons';
+const FloatingShareButtons = dynamic(() => import('@/components/article/FloatingShareButtons').then(m => m.FloatingShareButtons), { loading: () => <SkeletonBlock height="48px" /> });
+
+/** 遅延ロード中のスケルトンプレースホルダー */
+function SkeletonBlock({ height }: { height: string }) {
+  return (
+    <div
+      aria-busy="true"
+      style={{
+        height,
+        background: 'var(--paper-2)',
+        borderRadius: '12px',
+        animation: 'pulse-soft 2s ease-in-out infinite',
+      }}
+    />
+  );
+}
 
 // ISR: モデル本体は変動少ないので 10 分キャッシュ
 export const revalidate = 600;

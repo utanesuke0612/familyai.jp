@@ -12,6 +12,7 @@
  */
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { useSession, signOut } from 'next-auth/react';
 import { useState, useRef, useEffect } from 'react';
@@ -100,8 +101,7 @@ function UserAvatarMenu() {
         }}
       >
         {user.image ? (
-          /* eslint-disable-next-line @next/next/no-img-element */
-          <img src={user.image} alt={user.name ?? ''} width={36} height={36} className="object-cover w-full h-full" />
+          <Image src={user.image} alt={user.name ?? ''} width={36} height={36} className="object-cover w-full h-full" />
         ) : (
           <span
             className="font-mincho flex items-center justify-center w-full h-full text-sm"

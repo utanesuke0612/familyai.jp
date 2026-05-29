@@ -6,6 +6,7 @@
  */
 
 import { NextRequest, NextResponse } from 'next/server';
+import { revalidatePath, revalidateTag } from 'next/cache';
 import { protectAdminRoute, legacyErrorBuilder } from '@/lib/api/admin-guard';
 import { togglePublished }           from '@/lib/repositories/articles';
 
@@ -17,5 +18,17 @@ export const PATCH = protectAdminRoute<{ slug: string }>(async (_req: NextReques
   if (!result) {
     return NextResponse.json({ error: '記事が見つかりません' }, { status: 404 });
   }
+
+  // キャッシュ破棄
+  revalidatePath('/learn');
+  revalidatePath(`/learn/${slug}`);
+  revalidatePath('/', 'layout');
+  revalidateTag('article-detail');
+  revalidateTag('article-list');
+  revalidateTag('article-latest');
+  revalidateTag('article-related');
+  revalidateTag('article-tags');
+  revalidateTag('article-slugs');
+
   return NextResponse.json({ ok: true, data: result });
 }, { errorBuilder: legacyErrorBuilder });
