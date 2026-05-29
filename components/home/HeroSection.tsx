@@ -22,8 +22,9 @@ function toKanjiNumber(n: number): string {
 }
 
 // ── polaroid に入れるイラスト ──────────────────────────────
-// 家族3人（テラコッタ・ティール・マスタード）がデバイスを囲み、
-// 画面に「愛」と輝く——「AI = 愛」の世界観を絵で伝える。
+// 家族4人（父・母・子2人）がデバイスを囲む——「AI = 愛」の世界観を絵で伝える。
+// 配置: 父（左奥・テラコッタ）母（右奥・ティール）
+//       子1（前左・マスタード）子2（前右・オリーブ）
 function FamilyAIIllustration() {
   return (
     <svg
@@ -58,59 +59,74 @@ function FamilyAIIllustration() {
       <rect x="232" y="244.5" width="14" height="1.5" fill="#c9b393" />
       <rect x="244.5" y="232" width="1.5" height="14" fill="#c9b393" />
 
-      {/* デバイス本体 */}
-      <rect x="74" y="108" width="112" height="82" rx="7" fill="#2a1a12" opacity="0.88" />
-      {/* スクリーン */}
-      <rect x="80" y="114" width="100" height="64" rx="4" fill="#1a2834" />
-      <rect x="80" y="114" width="100" height="64" rx="4" fill="url(#heroScreenGlow)" />
-      {/* 画面中央の「愛」— テラコッタ × マスタードの輝き */}
+      {/* ── デバイス（中央）── */}
+      <rect x="80" y="100" width="100" height="78" rx="7" fill="#2a1a12" opacity="0.88" />
+      <rect x="86" y="106" width="88"  height="60" rx="4" fill="#1a2834" />
+      <rect x="86" y="106" width="88"  height="60" rx="4" fill="url(#heroScreenGlow)" />
+      {/* 画面中央の「愛」 */}
       <text
-        x="130" y="154"
+        x="130" y="143"
         textAnchor="middle"
         fontFamily="'Shippori Mincho','Noto Serif SC',serif"
-        fontSize="30"
+        fontSize="28"
         fill="#d99a2b"
         opacity="0.95"
       >愛</text>
       {/* スタンド */}
-      <rect x="119" y="190" width="22" height="5"  rx="2.5" fill="#2a1a12" opacity="0.5"  />
-      <rect x="106" y="195" width="48" height="4"  rx="2"   fill="#2a1a12" opacity="0.4"  />
+      <rect x="121" y="178" width="18" height="4" rx="2"   fill="#2a1a12" opacity="0.50" />
+      <rect x="109" y="182" width="42" height="3" rx="1.5" fill="#2a1a12" opacity="0.40" />
 
-      {/* 人物 左（テラコッタ＝情熱・ぬくもり） */}
-      <circle cx="72"  cy="75" r="20" fill="#b8412a" opacity="0.85" />
-      <path d="M51 97 Q72 87 93 97 L95 134 Q72 140 49 134 Z" fill="#b8412a" opacity="0.70" />
+      {/* ── 父（左奥・テラコッタ）── */}
+      <circle cx="60" cy="68" r="18" fill="#b8412a" opacity="0.86" />
+      <path d="M42 88 Q60 78 78 88 L80 122 Q60 128 40 122 Z" fill="#b8412a" opacity="0.72" />
       {/* 腕 → デバイスへ */}
       <path
-        d="M88 118 Q102 110 114 114"
-        stroke="#b8412a" strokeWidth="7" strokeLinecap="round"
-        fill="none" opacity="0.60"
+        d="M74 108 Q87 100 100 105"
+        stroke="#b8412a" strokeWidth="6.5" strokeLinecap="round"
+        fill="none" opacity="0.62"
       />
 
-      {/* 人物 右（ティール＝信頼・冷静） */}
-      <circle cx="188" cy="75" r="20" fill="#1f5e62" opacity="0.85" />
-      <path d="M167 97 Q188 87 209 97 L211 134 Q188 140 165 134 Z" fill="#1f5e62" opacity="0.70" />
+      {/* ── 母（右奥・ティール）── */}
+      <circle cx="200" cy="68" r="18" fill="#1f5e62" opacity="0.86" />
+      <path d="M182 88 Q200 78 218 88 L220 122 Q200 128 180 122 Z" fill="#1f5e62" opacity="0.72" />
       {/* 腕 → デバイスへ */}
       <path
-        d="M172 118 Q158 110 146 114"
-        stroke="#1f5e62" strokeWidth="7" strokeLinecap="round"
-        fill="none" opacity="0.60"
+        d="M186 108 Q173 100 160 105"
+        stroke="#1f5e62" strokeWidth="6.5" strokeLinecap="round"
+        fill="none" opacity="0.62"
       />
 
-      {/* 人物 中央（マスタード＝子ども・好奇心・未来） */}
-      <circle cx="130" cy="208" r="16" fill="#d99a2b" opacity="0.90" />
-      <path d="M116 224 Q130 216 144 224 L144 252 Q130 256 116 252 Z" fill="#d99a2b" opacity="0.82" />
+      {/* ── 子1（前左・マスタード）── */}
+      <circle cx="88" cy="205" r="14" fill="#d99a2b" opacity="0.90" />
+      <path d="M75 219 Q88 212 101 219 L101 250 Q88 254 75 250 Z" fill="#d99a2b" opacity="0.82" />
+      {/* 画面を指さす小さな腕 */}
+      <path
+        d="M99 210 Q108 200 116 188"
+        stroke="#d99a2b" strokeWidth="4.5" strokeLinecap="round"
+        fill="none" opacity="0.50"
+      />
 
-      {/* 画面の光の筋（アンビエント感） */}
-      <line x1="80"  y1="114" x2="50"  y2="82"  stroke="#d99a2b" strokeWidth="1" opacity="0.16" />
-      <line x1="180" y1="114" x2="210" y2="82"  stroke="#d99a2b" strokeWidth="1" opacity="0.16" />
-      <line x1="130" y1="114" x2="130" y2="72"  stroke="#d99a2b" strokeWidth="1" opacity="0.12" />
+      {/* ── 子2（前右・オリーブ）── */}
+      <circle cx="172" cy="205" r="14" fill="#6f7a3a" opacity="0.88" />
+      <path d="M159 219 Q172 212 185 219 L185 250 Q172 254 159 250 Z" fill="#6f7a3a" opacity="0.80" />
+      {/* 画面を指さす小さな腕 */}
+      <path
+        d="M161 210 Q152 200 144 188"
+        stroke="#6f7a3a" strokeWidth="4.5" strokeLinecap="round"
+        fill="none" opacity="0.50"
+      />
 
-      {/* スパークル（casual 必須装飾） */}
-      <text x="36"  y="52"  fontSize="14" fill="#d99a2b" opacity="0.62">✦</text>
-      <text x="208" y="46"  fontSize="11" fill="#b8412a" opacity="0.50">✦</text>
-      <text x="226" y="152" fontSize="9"  fill="#d99a2b" opacity="0.36">✦</text>
-      <text x="22"  y="150" fontSize="9"  fill="#1f5e62" opacity="0.30">✦</text>
-      <text x="124" y="38"  fontSize="8"  fill="#b8412a" opacity="0.28">✦</text>
+      {/* ── 画面の光の筋 ── */}
+      <line x1="86"  y1="106" x2="52"  y2="76"  stroke="#d99a2b" strokeWidth="1" opacity="0.15" />
+      <line x1="174" y1="106" x2="208" y2="76"  stroke="#d99a2b" strokeWidth="1" opacity="0.15" />
+      <line x1="130" y1="106" x2="130" y2="68"  stroke="#d99a2b" strokeWidth="1" opacity="0.10" />
+
+      {/* ── スパークル ── */}
+      <text x="30"  y="50"  fontSize="13" fill="#d99a2b" opacity="0.60">✦</text>
+      <text x="214" y="44"  fontSize="10" fill="#b8412a" opacity="0.48">✦</text>
+      <text x="228" y="148" fontSize="9"  fill="#d99a2b" opacity="0.34">✦</text>
+      <text x="20"  y="146" fontSize="9"  fill="#1f5e62" opacity="0.28">✦</text>
+      <text x="126" y="36"  fontSize="8"  fill="#6f7a3a" opacity="0.32">✦</text>
     </svg>
   );
 }
