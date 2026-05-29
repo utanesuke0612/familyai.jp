@@ -172,7 +172,7 @@ export default function HomePage() {
         >
           <div className="closing-casual">
             <div className="sign">
-              またお会いしましょう
+              家族の物語は、まだ始まったばかり。
               <small>· AI = 愛 ·</small>
             </div>
           </div>
