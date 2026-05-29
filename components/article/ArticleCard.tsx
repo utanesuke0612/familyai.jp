@@ -2,10 +2,10 @@
  * components/article/ArticleCard.tsx
  * familyai.jp — 記事カードコンポーネント（Rev40 Phase B: Mingei リファクタ）
  *
- * - サムネイル：washi-light 背景 + 線画アイコン（カテゴリ別 stroke-1）
- * - ボディ ：通し番号「№ XXX」+ 日付（ドット区切り）+ 明朝タイトル
- * - メタ  ：カテゴリ / レベル / 読了時間 を縦罫線で区切る
- * - ホバー：紙が右下に 2px ずれる（box-mingei::after）+ タイトル朱色
+ * - ヘッダー行：公開日（左）| タグ最大2個（右）
+ * - ボディ    ：明朝タイトル + 説明文
+ * - メタ      ：カテゴリ / レベル / 読了時間 を縦罫線で区切る
+ * - ホバー    ：紙が右下に 2px ずれる（box-mingei::after）+ タイトル朱色
  */
 
 import Link from 'next/link';
@@ -56,10 +56,7 @@ function formatDateDot(value: Date | string | null | undefined): string | null {
 export function ArticleCard({ article, featured = false }: ArticleCardProps) {
   const primaryCategory = (article.categories[0] ?? 'other') as ContentCategory;
   const level           = article.level as DifficultyLevel;
-
-  const serial = article.viewCount !== undefined
-    ? `№ ${String(article.viewCount).padStart(3, '0')}`
-    : '№ ---';
+  const visibleTags     = (article.tags ?? []).slice(0, 2);
 
   const readingMin   = article.body ? estimateReadingMin(article.body) : null;
   const dateStr      = formatDateDot(article.publishedAt);
@@ -72,19 +69,35 @@ export function ArticleCard({ article, featured = false }: ArticleCardProps) {
       aria-label={`${article.title} — 記事を読む`}
     >
       <article className="box-ehon p-0 transition-transform duration-200 hover:-translate-y-1">
-        {/* ── ボディ ── */}
         <div className="p-5 flex flex-col gap-3">
 
-          {/* 通し番号 + 短罫線 + 日付 */}
-          <div className="flex items-center justify-between gap-2">
-            <div className="flex items-center gap-2">
-              <span className="serial">{serial}</span>
-              <span className="rule-mingei" aria-hidden="true" />
-            </div>
-            {dateStr && (
-              <time className="serial" dateTime={dateTimeAttr}>
+          {/* 公開日（左）+ タグ最大2個（右） */}
+          <div className="flex items-center justify-between gap-2 min-w-0">
+            {dateStr ? (
+              <time className="serial shrink-0" dateTime={dateTimeAttr}>
                 {dateStr}
               </time>
+            ) : (
+              <span />
+            )}
+            {visibleTags.length > 0 && (
+              <div className="flex gap-1 min-w-0">
+                {visibleTags.map((tag) => (
+                  <span
+                    key={tag}
+                    className="font-mincho text-[11px] truncate"
+                    style={{
+                      color:        'var(--sumi-light)',
+                      border:       '1px solid var(--line-soft)',
+                      borderRadius: '4px',
+                      padding:      '2px 6px',
+                      maxWidth:     '90px',
+                    }}
+                  >
+                    #{tag}
+                  </span>
+                ))}
+              </div>
             )}
           </div>
 
@@ -129,24 +142,6 @@ export function ArticleCard({ article, featured = false }: ArticleCardProps) {
             )}
           </div>
 
-          {article.tags && article.tags.length > 0 && (
-            <div className="flex flex-wrap gap-1.5">
-              {article.tags.slice(0, 3).map((tag) => (
-                <span
-                  key={tag}
-                  className="font-mincho text-[11px]"
-                  style={{
-                    color:        'var(--sumi-light)',
-                    border:       '1px solid var(--line-soft)',
-                    borderRadius: '4px',
-                    padding:      '2px 6px',
-                  }}
-                >
-                  #{tag}
-                </span>
-              ))}
-            </div>
-          )}
         </div>
       </article>
     </Link>
