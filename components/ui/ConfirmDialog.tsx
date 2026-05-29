@@ -231,7 +231,7 @@ function ConfirmDialog({
               padding: '8px 18px',
               borderRadius: '999px',
               border: 'none',
-              background: options.destructive ? '#DC2626' : 'var(--color-orange, #F26B1F)',
+              background: options.destructive ? '#DC2626' : 'var(--terracotta)',
               color: 'white',
               fontSize: 'inherit',
               fontWeight: 700,

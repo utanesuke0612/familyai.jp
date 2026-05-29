@@ -163,6 +163,21 @@ export default function HomePage() {
       <HeroSection />
       <StatsRow />
       <ToolsListSection />
+
+      {/* ── クロージング sign-off（familyaidesign casual） ── */}
+      <section style={{ paddingBlock: 'var(--section-py)' }}>
+        <div
+          className="max-w-container mx-auto"
+          style={{ paddingInline: 'var(--container-px)' }}
+        >
+          <div className="closing-casual">
+            <div className="sign">
+              またお会いしましょう
+              <small>· AI = 愛 ·</small>
+            </div>
+          </div>
+        </div>
+      </section>
     </>
   );
 }

@@ -24,7 +24,7 @@ interface Props {
 
 export function AdminArticleBookmarkTable({ initialBookmarks, initialTotal }: Props) {
   const [bookmarks, setBookmarks] = useState<BookmarkRow[]>(initialBookmarks);
-  const [total,     setTotal]     = useState(initialTotal);
+  const [,         setTotal]     = useState(initialTotal);
   const [search,    setSearch]    = useState('');
   const [deleting,  setDeleting]  = useState<string | null>(null);
 

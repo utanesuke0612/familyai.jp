@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from 'next';
-import { Zen_Kaku_Gothic_New, Shippori_Mincho } from 'next/font/google';
+import { Zen_Kaku_Gothic_New, Shippori_Mincho, DM_Mono, Caveat } from 'next/font/google';
 import { SpeedInsights }          from '@vercel/speed-insights/next';
 import { GoogleAnalytics }        from '@/components/analytics/GoogleAnalytics';
 import { Providers }              from '@/components/Providers';
@@ -30,6 +30,22 @@ const shipporiMincho = Shippori_Mincho({
   weight:   ['500', '700', '800'],
   subsets:  ['latin'],
   variable: '--font-display',
+  display:  'swap',
+  preload:  true,
+});
+
+const dmMono = DM_Mono({
+  weight:   ['400', '500'],
+  subsets:  ['latin'],
+  variable: '--font-mono',
+  display:  'swap',
+  preload:  true,
+});
+
+const caveat = Caveat({
+  weight:   ['400', '700'],
+  subsets:  ['latin'],
+  variable: '--font-hand',
   display:  'swap',
   preload:  true,
 });
@@ -96,7 +112,7 @@ export const metadata: Metadata = {
 export const viewport: Viewport = {
   width:              'device-width',
   initialScale:       1,
-  themeColor:         '#FDF6ED',
+  themeColor:         '#f3ead8',
   colorScheme:        'light',
   viewportFit:        'cover',   // iOS ノッチ対応
 };
@@ -110,15 +126,15 @@ export default function RootLayout({
   return (
     <html
       lang="ja"
-      className={`${zenKakuGothic.variable} ${shipporiMincho.variable}`}
+      className={`${zenKakuGothic.variable} ${shipporiMincho.variable} ${dmMono.variable} ${caveat.variable}`}
     >
-      <body className="antialiased full-height" style={{ backgroundColor: 'var(--color-cream)' }}>
+      <body className="antialiased full-height" style={{ backgroundColor: 'var(--paper)' }}>
 
         {/* スキップリンク（キーボードアクセシビリティ・全ページ共通） */}
         <a
           href="#main-content"
           className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-toast focus:px-4 focus:py-2 focus:rounded-lg focus:font-bold"
-          style={{ background: 'var(--color-orange)', color: 'white' }}
+          style={{ background: 'var(--terracotta)', color: 'var(--paper)' }}
         >
           メインコンテンツへスキップ
         </a>

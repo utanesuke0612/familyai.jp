@@ -127,7 +127,7 @@ function makeComponents(color: string, fontSize: string): Components {
         href={href}
         target="_blank"
         rel="noopener noreferrer"
-        style={{ color: 'var(--color-orange)', textDecoration: 'underline' }}
+        style={{ color: 'var(--terracotta)', textDecoration: 'underline' }}
       >
         {children}
       </a>
@@ -136,7 +136,7 @@ function makeComponents(color: string, fontSize: string): Components {
     blockquote: ({ children }) => (
       <blockquote
         style={{
-          borderLeft:  '3px solid var(--color-orange)',
+          borderLeft:  '3px solid var(--terracotta)',
           paddingLeft: '0.75em',
           margin:      '0 0 0.6em',
           opacity:     0.85,

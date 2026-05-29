@@ -69,7 +69,7 @@ export function HeroSection() {
           }}
         >
           AIは、家族を<br />
-          <span style={{ color: 'var(--shu)' }}>もっと幸せに</span><br />
+          <span style={{ color: 'var(--terracotta)' }}>もっと<span className="hl">幸せ</span>に</span><br />
           する道具。
         </h1>
 

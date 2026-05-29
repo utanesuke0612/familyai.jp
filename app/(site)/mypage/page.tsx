@@ -210,6 +210,23 @@ export default async function MyPage() {
                   <span style={{ color: 'var(--shu)' }}>→</span>
                 </Link>
               </li>
+              <li>
+                <Link
+                  href="/mypage/bookmarks?tab=articles"
+                  className="flex items-center justify-between rounded-2xl p-3"
+                  style={{
+                    background: 'var(--washi)',
+                    border: '1px solid var(--line)',
+                    color: 'var(--sumi)',
+                  }}
+                >
+                  <span className="flex items-center gap-2">
+                    <span className="text-xl" aria-hidden="true">🔖</span>
+                    <span className="font-semibold">記事</span>
+                  </span>
+                  <span style={{ color: 'var(--shu)' }}>→</span>
+                </Link>
+              </li>
               {/* Rev36: AI教室（アニメ生成）は 3D 図鑑に置換済み・履歴ページは Phase 2 で再設計予定 */}
               <li>
                 <Link

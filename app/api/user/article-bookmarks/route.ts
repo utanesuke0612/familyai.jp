@@ -12,7 +12,7 @@
 
 import { NextRequest, NextResponse }  from 'next/server';
 import { z }                           from 'zod';
-import { eq, and, desc, count, sql }  from 'drizzle-orm';
+import { eq, and, desc, sql }  from 'drizzle-orm';
 import { auth }                        from '@/lib/auth';
 import { db, userArticleBookmarks }    from '@/lib/db';
 import { verifyCsrf }                  from '@/lib/csrf';

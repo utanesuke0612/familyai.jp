@@ -58,64 +58,76 @@ const config: Config = {
         input:  'hsl(var(--input))',
         ring:   'hsl(var(--ring))',
 
-        // ── familyai.jp ブランドカラー ─────────────────
-        cream:           '#FDF6ED',
-        peach:           '#FFAD80',
-        'peach-light':   '#FFD4B2',
-        orange:          '#FF8C42',
-        beige:           '#F5E6D0',
-        'beige-dark':    '#E8CFA8',
-        brown:           '#8B5E3C',
-        'brown-light':   '#B5896A',
-        sky:             '#C8E8F8',
-        mint:            '#B8EDD8',
-        yellow:          '#FFE066',
+        // ── familyaidesign casual ブランドカラー ──────────
+        paper:          '#f3ead8',
+        'paper-2':      '#ece1c9',
+        'paper-3':      '#f7f0dd',
+        'paper-shadow': '#d8c9a8',
+        ink:            '#1f1a17',
+        'ink-2':        '#4a3f37',
+        'ink-3':        '#7a6a5d',
+        terracotta:     '#b8412a',
+        'terracotta-deep': '#8a2e1c',
+        teal:           '#1f5e62',
+        olive:          '#6f7a3a',
+        mustard:        '#d99a2b',
 
-        // ── Rev40 Phase A: 民藝（Mingei）パレット ─────
-        // CSS 変数を直接参照する形で Tailwind class 経由でも使える
-        // 例: text-sumi / bg-washi / border-line
-        washi:        '#F5EDDE',
-        'washi-deep': '#ECDFC9',
-        'washi-light':'#FBF5E8',
-        sumi:         '#2A1A12',
-        'sumi-light': '#6B5843',
-        'sumi-soft':  '#9A8470',
-        shu:          '#D04A2E',
-        'shu-deep':   '#A8341F',
-        'shu-soft':   '#E89077',
-        line:         '#C9B393',
-        'line-soft':  '#E2D2B5',
+        // ── 旧ブランドカラー（エイリアス） ──────────────
+        cream:           '#f3ead8',
+        peach:           '#e89077',
+        'peach-light':   '#f7f0dd',
+        orange:          '#b8412a',
+        beige:           '#ece1c9',
+        'beige-dark':    '#d8c9a8',
+        brown:           '#1f1a17',
+        'brown-light':   '#4a3f37',
+        sky:             '#ece1c9',
+        mint:            '#ece1c9',
+        yellow:          '#d99a2b',
+
+        // ── 民藝（Mingei）トークン（エイリアス） ─────
+        washi:        '#f3ead8',
+        'washi-deep': '#ece1c9',
+        'washi-light':'#f7f0dd',
+        sumi:         '#1f1a17',
+        'sumi-light': '#4a3f37',
+        'sumi-soft':  '#7a6a5d',
+        shu:          '#b8412a',
+        'shu-deep':   '#8a2e1c',
+        'shu-soft':   '#e89077',
+        line:         '#d8c9a8',
+        'line-soft':  '#e2d2b5',
 
         // ── ロール別カラー ─────────────────────────────
         papa: {
-          bg:     '#C8E8F8',   // sky
-          accent: '#4A90C4',
-          text:   '#1a4f72',
-          border: '#9dd0ed',
+          bg:     '#ece1c9',
+          accent: '#1f5e62',
+          text:   '#1f1a17',
+          border: '#d8c9a8',
         },
         mama: {
-          bg:     '#FFD4B2',   // peach-light
-          accent: '#FF8C42',   // orange
-          text:   '#8B3a00',
-          border: '#ffb980',
+          bg:     '#f7f0dd',
+          accent: '#b8412a',
+          text:   '#1f1a17',
+          border: '#e89077',
         },
         kids: {
-          bg:     '#B8EDD8',   // mint
-          accent: '#2EAA6E',
-          text:   '#145c38',
-          border: '#7ddbb8',
+          bg:     '#ece1c9',
+          accent: '#6f7a3a',
+          text:   '#1f1a17',
+          border: '#d8c9a8',
         },
         senior: {
-          bg:     '#FFE066',   // yellow
-          accent: '#C07800',
-          text:   '#6b4200',
-          border: '#f5c800',
+          bg:     '#f7f0dd',
+          accent: '#d99a2b',
+          text:   '#1f1a17',
+          border: '#d8c9a8',
         },
         common: {
-          bg:     '#FDF6ED',   // cream
+          bg:     '#f3ead8',
           accent: '#3060D0',
-          text:   '#1a3580',
-          border: '#b0c4f0',
+          text:   '#1f1a17',
+          border: '#d8c9a8',
         },
       },
 
@@ -123,10 +135,11 @@ const config: Config = {
       // フォントファミリー
       // ══════════════════════════════════════════════════
       fontFamily: {
-        body:    ['var(--font-body)',    'Zen Maru Gothic', 'sans-serif'],
-        display: ['var(--font-display)', 'Kaisei Opti',     'serif'],
-        sans:    ['var(--font-body)',    'Zen Maru Gothic', 'sans-serif'],
-        mono:    ['Courier New', 'Courier', 'monospace'],
+        body:    ['var(--font-body)',    'Zen Kaku Gothic Antique', 'Noto Sans SC', 'Nunito Sans', 'sans-serif'],
+        display: ['var(--font-display)', 'Shippori Mincho', 'Noto Serif SC', 'Playfair Display', 'serif'],
+        sans:    ['var(--font-body)',    'Zen Kaku Gothic Antique', 'Noto Sans SC', 'Nunito Sans', 'sans-serif'],
+        mono:    ['DM Mono', 'JetBrains Mono', 'monospace'],
+        hand:    ['Caveat', 'Shadows Into Light', 'cursive'],
       },
 
       // ══════════════════════════════════════════════════
@@ -146,15 +159,15 @@ const config: Config = {
       // ボックスシャドウ
       // ══════════════════════════════════════════════════
       boxShadow: {
-        'warm-sm': '0 2px 8px rgba(139, 94, 60, 0.08)',
-        'warm':    '0 4px 24px rgba(139, 94, 60, 0.12)',
-        'warm-lg': '0 8px 48px rgba(139, 94, 60, 0.16)',
-        'peach':   '0 4px 24px rgba(255, 173, 128, 0.35)',
-        'orange':  '0 4px 24px rgba(255, 140, 66, 0.40)',
-        'orange-lg':'0 6px 32px rgba(255, 140, 66, 0.50)',
-        'sky':     '0 4px 24px rgba(200, 232, 248, 0.50)',
-        'mint':    '0 4px 24px rgba(184, 237, 216, 0.50)',
-        'inner-warm': 'inset 0 2px 8px rgba(139, 94, 60, 0.06)',
+        'warm-sm': '0 2px 8px rgba(40, 28, 18, 0.08)',
+        'warm':    '0 14px 30px -12px rgba(40, 28, 18, 0.45), 0 4px 10px -4px rgba(40, 28, 18, 0.25)',
+        'warm-lg': '0 20px 50px -12px rgba(40, 28, 18, 0.50), 0 8px 20px -6px rgba(40, 28, 18, 0.30)',
+        'peach':   '0 4px 24px rgba(184, 65, 42, 0.20)',
+        'orange':  '0 4px 12px rgba(184, 65, 42, 0.35)',
+        'orange-lg':'0 6px 32px rgba(184, 65, 42, 0.50)',
+        'sky':     '0 4px 24px rgba(31, 94, 98, 0.15)',
+        'mint':    '0 4px 24px rgba(111, 122, 58, 0.15)',
+        'inner-warm': 'inset 0 2px 8px rgba(40, 28, 18, 0.06)',
       },
 
       // ══════════════════════════════════════════════════

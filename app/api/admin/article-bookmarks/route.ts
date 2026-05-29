@@ -7,7 +7,7 @@
  */
 
 import { NextRequest, NextResponse }      from 'next/server';
-import { desc, eq, ilike, or, sql, and } from 'drizzle-orm';
+import { desc, eq, ilike, sql, and } from 'drizzle-orm';
 import { protectAdminRoute }              from '@/lib/api/admin-guard';
 import { db, userArticleBookmarks, users } from '@/lib/db';
 
