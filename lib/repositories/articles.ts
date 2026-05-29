@@ -61,23 +61,19 @@ export interface ArticleListResult {
  * Rev40 (Deepening #3): mapper を内部に内包し、DTO (Article) を返す。
  * 旧版は ArticleRow を返していたため caller 側で `toArticleDetail()` が必要だった。
  */
-export const getArticle = unstable_cache(
-  async (slug: string): Promise<ArticleDto | null> => {
-    try {
-      const rows = await db
-        .select()
-        .from(articles)
-        .where(and(eq(articles.slug, slug), eq(articles.published, true)))
-        .limit(1);
-      const row = rows[0];
-      return row ? toArticleDetail(row) : null;
-    } catch {
-      return null;
-    }
-  },
-  ['article-detail'],
-  { tags: ['article-detail'], revalidate: 3600 },
-);
+export async function getArticle(slug: string): Promise<ArticleDto | null> {
+  try {
+    const rows = await db
+      .select()
+      .from(articles)
+      .where(and(eq(articles.slug, slug), eq(articles.published, true)))
+      .limit(1);
+    const row = rows[0];
+    return row ? toArticleDetail(row) : null;
+  } catch {
+    return null;
+  }
+}
 
 // ─── 管理画面用：記事1件取得（非公開含む） ──────────────────
 
@@ -110,40 +106,36 @@ export async function getArticleForAdmin(slug: string): Promise<ArticleRow | nul
  *        現在は `publishedAt DESC` で index を効かせ、上位 `limit * 4` 件から
  *        Fisher–Yates でアプリ側シャッフルする。多少のバラつきは保ちつつ DB 負荷を抑える。
  */
-export const getRelatedArticles = unstable_cache(
-  async (
-    currentSlug: string,
-    categories:  string[],
-    limit = 3,
-  ): Promise<ArticleRow[]> => {
-    try {
-      const candidates = await db
-        .select()
-        .from(articles)
-        .where(
-          and(
-            eq(articles.published, true),
-            ne(articles.slug, currentSlug),
-            sql`${articles.categories} && ${categories}::text[]`,
-          ),
-        )
-        .orderBy(desc(articles.publishedAt))
-        .limit(Math.max(limit, limit * 4));
+export async function getRelatedArticles(
+  currentSlug: string,
+  categories:  string[],
+  limit = 3,
+): Promise<ArticleRow[]> {
+  try {
+    const candidates = await db
+      .select()
+      .from(articles)
+      .where(
+        and(
+          eq(articles.published, true),
+          ne(articles.slug, currentSlug),
+          sql`${articles.categories} && ${categories}::text[]`,
+        ),
+      )
+      .orderBy(desc(articles.publishedAt))
+      .limit(Math.max(limit, limit * 4));
 
-      // Fisher–Yates で上位候補をシャッフルして先頭 limit 件を返す
-      const a = candidates.slice();
-      for (let i = a.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [a[i], a[j]] = [a[j]!, a[i]!];
-      }
-      return a.slice(0, limit);
-    } catch {
-      return [];
+    // Fisher–Yates で上位候補をシャッフルして先頭 limit 件を返す
+    const a = candidates.slice();
+    for (let i = a.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [a[i], a[j]] = [a[j]!, a[i]!];
     }
-  },
-  ['article-related'],
-  { tags: ['article-related'], revalidate: 300 },
-);
+    return a.slice(0, limit);
+  } catch {
+    return [];
+  }
+}
 
 // ─── 記事一覧取得（フィルタ + ページネーション） ─────────────
 
