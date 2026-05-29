@@ -440,7 +440,7 @@ export default async function ArticlePage({
                 tags:         a.tags,
                 level:        a.level,
                 thumbnailUrl: a.thumbnailUrl ?? null,
-                publishedAt:  a.publishedAt?.toISOString() ?? null,
+                publishedAt:  a.publishedAt ? new Date(a.publishedAt).toISOString() : null,
                 viewCount:    a.viewCount,
                 body:         a.body,
               }))}
