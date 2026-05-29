@@ -32,7 +32,9 @@ import { ArticleBody }           from '@/components/article/ArticleBody';
 import { AIChatWidget }          from '@/components/article/AIChatWidget';
 import { FloatingShareButtons }  from '@/components/article/FloatingShareButtons';
 import { ArticleTableOfContents } from '@/components/article/ArticleTableOfContents';
-import { ArticleGrid }  from '@/components/article/ArticleGrid';
+import { ArticleComments }       from '@/components/article/ArticleComments';
+import { ArticleGrid }           from '@/components/article/ArticleGrid';
+import { getArticleBookmarkCount } from '@/lib/repositories/article-bookmarks';
 import { collectArticleHeadings } from '@/lib/articles/toc';
 import {
   SITE,
@@ -164,11 +166,11 @@ export default async function ArticlePage({
   // バックグラウンドで閲覧数インクリメント（await しない）
   incrementViewCount(params.slug);
 
-  // 関連記事
-  const relatedArticles = await getRelatedArticles(
-    article.slug,
-    article.categories,
-  );
+  // 関連記事 + ブックマーク件数（並列取得）
+  const [relatedArticles, bookmarkCount] = await Promise.all([
+    getRelatedArticles(article.slug, article.categories),
+    getArticleBookmarkCount(article.slug),
+  ]);
 
   // 計算済みメタ
   // Rev40 (Deepening #3): article は DTO (Article) — level は narrow 済み、
@@ -346,7 +348,12 @@ export default async function ArticlePage({
               <FloatingShareButtons
                 title={article.title}
                 url={`${SITE.url}/learn/${article.slug}`}
+                slug={article.slug}
+                bookmarkCount={bookmarkCount}
               />
+
+              {/* ── コメントセクション ── */}
+              <ArticleComments articleSlug={article.slug} />
             </div>
 
             {/* ── 右：スティッキーサイドバー ── */}

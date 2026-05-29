@@ -26,9 +26,10 @@ import {
   useSentenceBookmarkList,
   type SentenceBookmarkItem,
 } from '@/lib/voaenglish/sentence-bookmark-store';
+import { useArticleBookmarkList } from '@/lib/article-bookmark-list-store';
 import { rowsToCsv } from '@/shared';
 
-type TabKey = 'words' | 'sentences';
+type TabKey = 'words' | 'sentences' | 'articles';
 
 // ─── ページ本体（Suspense で囲む必要がある useSearchParams） ──
 export default function BookmarksPage() {
@@ -43,7 +44,10 @@ function BookmarksInner() {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
-  const tab: TabKey = searchParams.get('tab') === 'sentences' ? 'sentences' : 'words';
+  const tabParam = searchParams.get('tab');
+  const tab: TabKey =
+    tabParam === 'sentences' ? 'sentences' :
+    tabParam === 'articles'  ? 'articles'  : 'words';
 
   const switchTab = (next: TabKey) => {
     const sp = new URLSearchParams(searchParams.toString());
@@ -94,6 +98,7 @@ function BookmarksInner() {
           >
             <TabButton active={tab === 'words'}     label="📚 単語"     onClick={() => switchTab('words')} />
             <TabButton active={tab === 'sentences'} label="📜 センテンス" onClick={() => switchTab('sentences')} />
+            <TabButton active={tab === 'articles'}  label="🔖 記事"     onClick={() => switchTab('articles')} />
           </div>
         </div>
       </header>
@@ -102,6 +107,7 @@ function BookmarksInner() {
         <div className="max-w-container mx-auto" style={{ paddingInline: 'var(--container-px)' }}>
           {tab === 'words'     && <WordsTab />}
           {tab === 'sentences' && <SentencesTab />}
+          {tab === 'articles'  && <ArticlesTab />}
         </div>
       </section>
     </main>
@@ -401,6 +407,96 @@ function SentencesTab() {
             ))}
           </ul>
         </section>
+      ))}
+    </div>
+  );
+}
+
+// ════════════════════════════════════════════════════════════════
+// 🔖 記事タブ
+// ════════════════════════════════════════════════════════════════
+function ArticlesTab() {
+  const { items, loading, isLoggedIn, remove } = useArticleBookmarkList();
+
+  if (!loading && !isLoggedIn) {
+    return (
+      <div
+        className="rounded-[28px] p-8 text-center"
+        style={{ background: 'var(--washi-light)', border: '1px solid var(--line)' }}
+      >
+        <h2 className="font-mincho text-xl mb-2" style={{ color: 'var(--sumi)', fontWeight: 500 }}>
+          記事ブックマークはログイン会員専用です
+        </h2>
+        <p className="text-sm leading-relaxed mb-6" style={{ color: 'var(--sumi-light)' }}>
+          ログインすると、気になった記事をブックマークしてあとで読み返せます。
+        </p>
+        <Link
+          href="/auth/signin"
+          className="inline-flex items-center rounded-full px-6 text-sm font-semibold"
+          style={{ minHeight: '44px', background: 'var(--shu)', color: 'white' }}
+        >
+          🌱 ログイン / 登録
+        </Link>
+      </div>
+    );
+  }
+
+  if (loading) {
+    return (
+      <div className="flex justify-center py-16">
+        <div className="w-8 h-8 border-2 rounded-full animate-spin"
+          style={{ borderColor: 'var(--washi-deep)', borderTopColor: 'var(--shu)' }} />
+      </div>
+    );
+  }
+
+  if (items.length === 0) {
+    return (
+      <EmptyCard
+        message="まだ記事のブックマークはありません。"
+        hint="記事ページ左側のブックマークアイコンをクリックして保存できます。"
+        cta={{ href: '/learn', label: '記事一覧へ →' }}
+      />
+    );
+  }
+
+  return (
+    <div className="flex flex-col gap-4">
+      {items.map((item) => (
+        <div
+          key={item.slug}
+          className="flex items-center justify-between gap-4 rounded-2xl p-4"
+          style={{ background: 'var(--washi-light)', border: '1px solid var(--line)' }}
+        >
+          <div className="min-w-0 flex-1">
+            <Link
+              href={`/learn/${item.slug}`}
+              className="font-mincho font-medium text-base leading-snug hover:opacity-70 transition-opacity line-clamp-2"
+              style={{ color: 'var(--sumi)' }}
+            >
+              {item.title}
+            </Link>
+            <p className="text-xs mt-1" style={{ color: 'var(--sumi-light)' }}>
+              保存日：{new Date(item.createdAt).toLocaleDateString('ja-JP', { year: 'numeric', month: 'long', day: 'numeric' })}
+            </p>
+          </div>
+          <button
+            type="button"
+            onClick={() => remove(item.slug)}
+            aria-label="ブックマークから外す"
+            title="ブックマークから外す"
+            className="shrink-0 inline-flex items-center justify-center rounded-full transition-opacity hover:opacity-70"
+            style={{
+              width:      '36px',
+              height:     '36px',
+              background: 'var(--shu-soft)',
+              border:     '1px solid var(--shu)',
+              fontSize:   '16px',
+            }}
+          >
+            🔖
+          </button>
+        </div>
       ))}
     </div>
   );

@@ -273,6 +273,21 @@ export interface SentenceBookmarkItem {
   addedAt:      number;
 }
 
+// ─── 記事ブックマーク関連 ──────────────────────────────────────
+/**
+ * 記事ブックマーク（記事ページのブックマークボタン保存）
+ *
+ * API `/api/user/article-bookmarks` の data[] と 1:1 対応。
+ * `slug` が自然キー（toggle 操作の識別子）。
+ */
+export interface ArticleBookmarkItem {
+  /** articles.slug — 一意キー */
+  slug:      string;
+  title:     string;
+  /** 保存時刻 ISO 8601 */
+  createdAt: string;
+}
+
 // ─── ユーザー関連 ──────────────────────────────────────────────
 /** 認証済みユーザーのプロファイル */
 export interface UserProfile {

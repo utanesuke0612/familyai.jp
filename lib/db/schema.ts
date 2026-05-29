@@ -398,7 +398,55 @@ export const user3dBookmarks = pgTable(
   }),
 );
 
+// ─── article_comments（Phase 1: 記事コメント） ───────────────
+/**
+ * 記事へのユーザーコメント。Markdown 本文（最大 2000 字）。
+ * - 閲覧: 全員可
+ * - 投稿: ログインユーザーのみ
+ * - Phase 2 で is_hidden（管理者非表示フラグ）を追加予定
+ */
+export const articleComments = pgTable(
+  'article_comments',
+  {
+    id:          uuid('id').defaultRandom().primaryKey(),
+    articleSlug: varchar('article_slug', { length: 255 }).notNull(),
+    userId:      uuid('user_id').notNull().references(() => users.id, { onDelete: 'cascade' }),
+    body:        text('body').notNull(),
+    createdAt:   timestamp('created_at').defaultNow().notNull(),
+    updatedAt:   timestamp('updated_at').defaultNow().notNull(),
+  },
+  (t) => ({
+    slugCreatedIdx: index('article_comments_slug_created_idx').on(t.articleSlug, t.createdAt),
+    userIdIdx:      index('article_comments_user_id_idx').on(t.userId),
+  }),
+);
+
+// ─── user_article_bookmarks（Phase 1: 記事ブックマーク） ─────
+/**
+ * ログインユーザーによる記事ブックマーク。
+ * - article_slug への FK なし（記事削除後も閲覧履歴を保持 + JOIN コスト削減）
+ * - article_title は保存時点で非正規化（JOIN 不要）
+ * - ユーザー削除時は CASCADE 削除（GDPR 対応）
+ */
+export const userArticleBookmarks = pgTable(
+  'user_article_bookmarks',
+  {
+    id:           uuid('id').defaultRandom().primaryKey(),
+    userId:       uuid('user_id').notNull().references(() => users.id, { onDelete: 'cascade' }),
+    articleSlug:  varchar('article_slug', { length: 255 }).notNull(),
+    articleTitle: text('article_title').notNull(),
+    createdAt:    timestamp('created_at').defaultNow().notNull(),
+  },
+  (t) => ({
+    uniqUserArticle: uniqueIndex('user_article_bookmarks_user_article_idx').on(t.userId, t.articleSlug),
+    createdAtIdx:    index('user_article_bookmarks_user_created_at_idx').on(t.userId, t.createdAt),
+  }),
+);
+
 // ─── 型エクスポート（Drizzle の推論型） ───────────────────────
+export type UserArticleBookmark   = typeof userArticleBookmarks.$inferSelect;
+export type ArticleComment        = typeof articleComments.$inferSelect;
+export type NewArticleComment     = typeof articleComments.$inferInsert;
 export type Article              = typeof articles.$inferSelect;
 export type NewArticle           = typeof articles.$inferInsert;
 export type User                 = typeof users.$inferSelect;
