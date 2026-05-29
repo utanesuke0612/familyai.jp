@@ -41,12 +41,12 @@ export const CATEGORY_LABEL: Record<ContentCategory, string> = {
   'creative':  '創作・表現',
 } as const;
 
-/** カテゴリのアイコン絵文字 */
+/** カテゴリのアイコン絵文字（Rev41: 絵文字撤廃、lucide-react に置換） */
 export const CATEGORY_EMOJI: Record<ContentCategory, string> = {
-  'education': '📚',
-  'lifestyle': '🏠',
-  'work':      '💼',
-  'creative':  '🎨',
+  'education': '',
+  'lifestyle': '',
+  'work':      '',
+  'creative':  '',
 } as const;
 
 // ─── 難易度設定 ────────────────────────────────────────────────
@@ -145,10 +145,10 @@ import type { Tutor3dSubject, Tutor3dGrade } from '../types';
 
 /** 3D 教科サブカテゴリのラベル */
 export const TUTOR3D_SUBJECT_LABEL: Record<Tutor3dSubject, string> = {
-  biology:       '🧬 生物',
-  chemistry:     '⚗️ 化学',
-  'earth-space': '🪐 地学・宇宙',
-  physics:       '⚡ 物理',
+  biology:       '生物',
+  chemistry:     '化学',
+  'earth-space': '地学・宇宙',
+  physics:       '物理',
 } as const;
 
 /** 3D 教科サブカテゴリのアクセントカラー（既存 design tokens） */

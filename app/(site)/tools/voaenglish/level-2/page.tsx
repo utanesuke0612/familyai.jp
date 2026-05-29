@@ -9,6 +9,7 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import Image from 'next/image';
+import { BookOpen, Bookmark, Lightbulb, Sparkles } from 'lucide-react';
 import { SITE } from '@/shared';
 import { auth } from '@/lib/auth';
 import { listUserProgressByPrefix } from '@/lib/repositories/lessons-progress';
@@ -110,7 +111,7 @@ export default async function Level2TopPage() {
                 className="inline-flex w-fit rounded-full px-3 py-1 text-xs font-bold"
                 style={{ background: 'var(--washi-deep)', color: 'var(--sumi)' }}
               >
-                📚 全{lessons.length}レッスン
+                <BookOpen size={14} strokeWidth={1.25} aria-hidden="true" className="inline mr-1" />全{lessons.length}レッスン
               </span>
               <h2 className="font-mincho text-2xl sm:text-3xl" style={{ color: 'var(--sumi)', fontWeight: 500 }}>
                 Lessons
@@ -122,7 +123,7 @@ export default async function Level2TopPage() {
                 className="text-sm font-semibold"
                 style={{ color: 'var(--shu)' }}
               >
-                🔖 マイブックマークを開く →
+                <Bookmark size={14} strokeWidth={1.25} aria-hidden="true" className="inline mr-1" />マイブックマークを開く →
               </Link>
               <a
                 href="https://learningenglish.voanews.com/p/6765.html"
@@ -145,7 +146,7 @@ export default async function Level2TopPage() {
                 border:     '1px solid var(--line)',
               }}
             >
-              <span className="text-xl">💡</span>
+              <Lightbulb size={20} strokeWidth={1.25} aria-hidden="true" />
               <p className="flex-1 text-sm" style={{ color: 'var(--sumi)' }}>
                 ログインすると、各レッスンの<strong>挑戦回数</strong>を記録・表示できます。
               </p>
@@ -200,7 +201,7 @@ export default async function Level2TopPage() {
                           }}
                           title={`${attempts} 回挑戦しました`}
                         >
-                          ✨ {attempts}
+                          <Sparkles size={11} strokeWidth={1.5} aria-hidden="true" className="inline mr-0.5" />{attempts}
                         </span>
                       )}
                     </div>

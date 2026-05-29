@@ -7,12 +7,11 @@
 
 import { useScrollReveal } from '@/hooks/useScrollReveal';
 
-// Rev40 Phase G: 民藝奥付風に — 絵文字撤廃、明朝控えめ
 const STATS = [
-  { emoji: '🧰', value: '2',       label: 'AIツール' },
-  { emoji: '📚', value: '100+',   label: 'AI活用事例' },
-  { emoji: '🆓', value: '無料',   label: '基本機能すべて' },
-  { emoji: '🔄', value: '毎週',   label: '新着コンテンツ更新' },
+  { value: '2',     label: 'AIツール' },
+  { value: '100+',  label: 'AI活用事例' },
+  { value: '無料',  label: '基本機能すべて' },
+  { value: '毎週',  label: '新着コンテンツ更新' },
 ] as const;
 
 export function StatsRow() {

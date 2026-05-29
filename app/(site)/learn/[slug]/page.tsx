@@ -43,7 +43,6 @@ import { collectArticleHeadings } from '@/lib/articles/toc';
 import {
   SITE,
   CATEGORY_LABEL,
-  CATEGORY_EMOJI,
   DIFFICULTY_LABEL,
   formatDateJa,
 } from '@/shared';
@@ -257,7 +256,6 @@ export default async function ArticlePage({
                   minHeight:    'auto',
                 }}
               >
-                {CATEGORY_EMOJI[c as ContentCategory]}
                 {CATEGORY_LABEL[c as ContentCategory] ?? c}
               </a>
             ))}

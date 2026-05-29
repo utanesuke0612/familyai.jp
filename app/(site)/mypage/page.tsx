@@ -13,6 +13,7 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import Image from 'next/image';
+import { BookOpen, Bookmark, Pin, Volume2, Heart, ArrowRight } from 'lucide-react';
 import { auth } from '@/lib/auth';
 import { isAdmin } from '@/lib/admin-auth';
 import { SITE } from '@/shared';
@@ -29,17 +30,17 @@ export const metadata: Metadata = {
 const STATE_CONFIG = {
   anon: {
     bgGradient:   'var(--washi)',
-    badge:        '👋 ゲスト',
+    badge:        'ゲスト',
     badgeBg:      'var(--washi-light)',
   },
   free: {
     bgGradient:   'var(--washi-light)',
-    badge:        '🌱 無料会員',
+    badge:        '無料会員',
     badgeBg:      'var(--washi-deep)',
   },
   premium: {
     bgGradient:   'var(--washi-deep)',
-    badge:        '👑 プレミアム会員',
+    badge:        'プレミアム会員',
     badgeBg:      'var(--shu-soft)',
   },
 } as const;
@@ -154,7 +155,7 @@ export default async function MyPage() {
                   color: 'white',
                 }}
               >
-                ログイン →
+                ログイン <ArrowRight size={16} strokeWidth={1.25} aria-hidden="true" />
               </Link>
               <Link
                 href="/auth/register"
@@ -186,7 +187,7 @@ export default async function MyPage() {
             }}
           >
             <div className="flex items-center gap-2 mb-3">
-              <span className="text-2xl" aria-hidden="true">📚</span>
+              <BookOpen size={24} strokeWidth={1.25} aria-hidden="true" />
               <h2 className="font-mincho text-xl" style={{ color: 'var(--sumi)', fontWeight: 500 }}>
                 わたしの学習
               </h2>
@@ -204,10 +205,10 @@ export default async function MyPage() {
                   }}
                 >
                   <span className="flex items-center gap-2">
-                    <span className="text-xl" aria-hidden="true">🔖</span>
+                    <Bookmark size={20} strokeWidth={1.25} aria-hidden="true" />
                     <span className="font-semibold">単語・センテンス</span>
                   </span>
-                  <span style={{ color: 'var(--shu)' }}>→</span>
+                  <ArrowRight size={16} strokeWidth={1.25} aria-hidden="true" style={{ color: 'var(--shu)' }} />
                 </Link>
               </li>
               <li>
@@ -221,10 +222,10 @@ export default async function MyPage() {
                   }}
                 >
                   <span className="flex items-center gap-2">
-                    <span className="text-xl" aria-hidden="true">🔖</span>
+                    <Bookmark size={20} strokeWidth={1.25} aria-hidden="true" />
                     <span className="font-semibold">記事</span>
                   </span>
-                  <span style={{ color: 'var(--shu)' }}>→</span>
+                  <ArrowRight size={16} strokeWidth={1.25} aria-hidden="true" style={{ color: 'var(--shu)' }} />
                 </Link>
               </li>
               {/* Rev36: AI教室（アニメ生成）は 3D 図鑑に置換済み・履歴ページは Phase 2 で再設計予定 */}
@@ -239,10 +240,10 @@ export default async function MyPage() {
                   }}
                 >
                   <span className="flex items-center gap-2">
-                    <span className="text-xl" aria-hidden="true">📌</span>
+                    <Pin size={20} strokeWidth={1.25} aria-hidden="true" />
                     <span className="font-semibold">AIメモ帳</span>
                   </span>
-                  <span style={{ color: 'var(--shu)' }}>→</span>
+                  <ArrowRight size={16} strokeWidth={1.25} aria-hidden="true" style={{ color: 'var(--shu)' }} />
                 </Link>
               </li>
               <li>
@@ -256,10 +257,10 @@ export default async function MyPage() {
                   }}
                 >
                   <span className="flex items-center gap-2">
-                    <span className="text-xl" aria-hidden="true">🔊</span>
+                    <Volume2 size={20} strokeWidth={1.25} aria-hidden="true" />
                     <span className="font-semibold">AI Echo 履歴</span>
                   </span>
-                  <span style={{ color: 'var(--shu)' }}>→</span>
+                  <ArrowRight size={16} strokeWidth={1.25} aria-hidden="true" style={{ color: 'var(--shu)' }} />
                 </Link>
               </li>
             </ul>
@@ -274,7 +275,7 @@ export default async function MyPage() {
             }}
           >
             <div className="flex items-center gap-2 mb-2">
-              <span className="text-2xl" aria-hidden="true">💞</span>
+              <Heart size={24} strokeWidth={1.25} aria-hidden="true" />
               <h2 className="font-mincho text-xl" style={{ color: 'var(--sumi)', fontWeight: 500 }}>
                 AI 利用状況
               </h2>
@@ -300,12 +301,12 @@ export default async function MyPage() {
                   color: 'white',
                 }}
               >
-                🌱 無料で登録 → AI教室・履歴・メモ帳が使えます
+                無料で登録 → AI教室・履歴・メモ帳が使えます
               </Link>
             )}
             {plan === 'premium' && (
               <p className="mt-5 text-center text-sm font-semibold" style={{ color: 'var(--sumi)' }}>
-                👑 プレミアムプランをご利用いただきありがとうございます！
+                プレミアムプランをご利用いただきありがとうございます！
               </p>
             )}
           </article>
@@ -334,42 +335,42 @@ interface FeatureItem {
 
 const FEATURES: readonly FeatureItem[] = [
   {
-    feature: '🎬 AI教室(アニメ生成)',
+    feature: 'AI教室(アニメ生成)',
     desc:    '理科・算数・社会のアニメをAIで生成',
     anon:    '利用不可',
     free:    '3回/日',
     premium: '100回/日',
   },
   {
-    feature: '💬 AIチャット・解説',
+    feature: 'AIチャット・解説',
     desc:    '質問への回答・記事の解説',
     anon:    '10回/日',
     free:    '30回/日',
     premium: '200回/日',
   },
   {
-    feature: '📂 履歴から再閲覧',
+    feature: '履歴から再閲覧',
     desc:    '生成済みアニメを無料で見直し',
     anon:    '利用不可',
     free:    '無制限',
     premium: '無制限',
   },
   {
-    feature: '📤 友達にシェア',
+    feature: '友達にシェア',
     desc:    '記事・アニメをX・LINEで共有',
     anon:    '可',
     free:    '可',
     premium: '可',
   },
   {
-    feature: '📌 AIメモ帳',
+    feature: 'AIメモ帳',
     desc:    'AIとのやりとりを保存',
     anon:    '利用不可',
     free:    '無制限',
     premium: '無制限',
   },
   {
-    feature: '🔖 マイブックマーク',
+    feature: 'マイブックマーク',
     desc:    'VOA 英語の単語・センテンスを保存',
     anon:    'センテンスのみ可（端末内）',
     free:    '無制限（クラウド同期）',
@@ -377,10 +378,10 @@ const FEATURES: readonly FeatureItem[] = [
   },
 ];
 
-const PLAN_META: Record<PlanKey, { emoji: string; title: string }> = {
-  anon:    { emoji: '👋', title: '未ログイン' },
-  free:    { emoji: '🌱', title: '無料会員'   },
-  premium: { emoji: '👑', title: 'プレミアム' },
+const PLAN_META: Record<PlanKey, { title: string }> = {
+  anon:    { title: '未ログイン' },
+  free:    { title: '無料会員'   },
+  premium: { title: 'プレミアム' },
 };
 
 function FeatureComparison({ plan, showPremium }: { plan: PlanKey; showPremium: boolean }) {
@@ -404,10 +405,10 @@ function FeatureComparison({ plan, showPremium }: { plan: PlanKey; showPremium: 
               >
                 機能
               </th>
-              <PlanHeader title={PLAN_META.anon.title} emoji={PLAN_META.anon.emoji} current={plan === 'anon'} />
-              <PlanHeader title={PLAN_META.free.title} emoji={PLAN_META.free.emoji} current={plan === 'free'} />
+              <PlanHeader title={PLAN_META.anon.title} current={plan === 'anon'} />
+              <PlanHeader title={PLAN_META.free.title} current={plan === 'free'} />
               {showPremium && (
-                <PlanHeader title={PLAN_META.premium.title} emoji={PLAN_META.premium.emoji} current={plan === 'premium'} />
+                <PlanHeader title={PLAN_META.premium.title} current={plan === 'premium'} />
               )}
             </tr>
           </thead>
@@ -460,7 +461,7 @@ function FeatureMobileCard({
   );
 }
 
-/** モバイルカード内の1行: 「🌱 無料会員 ───── 3回/日」 */
+/** モバイルカード内の1行: 「無料会員 ───── 3回/日」 */
 function PlanValueRow({
   planKey, value, plan,
 }: {
@@ -481,7 +482,6 @@ function PlanValueRow({
       }}
     >
       <span className="flex items-center gap-1.5 min-w-0">
-        <span className="text-sm shrink-0">{meta.emoji}</span>
         <span
           className="truncate"
           style={{
@@ -499,13 +499,13 @@ function PlanValueRow({
           color: isDisabled ? 'var(--sumi-soft)' : (isCurrent ? 'var(--shu)' : 'var(--sumi)'),
         }}
       >
-        {isDisabled ? <span style={{ opacity: 0.7 }}>✕ {value}</span> : value}
+        {isDisabled ? <span style={{ opacity: 0.7 }}>{value}</span> : value}
       </span>
     </div>
   );
 }
 
-function PlanHeader({ title, emoji, current }: { title: string; emoji: string; current: boolean }) {
+function PlanHeader({ title, current }: { title: string; current: boolean }) {
   return (
     <th
       className="py-2 px-2 sm:px-3 text-center font-semibold whitespace-nowrap"
@@ -516,7 +516,6 @@ function PlanHeader({ title, emoji, current }: { title: string; emoji: string; c
       }}
     >
       <div className="flex flex-col items-center gap-0.5">
-        <span className="text-base">{emoji}</span>
         <span className="text-xs sm:text-sm">{title}</span>
         {current && <span className="text-[10px] font-normal opacity-90">（あなた）</span>}
       </div>
@@ -563,7 +562,7 @@ function CellValue({ value, isCurrent }: { value: string; isCurrent: boolean }) 
         fontWeight: isCurrent && !isDisabled ? 700 : 500,
       }}
     >
-      {isDisabled ? <span style={{ opacity: 0.6 }}>✕ {value}</span> : value}
+      {isDisabled ? <span style={{ opacity: 0.6 }}>{value}</span> : value}
     </td>
   );
 }

@@ -154,7 +154,7 @@ export default async function ModelDetailPage({ params }: PageProps) {
               lineHeight: 1.3,
             }}
           >
-            🔬 {model.title}
+            {model.title}
           </h1>
           {model.description && (
             <p

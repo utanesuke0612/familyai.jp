@@ -5,9 +5,9 @@
  * AI Echo パネル — レッスンページの聴写プレイヤー直下に常時表示
  *
  * UX 仕様（feedback 後の v2）:
- *   - 3 タブ（🌱 / 🌿 / 🌳）の入力 / フィードバック / 保存状態をすべて Level 別に保持
+ *   - 3 タブ（Level 1 / 2 / 3）の入力 / フィードバック / 保存状態をすべて Level 別に保持
  *     → タブ切替で内容は消えない（ページから離れるまで残る）
- *   - 保存はデフォルト OFF。「📌 保存」ボタン押下時のみ DB へ保存（AI Chat と同じ挙動）
+ *   - 保存はデフォルト OFF。「保存」ボタン押下時のみ DB へ保存（AI Chat と同じ挙動）
  *   - 入力欄は 5 行の高さ
  *   - SSE で AI フィードバックを逐次表示
  *
@@ -17,11 +17,13 @@
 
 import { useRef, useState } from 'react';
 import { useSession } from 'next-auth/react';
+import { Sprout, Leaf, TreePine, Loader2, Check } from 'lucide-react';
+import type { LucideIcon } from 'lucide-react';
 
 type Level = 1 | 2 | 3;
 
 interface LevelMeta {
-  emoji:       string;
+  Icon:        LucideIcon;
   label:       string;
   subtitle:    string;
   description: string;
@@ -31,7 +33,7 @@ interface LevelMeta {
 
 const LEVEL_META: Record<Level, LevelMeta> = {
   1: {
-    emoji:       '🌱',
+    Icon:        Sprout,
     label:       'Level 1',
     subtitle:    '3文でまとめる',
     description: '今日のレッスンを英語3文でまとめてみましょう。',
@@ -39,7 +41,7 @@ const LEVEL_META: Record<Level, LevelMeta> = {
     placeholder: 'The president went to Japan. They talked about trade...',
   },
   2: {
-    emoji:       '🌿',
+    Icon:        Leaf,
     label:       'Level 2',
     subtitle:    'くわしく復述',
     description: 'スクリプトを見ずに、今日の内容を自由に説明してください。英語で書いてみましょう。',
@@ -47,7 +49,7 @@ const LEVEL_META: Record<Level, LevelMeta> = {
     placeholder: 'The US president visited Japan to discuss trade issues. They reached some agreements...',
   },
   3: {
-    emoji:       '🌳',
+    Icon:        TreePine,
     label:       'Level 3',
     subtitle:    '意見を書く',
     description: 'このレッスンについてあなたの意見を英語で書いてください。',
@@ -235,7 +237,7 @@ export function AIEchoPanel({ lessonKey, lessonTitle, lessonScript }: AIEchoPane
     }
   }
 
-  // ── 「📌 保存」ボタン: 手動保存 ─────────────────────
+  // ── 「保存」ボタン: 手動保存 ─────────────────────
   async function saveToHistory() {
     if (!isLoggedIn) return;
     const lv = activeLevel;
@@ -295,7 +297,7 @@ export function AIEchoPanel({ lessonKey, lessonTitle, lessonScript }: AIEchoPane
                 fontWeight: 500,
               }}
             >
-              {m.emoji} {m.label}
+              <m.Icon size={16} strokeWidth={1.25} aria-hidden="true" /> {m.label}
               <span className="hidden sm:inline ml-1 font-normal opacity-90">
                 {m.subtitle}
               </span>
@@ -374,7 +376,7 @@ export function AIEchoPanel({ lessonKey, lessonTitle, lessonScript }: AIEchoPane
             }}
           >
             {isStreamingHere
-              ? <><span style={{ display: 'inline-block', animation: 'spin 1s linear infinite' }}>⟳</span> 評価中…</>
+              ? <><Loader2 size={16} strokeWidth={1.5} className="animate-spin" /> 評価中…</>
               : <>AI Echoに評価してもらう →</>
             }
           </button>
@@ -411,7 +413,7 @@ export function AIEchoPanel({ lessonKey, lessonTitle, lessonScript }: AIEchoPane
                   className="px-2 py-0.5 text-[10px] font-bold"
                   style={{ background: '#E8F5E9', color: '#2E7D32', borderRadius: '4px' }}
                 >
-                  ✓ 保存済み
+                  <Check size={12} strokeWidth={2} aria-hidden="true" /> 保存済み
                 </span>
               )}
             </div>
@@ -431,7 +433,7 @@ export function AIEchoPanel({ lessonKey, lessonTitle, lessonScript }: AIEchoPane
             {/* アクション群（ストリーム完了後のみ表示） */}
             {!isStreamingHere && (
               <div className="flex items-center gap-2 flex-wrap mt-1">
-                {/* 📌 保存（ログイン時のみ・未保存時のみ） */}
+                {/* 保存（ログイン時のみ・未保存時のみ） */}
                 {isLoggedIn && !current.isSaved && (
                   <button
                     type="button"

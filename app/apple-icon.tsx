@@ -26,7 +26,7 @@ export default function AppleIcon() {
           fontWeight:      700,
         }}
       >
-        💞
+        ✦
       </div>
     ),
     size,

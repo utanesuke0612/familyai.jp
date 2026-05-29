@@ -1,9 +1,11 @@
 /**
  * components/voaenglish/NextLessonCta.tsx
- * familyai.jp — 🌟 完璧時に表示する「次のレッスンへ」カード（R3-機能3 Phase 6）
+ * familyai.jp — 完璧時に表示する「次のレッスンへ」カード（R3-機能3 Phase 6）
  */
 
 import Link from 'next/link';
+import { Sprout, Newspaper, GraduationCap } from 'lucide-react';
+import type { LucideIcon } from 'lucide-react';
 
 export interface NextLessonInfo {
   course:        string;
@@ -17,10 +19,10 @@ interface NextLessonCtaProps {
   next: NextLessonInfo | null;
 }
 
-const LEVEL_BADGE: Record<string, { icon: string; label: string }> = {
-  beginning:    { icon: '🌱', label: 'Beginning' },
-  intermediate: { icon: '📰', label: 'Intermediate' },
-  advanced:     { icon: '🎓', label: 'Advanced' },
+const LEVEL_BADGE: Record<string, { Icon: LucideIcon; label: string }> = {
+  beginning:    { Icon: Sprout,        label: 'Beginning' },
+  intermediate: { Icon: Newspaper,     label: 'Intermediate' },
+  advanced:     { Icon: GraduationCap, label: 'Advanced' },
 };
 
 export function NextLessonCta({ next }: NextLessonCtaProps) {
@@ -68,7 +70,7 @@ export function NextLessonCta({ next }: NextLessonCtaProps) {
                     {next.lessonNumber ? `Lesson ${next.lessonNumber}: ` : ''}{next.title}
                   </p>
                   <p className="text-xs mt-1" style={{ color: 'var(--sumi-light)' }}>
-                    {LEVEL_BADGE[next.level]?.icon} {LEVEL_BADGE[next.level]?.label ?? next.level}
+                    {(() => { const Icon = LEVEL_BADGE[next.level]?.Icon; return Icon ? <Icon size={14} strokeWidth={1.25} aria-hidden="true" /> : null; })()} {LEVEL_BADGE[next.level]?.label ?? next.level}
                   </p>
                 </div>
               </div>

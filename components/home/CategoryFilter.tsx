@@ -11,8 +11,16 @@
  */
 
 import { useRouter, useSearchParams } from 'next/navigation';
-import { CATEGORY_LABEL, CATEGORY_EMOJI } from '@/shared';
+import { BookOpen, Home, Briefcase, Palette } from 'lucide-react';
+import { CATEGORY_LABEL } from '@/shared';
 import type { ContentCategory } from '@/shared';
+
+const CATEGORY_ICON: Record<ContentCategory, typeof BookOpen> = {
+  education: BookOpen,
+  lifestyle: Home,
+  work:      Briefcase,
+  creative:  Palette,
+};
 
 // ── カテゴリ定義（表示順） ─────────────────────────────────────
 const CATEGORIES: ContentCategory[] = [
@@ -114,7 +122,7 @@ export function CategoryFilter({
               aria-pressed={isActive}
               aria-label={`${CATEGORY_LABEL[cat]}フィルター`}
             >
-              <div className="text-3xl" aria-hidden="true">{CATEGORY_EMOJI[cat]}</div>
+              {(() => { const Icon = CATEGORY_ICON[cat]; return <Icon size={28} strokeWidth={1.25} aria-hidden="true" />; })()}
               <div
                 className="mt-2 font-mincho text-sm"
                 style={{

@@ -13,6 +13,8 @@
 
 import type { Metadata } from 'next';
 import Link              from 'next/link';
+import { Dna, FlaskConical, Globe, Zap } from 'lucide-react';
+import type { LucideIcon } from 'lucide-react';
 import { SITE }          from '@/shared';
 import {
   TUTOR3D_SUBJECTS,
@@ -23,7 +25,7 @@ import { STATIC_MODEL_SUMMARIES } from '@/lib/tutor3d/static-models';
 import { ModelGallery }        from '@/components/tools/3d-tutor/ModelGallery';
 
 export const metadata: Metadata = {
-  title:       `🌐 うごくAI教室・3D図鑑 | ${SITE.name}`,
+  title:       `うごくAI教室・3D図鑑 | ${SITE.name}`,
   description: '理科を 3D で学べる図鑑。太陽系を回して観察しながら、気になるパーツを AI と一緒に学べます。',
   alternates:  { canonical: `${SITE.url}/tools/ai-kyoshitsu` },
 };
@@ -165,7 +167,7 @@ export default async function AiKyoshitsu3DPage({ searchParams }: PageProps) {
                       }}
                       aria-pressed={isActive}
                     >
-                      <div className="text-3xl" aria-hidden="true">{display.emoji}</div>
+                      <display.Icon size={28} strokeWidth={1.25} aria-hidden="true" />
                       <div
                         className="mt-2 font-mincho text-sm"
                         style={{
@@ -214,11 +216,10 @@ export default async function AiKyoshitsu3DPage({ searchParams }: PageProps) {
   );
 }
 
-// ── ジャンル表示用の絵文字 + ラベル（カード式・/tools の CategoryFilter と同パターン）
-// Rev40 Phase K+: 旧 chipStyle/chipRowStyle/filterLabelStyle はカード式統合で全廃
-const SUBJECT_DISPLAY: Record<Tutor3dSubject, { emoji: string; label: string }> = {
-  biology:       { emoji: '🧬', label: '生物' },
-  chemistry:     { emoji: '⚗️', label: '化学' },
-  'earth-space': { emoji: '🪐', label: '地学・宇宙' },
-  physics:       { emoji: '⚡', label: '物理' },
+// ── ジャンル表示用のアイコン + ラベル（カード式・/tools の CategoryFilter と同パターン）
+const SUBJECT_DISPLAY: Record<Tutor3dSubject, { Icon: LucideIcon; label: string }> = {
+  biology:       { Icon: Dna,            label: '生物' },
+  chemistry:     { Icon: FlaskConical,   label: '化学' },
+  'earth-space': { Icon: Globe,          label: '地学・宇宙' },
+  physics:       { Icon: Zap,            label: '物理' },
 };

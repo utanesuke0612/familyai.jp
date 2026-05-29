@@ -8,6 +8,9 @@
  * このコンポーネントは UI と onSelect コールバックのみを提供する。
  */
 
+import type { LucideIcon } from 'lucide-react';
+import { RotateCcw, ThumbsUp, Sparkles } from 'lucide-react';
+
 export type SelfReportAction = 'retry' | 'good' | 'perfect';
 
 interface SelfReportProps {
@@ -19,7 +22,7 @@ interface SelfReportProps {
 
 const BUTTONS: ReadonlyArray<{
   action:  SelfReportAction;
-  emoji:   string;
+  Icon:    LucideIcon;
   label:   string;
   hint:    string;
   bg:      string;
@@ -28,7 +31,7 @@ const BUTTONS: ReadonlyArray<{
 }> = [
   {
     action: 'retry',
-    emoji:  '😓',
+    Icon:   RotateCcw,
     label:  'もう一度やる',
     hint:   '60%未満・最初からやり直す',
     bg:     '#FFF0F0',
@@ -37,7 +40,7 @@ const BUTTONS: ReadonlyArray<{
   },
   {
     action: 'good',
-    emoji:  '💪',
+    Icon:   ThumbsUp,
     label:  '頑張りました！',
     hint:   '60〜80%・もう一度聴く',
     bg:     '#FFF8E6',
@@ -46,7 +49,7 @@ const BUTTONS: ReadonlyArray<{
   },
   {
     action: 'perfect',
-    emoji:  '🌟',
+    Icon:   Sparkles,
     label:  '完璧！',
     hint:   '80%以上・次のレッスンへ',
     bg:     '#E8F7F0',
@@ -78,10 +81,10 @@ export function SelfReport({ onSelect, isSubmitting = false, layout = 'horizonta
             borderRadius: '4px',
             minHeight:    '88px',
           }}
-          aria-label={`${b.emoji} ${b.label} — ${b.hint}`}
+          aria-label={`${b.label} — ${b.hint}`}
         >
-          <div className="text-3xl leading-none mb-1.5" aria-hidden="true">
-            {b.emoji}
+          <div className="mb-1.5" aria-hidden="true">
+            <b.Icon size={32} strokeWidth={1.25} />
           </div>
           <div className="font-mincho text-sm" style={{ fontWeight: 500 }}>{b.label}</div>
           <div className="text-xs mt-1 opacity-80">{b.hint}</div>

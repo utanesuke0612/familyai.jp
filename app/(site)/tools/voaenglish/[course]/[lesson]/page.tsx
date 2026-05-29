@@ -14,6 +14,8 @@ import { notFound } from 'next/navigation';
 
 const AIChatWidget         = dynamic(() => import('@/components/article/AIChatWidget').then(m => m.AIChatWidget),         { ssr: false, loading: () => <SkeletonBlock height="300px" /> });
 const FloatingShareButtons = dynamic(() => import('@/components/article/FloatingShareButtons').then(m => m.FloatingShareButtons), { loading: () => <SkeletonBlock height="48px" /> });
+import { BookOpen, Headphones, Pencil, Volume2, Wrench, ExternalLink } from 'lucide-react';
+import type { LucideIcon } from 'lucide-react';
 import { MarkdownContent }      from '@/components/ui/MarkdownContent';
 import { DictationPanel }       from '@/components/voaenglish/DictationPanel';
 import { AIEchoPanel }          from '@/components/voaenglish/AIEchoPanel';
@@ -227,7 +229,7 @@ export default async function VoaLessonPage({
 
               {/* ─── ① レッスン概要（日本語）─────────────────────── */}
               <SectionCard
-                emoji="📖"
+                Icon={BookOpen}
                 title="レッスン概要"
                 accent={accent}
               >
@@ -252,14 +254,14 @@ export default async function VoaLessonPage({
                     className="mt-3 inline-flex items-center gap-1 text-xs font-semibold"
                     style={{ color: 'var(--shu)' }}
                   >
-                    📰 VOA 公式ページを開く ↗
+                    <ExternalLink size={14} strokeWidth={1.25} aria-hidden="true" className="inline mr-1" />VOA 公式ページを開く ↗
                   </a>
                 )}
               </SectionCard>
 
               {/* ─── ② 会話を聞いて、読んでみよう（動画のみ） ───── */}
               <SectionCard
-                emoji="🎧"
+                Icon={Headphones}
                 title="会話を聞いて、読んでみよう"
                 subtitle="まずは VOA 公式動画でストーリー全体をつかみましょう"
                 accent={accent}
@@ -289,7 +291,7 @@ export default async function VoaLessonPage({
               {/* ─── ③ Dictation 練習 ─────────────────────────────── */}
               {/* subtitle は HandwritingNote に統合したのでここでは指定しない */}
               <SectionCard
-                emoji="✍️"
+                Icon={Pencil}
                 title="Dictation 練習"
                 accent={accent}
               >
@@ -309,7 +311,7 @@ export default async function VoaLessonPage({
                       border:     '1px dashed var(--line)',
                     }}
                   >
-                    <span className="text-3xl block mb-2" aria-hidden="true">🔧</span>
+                    <Wrench size={28} strokeWidth={1.25} aria-hidden="true" className="block mx-auto mb-2" />
                     <p className="text-sm font-bold mb-1" style={{ color: 'var(--sumi)' }}>
                       このレッスンの音声は準備中です
                     </p>
@@ -322,7 +324,7 @@ export default async function VoaLessonPage({
 
               {/* ─── ④ AI Echo（聴写プレイヤー直下・常時表示） ─────────── */}
               <SectionCard
-                emoji="🔊"
+                Icon={Volume2}
                 title="AI Echo"
                 subtitle="学んだことを、自分の言葉で。聴いて・書いて・自分の言葉で表現する 3 ステップで定着しよう。"
                 accent={accent}
@@ -419,13 +421,13 @@ export default async function VoaLessonPage({
 // レッスン詳細ページの ① 概要 / ② 会話を聞いて / ③ Dictation の各セクションを
 // 同じデザインの白カードに統一して表示する。
 function SectionCard({
-  emoji,
+  Icon,
   title,
   subtitle,
   accent,
   children,
 }: {
-  emoji:    string;
+  Icon:      LucideIcon;
   title:    string;
   subtitle?: string;
   accent:   string;
@@ -443,9 +445,7 @@ function SectionCard({
         className="flex items-start gap-3 mb-4 pb-3"
         style={{ borderBottom: `2px solid ${accent}` }}
       >
-        <span aria-hidden="true" style={{ fontSize: 28, lineHeight: 1 }}>
-          {emoji}
-        </span>
+        <Icon size={28} strokeWidth={1.25} aria-hidden="true" />
         <div className="flex flex-col gap-0.5 min-w-0">
           <h2
             className="font-mincho leading-tight"

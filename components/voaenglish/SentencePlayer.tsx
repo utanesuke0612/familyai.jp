@@ -22,6 +22,7 @@
  */
 
 import { forwardRef, useEffect, useImperativeHandle, useRef } from 'react';
+import { Play, Pause, SkipBack, SkipForward } from 'lucide-react';
 import { useSentencePlayer, type PlaybackRate } from '@/lib/hooks/useSentencePlayer';
 import type { Sentence } from '@/shared/types';
 import { SentenceList } from './SentenceList';
@@ -31,7 +32,7 @@ interface SentencePlayerProps {
   sentences:     readonly Sentence[];
   /** 全再生終了時のコールバック（Phase 6 で自己申告ダイアログ表示用・Q5=C）*/
   onAllPlayed?:  () => void;
-  /** Rev34: SentenceList の 🔖 ブックマーク用文脈。省略時は 🔖 を表示しない */
+  /** Rev34: SentenceList のブックマーク用文脈。省略時はブックマークを表示しない */
   bookmarkContext?: {
     course:       string;
     lesson:       string;
@@ -42,7 +43,7 @@ interface SentencePlayerProps {
 
 /**
  * 親（DictationPanel）が ref 経由で呼び出せるアクション。
- * 自己申告 😓 / 💪 押下時の「最初に戻す」を実現する。
+ * 自己申告（retry / good）押下時の「最初に戻す」を実現する。
  */
 export interface SentencePlayerHandle {
   reset: () => void;
@@ -133,60 +134,61 @@ export const SentencePlayer = forwardRef<SentencePlayerHandle, SentencePlayerPro
             type="button"
             onClick={() => void actions.toggle()}
             disabled={!state.isReady}
-            className="rounded-full font-mincho transition-opacity hover:opacity-90 disabled:opacity-50"
+            className="rounded-full font-mincho transition-opacity hover:opacity-90 disabled:opacity-50 inline-flex items-center justify-center"
             style={{
-              minWidth:   52,
-              minHeight:  52,
-              background: 'var(--shu)',
-              color:      'white',
-              fontSize:   22,
-              fontWeight: 500,
+              width:       52,
+              height:      52,
+              background:  'var(--shu)',
+              color:       'white',
+              fontSize:    22,
+              fontWeight:  500,
+              paddingLeft: state.isPlaying ? 0 : 3,
             }}
             aria-label={state.isPlaying ? '一時停止' : '再生'}
           >
-            {state.isPlaying ? '⏸' : '▶'}
+            {state.isPlaying ? <Pause size={24} strokeWidth={1.5} /> : <Play size={24} strokeWidth={1.5} />}
           </button>
 
           <button
             type="button"
             onClick={() => void actions.prevSentence()}
             disabled={!state.isReady}
-            className="rounded-full transition-opacity hover:opacity-90 disabled:opacity-50"
+            className="rounded-full transition-opacity hover:opacity-90 disabled:opacity-50 inline-flex items-center justify-start"
             style={{
-              minWidth:   44,
-              minHeight:  44,
-              background: '#fff',
-              color:      'var(--sumi)',
-              border:     '1px solid var(--line)',
-              fontSize:   16,
+              width:       44,
+              height:      44,
+              background:  '#fff',
+              color:       'var(--sumi)',
+              border:      '1px solid var(--line)',
+              paddingLeft: 4,
             }}
             aria-label="前のセンテンス"
             title="前のセンテンス（←キー）"
           >
-            ⏮
+            <SkipBack size={18} strokeWidth={1.25} />
           </button>
 
           <button
             type="button"
             onClick={() => void actions.nextSentence()}
             disabled={!state.isReady}
-            className="rounded-full transition-opacity hover:opacity-90 disabled:opacity-50"
+            className="rounded-full transition-opacity hover:opacity-90 disabled:opacity-50 inline-flex items-center justify-end"
             style={{
-              minWidth:   44,
-              minHeight:  44,
-              background: '#fff',
-              color:      'var(--sumi)',
-              border:     '1px solid var(--line)',
-              fontSize:   16,
+              width:       44,
+              height:      44,
+              background:  '#fff',
+              color:       'var(--sumi)',
+              border:      '1px solid var(--line)',
+              paddingRight: 4,
             }}
             aria-label="次のセンテンス"
             title="次のセンテンス（→キー）"
           >
-            ⏭
+            <SkipForward size={18} strokeWidth={1.25} />
           </button>
         </div>
 
-        {/* トグル群: 🔁 リピート / ⏹ 自動停止（短いラベル・背景色で状態伝達） */}
+        {/* トグル群: リピート / 自動停止（短いラベル・背景色で状態伝達） */}
         <div className="flex items-center gap-1.5">
           <button
             type="button"

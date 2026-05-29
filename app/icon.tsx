@@ -29,7 +29,7 @@ export default function Icon() {
           borderRadius:    32,
         }}
       >
-        💞
+        ✦
       </div>
     ),
     size,

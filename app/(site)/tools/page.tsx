@@ -5,10 +5,17 @@
 
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import { ArrowRight, BookOpen, Globe2 } from 'lucide-react';
+import { ArrowRight, BookOpen, Globe2, Home, Briefcase, Palette } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
-import { CATEGORY_EMOJI, CATEGORY_LABEL, SITE } from '@/shared';
+import { CATEGORY_LABEL, SITE } from '@/shared';
 import type { ContentCategory } from '@/shared';
+
+const CATEGORY_ICON: Record<ContentCategory, LucideIcon> = {
+  education: BookOpen,
+  lifestyle: Home,
+  work:      Briefcase,
+  creative:  Palette,
+};
 import { isAdmin } from '@/lib/admin-auth';
 
 export const metadata: Metadata = {
@@ -158,7 +165,7 @@ export default async function ToolsPage({ searchParams }: ToolsPageProps) {
                       }}
                       aria-pressed={isActive}
                     >
-                      <div className="text-3xl" aria-hidden="true">{CATEGORY_EMOJI[category]}</div>
+                      {(() => { const Icon = CATEGORY_ICON[category]; return <Icon size={28} strokeWidth={1.25} aria-hidden="true" />; })()}
                       <div
                         className="mt-2 font-mincho text-sm"
                         style={{

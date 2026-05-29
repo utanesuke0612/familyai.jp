@@ -5,6 +5,8 @@
 
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import { Sprout, Newspaper, GraduationCap, Pencil } from 'lucide-react';
+import type { LucideIcon } from 'lucide-react';
 import { SITE } from '@/shared';
 
 export const metadata: Metadata = {
@@ -20,7 +22,7 @@ type LevelSection = {
   description: string;
   accent: string;
   chipText: string;
-  icon: string;
+  Icon: LucideIcon;
   modules: Array<{
     title: string;
     summary: string;
@@ -36,7 +38,7 @@ const LEVELS: LevelSection[] = [
     description: 'アメリカ人の英語教師が初心者向けに作った新しいコースです。Let\'s Learn English Level 1 と Level 2 を中心に、動画・語彙・スピーキング・ワークシートを使って基礎から学べます。',
     accent: 'var(--washi-deep)',
     chipText: '基礎から始める',
-    icon: '🌱',
+    Icon: Sprout,
     modules: [
       {
         title: "Let's Learn English with Anna",
@@ -62,7 +64,7 @@ const LEVELS: LevelSection[] = [
     description: 'アメリカ英語にまだ慣れていない方のための中級レベルです。500〜1,000語程度のニュース記事が中心で、ニュースメーカー本人の音声を含む場合もあります。',
     accent: 'var(--washi-deep)',
     chipText: 'ニュースで学ぶ',
-    icon: '📰',
+    Icon: Newspaper,
     modules: [
       {
         title: 'Health & Lifestyle',
@@ -88,7 +90,7 @@ const LEVELS: LevelSection[] = [
     description: 'すでにアメリカ英語を学んできた方が、読解力とリスニング力をさらに伸ばすための上級レベルです。500語を超える記事が中心で、ニュースメーカー本人の音声を含む場合もあります。',
     accent: 'var(--washi-deep)',
     chipText: '表現を深める',
-    icon: '🎓',
+    Icon: GraduationCap,
     modules: [
       {
         title: 'Education Tips',
@@ -214,7 +216,7 @@ export default function VoaEnglishToolPage({ searchParams }: VoaEnglishToolPageP
                     aria-pressed={selectedLevel === level.key}
                   >
                     <div className="flex items-center justify-center gap-1.5 text-2xl lg:text-xl lg:gap-2 lg:flex-shrink-0">
-                      <span aria-hidden="true" className="lg:inline-block lg:w-8 lg:text-center">{level.icon}</span>
+                      <level.Icon size={24} strokeWidth={1.25} aria-hidden="true" className="lg:inline-block lg:w-8 lg:text-center shrink-0" />
                       <span>{index + 1}</span>
                     </div>
                     <div className="mt-1 text-xs font-semibold lg:mt-0" style={{ color: 'var(--sumi)' }}>
@@ -300,7 +302,7 @@ export default function VoaEnglishToolPage({ searchParams }: VoaEnglishToolPageP
                             }}
                             aria-label="準備中"
                           >
-                            🚧 準備中
+                            準備中
                           </span>
                         )}
                       </div>
@@ -374,7 +376,7 @@ export default function VoaEnglishToolPage({ searchParams }: VoaEnglishToolPageP
                   className="inline-flex rounded-full px-3 py-1 text-xs font-bold"
                   style={{ background: 'var(--washi-deep)', color: 'var(--sumi)' }}
                 >
-                  📝 コンテンツの再利用について
+                  <Pencil size={14} strokeWidth={1.25} aria-hidden="true" className="inline mr-1" />コンテンツの再利用について
                 </span>
               </div>
               <p className="text-sm leading-relaxed sm:text-base" style={{ color: 'var(--sumi)' }}>
