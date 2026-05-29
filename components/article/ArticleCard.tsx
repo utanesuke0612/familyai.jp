@@ -9,8 +9,6 @@
  */
 
 import Link from 'next/link';
-import { BookOpen, Home, Briefcase, Palette } from 'lucide-react';
-import type { LucideIcon } from 'lucide-react';
 import {
   CATEGORY_LABEL,
   DIFFICULTY_LABEL,
@@ -36,14 +34,6 @@ export interface ArticleCardProps {
   featured?: boolean;
 }
 
-// ── カテゴリ別 線画アイコン ─────────────────────────────────
-const CATEGORY_ICON: Record<string, LucideIcon> = {
-  education: BookOpen,
-  lifestyle: Home,
-  work:      Briefcase,
-  creative:  Palette,
-};
-
 // ── 内部ユーティリティ ──────────────────────────────────────
 function toIsoString(value: Date | string | null | undefined): string | null {
   if (!value) return null;
@@ -66,7 +56,6 @@ function formatDateDot(value: Date | string | null | undefined): string | null {
 export function ArticleCard({ article, featured = false }: ArticleCardProps) {
   const primaryCategory = (article.categories[0] ?? 'other') as ContentCategory;
   const level           = article.level as DifficultyLevel;
-  const Icon            = CATEGORY_ICON[primaryCategory] ?? BookOpen;
 
   const serial = article.viewCount !== undefined
     ? `№ ${String(article.viewCount).padStart(3, '0')}`
@@ -83,23 +72,6 @@ export function ArticleCard({ article, featured = false }: ArticleCardProps) {
       aria-label={`${article.title} — 記事を読む`}
     >
       <article className="box-ehon p-0 transition-transform duration-200 hover:-translate-y-1">
-        {/* ── サムネイル（線画アイコン中央配置）── */}
-        <div
-          className="flex items-center justify-center border-b"
-          style={{
-            height:       featured ? '180px' : '140px',
-            background:   'var(--washi-light)',
-            borderColor:  'var(--line-soft)',
-          }}
-        >
-          <Icon
-            strokeWidth={1}
-            size={featured ? 56 : 44}
-            style={{ color: 'var(--sumi-soft)' }}
-            aria-hidden="true"
-          />
-        </div>
-
         {/* ── ボディ ── */}
         <div className="p-5 flex flex-col gap-3">
 
