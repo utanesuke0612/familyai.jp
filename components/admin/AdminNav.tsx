@@ -60,8 +60,8 @@ export function AdminNav({ email }: AdminNavProps) {
           <Link href="/admin/3d-models" style={navLinkStyle}>
             3D図鑑
           </Link>
-          <Link href="/admin/article-bookmarks" style={navLinkStyle}>
-            記事BM
+          <Link href="/admin/html-pages" style={navLinkStyle}>
+            HTMLページ
           </Link>
           <Link href="/" target="_blank" style={navLinkStyle}>
             サイトを見る

@@ -350,6 +350,13 @@ export default async function ArticlePage({
 
             {/* ── 左：記事本文 ── */}
             <div className="min-w-0">
+              {/* モバイル専用 TOC（lg 以上では非表示） */}
+              {tocItems.length > 0 && (
+                <div className="lg:hidden mb-6">
+                  <ArticleTableOfContents items={tocItems} />
+                </div>
+              )}
+
               <ArticleBody content={article.body} />
 
               {/* 記事一覧に戻る */}
@@ -381,7 +388,10 @@ export default async function ArticlePage({
 
             {/* ── 右：スティッキーサイドバー ── */}
             <aside className="flex flex-col gap-6 lg:sticky lg:top-[calc(var(--header-height)+24px)]">
-              <ArticleTableOfContents items={tocItems} />
+              {/* デスクトップ専用 TOC（モバイルでは上の lg:hidden 版を使用） */}
+              <div className="hidden lg:block">
+                <ArticleTableOfContents items={tocItems} />
+              </div>
 
               {/* AIチャットウィジェット */}
               <AIChatWidget

@@ -444,6 +444,30 @@ export const userArticleBookmarks = pgTable(
 );
 
 // ─── 型エクスポート（Drizzle の推論型） ───────────────────────
+// ─── html_pages（管理者アップロード HTML 公開） ───────────────
+/**
+ * 管理者が Vercel Blob にアップロードした HTML ファイルの公開ページ。
+ * 公開 URL: /pages/[slug]
+ */
+export const htmlPages = pgTable(
+  'html_pages',
+  {
+    id:           uuid('id').defaultRandom().primaryKey(),
+    slug:         varchar('slug', { length: 255 }).notNull(),
+    title:        varchar('title', { length: 500 }).notNull(),
+    blobUrl:      text('blob_url').notNull(),
+    passwordHash: text('password_hash'),      // NULL = 公開 / 値あり = パスワード保護
+    createdAt:    timestamp('created_at').defaultNow().notNull(),
+    updatedAt:    timestamp('updated_at').defaultNow().notNull(),
+  },
+  (t) => ({
+    slugIdx: uniqueIndex('html_pages_slug_idx').on(t.slug),
+  }),
+);
+
+export type HtmlPage    = typeof htmlPages.$inferSelect;
+export type NewHtmlPage = typeof htmlPages.$inferInsert;
+
 export type UserArticleBookmark   = typeof userArticleBookmarks.$inferSelect;
 export type ArticleComment        = typeof articleComments.$inferSelect;
 export type NewArticleComment     = typeof articleComments.$inferInsert;
