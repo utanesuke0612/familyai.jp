@@ -648,7 +648,10 @@
     font-family: var(--font-body), 'Zen Kaku Gothic Antique', 'Noto Sans SC', sans-serif;
     font-size: var(--text-body);
     line-height: 1.72;
-    max-width: calc(64ch + 40px);
+    /* フォント非依存の固定 px。ch 単位はフォントによって実寸が変わり、
+       本番(Zen Kaku)とローカル(Hiragino フォールバック)で prose 幅が
+       556px / 672px と不一致になっていたため px 固定に変更。 */
+    max-width: 720px;
   }
   .prose-warm h1,
   .prose-warm h2,
