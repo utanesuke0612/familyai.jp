@@ -63,8 +63,8 @@ function SkeletonBlock({ height }: { height: string }) {
   );
 }
 
-// ISR: 1時間ごとに再検証（generateStaticParams に含まれない新規記事も対応）
-export const dynamic = 'force-dynamic'; // 一時的に全キャッシュ無効化
+// ISR: 再検証（generateStaticParams に含まれない新規記事も対応）
+export const revalidate = 60; // 一時的に1分（安定後 3600 に戻す）
 
 // ビルド時に公開済み全記事の静的HTMLを生成。未知の slug も ISR で動的対応。
 export async function generateStaticParams() {
