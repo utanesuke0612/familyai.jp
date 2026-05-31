@@ -139,6 +139,12 @@ export function buildArticleSystemPrompt(opts: {
    * 実コンテンツを踏まえて回答できる（v2 設計書の lesson.script 相当）。
    */
   lessonContext?:  string | null;
+  /**
+   * /pages/[slug] の HTML ページ全文テキスト（上限 8000 字）。
+   * HtmlPageViewer から AIChatWidget 経由で渡される。
+   * lessonContext と排他的に使われる（両方ある場合は pageContent 優先）。
+   */
+  pageContent?:   string | null;
 }): string {
   const lines = [
     'あなたは familyai.jp のAIアシスタントです。',
@@ -148,14 +154,23 @@ export function buildArticleSystemPrompt(opts: {
   ];
 
   if (opts.articleTitle) {
-    lines.push(`\n現在読んでいる記事のタイトル:「${opts.articleTitle}」`);
+    lines.push(`\n現在読んでいるページのタイトル:「${opts.articleTitle}」`);
   }
   if (opts.articleExcerpt) {
-    lines.push(`記事の概要: ${opts.articleExcerpt.slice(0, 300)}`);
+    lines.push(`ページの概要: ${opts.articleExcerpt.slice(0, 300)}`);
   }
 
-  // VOA レッスン本文（AIctation のカテゴリ質問が機能するための実コンテンツ）
-  if (opts.lessonContext && opts.lessonContext.trim()) {
+  // /pages/[slug] の HTML ページ内容（汎用ラベル）
+  if (opts.pageContent && opts.pageContent.trim()) {
+    lines.push('\n=== ページ内容（参照用・上限8000字） ===');
+    lines.push(opts.pageContent.slice(0, 8000));
+    lines.push('=== ここまで ===');
+    lines.push(
+      '上記はユーザーが現在閲覧しているページの内容です。',
+      '要約・説明等は必ずこの内容に基づいて回答してください。',
+    );
+  } else if (opts.lessonContext && opts.lessonContext.trim()) {
+    // VOA レッスン本文（AIctation のカテゴリ質問が機能するための実コンテンツ）
     lines.push('\n=== レッスン全文（参照用・上限8000字） ===');
     lines.push(opts.lessonContext.slice(0, 8000));
     lines.push('=== ここまで ===');
@@ -165,7 +180,7 @@ export function buildArticleSystemPrompt(opts: {
     );
   }
 
-  lines.push('\nユーザーの質問に上記の記事内容を踏まえて回答してください。');
+  lines.push('\nユーザーの質問に上記の内容を踏まえて回答してください。');
 
   return lines.join('\n');
 }
@@ -184,6 +199,8 @@ export interface ArticleChatInput {
   articleExcerpt?: string | null;
   /** AIctation の VOA レッスン全文（上限 8000 字・任意） */
   lessonContext?:  string | null;
+  /** /pages/[slug] の HTML ページ全文テキスト（上限 8000 字・任意） */
+  pageContent?:   string | null;
   /** user / assistant の会話履歴。system プロンプトは本関数内で組み立てる */
   messages:        OpenRouterMessage[];
 }
@@ -209,6 +226,7 @@ export async function streamArticleChat(
     articleTitle:   input.articleTitle,
     articleExcerpt: input.articleExcerpt,
     lessonContext:  input.lessonContext,
+    pageContent:    input.pageContent,
   });
   const messages: OpenRouterMessage[] = [
     { role: 'system', content: system },

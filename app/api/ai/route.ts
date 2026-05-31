@@ -55,6 +55,9 @@ const bodySchema = z.object({
   // 例: sentences.json を平文化したもの（タイムスタンプ抜きの対話文）
   // 8000 字 ≒ 約 6,000 input token（Anthropic 換算）で OpenRouter のコストは ¥0.5/回程度
   lessonContext:  z.string().max(8000).optional().nullable(),
+  // /pages/[slug] の HTML ページ全文テキスト（HtmlPageViewer → AIChatWidget 経由）
+  // 8000 字 ≒ 約 6,000 input token（Anthropic 換算）
+  pageContent:    z.string().max(8000).optional().nullable(),
   /**
    * AI Echo: 機能識別子。'ai-echo' のとき AI Echo 専用の system prompt を使う。
    * 省略 or 他の値なら従来の buildArticleSystemPrompt を使う（後方互換）。
@@ -65,7 +68,10 @@ const bodySchema = z.object({
    * 1 = 🌱 内容のみ / 2 = 🌿 内容+文法+語彙 / 3 = 🌳 内容+意見+論理性
    */
   level:          z.union([z.literal(1), z.literal(2), z.literal(3)]).optional().nullable(),
-});
+}).refine(
+  (data) => !(data.pageContent && data.lessonContext),
+  { message: 'pageContent と lessonContext は同時に指定できません。' },
+);
 
 // ── エラーレスポンスヘルパー ───────────────────────────────────
 /**
@@ -124,7 +130,7 @@ export async function POST(req: NextRequest) {
     );
   }
 
-  const { type, messages, articleTitle, articleExcerpt, lessonContext, feature, level } = parsed.data;
+  const { type, messages, articleTitle, articleExcerpt, lessonContext, pageContent, feature, level } = parsed.data;
 
   // 3. レート制限チェック（セッション対応: ログイン済みはプラン別制限）
   // Rev40 (Deepening #6): lib/ratelimit.ts の enforceAiRateLimit に集約。
@@ -167,7 +173,7 @@ export async function POST(req: NextRequest) {
         )
       : await streamArticleChat(
           type,
-          { articleTitle, articleExcerpt, lessonContext, messages: userMessages },
+          { articleTitle, articleExcerpt, lessonContext, pageContent, messages: userMessages },
           { signal: ac.signal },
         );
 

@@ -16,6 +16,7 @@ import { SITE }                             from '@/shared';
 import { HtmlPagePasswordGate }             from '@/components/pages/HtmlPagePasswordGate';
 import { HtmlPageViewer }                   from '@/components/pages/HtmlPageViewer';
 import { verifyPageCookie, pageCookieName } from '@/lib/html-page-auth';
+import { extractTextFromHtml }            from '@/lib/html';
 
 // パスワード保護ページは毎回動的レンダリング、パスワードなしは ISR（1時間）
 // ※ パスワードありかどうかは DB を引くまで分からないため、ページ自体は
@@ -156,11 +157,15 @@ export default async function HtmlPublicPage({
     );
   }
 
+  // AI チャット用に HTML からテキストを抽出（先頭 6000 字）
+  const pageContent = extractTextFromHtml(htmlContent);
+
   return (
     <HtmlPageViewer
       title={page.title}
       slug={page.slug}
       htmlContent={htmlContent}
+      pageContent={pageContent}
     />
   );
 }

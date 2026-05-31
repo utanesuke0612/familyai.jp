@@ -47,6 +47,12 @@ interface AIChatWidgetProps {
    * mode='simple' でも渡せば追加 context として効くが、通常は不要。
    */
   lessonContext?: string;
+  /**
+   * /pages/[slug] の HTML ページ全文テキスト（最大 8000字）。
+   * HtmlPageViewer から渡され、AI がページ内容を踏まえて要約・質問回答するための context。
+   * lessonContext と排他的に使用（pageContent がある場合は pageContent が優先）。
+   */
+  pageContent?: string;
 }
 
 const DEFAULT_SUGGESTED_QUESTIONS = [
@@ -345,6 +351,7 @@ export function AIChatWidget({
   suggestedQuestions,
   mode = 'simple',
   lessonContext,
+  pageContent,
 }: AIChatWidgetProps) {
   const isAictation = mode === 'aictation';
   // 通常モード: suggestedQuestions or デフォルト 4 問
@@ -435,7 +442,9 @@ export function AIChatWidget({
           articleTitle,
           articleExcerpt: articleExcerpt?.slice(0, 300),
           // VOA レッスン全文（AIctation のカテゴリ質問が機能するために必須）
-          lessonContext:  lessonContext?.slice(0, 8000),
+          lessonContext:  pageContent ? undefined : lessonContext?.slice(0, 8000),
+          // /pages/[slug] HTML ページ全文テキスト（pageContent 優先・抽出元で6000字制限済み）
+          pageContent,
         }),
         signal: ac.signal,
       });
@@ -504,6 +513,8 @@ export function AIChatWidget({
         }
       };
 
+      let streamDone = false;
+
       while (true) {
         const { done, value } = await reader.read();
         if (done) break;
@@ -515,7 +526,7 @@ export function AIChatWidget({
         for (const line of lines) {
           if (!line.startsWith('data: ')) continue;
           const payload = line.slice(6).trim();
-          if (payload === '[DONE]') break;
+          if (payload === '[DONE]') { streamDone = true; break; }
 
           try {
             const json = JSON.parse(payload) as { delta?: string; error?: string; code?: string };
@@ -542,6 +553,7 @@ export function AIChatWidget({
             // 不正な JSON はスキップ
           }
         }
+        if (streamDone) break;
       }
 
       // ループ終了時に未 flush の差分があれば反映
@@ -559,7 +571,15 @@ export function AIChatWidget({
         ),
       );
     } catch (err) {
-      if ((err as Error).name === 'AbortError') return;
+      if ((err as Error).name === 'AbortError') {
+        // ストリーミング中フラグを解除（放置すると点滅カーソルが永続表示される）
+        setMessages((prev) =>
+          prev.map((m) =>
+            m.id === assistantId ? { ...m, streaming: false } : m,
+          ),
+        );
+        return;
+      }
 
       const msg = (err as Error).message?.trim() || 'エラーが発生しました。もう一度お試しください。';
       setMessages((prev) =>
@@ -571,7 +591,7 @@ export function AIChatWidget({
       );
       setError(msg);
     }
-  }, [input, isLoading, messages, articleTitle, articleExcerpt, articleCategories, mode, lessonContext]);
+  }, [input, isLoading, messages, articleTitle, articleExcerpt, articleCategories, mode, lessonContext, pageContent]);
 
   function handleKeyDown(e: React.KeyboardEvent<HTMLTextAreaElement>) {
     // IME変換中（日本語入力の確定Enter）は送信しない
