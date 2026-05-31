@@ -54,7 +54,7 @@ export function HtmlPageViewer({ title, slug, htmlContent, pageContent }: Props)
   return (
     <div style={{ width: '100%', height: 'calc(100vh - var(--header-height, 60px))', display: 'flex', flexDirection: 'column' }}>
       {/* ── 単一グリッド: order でモバイル/PC の位置を切替 ── */}
-      <div className="grid grid-cols-1 lg:grid-cols-[1fr_380px]" style={{ flex: 1, minHeight: 0 }}>
+      <div className="grid grid-cols-1 lg:grid-cols-[1fr_266px]" style={{ flex: 1, minHeight: 0 }}>
         {/* AI チャット — モバイル: row 1 (order-1), PC: column 2 (order-2) */}
         <div className="order-1 lg:order-2" style={{ minHeight: 0 }}>
           <div className="lg:sticky" style={{ top: 'calc(var(--header-height, 60px) + 8px)' }}>
