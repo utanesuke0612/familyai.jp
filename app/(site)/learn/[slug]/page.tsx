@@ -346,7 +346,7 @@ export default async function ArticlePage({
           className="max-w-container mx-auto"
           style={{ paddingInline: 'var(--container-px)' }}
         >
-          <div className="grid grid-cols-1 lg:grid-cols-[1fr_340px] gap-6 items-start">
+          <div className="grid grid-cols-1 lg:grid-cols-[1fr_340px] gap-12 items-start">
 
             {/* ── 左：記事本文 ── */}
             <div className="min-w-0">

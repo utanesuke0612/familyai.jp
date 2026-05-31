@@ -224,7 +224,7 @@ export default async function VoaLessonPage({
           className="max-w-container mx-auto"
           style={{ paddingInline: 'var(--container-px)' }}
         >
-          <div className="grid grid-cols-1 lg:grid-cols-[1fr_340px] gap-8 items-start">
+          <div className="grid grid-cols-1 lg:grid-cols-[1fr_340px] gap-12 items-start">
             <div className="min-w-0 flex flex-col gap-6">
 
               {/* ─── ① レッスン概要（日本語）─────────────────────── */}

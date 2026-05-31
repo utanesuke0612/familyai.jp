@@ -648,7 +648,7 @@
     font-family: var(--font-body), 'Zen Kaku Gothic Antique', 'Noto Sans SC', sans-serif;
     font-size: var(--text-body);
     line-height: 1.72;
-    max-width: calc(72ch + 40px);
+    max-width: calc(64ch + 40px);
   }
   .prose-warm h1,
   .prose-warm h2,
