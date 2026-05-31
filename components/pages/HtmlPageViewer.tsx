@@ -67,7 +67,7 @@ export function HtmlPageViewer({ title, slug, htmlContent, pageContent }: Props)
           <div className="lg:sticky" style={{ top: 'calc(var(--header-height, 60px) + 8px)' }}>
             <AIChatWidget
               articleTitle={title}
-              articleSlug={slug}
+              articleSlug={`pages/${slug}`}
               pageContent={pageContent}
               suggestedQuestions={PAGE_SUGGESTED_QUESTIONS}
               mode="simple"

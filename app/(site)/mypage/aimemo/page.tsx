@@ -54,12 +54,13 @@ function downloadCsv(items: AiMemoItem[]) {
  *
  * フォーマット別:
  *   tools/voaenglish/anna/lesson-01  → /tools/voaenglish/anna/lesson-01  (新形式)
+ *   pages/aitrainingservice          → /pages/aitrainingservice           (HTMLページ)
  *   voa-anna-lesson-01               → /tools/voaenglish/anna/lesson-01  (旧形式・後方互換)
  *   some-article-slug                → /learn/some-article-slug           (通常記事)
  */
 function resolveHref(slug: string): string {
-  // 新形式: tools/ または learn/ で始まるパス
-  if (slug.startsWith('tools/') || slug.startsWith('learn/')) {
+  // 新形式: tools/ learn/ pages/ で始まるパス
+  if (slug.startsWith('tools/') || slug.startsWith('learn/') || slug.startsWith('pages/')) {
     return `/${slug}`;
   }
   // 旧形式: voa-{course}-{lesson} → /tools/voaenglish/{course}/{lesson}
