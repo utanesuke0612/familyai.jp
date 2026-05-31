@@ -2,10 +2,9 @@
  * app/(site)/mypage/page.tsx
  * familyai.jp — MyPage（マイページ）
  *
- * セッションに応じて3状態で表示を切り替える：
+ * セッションに応じて2状態で表示を切り替える：
  *   - 未ログイン（no session）
  *   - 無料会員（plan='free'）
- *   - プレミアム会員（plan='premium'）
  *
  * 単語帳・AI利用状況・プラン情報などの入り口として機能する。
  */
@@ -15,7 +14,6 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { BookOpen, Bookmark, Pin, Volume2, Heart, ArrowRight } from 'lucide-react';
 import { auth } from '@/lib/auth';
-import { isAdmin } from '@/lib/admin-auth';
 import { SITE } from '@/shared';
 
 export const metadata: Metadata = {
@@ -38,32 +36,20 @@ const STATE_CONFIG = {
     badge:        '無料会員',
     badgeBg:      'var(--washi-deep)',
   },
-  premium: {
-    bgGradient:   'var(--washi-deep)',
-    badge:        'プレミアム会員',
-    badgeBg:      'var(--shu-soft)',
-  },
 } as const;
 
 const AI_QUOTA = {
-  anon:    { label: '非ログイン',       limit: 10 },
-  free:    { label: '無料会員',         limit: 30 },
-  premium: { label: 'プレミアム会員',   limit: 200 },
+  anon:    { label: '非ログイン',       limit: 30 },
+  free:    { label: '無料会員',         limit: 100 },
 } as const;
 
 export default async function MyPage() {
   const session = await auth();
   const isLoggedIn = !!session?.user;
-  const plan: 'anon' | 'free' | 'premium' = !isLoggedIn
-    ? 'anon'
-    : session.user.plan === 'premium' ? 'premium' : 'free';
+  const plan: 'anon' | 'free' = !isLoggedIn ? 'anon' : 'free';
 
   const config = STATE_CONFIG[plan];
   const quota  = AI_QUOTA[plan];
-
-  // Rev33: 課金フローが未確定の間、プレミアム関連 UI を管理者のみに見せる。
-  // ADMIN_EMAIL（lijun.kawasaki@gmail.com）のセッションでのみ true。
-  const showPremium = await isAdmin();
 
   return (
     <main style={{ background: 'var(--washi)' }}>
@@ -288,7 +274,7 @@ export default async function MyPage() {
             </p>
 
             {/* レスポンシブ比較: モバイルはスタックカード、sm以上はテーブル */}
-            <FeatureComparison plan={plan} showPremium={showPremium} />
+            <FeatureComparison plan={plan} />
 
             {/* CTA */}
             {plan === 'anon' && (
@@ -301,13 +287,8 @@ export default async function MyPage() {
                   color: 'white',
                 }}
               >
-                無料で登録 → AI教室・履歴・メモ帳が使えます
+                無料で登録 → AIチャット・履歴・メモ帳が使えます
               </Link>
-            )}
-            {plan === 'premium' && (
-              <p className="mt-5 text-center text-sm font-semibold" style={{ color: 'var(--sumi)' }}>
-                プレミアムプランをご利用いただきありがとうございます！
-              </p>
             )}
           </article>
 
@@ -323,74 +304,54 @@ export default async function MyPage() {
    - タブレット以上（>= sm）: 横並びテーブル
 ───────────────────────────────────────────────────── */
 
-type PlanKey = 'anon' | 'free' | 'premium';
+type PlanKey = 'anon' | 'free';
 
 interface FeatureItem {
   feature: string;
   desc:    string;
   anon:    string;
   free:    string;
-  premium: string;
 }
 
 const FEATURES: readonly FeatureItem[] = [
   {
-    feature: 'AI教室(アニメ生成)',
-    desc:    '理科・算数・社会のアニメをAIで生成',
-    anon:    '利用不可',
-    free:    '3回/日',
-    premium: '100回/日',
-  },
-  {
     feature: 'AIチャット・解説',
     desc:    '質問への回答・記事の解説',
-    anon:    '10回/日',
-    free:    '30回/日',
-    premium: '200回/日',
-  },
-  {
-    feature: '履歴から再閲覧',
-    desc:    '生成済みアニメを無料で見直し',
-    anon:    '利用不可',
-    free:    '無制限',
-    premium: '無制限',
+    anon:    '30回/日',
+    free:    '100回/日',
   },
   {
     feature: '友達にシェア',
-    desc:    '記事・アニメをX・LINEで共有',
+    desc:    '記事をX・LINEで共有',
     anon:    '可',
     free:    '可',
-    premium: '可',
   },
   {
     feature: 'AIメモ帳',
     desc:    'AIとのやりとりを保存',
     anon:    '利用不可',
     free:    '無制限',
-    premium: '無制限',
   },
   {
     feature: 'マイブックマーク',
     desc:    'VOA 英語の単語・センテンスを保存',
     anon:    'センテンスのみ可（端末内）',
     free:    '無制限（クラウド同期）',
-    premium: '無制限（クラウド同期）',
   },
 ];
 
 const PLAN_META: Record<PlanKey, { title: string }> = {
   anon:    { title: '未ログイン' },
   free:    { title: '無料会員'   },
-  premium: { title: 'プレミアム' },
 };
 
-function FeatureComparison({ plan, showPremium }: { plan: PlanKey; showPremium: boolean }) {
+function FeatureComparison({ plan }: { plan: PlanKey }) {
   return (
     <>
       {/* ── モバイル（< sm）: スタックカード ── */}
       <div className="flex flex-col gap-3 sm:hidden">
         {FEATURES.map((f) => (
-          <FeatureMobileCard key={f.feature} item={f} plan={plan} showPremium={showPremium} />
+          <FeatureMobileCard key={f.feature} item={f} plan={plan} />
         ))}
       </div>
 
@@ -407,14 +368,11 @@ function FeatureComparison({ plan, showPremium }: { plan: PlanKey; showPremium: 
               </th>
               <PlanHeader title={PLAN_META.anon.title} current={plan === 'anon'} />
               <PlanHeader title={PLAN_META.free.title} current={plan === 'free'} />
-              {showPremium && (
-                <PlanHeader title={PLAN_META.premium.title} current={plan === 'premium'} />
-              )}
             </tr>
           </thead>
           <tbody>
             {FEATURES.map((f) => (
-              <FeatureRow key={f.feature} {...f} plan={plan} showPremium={showPremium} />
+              <FeatureRow key={f.feature} {...f} plan={plan} />
             ))}
           </tbody>
         </table>
@@ -427,11 +385,9 @@ function FeatureComparison({ plan, showPremium }: { plan: PlanKey; showPremium: 
 function FeatureMobileCard({
   item,
   plan,
-  showPremium,
 }: {
   item: FeatureItem;
   plan: PlanKey;
-  showPremium: boolean;
 }) {
   return (
     <div
@@ -453,9 +409,6 @@ function FeatureMobileCard({
       <div className="flex flex-col gap-1.5">
         <PlanValueRow planKey="anon" value={item.anon} plan={plan} />
         <PlanValueRow planKey="free" value={item.free} plan={plan} />
-        {showPremium && (
-          <PlanValueRow planKey="premium" value={item.premium} plan={plan} />
-        )}
       </div>
     </div>
   );
@@ -524,15 +477,13 @@ function PlanHeader({ title, current }: { title: string; current: boolean }) {
 }
 
 function FeatureRow({
-  feature, desc, anon, free, premium, plan, showPremium,
+  feature, desc, anon, free, plan,
 }: {
   feature:     string;
   desc:        string;
   anon:        string;
   free:        string;
-  premium:     string;
   plan:        PlanKey;
-  showPremium: boolean;
 }) {
   return (
     <tr style={{ borderBottom: '1px solid var(--line)' }}>
@@ -546,7 +497,6 @@ function FeatureRow({
       </td>
       <CellValue value={anon} isCurrent={plan === 'anon'} />
       <CellValue value={free} isCurrent={plan === 'free'} />
-      {showPremium && <CellValue value={premium} isCurrent={plan === 'premium'} />}
     </tr>
   );
 }

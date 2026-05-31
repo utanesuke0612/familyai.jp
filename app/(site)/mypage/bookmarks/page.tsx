@@ -454,7 +454,7 @@ function ArticlesTab() {
     return (
       <EmptyCard
         message="まだ記事のブックマークはありません。"
-        hint="記事ページ左側のブックマークアイコンをクリックして保存できます。"
+        hint="記事や資料ページのタイトル横にあるブックマークアイコンをクリックして保存できます。"
         cta={{ href: '/learn', label: '記事一覧へ →' }}
       />
     );
@@ -470,7 +470,7 @@ function ArticlesTab() {
         >
           <div className="min-w-0 flex-1">
             <Link
-              href={`/learn/${item.slug}`}
+              href={item.slug.startsWith('pages/') ? `/${item.slug}` : `/learn/${item.slug}`}
               className="font-mincho font-medium text-base leading-snug hover:opacity-70 transition-opacity line-clamp-2"
               style={{ color: 'var(--sumi)' }}
             >

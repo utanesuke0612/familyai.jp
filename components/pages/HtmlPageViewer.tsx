@@ -12,7 +12,9 @@
  */
 
 import { useRef, useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 import { AIChatWidget } from '@/components/article/AIChatWidget';
+import { useArticleBookmark } from '@/lib/article-bookmark-store';
 
 interface Props {
   title:       string;
@@ -29,8 +31,13 @@ const PAGE_SUGGESTED_QUESTIONS = [
 ];
 
 export function HtmlPageViewer({ title, slug, htmlContent, pageContent }: Props) {
+  const router = useRouter();
   const iframeRef = useRef<HTMLIFrameElement>(null);
   const [isFullscreen, setIsFullscreen] = useState(false);
+  const { saved, toggle: toggleBookmark, loading: bookmarkLoading, isLoggedIn } = useArticleBookmark(
+    `pages/${slug}`,
+    title,
+  );
 
   useEffect(() => {
     const onChange = () => setIsFullscreen(!!document.fullscreenElement);
@@ -70,7 +77,7 @@ export function HtmlPageViewer({ title, slug, htmlContent, pageContent }: Props)
 
         {/* iframe カラム — モバイル: row 2 (order-2), PC: column 1 (order-1) */}
         <div className="order-2 lg:order-1" style={{ display: 'flex', flexDirection: 'column', minHeight: 0, minWidth: 0 }}>
-          {/* サブヘッダー：タイトル + 全画面ボタン */}
+          {/* サブヘッダー：タイトル + ブックマーク + 全画面ボタン */}
           <div
             style={{
               display:        'flex',
@@ -86,17 +93,61 @@ export function HtmlPageViewer({ title, slug, htmlContent, pageContent }: Props)
               flexShrink:     0,
             }}
           >
-            <span style={{
-              fontSize:     '13px',
-              fontWeight:   500,
-              color:        'var(--sumi)',
-              overflow:     'hidden',
-              textOverflow: 'ellipsis',
-              whiteSpace:   'nowrap',
-            }}>
-              {title}
-            </span>
+            {/* 左: タイトル + ブックマーク */}
+            <div style={{ display: 'flex', alignItems: 'center', minWidth: 0, flex: 1 }}>
+              <span style={{
+                fontSize:     '13px',
+                fontWeight:   500,
+                color:        'var(--sumi)',
+                overflow:     'hidden',
+                textOverflow: 'ellipsis',
+                whiteSpace:   'nowrap',
+              }}>
+                {title}
+              </span>
 
+              {/* ブックマークボタン */}
+              <button
+                type="button"
+                onClick={() => {
+                  if (!isLoggedIn) { router.push('/auth/signin'); return; }
+                  toggleBookmark();
+                }}
+                disabled={bookmarkLoading}
+                title={saved ? 'ブックマークから外す' : 'ページをブックマーク'}
+                aria-label={saved ? 'ブックマークから外す' : 'ページをブックマーク'}
+                aria-pressed={saved}
+                style={{
+                  flexShrink:   0,
+                  display:      'inline-flex',
+                  alignItems:   'center',
+                  justifyContent: 'center',
+                  marginLeft:   '8px',
+                  width:        '28px',
+                  height:       '28px',
+                  background:   saved ? 'var(--shu-soft)' : 'var(--washi)',
+                  border:       `1px solid ${saved ? 'var(--shu)' : 'var(--line)'}`,
+                  borderRadius: '6px',
+                  color:        saved ? 'var(--shu)' : 'var(--sumi-soft)',
+                  cursor:       bookmarkLoading ? 'wait' : 'pointer',
+                  opacity:      bookmarkLoading ? 0.7 : 1,
+                  transition:   'background 0.15s, color 0.15s, border-color 0.15s',
+                  padding:      0,
+                }}
+              >
+                {saved ? (
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                    <path d="M17 3H7c-1.1 0-2 .9-2 2v16l7-3 7 3V5c0-1.1-.9-2-2-2z"/>
+                  </svg>
+                ) : (
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                    <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/>
+                  </svg>
+                )}
+              </button>
+            </div>
+
+            {/* 右: 全画面ボタン */}
             <button
               onClick={toggleFullscreen}
               title={isFullscreen ? '全画面を終了' : '全画面表示'}

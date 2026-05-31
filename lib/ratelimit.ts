@@ -146,9 +146,9 @@ interface AiPlanPolicy {
 }
 
 const AI_PLAN_POLICY: Record<AiPlan, AiPlanPolicy> = {
-  anon:    { tokens: 10,  prefix: 'ratelimit:ai:anon' },
-  free:    { tokens: 30,  prefix: 'ratelimit:ai:free' },
-  premium: { tokens: 200, prefix: 'ratelimit:ai:pro'  },
+  anon:    { tokens: 30,   prefix: 'ratelimit:ai:anon' },
+  free:    { tokens: 100,  prefix: 'ratelimit:ai:free' },
+  premium: { tokens: 200,  prefix: 'ratelimit:ai:pro'  },
 };
 
 export async function enforceAiRateLimit(

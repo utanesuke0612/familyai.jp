@@ -88,6 +88,22 @@ export function SignInForm() {
           </p>
         </div>
 
+        {/* ベネフィットカード */}
+        <div
+          className="mb-6 px-4 py-3 text-sm text-center"
+          style={{
+            background: 'var(--washi-light)',
+            border: '1px solid var(--line)',
+            borderRadius: '8px',
+            color: 'var(--sumi)',
+            lineHeight: 1.8,
+          }}
+        >
+          あなたの学びを、もっと自由に。<br />
+          記事の保存・学習のふり返り・AIチャット回数アップ——<br />
+          すべて<span style={{ color: 'var(--shu)', fontWeight: 600 }}>無料</span>で始められます。
+        </div>
+
         {/* エラー表示 */}
         {errorMsg && (
           <div

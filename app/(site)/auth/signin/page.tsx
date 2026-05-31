@@ -14,7 +14,7 @@ import { SignInForm } from './SignInForm';
 
 export const metadata: Metadata = {
   title:       `ログイン | ${SITE.name}`,
-  description: 'familyai.jp にログインして AI メモや単語帳をクラウド同期しましょう。',
+  description: 'ログインすると記事のブックマーク・学習履歴のクラウド保存・AIチャット回数アップ——すべて無料で始められます。',
   alternates:  { canonical: `${SITE.url}/auth/signin` },
 };
 
