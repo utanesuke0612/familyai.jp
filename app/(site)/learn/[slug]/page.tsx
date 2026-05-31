@@ -12,7 +12,7 @@
  */
 
 import type { Metadata }    from 'next';
-import dynamic               from 'next/dynamic';
+import nextDynamic               from 'next/dynamic';
 import { notFound }         from 'next/navigation';
 import { cache }            from 'react';
 
@@ -32,10 +32,10 @@ import {
 const getArticleCached = cache(getArticle);
 
 // ── 遅延ロード（初期バンドル削減） ─────────────────────────────
-const ArticleBody           = dynamic(() => import('@/components/article/ArticleBody').then(m => m.ArticleBody),           { loading: () => <SkeletonBlock height="60vh" /> });
-const AIChatWidget          = dynamic(() => import('@/components/article/AIChatWidget').then(m => m.AIChatWidget),         { ssr: false, loading: () => <SkeletonBlock height="300px" /> });
-const ArticleComments       = dynamic(() => import('@/components/article/ArticleComments').then(m => m.ArticleComments),       { loading: () => <SkeletonBlock height="200px" /> });
-const FloatingShareButtons  = dynamic(() => import('@/components/article/FloatingShareButtons').then(m => m.FloatingShareButtons),  { loading: () => <SkeletonBlock height="48px" /> });
+const ArticleBody           = nextDynamic(() => import('@/components/article/ArticleBody').then(m => m.ArticleBody),           { loading: () => <SkeletonBlock height="60vh" /> });
+const AIChatWidget          = nextDynamic(() => import('@/components/article/AIChatWidget').then(m => m.AIChatWidget),         { ssr: false, loading: () => <SkeletonBlock height="300px" /> });
+const ArticleComments       = nextDynamic(() => import('@/components/article/ArticleComments').then(m => m.ArticleComments),       { loading: () => <SkeletonBlock height="200px" /> });
+const FloatingShareButtons  = nextDynamic(() => import('@/components/article/FloatingShareButtons').then(m => m.FloatingShareButtons),  { loading: () => <SkeletonBlock height="48px" /> });
 import { ArticleTableOfContents } from '@/components/article/ArticleTableOfContents';
 import { ArticleGrid }           from '@/components/article/ArticleGrid';
 import { getArticleBookmarkCount } from '@/lib/repositories/article-bookmarks';
