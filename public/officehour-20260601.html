@@ -4,8 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="author" content="familyaidesign">
-<meta name="description" content="familyai.jp 再評価報告書 — Office Hours VOL.02 · 改善後の現状と次へのアクション">
-<title>familyai.jp 再評価報告書 — Office Hours VOL.02</title>
+<meta name="description" content="familyai.jp 総合評価報告書 — Office Hours · 7軸評価と改善提案">
+<title>familyai.jp 総合評価報告書 — Office Hours 2026.06.01</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600;700;800&family=Zen+Kaku+Gothic+Antique:wght@300;400;500;700&family=DM+Mono:wght@400;500&family=Playfair+Display:wght@400;600;700;800&family=Noto+Serif+SC:wght@500;700;800&family=Noto+Sans+SC:wght@300;400;500;700&family=Nunito+Sans:wght@300;400;600;700&family=Caveat:wght@500;700&display=swap" rel="stylesheet">
@@ -23,427 +23,114 @@
     --mustard: #d99a2b;
     --olive: #6f7a3a;
     --positive: #4a8a3a;
-    --rule: rgba(40, 28, 18, 0.18);
-
-    --font-display: 'Shippori Mincho', 'Noto Serif SC', 'Playfair Display', serif;
-    --font-body:    'Zen Kaku Gothic Antique', 'Noto Sans SC', 'Nunito Sans', sans-serif;
-    --font-mono:    'DM Mono', monospace;
-    --font-hand:    'Caveat', cursive;
+    --rule: rgba(40,28,18,0.18);
+    --font-display: 'Shippori Mincho','Noto Serif SC','Playfair Display',serif;
+    --font-body: 'Zen Kaku Gothic Antique','Noto Sans SC','Nunito Sans',sans-serif;
+    --font-mono: 'DM Mono',monospace;
+    --font-hand: 'Caveat',cursive;
   }
 
   * { box-sizing: border-box; }
-  html, body {
-    margin: 0; padding: 0;
-    background: var(--paper);
-    color: var(--ink);
-    font-family: var(--font-body);
-    line-height: 1.75;
-    -webkit-font-smoothing: antialiased;
-    scroll-behavior: smooth;
-  }
+  html,body { margin:0;padding:0;background:var(--paper);color:var(--ink);font-family:var(--font-body);line-height:1.75;-webkit-font-smoothing:antialiased;scroll-behavior:smooth; }
 
-  .layout { display: flex; min-height: 100vh; }
+  .layout { display:flex;min-height:100vh; }
 
-  /* ── Sidebar TOC ── */
-  .toc-sidebar {
-    position: sticky; top: 0;
-    width: 260px; min-width: 260px;
-    height: 100vh;
-    overflow-y: auto;
-    background: var(--paper-2);
-    border-right: 1px solid var(--rule);
-    padding: 3rem 1.8rem 3rem 2rem;
-    display: flex; flex-direction: column;
-  }
-  .toc-sidebar .toc-title {
-    font-family: var(--font-mono);
-    font-size: 0.65rem;
-    letter-spacing: 0.3em;
-    color: var(--terracotta);
-    text-transform: uppercase;
-    margin-bottom: 1.8rem;
-    padding-bottom: 1rem;
-    border-bottom: 1px solid var(--rule);
-  }
-  .toc-sidebar .toc-list {
-    list-style: none; padding: 0; margin: 0;
-    display: flex; flex-direction: column; gap: 0.15rem;
-  }
-  .toc-sidebar .toc-list a {
-    display: flex; align-items: baseline; gap: 0.6rem;
-    text-decoration: none;
-    color: var(--ink-2);
-    font-family: var(--font-mono);
-    font-size: 0.7rem;
-    letter-spacing: 0.12em;
-    padding: 0.45rem 0.6rem;
-    border-radius: 2px;
-    border-left: 2px solid transparent;
-    transition: all 0.2s ease;
-  }
-  .toc-sidebar .toc-list a .toc-num {
-    color: var(--terracotta);
-    font-weight: 500;
-    min-width: 1.4rem;
-    font-size: 0.65rem;
-  }
-  .toc-sidebar .toc-list a:hover {
-    background: rgba(184, 65, 42, 0.06);
-    color: var(--ink);
-    border-left-color: var(--terracotta);
-  }
+  .toc-sidebar { position:sticky;top:0;width:260px;min-width:260px;height:100vh;overflow-y:auto;background:var(--paper-2);border-right:1px solid var(--rule);padding:3rem 1.8rem 3rem 2rem; }
+  .toc-sidebar .toc-title { font-family:var(--font-mono);font-size:0.65rem;letter-spacing:0.3em;color:var(--terracotta);text-transform:uppercase;margin-bottom:1.8rem;padding-bottom:1rem;border-bottom:1px solid var(--rule); }
+  .toc-sidebar .toc-list { list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:0.15rem; }
+  .toc-sidebar .toc-list a { display:flex;align-items:baseline;gap:0.6rem;text-decoration:none;color:var(--ink-2);font-family:var(--font-mono);font-size:0.7rem;letter-spacing:0.12em;padding:0.45rem 0.6rem;border-radius:2px;border-left:2px solid transparent;transition:all 0.2s ease; }
+  .toc-sidebar .toc-list a .toc-num { color:var(--terracotta);font-weight:500;min-width:1.4rem;font-size:0.65rem; }
+  .toc-sidebar .toc-list a:hover { background:rgba(184,65,42,0.06);color:var(--ink);border-left-color:var(--terracotta); }
 
-  /* ── Main ── */
-  .main-content {
-    flex: 1; min-width: 0;
-    padding: 5rem 3rem 6rem;
-    max-width: 860px;
-  }
+  .main-content { flex:1;min-width:0;padding:5rem 3rem 6rem;max-width:860px; }
 
-  header {
-    border-bottom: 1px solid var(--rule);
-    padding-bottom: 2.4rem;
-    margin-bottom: 3rem;
-    display: grid;
-    grid-template-columns: 1fr auto;
-    gap: 1.5rem;
-    align-items: end;
-  }
-  .doc-meta-top { display: flex; flex-direction: column; gap: 0.4rem; }
-  .doc-eyebrow {
-    font-family: var(--font-mono);
-    font-size: 0.7rem;
-    letter-spacing: 0.3em;
-    color: var(--terracotta);
-    text-transform: uppercase;
-  }
-  h1 {
-    font-family: var(--font-display);
-    font-weight: 700;
-    font-size: 2.8rem;
-    line-height: 1.15;
-    margin: 0;
-    color: var(--ink);
-    letter-spacing: 0.005em;
-  }
-  h1 .accent { color: var(--terracotta); }
-  .doc-meta {
-    font-family: var(--font-mono);
-    font-size: 0.7rem;
-    letter-spacing: 0.18em;
-    color: var(--ink-3);
-    text-transform: uppercase;
-    text-align: right;
-    line-height: 1.8;
-  }
-  .doc-meta b { color: var(--ink); font-weight: 500; }
+  header { border-bottom:1px solid var(--rule);padding-bottom:2.4rem;margin-bottom:3rem;display:grid;grid-template-columns:1fr auto;gap:1.5rem;align-items:end; }
+  .doc-meta-top { display:flex;flex-direction:column;gap:0.4rem; }
+  .doc-eyebrow { font-family:var(--font-mono);font-size:0.7rem;letter-spacing:0.3em;color:var(--terracotta);text-transform:uppercase; }
+  h1 { font-family:var(--font-display);font-weight:700;font-size:2.8rem;line-height:1.15;margin:0;color:var(--ink);letter-spacing:0.005em; }
+  h1 .accent { color:var(--terracotta); }
+  .doc-meta { font-family:var(--font-mono);font-size:0.7rem;letter-spacing:0.18em;color:var(--ink-3);text-transform:uppercase;text-align:right;line-height:1.8; }
+  .doc-meta b { color:var(--ink);font-weight:500; }
 
-  .lead {
-    font-family: var(--font-display);
-    font-size: 1.15rem;
-    line-height: 1.7;
-    color: var(--ink-2);
-    margin-bottom: 2.5rem;
-    padding-left: 1.2rem;
-    border-left: 3px solid var(--terracotta);
-  }
+  .lead { font-family:var(--font-display);font-size:1.15rem;line-height:1.7;color:var(--ink-2);margin-bottom:2.5rem;padding-left:1.2rem;border-left:3px solid var(--terracotta); }
 
-  section.section { margin-bottom: 3rem; }
-  .section-head {
-    display: flex; align-items: baseline; gap: 1rem;
-    margin-bottom: 1.4rem;
-    padding-bottom: 0.5rem;
-    border-bottom: 1px solid var(--rule);
-  }
-  .section-num {
-    font-family: var(--font-mono);
-    font-size: 0.85rem;
-    letter-spacing: 0.2em;
-    color: var(--terracotta);
-    padding: 0.2rem 0.6rem;
-    border: 1.5px solid var(--terracotta);
-    border-radius: 2px;
-  }
-  .section-title {
-    font-family: var(--font-display);
-    font-weight: 600;
-    font-size: 1.5rem;
-    color: var(--ink);
-    margin: 0; flex: 1;
-    letter-spacing: 0.015em;
-  }
-  .section-sub {
-    font-size: 13px;
-    color: var(--ink-3);
-    margin-top: 0.4rem;
-  }
+  section.section { margin-bottom:3rem; }
+  .section-head { display:flex;align-items:baseline;gap:1rem;margin-bottom:1.4rem;padding-bottom:0.5rem;border-bottom:1px solid var(--rule); }
+  .section-num { font-family:var(--font-mono);font-size:0.85rem;letter-spacing:0.2em;color:var(--terracotta);padding:0.2rem 0.6rem;border:1.5px solid var(--terracotta);border-radius:2px; }
+  .section-title { font-family:var(--font-display);font-weight:600;font-size:1.5rem;color:var(--ink);margin:0;flex:1;letter-spacing:0.015em; }
 
-  .body { font-size: 1rem; line-height: 1.85; color: var(--ink); }
-  .body p { margin: 0 0 1rem; }
-  .body strong { color: var(--ink); font-weight: 700; }
-  .body .em { color: var(--terracotta); font-weight: 600; }
-  .body ul, .body ol { padding-left: 1.4rem; margin: 0 0 1rem; }
-  .body li { margin-bottom: 0.4rem; }
+  .body { font-size:1rem;line-height:1.85;color:var(--ink); }
+  .body p { margin:0 0 1rem; }
+  .body strong { color:var(--ink);font-weight:700; }
+  .body .em { color:var(--terracotta);font-weight:600; }
+  .body ul,.body ol { padding-left:1.4rem;margin:0 0 1rem; }
+  .body li { margin-bottom:0.4rem; }
 
-  /* ── KPI band ── */
-  .kpi-band {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 1rem;
-    margin: 1.5rem 0 2rem;
-  }
-  .kpi-tile {
-    background: var(--paper-3);
-    border: 1px solid var(--rule);
-    border-radius: 3px;
-    padding: 1.2rem 1.2rem;
-    position: relative;
-  }
-  .kpi-tile::before {
-    content: ""; position: absolute;
-    left: 0; top: 0; bottom: 0; width: 3px;
-    background: var(--terracotta);
-  }
-  .kpi-tile.teal::before  { background: var(--teal); }
-  .kpi-tile.olive::before { background: var(--olive); }
-  .kpi-tile .lbl {
-    font-family: var(--font-mono);
-    font-size: 0.6rem;
-    letter-spacing: 0.22em;
-    color: var(--ink-3);
-    text-transform: uppercase;
-    margin-bottom: 0.4rem;
-  }
-  .kpi-tile .val {
-    font-family: var(--font-display);
-    font-weight: 700;
-    font-size: 1.7rem;
-    line-height: 1;
-    color: var(--ink);
-  }
-  .kpi-tile .val .unit {
-    font-size: 0.8rem; font-weight: 500;
-    color: var(--ink-2); margin-left: 0.1rem;
-  }
-  .kpi-tile .dlt {
-    font-family: var(--font-mono);
-    font-size: 0.7rem;
-    margin-top: 0.4rem;
-    color: var(--ink-3);
-  }
+  .kpi-band { display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin:1.5rem 0 2rem; }
+  .kpi-tile { background:var(--paper-3);border:1px solid var(--rule);border-radius:3px;padding:1.2rem;position:relative; }
+  .kpi-tile::before { content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--terracotta); }
+  .kpi-tile.teal::before  { background:var(--teal); }
+  .kpi-tile.olive::before { background:var(--olive); }
+  .kpi-tile.still::before { background:var(--ink-3); }
+  .kpi-tile .lbl { font-family:var(--font-mono);font-size:0.6rem;letter-spacing:0.22em;color:var(--ink-3);text-transform:uppercase;margin-bottom:0.4rem; }
+  .kpi-tile .val { font-family:var(--font-display);font-weight:700;font-size:1.7rem;line-height:1;color:var(--ink); }
+  .kpi-tile .val .unit { font-size:0.8rem;font-weight:500;color:var(--ink-2);margin-left:0.1rem; }
+  .kpi-tile .dlt { font-family:var(--font-mono);font-size:0.7rem;margin-top:0.4rem;color:var(--ink-3); }
 
-  /* ── Delta tag ── */
-  .delta-up {
-    font-family: var(--font-mono);
-    font-size: 0.7rem;
-    color: var(--positive);
-    font-weight: 600;
-  }
+  table.dt { width:100%;border-collapse:collapse;margin:1.2rem 0;background:var(--paper-3);border:1px solid var(--rule);font-size:0.9rem; }
+  table.dt th { background:var(--ink);color:var(--paper);font-family:var(--font-mono);font-size:0.7rem;letter-spacing:0.18em;text-transform:uppercase;text-align:left;padding:0.7rem 1rem;font-weight:500; }
+  table.dt td { padding:0.7rem 1rem;border-top:1px solid var(--rule);vertical-align:top;line-height:1.65; }
+  table.dt tr:nth-child(even) td { background:rgba(40,28,18,0.02); }
+  table.dt td.score { font-family:var(--font-display);font-weight:700;font-size:1.2rem;color:var(--terracotta);text-align:center;white-space:nowrap;width:50px; }
+  table.dt td.score.high { color:var(--teal); }
 
-  /* ── Table ── */
-  table.dt {
-    width: 100%;
-    border-collapse: collapse;
-    margin: 1.2rem 0;
-    background: var(--paper-3);
-    border: 1px solid var(--rule);
-    font-size: 0.9rem;
-  }
-  table.dt th {
-    background: var(--ink);
-    color: var(--paper);
-    font-family: var(--font-mono);
-    font-size: 0.7rem;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    text-align: left;
-    padding: 0.7rem 1rem;
-    font-weight: 500;
-  }
-  table.dt td {
-    padding: 0.7rem 1rem;
-    border-top: 1px solid var(--rule);
-    vertical-align: top;
-    line-height: 1.65;
-  }
-  table.dt tr:nth-child(even) td { background: rgba(40,28,18,0.02); }
+  .callout { background:var(--paper-3);border-left:4px solid var(--terracotta);padding:1.2rem 1.5rem;margin:1.5rem 0;border-radius:0 3px 3px 0; }
+  .callout.teal { border-left-color:var(--teal); }
+  .callout.olive { border-left-color:var(--olive); }
+  .callout-label { font-family:var(--font-mono);font-size:0.65rem;letter-spacing:0.22em;color:var(--terracotta);text-transform:uppercase;margin-bottom:0.4rem;display:block; }
+  .callout.teal .callout-label { color:var(--teal); }
+  .callout.olive .callout-label { color:var(--olive); }
+  .callout p:last-child { margin-bottom:0; }
 
-  /* ── Callout ── */
-  .callout {
-    background: var(--paper-3);
-    border-left: 4px solid var(--terracotta);
-    padding: 1.2rem 1.5rem;
-    margin: 1.5rem 0;
-    border-radius: 0 3px 3px 0;
-  }
-  .callout.teal { border-left-color: var(--teal); }
-  .callout.olive { border-left-color: var(--olive); }
-  .callout-label {
-    font-family: var(--font-mono);
-    font-size: 0.65rem;
-    letter-spacing: 0.22em;
-    color: var(--terracotta);
-    text-transform: uppercase;
-    margin-bottom: 0.4rem;
-    display: block;
-  }
-  .callout.teal .callout-label { color: var(--teal); }
-  .callout.olive .callout-label { color: var(--olive); }
-  .callout p:last-child { margin-bottom: 0; }
+  .roadmap-phase { display:grid;grid-template-columns:140px 1fr;gap:1.5rem;padding:1.3rem 0;border-bottom:1px solid var(--rule); }
+  .roadmap-phase:last-child { border-bottom:none; }
+  .phase-label { font-family:var(--font-display);font-weight:700;font-size:1rem;color:var(--ink); }
+  .phase-label small { display:block;font-family:var(--font-mono);font-size:0.6rem;color:var(--terracotta);letter-spacing:0.15em;margin-top:0.2rem; }
+  .phase-body h4 { font-family:var(--font-display);font-size:1rem;margin:0 0 0.3rem; }
+  .phase-body p { font-size:0.9rem;color:var(--ink-2);line-height:1.7;margin:0 0 0.5rem; }
+  .phase-body ul { list-style:none;padding:0;margin:0.3rem 0 0; }
+  .phase-body ul li { position:relative;padding-left:1.2rem;font-size:0.88rem;color:var(--ink-2);line-height:1.7;margin-bottom:0.2rem; }
+  .phase-body ul li::before { content:'→';position:absolute;left:0;color:var(--terracotta);font-family:var(--font-mono);font-size:0.7rem; }
 
-  /* ── Roadmap ── */
-  .roadmap-phase {
-    display: grid;
-    grid-template-columns: 140px 1fr;
-    gap: 1.5rem;
-    padding: 1.3rem 0;
-    border-bottom: 1px solid var(--rule);
-  }
-  .roadmap-phase:last-child { border-bottom: none; }
-  .phase-label {
-    font-family: var(--font-display);
-    font-weight: 700;
-    font-size: 1rem;
-    color: var(--ink);
-  }
-  .phase-label small {
-    display: block;
-    font-family: var(--font-mono);
-    font-size: 0.6rem;
-    color: var(--terracotta);
-    letter-spacing: 0.15em;
-    margin-top: 0.2rem;
-  }
-  .phase-body h4 {
-    font-family: var(--font-display);
-    font-size: 1rem;
-    margin: 0 0 0.3rem;
-  }
-  .phase-body p {
-    font-size: 0.9rem;
-    color: var(--ink-2);
-    line-height: 1.7;
-    margin: 0 0 0.5rem;
-  }
-  .phase-body ul {
-    list-style: none; padding: 0; margin: 0.3rem 0 0;
-  }
-  .phase-body ul li {
-    position: relative;
-    padding-left: 1.2rem;
-    font-size: 0.88rem;
-    color: var(--ink-2);
-    line-height: 1.7;
-    margin-bottom: 0.2rem;
-  }
-  .phase-body ul li::before {
-    content: '→';
-    position: absolute; left: 0;
-    color: var(--terracotta);
-    font-family: var(--font-mono);
-    font-size: 0.7rem;
-  }
+  .two-col { display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin:1.2rem 0; }
+  .strength-card { padding:1.3rem 1.5rem;border:1px solid var(--rule);border-radius:3px;background:rgba(74,138,58,0.05);border-left:3px solid var(--positive); }
+  .weakness-card { padding:1.3rem 1.5rem;border:1px solid var(--rule);border-radius:3px;background:rgba(184,65,42,0.04);border-left:3px solid var(--terracotta); }
+  .strength-card h4,.weakness-card h4 { font-family:var(--font-display);font-size:0.95rem;margin:0 0 0.5rem; }
+  .strength-card ul,.weakness-card ul { list-style:none;padding:0;margin:0; }
+  .strength-card ul li,.weakness-card ul li { position:relative;padding-left:1rem;font-size:0.88rem;color:var(--ink-2);line-height:1.7;margin-bottom:0.15rem; }
+  .strength-card ul li::before { content:'✓';position:absolute;left:0;color:var(--positive);font-size:0.75rem; }
+  .weakness-card ul li::before { content:'！';position:absolute;left:0;color:var(--terracotta);font-size:0.75rem; }
 
-  /* ── Comparison grid ── */
-  .compare-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1.5rem;
-    margin: 1.2rem 0;
-  }
-  .compare-card {
-    padding: 1.3rem 1.5rem;
-    border: 1px solid var(--rule);
-    border-radius: 3px;
-  }
-  .compare-card.up   { background: rgba(74, 138, 58, 0.06); border-left: 3px solid var(--positive); }
-  .compare-card.flat { background: var(--paper-3);          border-left: 3px solid var(--ink-3); }
-  .compare-card h4 {
-    font-family: var(--font-display);
-    font-size: 0.95rem;
-    margin: 0 0 0.5rem;
-  }
-  .compare-card ul {
-    list-style: none; padding: 0; margin: 0;
-  }
-  .compare-card ul li {
-    position: relative;
-    padding-left: 1rem;
-    font-size: 0.88rem;
-    color: var(--ink-2);
-    line-height: 1.7;
-    margin-bottom: 0.15rem;
-  }
-  .compare-card.up ul li::before   { content: '↑'; position: absolute; left: 0; color: var(--positive); font-size: 0.7rem; }
-  .compare-card.flat ul li::before { content: '—'; position: absolute; left: 0; color: var(--ink-3); font-size: 0.7rem; }
+  .closing-casual { margin-top:2rem;padding-top:1.8rem;border-top:2px dashed var(--ink-2);text-align:center; }
+  .closing-casual .sign { font-family:var(--font-hand);font-size:2.2rem;color:var(--terracotta);line-height:1.2; }
+  .closing-casual .sign::before { content:'✦';color:var(--mustard);margin-right:0.5rem;font-size:1rem;vertical-align:middle; }
+  .closing-casual .sign small { display:block;font-family:var(--font-display);font-size:0.9rem;color:var(--ink-2);margin-top:0.4rem;letter-spacing:0.08em;font-weight:500; }
 
-  /* ── Closing ── */
-  .closing-casual {
-    margin-top: 2rem;
-    padding-top: 1.8rem;
-    border-top: 2px dashed var(--ink-2);
-    text-align: center;
-  }
-  .closing-casual .sign {
-    font-family: var(--font-hand);
-    font-size: 2.2rem;
-    color: var(--terracotta);
-    line-height: 1.2;
-  }
-  .closing-casual .sign::before {
-    content: '✦';
-    color: var(--mustard);
-    margin-right: 0.5rem;
-    font-size: 1rem;
-    vertical-align: middle;
-  }
-  .closing-casual .sign small {
-    display: block;
-    font-family: var(--font-display);
-    font-size: 0.9rem;
-    color: var(--ink-2);
-    margin-top: 0.4rem;
-    letter-spacing: 0.08em;
-    font-weight: 500;
-  }
+  footer.doc-foot { margin-top:4rem;padding-top:1.5rem;border-top:1px solid var(--rule);display:flex;justify-content:space-between;font-family:var(--font-mono);font-size:0.7rem;letter-spacing:0.2em;color:var(--ink-3);text-transform:uppercase; }
 
-  footer.doc-foot {
-    margin-top: 4rem;
-    padding-top: 1.5rem;
-    border-top: 1px solid var(--rule);
-    display: flex; justify-content: space-between;
-    font-family: var(--font-mono);
-    font-size: 0.7rem;
-    letter-spacing: 0.2em;
-    color: var(--ink-3);
-    text-transform: uppercase;
-  }
+  .hl { background:linear-gradient(transparent 60%,rgba(217,154,43,0.45) 60%);padding:0 0.2em; }
 
-  .hl {
-    background: linear-gradient(transparent 60%, rgba(217,154,43,0.45) 60%);
-    padding: 0 0.2em;
-  }
-
-  @media print {
-    .toc-sidebar { display: none; }
-    .main-content { padding: 0; max-width: 100%; }
-    section.section { page-break-inside: avoid; }
-  }
-  @media (max-width: 860px) {
-    .layout { flex-direction: column; }
-    .toc-sidebar {
-      position: relative; width: 100%; min-width: 0;
-      height: auto; max-height: 40vh;
-      border-right: none; border-bottom: 1px solid var(--rule);
-      padding: 1.8rem 1.5rem;
-    }
-    .main-content { padding: 3rem 1.5rem 4rem; max-width: 100%; }
-    h1 { font-size: 2rem; }
-    .kpi-band { grid-template-columns: 1fr 1fr; }
-    .compare-grid { grid-template-columns: 1fr; }
-    .roadmap-phase { grid-template-columns: 1fr; gap: 0.3rem; }
-    header { grid-template-columns: 1fr; }
-    .doc-meta { text-align: left; }
+  @media print { .toc-sidebar{display:none} .main-content{padding:0;max-width:100%} section.section{page-break-inside:avoid} }
+  @media (max-width:860px) {
+    .layout{flex-direction:column}
+    .toc-sidebar{position:relative;width:100%;min-width:0;height:auto;max-height:40vh;border-right:none;border-bottom:1px solid var(--rule);padding:1.8rem 1.5rem}
+    .main-content{padding:3rem 1.5rem 4rem;max-width:100%}
+    h1{font-size:2rem}
+    .kpi-band{grid-template-columns:1fr 1fr}
+    .two-col{grid-template-columns:1fr}
+    .roadmap-phase{grid-template-columns:1fr;gap:0.3rem}
+    header{grid-template-columns:1fr}
+    .doc-meta{text-align:left}
   }
 </style>
 </head>
@@ -454,11 +141,14 @@
     <div class="toc-title">目次 · Contents</div>
     <ul class="toc-list">
       <li><a href="#sec-01"><span class="toc-num">01</span>エグゼクティブサマリー</a></li>
-      <li><a href="#sec-02"><span class="toc-num">02</span>今回改善した7項目</a></li>
-      <li><a href="#sec-03"><span class="toc-num">03</span>改善前後スコア比較</a></li>
-      <li><a href="#sec-04"><span class="toc-num">04</span>変わらなかった課題</a></li>
-      <li><a href="#sec-05"><span class="toc-num">05</span>次へのアクション</a></li>
-      <li><a href="#sec-06"><span class="toc-num">06</span>最終所見</a></li>
+      <li><a href="#sec-02"><span class="toc-num">02</span>プロダクトとポジショニング</a></li>
+      <li><a href="#sec-03"><span class="toc-num">03</span>コンテンツと機能</a></li>
+      <li><a href="#sec-04"><span class="toc-num">04</span>技術アーキテクチャ</a></li>
+      <li><a href="#sec-05"><span class="toc-num">05</span>デザインとUX</a></li>
+      <li><a href="#sec-06"><span class="toc-num">06</span>ビジネスモデルと成長</a></li>
+      <li><a href="#sec-07"><span class="toc-num">07</span>競合分析</a></li>
+      <li><a href="#sec-08"><span class="toc-num">08</span>改善提案</a></li>
+      <li><a href="#sec-09"><span class="toc-num">09</span>最終所見</a></li>
     </ul>
   </nav>
 
@@ -466,344 +156,380 @@
 
   <header>
     <div class="doc-meta-top">
-      <div class="doc-eyebrow">— Office Hours · Check-in Report</div>
-      <h1>familyai.jp<span class="accent">再評価報告書</span></h1>
+      <div class="doc-eyebrow">— Office Hours · Comprehensive Assessment</div>
+      <h1>familyai.jp<span class="accent"> 総合評価報告書</span></h1>
     </div>
     <div class="doc-meta">
       <div><b>Date</b> · 2026.06.01</div>
-      <div><b>Rev</b> · VOL.02 · DRAFT</div>
+      <div><b>Status</b> · FINAL</div>
       <div><b>Author</b> · Claude Code /office-hours</div>
     </div>
   </header>
 
   <div class="lead">
-    VOL.01 の評価から7件の改善を実装し、<strong>総合スコアは 5.9 → 6.3 に上昇</strong>。
-    コード面のクイックウィンはほぼ打ち切り、残る課題はコンテンツ供給とユーザー獲得・検証の領域へ。
-    本報告書は改善の差分・現状の課題・次への具体的なアクションを整理する。
+    familyai.jp は「AI＝愛」を掲げ、家族の暮らしにAIを届ける日本唯一のデジタルマガジン。
+    温かみのあるデザインシステムと堅実な技術基盤を持つ一方、コンテンツ量とユーザー検証が発展途上。
+    本報告書は2026年6月1日時点の全ページ・全コードベースを精査し、
+    <strong>7軸の評価と優先度付き改善提案</strong>をまとめたものである。
   </div>
 
-  <!-- ═══════════════════════════════════════════════ -->
-  <!-- Section 01: Executive Summary -->
-  <!-- ═══════════════════════════════════════════════ -->
+  <!-- ═══════════════ 01 ═══════════════ -->
   <section class="section" id="sec-01">
     <div class="section-head">
       <span class="section-num">01</span>
       <h2 class="section-title">エグゼクティブサマリー</h2>
     </div>
     <div class="body">
-      <p>
-        VOL.01 で指摘した「実装コストが低くインパクトの大きい改善点」7件すべてを実装完了。
-        TypeScript コンパイルエラーゼロ。しかし<span class="em">変更はまだローカルに留まっており、本番には未反映</span>。
-      </p>
 
       <div class="kpi-band">
-        <div class="kpi-tile">
-          <div class="lbl">Before</div>
-          <div class="val">5.9<span class="unit">/10</span></div>
-          <div class="dlt">VOL.01 初回評価</div>
-        </div>
-        <div class="kpi-tile teal">
-          <div class="lbl">After</div>
-          <div class="val">6.3<span class="unit">/10</span></div>
-          <div class="dlt">VOL.02 再評価 <span class="delta-up">+0.4</span></div>
-        </div>
-        <div class="kpi-tile olive">
-          <div class="lbl">FIXED</div>
-          <div class="val">7<span class="unit">件</span></div>
-          <div class="dlt">コード改善 完了</div>
-        </div>
-        <div class="kpi-tile">
-          <div class="lbl">DEPLOY</div>
-          <div class="val">未<span class="unit"></span></div>
-          <div class="dlt">本番未反映 ⚠</div>
-        </div>
+        <div class="kpi-tile"><div class="lbl">Concept</div><div class="val">8<span class="unit">/10</span></div><div class="dlt">ポジショニング</div></div>
+        <div class="kpi-tile teal"><div class="lbl">Design</div><div class="val">8<span class="unit">/10</span></div><div class="dlt">デザイン品質</div></div>
+        <div class="kpi-tile olive"><div class="lbl">Tech</div><div class="val">8<span class="unit">/10</span></div><div class="dlt">技術的完成度</div></div>
+        <div class="kpi-tile still"><div class="lbl">Content</div><div class="val">3<span class="unit">/10</span></div><div class="dlt">コンテンツ充実度</div></div>
+      </div>
+      <div class="kpi-band">
+        <div class="kpi-tile"><div class="lbl">UX Flow</div><div class="val">7<span class="unit">/10</span></div><div class="dlt">ユーザー導線</div></div>
+        <div class="kpi-tile teal"><div class="lbl">Revenue</div><div class="val">3<span class="unit">/10</span></div><div class="dlt">収益化の準備</div></div>
+        <div class="kpi-tile olive"><div class="lbl">Moat</div><div class="val">7<span class="unit">/10</span></div><div class="dlt">競合優位性</div></div>
+        <div class="kpi-tile still"><div class="lbl">Overall</div><div class="val">6.3<span class="unit">/10</span></div><div class="dlt">総合スコア</div></div>
       </div>
 
+      <p>
+        familyai.jp の最大の強みは<span class="em">日本で唯一の「家族×AI」ブランド</span>であること。
+        「AI＝愛」のダブルミーニング、号数表記（VOL.01 二〇二六年六月）、アステリズム装飾（⁂）による
+        手帖・雑誌の情緒は、テック系AIメディアとの明確な差別化になっている。
+      </p>
+
+      <p>
+        技術基盤は Next.js 14 + Drizzle ORM + Neon PostgreSQL で堅実に構築されており、
+        認証・CSRF・レート制限・ISR最適化が実装済み。グローバル検索・タグ正規化・
+        3Dブックマーク・404回遊導線・HTMLセキュリティの二重防御も整っている。
+      </p>
+
+      <p>
+        最大の弱点は<span class="hl">コンテンツ量の不足</span>——記事3本・AIツール2つでは、
+        サイトが掲げる「家族の暮らし全般をAIで応援」という価値提案に届いていない。
+        また収益化の仕組みが未整備で、ユーザー行動データの取得もこれからである。
+      </p>
+
       <div class="callout">
-        <span class="callout-label">最重要所見</span>
-        <p>コード面のクイックウィンは打ち切った。残る課題は<strong>コンテンツ供給・ユーザー獲得・課金検証</strong>の3領域——すべてコードではなく運用・戦略で動く指標。次の一手は「デプロイ＋記事を書く」の2つだけ。</p>
+        <span class="callout-label">診断</span>
+        <p>器はできている。中身を注ぐ段階。デザインもコードも丁寧に作られているからこそ、<strong>コンテンツさえ追いつけば一気に化けるポテンシャル</strong>がある。逆に、このままコンテンツ不足が続けば、せっかくの世界観と技術投資が来訪者の失望によって無駄になる。</p>
       </div>
     </div>
   </section>
 
-  <!-- ═══════════════════════════════════════════════ -->
-  <!-- Section 02: What Was Improved -->
-  <!-- ═══════════════════════════════════════════════ -->
+  <!-- ═══════════════ 02 ═══════════════ -->
   <section class="section" id="sec-02">
     <div class="section-head">
       <span class="section-num">02</span>
-      <h2 class="section-title">今回改善した 7 項目</h2>
-      <p class="section-sub">全項目 TypeScript コンパイル済み・ローカル完了・未デプロイ</p>
+      <h2 class="section-title">プロダクトとポジショニング</h2>
     </div>
     <div class="body">
+      <p>
+        familyai.jp は<span class="em">「AIを家族の味方に」</span>というコンセプトのもと、
+        AI活用記事・自社開発AIツール・学習管理機能の3層で構成されるデジタルマガジン。
+      </p>
+
       <table class="dt">
-        <thead>
-          <tr><th style="width:22%;">項目</th><th style="width:28%;">Before</th><th style="width:28%;">After</th><th style="width:22%;">Impact</th></tr>
-        </thead>
+        <thead><tr><th style="width:25%;">要素</th><th>現状</th><th style="width:10%;">評価</th></tr></thead>
         <tbody>
-          <tr>
-            <td><strong>StatsRow 表記</strong></td>
-            <td>「100+AI活用事例」虚偽の数字を表示</td>
-            <td>3項目（2ツール / 無料 / 毎週更新）に修正</td>
-            <td>信用毀損リスク解消</td>
-          </tr>
-          <tr>
-            <td><strong>HTML セキュリティ</strong></td>
-            <td>iframe sandbox のみ</td>
-            <td>CSP メタタグ注入 + 設計文書化。二重防御</td>
-            <td>Defense-in-depth</td>
-          </tr>
-          <tr>
-            <td><strong>Dead code 期限</strong></td>
-            <td>user_animations 無期限残置</td>
-            <td>2026-09-30 deadline を明記</td>
-            <td>負債の可視化</td>
-          </tr>
-          <tr>
-            <td><strong>3D ブックマーク</strong></td>
-            <td>DB+リポジトリのみ</td>
-            <td>API（GET/POST/DELETE）+ ⭐ ボタン + ページ接続</td>
-            <td>ユーザー機能 完成</td>
-          </tr>
-          <tr>
-            <td><strong>タグ管理</strong></td>
-            <td>手動・表記揺れリスク</td>
-            <td>正規化ユーティリティ + 全入力経路に適用</td>
-            <td>データ品質向上</td>
-          </tr>
-          <tr>
-            <td><strong>グローバル検索</strong></td>
-            <td>不在（/learn のみ）</td>
-            <td>ヘッダー常設 + リアルタイム API + キーボード操作</td>
-            <td>発見性 大幅向上</td>
-          </tr>
-          <tr>
-            <td><strong>404 ページ</strong></td>
-            <td>2ボタンのみ</td>
-            <td>検索窓 + カテゴリ + 人気記事 3 件</td>
-            <td>離脱防止・回遊起点化</td>
-          </tr>
+          <tr><td><strong>ブランド</strong></td><td>「AI＝愛」。familyai.jp ドメイン。号数表記・アステリズム装飾で手帖の情緒を確立</td><td class="score high">8</td></tr>
+          <tr><td><strong>ターゲット</strong></td><td>子育て中の親・AIに興味はあるがテクニカルではない層。明確だがペルソナがまだ抽象的</td><td class="score">6</td></tr>
+          <tr><td><strong>価値提案</strong></td><td>「難しくない。怖くない。仕事にも、暮らしにも、学習にも」——包括的だが焦点が広い</td><td class="score">6</td></tr>
+          <tr><td><strong>差別化</strong></td><td>日本語×家族×AIの交差点に立つ唯一のサービス。TechCrunch ではなく暮らしの手帖</td><td class="score high">8</td></tr>
         </tbody>
       </table>
+
+      <div class="callout teal">
+        <span class="callout-label">強み</span>
+        <p>「AI＝愛」は日本語の同音異義語を活かした秀逸なブランディング。サイト全体に流れる「家族の物語は、まだ始まったばかり」というトーンは、機能説明ではなく<strong>情緒で記憶に残る</strong>。競合が誰もやっていないことをやっている。</p>
+      </div>
     </div>
   </section>
 
-  <!-- ═══════════════════════════════════════════════ -->
-  <!-- Section 03: Score Comparison -->
-  <!-- ═══════════════════════════════════════════════ -->
+  <!-- ═══════════════ 03 ═══════════════ -->
   <section class="section" id="sec-03">
     <div class="section-head">
       <span class="section-num">03</span>
-      <h2 class="section-title">改善前後スコア比較</h2>
+      <h2 class="section-title">コンテンツと機能</h2>
     </div>
     <div class="body">
-      <div class="compare-grid">
-        <div class="compare-card up">
-          <h4>↑ 上がった指標</h4>
-          <ul>
-            <li>技術的完成度 7→8（セキュリティ・検索・タグ・ブックマーク）</li>
-            <li>ユーザー導線 5→7（グローバル検索・404 刷新）</li>
-          </ul>
-        </div>
-        <div class="compare-card flat">
-          <h4>— 変わらなかった指標</h4>
-          <ul>
-            <li>コンテンツ充実度 3（コードでは記事数は増えない）</li>
-            <li>収益化の準備 3（戦略判断が必要）</li>
-            <li>成長と配布 5（SEO ベースはあるが流入なし）</li>
-          </ul>
-        </div>
-      </div>
-
       <table class="dt">
-        <thead>
-          <tr><th>評価軸</th><th>VOL.01</th><th>VOL.02</th><th>差分</th></tr>
-        </thead>
+        <thead><tr><th>領域</th><th>現状</th><th style="width:10%;">評価</th><th>詳細</th></tr></thead>
         <tbody>
-          <tr>
-            <td>コンセプトの鋭さ</td>
-            <td style="font-family:var(--font-display);font-weight:700;">8</td>
-            <td style="font-family:var(--font-display);font-weight:700;">8</td>
-            <td style="color:var(--ink-3);">—</td>
-          </tr>
-          <tr>
-            <td>コンテンツの充実度</td>
-            <td style="font-family:var(--font-display);font-weight:700;color:var(--terracotta);">3</td>
-            <td style="font-family:var(--font-display);font-weight:700;color:var(--terracotta);">3</td>
-            <td style="color:var(--ink-3);">—</td>
-          </tr>
-          <tr>
-            <td>技術的完成度</td>
-            <td style="font-family:var(--font-display);font-weight:700;">7</td>
-            <td style="font-family:var(--font-display);font-weight:700;color:var(--teal);">8</td>
-            <td style="color:var(--positive);">+1</td>
-          </tr>
-          <tr>
-            <td>デザイン品質</td>
-            <td style="font-family:var(--font-display);font-weight:700;">8</td>
-            <td style="font-family:var(--font-display);font-weight:700;">8</td>
-            <td style="color:var(--ink-3);">—</td>
-          </tr>
-          <tr>
-            <td>ユーザー導線</td>
-            <td style="font-family:var(--font-display);font-weight:700;">5</td>
-            <td style="font-family:var(--font-display);font-weight:700;color:var(--teal);">7</td>
-            <td style="color:var(--positive);">+2</td>
-          </tr>
-          <tr>
-            <td>収益化の準備</td>
-            <td style="font-family:var(--font-display);font-weight:700;color:var(--terracotta);">3</td>
-            <td style="font-family:var(--font-display);font-weight:700;color:var(--terracotta);">3</td>
-            <td style="color:var(--ink-3);">—</td>
-          </tr>
-          <tr>
-            <td>競合優位性</td>
-            <td style="font-family:var(--font-display);font-weight:700;">7</td>
-            <td style="font-family:var(--font-display);font-weight:700;">7</td>
-            <td style="color:var(--ink-3);">—</td>
-          </tr>
-          <tr style="border-top: 2px solid var(--rule);">
-            <td><strong>総合</strong></td>
-            <td style="font-family:var(--font-display);font-weight:800;font-size:1.2rem;">5.9</td>
-            <td style="font-family:var(--font-display);font-weight:800;font-size:1.2rem;color:var(--teal);">6.3</td>
-            <td style="color:var(--positive);font-weight:700;">+0.4</td>
-          </tr>
+          <tr><td><strong>記事</strong></td><td>3本（+ 下書き2本）</td><td class="score">3</td><td>フォーマット（読了時間・難易度・タグ・カテゴリ）は整備済み。量が圧倒的に不足。全4カテゴリ中3つが空</td></tr>
+          <tr><td><strong>AIツール</strong></td><td>2つ（VOA英語 / 3D図鑑）</td><td class="score">5</td><td>両方とも教育カテゴリ。家事・仕事・創作カテゴリのツールが不在。VOAは7モジュール中3つのみ実装</td></tr>
+          <tr><td><strong>ユーザー機能</strong></td><td>認証・ブックマーク・コメント・AIメモ・グローバル検索</td><td class="score high">7</td><td>DBスキーマ完備。3Dブックマーク・タグ正規化も実装済み。機能面の不足はほぼない</td></tr>
+          <tr><td><strong>管理画面</strong></td><td>記事作成・Markdownエディタ・AI設定・HTML公開</td><td class="score high">7</td><td>CodeMirrorベースの編集環境。運営基盤として十分</td></tr>
+          <tr><td><strong>コンテンツ発見</strong></td><td>カテゴリフィルター・タグ・検索・難易度・ソート</td><td class="score high">7</td><td>枠組みは揃っている。記事が増えれば真価を発揮する</td></tr>
         </tbody>
       </table>
+
+      <div class="callout">
+        <span class="callout-label">最重要課題</span>
+        <p>4つのカテゴリを掲げながら、実際にコンテンツがあるのは<strong>「学習・教育」のみ</strong>。「家事・暮らし」「仕事・効率化」「創作・表現」はゼロ。ツールも教育系2つのみ。サイトが謳う価値提案と実態の間に大きな乖離がある。</p>
+      </div>
     </div>
   </section>
 
-  <!-- ═══════════════════════════════════════════════ -->
-  <!-- Section 04: Unchanged Issues -->
-  <!-- ═══════════════════════════════════════════════ -->
+  <!-- ═══════════════ 04 ═══════════════ -->
   <section class="section" id="sec-04">
     <div class="section-head">
       <span class="section-num">04</span>
-      <h2 class="section-title">変わらなかった課題 — 3つの構造的問題</h2>
+      <h2 class="section-title">技術アーキテクチャ</h2>
     </div>
     <div class="body">
-      <div class="callout">
-        <span class="callout-label">ISSUE ① · 緊急</span>
-        <p><strong>修正が本番に反映されていない。</strong>全変更（11 modified + 7 new files）が git 未コミット。本番 familyai.jp はまだ「100+AI活用事例」を表示している。修正した7件がユーザーに見えなければ、この作業は完了していないに等しい。</p>
-      </div>
+      <p>
+        スタックは <span class="em">Next.js 14 (App Router) + TypeScript + Drizzle ORM + Neon PostgreSQL</span>。
+        デプロイは Vercel、キャッシュに Upstash Redis、ファイルストレージに Vercel Blob を使用。
+      </p>
+
+      <table class="dt">
+        <thead><tr><th style="width:25%;">観点</th><th style="width:10%;">評価</th><th>詳細</th></tr></thead>
+        <tbody>
+          <tr><td><strong>データベース設計</strong></td><td class="score high">8</td><td>GIN インデックス（配列カラム検索）、複合インデックス、部分インデックス。Drizzle ORM で型安全にクエリ。リポジトリパターンでデータアクセスを抽象化</td></tr>
+          <tr><td><strong>セキュリティ</strong></td><td class="score high">8</td><td>NextAuth v5（Google + メール認証）、CSRF トークン検証、レート制限（Upstash Redis）、bcrypt saltRounds:12、admin ガード。HTML ページは iframe sandbox + CSP 二重防御</td></tr>
+          <tr><td><strong>キャッシュ戦略</strong></td><td class="score high">7</td><td>Next.js ISR（revalidate 60〜3600）+ unstable_cache。revalidateTag/revalidatePath で選択的キャッシュ破棄。記事詳細・一覧・タグ・slug を個別タグ管理</td></tr>
+          <tr><td><strong>コード品質</strong></td><td class="score high">7</td><td>日本語 JSDoc が詳細。migration 番号・Rev 番号で変更管理。shared/ 層と lib/ 層の分離。dead code（user_animations）に 2026-09-30 deadline 設定済み</td></tr>
+          <tr><td><strong>UI 基盤</strong></td><td class="score high">8</td><td>familyaidesign casual デザインシステム（CSS カスタムプロパティ + Tailwind）。model-viewer による3D表示。CodeMirror による Markdown 編集</td></tr>
+        </tbody>
+      </table>
 
       <div class="callout teal">
-        <span class="callout-label">ISSUE ② · 構造的</span>
-        <p><strong>コンテンツ不在。</strong>記事3本・ツール2つという数字は変わっていない。コード改善ではコンテンツは増えない。2本の下書き（ai-homework-helper.md / english-learning-voice-ai.md）が content/ に眠ったまま。これらを公開し、さらに5本書いて計10本にする——それが次の一手。</p>
-      </div>
-
-      <div class="callout olive">
-        <span class="callout-label">ISSUE ③ · 中長期</span>
-        <p><strong>ユーザーフィードバックループが存在しない。</strong>誰がどのツールをどう使っているか、どれくらいの頻度で戻ってきているか——それが分からないと、次の改善の優先順位が勘に頼る。Vercel Web Analytics の有効化と、最低限のカスタムイベント計測を入れる必要がある。</p>
+        <span class="callout-label">評価</span>
+        <p>一人開発としては<strong>非常に高い水準</strong>。インデックス戦略・セキュリティ・キャッシュ制御のすべてに意図が感じられる。日本語コメントの充実度は、将来の共同開発を見据えた資産。型安全性・CSRF・レート制限・bcrypt ストレッチング——見過ごされがちな「本番品質」の要素が揃っている。</p>
       </div>
     </div>
   </section>
 
-  <!-- ═══════════════════════════════════════════════ -->
-  <!-- Section 05: Next Actions -->
-  <!-- ═══════════════════════════════════════════════ -->
+  <!-- ═══════════════ 05 ═══════════════ -->
   <section class="section" id="sec-05">
     <div class="section-head">
       <span class="section-num">05</span>
-      <h2 class="section-title">次へのアクション — 優先度順 8 項目</h2>
+      <h2 class="section-title">デザインとユーザー体験</h2>
     </div>
     <div class="body">
 
-      <div class="roadmap-phase">
-        <div class="phase-label">
-          🔴 P0
-          <small>今日中</small>
-        </div>
-        <div class="phase-body">
-          <h4>A1 · デプロイ</h4>
-          <p>git add -A && git commit && git push → Vercel 自動デプロイ。7件の改善が初めてユーザーに届く。</p>
-          <h4 style="margin-top: .8rem;">A2 · 下書き2本を公開</h4>
-          <p>content/articles/ にある ai-homework-helper.md と english-learning-voice-ai.md を管理画面から DB に投入。記事 3→5。所要15分。</p>
-        </div>
-      </div>
-
-      <div class="roadmap-phase">
-        <div class="phase-label">
-          🟡 P1
-          <small>1週間以内</small>
-        </div>
-        <div class="phase-body">
-          <h4>A3 · 記事を10本へ（+5本）</h4>
-          <p>AIで下書き→自分で編集のパイプライン。ネタの優先順位：</p>
+      <div class="two-col">
+        <div class="strength-card">
+          <h4>優れている点</h4>
           <ul>
-            <li>familyai.jp ツールの実体験記（VOAディクテーション / 3D図鑑）</li>
-            <li>空カテゴリを埋める（家事・暮らし / 仕事・効率化 / 創作・表現 ×各1）</li>
-            <li>話題のAIツールを家族目線でレビュー</li>
+            <li>familyaidesign casual — 和紙背景・紙目グレイン・明朝体・polaroid/stamp/closing-casual で情緒を確立</li>
+            <li>号数表記 + アステリズム装飾で「雑誌」のフォーマット感</li>
+            <li>44px タップターゲット・skip link・prefers-reduced-motion 対応</li>
+            <li>グローバル検索がヘッダー常設・リアルタイム結果表示・キーボード操作対応</li>
+            <li>404 ページに検索窓 + カテゴリ + 人気記事（離脱防止・回遊起点化）</li>
+            <li>読了時間・難易度ラベル・カテゴリフィルター・タグフィルターで発見性を設計</li>
           </ul>
-
-          <h4 style="margin-top: .8rem;">A4 · VOA中級モジュールを1つ実装</h4>
-          <p>Health & Lifestyle または Science & Technology の最初のレッスンを実装。7モジュール中3つのみ実装の「準備中」状態を改善。</p>
+        </div>
+        <div class="weakness-card">
+          <h4>改善が必要な点</h4>
+          <ul>
+            <li>初回来訪者に「まず何をすればいいか」が伝わらない（オンボーディング不在）</li>
+            <li>記事↔ツールの相互リンクが弱く、回遊が分断されている</li>
+            <li>3D図鑑の操作説明がテキストのみ（初回チュートリアル不在）</li>
+            <li>マイページが空の状態の Empty State が未設計</li>
+            <li>スマホでの VOA ディクテーション体験が未検証</li>
+          </ul>
         </div>
       </div>
 
-      <div class="roadmap-phase">
-        <div class="phase-label">
-          🔵 P2
-          <small>2週間以内</small>
-        </div>
-        <div class="phase-body">
-          <h4>A5 · ユーザー行動分析を導入</h4>
-          <p>Vercel Web Analytics 有効化。カスタムイベント：ブックマーク追加 / 検索実行 / ツール利用開始。週15分だけ数字を見る習慣。</p>
-
-          <h4 style="margin-top: .8rem;">A6 · X (@familyaijp) 定期投稿</h4>
-          <p>火曜：新着記事の紹介 / 金曜：今週のAI活用Tips。週2回。いいね1桁でも継続が勝つ。</p>
-        </div>
-      </div>
-
-      <div class="roadmap-phase">
-        <div class="phase-label">
-          🟢 P3
-          <small>1ヶ月以内</small>
-        </div>
-        <div class="phase-body">
-          <h4>A7 · 課金仮説を1つ決めてMVP</h4>
-          <p><strong>推奨：VOAプレミアム</strong>（中級・上級を月額480〜980円に。初級は無料のまま）。初級で価値を体験したユーザーが中級・上級で課金——フリーミアムの定石。課金コンバージョンが最も高いセグメント。</p>
-
-          <h4 style="margin-top: .8rem;">A8 · メールマガジン開始</h4>
-          <p>Resend 無料枠でOK。登録フォームをフッターに追加。週1回、新着記事の要約を配信。</p>
-        </div>
-      </div>
-
-      <div class="callout" style="margin-top: 2rem;">
-        <span class="callout-label">今週やるべきは2つだけ</span>
-        <p><strong>1. デプロイ（30分）—— 2. 記事を 3→10本に（週5時間）。</strong><br>
-        この2つが終わったら、ユーザー分析を入れてデータを見ながら次の判断。課金もマーケティングも、ユーザーが来てから考える話。分散しない。最初の2つだけ。</p>
+      <div class="callout teal">
+        <span class="callout-label">総評</span>
+        <p>familyaidesign casual は<strong>このプロダクト最大の競争資産</strong>。テック系サイトにありがちな無機質さがなく、「安心感」をビジュアルで伝えられている。情報設計面では、検索・フィルター・404 回遊導線が出揃い、記事が増えたときにスケールする基盤ができている。残るは「中身」と「初回体験」の改善。</p>
       </div>
     </div>
   </section>
 
-  <!-- ═══════════════════════════════════════════════ -->
-  <!-- Section 06: Closing -->
-  <!-- ═══════════════════════════════════════════════ -->
+  <!-- ═══════════════ 06 ═══════════════ -->
   <section class="section" id="sec-06">
     <div class="section-head">
       <span class="section-num">06</span>
-      <h2 class="section-title">最終所見</h2>
+      <h2 class="section-title">ビジネスモデルと成長</h2>
+    </div>
+    <div class="body">
+      <table class="dt">
+        <thead><tr><th style="width:22%;">観点</th><th>現状</th><th style="width:10%;">評価</th><th>備考</th></tr></thead>
+        <tbody>
+          <tr><td><strong>収益化</strong></td><td>完全無料。DB に plan / stripeCustomerId の枠のみ</td><td class="score">3</td><td>課金仮説未検証。VOAプレミアムが最も有望な候補</td></tr>
+          <tr><td><strong>獲得チャネル</strong></td><td>SEO ベース（sitemap/OG画像）+ X アカウント</td><td class="score">5</td><td>記事3本では検索流入は期待できず。X も実質未運用</td></tr>
+          <tr><td><strong>リテンション</strong></td><td>ブックマーク・コメント・AIメモで再訪導線あり</td><td class="score">5</td><td>機能はあるがユーザー数・リピート率が不明。メルマガ・LINE なし</td></tr>
+          <tr><td><strong>分析</strong></td><td>Vercel Speed Insights のみ</td><td class="score">4</td><td>ページビュー・離脱率・カスタムイベント未計測。データドリブンな改善ができない</td></tr>
+          <tr><td><strong>ドメイン</strong></td><td>familyai.jp。日本向け信頼感。PWA 対応</td><td class="score high">7</td><td>覚えやすい。.jp で日本特化の信頼性</td></tr>
+        </tbody>
+      </table>
+
+      <div class="callout olive">
+        <span class="callout-label">成長のボトルネック</span>
+        <p>コンテンツが3本では、SEO も SNS 拡散も機能しない。<strong>記事が10本を超えるまでは、獲得の議論をする土台がない。</strong>まず書く。それから測る。その次に最適化する。順序を間違えないこと。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════ 07 ═══════════════ -->
+  <section class="section" id="sec-07">
+    <div class="section-head">
+      <span class="section-num">07</span>
+      <h2 class="section-title">競合分析</h2>
     </div>
     <div class="body">
       <p>
-        VOL.01 から VOL.02 で上がったのは「技術」と「導線」。
-        動かなかったのは「コンテンツ」と「収益化」——これは<span class="em">コードでは解決できない領域</span>だから当然の結果。
+        <span class="em">日本語で「家族×AI」を正面から掲げ、記事＋ツール＋学習管理を統合したサービスはほぼ存在しない。</span>
+        これは familyai.jp 最大の構造的アドバンテージである。
+      </p>
+
+      <table class="dt">
+        <thead><tr><th>競合タイプ</th><th>例</th><th>familyai.jp との違い</th></tr></thead>
+        <tbody>
+          <tr><td><strong>AI ニュースメディア</strong></td><td>ITmedia AI、AI-SCHOLAR</td><td>技術者・ビジネス層向け。家族目線・生活目線ではない</td></tr>
+          <tr><td><strong>AI ツールディレクトリ</strong></td><td>AIナビ、Futurepedia</td><td>リンク集に留まる。自社開発ツール・記事・学習管理の統合がない</td></tr>
+          <tr><td><strong>教育アプリ</strong></td><td>スタディサプリ、Duolingo</td><td>特定教科・言語に特化。AI 生活全般への広がりがない</td></tr>
+          <tr><td><strong>ファミリー向けメディア</strong></td><td>あんふぁん、cafeglobe</td><td>育児・ライフスタイルが中心。AI 要素ゼロ</td></tr>
+          <tr><td><strong>海外類似サービス</strong></td><td>AI for Families（英語圏小規模サイト）</td><td>日本語対応なし。日本市場には参入障壁あり</td></tr>
+        </tbody>
+      </table>
+
+      <div class="callout">
+        <span class="callout-label">戦略的示唆</span>
+        <p>競合不在はチャンスであると同時に、<strong>「市場そのものが存在しない」可能性も示唆する</strong>。日本で「家族がAIを使う」という文化自体がまだない。familyai.jp はサービスを作るだけでなく、<strong>市場そのものを啓発する役割</strong>を負っている。だからこそコンテンツの量と質が生死を分ける。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════ 08 ═══════════════ -->
+  <section class="section" id="sec-08">
+    <div class="section-head">
+      <span class="section-num">08</span>
+      <h2 class="section-title">改善提案 — 優先度別ロードマップ</h2>
+    </div>
+    <div class="body">
+
+      <div class="roadmap-phase">
+        <div class="phase-label">
+          🔴 Phase 1
+          <small>今日〜今週</small>
+        </div>
+        <div class="phase-body">
+          <h4>デプロイ + コンテンツ始動</h4>
+          <p>コード改善を本番に反映し、記事の供給を開始する。</p>
+          <ul>
+            <li>git commit & push → Vercel 自動デプロイ（全変更を本番反映）</li>
+            <li>下書き2本（ai-homework-helper / english-learning-voice-ai）を公開</li>
+            <li>新規3本書き下ろし → 計8本へ（空カテゴリを最低1本ずつ埋める）</li>
+            <li>AI 執筆パイプライン確立：実体験メモ（5分）→ AI下書き（2分）→ 自分で編集（10分）= 1本20分</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="roadmap-phase">
+        <div class="phase-label">
+          🟡 Phase 2
+          <small>1〜2週間</small>
+        </div>
+        <div class="phase-body">
+          <h4>コンテンツの厚み + 導線強化</h4>
+          <p>来訪者が「また来たい」と思える情報量と導線を整備。</p>
+          <ul>
+            <li>記事を10本へ（+5本）</li>
+            <li>VOA中級モジュール1つ実装（Health & Lifestyle または Science & Technology）</li>
+            <li>3D図鑑の新モデル1点追加（物理または生物カテゴリ）</li>
+            <li>初回来訪者向けオンボーディング：トップページに「3ステップではじめる」セクション</li>
+            <li>記事↔ツールの相互リンク：「この記事に関連するAIツール」「このツールを使った活用事例」</li>
+            <li>トップページに「今週のピックアップ」セクション（更新頻度を可視化）</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="roadmap-phase">
+        <div class="phase-label">
+          🔵 Phase 3
+          <small>2週間〜1ヶ月</small>
+        </div>
+        <div class="phase-body">
+          <h4>ユーザー理解 + リテンション</h4>
+          <p>データを取得し、ユーザー行動に基づいた改善サイクルを回す。</p>
+          <ul>
+            <li>Vercel Web Analytics 有効化（ページビュー・参照元・離脱率）</li>
+            <li>カスタムイベント計測：ブックマーク / 検索実行 / ツール利用 / コメント投稿</li>
+            <li>X（@familyaijp）週2回定期投稿：火曜＝新着記事 / 金曜＝AI活用Tips</li>
+            <li>Empty State のデザイン：マイページ・検索結果ゼロ・ブックマークなし の3画面</li>
+            <li>3D図鑑にチュートリアルオーバーレイ（初回訪問時のみ表示）</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="roadmap-phase">
+        <div class="phase-label">
+          🟢 Phase 4
+          <small>1〜3ヶ月</small>
+        </div>
+        <div class="phase-body">
+          <h4>収益化 + 成長エンジン</h4>
+          <p>ユーザーデータに基づいて課金を検証し、持続可能なモデルへ。</p>
+          <ul>
+            <li><strong>VOAプレミアムMVP</strong>：中級・上級モジュールを月額480〜980円に。初級は無料維持</li>
+            <li>Stripe 連携実装（Checkout + Customer Portal）</li>
+            <li>メールマガジン開始（Resend 無料枠）— 週1回・新着記事の要約配信</li>
+            <li>Schema.org 構造化データ（Article / WebApplication）で検索スニペット強化</li>
+            <li>UGC 型「みんなのAI活用事例」投稿機能（ユーザー投稿で記事供給を加速）</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="callout" style="margin-top:2rem;">
+        <span class="callout-label">最初の一手——分散しない</span>
+        <p><strong>デプロイする（30分）。そして記事を書く（週5時間）。</strong><br>
+        他のすべて——課金もマーケティングも分析も——コンテンツが10本を超えてからで十分。
+        順番を守ること。まず届けて、それから考える。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════ 09 ═══════════════ -->
+  <section class="section" id="sec-09">
+    <div class="section-head">
+      <span class="section-num">09</span>
+      <h2 class="section-title">最終所見</h2>
+    </div>
+    <div class="body">
+
+      <div class="two-col">
+        <div class="strength-card">
+          <h4>このプロダクトの武器</h4>
+          <ul>
+            <li>日本唯一の「家族×AI」ブランド</li>
+            <li>familyaidesign casual — 記憶に残るデザイン</li>
+            <li>堅実な技術基盤（認証・セキュリティ・キャッシュ）</li>
+            <li>記事＋ツール＋学習管理の統合プラットフォーム</li>
+            <li>競合不在のブルーオーシャン</li>
+          </ul>
+        </div>
+        <div class="weakness-card">
+          <h4>突破すべき壁</h4>
+          <ul>
+            <li>コンテンツ量（3本では話にならない）</li>
+            <li>収益化の仕組み（仮説すら未検証）</li>
+            <li>ユーザー行動データの不在（感覚で判断している）</li>
+            <li>「家族がAIを使う」文化の未成熟（市場啓発が必要）</li>
+            <li>一人開発の限界（コンテンツ供給のボトルネック）</li>
+          </ul>
+        </div>
+      </div>
+
+      <p style="margin-top:1.5rem;">
+        familyai.jp の現在地は<span class="em">「基盤は整った。あとは実行」</span>である。
+        コード面で緊急度の高い課題は解決済み。残るは量とユーザー検証。
+        これは派手ではないが、避けて通れない。
       </p>
 
       <p>
-        コード面のクイックウィンはほぼ完了した。残るは<strong>量を増やすこと</strong>と<strong>ユーザーを呼ぶこと</strong>。
-        どちらも派手ではないが、これなしにスコアは上がらない。
-      </p>
-
-      <p>
-        次の再評価は<strong>記事が10本になったタイミング</strong>を推奨。
-        その時点でユーザー行動データがあれば、課金戦略の解像度が格段に上がる。
+        このプロダクトが成功するかどうかは、技術の完成度ではなく<span class="hl">継続的なコンテンツ供給とユーザー理解</span>にかかっている。週2本、半年で50本——その積み上げだけが、familyai.jp を「アイデア」から「メディア」に変える。
       </p>
 
       <div class="closing-casual">
         <div class="sign">
-          まず届けて、それから考える。
+          家族の物語は、まだ始まったばかり。
           <small>· AI = 愛 ·</small>
         </div>
       </div>
@@ -811,7 +537,7 @@
   </section>
 
   <footer class="doc-foot">
-    <span>FAMILYAIDESIGN · OFFICE HOURS VOL.02</span>
+    <span>FAMILYAIDESIGN · OFFICE HOURS REPORT</span>
     <span>END · 2026.06.01</span>
   </footer>
 
