@@ -58,7 +58,7 @@ interface AIChatWidgetProps {
 const DEFAULT_SUGGESTED_QUESTIONS = [
   'もっと簡単に教えて',
   '実際の手順を教えて',
-  'このAIツールは安全？',
+  '次に学ぶとよいことは？',
 ];
 
 // ── AIctation モード用：5 カテゴリ × 3 定型質問 ────────────────

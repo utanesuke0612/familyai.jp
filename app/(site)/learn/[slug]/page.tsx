@@ -303,7 +303,7 @@ export default async function ArticlePage({
           {/* 説明文 */}
           {article.description && (
             <p
-              className="mb-6 max-w-2xl leading-relaxed"
+              className="mb-6 leading-relaxed"
               style={{
                 fontSize: 'clamp(14px, 2vw, 17px)',
                 color:    'var(--sumi-light)',
