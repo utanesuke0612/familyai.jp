@@ -28,7 +28,6 @@ interface Props {
 
 export function Bookmark3dButton({
   modelId,
-  slug: _slug,
   initialBookmarked = false,
   isLoggedIn = false,
 }: Props) {

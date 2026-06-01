@@ -23,7 +23,6 @@ import { withRequest }                from '@/lib/log';
 import {
   addBookmark,
   removeBookmark,
-  isBookmarked,
   listBookmarkedModels,
 } from '@/lib/repositories/3d-models';
 

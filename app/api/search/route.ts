@@ -11,7 +11,7 @@
 
 import { NextRequest, NextResponse } from 'next/server';
 import { unstable_cache } from 'next/cache';
-import { eq, or, ilike, desc, sql } from 'drizzle-orm';
+import { and, eq, or, ilike, desc } from 'drizzle-orm';
 import { db, articles } from '@/lib/db';
 import { withRequest } from '@/lib/log';
 
@@ -33,10 +33,13 @@ const searchPublishedArticles = unstable_cache(
       })
       .from(articles)
       .where(
-        or(
-          ilike(articles.title, pattern),
-          ilike(articles.description, pattern),
-        )!,
+        and(
+          eq(articles.published, true),
+          or(
+            ilike(articles.title, pattern),
+            ilike(articles.description, pattern),
+          )!,
+        ),
       )
       .orderBy(desc(articles.publishedAt))
       .limit(limit);
