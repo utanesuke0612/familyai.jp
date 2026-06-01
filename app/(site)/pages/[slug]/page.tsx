@@ -69,10 +69,30 @@ const ANCHOR_FIX_SCRIPT = `
 `;
 
 /**
- * HTML 内の localhost 参照を無害化する。
+ * iframe srcdoc 用の Content-Security-Policy メタタグ。
+ *
+ * 【セキュリティ境界の設計意図】
+ * 管理者がアップロードした HTML は iframe sandbox（allow-scripts allow-forms
+ * allow-popups, allow-same-origin なし）内で実行される。
+ * sandbox だけでも親ページの Cookie / localStorage へのアクセスは阻止されるが、
+ * defense-in-depth として CSP も適用する：
+ *
+ *   ・外部スクリプト読み込みを禁止（script-src 'unsafe-inline' のみ）
+ *   ・フォーム送信先を同一オリジンに制限（form-action 'self'）
+ *   ・iframe 内ナビゲーションを防止（navigate-to 'none'）
+ *
+ * この CSP は最低限の防御線であり、sandbox 属性が主防御である。
+ * 管理者以外が HTML をアップロードできるようになった場合は、
+ * DOMPurify などによる HTML サニタイズを追加すること。
+ */
+const IFRAME_CSP_META = `<meta http-equiv="Content-Security-Policy" content="default-src 'unsafe-inline' 'unsafe-eval'; img-src * data: blob:; media-src *; form-action 'self'; navigate-to 'none';">`;
+
+/**
+ * HTML 内の危険な要素を無害化し、セキュリティヘッダを注入する。
  *   1. <base href="http://localhost..."> を削除
  *   2. <meta http-equiv="refresh"> を削除（自動リダイレクト防止）
- *   3. アンカークリック修正スクリプトを </body> 直前（無ければ末尾）に注入
+ *   3. CSP <meta> を <head> 直後（無ければ <html> 直後）に注入
+ *   4. アンカークリック修正スクリプトを </body> 直前（無ければ末尾）に注入
  */
 function sanitizeHtml(html: string): string {
   let result = html;
@@ -89,7 +109,16 @@ function sanitizeHtml(html: string): string {
     '',
   );
 
-  // 3. アンカー修正スクリプトを注入
+  // 3. CSP メタタグを注入（defense-in-depth: sandbox の補完）
+  if (/<head[^>]*>/i.test(result)) {
+    result = result.replace(/<head[^>]*>/i, `$&${IFRAME_CSP_META}`);
+  } else if (/<html[^>]*>/i.test(result)) {
+    result = result.replace(/<html[^>]*>/i, `$&${IFRAME_CSP_META}`);
+  } else {
+    result = IFRAME_CSP_META + result;
+  }
+
+  // 4. アンカー修正スクリプトを注入
   if (/<\/body>/i.test(result)) {
     result = result.replace(/<\/body>/i, `${ANCHOR_FIX_SCRIPT}</body>`);
   } else {

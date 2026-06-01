@@ -18,6 +18,7 @@ import { useSession, signOut } from 'next-auth/react';
 import { useState, useRef, useEffect } from 'react';
 import { UserCircle, LogOut } from 'lucide-react';
 import { MobileNav } from './MobileNav';
+import { SearchPopover } from './SearchPopover';
 import { ROUTES } from '@/shared';
 
 // ── ナビ定義 ─────────────────────────────────────────────
@@ -241,9 +242,11 @@ export function Header() {
           })}
         </nav>
 
-        {/* ── PC アバター + Mobile ハンバーガー ── */}
+        {/* ── PC: 検索 + アバター + Mobile ハンバーガー ── */}
         <div className="flex items-center gap-3">
-          <div className="hidden lg:flex">
+          <div className="hidden lg:flex items-center gap-2">
+            {/* Rev41: グローバル検索 */}
+            <SearchPopover />
             <UserAvatarMenu />
           </div>
           <MobileNav />

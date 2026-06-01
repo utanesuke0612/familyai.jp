@@ -22,6 +22,7 @@ import {
   CATEGORY_LABEL,
   DIFFICULTY_LABEL,
   estimateReadingMin,
+  normalizeTags,
 } from '@/shared';
 import type { ContentCategory, DifficultyLevel } from '@/shared';
 
@@ -38,18 +39,6 @@ interface ArticleFormProps {
 // ─── ヘルパー ─────────────────────────────────────────────────
 const dateToInput = (d: Date | null | undefined): string =>
   d ? new Date(d).toISOString().split('T')[0]! : '';
-
-const normalizeTags = (value: string): string[] => {
-  const seen = new Set<string>();
-  const tags: string[] = [];
-  for (const raw of value.split(',')) {
-    const tag = raw.trim();
-    if (!tag || seen.has(tag)) continue;
-    seen.add(tag);
-    tags.push(tag);
-  }
-  return tags;
-};
 
 // ─── フォーム本体 ─────────────────────────────────────────────
 export function ArticleForm({ article }: ArticleFormProps) {

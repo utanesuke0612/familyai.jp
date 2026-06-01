@@ -18,6 +18,7 @@ import type { Article, NewArticle } from '@/lib/db/schema';
 import type { Article as ArticleDto, ArticleSummary } from '@/shared/types';
 import { toArticleDetail, toArticleSummary } from '@/lib/mappers/articles';
 import { logger } from '@/lib/log';
+import { normalizeTags } from '@/shared';
 
 // ─── 共通型 ───────────────────────────────────────────────────
 
@@ -264,9 +265,9 @@ export const getArticleTags = unstable_cache(
         .orderBy(desc(articles.publishedAt))
         .limit(300);
 
-      return Array.from(
-        new Set(rows.flatMap((row) => row.tags.map((tag) => tag.trim()).filter(Boolean))),
-      )
+      // normalizeTags で case-insensitive 重複除去（#ChatGPT / #chatgpt の統一）
+      const rawTags = rows.flatMap((row) => row.tags);
+      return normalizeTags(rawTags.join(','))
         .sort((a, b) => a.localeCompare(b, 'ja-JP'))
         .slice(0, limit);
     } catch (err) {

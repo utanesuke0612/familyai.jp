@@ -187,7 +187,11 @@ export const userSentenceBookmarks = pgTable(
 
 // ─── user_animations ──────────────────────────────────────────
 /**
- * 【Phase 2 用に残置 — 現状未使用・目標 2026 Q3 着手】(L-8)
+ * 【Phase 2 用に残置 — 現状未使用・⏰ DEADLINE: 2026-09-30】
+ *
+ * このテーブルが 2026年9月末までに Phase 2（AI 3D 生成版・Tripo 連携）で
+ * 再利用されなかった場合、次回のメジャーリビジョンで削除すること。
+ * それまでに着手の見込みがないと判断した場合も早期削除を検討する。
  *
  * 旧: AI 生成アニメーション（HTML）を保存するテーブル。
  * Rev36 で機能を 3D 図鑑にリプレイス (commit 88362a4) し、関連 API・mapper・
@@ -201,6 +205,7 @@ export const userSentenceBookmarks = pgTable(
  *   - 旧 stage1Json は AI 生成 3D の構造化メタとして再利用
  *
  * Phase 2 着手時に「再利用 or 完全削除（破棄して新テーブル）」を再評価する。
+ * 2026-09-30 を最終デッドラインとし、未着手の場合は削除（dead code 温存防止）。
  */
 export const userAnimations = pgTable(
   'user_animations',

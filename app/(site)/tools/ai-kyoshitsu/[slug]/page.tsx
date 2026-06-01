@@ -24,9 +24,12 @@ import {
 import {
   getPublishedModelBySlugCached,
   incrementViewCount,
+  isBookmarked as checkIsBookmarked,
 } from '@/lib/repositories/3d-models';
+import { auth } from '@/lib/auth';
 import { STATIC_MODELS_BY_SLUG } from '@/lib/tutor3d/static-models';
 import { ModelDetailClient } from '@/components/tools/3d-tutor/ModelDetailClient';
+import { Bookmark3dButton } from '@/components/tools/3d-tutor/Bookmark3dButton';
 const FloatingShareButtons = dynamic(() => import('@/components/article/FloatingShareButtons').then(m => m.FloatingShareButtons), { loading: () => <SkeletonBlock height="48px" /> });
 
 /** 遅延ロード中のスケルトンプレースホルダー */
@@ -109,7 +112,19 @@ export default async function ModelDetailPage({ params }: PageProps) {
     void incrementViewCount(params.slug);
   }
 
-  // 3. UI
+  // 3. ブックマーク状態（Rev41: 3DブックマークAPI/UI接続）
+  const session = await auth();
+  const isLoggedIn = !!session?.user?.id;
+  let bookmarked = false;
+  if (isLoggedIn && !staticModel) {
+    try {
+      bookmarked = await checkIsBookmarked(session!.user!.id, model.id);
+    } catch {
+      bookmarked = false;
+    }
+  }
+
+  // 4. UI
   return (
     <main style={{ background: 'var(--washi)', minHeight: '100vh' }}>
       {/* パンくず + 戻る */}
@@ -167,6 +182,18 @@ export default async function ModelDetailPage({ params }: PageProps) {
             >
               {model.description}
             </p>
+          )}
+
+          {/* Rev41: 3Dブックマークボタン（DB モデルのみ・静的モデルは DB id を持たないため非表示） */}
+          {!staticModel && (
+            <div style={{ marginTop: 12 }}>
+              <Bookmark3dButton
+                modelId={model.id}
+                slug={model.slug}
+                initialBookmarked={bookmarked}
+                isLoggedIn={isLoggedIn}
+              />
+            </div>
           )}
         </div>
       </section>

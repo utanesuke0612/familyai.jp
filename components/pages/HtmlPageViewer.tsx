@@ -180,7 +180,14 @@ export function HtmlPageViewer({ title, slug, htmlContent, pageContent }: Props)
             </button>
           </div>
 
-          {/* HTML 本体 */}
+          {/* HTML 本体
+              【セキュリティ境界】
+              sandbox 属性は allow-scripts / allow-forms / allow-popups のみ許可。
+              allow-same-origin は意図的に外している。
+              → iframe 内スクリプトは親ページの Cookie / localStorage / DOM に
+                アクセスできない。CSP メタタグもサーバー側で注入済み。
+              → allow-top-navigation / allow-popups-to-escape-sandbox も未許可のため
+                iframe 内からの親ページナビゲーションは不可。 */}
           <iframe
             ref={iframeRef}
             srcDoc={htmlContent}

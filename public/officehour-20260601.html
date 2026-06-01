@@ -1,0 +1,822 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="author" content="familyaidesign">
+<meta name="description" content="familyai.jp 再評価報告書 — Office Hours VOL.02 · 改善後の現状と次へのアクション">
+<title>familyai.jp 再評価報告書 — Office Hours VOL.02</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600;700;800&family=Zen+Kaku+Gothic+Antique:wght@300;400;500;700&family=DM+Mono:wght@400;500&family=Playfair+Display:wght@400;600;700;800&family=Noto+Serif+SC:wght@500;700;800&family=Noto+Sans+SC:wght@300;400;500;700&family=Nunito+Sans:wght@300;400;600;700&family=Caveat:wght@500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #f3ead8;
+    --paper-2: #ece1c9;
+    --paper-3: #f7f0dd;
+    --ink: #1f1a17;
+    --ink-2: #4a3f37;
+    --ink-3: #7a6a5d;
+    --terracotta: #b8412a;
+    --terracotta-deep: #8a2e1c;
+    --teal: #1f5e62;
+    --mustard: #d99a2b;
+    --olive: #6f7a3a;
+    --positive: #4a8a3a;
+    --rule: rgba(40, 28, 18, 0.18);
+
+    --font-display: 'Shippori Mincho', 'Noto Serif SC', 'Playfair Display', serif;
+    --font-body:    'Zen Kaku Gothic Antique', 'Noto Sans SC', 'Nunito Sans', sans-serif;
+    --font-mono:    'DM Mono', monospace;
+    --font-hand:    'Caveat', cursive;
+  }
+
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0; padding: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--font-body);
+    line-height: 1.75;
+    -webkit-font-smoothing: antialiased;
+    scroll-behavior: smooth;
+  }
+
+  .layout { display: flex; min-height: 100vh; }
+
+  /* ── Sidebar TOC ── */
+  .toc-sidebar {
+    position: sticky; top: 0;
+    width: 260px; min-width: 260px;
+    height: 100vh;
+    overflow-y: auto;
+    background: var(--paper-2);
+    border-right: 1px solid var(--rule);
+    padding: 3rem 1.8rem 3rem 2rem;
+    display: flex; flex-direction: column;
+  }
+  .toc-sidebar .toc-title {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.3em;
+    color: var(--terracotta);
+    text-transform: uppercase;
+    margin-bottom: 1.8rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--rule);
+  }
+  .toc-sidebar .toc-list {
+    list-style: none; padding: 0; margin: 0;
+    display: flex; flex-direction: column; gap: 0.15rem;
+  }
+  .toc-sidebar .toc-list a {
+    display: flex; align-items: baseline; gap: 0.6rem;
+    text-decoration: none;
+    color: var(--ink-2);
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.12em;
+    padding: 0.45rem 0.6rem;
+    border-radius: 2px;
+    border-left: 2px solid transparent;
+    transition: all 0.2s ease;
+  }
+  .toc-sidebar .toc-list a .toc-num {
+    color: var(--terracotta);
+    font-weight: 500;
+    min-width: 1.4rem;
+    font-size: 0.65rem;
+  }
+  .toc-sidebar .toc-list a:hover {
+    background: rgba(184, 65, 42, 0.06);
+    color: var(--ink);
+    border-left-color: var(--terracotta);
+  }
+
+  /* ── Main ── */
+  .main-content {
+    flex: 1; min-width: 0;
+    padding: 5rem 3rem 6rem;
+    max-width: 860px;
+  }
+
+  header {
+    border-bottom: 1px solid var(--rule);
+    padding-bottom: 2.4rem;
+    margin-bottom: 3rem;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 1.5rem;
+    align-items: end;
+  }
+  .doc-meta-top { display: flex; flex-direction: column; gap: 0.4rem; }
+  .doc-eyebrow {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.3em;
+    color: var(--terracotta);
+    text-transform: uppercase;
+  }
+  h1 {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 2.8rem;
+    line-height: 1.15;
+    margin: 0;
+    color: var(--ink);
+    letter-spacing: 0.005em;
+  }
+  h1 .accent { color: var(--terracotta); }
+  .doc-meta {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.18em;
+    color: var(--ink-3);
+    text-transform: uppercase;
+    text-align: right;
+    line-height: 1.8;
+  }
+  .doc-meta b { color: var(--ink); font-weight: 500; }
+
+  .lead {
+    font-family: var(--font-display);
+    font-size: 1.15rem;
+    line-height: 1.7;
+    color: var(--ink-2);
+    margin-bottom: 2.5rem;
+    padding-left: 1.2rem;
+    border-left: 3px solid var(--terracotta);
+  }
+
+  section.section { margin-bottom: 3rem; }
+  .section-head {
+    display: flex; align-items: baseline; gap: 1rem;
+    margin-bottom: 1.4rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--rule);
+  }
+  .section-num {
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    letter-spacing: 0.2em;
+    color: var(--terracotta);
+    padding: 0.2rem 0.6rem;
+    border: 1.5px solid var(--terracotta);
+    border-radius: 2px;
+  }
+  .section-title {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 1.5rem;
+    color: var(--ink);
+    margin: 0; flex: 1;
+    letter-spacing: 0.015em;
+  }
+  .section-sub {
+    font-size: 13px;
+    color: var(--ink-3);
+    margin-top: 0.4rem;
+  }
+
+  .body { font-size: 1rem; line-height: 1.85; color: var(--ink); }
+  .body p { margin: 0 0 1rem; }
+  .body strong { color: var(--ink); font-weight: 700; }
+  .body .em { color: var(--terracotta); font-weight: 600; }
+  .body ul, .body ol { padding-left: 1.4rem; margin: 0 0 1rem; }
+  .body li { margin-bottom: 0.4rem; }
+
+  /* ── KPI band ── */
+  .kpi-band {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+    margin: 1.5rem 0 2rem;
+  }
+  .kpi-tile {
+    background: var(--paper-3);
+    border: 1px solid var(--rule);
+    border-radius: 3px;
+    padding: 1.2rem 1.2rem;
+    position: relative;
+  }
+  .kpi-tile::before {
+    content: ""; position: absolute;
+    left: 0; top: 0; bottom: 0; width: 3px;
+    background: var(--terracotta);
+  }
+  .kpi-tile.teal::before  { background: var(--teal); }
+  .kpi-tile.olive::before { background: var(--olive); }
+  .kpi-tile .lbl {
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.22em;
+    color: var(--ink-3);
+    text-transform: uppercase;
+    margin-bottom: 0.4rem;
+  }
+  .kpi-tile .val {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 1.7rem;
+    line-height: 1;
+    color: var(--ink);
+  }
+  .kpi-tile .val .unit {
+    font-size: 0.8rem; font-weight: 500;
+    color: var(--ink-2); margin-left: 0.1rem;
+  }
+  .kpi-tile .dlt {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    margin-top: 0.4rem;
+    color: var(--ink-3);
+  }
+
+  /* ── Delta tag ── */
+  .delta-up {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    color: var(--positive);
+    font-weight: 600;
+  }
+
+  /* ── Table ── */
+  table.dt {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1.2rem 0;
+    background: var(--paper-3);
+    border: 1px solid var(--rule);
+    font-size: 0.9rem;
+  }
+  table.dt th {
+    background: var(--ink);
+    color: var(--paper);
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    text-align: left;
+    padding: 0.7rem 1rem;
+    font-weight: 500;
+  }
+  table.dt td {
+    padding: 0.7rem 1rem;
+    border-top: 1px solid var(--rule);
+    vertical-align: top;
+    line-height: 1.65;
+  }
+  table.dt tr:nth-child(even) td { background: rgba(40,28,18,0.02); }
+
+  /* ── Callout ── */
+  .callout {
+    background: var(--paper-3);
+    border-left: 4px solid var(--terracotta);
+    padding: 1.2rem 1.5rem;
+    margin: 1.5rem 0;
+    border-radius: 0 3px 3px 0;
+  }
+  .callout.teal { border-left-color: var(--teal); }
+  .callout.olive { border-left-color: var(--olive); }
+  .callout-label {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.22em;
+    color: var(--terracotta);
+    text-transform: uppercase;
+    margin-bottom: 0.4rem;
+    display: block;
+  }
+  .callout.teal .callout-label { color: var(--teal); }
+  .callout.olive .callout-label { color: var(--olive); }
+  .callout p:last-child { margin-bottom: 0; }
+
+  /* ── Roadmap ── */
+  .roadmap-phase {
+    display: grid;
+    grid-template-columns: 140px 1fr;
+    gap: 1.5rem;
+    padding: 1.3rem 0;
+    border-bottom: 1px solid var(--rule);
+  }
+  .roadmap-phase:last-child { border-bottom: none; }
+  .phase-label {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 1rem;
+    color: var(--ink);
+  }
+  .phase-label small {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    color: var(--terracotta);
+    letter-spacing: 0.15em;
+    margin-top: 0.2rem;
+  }
+  .phase-body h4 {
+    font-family: var(--font-display);
+    font-size: 1rem;
+    margin: 0 0 0.3rem;
+  }
+  .phase-body p {
+    font-size: 0.9rem;
+    color: var(--ink-2);
+    line-height: 1.7;
+    margin: 0 0 0.5rem;
+  }
+  .phase-body ul {
+    list-style: none; padding: 0; margin: 0.3rem 0 0;
+  }
+  .phase-body ul li {
+    position: relative;
+    padding-left: 1.2rem;
+    font-size: 0.88rem;
+    color: var(--ink-2);
+    line-height: 1.7;
+    margin-bottom: 0.2rem;
+  }
+  .phase-body ul li::before {
+    content: '→';
+    position: absolute; left: 0;
+    color: var(--terracotta);
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+  }
+
+  /* ── Comparison grid ── */
+  .compare-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    margin: 1.2rem 0;
+  }
+  .compare-card {
+    padding: 1.3rem 1.5rem;
+    border: 1px solid var(--rule);
+    border-radius: 3px;
+  }
+  .compare-card.up   { background: rgba(74, 138, 58, 0.06); border-left: 3px solid var(--positive); }
+  .compare-card.flat { background: var(--paper-3);          border-left: 3px solid var(--ink-3); }
+  .compare-card h4 {
+    font-family: var(--font-display);
+    font-size: 0.95rem;
+    margin: 0 0 0.5rem;
+  }
+  .compare-card ul {
+    list-style: none; padding: 0; margin: 0;
+  }
+  .compare-card ul li {
+    position: relative;
+    padding-left: 1rem;
+    font-size: 0.88rem;
+    color: var(--ink-2);
+    line-height: 1.7;
+    margin-bottom: 0.15rem;
+  }
+  .compare-card.up ul li::before   { content: '↑'; position: absolute; left: 0; color: var(--positive); font-size: 0.7rem; }
+  .compare-card.flat ul li::before { content: '—'; position: absolute; left: 0; color: var(--ink-3); font-size: 0.7rem; }
+
+  /* ── Closing ── */
+  .closing-casual {
+    margin-top: 2rem;
+    padding-top: 1.8rem;
+    border-top: 2px dashed var(--ink-2);
+    text-align: center;
+  }
+  .closing-casual .sign {
+    font-family: var(--font-hand);
+    font-size: 2.2rem;
+    color: var(--terracotta);
+    line-height: 1.2;
+  }
+  .closing-casual .sign::before {
+    content: '✦';
+    color: var(--mustard);
+    margin-right: 0.5rem;
+    font-size: 1rem;
+    vertical-align: middle;
+  }
+  .closing-casual .sign small {
+    display: block;
+    font-family: var(--font-display);
+    font-size: 0.9rem;
+    color: var(--ink-2);
+    margin-top: 0.4rem;
+    letter-spacing: 0.08em;
+    font-weight: 500;
+  }
+
+  footer.doc-foot {
+    margin-top: 4rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--rule);
+    display: flex; justify-content: space-between;
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    color: var(--ink-3);
+    text-transform: uppercase;
+  }
+
+  .hl {
+    background: linear-gradient(transparent 60%, rgba(217,154,43,0.45) 60%);
+    padding: 0 0.2em;
+  }
+
+  @media print {
+    .toc-sidebar { display: none; }
+    .main-content { padding: 0; max-width: 100%; }
+    section.section { page-break-inside: avoid; }
+  }
+  @media (max-width: 860px) {
+    .layout { flex-direction: column; }
+    .toc-sidebar {
+      position: relative; width: 100%; min-width: 0;
+      height: auto; max-height: 40vh;
+      border-right: none; border-bottom: 1px solid var(--rule);
+      padding: 1.8rem 1.5rem;
+    }
+    .main-content { padding: 3rem 1.5rem 4rem; max-width: 100%; }
+    h1 { font-size: 2rem; }
+    .kpi-band { grid-template-columns: 1fr 1fr; }
+    .compare-grid { grid-template-columns: 1fr; }
+    .roadmap-phase { grid-template-columns: 1fr; gap: 0.3rem; }
+    header { grid-template-columns: 1fr; }
+    .doc-meta { text-align: left; }
+  }
+</style>
+</head>
+<body>
+<div class="layout">
+
+  <nav class="toc-sidebar">
+    <div class="toc-title">目次 · Contents</div>
+    <ul class="toc-list">
+      <li><a href="#sec-01"><span class="toc-num">01</span>エグゼクティブサマリー</a></li>
+      <li><a href="#sec-02"><span class="toc-num">02</span>今回改善した7項目</a></li>
+      <li><a href="#sec-03"><span class="toc-num">03</span>改善前後スコア比較</a></li>
+      <li><a href="#sec-04"><span class="toc-num">04</span>変わらなかった課題</a></li>
+      <li><a href="#sec-05"><span class="toc-num">05</span>次へのアクション</a></li>
+      <li><a href="#sec-06"><span class="toc-num">06</span>最終所見</a></li>
+    </ul>
+  </nav>
+
+  <main class="main-content">
+
+  <header>
+    <div class="doc-meta-top">
+      <div class="doc-eyebrow">— Office Hours · Check-in Report</div>
+      <h1>familyai.jp<span class="accent">再評価報告書</span></h1>
+    </div>
+    <div class="doc-meta">
+      <div><b>Date</b> · 2026.06.01</div>
+      <div><b>Rev</b> · VOL.02 · DRAFT</div>
+      <div><b>Author</b> · Claude Code /office-hours</div>
+    </div>
+  </header>
+
+  <div class="lead">
+    VOL.01 の評価から7件の改善を実装し、<strong>総合スコアは 5.9 → 6.3 に上昇</strong>。
+    コード面のクイックウィンはほぼ打ち切り、残る課題はコンテンツ供給とユーザー獲得・検証の領域へ。
+    本報告書は改善の差分・現状の課題・次への具体的なアクションを整理する。
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- Section 01: Executive Summary -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <section class="section" id="sec-01">
+    <div class="section-head">
+      <span class="section-num">01</span>
+      <h2 class="section-title">エグゼクティブサマリー</h2>
+    </div>
+    <div class="body">
+      <p>
+        VOL.01 で指摘した「実装コストが低くインパクトの大きい改善点」7件すべてを実装完了。
+        TypeScript コンパイルエラーゼロ。しかし<span class="em">変更はまだローカルに留まっており、本番には未反映</span>。
+      </p>
+
+      <div class="kpi-band">
+        <div class="kpi-tile">
+          <div class="lbl">Before</div>
+          <div class="val">5.9<span class="unit">/10</span></div>
+          <div class="dlt">VOL.01 初回評価</div>
+        </div>
+        <div class="kpi-tile teal">
+          <div class="lbl">After</div>
+          <div class="val">6.3<span class="unit">/10</span></div>
+          <div class="dlt">VOL.02 再評価 <span class="delta-up">+0.4</span></div>
+        </div>
+        <div class="kpi-tile olive">
+          <div class="lbl">FIXED</div>
+          <div class="val">7<span class="unit">件</span></div>
+          <div class="dlt">コード改善 完了</div>
+        </div>
+        <div class="kpi-tile">
+          <div class="lbl">DEPLOY</div>
+          <div class="val">未<span class="unit"></span></div>
+          <div class="dlt">本番未反映 ⚠</div>
+        </div>
+      </div>
+
+      <div class="callout">
+        <span class="callout-label">最重要所見</span>
+        <p>コード面のクイックウィンは打ち切った。残る課題は<strong>コンテンツ供給・ユーザー獲得・課金検証</strong>の3領域——すべてコードではなく運用・戦略で動く指標。次の一手は「デプロイ＋記事を書く」の2つだけ。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- Section 02: What Was Improved -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <section class="section" id="sec-02">
+    <div class="section-head">
+      <span class="section-num">02</span>
+      <h2 class="section-title">今回改善した 7 項目</h2>
+      <p class="section-sub">全項目 TypeScript コンパイル済み・ローカル完了・未デプロイ</p>
+    </div>
+    <div class="body">
+      <table class="dt">
+        <thead>
+          <tr><th style="width:22%;">項目</th><th style="width:28%;">Before</th><th style="width:28%;">After</th><th style="width:22%;">Impact</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>StatsRow 表記</strong></td>
+            <td>「100+AI活用事例」虚偽の数字を表示</td>
+            <td>3項目（2ツール / 無料 / 毎週更新）に修正</td>
+            <td>信用毀損リスク解消</td>
+          </tr>
+          <tr>
+            <td><strong>HTML セキュリティ</strong></td>
+            <td>iframe sandbox のみ</td>
+            <td>CSP メタタグ注入 + 設計文書化。二重防御</td>
+            <td>Defense-in-depth</td>
+          </tr>
+          <tr>
+            <td><strong>Dead code 期限</strong></td>
+            <td>user_animations 無期限残置</td>
+            <td>2026-09-30 deadline を明記</td>
+            <td>負債の可視化</td>
+          </tr>
+          <tr>
+            <td><strong>3D ブックマーク</strong></td>
+            <td>DB+リポジトリのみ</td>
+            <td>API（GET/POST/DELETE）+ ⭐ ボタン + ページ接続</td>
+            <td>ユーザー機能 完成</td>
+          </tr>
+          <tr>
+            <td><strong>タグ管理</strong></td>
+            <td>手動・表記揺れリスク</td>
+            <td>正規化ユーティリティ + 全入力経路に適用</td>
+            <td>データ品質向上</td>
+          </tr>
+          <tr>
+            <td><strong>グローバル検索</strong></td>
+            <td>不在（/learn のみ）</td>
+            <td>ヘッダー常設 + リアルタイム API + キーボード操作</td>
+            <td>発見性 大幅向上</td>
+          </tr>
+          <tr>
+            <td><strong>404 ページ</strong></td>
+            <td>2ボタンのみ</td>
+            <td>検索窓 + カテゴリ + 人気記事 3 件</td>
+            <td>離脱防止・回遊起点化</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- Section 03: Score Comparison -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <section class="section" id="sec-03">
+    <div class="section-head">
+      <span class="section-num">03</span>
+      <h2 class="section-title">改善前後スコア比較</h2>
+    </div>
+    <div class="body">
+      <div class="compare-grid">
+        <div class="compare-card up">
+          <h4>↑ 上がった指標</h4>
+          <ul>
+            <li>技術的完成度 7→8（セキュリティ・検索・タグ・ブックマーク）</li>
+            <li>ユーザー導線 5→7（グローバル検索・404 刷新）</li>
+          </ul>
+        </div>
+        <div class="compare-card flat">
+          <h4>— 変わらなかった指標</h4>
+          <ul>
+            <li>コンテンツ充実度 3（コードでは記事数は増えない）</li>
+            <li>収益化の準備 3（戦略判断が必要）</li>
+            <li>成長と配布 5（SEO ベースはあるが流入なし）</li>
+          </ul>
+        </div>
+      </div>
+
+      <table class="dt">
+        <thead>
+          <tr><th>評価軸</th><th>VOL.01</th><th>VOL.02</th><th>差分</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>コンセプトの鋭さ</td>
+            <td style="font-family:var(--font-display);font-weight:700;">8</td>
+            <td style="font-family:var(--font-display);font-weight:700;">8</td>
+            <td style="color:var(--ink-3);">—</td>
+          </tr>
+          <tr>
+            <td>コンテンツの充実度</td>
+            <td style="font-family:var(--font-display);font-weight:700;color:var(--terracotta);">3</td>
+            <td style="font-family:var(--font-display);font-weight:700;color:var(--terracotta);">3</td>
+            <td style="color:var(--ink-3);">—</td>
+          </tr>
+          <tr>
+            <td>技術的完成度</td>
+            <td style="font-family:var(--font-display);font-weight:700;">7</td>
+            <td style="font-family:var(--font-display);font-weight:700;color:var(--teal);">8</td>
+            <td style="color:var(--positive);">+1</td>
+          </tr>
+          <tr>
+            <td>デザイン品質</td>
+            <td style="font-family:var(--font-display);font-weight:700;">8</td>
+            <td style="font-family:var(--font-display);font-weight:700;">8</td>
+            <td style="color:var(--ink-3);">—</td>
+          </tr>
+          <tr>
+            <td>ユーザー導線</td>
+            <td style="font-family:var(--font-display);font-weight:700;">5</td>
+            <td style="font-family:var(--font-display);font-weight:700;color:var(--teal);">7</td>
+            <td style="color:var(--positive);">+2</td>
+          </tr>
+          <tr>
+            <td>収益化の準備</td>
+            <td style="font-family:var(--font-display);font-weight:700;color:var(--terracotta);">3</td>
+            <td style="font-family:var(--font-display);font-weight:700;color:var(--terracotta);">3</td>
+            <td style="color:var(--ink-3);">—</td>
+          </tr>
+          <tr>
+            <td>競合優位性</td>
+            <td style="font-family:var(--font-display);font-weight:700;">7</td>
+            <td style="font-family:var(--font-display);font-weight:700;">7</td>
+            <td style="color:var(--ink-3);">—</td>
+          </tr>
+          <tr style="border-top: 2px solid var(--rule);">
+            <td><strong>総合</strong></td>
+            <td style="font-family:var(--font-display);font-weight:800;font-size:1.2rem;">5.9</td>
+            <td style="font-family:var(--font-display);font-weight:800;font-size:1.2rem;color:var(--teal);">6.3</td>
+            <td style="color:var(--positive);font-weight:700;">+0.4</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- Section 04: Unchanged Issues -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <section class="section" id="sec-04">
+    <div class="section-head">
+      <span class="section-num">04</span>
+      <h2 class="section-title">変わらなかった課題 — 3つの構造的問題</h2>
+    </div>
+    <div class="body">
+      <div class="callout">
+        <span class="callout-label">ISSUE ① · 緊急</span>
+        <p><strong>修正が本番に反映されていない。</strong>全変更（11 modified + 7 new files）が git 未コミット。本番 familyai.jp はまだ「100+AI活用事例」を表示している。修正した7件がユーザーに見えなければ、この作業は完了していないに等しい。</p>
+      </div>
+
+      <div class="callout teal">
+        <span class="callout-label">ISSUE ② · 構造的</span>
+        <p><strong>コンテンツ不在。</strong>記事3本・ツール2つという数字は変わっていない。コード改善ではコンテンツは増えない。2本の下書き（ai-homework-helper.md / english-learning-voice-ai.md）が content/ に眠ったまま。これらを公開し、さらに5本書いて計10本にする——それが次の一手。</p>
+      </div>
+
+      <div class="callout olive">
+        <span class="callout-label">ISSUE ③ · 中長期</span>
+        <p><strong>ユーザーフィードバックループが存在しない。</strong>誰がどのツールをどう使っているか、どれくらいの頻度で戻ってきているか——それが分からないと、次の改善の優先順位が勘に頼る。Vercel Web Analytics の有効化と、最低限のカスタムイベント計測を入れる必要がある。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- Section 05: Next Actions -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <section class="section" id="sec-05">
+    <div class="section-head">
+      <span class="section-num">05</span>
+      <h2 class="section-title">次へのアクション — 優先度順 8 項目</h2>
+    </div>
+    <div class="body">
+
+      <div class="roadmap-phase">
+        <div class="phase-label">
+          🔴 P0
+          <small>今日中</small>
+        </div>
+        <div class="phase-body">
+          <h4>A1 · デプロイ</h4>
+          <p>git add -A && git commit && git push → Vercel 自動デプロイ。7件の改善が初めてユーザーに届く。</p>
+          <h4 style="margin-top: .8rem;">A2 · 下書き2本を公開</h4>
+          <p>content/articles/ にある ai-homework-helper.md と english-learning-voice-ai.md を管理画面から DB に投入。記事 3→5。所要15分。</p>
+        </div>
+      </div>
+
+      <div class="roadmap-phase">
+        <div class="phase-label">
+          🟡 P1
+          <small>1週間以内</small>
+        </div>
+        <div class="phase-body">
+          <h4>A3 · 記事を10本へ（+5本）</h4>
+          <p>AIで下書き→自分で編集のパイプライン。ネタの優先順位：</p>
+          <ul>
+            <li>familyai.jp ツールの実体験記（VOAディクテーション / 3D図鑑）</li>
+            <li>空カテゴリを埋める（家事・暮らし / 仕事・効率化 / 創作・表現 ×各1）</li>
+            <li>話題のAIツールを家族目線でレビュー</li>
+          </ul>
+
+          <h4 style="margin-top: .8rem;">A4 · VOA中級モジュールを1つ実装</h4>
+          <p>Health & Lifestyle または Science & Technology の最初のレッスンを実装。7モジュール中3つのみ実装の「準備中」状態を改善。</p>
+        </div>
+      </div>
+
+      <div class="roadmap-phase">
+        <div class="phase-label">
+          🔵 P2
+          <small>2週間以内</small>
+        </div>
+        <div class="phase-body">
+          <h4>A5 · ユーザー行動分析を導入</h4>
+          <p>Vercel Web Analytics 有効化。カスタムイベント：ブックマーク追加 / 検索実行 / ツール利用開始。週15分だけ数字を見る習慣。</p>
+
+          <h4 style="margin-top: .8rem;">A6 · X (@familyaijp) 定期投稿</h4>
+          <p>火曜：新着記事の紹介 / 金曜：今週のAI活用Tips。週2回。いいね1桁でも継続が勝つ。</p>
+        </div>
+      </div>
+
+      <div class="roadmap-phase">
+        <div class="phase-label">
+          🟢 P3
+          <small>1ヶ月以内</small>
+        </div>
+        <div class="phase-body">
+          <h4>A7 · 課金仮説を1つ決めてMVP</h4>
+          <p><strong>推奨：VOAプレミアム</strong>（中級・上級を月額480〜980円に。初級は無料のまま）。初級で価値を体験したユーザーが中級・上級で課金——フリーミアムの定石。課金コンバージョンが最も高いセグメント。</p>
+
+          <h4 style="margin-top: .8rem;">A8 · メールマガジン開始</h4>
+          <p>Resend 無料枠でOK。登録フォームをフッターに追加。週1回、新着記事の要約を配信。</p>
+        </div>
+      </div>
+
+      <div class="callout" style="margin-top: 2rem;">
+        <span class="callout-label">今週やるべきは2つだけ</span>
+        <p><strong>1. デプロイ（30分）—— 2. 記事を 3→10本に（週5時間）。</strong><br>
+        この2つが終わったら、ユーザー分析を入れてデータを見ながら次の判断。課金もマーケティングも、ユーザーが来てから考える話。分散しない。最初の2つだけ。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- Section 06: Closing -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <section class="section" id="sec-06">
+    <div class="section-head">
+      <span class="section-num">06</span>
+      <h2 class="section-title">最終所見</h2>
+    </div>
+    <div class="body">
+      <p>
+        VOL.01 から VOL.02 で上がったのは「技術」と「導線」。
+        動かなかったのは「コンテンツ」と「収益化」——これは<span class="em">コードでは解決できない領域</span>だから当然の結果。
+      </p>
+
+      <p>
+        コード面のクイックウィンはほぼ完了した。残るは<strong>量を増やすこと</strong>と<strong>ユーザーを呼ぶこと</strong>。
+        どちらも派手ではないが、これなしにスコアは上がらない。
+      </p>
+
+      <p>
+        次の再評価は<strong>記事が10本になったタイミング</strong>を推奨。
+        その時点でユーザー行動データがあれば、課金戦略の解像度が格段に上がる。
+      </p>
+
+      <div class="closing-casual">
+        <div class="sign">
+          まず届けて、それから考える。
+          <small>· AI = 愛 ·</small>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="doc-foot">
+    <span>FAMILYAIDESIGN · OFFICE HOURS VOL.02</span>
+    <span>END · 2026.06.01</span>
+  </footer>
+
+  </main>
+
+</div>
+</body>
+</html>

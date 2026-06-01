@@ -189,3 +189,11 @@ export function rowsToCsv<T extends Record<string, unknown>>(
 // ─── AI教室コスト試算（再エクスポート） ────────────────────
 export { estimateAiCost, estimateMonthlyCost, TOKEN_ESTIMATE } from './ai-cost';
 export type { AiCostBreakdown } from './ai-cost';
+
+// ─── タグ正規化 ────────────────────────────────────────────
+export {
+  normalizeTags,
+  tagToDisplay,
+  prepareTagsForDb,
+  tagMatches,
+} from './tag-normalize';

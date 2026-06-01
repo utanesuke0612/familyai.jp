@@ -13,6 +13,7 @@ import { revalidatePath, revalidateTag } from 'next/cache';
 import { protectAdminRoute, legacyErrorBuilder } from '@/lib/api/admin-guard';
 import { listAllArticles, createArticle } from '@/lib/repositories/articles';
 import { createArticleSchema, adminArticlesQuerySchema } from '@/lib/schemas/articles';
+import { normalizeTags } from '@/shared';
 import { withRequest } from '@/lib/log';
 
 // ─── GET: 全記事一覧 ──────────────────────────────────────────
@@ -77,7 +78,7 @@ export const POST = protectAdminRoute(async (req: NextRequest) => {
       description:      data.description,
       body:             data.body,
       categories:       data.categories,
-      tags:             data.tags,
+      tags:             normalizeTags((data.tags ?? []).join(',')),
       level:            data.level,
       published:        data.published,
       publishedAt:      data.publishedAt ?? null,

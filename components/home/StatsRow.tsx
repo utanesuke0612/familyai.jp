@@ -9,7 +9,6 @@ import { useScrollReveal } from '@/hooks/useScrollReveal';
 
 const STATS = [
   { value: '2',     label: 'AIツール' },
-  { value: '100+',  label: 'AI活用事例' },
   { value: '無料',  label: '基本機能すべて' },
   { value: '毎週',  label: '新着コンテンツ更新' },
 ] as const;
@@ -27,7 +26,7 @@ export function StatsRow() {
       }}
     >
       <div
-        className="max-w-container mx-auto grid grid-cols-2 sm:grid-cols-4 gap-6 text-center"
+        className="max-w-container mx-auto grid grid-cols-2 sm:grid-cols-3 gap-6 text-center"
         style={{ paddingInline: 'var(--container-px)' }}
       >
         {STATS.map((s, i) => (
