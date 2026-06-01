@@ -106,6 +106,7 @@ export function ArticleGrid({
       {articles.map((article, i) => (
         <div
           key={article.slug}
+          className="h-full"
         >
           <ArticleCard
             article={article}

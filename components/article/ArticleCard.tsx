@@ -65,11 +65,11 @@ export function ArticleCard({ article, featured = false }: ArticleCardProps) {
   return (
     <Link
       href={`/learn/${article.slug}`}
-      className="group block"
+      className="group block h-full"
       aria-label={`${article.title} — 記事を読む`}
     >
-      <article className="box-ehon p-0 transition-transform duration-200 hover:-translate-y-1">
-        <div className="p-5 flex flex-col gap-3">
+      <article className="box-ehon p-0 h-[240px] transition-transform duration-200 hover:-translate-y-1">
+        <div className="p-5 h-full flex flex-col gap-3">
 
           {/* 公開日（左）+ タグ最大2個（右） */}
           <div className="flex items-center justify-between gap-2 min-w-0">
@@ -108,36 +108,40 @@ export function ArticleCard({ article, featured = false }: ArticleCardProps) {
               fontSize:   featured ? '20px' : '17px',
               fontWeight: 500,
               color:      'var(--sumi)',
+              minHeight:  featured ? '52px' : '44px',
             }}
           >
             {article.title}
           </h3>
 
           {/* 説明 */}
-          {article.description && (
-            <p
-              className="text-xs leading-relaxed line-clamp-2"
-              style={{ color: 'var(--sumi-light)' }}
-            >
-              {article.description}
-            </p>
-          )}
+          <p
+            className="text-xs leading-relaxed line-clamp-2"
+            style={{
+              color:     'var(--sumi-light)',
+              minHeight: '40px',
+              visibility: article.description ? 'visible' : 'hidden',
+            }}
+          >
+            {article.description || '記事の説明文がここに入ります。'}
+          </p>
 
           {/* メタ情報（横区切り罫線で表現） */}
           <div
-            className="flex items-center gap-3 pt-3 mt-1 font-mincho text-xs"
+            className="flex items-center gap-3 pt-3 mt-auto font-mincho text-xs min-w-0"
             style={{
               borderTop: '1px solid var(--line-soft)',
               color:     'var(--sumi-light)',
+              minHeight: '28px',
             }}
           >
-            <span>{CATEGORY_LABEL[primaryCategory] ?? primaryCategory}</span>
-            <span className="text-[var(--line)]" aria-hidden="true">│</span>
-            <span>{DIFFICULTY_LABEL[level] ?? level}</span>
+            <span className="truncate min-w-0">{CATEGORY_LABEL[primaryCategory] ?? primaryCategory}</span>
+            <span className="text-[var(--line)] shrink-0" aria-hidden="true">│</span>
+            <span className="truncate min-w-0">{DIFFICULTY_LABEL[level] ?? level}</span>
             {readingMin && (
               <>
-                <span className="text-[var(--line)]" aria-hidden="true">│</span>
-                <span>{readingMin}分で読める</span>
+                <span className="text-[var(--line)] shrink-0" aria-hidden="true">│</span>
+                <span className="truncate min-w-0 text-right ml-auto">{readingMin}分で読める</span>
               </>
             )}
           </div>
