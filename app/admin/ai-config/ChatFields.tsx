@@ -25,7 +25,7 @@ interface ChatFieldsProps {
 
 export function ChatFields({ form, onChange, disabled }: ChatFieldsProps) {
   return (
-    <Section title="AIチャット設定">
+    <Section title="モデル設定（AIチャット・AI Echo・AI 3D 先生 共通）">
       {/* ① モデル選択 ───────────────────────────────────── */}
       <Field label="モデル">
         <ModelSelect

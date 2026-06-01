@@ -94,6 +94,8 @@ export async function completeByModelIdWithUsage(
 
 /**
  * 用途別にモデルを選択し、ストリーム生成を開始する。
+ * AI チャット・AI Echo・AI 3D 先生の全機能がこの関数を経由する。
+ * 管理画面（/admin/ai-config）の設定が最優先される。
  * 返却する ReadableStream は `data: {"delta":"..."}` / `data: [DONE]` 形式。
  */
 export async function routeAI(

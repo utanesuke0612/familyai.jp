@@ -140,7 +140,7 @@ export function AiConfigForm({ effective, dbPartial, history }: AiConfigFormProp
       {/* プリセット切替（比較カード） */}
       <PresetSwitcher current={form} onApply={applyPreset} disabled={isSaving} />
 
-      {/* AIチャット 3 項目（model / maxTokens / temperature） */}
+      {/* モデル設定（AIチャット・AI Echo・AI 3D 先生 共通） */}
       <ChatFields form={form} onChange={setForm} disabled={isSaving} />
 
       {/* 月間コスト試算（コンパクトバー） */}

@@ -4,7 +4,12 @@
  *
  * 用途:
  *   AIctation ページの AI Echo パネルで、ユーザーの英文アウトプットを
- *   Claude Haiku に評価させるための system prompt を生成する。
+ *   評価させるための system prompt を生成する。
+ *
+ * 【モデル選択】
+ *   使用する AI モデルは管理画面（/admin/ai-config）で設定された chatModel に従う。
+ *   未設定時は MODEL_ROUTER['text-quality'] → fallback の順で自動選択される。
+ *   本ファイルはシステムプロンプトの構築のみを担当し、モデル選択は routeAI() に委譲する。
  *
  * 設計原則（aictation_page_design_aiecho.md）:
  *   ・最初に必ず良い点を褒める（1〜2文）
